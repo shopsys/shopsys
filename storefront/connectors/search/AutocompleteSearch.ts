@@ -63,9 +63,9 @@ const mapCategoriesSearchResults = (
 ): AutocompleteSearchType['categoriesSearch'] => {
     const mappedCategories = [];
 
-    if (apiData?.edges !== undefined && apiData?.edges !== null) {
+    if (apiData?.edges !== undefined && apiData.edges !== null) {
         for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge?.node !== null) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
                 mappedCategories.push({
                     ...categoryEdge.node,
                     name: categoryEdge.node.name,
@@ -84,7 +84,7 @@ const mapProductsSearchResults = (
 
     if (apiData?.edges !== undefined && apiData.edges !== null) {
         for (const productEdge of apiData.edges) {
-            if (productEdge?.node !== undefined && productEdge?.node !== null) {
+            if (productEdge?.node !== undefined && productEdge.node !== null) {
                 mappedProducts.push({
                     ...productEdge.node,
                     name: productEdge.node.name,

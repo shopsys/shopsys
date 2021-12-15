@@ -8,7 +8,7 @@ type ImageProps = {
 };
 
 const Image: FC<ImageProps> = (props) => {
-    if (props.image === null || props.image === undefined) {
+    if (props.image === null) {
         return <img src={'/images/optimized-noimage.png'} alt={props.alt} />;
     }
     return (

@@ -20,15 +20,13 @@ export const setTokensToCookie = (
 };
 
 export const hasTokenInCookie = (context?: GetServerSidePropsContext): boolean => {
-    const cookies = parseCookies(context);
-
-    return cookies?.refreshToken !== undefined;
+    return 'refreshToken' in parseCookies(context);
 };
 
 export const getTokensFromCookies = (context?: GetServerSidePropsContext): OptionalTokenType => {
     const cookies = parseCookies(context);
-    const accessToken = cookies.accessToken ?? undefined;
-    const refreshToken = cookies.refreshToken ?? undefined;
+    const accessToken = cookies.accessToken;
+    const refreshToken = cookies.refreshToken;
 
     return { accessToken, refreshToken };
 };

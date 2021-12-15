@@ -29,7 +29,7 @@ const FormLineError: FC<FormLineErrorProps> = (props) => {
                     iconType="icon"
                     icon="Cross"
                 />
-                {props.error !== undefined && <ErrorMessageStyled>{props.error.message}</ErrorMessageStyled>}
+                {props.error.message !== undefined && <ErrorMessageStyled>{props.error.message}</ErrorMessageStyled>}
             </FormFieldErrorStyled>
         );
     }

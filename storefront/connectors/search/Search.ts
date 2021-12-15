@@ -81,7 +81,7 @@ const mapProductsSearchResults = (
 
     if (apiData?.edges !== undefined && apiData.edges !== null) {
         for (const productEdge of apiData.edges) {
-            if (productEdge?.node !== undefined && productEdge?.node !== null) {
+            if (productEdge?.node !== undefined && productEdge.node !== null) {
                 mappedProducts.push(mapListedProductType(productEdge.node, currencyCode));
             }
         }
@@ -95,7 +95,7 @@ const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch'])
 
     if (apiData?.edges !== undefined && apiData.edges !== null) {
         for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge?.node !== null) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
                 mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
             }
         }

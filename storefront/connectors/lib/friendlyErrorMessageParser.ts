@@ -22,14 +22,14 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction
 
                 for (const errorName in error.extensions.validation) {
                     const newErrorName = errorName.replace('input.', '');
-                    mappedValidationErrors[newErrorName] = error?.extensions?.validation[errorName][0];
+                    mappedValidationErrors[newErrorName] = error.extensions.validation[errorName][0];
                 }
 
                 errors.userError = { validation: mappedValidationErrors };
                 continue;
             }
 
-            if (error?.extensions?.code === 'cart-unavailable') {
+            if (error.extensions?.code === 'cart-unavailable') {
                 errors.applicationError = { type: ApplicationErrors.CART_NOT_FOUND, message: t('Cart not found') };
                 continue;
             }

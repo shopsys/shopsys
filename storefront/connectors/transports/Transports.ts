@@ -24,9 +24,7 @@ const mapTransports = (
     const mappedTransports: TransportType[] = [];
     for (const transport of apiData) {
         const mappedTransport = mapTransport(transport, currencyCode);
-        if (mappedTransport !== null) {
-            mappedTransports.push(mappedTransport);
-        }
+        mappedTransports.push(mappedTransport);
     }
     return mappedTransports;
 };
@@ -34,7 +32,7 @@ const mapTransports = (
 export const getTransports = (cartUuid?: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [result] = useTransportsQueryApi({ variables: { cartUuid } });
-    const transportsApiData = result?.data?.transports;
+    const transportsApiData = result.data?.transports;
 
     if (transportsApiData !== undefined) {
         return mapTransports(transportsApiData, currencyCode);

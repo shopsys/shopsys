@@ -17,10 +17,7 @@ export const mapProductDetailApiData = (
 ): ProductDetailType => {
     return {
         ...productDetailApiData,
-        __typename:
-            productDetailApiData?.__typename !== undefined && productDetailApiData.__typename !== null
-                ? productDetailApiData.__typename
-                : 'RegularProduct',
+        __typename: productDetailApiData.__typename !== undefined ? productDetailApiData.__typename : 'RegularProduct',
         availability: {
             name: productDetailApiData.availability.name,
             status: productDetailApiData.availability.status === 'in-stock' ? 'in-stock' : 'out-of-stock',
@@ -43,10 +40,7 @@ export const mapProductDetailApiData = (
                 ? productDetailApiData.shortDescription
                 : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
-        accessories:
-            productDetailApiData.accessories !== undefined && productDetailApiData.accessories !== null
-                ? mapSliderProductApiData(productDetailApiData.accessories, currencyCode)
-                : [],
+        accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
         parameters: mapParametersApiData(productDetailApiData.parameters),
         images: mapProductDetailImages(productDetailApiData.images),
     };
@@ -90,10 +84,7 @@ export const mapMainVariantDetailApiData = (
         nameSuffix: apiData.nameSuffix !== undefined && apiData.nameSuffix !== null ? apiData.nameSuffix : '',
         description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
         price: mapProductPriceData(apiData.price, currencyCode),
-        accessories:
-            apiData.accessories !== undefined && apiData.accessories !== null
-                ? mapSliderProductApiData(apiData.accessories, currencyCode)
-                : [],
+        accessories: mapSliderProductApiData(apiData.accessories, currencyCode),
         parameters: mapParametersApiData(apiData.parameters),
         images: mapProductDetailImages([...apiData.images, ...mapVariantImages(apiData.variants)]),
         variants: apiData.variants.map((variant) => mapListedVariantType(variant, currencyCode)),

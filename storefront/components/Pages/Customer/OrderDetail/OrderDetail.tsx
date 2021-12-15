@@ -65,7 +65,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 <tr>
                                     <td>{t('Package number')}:</td>
                                     <td className="text-right">
-                                        {order.trackingUrl !== null && order.trackingUrl !== undefined && (
+                                        {order.trackingUrl !== null && (
                                             <NextLink href={order.trackingUrl} passHref>
                                                 <a target="_blank">{order.trackingNumber}</a>
                                             </NextLink>

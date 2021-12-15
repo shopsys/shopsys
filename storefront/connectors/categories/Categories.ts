@@ -23,7 +23,7 @@ export const mapCategoryDetailData = (
                 : null,
     };
 
-    if (apiCategoryDetailData?.products?.edges !== undefined && apiCategoryDetailData.products.edges !== null) {
+    if (apiCategoryDetailData.products?.edges !== undefined && apiCategoryDetailData.products.edges !== null) {
         for (const edge of apiCategoryDetailData.products.edges) {
             if (edge?.node === undefined || edge.node === null) {
                 continue;

@@ -116,10 +116,7 @@ export const mapCart = (
                     price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
                     image:
-                        0 in item.product.images &&
-                        item.product.images[0].sizes !== undefined &&
-                        item.product.images[0].sizes !== null &&
-                        0 in item.product.images[0].sizes
+                        0 in item.product.images && 0 in item.product.images[0].sizes
                             ? mapImageSizeApiData(item.product.images[0].sizes[0])
                             : null,
                 },

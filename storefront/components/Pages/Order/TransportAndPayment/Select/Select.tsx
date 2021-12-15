@@ -97,7 +97,7 @@ const Select: FC<SelectProps> = (props) => {
     const isPickupPlaceSelected = () => transportInput !== null && transportInput.pickupPlaceIdentifier !== null;
 
     const onChangePersonalPickupTransportHandler = (newTransport: TransportType) => {
-        if (newTransport?.transportType.code === 'packetery') {
+        if (newTransport.transportType.code === 'packetery') {
             if (!isPickupPlaceSelected()) {
                 const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
                 if (packeteryApiKey !== undefined) {
@@ -150,7 +150,7 @@ const Select: FC<SelectProps> = (props) => {
         packeteryPoint: PacketeryExtendedPoint | null,
         packeteryTransport: TransportType,
     ) => {
-        if (packeteryPoint !== null && packeteryTransport !== null) {
+        if (packeteryPoint !== null) {
             const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
             setPacketeryCookie(mappedPacketeryPoint);
             updateTransport(packeteryTransport);

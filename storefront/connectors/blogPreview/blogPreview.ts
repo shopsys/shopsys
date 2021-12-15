@@ -14,7 +14,7 @@ const mapBlogPreview = (blogArticles: BlogListQueryApi['blogArticles'] | undefin
 
     const mappedBlogPreviewArticles = [];
     for (const blogArticle of blogArticleEdges) {
-        if (blogArticle?.node === undefined || blogArticle?.node === null) {
+        if (blogArticle?.node === undefined || blogArticle.node === null) {
             continue;
         }
 
@@ -22,7 +22,7 @@ const mapBlogPreview = (blogArticles: BlogListQueryApi['blogArticles'] | undefin
             ...blogArticle.node,
             perex:
                 blogArticle.node.perex !== undefined && blogArticle.node.perex !== null ? blogArticle.node.perex : '',
-            image: mapImageApiData([blogArticle.node?.image]),
+            image: mapImageApiData([blogArticle.node.image]),
         });
     }
 

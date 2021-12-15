@@ -43,7 +43,7 @@ export async function initServerSideProps(
 
     let serversideTranslationConfig;
 
-    if (domainConfig.defaultLocale !== undefined && client !== null) {
+    if (client !== null) {
         serversideTranslationConfig = await serverSideTranslations(
             domainConfig.defaultLocale,
             undefined,

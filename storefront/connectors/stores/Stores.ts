@@ -21,7 +21,7 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
     const mappedStores = [];
 
     for (const edge of data.edges) {
-        if (edge?.node === undefined || edge?.node === null) {
+        if (edge?.node === undefined || edge.node === null) {
             continue;
         }
 

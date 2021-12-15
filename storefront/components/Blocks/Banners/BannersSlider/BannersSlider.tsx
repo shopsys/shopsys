@@ -62,6 +62,8 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
         setLoadedImageUrls((currentLoadedImageUrls) => {
             const newLoadedImageUrls = { ...currentLoadedImageUrls };
             newLoadedImageUrls[currentSlide] = true;
+
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (slider !== null && slider.options().centered) {
                 newLoadedImageUrls[Math.min(currentSlide + 1, props.sliderItems.length - 1)] = true;
             }
@@ -80,6 +82,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     }, [sliderRef]);
     useEffect(() => {
         timer.current = setInterval(() => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (!pause && slider !== null) {
                 slider.next();
             }

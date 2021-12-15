@@ -28,24 +28,18 @@ const Filter: FC<FilterProps> = (props) => {
     const dispatch = useShopsysDispatch();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
 
-    const getBrandsValues =
-        props.productFilterOptions.brands !== null && props.productFilterOptions.brands !== undefined
-            ? props.productFilterOptions.brands.map((value) => ({
-                  ...value.brand,
-                  checked: false,
-              }))
-            : [];
+    const getBrandsValues = props.productFilterOptions.brands.map((value) => ({
+        ...value.brand,
+        checked: false,
+    }));
 
-    const getFlagsValues =
-        props.productFilterOptions.flags !== null && props.productFilterOptions.flags !== undefined
-            ? props.productFilterOptions.flags.map((value) => ({
-                  ...value.flag,
-                  checked: false,
-              }))
-            : [];
+    const getFlagsValues = props.productFilterOptions.flags.map((value) => ({
+        ...value.flag,
+        checked: false,
+    }));
 
     const getParametersValues =
-        props.productFilterOptions.parameters !== undefined && props.productFilterOptions.parameters !== null
+        props.productFilterOptions.parameters !== undefined
             ? props.productFilterOptions.parameters.map((parameter) => {
                   const valuesData = parameter.values.map((value) => ({
                       ...value,
@@ -233,7 +227,6 @@ const Filter: FC<FilterProps> = (props) => {
                     )}
 
                     {props.productFilterOptions.parameters !== undefined &&
-                        props.productFilterOptions.parameters !== null &&
                         fieldsParameters.map((parametersItem, index) => (
                             <FilterGroupParameters
                                 key={parametersItem.id}
