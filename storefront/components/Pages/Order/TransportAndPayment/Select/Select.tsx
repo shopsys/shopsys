@@ -180,7 +180,6 @@ const Select: FC<SelectProps> = (props) => {
                                             value={updatedTransport.uuid}
                                             fieldRef={field}
                                             image={updatedTransport.image}
-                                            disabled={false}
                                             checked={true}
                                             uncheckCallback={resetTransportAndPayment}
                                             label={
@@ -210,7 +209,6 @@ const Select: FC<SelectProps> = (props) => {
                                                 value={transportItem.uuid}
                                                 fieldRef={field}
                                                 image={transportItem.image}
-                                                disabled={false}
                                                 checked={false}
                                                 uncheckCallback={resetTransportAndPayment}
                                                 label={
@@ -269,7 +267,6 @@ const Select: FC<SelectProps> = (props) => {
                                                     value={payment.uuid}
                                                     fieldRef={field}
                                                     image={payment.image}
-                                                    disabled={false}
                                                     checked={true}
                                                     uncheckCallback={() =>
                                                         formProviderMethods.setValue(formMeta.fields.payment.name, null)
@@ -292,7 +289,6 @@ const Select: FC<SelectProps> = (props) => {
                                                         value={paymentItem.uuid}
                                                         fieldRef={field}
                                                         image={paymentItem.image}
-                                                        disabled={false}
                                                         checked={false}
                                                         uncheckCallback={() =>
                                                             formProviderMethods.setValue(
