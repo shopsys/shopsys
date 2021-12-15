@@ -1,8 +1,11 @@
 import * as Yup from 'yup';
+import Link from 'components/Basic/Link';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { Trans } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -45,6 +48,8 @@ export const useRegistrationAfterOrderFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
 ): RegistrationAfterOrderFormMetaType => {
     const t = useTypedTranslationFunction();
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [TermsAndConditionUrl] = useGetInternationalizedStaticUrls(['/terms-and-conditions'], url);
 
     const formMeta = {
         formName: 'registration-after-order-form',
@@ -57,11 +62,13 @@ export const useRegistrationAfterOrderFormMeta = (
             privacyPolicy: {
                 name: 'privacyPolicy' as const,
                 label: (
-                    <Trans i18nKey="I agree with terms and conditions and privacy policy">
-                        I agree with
-                        <a href="/">terms and conditions</a>
-                        and privacy policy
-                    </Trans>
+                    <Trans
+                        i18nKey="I agree with terms and conditions and privacy policy"
+                        defaults="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
+                        components={{
+                            lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
+                        }}
+                    />
                 ),
                 errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
             },

@@ -34,9 +34,13 @@ export const registerMutation = `mutation (
             newsletterSubscription: $newsletterSubscription
         }){
             accessToken
+            refreshToken
         }
     }` as const;
 
-export const useRegister = (): UseMutationResponse<{ Register: { accessToken: string } }, RegistrationInputType> => {
+export const useRegister = (): UseMutationResponse<
+    { Register: { accessToken: string; refreshToken: string } },
+    RegistrationInputType
+> => {
     return useMutation(registerMutation);
 };
