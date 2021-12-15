@@ -154,7 +154,9 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
                         street
                         city
                         postcode
-                        country
+                        country {
+                            code
+                        }
                         differentDeliveryAddress
                         deliveryFirstName
                         deliveryLastName
@@ -163,7 +165,9 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
                         deliveryStreet
                         deliveryCity
                         deliveryPostcode
-                        deliveryCountry
+                        deliveryCountry {
+                            code
+                        }
                         note
                     }
                 }';

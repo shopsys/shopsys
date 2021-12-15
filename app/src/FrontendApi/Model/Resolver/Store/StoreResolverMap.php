@@ -38,9 +38,6 @@ class StoreResolverMap extends ResolverMap
     {
         return [
             'Store' => [
-                'country' => static function (Store $store) {
-                    return $store->getCountry()->getCode();
-                },
                 'slug' => function (Store $store) {
                     return $this->getSlug($store);
                 },

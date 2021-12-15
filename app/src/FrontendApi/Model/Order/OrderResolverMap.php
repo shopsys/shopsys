@@ -18,6 +18,12 @@ class OrderResolverMap extends BaseOrderResolverMap
         $orderDataArray['Order']['promoCode'] = function (Order $order) {
             return $order->getGtmCoupon();
         };
+        $orderDataArray['Order']['country'] = function (Order $order) {
+            return $order->getCountry();
+        };
+        $orderDataArray['Order']['deliveryCountry'] = function (Order $order) {
+            return $order->getDeliveryCountry();
+        };
 
         return $orderDataArray;
     }

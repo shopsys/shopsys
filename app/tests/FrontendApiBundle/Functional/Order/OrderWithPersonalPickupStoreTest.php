@@ -28,7 +28,9 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                     'deliveryStreet' => $store->getStreet(),
                     'deliveryCity' => $store->getCity(),
                     'deliveryPostcode' => $store->getPostcode(),
-                    'deliveryCountry' => $store->getCountry()->getCode(),
+                    'deliveryCountry' => [
+                        'code' => $store->getCountry()->getCode(),
+                    ],
                 ],
             ],
         ];
@@ -102,7 +104,9 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                         deliveryStreet
                         deliveryCity
                         deliveryPostcode
-                        deliveryCountry
+                        deliveryCountry {
+                            code
+                        }
                     }
                 }';
     }

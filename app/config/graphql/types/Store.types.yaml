@@ -30,8 +30,8 @@ Store:
                 type: "String!"
                 description: "Store address postcode"
             country:
-                type: "String!"
-                description: "Store address country code"
+                type: "Country!"
+                description: "Store address country"
             openingHours:
                 type: "String"
                 description: "Store opening hours"

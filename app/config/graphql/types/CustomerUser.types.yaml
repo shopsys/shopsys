@@ -17,8 +17,8 @@ CustomerUser:
                 type: "String!"
                 description: "Billing address zip code"
             country:
-                type: "String!"
-                description: "Billing address country code"
+                type: "Country!"
+                description: "Billing address country"
             newsletterSubscription:
                 type: "Boolean!"
                 description: "Whether customer user receives newsletters or not"
