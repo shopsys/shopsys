@@ -6,6 +6,9 @@ import {
     MenuIconicItemLinkStyled,
     MenuIconicItemStyled,
     MenuIconicListStyled,
+    MenuIconicSubItemLinkStyled,
+    MenuIconicSubItemStyled,
+    MenuIconicSubStyled,
 } from './MenuIconic.style';
 import Heading from 'components/Basic/Heading';
 import Login from 'components/Blocks/Popup/Login';
@@ -21,7 +24,10 @@ const MenuIconic: FC = () => {
     const [, [, logout]] = useAuth();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [storesUrl] = useGetInternationalizedStaticUrls(['/stores'], domainConfig.url);
+    const [storesUrl, myOrdersUrl] = useGetInternationalizedStaticUrls(
+        ['/stores', '/customer/orders'],
+        domainConfig.url,
+    );
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
 
     const loginHandler = () => {
@@ -33,7 +39,7 @@ const MenuIconic: FC = () => {
     };
 
     useEffect(() => {
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn === true) {
             setIsLoginPopupOpened(false);
         }
     }, [isUserLoggedIn]);
@@ -62,11 +68,25 @@ const MenuIconic: FC = () => {
                     </NextLink>
                 </MenuIconicItemStyled>
                 <MenuIconicItemStyled>
-                    {isUserLoggedIn ? (
-                        <MenuIconicItemLinkStyled>
+                    {isUserLoggedIn === true ? (
+                        <MenuIconicItemLinkStyled hasSubmenu={true}>
                             <MenuIconicItemIconStyled iconType="icon" icon="User" />
                             {t('My account')}
-                            <MenuIconicItemIconStyled iconType="icon" icon="RemoveBold" onClick={logoutHandler} />
+                            <MenuIconicSubStyled>
+                                <MenuIconicSubItemStyled>
+                                    <NextLink href={myOrdersUrl} passHref>
+                                        <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
+                                    </NextLink>
+                                </MenuIconicSubItemStyled>
+                                <MenuIconicSubItemStyled>
+                                    <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
+                                </MenuIconicSubItemStyled>
+                                <MenuIconicSubItemStyled>
+                                    <MenuIconicSubItemLinkStyled onClick={logoutHandler}>
+                                        {t('Logout')}
+                                    </MenuIconicSubItemLinkStyled>
+                                </MenuIconicSubItemStyled>
+                            </MenuIconicSubStyled>
                         </MenuIconicItemLinkStyled>
                     ) : (
                         <MenuIconicItemLinkStyled onClick={loginHandler}>
@@ -77,7 +97,7 @@ const MenuIconic: FC = () => {
                 </MenuIconicItemStyled>
             </MenuIconicListStyled>
             <MenuIconicButtonMobileStyled>
-                {isUserLoggedIn ? (
+                {isUserLoggedIn === true ? (
                     <MenuIconicButtonMobileLinkStyled>
                         <MenuIconicItemIconStyled iconType="icon" icon="RemoveBold" onClick={logoutHandler} />
                     </MenuIconicButtonMobileLinkStyled>

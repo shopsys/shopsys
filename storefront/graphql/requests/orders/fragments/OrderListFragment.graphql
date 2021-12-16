@@ -1,0 +1,12 @@
+fragment OrderListFragment on OrderConnection {
+    totalCount
+    pageInfo {
+        ...PageInfoFragment
+    }
+    edges {
+        node {
+            ...OrderDetailFragment
+        }
+        cursor
+    }
+}

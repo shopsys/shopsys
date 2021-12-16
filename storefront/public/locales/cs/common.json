@@ -208,5 +208,16 @@
     "to": "do",
     "No results match the filter": "Filtru neodpovídají žádné výsledky",
     "In stock": "Skladem",
-    "ProductsNoResults": "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky. <1/> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje."
+    "ProductsNoResults": "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky. <1/> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje.",
+    "My orders": "Mé objednávky",
+    "Edit profile": "Upravit údaje",
+    "Logout": "Odhlásit",
+    "Order number": "Číslo objednávky",
+    "Creation date": "Datum objednávky",
+    "Number of items": "Počet položek",
+    "Shipping": "Doprava",
+    "Payment": "Platba",
+    "Total price including VAT": "Celková cena s DPH",
+    "You have no orders": "Nemáte žádné objednávky",
+    "Detail": "Detail"
 }

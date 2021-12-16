@@ -208,5 +208,16 @@
     "to": "to",
     "No results match the filter": "No results match the filter",
     "In stock": "In stock",
-    "ProductsNoResults": "We currently have no results for your exact search. <1/> Try to be more specific, or see if you have filtered out non-existent data."
+    "ProductsNoResults": "We currently have no results for your exact search. <1/> Try to be more specific, or see if you have filtered out non-existent data.",
+    "My orders": "My orders",
+    "Edit profile": "Edit profile",
+    "Logout": "Logout",
+    "Order number": "Order number",
+    "Creation date": "Creation date",
+    "Number of items": "Number of items",
+    "Shipping": "Shipping",
+    "Payment": "Payment",
+    "Total price including VAT": "Total price including VAT",
+    "You have no orders": "You have no orders",
+    "Detail": "Detail"
 }
