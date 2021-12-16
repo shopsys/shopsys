@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Image;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -13,9 +14,9 @@ class ProductImagesResolver extends AbstractImagesResolver implements AliasedInt
      * @param \App\Model\Product\Product|array $data
      * @param string|null $type
      * @param array|null $sizes
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByProduct($data, ?string $type, ?array $sizes): array
+    public function resolveByProduct($data, ?string $type, ?array $sizes): Promise
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
         return $this->resolveByEntityId($productId, 'product', $type, $sizes);

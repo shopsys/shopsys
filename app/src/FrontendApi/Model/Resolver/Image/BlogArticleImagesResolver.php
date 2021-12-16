@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Image;
 
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
 class BlogArticleImagesResolver extends AbstractImagesResolver implements AliasedInterface
 {
+    public const ENTITY_NAME = 'blogArticle';
+
     /**
      * @param array $data
      * @param string|null $type
      * @param array|null $sizes
-     * @return array|null
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByBlogArticle(array $data, ?string $type, ?array $sizes): ?array
+    public function resolveByBlogArticle(array $data, ?string $type, ?array $sizes): Promise
     {
-        $images = $this->resolveByEntityId($data['id'], 'blogArticle', $type, $sizes);
-        return array_shift($images);
+        return $this->resolveByEntityId($data['id'], self::ENTITY_NAME, $type, $sizes);
     }
 
     /**

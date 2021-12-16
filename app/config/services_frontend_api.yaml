@@ -6,6 +6,7 @@ services:
         bind:
             Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\
@@ -121,3 +122,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver:
         alias: App\FrontendApi\Model\Resolver\Category\CategoriesResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
+        alias: App\FrontendApi\Model\Image\ImageFacade
