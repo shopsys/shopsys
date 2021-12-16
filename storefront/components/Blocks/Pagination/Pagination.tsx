@@ -40,7 +40,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         dispatch(userActions.setPagination({ ...initialState.pagination }));
     }, [router.asPath]);
 
-    if (paginationButtons === undefined || paginationButtons === null) {
+    if (paginationButtons === undefined || paginationButtons === null || paginationButtons.length === 1) {
         return null;
     }
 
