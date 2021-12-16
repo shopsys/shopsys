@@ -27,6 +27,7 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
         const selectedPickupPlace = props.transport.stores.find((store) => store.identifier === pickupPlaceValue);
 
         props.onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
+
         formProviderMethods.setValue(formMeta.fields.pickupPlace.name, '');
     };
 

@@ -91,7 +91,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                     : pickupPlace.postcode,
                 deliveryCountry: formValues.differentDeliveryAddress
                     ? formValues.deliveryCountry.value
-                    : pickupPlace.country,
+                    : pickupPlace.country.code,
                 differentDeliveryAddress: true,
             };
         } else {
