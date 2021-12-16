@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import Link from 'components/Basic/Link';
-import { SelectOptionType } from 'components/Forms/Select/Select';
+import { SelectOptionType } from 'types/selectOptions';
 import { Trans } from 'react-i18next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';

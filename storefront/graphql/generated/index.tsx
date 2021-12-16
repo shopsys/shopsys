@@ -2533,6 +2533,26 @@ export type PromotedProductsQueryVariablesApi = Exact<{ [key: string]: never; }>
 
 export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }> };
 
+export type RegistrationMutationVariablesApi = Exact<{
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['Password'];
+  telephone: Scalars['String'];
+  street: Scalars['String'];
+  city: Scalars['String'];
+  postcode: Scalars['String'];
+  country: Scalars['String'];
+  companyCustomer: Scalars['Boolean'];
+  companyName?: Maybe<Scalars['String']>;
+  companyNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber?: Maybe<Scalars['String']>;
+  newsletterSubscription: Scalars['Boolean'];
+}>;
+
+
+export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+
 export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined };
 
 export type EnrichedCategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined };
@@ -3719,6 +3739,20 @@ export const PromotedProductsQueryDocumentApi = gql`
 
 export function usePromotedProductsQueryApi(options: Omit<Urql.UseQueryArgs<PromotedProductsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PromotedProductsQueryApi>({ query: PromotedProductsQueryDocumentApi, ...options });
+};
+export const RegistrationMutationDocumentApi = gql`
+    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!) {
+  Register(
+    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription}
+  ) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+export function useRegistrationMutationApi() {
+  return Urql.useMutation<RegistrationMutationApi, RegistrationMutationVariablesApi>(RegistrationMutationDocumentApi);
 };
 export const EnrichedSearchQueryDocumentApi = gql`
     query EnrichedSearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {

@@ -30,13 +30,13 @@ import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import User from './User';
 import { userActions } from 'redux/slices/user';
-import { useRegister } from 'connectors/registration/Registration';
+import { useRegistrationMutationApi } from 'graphql/generated';
 import { useRouter } from 'next/router';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Registration: FC = () => {
     const t = useTypedTranslationFunction();
-    const [registerResult, register] = useRegister();
+    const [registerResult, register] = useRegistrationMutationApi();
     const { url } = useShopsysSelector((state) => state.domain);
     const [RegistrationUrl] = useGetInternationalizedStaticUrls(['/registration'], url);
     const [formProviderMethods, defaultValues] = useRegistrationForm();

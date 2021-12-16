@@ -26,7 +26,7 @@ import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { userActions } from 'redux/slices/user';
-import { useRegister } from 'connectors/registration/Registration';
+import { useRegistrationMutationApi } from 'graphql/generated';
 import { useRouter } from 'next/router';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -35,7 +35,7 @@ const Registration: FC = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const contactInformation = useShopsysSelector((state) => state.contactInformation);
-    const [registerResult, register] = useRegister();
+    const [registerResult, register] = useRegistrationMutationApi();
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
