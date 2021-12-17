@@ -349,6 +349,9 @@ msgstr "\nAdresa obchodu"
 msgid "Advanced search"
 msgstr ""
 
+msgid "Advanced SEO categories"
+msgstr ""
+
 msgid "Adverts - full"
 msgstr ""
 
@@ -841,6 +844,9 @@ msgstr "Krajina"
 msgid "Create and download CSV"
 msgstr ""
 
+msgid "Create flag"
+msgstr ""
+
 msgid "Create new banner"
 msgstr ""
 
@@ -1014,6 +1020,9 @@ msgstr ""
 
 msgid "Do you really want to remove this delivery address?"
 msgstr "Naozaj chcete odstrániť túto dodaciu adresu?"
+
+msgid "Do you really want to remove this flag?"
+msgstr ""
 
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr ""
@@ -1339,10 +1348,13 @@ msgstr "Meno"
 msgid "Flag"
 msgstr ""
 
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
 msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Flags"
@@ -2051,6 +2063,9 @@ msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, sp
 msgstr "Nepodporovaný dátový typ pre validáciu súboru. Kontaktujte, prosím, správcu obchodu."
 
 msgid "New banner"
+msgstr ""
+
+msgid "New flag"
 msgstr ""
 
 msgid "New orders"
@@ -3355,6 +3370,9 @@ msgstr "Výsledky vyhľadávanie pre \"%searchText%\""
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
+msgid "Selected flag doesn't exist."
+msgstr ""
+
 msgid "Selected product no longer available or doesn't exist."
 msgstr "Vybraný produkt už nie je dostupný alebo neexistuje"
 
@@ -3673,6 +3691,9 @@ msgstr ""
 msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr ""
 
+msgid "The selected flag cannot be deleted."
+msgstr ""
+
 msgid "There were problems during payment of created order with number %orderNumber%."
 msgstr "Počas platby vytvorenej objednávky %orderNumber% sa vyskytol problém."
 
@@ -3681,6 +3702,9 @@ msgstr "Tento účet neexistuje alebo heslo nie je správne"
 
 msgid "This category contains no products."
 msgstr "Táto kategória neobsahuje žiadne produkty."
+
+msgid "This flag can not be deleted as it is used in definition of:"
+msgstr ""
 
 msgid "This product is no longer available for purchase. Have a look at similar products <a href=\"%url%\">here</a>."
 msgstr "Tento produkt sa už nepredáva. Pozrite si podobné produkty <a href=\"%url%\">here</a>."

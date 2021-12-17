@@ -109,6 +109,9 @@ msgstr ""
 msgid "Advanced search"
 msgstr ""
 
+msgid "Advanced SEO categories"
+msgstr "Rozšířené SEO kategorií"
+
 msgid "Adverts - full"
 msgstr "Reklamní systém - vše"
 
@@ -694,6 +697,9 @@ msgstr ""
 msgid "Do you really want to remove this delivery address?"
 msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 
+msgid "Do you really want to remove this flag?"
+msgstr "Opravdu chcete odstranit tento příznak?"
+
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
 
@@ -946,11 +952,17 @@ msgstr "Jméno"
 msgid "Flag"
 msgstr "Příznak"
 
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Barva příznaku musí být plattný hexadecimální kód např. #3333ff"
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
 
 msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
+
+msgid "Flag <strong>{{ name }}</strong> deleted"
+msgstr "Příznak <strong>{{ name }}</strong> byl smazán"
+
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr "Barva příznaku musí být plattný hexadecimální kód např. #3333ff"
 
 msgid "Flags"
 msgstr "Příznaky"
@@ -1455,6 +1467,9 @@ msgstr "Nový banner"
 
 msgid "New delivery address"
 msgstr "Nová dodací adresa"
+
+msgid "New flag"
+msgstr "Nový příznak"
 
 msgid "New orders"
 msgstr ""
@@ -2413,6 +2428,9 @@ msgstr "Vyhledávání"
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
+msgid "Selected flag doesn't exist."
+msgstr "Vybraný příznak neexistuje."
+
 msgid "Selected product no longer available or doesn't exist."
 msgstr "Zvolené zboží již není v nabídce nebo neexistuje."
 
@@ -2716,6 +2734,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ tran
 msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
+msgid "The selected flag cannot be deleted."
+msgstr "Vybraný příznak nelze smazat."
+
 msgid "There were problems during payment of created order with number %orderNumber%."
 msgstr "Během placení dokončené a odeslané objednávky č. %orderNumber% došlo k potížím."
 
@@ -2727,6 +2748,9 @@ msgstr "Zadali jste špatné uživatelské jméno nebo heslo"
 
 msgid "This category contains no products."
 msgstr "Tato kategorie neobsahuje žádné produkty"
+
+msgid "This flag can not be deleted as it is used in definition of"
+msgstr "Tento příznak nelze smazat, protože se používá v definici"
 
 msgid "This product is no longer available for purchase. Have a look at similar products <a href=\"%url%\">here</a>."
 msgstr "Toto zboží nadále není možné koupit. Prohlédněte si podobné produkty <a href=\"%url%\">zde</a>."

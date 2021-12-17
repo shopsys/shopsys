@@ -33,6 +33,8 @@ class FlagGridFactory extends BaseFlagGridFactory
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);
+        $grid->addDeleteActionColumn('admin_flag_deleteconfirm', ['id' => 'f.id'])
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig');
 

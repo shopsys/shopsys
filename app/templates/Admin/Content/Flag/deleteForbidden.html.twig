@@ -1,0 +1,21 @@
+<p>{{ 'This flag can not be deleted as it is used in definition of'|trans }}:</p>
+
+{% if hasPromoCodeDependency%}
+    <p>{{ 'Promo code'|trans }}</p>
+{% endif %}
+
+{% if hasSeoMixDependency%}
+    <p>{{ 'Advanced SEO categories'|trans }}</p>
+{% endif %}
+
+
+{# buttons should be consistent with the result of Shopsys.window JS function in Resources/scripts/admin/window.js #}
+<div class="window__actions">
+    <a
+            href="#"
+            class="window__actions__btn window-button-cancel btn btn--default"
+            onclick="$(this).closest('.window').trigger('windowClose'); return false;"
+    >
+        {{ 'Cancel'|trans }}
+    </a>
+</div>

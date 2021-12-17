@@ -150,4 +150,13 @@ class FlagFacade extends BaseFlagFacade
     {
         return $this->flagRepository->getVisibleFlagById($flagId, $locale);
     }
+
+    /**
+     * @param int $flagId
+     * @return \App\Model\Product\Flag\FlagDependenciesData
+     */
+    public function getFlagDependencies(int $flagId): FlagDependenciesData
+    {
+        return $this->flagRepository->getFlagDependencies($flagId);
+    }
 }
