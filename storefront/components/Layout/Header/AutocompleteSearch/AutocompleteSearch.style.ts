@@ -98,5 +98,30 @@ export const AutocompleteSearchRemoveButtonStyled = styled.div`
         background-color: ${theme.color.greyLighter};
         border-radius: 50%;
         cursor: pointer;
+
+        @media ${theme.mediaQueries.queryTablet} {
+            padding: 0 10px;
+            width: 69px;
+            height: 40px;
+            top: -31px;
+            right: 0;
+
+            background-color: ${theme.color.orangeLight};
+            border-radius: ${theme.radius.big};
+        }
     `}
+`;
+
+export const AutocompleteSearchRemoveButtonTextStyled = styled.span`
+    width: 29px;
+    margin-left: 4px;
+
+    font-size: 11px;
+`;
+
+export const AutocompleteSearchRemoveButtonImageStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
 `;

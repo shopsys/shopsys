@@ -1,7 +1,9 @@
 import {
     AutocompleteSearchFormStyled,
     AutocompleteSearchInStyled,
+    AutocompleteSearchRemoveButtonImageStyled,
     AutocompleteSearchRemoveButtonStyled,
+    AutocompleteSearchRemoveButtonTextStyled,
     AutocompleteSearchStyled,
     AutocompleteSearchTextInputStyled,
 } from './AutocompleteSearch.style';
@@ -11,12 +13,16 @@ import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './form
 import Autocomplete from './Autocomplete';
 import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import Icon from 'components/Basic/Icon';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const AutocompleteSearch: FC = () => {
     const router = useRouter();
@@ -35,6 +41,9 @@ const AutocompleteSearch: FC = () => {
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainUrl);
+    const t = useTypedTranslationFunction();
+    const [isDesktop, setIsDesktop] = useState(false);
+    const { width } = useGetWindowSize();
 
     useEffect(() => {
         if (formProviderMethods.formState.isValid) {
@@ -55,6 +64,13 @@ const AutocompleteSearch: FC = () => {
     useEffect(() => {
         return () => document.removeEventListener('click', onDocumentClickHandler);
     }, []);
+
+    useResizeWidthEffect(
+        width,
+        desktopFirstSizes.tablet,
+        () => setIsDesktop(true),
+        () => setIsDesktop(false),
+    );
 
     const onDocumentClickHandler: EventListener = (event) => {
         if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
@@ -105,7 +121,18 @@ const AutocompleteSearch: FC = () => {
                                         formProviderMethods.setValue(formMeta.fields.autocompleteSearchQuery.name, '')
                                     }
                                 >
-                                    <Icon iconType="icon" icon="Remove" />
+                                    {isDesktop ? (
+                                        <Icon iconType="icon" icon="Close" />
+                                    ) : (
+                                        <>
+                                            <AutocompleteSearchRemoveButtonImageStyled>
+                                                <Icon iconType="icon" icon="Close" />
+                                            </AutocompleteSearchRemoveButtonImageStyled>
+                                            <AutocompleteSearchRemoveButtonTextStyled>
+                                                {t('Close')}
+                                            </AutocompleteSearchRemoveButtonTextStyled>
+                                        </>
+                                    )}
                                 </AutocompleteSearchRemoveButtonStyled>
                             )}
                         </FormProvider>
