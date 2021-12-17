@@ -13,5 +13,5 @@ StoreAvailability:
                 type: "String!"
                 description: "Availability status in a format suitable for usage in the code"
             store:
-                type: "Store!"
+                type: "Store"
                 description: "Store"

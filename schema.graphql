@@ -2141,7 +2141,7 @@ type StoreAvailability {
   availabilityStatus: String!
 
   """Store"""
-  store: Store!
+  store: Store
 }
 
 """A connection to a list of items."""

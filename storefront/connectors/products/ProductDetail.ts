@@ -49,11 +49,22 @@ export const mapProductDetailApiData = (
 };
 
 export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]): StoreAvailability[] => {
-    return apiData.map((storeAvailabilityApiData) => ({
-        ...storeAvailabilityApiData,
-        availabilityStatus: storeAvailabilityApiData.availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock',
-        store: mapStoreDetailApiData(storeAvailabilityApiData.store),
-    }));
+    const mappedStoreAvailabilities = [];
+
+    for (const storeAvailabilityApiData of apiData) {
+        if (storeAvailabilityApiData.store !== null && storeAvailabilityApiData.store !== undefined) {
+            mappedStoreAvailabilities.push({
+                ...storeAvailabilityApiData,
+                availabilityStatus:
+                    storeAvailabilityApiData.availabilityStatus === 'in-stock'
+                        ? ('in-stock' as const)
+                        : ('out-of-stock' as const),
+                store: mapStoreDetailApiData(storeAvailabilityApiData.store),
+            });
+        }
+    }
+
+    return mappedStoreAvailabilities;
 };
 
 const mapVariantImages = (variants: ListedVariantFragmentApi[]): ProductDetailImagesFragmentApi['images'] => {

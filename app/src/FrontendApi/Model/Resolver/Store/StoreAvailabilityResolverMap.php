@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Store;
 
+use App\Model\Store\Exception\StoreNotFoundException;
 use App\Model\Store\StoreFacade;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -40,10 +41,16 @@ class StoreAvailabilityResolverMap extends ResolverMap
                 'exposed' => static fn ($storeAvailability) => $storeAvailability['exposed'],
                 'availabilityInformation' => static fn ($storeAvailability) => $storeAvailability['availability_information'],
                 'availabilityStatus' => static fn ($storeAvailability) => $storeAvailability['availability_status'],
-                'store' => fn ($storeAvailability) => $this->storeFacade->getByIdEnabledOnDomain(
-                    $storeAvailability['store_id'],
-                    $this->domain->getId()
-                ),
+                'store' => function ($storeAvailability) {
+                    try {
+                        return $this->storeFacade->getByIdEnabledOnDomain(
+                            $storeAvailability['store_id'],
+                            $this->domain->getId()
+                        );
+                    } catch (StoreNotFoundException $e) {
+                        return null;
+                    }
+                },
             ],
         ];
     }
