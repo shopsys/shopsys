@@ -12,6 +12,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFrien
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
@@ -297,6 +298,16 @@ class ReadyCategorySeoMixFacade
     public function getAllForShowInCategory(Category $category, int $domainId): array
     {
         return $this->readyCategorySeoMixRepository->getAllForShowInCategory($category, $domainId);
+    }
+
+    /**
+     * @param array $categoryIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[][]
+     */
+    public function getAllIndexedByCategoryId(array $categoryIds, DomainConfig $domainConfig): array
+    {
+        return $this->readyCategorySeoMixRepository->getAllIndexedByCategoryId($categoryIds, $domainConfig);
     }
 
     /**

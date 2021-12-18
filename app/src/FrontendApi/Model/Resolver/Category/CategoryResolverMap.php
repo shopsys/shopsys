@@ -8,10 +8,10 @@ use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
@@ -24,32 +24,32 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
-
-    /**
      * @var \App\Model\Category\CategoryFacade
      */
     private CategoryFacade $categoryFacade;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $readyCategorySeoMixesBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      */
     public function __construct(
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        CategoryFacade $categoryFacade
+        CategoryFacade $categoryFacade,
+        DataLoaderInterface $readyCategorySeoMixesBatchLoader
     ) {
         parent::__construct($domain);
 
         $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
     }
 
     /**
@@ -96,25 +96,6 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return array<array<string, string>>
-     */
-    private function getLinksByCategory(Category $category): array
-    {
-        return array_map(
-            fn (ReadyCategorySeoMix $readyCategorySeoMix) => [
-                'name' => $readyCategorySeoMix->getH1(),
-                'slug' => $this->friendlyUrlFacade->getMainFriendlyUrl(
-                    $this->domain->getId(),
-                    'front_category_seo',
-                    $readyCategorySeoMix->getId()
-                )->getSlug(),
-            ],
-            $this->readyCategorySeoMixFacade->getAllForShowInCategory($category, $this->domain->getId())
-        );
-    }
-
-    /**
      * @param string $fieldName
      * @param \App\Model\Category\Category $category
      * @return mixed
@@ -141,7 +122,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'slug':
                 return $this->getSlug($category->getId(), 'front_product_list');
             case 'readyCategorySeoMixLinks':
-                return $this->getLinksByCategory($category);
+                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
                 return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
             default:
@@ -177,7 +158,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'slug':
                 return $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo');
             case 'readyCategorySeoMixLinks':
-                return $this->getLinksByCategory($category);
+                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
                 return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
             default:
