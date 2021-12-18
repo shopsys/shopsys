@@ -1,14 +1,14 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { mapPaymentToPaymentInput, mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
+import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { PaymentInputType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
 import { PickupPlaceType } from 'types/pickupPlace';
 import Radiobutton from 'components/Forms/Radiobutton';
@@ -162,6 +162,63 @@ const Select: FC<SelectProps> = (props) => {
         }
     };
 
+    const renderTransportListItem = (
+        transportItem: TransportType,
+        isActive: boolean,
+        fieldRef: ControllerRenderProps,
+    ) => {
+        return (
+            <ListItemStyled key={transportItem.uuid} isActive={isActive}>
+                <Radiobutton
+                    name={formMeta.fields.transport.name}
+                    id={transportItem.uuid}
+                    value={transportItem.uuid}
+                    fieldRef={fieldRef}
+                    image={transportItem.image}
+                    checked={isActive}
+                    uncheckCallback={resetTransportAndPayment}
+                    label={
+                        <SelectItemLabel
+                            name={transportItem.name}
+                            daysUntilDelivery={transportItem.daysUntilDelivery}
+                            price={transportItem.price}
+                            description={transportItem.description}
+                            pickupPlaceDetail={
+                                transportValue === transportItem.uuid &&
+                                transportItem.stores.some((store) => store.identifier === pickupPlace?.identifier)
+                                    ? pickupPlace
+                                    : null
+                            }
+                        />
+                    }
+                />
+            </ListItemStyled>
+        );
+    };
+
+    const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean, fieldRef: ControllerRenderProps) => {
+        return (
+            <ListItemStyled key={paymentItem.uuid} isActive={isActive}>
+                <Radiobutton
+                    name={formMeta.fields.payment.name}
+                    id={paymentItem.uuid}
+                    value={paymentItem.uuid}
+                    fieldRef={fieldRef}
+                    image={paymentItem.image}
+                    checked={isActive}
+                    uncheckCallback={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                    label={
+                        <SelectItemLabel
+                            name={paymentItem.name}
+                            price={paymentItem.price}
+                            description={paymentItem.description}
+                        />
+                    }
+                />
+            </ListItemStyled>
+        );
+    };
+
     return (
         <>
             <PacketeryContainer />
@@ -172,65 +229,11 @@ const Select: FC<SelectProps> = (props) => {
                         name={formMeta.fields.transport.name}
                         render={({ field }) => (
                             <ul>
-                                {transportValue !== null && updatedTransport !== null ? (
-                                    <ListItemStyled key={updatedTransport.uuid} isActive={true}>
-                                        <Radiobutton
-                                            name={formMeta.fields.transport.name}
-                                            id={updatedTransport.uuid}
-                                            value={updatedTransport.uuid}
-                                            fieldRef={field}
-                                            image={updatedTransport.image}
-                                            checked={true}
-                                            uncheckCallback={resetTransportAndPayment}
-                                            label={
-                                                <SelectItemLabel
-                                                    name={updatedTransport.name}
-                                                    daysUntilDelivery={updatedTransport.daysUntilDelivery}
-                                                    price={updatedTransport.price}
-                                                    description={updatedTransport.description}
-                                                    pickupPlaceDetail={
-                                                        transportValue === updatedTransport.uuid &&
-                                                        updatedTransport.stores.some(
-                                                            (store) => store.identifier === pickupPlace?.identifier,
-                                                        )
-                                                            ? pickupPlace
-                                                            : null
-                                                    }
-                                                />
-                                            }
-                                        />
-                                    </ListItemStyled>
-                                ) : (
-                                    props.transports.map((transportItem) => (
-                                        <ListItemStyled key={transportItem.uuid} isActive={false}>
-                                            <Radiobutton
-                                                name={formMeta.fields.transport.name}
-                                                id={transportItem.uuid}
-                                                value={transportItem.uuid}
-                                                fieldRef={field}
-                                                image={transportItem.image}
-                                                checked={false}
-                                                uncheckCallback={resetTransportAndPayment}
-                                                label={
-                                                    <SelectItemLabel
-                                                        name={transportItem.name}
-                                                        daysUntilDelivery={transportItem.daysUntilDelivery}
-                                                        price={transportItem.price}
-                                                        description={transportItem.description}
-                                                        pickupPlaceDetail={
-                                                            transportValue === transportItem.uuid &&
-                                                            transportItem.stores.some(
-                                                                (store) => store.identifier === pickupPlace?.identifier,
-                                                            )
-                                                                ? pickupPlace
-                                                                : null
-                                                        }
-                                                    />
-                                                }
-                                            />
-                                        </ListItemStyled>
-                                    ))
-                                )}
+                                {transportValue !== null && updatedTransport !== null
+                                    ? renderTransportListItem(updatedTransport, true, field)
+                                    : props.transports.map((transportItem) =>
+                                          renderTransportListItem(transportItem, false, field),
+                                      )}
                             </ul>
                         )}
                     />
@@ -259,54 +262,11 @@ const Select: FC<SelectProps> = (props) => {
                                 name={formMeta.fields.payment.name}
                                 render={({ field }) => (
                                     <ul>
-                                        {paymentValue !== null && payment !== null ? (
-                                            <ListItemStyled key={payment.uuid} isActive={true}>
-                                                <Radiobutton
-                                                    name={formMeta.fields.payment.name}
-                                                    id={payment.uuid}
-                                                    value={payment.uuid}
-                                                    fieldRef={field}
-                                                    image={payment.image}
-                                                    checked={true}
-                                                    uncheckCallback={() =>
-                                                        formProviderMethods.setValue(formMeta.fields.payment.name, null)
-                                                    }
-                                                    label={
-                                                        <SelectItemLabel
-                                                            name={payment.name}
-                                                            price={payment.price}
-                                                            description={payment.description}
-                                                        />
-                                                    }
-                                                />
-                                            </ListItemStyled>
-                                        ) : (
-                                            transport.payments.map((paymentItem) => (
-                                                <ListItemStyled key={paymentItem.uuid} isActive={false}>
-                                                    <Radiobutton
-                                                        name={formMeta.fields.payment.name}
-                                                        id={paymentItem.uuid}
-                                                        value={paymentItem.uuid}
-                                                        fieldRef={field}
-                                                        image={paymentItem.image}
-                                                        checked={false}
-                                                        uncheckCallback={() =>
-                                                            formProviderMethods.setValue(
-                                                                formMeta.fields.payment.name,
-                                                                null,
-                                                            )
-                                                        }
-                                                        label={
-                                                            <SelectItemLabel
-                                                                name={paymentItem.name}
-                                                                price={paymentItem.price}
-                                                                description={paymentItem.description}
-                                                            />
-                                                        }
-                                                    />
-                                                </ListItemStyled>
-                                            ))
-                                        )}
+                                        {paymentValue !== null && payment !== null
+                                            ? renderPaymentListItem(payment, true, field)
+                                            : transport.payments.map((paymentItem) =>
+                                                  renderPaymentListItem(paymentItem, false, field),
+                                              )}
                                     </ul>
                                 )}
                             />
