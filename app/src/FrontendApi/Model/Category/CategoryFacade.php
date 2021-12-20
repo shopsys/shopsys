@@ -9,6 +9,8 @@ use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade as BaseCategoryFacad
 
 /**
  * @property \App\FrontendApi\Model\Category\CategoryRepository $categoryRepository
+ * @method __construct(\App\FrontendApi\Model\Category\CategoryRepository $categoryRepository)
+ * @method \App\Model\Category\Category[] getVisibleCategoriesBySearchText(string $search, string $locale, int $domainId, int $offset, int $limit)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
