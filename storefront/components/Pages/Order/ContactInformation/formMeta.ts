@@ -45,12 +45,13 @@ export const useContactInformationForm = (): [
                             postProcess: 'interval',
                             count: 6,
                         }),
-                    ),
+                    )
+                    .oneOf([Yup.ref('passwordFirst'), null], t('Passwords must match')),
                 otherwise: Yup.string(),
             }),
             customer: Yup.string().oneOf(['commonCustomer', 'companyCustomer']),
             telephone: Yup.string()
-                .required(t('Please enter telephone number'))
+                .required(t('Please enter phone number'))
                 .matches(/^[0-9+]*$/, t('Please enter only numbers and the + character'))
                 .test(
                     'more-than-8',
@@ -207,7 +208,7 @@ export const useContactInformationFormMeta = (
         fields: {
             email: {
                 name: 'email' as const,
-                label: t('Your e-mail'),
+                label: t('Your email'),
                 errorMessage: errors.email?.message,
             },
             [registerFieldName]: {
@@ -227,12 +228,12 @@ export const useContactInformationFormMeta = (
             },
             [customerFieldName]: {
                 name: customerFieldName,
-                label: t('You will shop with us like'),
+                label: t('You will shop with us as'),
                 errorMessage: isEmailValid ? errors.customer?.message : undefined,
             },
             telephone: {
                 name: 'telephone' as const,
-                label: t('Telephone'),
+                label: t('Phone'),
                 errorMessage: isEmailValid ? errors.telephone?.message : undefined,
             },
             firstName: {
@@ -265,7 +266,7 @@ export const useContactInformationFormMeta = (
             },
             street: {
                 name: 'street' as const,
-                label: t('Street'),
+                label: t('Street and house no.'),
                 errorMessage: isEmailValid ? errors.street?.message : undefined,
             },
             city: {
@@ -306,7 +307,7 @@ export const useContactInformationFormMeta = (
             },
             deliveryTelephone: {
                 name: 'deliveryTelephone' as const,
-                label: t('Telephone'),
+                label: t('Phone'),
                 errorMessage: differentDeliveryAddressValue ? errors.deliveryTelephone?.message : undefined,
             },
             deliveryStreet: {

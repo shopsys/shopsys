@@ -1,6 +1,7 @@
 import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformation.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -8,10 +9,11 @@ import ContactInformationContent from './ContactInformationContent';
 import { ContactInformationFormType } from 'types/form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import Link from 'components/Basic/Link';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useContactInformationFormMeta } from './formMeta';
-import { useShopsysDispatch } from 'redux/main';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -19,6 +21,8 @@ const ContactInformation: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [TermsAndConditionUrl, GdprUrl] = useGetInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
 
     useEffect(() => {
         if (formProviderMethods.formState.touchedFields.email !== undefined) {
@@ -59,10 +63,14 @@ const ContactInformation: FC = () => {
             <ContactInformationContent isEmailEntered={isEmailFilledCorrectly} />
             <ContactInformationTextWrapperStyled isEmailEntered={isEmailFilledCorrectly}>
                 <ContactInformationTextStyled>
-                    <Trans i18nKey="ContactInformationInfo">
-                        By clicking on the Send order button, you agree with <a href="#">terms and conditions</a> of the
-                        e-shop and with the <a href="#">processing of privacy policy</a>.
-                    </Trans>
+                    <Trans
+                        i18nKey="ContactInformationInfo"
+                        defaults="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
+                        components={{
+                            lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
+                            lnk2: <Link href={GdprUrl} linkType="external" target="_blank" />,
+                        }}
+                    />
                 </ContactInformationTextStyled>
                 <ChoiceFormLine>
                     <Controller

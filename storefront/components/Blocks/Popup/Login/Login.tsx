@@ -21,6 +21,7 @@ import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Image from 'next/image';
+import Link from 'components/Basic/Link';
 import NextLink from 'next/link';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'react-i18next';
@@ -44,7 +45,10 @@ const getLoginFormResolver = (t: TFunction) => {
 const Login: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
-    const [resetPasswordUrl] = useGetInternationalizedStaticUrls(['/reset-password'], url);
+    const [resetPasswordUrl, registrationUrl] = useGetInternationalizedStaticUrls(
+        ['/reset-password', '/registration'],
+        url,
+    );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const [[loginResult, login]] = useAuth();
 
@@ -128,20 +132,22 @@ const Login: FC = () => {
             </LoginColumnStyled>
             <LoginColumnStyled>
                 <LoginProfileStyled>
-                    <LoginProfileTextStyled>{t("Don't have account? Register")}</LoginProfileTextStyled>
+                    <LoginProfileTextStyled>{t("Don't have an account yet? Register.")}</LoginProfileTextStyled>
                     <LoginProfileIconStyled>
                         <Image
                             src="/images/qmark.png"
                             height={120}
                             width={75}
-                            alt={t("Don't have account? Register.")}
+                            alt={t("Don't have an account yet? Register.")}
                         />
                     </LoginProfileIconStyled>
                 </LoginProfileStyled>
                 <LoginMessageStyled>
                     {t('Your addresses prefilled and you can check your order history.')}
                 </LoginMessageStyled>
-                <Button type="submit">{t('Register')}</Button>
+                <Link isButton={true} href={registrationUrl}>
+                    {t('Register')}
+                </Link>
             </LoginColumnStyled>
         </LoginStyled>
     );
