@@ -6,6 +6,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const FreeTransport: FC = () => {
+    const testIdentifier = 'blocks-freetransport';
+
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
@@ -19,7 +21,7 @@ const FreeTransport: FC = () => {
 
     if (amount > 0) {
         return (
-            <FreeTransportStyled>
+            <FreeTransportStyled data-testid={testIdentifier}>
                 <Trans i18nKey="FreeTransportAmountLeft">
                     Add products for
                     <strong>{{ amountFormatted }}</strong>
@@ -30,7 +32,7 @@ const FreeTransport: FC = () => {
     }
 
     return (
-        <FreeTransportStyled>
+        <FreeTransportStyled data-testid={testIdentifier}>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
         </FreeTransportStyled>
     );

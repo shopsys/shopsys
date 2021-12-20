@@ -8,8 +8,10 @@ type ProductsListProps = {
 };
 
 const ProductsList: FC<ProductsListProps> = (props) => {
+    const testIdentifier = 'blocks-product-list';
+
     return (
-        <ProductsListStyled>
+        <ProductsListStyled data-testid={testIdentifier}>
             {props.products.map((listedProductItem, index) => (
                 <ProductItem key={index} {...listedProductItem} />
             ))}

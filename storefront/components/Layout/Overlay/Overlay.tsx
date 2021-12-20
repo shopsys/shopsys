@@ -7,8 +7,10 @@ type OverlayProps = {
 };
 
 const Overlay: FC<OverlayProps> = (props) => {
+    const testIdentifier = 'layout-overlay';
+
     return (
-        <OverlayWrapperStyled>
+        <OverlayWrapperStyled data-testid={testIdentifier}>
             <CSSTransition in={props.isActive} timeout={500} classNames="overlay" unmountOnExit>
                 <OverlayStyled />
             </CSSTransition>

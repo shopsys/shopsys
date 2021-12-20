@@ -23,6 +23,8 @@ type FilterProps = {
 };
 
 const Filter: FC<FilterProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter';
+
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -193,7 +195,7 @@ const Filter: FC<FilterProps> = (props) => {
     return (
         <FormProvider {...formProviderMethods}>
             <SelectedParameters productFilterOptions={props.productFilterOptions} />
-            <FilterStyled>
+            <FilterStyled data-testid={testIdentifier}>
                 <Form>
                     <FilterGroupPrice
                         title={t('Price')}

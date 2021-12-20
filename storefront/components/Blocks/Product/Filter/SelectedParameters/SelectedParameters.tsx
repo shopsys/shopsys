@@ -22,6 +22,8 @@ type SelectedParametersProps = {
 };
 
 const SelectedParameters: FC<SelectedParametersProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter-selectedparameters';
+
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<FilterFormType>();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
@@ -79,7 +81,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     return (
         <>
             {!isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions) && (
-                <SelectedParametersStyled>
+                <SelectedParametersStyled data-testid={testIdentifier}>
                     <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
                     <SelectedParametersListStyled>
                         {parametersFilterState.brands.map((brandUuid) => (

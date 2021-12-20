@@ -21,6 +21,8 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const BlogPreview: FC = () => {
+    const testIdentifier = 'blocks-blogpreview';
+
     const t = useTypedTranslationFunction();
     const blogPreviewItems = getBlogPreviewArticles();
     const blogUrl = getBlogUrl();
@@ -41,7 +43,7 @@ const BlogPreview: FC = () => {
     );
 
     return (
-        <BlogPreviewStyled>
+        <BlogPreviewStyled data-testid={testIdentifier}>
             <BlogPreviewHeadingStyled>
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
                 {blogUrl !== undefined && (

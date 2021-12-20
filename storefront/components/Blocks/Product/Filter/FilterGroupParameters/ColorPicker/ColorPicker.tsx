@@ -12,6 +12,8 @@ type ColorPickerProps = {
 };
 
 const ColorPicker: FC<ColorPickerProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter-filtergroupparameters-colorpicker-' + props.index;
+
     return (
         <Controller
             name={`parameters.${props.parameterParentIndex}.values.${props.index}.checked`}
@@ -24,6 +26,7 @@ const ColorPicker: FC<ColorPickerProps> = (props) => {
                         isActive={field.value}
                         bgColor={props.dataItem.rgbHex as string}
                         fieldRef={field}
+                        data-testid={testIdentifier}
                     />
                 </>
             )}

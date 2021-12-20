@@ -9,7 +9,13 @@ type OverlayProps = {
  * A global overlay element
  */
 const Overlay: FC<OverlayProps> = (props) => {
-    return <OverlayStyled {...props}>{props.children}</OverlayStyled>;
+    const testIdentifier = 'basic-overlay';
+
+    return (
+        <OverlayStyled {...props} data-testid={testIdentifier}>
+            {props.children}
+        </OverlayStyled>
+    );
 };
 
 export default Overlay;

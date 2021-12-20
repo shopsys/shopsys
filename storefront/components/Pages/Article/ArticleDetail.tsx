@@ -9,10 +9,12 @@ type ArticleDetailProps = {
 };
 
 const ArticleDetail: FC<ArticleDetailProps> = (props) => {
+    const testIdentifier = 'pages-article-';
+
     return (
-        <Webline>
-            <ArticleTitle>{props.article.articleName}</ArticleTitle>
-            <ArticleWrapper>
+        <Webline data-testid={testIdentifier}>
+            <ArticleTitle data-testid={testIdentifier + 'title'}>{props.article.articleName}</ArticleTitle>
+            <ArticleWrapper data-testid={testIdentifier + 'content'}>
                 {props.article.text !== null ? (
                     <ArticleTextContent>
                         <UserText htmlContent={props.article.text} />

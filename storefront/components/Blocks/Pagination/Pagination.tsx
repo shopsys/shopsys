@@ -16,6 +16,8 @@ type PaginationProps = {
 };
 
 const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
+    const testIdentifier = 'blocks-pagination';
+
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
@@ -76,7 +78,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
     let previousPageButton: number | null = null;
 
     return (
-        <PaginationWrapperStyled>
+        <PaginationWrapperStyled data-testid={testIdentifier}>
             {paginationButtons.map((pageButton: number) => {
                 let dotKey!: string;
                 if (
@@ -96,6 +98,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
                             </PaginationButtonStyled>
                         )}
                         <PaginationButtonStyled
+                            data-testid={testIdentifier + '-' + pageButton}
                             key={pageButton}
                             active={paginationState.currentPage === pageButton}
                             dotButton={false}

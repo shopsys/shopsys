@@ -19,20 +19,22 @@ type TransportAndPaymentProps = {
 };
 
 const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
+    const testIdentifier = 'blocks-ordersummary';
+
     const t = useTypedTranslationFunction();
 
     return (
-        <TransportAndPaymentWrapper>
+        <TransportAndPaymentWrapper data-testid={testIdentifier}>
             <OrderSummaryContent>
                 {props.transport !== null && (
                     <SummaryRow>
-                        <TransportAndPaymentTextAndImage>
+                        <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-transport-name'}>
                             {props.transport.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.transport.image} alt={props.transport.name} />
                             </TransportAndPaymentImageWrapper>
                         </TransportAndPaymentTextAndImage>
-                        <TransportAndPaymentPrice>
+                        <TransportAndPaymentPrice data-testid={testIdentifier + '-transport-price'}>
                             <strong>
                                 {formatPrice(props.transport.price.priceWithVat, props.transport.price.currencyCode, t)}
                             </strong>
@@ -41,13 +43,13 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                 )}
                 {props.payment !== null && (
                     <SummaryRow>
-                        <TransportAndPaymentTextAndImage>
+                        <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-payment-name'}>
                             {props.payment.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.payment.image} alt={props.payment.name} />
                             </TransportAndPaymentImageWrapper>
                         </TransportAndPaymentTextAndImage>
-                        <TransportAndPaymentPrice>
+                        <TransportAndPaymentPrice data-testid={testIdentifier + '-payment-price'}>
                             <strong>
                                 {formatPrice(props.payment.price.priceWithVat, props.payment.price.currencyCode, t)}
                             </strong>

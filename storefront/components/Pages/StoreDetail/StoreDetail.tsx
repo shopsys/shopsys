@@ -23,13 +23,15 @@ type StoreDetailProps = {
 };
 
 const StoreDetail: FC<StoreDetailProps> = (props) => {
+    const testIdentifier = 'pages-storedetail';
+
     const t = useTypedTranslationFunction();
     const storeCoordinates = [
         { locationLatitude: props.store.locationLatitude, locationLongitude: props.store.locationLongitude },
     ];
 
     return (
-        <Webline>
+        <Webline data-testid={testIdentifier}>
             <StoreDetailStyled>
                 <StoreDetailContentStyled>
                     <Heading type={'h1'}>{props.store.storeName}</Heading>

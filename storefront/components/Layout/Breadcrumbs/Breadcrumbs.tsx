@@ -15,6 +15,8 @@ type BreadcrumbsProps = {
 };
 
 const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
+    const testIdentifier = 'layout-breadcrumbs';
+
     const t = useTypedTranslationFunction();
 
     if (props.breadcrumb.length === 0) {
@@ -23,21 +25,27 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
 
     return (
         <Webline>
-            <BreadcrumbsStyled>
+            <BreadcrumbsStyled data-testid={testIdentifier}>
                 <LeftArrowIconStyled iconType="icon" icon="Arrow" />
                 <NextLink href="/">
-                    <BreadcrumbsLinkStyled>{t('Home page')}</BreadcrumbsLinkStyled>
+                    <BreadcrumbsLinkStyled data-testid={testIdentifier + '-item-root'}>
+                        {t('Home page')}
+                    </BreadcrumbsLinkStyled>
                 </NextLink>
                 <BreadcrumbsSpanStyled>/</BreadcrumbsSpanStyled>
                 {props.breadcrumb.slice(0, props.breadcrumb.length - 1).map((breadcrumb, index) => (
                     <Fragment key={index}>
                         <NextLink href={breadcrumb.slug}>
-                            <BreadcrumbsLinkStyled>{breadcrumb.name}</BreadcrumbsLinkStyled>
+                            <BreadcrumbsLinkStyled data-testid={testIdentifier + '-item-' + index}>
+                                {breadcrumb.name}
+                            </BreadcrumbsLinkStyled>
                         </NextLink>
                         <BreadcrumbsSpanStyled>/</BreadcrumbsSpanStyled>
                     </Fragment>
                 ))}
-                <BreadcrumbsSpanStyled>{props.breadcrumb[props.breadcrumb.length - 1].name}</BreadcrumbsSpanStyled>
+                <BreadcrumbsSpanStyled data-testid={testIdentifier + '-item-last'}>
+                    {props.breadcrumb[props.breadcrumb.length - 1].name}
+                </BreadcrumbsSpanStyled>
             </BreadcrumbsStyled>
         </Webline>
     );

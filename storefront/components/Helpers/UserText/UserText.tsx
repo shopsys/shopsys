@@ -11,11 +11,16 @@ type UserTextProps = {
      * can be both plain text and HTML content
      */
     htmlContent: string;
+    'data-testid'?: string;
 };
 
-export const UserText: FC<UserTextProps> = ({ ...props }) => (
-    <UserTextStyled dangerouslySetInnerHTML={{ __html: props.htmlContent }}></UserTextStyled>
-);
+export const UserText: FC<UserTextProps> = ({ ...props }) => {
+    const attr = {
+        'data-testid': props['data-testid'],
+    };
+
+    return <UserTextStyled dangerouslySetInnerHTML={{ __html: props.htmlContent }} {...attr}></UserTextStyled>;
+};
 
 /* @component */
 export default UserText;

@@ -5,11 +5,13 @@ import { ProductPriceType } from 'types/product';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductPrice: FC<ProductPriceType> = (props) => {
+    const testIdentifier = 'blocks-product-price';
+
     const t = useTypedTranslationFunction();
 
     return (
         <ProductPriceStyled>
-            <ProductPriceMainStyled>
+            <ProductPriceMainStyled data-testid={testIdentifier}>
                 {props.isPriceFrom && t('From') + '\u00A0'}
                 {formatPrice(props.priceWithVat, props.currencyCode, t)}
             </ProductPriceMainStyled>

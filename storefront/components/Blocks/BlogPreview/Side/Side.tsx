@@ -9,10 +9,12 @@ type SideProps = {
 };
 
 const Side: FC<SideProps> = (props) => {
+    const testIdentifier = 'blocks-blogpreview-side-';
+
     return (
         <>
             {props.blogSideItems.map((blogSideItem, index) => (
-                <SideItemStyled key={index}>
+                <SideItemStyled key={index} data-testid={testIdentifier + index}>
                     <SideImageStyled>
                         <SideImageLinkStyled href={blogSideItem.link}>
                             <Image image={blogSideItem.image} alt="alt" />

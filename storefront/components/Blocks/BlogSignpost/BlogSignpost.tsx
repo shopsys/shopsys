@@ -15,17 +15,20 @@ type BlogSingpostProps = {
 };
 
 const BlogSignpost: FC<BlogSingpostProps> = (props) => {
+    const testIdentifier = 'blocks-blogsignpost-';
+
     const t = useTypedTranslationFunction();
 
     return (
         <BlogSignpostStyled>
             <BlogSignpostHeadingStyled type="h2">{t('Article categories')}</BlogSignpostHeadingStyled>
             {props.blogCategoriesItems !== undefined &&
-                props.blogCategoriesItems.map((blogCategory) => (
+                props.blogCategoriesItems.map((blogCategory, index) => (
                     <Fragment key={blogCategory.uuid}>
                         <BlogSignpostItemStyled
                             href={blogCategory.link}
                             isActive={props.activeItem === blogCategory.uuid}
+                            data-testid={testIdentifier + index}
                         >
                             <BlogSignpostItemIconStyled
                                 iconType="icon"

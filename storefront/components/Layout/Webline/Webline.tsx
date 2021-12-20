@@ -8,8 +8,11 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 type WeblineProps = NativeProps & WeblinePropType;
 
 const Webline: FC<WeblineProps> = (props) => {
+    const testIdentifier =
+        props['data-testid'] ?? 'layout-webline' + (props.type !== undefined ? '-' + props.type : '');
+
     return (
-        <WeblineStyled {...props}>
+        <WeblineStyled {...props} data-testid={testIdentifier}>
             <ContainerStyled>{props.children}</ContainerStyled>
         </WeblineStyled>
     );

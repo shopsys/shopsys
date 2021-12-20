@@ -18,6 +18,8 @@ type SideSliderProps = {
 };
 
 const SideSlider: FC<SideSliderProps> = (props) => {
+    const testIdentifier = 'blocks-blogpreview-sideslider-';
+
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryNotLargeDesktop]: {
@@ -38,7 +40,11 @@ const SideSlider: FC<SideSliderProps> = (props) => {
         <>
             <div ref={sliderRef} className="keen-slider">
                 {props.blogSideItems.map((blogSideItem, index) => (
-                    <SideSliderItemStyled key={index} className="keen-slider__slide">
+                    <SideSliderItemStyled
+                        key={index}
+                        className="keen-slider__slide"
+                        data-testid={testIdentifier + index}
+                    >
                         <SideSliderImageStyled>
                             <SideSliderImageLinkStyled href={blogSideItem.link}>
                                 <Image image={blogSideItem.image} alt="alt" />

@@ -8,6 +8,8 @@ type ProductAvailableStoresCountProps = {
 };
 
 const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props) => {
+    const testIdentifier = 'blocks-product-availability';
+
     const t = useTypedTranslationFunction();
 
     if (props.isMainVariant || props.availableStoresCount === 0) {
@@ -15,7 +17,7 @@ const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props
     }
 
     return (
-        <ProductAvailableStoreCountStyled>
+        <ProductAvailableStoreCountStyled data-testid={testIdentifier}>
             {t(
                 '(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];',
                 { postProcess: 'interval', count: props.availableStoresCount },

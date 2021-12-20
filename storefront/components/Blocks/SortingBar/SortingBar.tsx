@@ -22,6 +22,8 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const SortingBar: FC<{ totalCount: number }> = (props) => {
+    const testIdentifier = 'blocks-sortingbar';
+
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
@@ -62,7 +64,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
     };
 
     return (
-        <SortingBarStyled>
+        <SortingBarStyled data-testid={testIdentifier}>
             {isMobileSortBarVisible ? (
                 <SortingBarOptionsWrapStyled>
                     <SortingBarItemStyled>
@@ -76,11 +78,12 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                         updateUrlWithCurrentSort(value.stateValue);
                                         dispatch(userActions.setSort(value.stateValue));
                                     }}
+                                    data-testid={testIdentifier + '-selected'}
                                 >
                                     <SortingBarSortIconStyled iconType="icon" icon="Sort" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
-                                        <SortingBarSelectedValue>
+                                        <SortingBarSelectedValue data-testid={testIdentifier + '-selected-value'}>
                                             {t(value.displayValue.toString())}
                                         </SortingBarSelectedValue>
                                     </SortingBarSeletedSortWrapStyled>
@@ -90,7 +93,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                     {toggleSortMenu &&
                         sortValues
                             .filter((value) => value.stateValue !== selectedSort)
-                            .map((value) => {
+                            .map((value, index) => {
                                 return (
                                     <SortingBarItemStyled key={value.stateValue}>
                                         <SortingBarItemLinkStyled
@@ -101,6 +104,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                                 dispatch(userActions.setSort(value.stateValue));
                                                 dispatch(userActions.setPagination({ ...initialState.pagination }));
                                             }}
+                                            data-testid={testIdentifier + '-' + index}
                                         >
                                             {t(value.displayValue.toString())}
                                         </SortingBarItemLinkStyled>
@@ -111,7 +115,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
             ) : (
                 <SortingBarOptionsWrapStyled>
                     <SortingBarOptionsStyled>
-                        {sortValues.map((value) => {
+                        {sortValues.map((value, index) => {
                             return (
                                 <SortingBarItemStyled
                                     key={value.stateValue}
@@ -120,6 +124,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                         dispatch(userActions.setSort(value.stateValue));
                                         dispatch(userActions.setPagination({ ...initialState.pagination }));
                                     }}
+                                    data-testid={testIdentifier + '-' + index}
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
                                         <SortingBarItemLinkWrapStyled>

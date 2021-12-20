@@ -28,6 +28,8 @@ type RangeSliderProps = {
 };
 
 const RangeSlider: FC<RangeSliderProps> = (props) => {
+    const testIdentifier = 'basic-rangeslider';
+
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<FilterFormType>();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
@@ -171,13 +173,14 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     }, [maxValueThumb]);
 
     return (
-        <RangeSliderContainerStyled>
+        <RangeSliderContainerStyled data-testid={testIdentifier}>
             <RangeSliderLeftThumbStyled
                 type="range"
                 min={props.min}
                 max={props.max}
                 value={minValueThumb}
                 onChange={onChangeMinHandler}
+                data-testid={testIdentifier + '-left-thumb'}
             />
             <RangeSliderRightThumbStyled
                 type="range"
@@ -185,11 +188,12 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
                 max={props.max}
                 value={maxValueThumb}
                 onChange={onChangeMaxHandler}
+                data-testid={testIdentifier + '-right-thumb'}
             />
             <RangeSliderStyled>
                 <RangeSliderTrackStyled />
                 <RangeSliderRangeStyled ref={range} />
-                <RangeSliderLeftValueStyled>
+                <RangeSliderLeftValueStyled data-testid={testIdentifier + '-left-value'}>
                     <Controller
                         name="minimalPrice"
                         render={({ field }) => (
@@ -211,7 +215,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
                         )}
                     />
                 </RangeSliderLeftValueStyled>
-                <RangeSliderRightValueStyled>
+                <RangeSliderRightValueStyled data-testid={testIdentifier + '-right-value'}>
                     <Controller
                         name="maximalPrice"
                         render={({ field }) => (

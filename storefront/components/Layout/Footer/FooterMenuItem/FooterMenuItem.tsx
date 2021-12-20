@@ -21,6 +21,8 @@ type FooterMenuItemProps = {
 };
 
 const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
+    const testIdentifier = 'layout-footer-footermenuitem';
+
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLUListElement>(null);
@@ -42,7 +44,7 @@ const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
     );
 
     return (
-        <FooterMenuItemStyled contentElementHeight={contentElementHeight}>
+        <FooterMenuItemStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
             <FooterMenuHeadingStyled
                 type="h4"
                 onClick={() => setIsContentVisible(!isContentVisible)}

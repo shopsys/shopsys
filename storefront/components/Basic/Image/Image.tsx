@@ -8,8 +8,10 @@ type ImageProps = {
 };
 
 const Image: FC<ImageProps> = (props) => {
+    const testIdentifier = 'basic-image';
+
     if (props.image === null) {
-        return <img src={'/images/optimized-noimage.png'} alt={props.alt} />;
+        return <img src={'/images/optimized-noimage.png'} alt={props.alt} data-testid={testIdentifier + '-empty'} />;
     }
     return (
         <NextImage
@@ -20,6 +22,7 @@ const Image: FC<ImageProps> = (props) => {
             }}
             alt={props.alt}
             unoptimized={true} // Images are optimized already in backend
+            data-testid={testIdentifier}
         />
     );
 };

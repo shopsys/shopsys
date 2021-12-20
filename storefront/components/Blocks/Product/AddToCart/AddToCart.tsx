@@ -15,6 +15,8 @@ type AddToCartProps = {
 };
 
 const AddToCart: FC<AddToCartProps> = (props) => {
+    const testIdentifier = 'blocks-product-addtocart';
+
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
@@ -48,7 +50,13 @@ const AddToCart: FC<AddToCartProps> = (props) => {
                 defaultValue={1}
                 ref={spinboxRef}
             />
-            <Button type="button" size="small" name="add-to-cart" onClick={onAddToCartHandler}>
+            <Button
+                type="button"
+                size="small"
+                name="add-to-cart"
+                onClick={onAddToCartHandler}
+                data-testid={testIdentifier}
+            >
                 {t('Add to cart')}
             </Button>
             {popupData !== null && (

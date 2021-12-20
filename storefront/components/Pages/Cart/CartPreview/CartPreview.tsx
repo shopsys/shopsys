@@ -11,6 +11,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const CartPreview: FC = () => {
+    const testIdentifier = 'pages-cart-cartpreview';
+
     const t = useTypedTranslationFunction();
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -20,10 +22,10 @@ const CartPreview: FC = () => {
     }
 
     return (
-        <CartPreviewStyled>
+        <CartPreviewStyled data-testid={testIdentifier}>
             <tbody>
                 {cart.totalDiscountPrice.priceWithVat > 0 && (
-                    <CartPreviewRowStyled>
+                    <CartPreviewRowStyled data-testid={testIdentifier + '-discount'}>
                         <CartPreviewCellStyled>{t('The amount of discounts')}</CartPreviewCellStyled>
                         <CartPreviewCellStyled textAlign="right">
                             <CartPreviewCellBasicPrice>
@@ -32,7 +34,7 @@ const CartPreview: FC = () => {
                         </CartPreviewCellStyled>
                     </CartPreviewRowStyled>
                 )}
-                <CartPreviewRowStyled>
+                <CartPreviewRowStyled data-testid={testIdentifier + '-total'}>
                     <CartPreviewCellStyled>{t('You pay')}</CartPreviewCellStyled>
                     <CartPreviewCellStyled textAlign="right">
                         <CartPreviewCellTotalPrice>

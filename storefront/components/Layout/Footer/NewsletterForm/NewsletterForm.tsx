@@ -29,6 +29,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
  * a signup form for the Newsletter.
  */
 const NewsletterForm: FC = () => {
+    const testIdentifier = 'layout-footer-newsletterform';
+
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
@@ -50,7 +52,7 @@ const NewsletterForm: FC = () => {
 
     return (
         <>
-            <NewsletterFormWrapperStyled>
+            <NewsletterFormWrapperStyled data-testid={testIdentifier}>
                 <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
                 <NewsletterFormColumnStyled>
                     <FormProvider {...formProviderMethods}>

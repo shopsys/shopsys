@@ -27,6 +27,8 @@ type FilterGroupPriceProps = {
 };
 
 const FilterGroupPrice: FC<FilterGroupPriceProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter-filtergroup-price';
+
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
 
     const handleGroupClick = () => {
@@ -34,7 +36,7 @@ const FilterGroupPrice: FC<FilterGroupPriceProps> = (props) => {
     };
 
     return (
-        <FilterGroupStyled>
+        <FilterGroupStyled data-testid={testIdentifier}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {props.title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />

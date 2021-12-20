@@ -20,11 +20,13 @@ type ListItemProps = {
 };
 
 const ListItem: FC<ListItemProps> = (props) => {
+    const testIdentifier = 'layout-header-cart-listitem';
+
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
 
     return (
-        <ListItemStyled key={props.cartItem.uuid}>
+        <ListItemStyled key={props.cartItem.uuid} data-testid={testIdentifier}>
             <ListItemImageWrapperStyled>
                 <Image alt={props.cartItem.product.fullName} image={props.cartItem.product.image} />
             </ListItemImageWrapperStyled>

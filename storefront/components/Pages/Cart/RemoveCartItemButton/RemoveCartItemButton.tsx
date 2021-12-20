@@ -9,6 +9,8 @@ type RemoveCartItemButtonProps = {
 };
 
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
+    const testIdentifier = 'pages-cart-removecartitembutton';
+
     const {
         isCartEmpty,
         cartInput: { cartUuid, transport, payment, promoCode },
@@ -24,7 +26,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     };
 
     return (
-        <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler}>
+        <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler} data-testid={testIdentifier}>
             <Icon iconType="icon" icon="RemoveBold" />
         </RemoveCartItemButtonStyled>
     );

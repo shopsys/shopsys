@@ -15,9 +15,11 @@ type ListItemProps = {
 };
 
 const ListItem: FC<ListItemProps> = (props) => {
+    const testIdentifier = 'blocks-simplenavigation-listitem';
+
     return (
         <NextLink href={props.listedItem.slug} passHref>
-            <ListItemBlockStyled>
+            <ListItemBlockStyled data-testid={testIdentifier}>
                 <ListItemImageStyled>
                     <Image image={props.listedItem.image} alt={props.listedItem.name} />
                 </ListItemImageStyled>

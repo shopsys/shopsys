@@ -23,10 +23,12 @@ const dummyData = {
 };
 
 const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
+    const testIdentifier = 'layout-footer-footerboxinfo';
+
     const t = useTypedTranslationFunction();
 
     return (
-        <FooterBoxInfoStyled orderStep={props.orderStep}>
+        <FooterBoxInfoStyled orderStep={props.orderStep} data-testid={testIdentifier}>
             <picture>
                 <source srcSet="/images/need_advice2x.png 2x, /images/need_advice2x.png 1x" />
                 <FooterBoxInfoImageStyled src="/images/need_advice.png" alt={t('Need advice?')} />

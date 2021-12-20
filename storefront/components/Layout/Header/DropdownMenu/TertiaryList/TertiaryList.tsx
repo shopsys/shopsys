@@ -4,6 +4,8 @@ import { DropdownListType } from 'types/dropdown';
 import { TertiaryListTitleStyled } from './TertiaryList.style';
 
 const TertiaryList: FC<DropdownListType> = (props) => {
+    const testIdentifier = 'layout-header-dropdownmenu-tertiarylist-';
+
     return (
         <>
             {props.navigationItems
@@ -14,7 +16,11 @@ const TertiaryList: FC<DropdownListType> = (props) => {
                                 {columnCategories.categories
                                     .map((columnCategory, columnCategoryIndex) => (
                                         <Fragment key={columnCategoryIndex}>
-                                            <TertiaryListTitleStyled>{columnCategory.name}</TertiaryListTitleStyled>
+                                            <TertiaryListTitleStyled
+                                                data-testid={testIdentifier + '-' + index + '-' + columnCategoryIndex}
+                                            >
+                                                {columnCategory.name}
+                                            </TertiaryListTitleStyled>
                                             {columnCategory.children.map((columnCategoryChild, subListIndex) => (
                                                 <DropdownItem
                                                     key={subListIndex}

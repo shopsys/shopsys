@@ -11,6 +11,8 @@ type SliderProps = {
 };
 
 const Slider: FC<SliderProps> = (props) => {
+    const testIdentifier = 'blocks-simplenavigation-slider-';
+
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryTablet]: {
@@ -31,7 +33,7 @@ const Slider: FC<SliderProps> = (props) => {
     return (
         <div ref={sliderRef} className="keen-slider">
             {props.listedItems.map((listedItem, key) => (
-                <ListItemStyled key={key} className="keen-slider__slide">
+                <ListItemStyled key={key} className="keen-slider__slide" data-testid={testIdentifier + key}>
                     <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
                 </ListItemStyled>
             ))}

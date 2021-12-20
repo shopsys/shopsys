@@ -19,6 +19,8 @@ import Overlay from 'components/Layout/Overlay';
 import { useRouter } from 'next/router';
 
 const Header: FC = () => {
+    const testIdentifier = 'layout-header';
+
     const [isMenuOpened, setIsMenuOpened] = useState(false);
     const router = useRouter();
     const isOrderPageLayoutVisible = router.route.slice(0, 6) === '/order';
@@ -28,7 +30,7 @@ const Header: FC = () => {
     };
 
     return (
-        <HeaderStyled>
+        <HeaderStyled data-testid={testIdentifier}>
             <HeaderLogoStyled>
                 <Logo />
             </HeaderLogoStyled>

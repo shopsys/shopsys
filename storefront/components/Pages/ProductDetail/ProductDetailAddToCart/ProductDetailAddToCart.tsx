@@ -21,6 +21,8 @@ type ProductDetailAddToCartProps = {
 };
 
 const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
+    const testIdentifier = 'pages-productdetail-addtocart';
+
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
@@ -46,15 +48,19 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
     return (
         <>
-            <AddToCartWrapperStyled>
-                <AddToCartPriceStyled>
+            <AddToCartWrapperStyled data-testid={testIdentifier}>
+                <AddToCartPriceStyled data-testid={testIdentifier + '-price'}>
                     {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
                 </AddToCartPriceStyled>
                 <AddToCartFormStyled>
                     <AddToCartButtonsWrapperStyled>
                         <Spinbox min={1} step={1} defaultValue={1} max={props.product.stockQuantity} ref={spinboxRef} />
                         <AddToCartButtonWrapperStyled>
-                            <AddToCartButtonStyled onClick={onAddToCartHandler} variant="primary">
+                            <AddToCartButtonStyled
+                                onClick={onAddToCartHandler}
+                                variant="primary"
+                                data-testid={testIdentifier + '-button'}
+                            >
                                 {t('Add to cart')}
                             </AddToCartButtonStyled>
                         </AddToCartButtonWrapperStyled>

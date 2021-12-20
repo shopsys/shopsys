@@ -11,6 +11,8 @@ type ProductDetailTabsProps = {
 };
 
 const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
+    const testIdentifier = 'pages-productdetail-';
+
     const t = useTypedTranslationFunction();
 
     const formatParameterValue = (valueText: string, index: number) => {
@@ -20,14 +22,16 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem>{t('Overview')}</TabsListItem>
-                {props.parameters.length > 0 && <TabsListItem>{t('Parameters')}</TabsListItem>}
+                <TabsListItem data-testid={testIdentifier + 'overview-link'}>{t('Overview')}</TabsListItem>
+                {props.parameters.length > 0 && (
+                    <TabsListItem data-testid={testIdentifier + 'parameters-link'}>{t('Parameters')}</TabsListItem>
+                )}
             </TabsList>
-            <TabsContent headingTextMobile={t('Overview')}>
+            <TabsContent headingTextMobile={t('Overview')} data-testid={testIdentifier + 'overview-content'}>
                 <UserText htmlContent={props.description} />
             </TabsContent>
             {props.parameters.length > 0 && (
-                <TabsContent headingTextMobile={t('Parameters')}>
+                <TabsContent headingTextMobile={t('Parameters')} data-testid={testIdentifier + 'parameters-content'}>
                     <Table>
                         <tbody>
                             {props.parameters.map((parameter) => (

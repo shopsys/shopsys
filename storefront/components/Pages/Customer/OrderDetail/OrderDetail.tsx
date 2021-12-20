@@ -18,6 +18,8 @@ type OrderDetailPageProps = {
 };
 
 const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
+    const testIdentifier = 'pages-customer-orderdetail-';
+
     const t = useTypedTranslationFunction();
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
@@ -54,7 +56,9 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                             </tr>
                             <tr>
                                 <td>{t('Creation date')}:</td>
-                                <td className="text-right">{order.creationDate}</td>
+                                <td className="text-right" data-testid={testIdentifier + 'creationDate'}>
+                                    {order.creationDate}
+                                </td>
                             </tr>
                         </TableGridColumnStyled>
                         {order.trackingNumber !== null && (
@@ -64,7 +68,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 </tr>
                                 <tr>
                                     <td>{t('Package number')}:</td>
-                                    <td className="text-right">
+                                    <td className="text-right" data-testid={testIdentifier + 'trackingUrl'}>
                                         {order.trackingUrl !== null && (
                                             <NextLink href={order.trackingUrl} passHref>
                                                 <a target="_blank">{order.trackingNumber}</a>
@@ -87,15 +91,17 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 <>
                                     <tr>
                                         <td>{t('Company name')}:</td>
-                                        <td>{order.companyName}</td>
+                                        <td data-testid={testIdentifier + 'companyName'}>{order.companyName}</td>
                                     </tr>
                                     <tr>
                                         <td>{t('Company number')}:</td>
-                                        <td>{order.companyNumber}</td>
+                                        <td data-testid={testIdentifier + 'companyNumber'}>{order.companyNumber}</td>
                                     </tr>
                                     <tr>
                                         <td>{t('Tax number')}:</td>
-                                        <td>{order.companyTaxNumber}</td>
+                                        <td data-testid={testIdentifier + 'companyTaxNumber'}>
+                                            {order.companyTaxNumber}
+                                        </td>
                                     </tr>
                                 </>
                             )}
@@ -103,37 +109,37 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 <>
                                     <tr>
                                         <td>{t('First name')}:</td>
-                                        <td>{order.firstName}</td>
+                                        <td data-testid={testIdentifier + 'firstName'}>{order.firstName}</td>
                                     </tr>
                                     <tr>
                                         <td>{t('Last name')}:</td>
-                                        <td>{order.lastName}</td>
+                                        <td data-testid={testIdentifier + 'lastName'}>{order.lastName}</td>
                                     </tr>
                                 </>
                             )}
                             <tr>
                                 <td>{t('Email')}:</td>
-                                <td>{order.email}</td>
+                                <td data-testid={testIdentifier + 'email'}>{order.email}</td>
                             </tr>
                             <tr>
                                 <td>{t('Phone')}:</td>
-                                <td>{order.telephone}</td>
+                                <td data-testid={testIdentifier + 'telephone'}>{order.telephone}</td>
                             </tr>
                             <tr>
                                 <td>{t('Street and house no.')}:</td>
-                                <td>{order.street}</td>
+                                <td data-testid={testIdentifier + 'street'}>{order.street}</td>
                             </tr>
                             <tr>
                                 <td>{t('City')}:</td>
-                                <td>{order.city}</td>
+                                <td data-testid={testIdentifier + 'city'}>{order.city}</td>
                             </tr>
                             <tr>
                                 <td>{t('Postcode')}:</td>
-                                <td>{order.postcode}</td>
+                                <td data-testid={testIdentifier + 'postcode'}>{order.postcode}</td>
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td>{order.country}</td>
+                                <td data-testid={testIdentifier + 'country'}>{order.country}</td>
                             </tr>
                         </TableGridColumnStyled>
                         <TableGridColumnStyled>
@@ -142,31 +148,31 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                             </tr>
                             <tr>
                                 <td>{t('First name')}:</td>
-                                <td>{order.deliveryFirstName}</td>
+                                <td data-testid={testIdentifier + 'deliveryFirstName'}>{order.deliveryFirstName}</td>
                             </tr>
                             <tr>
                                 <td>{t('Last name')}:</td>
-                                <td>{order.deliveryLastName}</td>
+                                <td data-testid={testIdentifier + 'deliveryLastName'}>{order.deliveryLastName}</td>
                             </tr>
                             <tr>
                                 <td>{t('Phone')}:</td>
-                                <td>{order.deliveryTelephone}</td>
+                                <td data-testid={testIdentifier + 'deliveryTelephone'}>{order.deliveryTelephone}</td>
                             </tr>
                             <tr>
                                 <td>{t('Street and house no.')}:</td>
-                                <td>{order.deliveryStreet}</td>
+                                <td data-testid={testIdentifier + 'deliveryStreet'}>{order.deliveryStreet}</td>
                             </tr>
                             <tr>
                                 <td>{t('City')}:</td>
-                                <td>{order.deliveryCity}</td>
+                                <td data-testid={testIdentifier + 'deliveryCity'}>{order.deliveryCity}</td>
                             </tr>
                             <tr>
                                 <td>{t('Postcode')}:</td>
-                                <td>{order.deliveryPostcode}</td>
+                                <td data-testid={testIdentifier + 'deliveryPostcode'}>{order.deliveryPostcode}</td>
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td>{order.deliveryCountry}</td>
+                                <td data-testid={testIdentifier + 'deliveryCountry'}>{order.deliveryCountry}</td>
                             </tr>
                         </TableGridColumnStyled>
                     </TableGridColumnsStyled>
@@ -188,27 +194,29 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
 
                             {order.items.map((item, index) => {
                                 return (
-                                    <tr key={index}>
-                                        <td>{item.name}</td>
-                                        <td className="text-right">
+                                    <tr key={index} data-testid={testIdentifier + 'item-' + index}>
+                                        <td data-testid={testIdentifier + 'item-name'}>{item.name}</td>
+                                        <td className="text-right" data-testid={testIdentifier + 'item-unitprice'}>
                                             {formatPrice(
                                                 item.unitPrice.priceWithVat,
                                                 currentDomainConfig.currencyCode,
                                                 t,
                                             )}
                                         </td>
-                                        <td className="text-right">
+                                        <td className="text-right" data-testid={testIdentifier + 'item-quantity'}>
                                             {item.quantity} {item.unit}
                                         </td>
-                                        <td className="text-right nowrap">{parseFloat(item.vatRate)} %</td>
-                                        <td className="text-right">
+                                        <td className="text-right nowrap" data-testid={testIdentifier + 'item-vat'}>
+                                            {parseFloat(item.vatRate)} %
+                                        </td>
+                                        <td className="text-right" data-testid={testIdentifier + 'item-price'}>
                                             {formatPrice(
                                                 item.totalPrice.priceWithoutVat,
                                                 currentDomainConfig.currencyCode,
                                                 t,
                                             )}
                                         </td>
-                                        <td className="text-right">
+                                        <td className="text-right" data-testid={testIdentifier + 'item-pricevat'}>
                                             {formatPrice(
                                                 item.totalPrice.priceWithVat,
                                                 currentDomainConfig.currencyCode,

@@ -15,6 +15,8 @@ type ProductDetailAvailabilityProps = {
 };
 
 const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) => {
+    const testIdentifier = 'pages-productdetail-productdetailavailability';
+
     const t = useTypedTranslationFunction();
 
     const scrollOnClickHandler = () => {
@@ -28,13 +30,13 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
     }, []);
 
     return (
-        <AvailabilityStyled>
+        <AvailabilityStyled data-testid={testIdentifier}>
             <AvailabilityLinkStyled status={props.product.availability.status} onClick={scrollOnClickHandler}>
                 {props.product.availability.name}
                 <Icon iconType="icon" icon="Arrow" />
             </AvailabilityLinkStyled>
             {props.product.availableStoresCount > 0 && (
-                <AvailabilityInfoStyled>
+                <AvailabilityInfoStyled data-testid={testIdentifier + '-availability'}>
                     {t(
                         '(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];',
                         { postProcess: 'interval', count: props.product.availableStoresCount },
@@ -42,7 +44,7 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
                 </AvailabilityInfoStyled>
             )}
             {props.product.exposedStoresCount > 0 && (
-                <AvailabilityInfoStyled>
+                <AvailabilityInfoStyled data-testid={testIdentifier + '-exposed'}>
                     {t(
                         '(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];',
                         { postProcess: 'interval', count: props.product.exposedStoresCount },

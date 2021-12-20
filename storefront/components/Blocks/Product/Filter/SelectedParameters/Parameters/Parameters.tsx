@@ -8,6 +8,8 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 
 const Parameters: FC = () => {
+    const testIdentifier = 'blocks-product-filter-selectedparameters-parameters-';
+
     const formProviderMethods = useFormContext<FilterFormType>();
     const [filteredParameters, setFilteredParameters] = useState<FilterFormParameterType[] | []>([]);
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
@@ -45,14 +47,15 @@ const Parameters: FC = () => {
         <>
             {filteredParameters.map((filteredParameter) =>
                 filteredParameter.values.map(
-                    (value) =>
+                    (value, index) =>
                         value.checked && (
-                            <SelectedParametersListItemStyled key={value.uuid}>
+                            <SelectedParametersListItemStyled key={value.uuid} data-testid={testIdentifier + index}>
                                 {value.text}
                                 <SelectedParametersListItemRemoveStyled
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={() => onUncheckParameter(filteredParameter.parameterUuid, value.uuid)}
+                                    data-testid={testIdentifier + 'remove-' + index}
                                 />
                             </SelectedParametersListItemStyled>
                         ),

@@ -26,24 +26,28 @@ type ProductDetailProps = {
  * Product Detail page component
  */
 const ProductDetail: FC<ProductDetailProps> = (props) => {
+    const testIdentifier = 'pages-productdetail-';
+
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
     return (
         <>
             <Webline>
                 <ProductDetailStyled>
-                    <ProductDetailImageStyled>
+                    <ProductDetailImageStyled data-testid={testIdentifier + 'gallery'}>
                         <ProductDetailGallery images={props.product.images} productName={props.product.name} />
                     </ProductDetailImageStyled>
                     <ProductDetailInfoStyled>
-                        <ProductDetailPrefixStyled>{props.product.namePrefix}</ProductDetailPrefixStyled>
-                        <ProductDetailHeadingStyled>
+                        <ProductDetailPrefixStyled data-testid={testIdentifier + 'prefix'}>
+                            {props.product.namePrefix}
+                        </ProductDetailPrefixStyled>
+                        <ProductDetailHeadingStyled data-testid={testIdentifier + 'name'}>
                             {props.product.name} {props.product.nameSuffix}
                         </ProductDetailHeadingStyled>
-                        <ProductDetailCodeStyled>
+                        <ProductDetailCodeStyled data-testid={testIdentifier + 'code'}>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
-                        <ProductDetailShortDescriptionStyled>
+                        <ProductDetailShortDescriptionStyled data-testid={testIdentifier + 'short-description'}>
                             {props.product.shortDescription}
                         </ProductDetailShortDescriptionStyled>
                         <ProductDetailAddToCart {...props} />
@@ -51,16 +55,16 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
             </Webline>
-            <Webline>
+            <Webline data-testid={testIdentifier + 'description'}>
                 <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />
             </Webline>
-            <Webline>
+            <Webline data-testid={testIdentifier + 'availability'}>
                 <ProductDetailAvailabilityList
                     ref={scrollTarget}
                     storeAvailabilities={props.product.storeAvailabilities}
                 />
             </Webline>
-            <Webline>
+            <Webline data-testid={testIdentifier + 'accessories'}>
                 <ProductDetailAccessories accessories={props.product.accessories} />
             </Webline>
         </>

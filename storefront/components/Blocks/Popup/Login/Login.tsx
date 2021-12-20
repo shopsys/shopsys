@@ -43,6 +43,8 @@ const getLoginFormResolver = (t: TFunction) => {
 };
 
 const Login: FC = () => {
+    const testIdentifier = 'blocks-popup-login';
+
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const { url } = useShopsysSelector((state) => state.domain);
@@ -63,7 +65,7 @@ const Login: FC = () => {
     };
 
     return (
-        <LoginStyled>
+        <LoginStyled data-testid={testIdentifier}>
             <LoginColumnStyled>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>

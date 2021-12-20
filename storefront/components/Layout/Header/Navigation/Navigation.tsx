@@ -4,6 +4,8 @@ import { NavigationStyled } from './Navigation.style';
 import { ReactElement } from 'react';
 
 const Navigation = (): ReactElement | null => {
+    const testIdentifier = 'layout-header-navigation';
+
     const navigationItems = getNavigationItems();
 
     if (navigationItems.length === 0) {
@@ -11,7 +13,7 @@ const Navigation = (): ReactElement | null => {
     }
 
     return (
-        <NavigationStyled>
+        <NavigationStyled data-testid={testIdentifier}>
             {navigationItems.map((navigationItem, index) => (
                 <NavigationItem navigationItem={navigationItem} key={index} />
             ))}

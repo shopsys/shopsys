@@ -25,6 +25,8 @@ type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & 
 
 const Icon: FC<IconProps> = (props) => {
     if (props.iconType === 'image') {
+        const testIdentifier = 'basic-icon-' + props.icon;
+
         return (
             <img
                 src={`/icons/${props.icon}.png`}
@@ -32,6 +34,7 @@ const Icon: FC<IconProps> = (props) => {
                 width={props.width !== undefined ? props.width : '24'}
                 title={props.title}
                 alt={props.alt}
+                data-testid={testIdentifier}
             />
         );
     }

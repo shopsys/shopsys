@@ -19,19 +19,23 @@ import ProductPrice from './Price/ProductPrice';
 import { SliderProductItemType } from 'types/product';
 
 const ProductItem: FC<SliderProductItemType> = (props) => {
+    const testIdentifier = 'blocks-product-sliderproductitem-';
+
     return (
-        <SliderProductItemStyled className="keen-slider__slide">
+        <SliderProductItemStyled className="keen-slider__slide" data-testid={testIdentifier + props.catalogNumber}>
             <SliderProductItemInStyled>
                 <NextLink href={props.slug} passHref>
                     <SliderProductItemLinkStyled>
-                        <SliderProductItemImageStyled>
+                        <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
                             <Image image={props.image} alt={props.name} />
                             <SliderProductItemFlagsStyled>
                                 <ProductFlags flags={props.flags} />
                             </SliderProductItemFlagsStyled>
                         </SliderProductItemImageStyled>
                         <SliderProductItemInfoStyled>
-                            <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>
+                            <SliderProductItemTitleStyled data-testid={testIdentifier + 'name'}>
+                                {props.name}
+                            </SliderProductItemTitleStyled>
                             <ProductPrice {...props.price} />
                             <ProductAvailabilityStyled>
                                 {props.availability}

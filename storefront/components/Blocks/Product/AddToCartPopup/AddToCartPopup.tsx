@@ -29,6 +29,8 @@ type AddToCartPopupProps = {
 };
 
 const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
+    const testIdentifier = 'blocks-product-addtocartpopup-product';
+
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
@@ -44,18 +46,18 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
                 <Checkmark iconType="icon" icon="Checkmark" />
                 {t('Great choice! We have added your item to the cart')}
             </HeadingStyled>
-            <ProductStyled>
+            <ProductStyled data-testid={testIdentifier}>
                 {props.product.image !== null && (
                     <ImageStyled>
                         <Image image={props.product.image} alt={props.product.name} />
                     </ImageStyled>
                 )}
                 <ContentStyled>
-                    <NameStyled>
+                    <NameStyled data-testid={testIdentifier + '-name'}>
                         <NextLink href={props.product.slug}>{props.product.name}</NextLink>
                     </NameStyled>
                     <PriceInfoStyled>
-                        <PriceStyled>
+                        <PriceStyled data-testid={testIdentifier + '-price'}>
                             {`${props.product.quantity} ${props.product.unitName}, ${formatPrice(
                                 props.product.quantity * props.product.price.priceWithVat,
                                 props.product.price.currencyCode,

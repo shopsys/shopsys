@@ -6,12 +6,14 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Webline from 'components/Layout/Webline';
 
 const OrderConfirmation: FC = () => {
+    const testIdentifier = 'pages-orderconfirmation';
+
     const t = useTypedTranslationFunction();
     const { email } = useShopsysSelector((state) => state.contactInformation);
 
     return (
         <Webline>
-            <MessageWrapperStyled>
+            <MessageWrapperStyled data-testid={testIdentifier}>
                 <ImageWrapperStyled>
                     <img alt="Objednávka odeslána" src="/public/frontend/images/sent-cart.svg" />
                 </ImageWrapperStyled>

@@ -25,21 +25,32 @@ type LinkProps = NativePropsAnchor &
  * or a button link when the "isButton" prop is true
  */
 const Link: FC<LinkProps> = (props) => {
+    const testIdentifier =
+        'basic-link' +
+        (props.linkType !== undefined ? '-' + props.linkType : '') +
+        (props.isButton === true ? '-button' : '');
+
     if (props.linkType === 'external') {
-        return <LinkStyled {...props}>{props.children}</LinkStyled>;
+        return (
+            <LinkStyled {...props} data-testid={testIdentifier}>
+                {props.children}
+            </LinkStyled>
+        );
     }
 
     if (props.isButton === true) {
         return (
             <NextLink {...props}>
-                <ButtonStyled {...props}>{props.children}</ButtonStyled>
+                <ButtonStyled {...props} data-testid={testIdentifier}>
+                    {props.children}
+                </ButtonStyled>
             </NextLink>
         );
     }
 
     return (
         <NextLink {...props}>
-            <LinkStyled>{props.children}</LinkStyled>
+            <LinkStyled data-testid={testIdentifier}>{props.children}</LinkStyled>
         </NextLink>
     );
 };

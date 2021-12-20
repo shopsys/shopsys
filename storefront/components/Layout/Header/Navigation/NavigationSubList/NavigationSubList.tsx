@@ -15,15 +15,18 @@ type NavigationSubListProps = {
 };
 
 const NavigationSubList: FC<NavigationSubListProps> = (props) => {
+    const testIdentifier = 'layout-header-navigation-navigationsublist';
+
     const dispatch = useShopsysDispatch();
     const router = useRouter();
     return (
-        <NavigationSubListStyled>
+        <NavigationSubListStyled data-testid={testIdentifier}>
             {props.columnCategoryChildren.map((columnCategoryChild, subListIndex) =>
                 columnCategoryChild.slug === router.asPath ? (
                     <NavigationSubListItemStyled
                         key={subListIndex}
                         onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
+                        data-testid={testIdentifier + '-' + subListIndex}
                     >
                         <NextLink href={columnCategoryChild.slug} passHref>
                             <NavigationSubListItemLinkStyled>
@@ -32,7 +35,7 @@ const NavigationSubList: FC<NavigationSubListProps> = (props) => {
                         </NextLink>
                     </NavigationSubListItemStyled>
                 ) : (
-                    <NavigationSubListItemStyled key={subListIndex}>
+                    <NavigationSubListItemStyled key={subListIndex} data-testid={testIdentifier + '-' + subListIndex}>
                         <NextLink href={columnCategoryChild.slug} passHref>
                             <NavigationSubListItemLinkStyled>
                                 {columnCategoryChild.name}

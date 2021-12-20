@@ -4,18 +4,19 @@ import { ReactElement } from 'react';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const SubMenu = (): ReactElement => {
+    const testIdentifier = 'layout-header-dropdownmenu-submenu';
     const t = useTypedTranslationFunction();
 
     return (
-        <SubMenuStyled>
+        <SubMenuStyled data-testid={testIdentifier}>
             <Link href="/" passHref>
-                <SubMenuItemStyled>{t('Customer service')}</SubMenuItemStyled>
+                <SubMenuItemStyled data-testid={testIdentifier + '-0'}>{t('Customer service')}</SubMenuItemStyled>
             </Link>
             <Link href="/" passHref>
-                <SubMenuItemStyled>{t('Stores')}</SubMenuItemStyled>
+                <SubMenuItemStyled data-testid={testIdentifier + '-1'}>{t('Stores')}</SubMenuItemStyled>
             </Link>
             <Link href="/" passHref>
-                <SubMenuItemStyled>{t('Sign in')}</SubMenuItemStyled>
+                <SubMenuItemStyled data-testid={testIdentifier + '-2'}>{t('Sign in')}</SubMenuItemStyled>
             </Link>
         </SubMenuStyled>
     );

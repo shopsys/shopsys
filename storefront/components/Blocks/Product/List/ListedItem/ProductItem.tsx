@@ -19,8 +19,10 @@ import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 
 const ProductItem: FC<ListedProductType> = (props) => {
+    const testIdentifier = 'blocks-product-list-listeditem-' + props.catalogNumber;
+
     return (
-        <ProductItemStyled>
+        <ProductItemStyled data-testid={testIdentifier}>
             <ProductItemInStyled>
                 <NextLink href={props.slug} passHref>
                     <ProductItemLinkStyled>
