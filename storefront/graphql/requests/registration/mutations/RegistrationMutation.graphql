@@ -13,6 +13,7 @@ mutation RegistrationMutation(
     $companyNumber: String
     $companyTaxNumber: String
     $newsletterSubscription: Boolean!
+    $previousCartUuid: Uuid
 ) {
     Register(
         input: {
@@ -30,6 +31,7 @@ mutation RegistrationMutation(
             companyNumber: $companyNumber
             companyTaxNumber: $companyTaxNumber
             newsletterSubscription: $newsletterSubscription
+            cartUuid: $previousCartUuid
         }
     ) {
         accessToken

@@ -31,18 +31,17 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import User from './User';
 import { userActions } from 'redux/slices/user';
 import { useRegistrationMutationApi } from 'graphql/generated';
-import { useRouter } from 'next/router';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Registration: FC = () => {
     const t = useTypedTranslationFunction();
     const [registerResult, register] = useRegistrationMutationApi();
+    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const { url } = useShopsysSelector((state) => state.domain);
     const [RegistrationUrl] = useGetInternationalizedStaticUrls(['/registration'], url);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    const router = useRouter();
     const dispatch = useShopsysDispatch();
 
     useHandleFormErrors(registerResult.error, formProviderMethods, formMeta.messages.error);
@@ -63,7 +62,7 @@ const Registration: FC = () => {
                 showSuccessMessage(formMeta.messages.success);
             }
 
-            router.push('/');
+            window.location.href = '/';
         },
         { blur: true, reset: true },
     );
@@ -73,6 +72,7 @@ const Registration: FC = () => {
         await register({
             ...data,
             password: data.passwordFirst,
+            previousCartUuid: cartUuid,
             country: data.country.value,
             companyCustomer: data.customer === 'companyCustomer',
         });

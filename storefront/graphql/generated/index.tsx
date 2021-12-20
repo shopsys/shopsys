@@ -2597,6 +2597,7 @@ export type RegistrationMutationVariablesApi = Exact<{
   companyNumber?: Maybe<Scalars['String']>;
   companyTaxNumber?: Maybe<Scalars['String']>;
   newsletterSubscription: Scalars['Boolean'];
+  previousCartUuid?: Maybe<Scalars['Uuid']>;
 }>;
 
 
@@ -3907,9 +3908,9 @@ export function usePromotedProductsQueryApi(options: Omit<Urql.UseQueryArgs<Prom
   return Urql.useQuery<PromotedProductsQueryApi>({ query: PromotedProductsQueryDocumentApi, ...options });
 };
 export const RegistrationMutationDocumentApi = gql`
-    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!) {
+    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!, $previousCartUuid: Uuid) {
   Register(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription}
+    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription, cartUuid: $previousCartUuid}
   ) {
     accessToken
     refreshToken
