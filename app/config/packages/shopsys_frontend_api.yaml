@@ -29,6 +29,9 @@ overblog_dataloader:
         productsByEntitiesBatchLoader:
             alias: "products_by_entities_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadByEntities"
+        productsSellableByIdsBatchLoader:
+            alias: "products_sellable_by_ids_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadSellableByIds"
         imagesBatchLoader:
             alias: "images_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Image\\ImagesBatchLoader:loadByBatchData"

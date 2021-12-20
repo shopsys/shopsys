@@ -33,6 +33,20 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     }
 
     /**
+     * @param int[][] $productsIds
+     * @return array
+     */
+    public function getBatchedSellableByProductIds(array $productsIds): array
+    {
+        $filterQueries = [];
+        foreach ($productsIds as $productIds) {
+            $filterQueries[] = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds);
+        }
+
+        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    }
+
+    /**
      * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
      * @return array
      */

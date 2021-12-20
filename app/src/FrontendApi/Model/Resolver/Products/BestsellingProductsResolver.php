@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Products;
 
-use App\FrontendApi\Model\Product\ProductFacade;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Product;
+use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -22,11 +23,6 @@ class BestsellingProductsResolver implements ResolverInterface
     private CachedBestsellingProductFacade $cachedBestsellingProductFacade;
 
     /**
-     * @var \App\FrontendApi\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
@@ -37,28 +33,33 @@ class BestsellingProductsResolver implements ResolverInterface
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsSellableByIdsBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
-     * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
         CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        ProductFacade $productFacade,
         Domain $domain,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        DataLoaderInterface $productsSellableByIdsBatchLoader
     ) {
         $this->cachedBestsellingProductFacade = $cachedBestsellingProductFacade;
-        $this->productFacade = $productFacade;
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
     }
 
     /**
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix): array
+    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix): Promise
     {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
@@ -80,11 +81,13 @@ class BestsellingProductsResolver implements ResolverInterface
             $this->currentCustomerUser->getPricingGroup()
         );
 
-        return $this->productFacade->getSellableProductsByIds(array_map(
+        $bestsellingProductsIds = array_map(
             static function (Product $product) {
                 return $product->getId();
             },
             $bestsellingProducts
-        ));
+        );
+
+        return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);
     }
 }

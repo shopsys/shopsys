@@ -46,6 +46,15 @@ class ProductsBatchLoader
     }
 
     /**
+     * @param int[][] $productsIds
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadSellableByIds(array $productsIds): Promise
+    {
+        return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedSellableByProductIds($productsIds)[ProductElasticsearchRepository::PRODUCTS_KEY]);
+    }
+
+    /**
      * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
      * @return \GraphQL\Executor\Promise\Promise
      */
