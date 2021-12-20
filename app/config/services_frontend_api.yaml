@@ -9,6 +9,7 @@ services:
             Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader: '@category_children_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\
@@ -127,3 +128,6 @@ services:
 
     Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
         alias: App\FrontendApi\Model\Image\ImageFacade
+
+    Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
+        alias: App\FrontendApi\Model\Category\CategoryFacade

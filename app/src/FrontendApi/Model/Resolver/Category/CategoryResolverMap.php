@@ -34,22 +34,30 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private DataLoaderInterface $readyCategorySeoMixesBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $categoryChildrenBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
      */
     public function __construct(
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
         CategoryFacade $categoryFacade,
-        DataLoaderInterface $readyCategorySeoMixesBatchLoader
+        DataLoaderInterface $readyCategorySeoMixesBatchLoader,
+        DataLoaderInterface $categoryChildrenBatchLoader
     ) {
         parent::__construct($domain);
 
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->categoryFacade = $categoryFacade;
         $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
+        $this->categoryChildrenBatchLoader = $categoryChildrenBatchLoader;
     }
 
     /**
@@ -108,7 +116,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
-                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainConfig($category, $this->domain->getCurrentDomainConfig());
+                return $this->categoryChildrenBatchLoader->load($category);
             case 'parent':
                 $parent = $category->getParent();
 
@@ -144,7 +152,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
-                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+                return $this->categoryChildrenBatchLoader->load($category);
             case 'parent':
                 $parent = $category->getParent();
 

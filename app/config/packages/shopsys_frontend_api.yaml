@@ -38,3 +38,6 @@ overblog_dataloader:
         readyCategorySeoMixesBatchLoader:
             alias: "ready_category_seo_mixes_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"
+        categoryChildrenBatchLoader:
+            alias: "category_children_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"

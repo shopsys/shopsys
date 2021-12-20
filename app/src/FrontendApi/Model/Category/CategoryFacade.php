@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\FrontendApi\Model\Category;
+
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
+
+/**
+ * @property \App\FrontendApi\Model\Category\CategoryRepository $categoryRepository
+ */
+class CategoryFacade extends BaseCategoryFacade
+{
+    /**
+     * @param \App\Model\Category\Category[] $categories
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[][]
+     */
+    public function getAllVisibleChildrenByCategoriesAndDomainConfig(array $categories, DomainConfig $domainConfig): array
+    {
+        return $this->categoryRepository->getAllVisibleChildrenByCategoriesAndDomainConfig($categories, $domainConfig);
+    }
+}
