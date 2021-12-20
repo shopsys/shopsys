@@ -131,7 +131,9 @@ class ProductSourceEqualityTest extends GraphQlTestCase
               url
             }
             storeAvailabilities {
-                storeName
+                store {
+                    name
+                }
                 exposed
                 availabilityInformation
                 availabilityStatus

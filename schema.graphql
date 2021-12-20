@@ -2131,9 +2131,6 @@ type Store implements Breadcrumb & Slug {
 
 """Represents an availability in an individual store"""
 type StoreAvailability {
-  """Name of the store"""
-  storeName: String!
-
   """Is product exposed on this store"""
   exposed: Boolean!
 
@@ -2142,6 +2139,9 @@ type StoreAvailability {
 
   """Availability status in a format suitable for usage in the code"""
   availabilityStatus: String!
+
+  """Store"""
+  store: Store
 }
 
 """A connection to a list of items."""
