@@ -2223,6 +2223,7 @@ export type SimpleArticleFragmentApi = SimpleArticleFragment_Article_Api | Simpl
 export type LoginVariablesApi = Exact<{
   email: Scalars['String'];
   password: Scalars['Password'];
+  previousCartUuid?: Maybe<Scalars['Uuid']>;
 }>;
 
 
@@ -3601,8 +3602,8 @@ export const ListedStoreFragmentApi = gql`
 }
     `;
 export const LoginDocumentApi = gql`
-    mutation Login($email: String!, $password: Password!) {
-  Login(input: {email: $email, password: $password}) {
+    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
+  Login(input: {email: $email, password: $password, cartUuid: $previousCartUuid}) {
     accessToken
     refreshToken
   }

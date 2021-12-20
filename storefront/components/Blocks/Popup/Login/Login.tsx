@@ -44,6 +44,7 @@ const getLoginFormResolver = (t: TFunction) => {
 
 const Login: FC = () => {
     const t = useTypedTranslationFunction();
+    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const { url } = useShopsysSelector((state) => state.domain);
     const [resetPasswordUrl, registrationUrl] = useGetInternationalizedStaticUrls(
         ['/reset-password', '/registration'],
@@ -58,7 +59,7 @@ const Login: FC = () => {
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = (data, event) => {
         event?.preventDefault();
-        login({ email: data.email, password: data.password });
+        login({ email: data.email, password: data.password, previousCartUuid: cartUuid });
     };
 
     return (
