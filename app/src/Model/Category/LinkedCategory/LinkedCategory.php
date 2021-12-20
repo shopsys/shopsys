@@ -68,4 +68,12 @@ class LinkedCategory
     {
         $this->position = $position;
     }
+
+    /**
+     * @return \App\Model\Category\Category
+     */
+    public function getParentCategory(): Category
+    {
+        return $this->parentCategory;
+    }
 }

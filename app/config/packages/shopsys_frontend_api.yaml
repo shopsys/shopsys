@@ -41,3 +41,6 @@ overblog_dataloader:
         categoryChildrenBatchLoader:
             alias: "category_children_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\CategoryChildrenBatchLoader:loadByCategories"
+        linkedCategoriesBatchLoader:
+            alias: "linked_categories_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Category\\LinkedCategoriesBatchLoader:loadByCategories"

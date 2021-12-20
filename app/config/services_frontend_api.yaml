@@ -10,6 +10,7 @@ services:
             Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\

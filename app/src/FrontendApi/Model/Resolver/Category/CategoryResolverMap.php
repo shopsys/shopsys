@@ -6,7 +6,6 @@ namespace App\FrontendApi\Model\Resolver\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\Category;
-use App\Model\Category\CategoryFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -24,11 +23,6 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
      * @var \Overblog\DataLoader\DataLoaderInterface
      */
     private DataLoaderInterface $readyCategorySeoMixesBatchLoader;
@@ -39,25 +33,30 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private DataLoaderInterface $categoryChildrenBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $linkedCategoriesBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader
      */
     public function __construct(
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
-        CategoryFacade $categoryFacade,
         DataLoaderInterface $readyCategorySeoMixesBatchLoader,
-        DataLoaderInterface $categoryChildrenBatchLoader
+        DataLoaderInterface $categoryChildrenBatchLoader,
+        DataLoaderInterface $linkedCategoriesBatchLoader
     ) {
         parent::__construct($domain);
 
         $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->categoryFacade = $categoryFacade;
         $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
         $this->categoryChildrenBatchLoader = $categoryChildrenBatchLoader;
+        $this->linkedCategoriesBatchLoader = $linkedCategoriesBatchLoader;
     }
 
     /**
@@ -132,7 +131,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'readyCategorySeoMixLinks':
                 return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
-                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
+                return $this->linkedCategoriesBatchLoader->load($category);
             default:
                 throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
@@ -168,7 +167,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'readyCategorySeoMixLinks':
                 return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
-                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
+                return $this->linkedCategoriesBatchLoader->load($category);
             default:
                 throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
