@@ -1,8 +1,14 @@
-import { OrdersQueryApi, useOrdersQueryApi } from 'graphql/generated';
+import { ListedOrdersType, OrderDetailItemType, OrderDetailType } from 'types/orders';
+import {
+    OrderDetailItemFragmentApi,
+    OrderDetailQueryApi,
+    OrdersQueryApi,
+    useOrderDetailQueryApi,
+    useOrdersQueryApi,
+} from 'graphql/generated';
 
 import { DomainConfigType } from 'utils/Domain/Domain';
 import { initialState } from 'redux/slices/user';
-import { ListedOrdersType } from 'types/orders';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapPriceData } from 'connectors/transports/Transports';
@@ -41,9 +47,10 @@ const mapOrdersApiData = (
                 continue;
             }
             mappedOrders.orders.push({
+                uuid: edge.node.uuid,
                 number: edge.node.number.toString(),
                 creationDate: new Date(edge.node.creationDate).toLocaleDateString(currentDomainConfig.defaultLocale),
-                items: { quantity: edge.node.items.length - 2 },
+                items: { quantity: edge.node.items.length - 2 }, // -2 => we need to remove transport and payment
                 transport: {
                     name: edge.node.transport.name,
                     image: mapImageApiData(edge.node.transport.images),
@@ -56,3 +63,122 @@ const mapOrdersApiData = (
 
     return { ...mappedOrders };
 };
+
+export function getOrderDetail(orderNumber: string, currentDomainConfig: DomainConfigType): OrderDetailType | null {
+    const [{ data, error }] = useOrderDetailQueryApi({ variables: { orderNumber } });
+    useQueryError(error);
+
+    return mapOrderDetailApiData(data?.order, currentDomainConfig);
+}
+
+export function mapOrderDetailApiData(
+    apiOrderDetailData: OrderDetailQueryApi['order'],
+    currentDomainConfig: DomainConfigType,
+): OrderDetailType | null {
+    if (apiOrderDetailData !== null && apiOrderDetailData !== undefined) {
+        return {
+            ...apiOrderDetailData,
+            creationDate: new Date(apiOrderDetailData.creationDate).toLocaleDateString(
+                currentDomainConfig.defaultLocale,
+            ),
+            firstName:
+                apiOrderDetailData.firstName !== null && apiOrderDetailData.firstName !== undefined
+                    ? apiOrderDetailData.firstName
+                    : '',
+            lastName:
+                apiOrderDetailData.lastName !== null && apiOrderDetailData.lastName !== undefined
+                    ? apiOrderDetailData.lastName
+                    : '',
+            companyName:
+                apiOrderDetailData.companyName !== null && apiOrderDetailData.companyName !== undefined
+                    ? apiOrderDetailData.companyName
+                    : '',
+            companyNumber:
+                apiOrderDetailData.companyNumber !== null && apiOrderDetailData.companyNumber !== undefined
+                    ? apiOrderDetailData.companyNumber
+                    : '',
+            companyTaxNumber:
+                apiOrderDetailData.companyTaxNumber !== null && apiOrderDetailData.companyTaxNumber !== undefined
+                    ? apiOrderDetailData.companyTaxNumber
+                    : '',
+            street:
+                apiOrderDetailData.street !== null && apiOrderDetailData.street !== undefined
+                    ? apiOrderDetailData.street
+                    : '',
+            city:
+                apiOrderDetailData.city !== null && apiOrderDetailData.city !== undefined
+                    ? apiOrderDetailData.city
+                    : '',
+            postcode:
+                apiOrderDetailData.postcode !== null && apiOrderDetailData.postcode !== undefined
+                    ? apiOrderDetailData.postcode
+                    : '',
+            country:
+                apiOrderDetailData.country !== null && apiOrderDetailData.country !== undefined
+                    ? apiOrderDetailData.country.name
+                    : '',
+            deliveryFirstName:
+                apiOrderDetailData.deliveryFirstName !== null && apiOrderDetailData.deliveryFirstName !== undefined
+                    ? apiOrderDetailData.deliveryFirstName
+                    : '',
+            deliveryLastName:
+                apiOrderDetailData.deliveryLastName !== null && apiOrderDetailData.deliveryLastName !== undefined
+                    ? apiOrderDetailData.deliveryLastName
+                    : '',
+            deliveryCompanyName:
+                apiOrderDetailData.deliveryCompanyName !== null && apiOrderDetailData.deliveryCompanyName !== undefined
+                    ? apiOrderDetailData.deliveryCompanyName
+                    : '',
+            deliveryTelephone:
+                apiOrderDetailData.deliveryTelephone !== null && apiOrderDetailData.deliveryTelephone !== undefined
+                    ? apiOrderDetailData.deliveryTelephone
+                    : '',
+            deliveryStreet:
+                apiOrderDetailData.deliveryStreet !== null && apiOrderDetailData.deliveryStreet !== undefined
+                    ? apiOrderDetailData.deliveryStreet
+                    : '',
+            deliveryCity:
+                apiOrderDetailData.deliveryCity !== null && apiOrderDetailData.deliveryCity !== undefined
+                    ? apiOrderDetailData.deliveryCity
+                    : '',
+            deliveryPostcode:
+                apiOrderDetailData.deliveryPostcode !== null && apiOrderDetailData.deliveryPostcode !== undefined
+                    ? apiOrderDetailData.deliveryPostcode
+                    : '',
+            deliveryCountry:
+                apiOrderDetailData.deliveryCountry !== null && apiOrderDetailData.deliveryCountry !== undefined
+                    ? apiOrderDetailData.deliveryCountry.name
+                    : '',
+            note:
+                apiOrderDetailData.note !== null && apiOrderDetailData.note !== undefined
+                    ? apiOrderDetailData.note
+                    : '',
+            urlHash:
+                apiOrderDetailData.urlHash !== null && apiOrderDetailData.urlHash !== undefined
+                    ? apiOrderDetailData.urlHash
+                    : '',
+            promoCode:
+                apiOrderDetailData.promoCode !== null && apiOrderDetailData.promoCode !== undefined
+                    ? apiOrderDetailData.promoCode
+                    : '',
+            trackingNumber: apiOrderDetailData.trackingNumber !== undefined ? apiOrderDetailData.trackingNumber : null,
+            trackingUrl: apiOrderDetailData.trackingUrl !== undefined ? apiOrderDetailData.trackingUrl : null,
+            items: mapOrderDetailItems(apiOrderDetailData.items, currentDomainConfig.currencyCode),
+        };
+    }
+    return null;
+}
+
+export function mapOrderDetailItems(
+    apiOrderDetailItemData: OrderDetailItemFragmentApi[],
+    currencyCode: string,
+): OrderDetailItemType[] {
+    const mappedItems = apiOrderDetailItemData.map((item) => ({
+        ...item,
+        unitPrice: mapPriceData(item.unitPrice, currencyCode),
+        totalPrice: mapPriceData(item.totalPrice, currencyCode),
+        unit: item.unit !== null && item.unit !== undefined ? item.unit : '',
+    }));
+
+    return mappedItems;
+}

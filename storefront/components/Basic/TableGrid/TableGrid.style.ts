@@ -53,6 +53,63 @@ export const TableGridRootStyled = styled.table`
                 &.text-right {
                     text-align: right;
                 }
+
+                &.nowrap {
+                    white-space: nowrap;
+                }
+            }
+        }
+    `}
+`;
+
+export const TableGridColumnsStyled = styled.tbody`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 25px;
+`;
+
+export const TableGridColumnStyled = styled.table`
+    ${({ theme }) => css`
+        width: 100%;
+
+        @media ${theme.mediaQueries.queryMd} {
+            width: calc(50% - 15px);
+            margin-right: 15px;
+
+            &:nth-child(even) {
+                margin-right: 0;
+                margin-left: 15px;
+            }
+        }
+
+        tr {
+            th {
+                margin-bottom: 0;
+                padding-bottom: 15px;
+                padding-left: 0;
+                text-transform: none;
+
+                font-size: ${theme.fontSize.bigger} !important;
+                font-weight: 400 !important;
+                border-bottom: 2px solid ${theme.color.greyLighter};
+                color: ${theme.color.base};
+            }
+
+            td {
+                padding-left: 0;
+
+                color: ${theme.color.greyLight};
+                font-size: 15px;
+
+                &.text-right {
+                    text-align: right;
+                }
+
+                &.nowrap {
+                    white-space: nowrap;
+                }
             }
         }
     `}

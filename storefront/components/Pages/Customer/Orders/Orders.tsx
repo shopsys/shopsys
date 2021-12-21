@@ -5,6 +5,7 @@ import Heading from 'components/Basic/Heading';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import Image from 'components/Basic/Image';
 import { ListedOrderType } from 'types/orders';
+import NextLink from 'next/link';
 import Pagination from 'components/Blocks/Pagination';
 import TableGrid from 'components/Basic/TableGrid';
 import { TransportImageWrapperStyled } from './Orders.style';
@@ -17,19 +18,22 @@ type ListedOrdersProps = { orders: ListedOrderType[] | undefined; totalCount: nu
 
 const Orders: FC<ListedOrdersProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], url);
+    const [customerOrdersUrl, customerOrderDetailUrl] = useGetInternationalizedStaticUrls(
+        ['/customer/orders', '/customer/order-detail'],
+        url,
+    );
     const orders = props.orders;
+
     return (
         <>
             <Webline>
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('My orders')}</Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('Orders'), slug: customerOrdersUrl }]} />
+                <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('My orders'), slug: customerOrdersUrl }]} />
             </Webline>
             <div ref={containerWrapRef}>
                 <Webline>
@@ -50,7 +54,16 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                             orders.length !== 0 &&
                             orders.map((order, index) => (
                                 <tr key={index}>
-                                    <td>{order.number}</td>
+                                    <td>
+                                        <NextLink
+                                            href={{
+                                                pathname: customerOrderDetailUrl,
+                                                query: { orderNumber: order.number },
+                                            }}
+                                        >
+                                            {order.number}
+                                        </NextLink>
+                                    </td>
                                     <td className="text-right">{order.creationDate}</td>
                                     <td className="text-right">{order.items.quantity}</td>
                                     <td>
@@ -63,11 +76,20 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                                     <td className="text-right">
                                         {formatPrice(order.totalPrice.priceWithVat, currencyCode, t)}
                                     </td>
-                                    <td>{t('Detail')}</td>
+                                    <td>
+                                        <NextLink
+                                            href={{
+                                                pathname: customerOrderDetailUrl,
+                                                query: { orderNumber: order.number },
+                                            }}
+                                        >
+                                            {t('Detail')}
+                                        </NextLink>
+                                    </td>
                                 </tr>
                             ))}
 
-                        {orders === undefined && (
+                        {orders?.length === 0 && (
                             <tr>
                                 <th>{t('You have no orders')}</th>
                             </tr>
