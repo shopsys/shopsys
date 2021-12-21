@@ -96,3 +96,13 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersResolver:
         alias: App\FrontendApi\Model\Resolver\Order\OrdersResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver:
+        alias: App\FrontendApi\Model\Resolver\Order\OrderResolver
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderFacade:
+        alias: App\FrontendApi\Model\Order\OrderFacade
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderRepository:
+        alias: App\FrontendApi\Model\Order\OrderRepository

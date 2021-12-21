@@ -19,12 +19,12 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     public function testGetOrder(): void
     {
         foreach ($this->getOrderDataForCurrentlyLoggedCustomerUserProvider() as $dataSet) {
-            [$uuid, $expectedOrderData] = $dataSet;
+            [$uuid, $orderNumber, $expectedOrderData] = $dataSet;
 
             $graphQlType = 'order';
-            $response = $this->getResponseContentForQuery($this->getOrderQuery($uuid));
-            $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-            $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+            $responseByUuid = $this->getResponseContentForQuery($this->getOrderQueryByUuid($uuid));
+            $this->assertResponseContainsArrayOfDataForGraphQlType($responseByUuid, $graphQlType);
+            $responseData = $this->getResponseDataForGraphQlType($responseByUuid, $graphQlType);
 
             $this->assertArrayHasKey('status', $responseData);
             $this->assertSame($expectedOrderData['status'], $responseData['status']);
@@ -47,15 +47,32 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
             $this->assertArrayHasKey('trackingUrl', $responseData);
             $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
+
+            $responseByOrderNumber = $this->getResponseContentForQuery($this->getOrderQueryByOrderNumber($orderNumber));
+            $this->assertSame($responseByUuid, $responseByOrderNumber);
         }
     }
 
-    public function testGetOrderReturnsError(): void
+    public function testGetOrderByUuidReturnsError(): void
     {
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
-        $expectedErrorMessage = 'Order with UUID \'' . $order->getUuid() . '\' not found.';
+        $expectedErrorMessage = 'Order not found';
 
-        $response = $this->getResponseContentForQuery($this->getOrderQuery($order->getUuid()));
+        $response = $this->getResponseContentForQuery($this->getOrderQueryByUuid($order->getUuid()));
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('message', $errors[0]);
+        $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+    }
+
+    public function testGetOrderByOrderNumberReturnsError(): void
+    {
+        $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
+        $expectedErrorMessage = 'Order not found';
+
+        $response = $this->getResponseContentForQuery($this->getOrderQueryByOrderNumber($order->getNumber()));
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -76,6 +93,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $order = $this->orderFacade->getById($orderId);
             $data[] = [
                 $order->getUuid(),
+                $order->getNumber(),
                 [
                     'status' => $order->getStatus()->getName(),
                     'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
@@ -96,11 +114,34 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
      * @param string $uuid
      * @return string
      */
-    private function getOrderQuery(string $uuid): string
+    private function getOrderQueryByUuid(string $uuid): string
     {
         return '
             {
                 order (uuid:"' . $uuid . '") {
+                    status
+                    totalPrice {
+                        priceWithVat
+                    }
+                    firstName
+                    lastName
+                    promoCode
+                    trackingNumber
+                    trackingUrl
+                }
+            }
+        ';
+    }
+
+    /**
+     * @param string $orderNumber
+     * @return string
+     */
+    private function getOrderQueryByOrderNumber(string $orderNumber): string
+    {
+        return '
+            {
+                order (orderNumber:"' . $orderNumber . '") {
                     status
                     totalPrice {
                         priceWithVat
