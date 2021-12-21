@@ -5,6 +5,7 @@ import {
     ProductDetailImageStyled,
     ProductDetailInfoStyled,
     ProductDetailPrefixStyled,
+    ProductDetailShortDescriptionStyled,
     ProductDetailStyled,
 } from './ProductDetail.style';
 import ProductDetailAccessories from './ProductDetailAccessories';
@@ -27,7 +28,6 @@ type ProductDetailProps = {
 const ProductDetail: FC<ProductDetailProps> = (props) => {
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
-
     return (
         <>
             <Webline>
@@ -43,6 +43,11 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
+                        {props.product.shortDescription !== undefined && (
+                            <ProductDetailShortDescriptionStyled>
+                                {props.product.shortDescription}
+                            </ProductDetailShortDescriptionStyled>
+                        )}
                         <ProductDetailAddToCart {...props} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>

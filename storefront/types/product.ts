@@ -94,6 +94,7 @@ export type ProductDetailType = {
     nameSuffix: string;
     stockQuantity: number;
     description: string;
+    shortDescription: string;
     catalogNumber: string;
     price: ProductPriceType;
     availability: Availability;

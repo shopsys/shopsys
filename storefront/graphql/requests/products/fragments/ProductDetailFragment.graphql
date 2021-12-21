@@ -5,6 +5,7 @@ fragment ProductDetailFragment on Product {
     namePrefix
     nameSuffix
     description
+    shortDescription
     catalogNumber
     stockQuantity
     ...ProductPriceFragment

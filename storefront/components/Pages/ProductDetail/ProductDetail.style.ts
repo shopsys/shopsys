@@ -95,3 +95,7 @@ export const ProductDetailCodeStyled = styled.div`
         font-size: 13px;
     `}
 `;
+
+export const ProductDetailShortDescriptionStyled = styled.div`
+    margin-bottom: 20px;
+`;
