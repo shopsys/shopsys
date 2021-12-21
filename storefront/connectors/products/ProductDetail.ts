@@ -38,6 +38,10 @@ export const mapProductDetailApiData = (
             productDetailApiData.description !== undefined && productDetailApiData.description !== null
                 ? productDetailApiData.description
                 : '',
+        shortDescription:
+            productDetailApiData.shortDescription !== undefined && productDetailApiData.shortDescription !== null
+                ? productDetailApiData.shortDescription
+                : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories:
             productDetailApiData.accessories !== undefined && productDetailApiData.accessories !== null
