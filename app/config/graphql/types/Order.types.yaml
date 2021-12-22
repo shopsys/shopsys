@@ -19,3 +19,9 @@ Order:
             trackingUrl:
                 type: "String"
                 description: "The order tracking link"
+            country:
+                type: "Country!"
+                description: "Billing address country"
+            deliveryCountry:
+                type: "Country"
+                description: "Country for delivery"

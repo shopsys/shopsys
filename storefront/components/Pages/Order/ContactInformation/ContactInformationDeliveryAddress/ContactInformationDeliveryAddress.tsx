@@ -54,7 +54,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
             const selectedCountryOption = countrySelectOptions.find((option) => {
-                return option.value === pickupPlace?.country;
+                return option.value === pickupPlace?.country.code;
             });
             if (selectedCountryOption !== undefined && pickupPlace !== null) {
                 const formValues = formProviderMethods.getValues();
@@ -76,6 +76,8 @@ const ContactInformationDeliveryAddress: FC = () => {
             return;
         }
         setTimeout(() => {
+            const firstCountrySelectOption = { ...countrySelectOptions[0] };
+
             formProviderMethods.setValue(formMeta.fields.deliveryFirstName.name, '');
             formProviderMethods.setValue(formMeta.fields.deliveryLastName.name, '');
             formProviderMethods.setValue(formMeta.fields.deliveryCompanyName.name, '');
@@ -83,13 +85,13 @@ const ContactInformationDeliveryAddress: FC = () => {
             formProviderMethods.setValue(formMeta.fields.deliveryStreet.name, '');
             formProviderMethods.setValue(formMeta.fields.deliveryCity.name, '');
             formProviderMethods.setValue(formMeta.fields.deliveryPostcode.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
+            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, firstCountrySelectOption);
             dispatch(
                 contactInformationActions.setDeliveryAddressFromPickupPlace({
                     city: '',
                     postcode: '',
                     street: '',
-                    country: countrySelectOptions[0],
+                    country: firstCountrySelectOption,
                 }),
             );
         }, 500);

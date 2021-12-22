@@ -32,7 +32,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         street
         city
         postcode
-        country
+        country {
+            code
+        }
         defaultDeliveryAddress {
             uuid
             companyName
@@ -40,7 +42,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             city
             postcode
             telephone
-            country
+            country {
+                code
+            }
             firstName
             lastName
         }
@@ -51,7 +55,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             city
             postcode
             telephone
-            country
+            country {
+                code
+            }
             firstName
             lastName
         }
@@ -77,7 +83,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             "street": "Hlubinská 5",
             "city": "Ostrava",
             "postcode": "70200",
-            "country": "CZ",
+            "country": {
+                "code": "CZ"
+            },
             "defaultDeliveryAddress": {
                 "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
                 "companyName": "Rockpoint",
@@ -85,7 +93,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 "city": "Ostrava",
                 "postcode": "70030",
                 "telephone": "123456789",
-                "country": "CZ",
+                "country": {
+                    "code": "CZ"
+                },
                 "firstName": "Eva",
                 "lastName": "Wallicová"
             },
@@ -97,7 +107,9 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                     "city": "Ostrava",
                     "postcode": "70030",
                     "telephone": "123456789",
-                    "country": "CZ",
+                    "country": {
+                        "code": "CZ"
+                    },
                     "firstName": "Eva",
                     "lastName": "Wallicová"
                 }
@@ -132,7 +144,9 @@ mutation {
         email
         street
         city
-        country
+        country {
+            code
+        }
         postcode
     }
 }';
@@ -147,7 +161,9 @@ mutation {
             "email": "no-reply@shopsys.com",
             "street": "123 Fake street",
             "city": "Springfield",
-            "country": "CZ",
+            "country": {
+                "code": "CZ"
+            },
             "postcode": "54321"
         }
     }

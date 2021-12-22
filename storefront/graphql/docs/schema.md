@@ -2804,10 +2804,10 @@ Billing address zip code
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Billing address country code
+Billing address country
 
 </td>
 </tr>
@@ -2971,10 +2971,10 @@ Delivery address telephone
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Delivery address country code
+Delivery address country
 
 </td>
 </tr>
@@ -4077,10 +4077,10 @@ Billing address zip code
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Billing address country code
+Billing address country
 
 </td>
 </tr>
@@ -4158,10 +4158,10 @@ Zip code for delivery
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#country">Country</a></td>
 <td>
 
-Country code for delivery
+Country for delivery
 
 </td>
 </tr>
@@ -5201,10 +5201,10 @@ Billing address zip code
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Billing address country code
+Billing address country
 
 </td>
 </tr>
@@ -5754,10 +5754,10 @@ Store address postcode
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Store address country code
+Store address country
 
 </td>
 </tr>
@@ -8035,10 +8035,10 @@ Billing address zip code
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
-Billing address country code
+Billing address country
 
 </td>
 </tr>

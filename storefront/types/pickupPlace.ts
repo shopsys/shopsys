@@ -1,3 +1,5 @@
+import { CountryType } from 'types/country';
+
 export type PickupPlaceType = {
     identifier: string;
     name: string;
@@ -6,5 +8,5 @@ export type PickupPlaceType = {
     street: string;
     postcode: string;
     city: string;
-    country: string;
+    country: CountryType;
 };

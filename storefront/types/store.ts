@@ -1,4 +1,5 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
+import { CountryType } from 'types/country';
 
 export type StoreDetailType = {
     __typename: 'Store';
@@ -9,7 +10,7 @@ export type StoreDetailType = {
     street: string;
     city: string;
     postcode: string;
-    country: string;
+    country: CountryType;
     openingHours: string | null;
     contactInfo: string | null;
     specialMessage: string | null;

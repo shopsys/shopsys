@@ -39,7 +39,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                     'street' => '123 Fake Street',
                     'city' => 'Springfield',
                     'postcode' => '12345',
-                    'country' => 'CZ',
+                    'country' => [
+                        'code' => 'CZ',
+                    ],
                     'differentDeliveryAddress' => false,
                     'deliveryFirstName' => 'firstName',
                     'deliveryLastName' => 'lastName',
@@ -48,7 +50,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                     'deliveryStreet' => '123 Fake Street',
                     'deliveryCity' => 'Springfield',
                     'deliveryPostcode' => '12345',
-                    'deliveryCountry' => 'CZ',
+                    'deliveryCountry' => [
+                        'code' => 'CZ',
+                    ],
                     'note' => null,
                 ],
             ],
@@ -151,7 +155,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                         street
                         city
                         postcode
-                        country
+                        country {
+                            code
+                        }
                         differentDeliveryAddress
                         deliveryFirstName
                         deliveryLastName
@@ -160,7 +166,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                         deliveryStreet
                         deliveryCity
                         deliveryPostcode
-                        deliveryCountry
+                        deliveryCountry {
+                            code
+                        }
                         note
                     }
                 }';
@@ -259,7 +267,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                         street
                         city
                         postcode
-                        country
+                        country {
+                            code
+                        }
                         differentDeliveryAddress
                         deliveryFirstName
                         deliveryLastName
@@ -268,7 +278,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
                         deliveryStreet
                         deliveryCity
                         deliveryPostcode
-                        deliveryCountry
+                        deliveryCountry {
+                            code
+                        }
                         note
                     }
                 }';

@@ -39,7 +39,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                     'street' => '123 Fake Street',
                     'city' => 'Springfield',
                     'postcode' => '12345',
-                    'country' => 'CZ',
+                    'country' => [
+                        'code' => 'CZ',
+                    ],
                     'differentDeliveryAddress' => true,
                     'deliveryFirstName' => 'deliveryFirstName',
                     'deliveryLastName' => 'deliveryLastName',
@@ -48,7 +50,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                     'deliveryStreet' => 'deliveryStreet',
                     'deliveryCity' => 'deliveryCity',
                     'deliveryPostcode' => '13453',
-                    'deliveryCountry' => 'SK',
+                    'deliveryCountry' => [
+                        'code' => 'SK',
+                    ],
                     'note' => 'Thank You',
                 ],
             ],
@@ -230,7 +234,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         street
                         city
                         postcode
-                        country
+                        country {
+                            code
+                        }
                         differentDeliveryAddress
                         deliveryFirstName
                         deliveryLastName
@@ -239,7 +245,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         deliveryStreet
                         deliveryCity
                         deliveryPostcode
-                        deliveryCountry
+                        deliveryCountry {
+                            code
+                        }
                         note
                     }
                 }';

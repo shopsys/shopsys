@@ -6,7 +6,9 @@ fragment StoreDetailFragment on Store {
     street
     city
     postcode
-    country
+    country {
+        ...CountryFragment
+    }
     openingHours
     contactInfo
     specialMessage

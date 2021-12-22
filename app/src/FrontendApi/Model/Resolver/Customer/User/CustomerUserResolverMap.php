@@ -25,7 +25,7 @@ class CustomerUserResolverMap extends ResolverMap
                 return $customerUser->getCustomer()->getBillingAddress()->getPostcode();
             },
             'country' => function (CustomerUser $customerUser) {
-                return $customerUser->getCustomer()->getBillingAddress()->getCountry()->getCode();
+                return $customerUser->getCustomer()->getBillingAddress()->getCountry();
             },
             'defaultDeliveryAddress' => function (CustomerUser $customerUser) {
                 return $customerUser->getDefaultDeliveryAddress();

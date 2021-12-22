@@ -584,8 +584,8 @@ type CompanyCustomerUser implements CustomerUser {
   """Billing address zip code"""
   postcode: String!
 
-  """Billing address country code"""
-  country: String!
+  """Billing address country"""
+  country: Country!
 
   """Whether customer user receives newsletters or not"""
   newsletterSubscription: Boolean!
@@ -643,8 +643,8 @@ interface CustomerUser {
   """Billing address zip code"""
   postcode: String!
 
-  """Billing address country code"""
-  country: String!
+  """Billing address country"""
+  country: Country!
 
   """Whether customer user receives newsletters or not"""
   newsletterSubscription: Boolean!
@@ -678,8 +678,8 @@ type DeliveryAddress {
   """Delivery address telephone"""
   telephone: String!
 
-  """Delivery address country code"""
-  country: String!
+  """Delivery address country"""
+  country: Country!
 
   """Delivery address firstname"""
   firstName: String!
@@ -1054,8 +1054,8 @@ type Order {
   """Billing address zip code"""
   postcode: String!
 
-  """Billing address country code"""
-  country: String!
+  """Billing address country"""
+  country: Country!
 
   """
   Indicates whether the billing address is other than a delivery address
@@ -1083,8 +1083,8 @@ type Order {
   """Zip code for delivery"""
   deliveryPostcode: String
 
-  """Country code for delivery"""
-  deliveryCountry: String
+  """Country for delivery"""
+  deliveryCountry: Country
 
   """Other information related to the order"""
   note: String
@@ -1919,8 +1919,8 @@ type RegularCustomerUser implements CustomerUser {
   """Billing address zip code"""
   postcode: String!
 
-  """Billing address country code"""
-  country: String!
+  """Billing address country"""
+  country: Country!
 
   """Whether customer user receives newsletters or not"""
   newsletterSubscription: Boolean!
@@ -2108,8 +2108,8 @@ type Store implements Breadcrumb & Slug {
   """Store address postcode"""
   postcode: String!
 
-  """Store address country code"""
-  country: String!
+  """Store address country"""
+  country: Country!
 
   """Store opening hours"""
   openingHours: String

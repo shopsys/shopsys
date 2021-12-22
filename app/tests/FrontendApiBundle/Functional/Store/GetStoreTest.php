@@ -208,7 +208,9 @@ class GetStoreTest extends GraphQlTestCase
                     street
                     city
                     postcode
-                    country
+                    country {
+                        code
+                    }
                     openingHours
                     specialMessage
                     locationLatitude
@@ -240,7 +242,9 @@ class GetStoreTest extends GraphQlTestCase
                 'street' => 'Koksární 10',
                 'city' => 'Ostrava',
                 'postcode' => '70200',
-                'country' => 'CZ',
+                'country' => [
+                    'code' => 'CZ',
+                ],
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-16:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,
@@ -265,7 +269,9 @@ class GetStoreTest extends GraphQlTestCase
                 'street' => 'Bratranců Veverkových 2722',
                 'city' => 'Pardubice',
                 'postcode' => '53002',
-                'country' => 'CZ',
+                'country' => [
+                    'code' => 'CZ',
+                ],
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-17:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,
