@@ -10,11 +10,11 @@ import {
 } from './Search.style';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import Button from 'components/Forms/Button';
-import { EnrichedSearchType } from 'types/search';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
+import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
@@ -32,7 +32,7 @@ enum NUMBER_OF_VISIBLE_ITEMS {
 }
 
 type SearchProps = {
-    searchResults: EnrichedSearchType | undefined;
+    searchResults: SearchType | undefined;
 };
 
 const Search: FC<SearchProps> = (props) => {

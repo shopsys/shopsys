@@ -11,7 +11,7 @@ export type AutocompleteSearchType = {
     productsSearch: { totalCount: number; products: SimpleProductType[] };
 };
 
-export type EnrichedSearchType = {
+export type SearchType = {
     articlesSearch: (ListedArticleType | ListedBlogArticleType)[];
     brandSearch: ListedBrandType[];
     productsSearch: { totalCount: number; products: ListedProductType[] };

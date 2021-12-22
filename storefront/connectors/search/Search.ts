@@ -1,6 +1,5 @@
-import { EnrichedSearchQueryApi, ProductOrderingModeEnumApi, useEnrichedSearchQueryApi } from 'graphql/generated';
+import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
-import { EnrichedSearchType } from 'types/search';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
@@ -11,58 +10,56 @@ import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
 import { PaginationType } from 'redux/slices/user';
+import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const getEnrichedSearch = (
+export const getSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi,
     searchProductsPagination: PaginationType['paginationCursor'],
-): EnrichedSearchType | undefined => {
-    const [result] = useEnrichedSearchQueryApi({
+): SearchType | undefined => {
+    const [result] = useSearchQueryApi({
         variables: { search: searchQuery, orderingMode: searchProductsSort, after: searchProductsPagination },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [mappedResult, setMappedResult] = useState<EnrichedSearchType | undefined>(
-        mapEnrichedSearchResult(result.data, currencyCode),
+    const [mappedResult, setMappedResult] = useState<SearchType | undefined>(
+        mapSearchResult(result.data, currencyCode),
     );
 
     useQueryError(result.error);
     useEffect(() => {
-        setMappedResult(mapEnrichedSearchResult(result.data, currencyCode));
+        setMappedResult(mapSearchResult(result.data, currencyCode));
     }, [result.data]);
 
     if (typeof window === 'undefined' && result.data !== undefined) {
-        return mapEnrichedSearchResult(result.data, currencyCode);
+        return mapSearchResult(result.data, currencyCode);
     }
 
     return mappedResult;
 };
 
-const mapEnrichedSearchResult = (
-    apiData: EnrichedSearchQueryApi | undefined,
-    currencyCode: string,
-): EnrichedSearchType | undefined => {
+const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: string): SearchType | undefined => {
     if (apiData === undefined) {
         return undefined;
     }
 
     return {
-        articlesSearch: mapEnrichedArticlesSearchResults(apiData.articlesSearch),
-        brandSearch: mapEnrichedBrandSearchResults(apiData.brandSearch),
+        articlesSearch: mapArticlesSearchResults(apiData.articlesSearch),
+        brandSearch: mapBrandSearchResults(apiData.brandSearch),
         categoriesSearch: {
             totalCount: apiData.categoriesSearch?.totalCount === undefined ? 0 : apiData.categoriesSearch.totalCount,
-            categories: mapEnrichedCategoriesSearchResults(apiData.categoriesSearch),
+            categories: mapCategoriesSearchResults(apiData.categoriesSearch),
         },
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
-            products: mapEnrichedProductsSearchResults(apiData.productsSearch, currencyCode),
+            products: mapProductsSearchResults(apiData.productsSearch, currencyCode),
         },
     };
 };
 
-const mapEnrichedProductsSearchResults = (
-    apiData: EnrichedSearchQueryApi['productsSearch'],
+const mapProductsSearchResults = (
+    apiData: SearchQueryApi['productsSearch'],
     currencyCode: string,
 ): ListedProductType[] => {
     const mappedProducts = [];
@@ -78,9 +75,7 @@ const mapEnrichedProductsSearchResults = (
     return mappedProducts;
 };
 
-const mapEnrichedCategoriesSearchResults = (
-    apiData: EnrichedSearchQueryApi['categoriesSearch'],
-): ListedCategoryType[] => {
+const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch']): ListedCategoryType[] => {
     const mappedCategories = [];
 
     if (apiData?.edges !== undefined && apiData.edges !== null) {
@@ -94,12 +89,12 @@ const mapEnrichedCategoriesSearchResults = (
     return mappedCategories;
 };
 
-export const mapEnrichedBrandSearchResults = (apiData: EnrichedSearchQueryApi['brandSearch']): ListedBrandType[] => {
+export const mapBrandSearchResults = (apiData: SearchQueryApi['brandSearch']): ListedBrandType[] => {
     return apiData.map((brand) => mapListedBrandApiData(brand));
 };
 
-export const mapEnrichedArticlesSearchResults = (
-    apiData: EnrichedSearchQueryApi['articlesSearch'],
+export const mapArticlesSearchResults = (
+    apiData: SearchQueryApi['articlesSearch'],
 ): (ListedArticleType | ListedBlogArticleType)[] => {
     const mappedArticles = [];
 
