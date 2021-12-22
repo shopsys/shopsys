@@ -4,7 +4,7 @@ import { ListedBrandType, SimpleBrandType } from 'types/brand';
 import { ListedCategoryType, SimpleCategoryType } from 'types/category';
 import { ListedProductType, SimpleProductType } from 'types/product';
 
-export type SearchType = {
+export type AutocompleteSearchType = {
     articlesSearch: (SimpleArticleType | SimpleBlogArticleType)[];
     brandSearch: SimpleBrandType[];
     categoriesSearch: { totalCount: number; categories: SimpleCategoryType[] };

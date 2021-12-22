@@ -1,4 +1,4 @@
-query SearchQuery($search: String!) {
+query AutocompleteSearchQuery($search: String!) {
     articlesSearch(search: $search) {
         ...SimpleArticleFragment
     }

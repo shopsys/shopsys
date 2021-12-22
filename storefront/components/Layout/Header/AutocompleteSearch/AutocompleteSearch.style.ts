@@ -2,11 +2,11 @@ import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 import TextInput from 'components/Forms/TextInput';
 
-type WithIsActiveStyledProps = {
+type AutocompleteSearchFormStyledProps = {
     isActive: boolean;
 };
 
-export const SearchStyled = styled.div`
+export const AutocompleteSearchStyled = styled.div`
     ${({ theme }) => css`
         height: 48px;
 
@@ -16,7 +16,7 @@ export const SearchStyled = styled.div`
     `}
 `;
 
-export const SearchInStyled = styled.div`
+export const AutocompleteSearchInStyled = styled.div`
     ${({ theme }) => css`
         transition: all 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
 
@@ -30,7 +30,7 @@ export const SearchInStyled = styled.div`
     `}
 `;
 
-export const SearchFormStyled = styled.form<WithIsActiveStyledProps>`
+export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormStyledProps>`
     ${({ theme, isActive }) => css`
         position: relative;
         display: flex;
@@ -70,7 +70,7 @@ export const SearchFormStyled = styled.form<WithIsActiveStyledProps>`
     `}
 `;
 
-export const SearchTextInputStyled = styled(TextInput)`
+export const AutocompleteSearchTextInputStyled = styled(TextInput)`
     width: 100%;
     margin-bottom: 0;
 
@@ -82,7 +82,7 @@ export const SearchTextInputStyled = styled(TextInput)`
     }
 `;
 
-export const RemoveSearchButtonStyled = styled.div`
+export const AutocompleteSearchRemoveButtonStyled = styled.div`
     ${({ theme }) => css`
         align-items: center;
         display: flex;

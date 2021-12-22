@@ -7,6 +7,7 @@ import {
     HeaderMiddleStyled,
     HeaderStyled,
 } from './Header.style';
+import AutocompleteSearch from './AutocompleteSearch';
 import Cart from './Cart';
 import DropdownMenu from './DropdownMenu';
 import FrontendSwitcher from 'components/Blocks/FrontendSwitcher';
@@ -15,7 +16,6 @@ import HeaderContact from './Contact/HeaderContact';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import Overlay from 'components/Layout/Overlay';
-import Search from './Search';
 import { useRouter } from 'next/router';
 
 const Header: FC = () => {
@@ -37,7 +37,7 @@ const Header: FC = () => {
             ) : (
                 <>
                     <HeaderMiddleStyled>
-                        <Search />
+                        <AutocompleteSearch />
                     </HeaderMiddleStyled>
                     <HeaderLinksStyled>
                         <MenuIconic />

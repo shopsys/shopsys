@@ -1,18 +1,22 @@
-import { ProductImagesListFragmentApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
+import {
+    AutocompleteSearchQueryApi,
+    ProductImagesListFragmentApi,
+    useAutocompleteSearchQueryApi,
+} from 'graphql/generated';
 import { useEffect, useState } from 'react';
+import { AutocompleteSearchType } from 'types/search';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapProductPriceApiData } from 'connectors/products/Products';
-import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const getSearch = (searchQuery: string): SearchType | undefined => {
-    const [result] = useSearchQueryApi({
-        variables: { search: searchQuery },
-        pause: searchQuery.length < 3,
+export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
+    const [result] = useAutocompleteSearchQueryApi({
+        variables: { search: autocompleteSearch },
+        pause: autocompleteSearch.length < 3,
         requestPolicy: 'network-only',
     });
-    const [mappedResult, setMappedResult] = useState<SearchType | undefined>(undefined);
+    const [mappedResult, setMappedResult] = useState<AutocompleteSearchType | undefined>(undefined);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     useQueryError(result.error);
@@ -22,15 +26,15 @@ export const getSearch = (searchQuery: string): SearchType | undefined => {
         }
     }, [result.data]);
     useEffect(() => {
-        if (searchQuery.length < 3 && mappedResult !== undefined) {
+        if (autocompleteSearch.length < 3 && mappedResult !== undefined) {
             setMappedResult(undefined);
         }
-    }, [searchQuery]);
+    }, [autocompleteSearch]);
 
     return mappedResult;
 };
 
-const mapSearchResult = (apiData: SearchQueryApi, currencyCode: string): SearchType => {
+const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: string): AutocompleteSearchType => {
     return {
         ...apiData,
         articlesSearch: mapArticlesSearchResults(apiData.articlesSearch),
@@ -39,7 +43,9 @@ const mapSearchResult = (apiData: SearchQueryApi, currencyCode: string): SearchT
     };
 };
 
-const mapArticlesSearchResults = (apiData: SearchQueryApi['articlesSearch']): SearchType['articlesSearch'] => {
+const mapArticlesSearchResults = (
+    apiData: AutocompleteSearchQueryApi['articlesSearch'],
+): AutocompleteSearchType['articlesSearch'] => {
     const mappedArticles = [];
 
     if (apiData !== undefined && apiData !== null) {
@@ -52,7 +58,9 @@ const mapArticlesSearchResults = (apiData: SearchQueryApi['articlesSearch']): Se
     return mappedArticles;
 };
 
-const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch']): SearchType['categoriesSearch'] => {
+const mapCategoriesSearchResults = (
+    apiData: AutocompleteSearchQueryApi['categoriesSearch'],
+): AutocompleteSearchType['categoriesSearch'] => {
     const mappedCategories = [];
 
     if (apiData?.edges !== undefined && apiData?.edges !== null) {
@@ -69,9 +77,9 @@ const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch'])
 };
 
 const mapProductsSearchResults = (
-    apiData: SearchQueryApi['productsSearch'],
+    apiData: AutocompleteSearchQueryApi['productsSearch'],
     currencyCode: string,
-): SearchType['productsSearch'] => {
+): AutocompleteSearchType['productsSearch'] => {
     const mappedProducts = [];
 
     if (apiData?.edges !== undefined && apiData.edges !== null) {
