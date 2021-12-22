@@ -114,7 +114,7 @@ export const RangeSliderRangeStyled = styled.div`
     ${({ theme }) => css`
         position: absolute;
         height: 5px;
-        z-index: ${theme.zIndex.above} + 1;
+        z-index: calc(${theme.zIndex.above} + 1);
 
         border-radius: 3px;
         background-color: ${localVariables.RangeSliderRangeBackground};
