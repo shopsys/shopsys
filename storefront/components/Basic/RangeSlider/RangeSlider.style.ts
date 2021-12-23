@@ -23,6 +23,7 @@ const getThumbStyle = () => {
         position: absolute;
         height: 0;
         width: 100%;
+        z-index: 3;
         top: ${localVariables.RangeSliderThumbTopPosition};
         outline: none;
 
