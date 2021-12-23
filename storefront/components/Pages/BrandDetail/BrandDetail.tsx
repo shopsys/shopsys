@@ -3,8 +3,8 @@ import {
     BrandDetailStyled,
     BrandDetailTextStyled,
 } from 'components/Pages/BrandDetail/BrandDetail.style';
+import { FC, useRef } from 'react';
 import { BrandDetailType } from 'types/brand';
-import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
 import Pagination from 'components/Blocks/Pagination';
@@ -18,6 +18,8 @@ type BrandDetailProps = {
 };
 
 const BrandDetail: FC<BrandDetailProps> = (props) => {
+    const containerWrapRef = useRef<null | HTMLDivElement>(null);
+
     return (
         <>
             <Webline>
@@ -32,11 +34,13 @@ const BrandDetail: FC<BrandDetailProps> = (props) => {
                 </BrandDetailStyled>
             </Webline>
             <Webline>
-                <SortingBar totalCount={props.brand.products.totalCount} />
-                {props.brand.products.edges.length !== 0 && (
-                    <ProductsList products={props.brand.products.edges.map((edge) => edge.node)} />
-                )}
-                <Pagination totalCount={props.brand.products.totalCount} />
+                <div ref={containerWrapRef}>
+                    <SortingBar totalCount={props.brand.products.totalCount} />
+                    {props.brand.products.edges.length !== 0 && (
+                        <ProductsList products={props.brand.products.edges.map((edge) => edge.node)} />
+                    )}
+                    <Pagination totalCount={props.brand.products.totalCount} containerWrapRef={containerWrapRef} />
+                </div>
             </Webline>
         </>
     );

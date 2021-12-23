@@ -1,5 +1,5 @@
+import { FC, useRef } from 'react';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Heading from 'components/Basic/Heading';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
@@ -18,6 +18,7 @@ type ListedOrdersProps = { orders: ListedOrderType[] | undefined; totalCount: nu
 const Orders: FC<ListedOrdersProps> = (props) => {
     const t = useTypedTranslationFunction();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     const { url } = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], url);
@@ -30,51 +31,56 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                 </HeadingWrapperStyled>
                 <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('Orders'), slug: customerOrdersUrl }]} />
             </Webline>
-            <Webline>
-                <TableGrid>
-                    {orders !== undefined && orders.length !== 0 && (
-                        <tr>
-                            <th>{t('Order number')}</th>
-                            <th className="text-right">{t('Creation date')}</th>
-                            <th className="text-right">{t('Number of items')}</th>
-                            <th>{t('Shipping')}</th>
-                            <th>{t('Payment')}</th>
-                            <th className="text-right">{t('Total price including VAT')}</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    )}
-
-                    {orders !== undefined &&
-                        orders.length !== 0 &&
-                        orders.map((order, index) => (
-                            <tr key={index}>
-                                <td>{order.number}</td>
-                                <td className="text-right">{order.creationDate}</td>
-                                <td className="text-right">{order.items.quantity}</td>
-                                <td>
-                                    <TransportImageWrapperStyled>
-                                        <Image image={order.transport.image} alt={order.transport.name} />
-                                    </TransportImageWrapperStyled>
-                                    {order.transport.name}
-                                </td>
-                                <td>{order.payment}</td>
-                                <td className="text-right">
-                                    {formatPrice(order.totalPrice.priceWithVat, currencyCode, t)}
-                                </td>
-                                <td>{t('Detail')}</td>
+            <div ref={containerWrapRef}>
+                <Webline>
+                    <TableGrid>
+                        {orders !== undefined && orders.length !== 0 && (
+                            <tr>
+                                <th>{t('Order number')}</th>
+                                <th className="text-right">{t('Creation date')}</th>
+                                <th className="text-right">{t('Number of items')}</th>
+                                <th>{t('Shipping')}</th>
+                                <th>{t('Payment')}</th>
+                                <th className="text-right">{t('Total price including VAT')}</th>
+                                <th>&nbsp;</th>
                             </tr>
-                        ))}
+                        )}
 
-                    {orders === undefined && (
-                        <tr>
-                            <th>{t('You have no orders')}</th>
-                        </tr>
-                    )}
-                </TableGrid>
-            </Webline>
-            <Webline>
-                <Pagination totalCount={props.totalCount !== undefined ? props.totalCount : 0} />
-            </Webline>
+                        {orders !== undefined &&
+                            orders.length !== 0 &&
+                            orders.map((order, index) => (
+                                <tr key={index}>
+                                    <td>{order.number}</td>
+                                    <td className="text-right">{order.creationDate}</td>
+                                    <td className="text-right">{order.items.quantity}</td>
+                                    <td>
+                                        <TransportImageWrapperStyled>
+                                            <Image image={order.transport.image} alt={order.transport.name} />
+                                        </TransportImageWrapperStyled>
+                                        {order.transport.name}
+                                    </td>
+                                    <td>{order.payment}</td>
+                                    <td className="text-right">
+                                        {formatPrice(order.totalPrice.priceWithVat, currencyCode, t)}
+                                    </td>
+                                    <td>{t('Detail')}</td>
+                                </tr>
+                            ))}
+
+                        {orders === undefined && (
+                            <tr>
+                                <th>{t('You have no orders')}</th>
+                            </tr>
+                        )}
+                    </TableGrid>
+                </Webline>
+                <Webline>
+                    <Pagination
+                        totalCount={props.totalCount !== undefined ? props.totalCount : 0}
+                        containerWrapRef={containerWrapRef}
+                    />
+                </Webline>
+            </div>
         </>
     );
 };

@@ -39,6 +39,7 @@ const Search: FC<SearchProps> = (props) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -167,14 +168,17 @@ const Search: FC<SearchProps> = (props) => {
             {props.searchResults.productsSearch.totalCount > 0 && (
                 <SearchResultsWeblineStyled>
                     <Heading type={'h3'}>{t('Found products')}</Heading>
-                    <SearchResultsStyled>
+                    <SearchResultsStyled ref={containerWrapRef}>
                         <SearchResultsPanelStyled>
                             <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                         </SearchResultsPanelStyled>
                         <SearchResultsContentStyled>
                             <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
                             <ProductsList products={props.searchResults.productsSearch.products} />
-                            <Pagination totalCount={props.searchResults.productsSearch.totalCount} />
+                            <Pagination
+                                totalCount={props.searchResults.productsSearch.totalCount}
+                                containerWrapRef={containerWrapRef}
+                            />
                         </SearchResultsContentStyled>
                     </SearchResultsStyled>
                 </SearchResultsWeblineStyled>

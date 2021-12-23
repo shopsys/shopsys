@@ -28,6 +28,7 @@ type CategoryDetailProps = {
 const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
     const [productFilterOptionsData, setProductFilterOptionsData] = useState<FilterOptionsType>(
@@ -59,7 +60,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
 
     return (
         <Webline>
-            <CategoryDetailStyled>
+            <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
                     <ProductFilter productFilterOptions={productFilterOptionsData} slug={categorySlug} />
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
@@ -100,7 +101,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                             </div>
                         </CategoryDetailContentMessageStyled>
                     )}
-                    <Pagination totalCount={props.category.products.totalCount} />
+                    <Pagination totalCount={props.category.products.totalCount} containerWrapRef={containerWrapRef} />
                 </CategoryDetailContentStyled>
             </CategoryDetailStyled>
         </Webline>
