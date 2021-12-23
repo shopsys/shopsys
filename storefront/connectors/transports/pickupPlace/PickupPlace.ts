@@ -5,7 +5,7 @@ import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/gene
 
 export const getSelectedPickupPlace = (
     transport: TransportType | null,
-    pickupPlaceIdentifier: string | null,
+    pickupPlaceIdentifier: string | null | undefined,
 ): PickupPlaceType | null => {
     if (transport === null || pickupPlaceIdentifier === null) {
         return null;

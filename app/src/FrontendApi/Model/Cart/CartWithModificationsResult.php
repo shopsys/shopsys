@@ -82,6 +82,16 @@ class CartWithModificationsResult
     private ?Money $remainingAmountWithVatForFreeTransport = null;
 
     /**
+     * @var string|null
+     */
+    private ?string $promoCode;
+
+    /**
+     * @var string|null
+     */
+    private ?string $selectedPickupPlaceIdentifier = null;
+
+    /**
      * @param \App\Model\Cart\Cart $cart
      */
     public function __construct(Cart $cart)
@@ -262,6 +272,22 @@ class CartWithModificationsResult
     }
 
     /**
+     * @return string|null
+     */
+    public function getPromoCode(): ?string
+    {
+        return $this->promoCode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSelectedPickupPlaceIdentifier(): ?string
+    {
+        return $this->selectedPickupPlaceIdentifier;
+    }
+
+    /**
      * @param \App\Model\Transport\Transport|null $transport
      */
     public function setTransport(?Transport $transport): void
@@ -275,5 +301,21 @@ class CartWithModificationsResult
     public function setPayment(?Payment $payment): void
     {
         $this->payment = $payment;
+    }
+
+    /**
+     * @param string|null $promoCode
+     */
+    public function setPromoCode(?string $promoCode): void
+    {
+        $this->promoCode = $promoCode;
+    }
+
+    /**
+     * @param string|null $selectedPickupPlaceIdentifier
+     */
+    public function setSelectedPickupPlaceIdentifier(?string $selectedPickupPlaceIdentifier): void
+    {
+        $this->selectedPickupPlaceIdentifier = $selectedPickupPlaceIdentifier;
     }
 }

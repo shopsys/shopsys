@@ -28,7 +28,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const Cart: FC = () => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const { cart } = useShopsysSelector((state) => state.user);
+    const { cart } = useShopsysSelector((state) => state.cart);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 

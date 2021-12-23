@@ -1,6 +1,5 @@
 import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
-import { cartInputActions } from 'redux/slices/cartInput';
+import { cartActions } from 'redux/slices/cart';
 import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
@@ -20,24 +19,17 @@ export const useHandleCartErrors = (resultErrors: CombinedError | undefined, err
 
         switch (applicationError?.type) {
             case ApplicationErrors.CART_NOT_FOUND:
-                updateCartState(
-                    dispatch,
-                    { cart: null, payment: null, pickupPlace: null, transport: null },
-                    { cartUuid: null, isCartEmpty: true, transport: null, payment: null, promoCode: null },
-                );
-                updateCartInputCookie(initCartInputCookie());
+                updateCartState(dispatch);
                 break;
             case ApplicationErrors.DEFAULT:
                 showErrorMessage(errorMessage);
-                break;
-            default:
                 break;
         }
 
         if (userError?.validation !== undefined) {
             for (const invalidFieldName in userError.validation) {
                 if (invalidFieldName === 'promoCode') {
-                    dispatch(cartInputActions.setPromoCode(null));
+                    dispatch(cartActions.setPromoCode(null));
                 }
                 showErrorMessage(userError.validation[invalidFieldName].message);
             }

@@ -6,8 +6,7 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const FreeTransport: FC = () => {
-    const { cart } = useShopsysSelector((state) => state.user);
-    const { isCartEmpty } = useShopsysSelector((state) => state.cartInput);
+    const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const amount = cart?.remainingAmountWithVatForFreeTransport;

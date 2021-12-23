@@ -1,5 +1,4 @@
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { NavigationQueryDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -38,8 +37,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace } = useShopsysSelector((state) => state.user);
-    const cartInput = useShopsysSelector((state) => state.cartInput);
+    const { pickupPlace, cartInput } = useShopsysSelector((state) => state.cart);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
@@ -52,9 +50,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     const onSuccessfullyCreatedOrderHandler = () => {
-        const resetCartInput = initCartInputCookie();
-        updateCartState(dispatch, { cart: null, transport: null, pickupPlace: null, payment: null }, resetCartInput);
-        updateCartInputCookie(resetCartInput);
+        updateCartState(dispatch);
         dispatch(userActions.setOrderConfirmationAccess(true));
         router.push(orderConfirmationUrl);
     };
@@ -149,7 +145,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const redirect = handleOrderPagesRedirect(context);
+    const cartState = store.getState().cart;
+    const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
     return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
 });
 

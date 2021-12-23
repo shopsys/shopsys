@@ -150,6 +150,8 @@ class TransportAndPaymentWatcherFacade
             if ($transport !== null && !$transport->isPacketery()) {
                 $this->checkPersonalPickupStoreAvailability($transportInputData);
             }
+
+            $this->cartWithModificationsResult->setSelectedPickupPlaceIdentifier($transportInputData->getPickupPlaceIdentifier());
         }
 
         if ($paymentInputData) {
@@ -181,6 +183,7 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
         $this->cartWithModificationsResult->setTransport($transport);
         $this->cartWithModificationsResult->setPayment($payment);
+        $this->cartWithModificationsResult->setPromoCode($promoCode ? $promoCode->getCode() : null);
 
         $this->checkTransport($transport, $transportInputData, $orderPreview, $currency, $cart);
 

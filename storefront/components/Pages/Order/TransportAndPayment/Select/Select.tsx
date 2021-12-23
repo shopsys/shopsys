@@ -1,15 +1,14 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
-import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
+import { mapPaymentToPaymentInput, mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
+import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
-import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { PaymentInputType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
 import { PickupPlaceType } from 'types/pickupPlace';
 import Radiobutton from 'components/Forms/Radiobutton';
@@ -34,10 +33,13 @@ const Select: FC<SelectProps> = (props) => {
         control: formProviderMethods.control,
     });
 
-    const { payment, transport, pickupPlace } = useShopsysSelector((state) => state.user);
-    const transportInput = useShopsysSelector((state) => state.cartInput.transport);
-    const paymentInput = useShopsysSelector((state) => state.cartInput.payment);
-    const { cartUuid, isCartEmpty, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const {
+        payment,
+        transport,
+        pickupPlace,
+        isCartEmpty,
+        cartInput: { cartUuid, promoCode, transport: transportInput, payment: paymentInput },
+    } = useShopsysSelector((state) => state.cart);
 
     const [isPreSelectingTransport, setIsPreSelectingTransport] = useState(false);
 
@@ -47,7 +49,7 @@ const Select: FC<SelectProps> = (props) => {
     const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
     const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
 
-    loadCart(cartUuid, isCartEmpty, mappedTransportInput, mappedPaymentInput, promoCode);
+    useLoadCart(cartUuid, isCartEmpty, mappedTransportInput, mappedPaymentInput, promoCode);
 
     useEffect(() => {
         formProviderMethods.setValue(
@@ -160,6 +162,63 @@ const Select: FC<SelectProps> = (props) => {
         }
     };
 
+    const renderTransportListItem = (
+        transportItem: TransportType,
+        isActive: boolean,
+        fieldRef: ControllerRenderProps,
+    ) => {
+        return (
+            <ListItemStyled key={transportItem.uuid} isActive={isActive}>
+                <Radiobutton
+                    name={formMeta.fields.transport.name}
+                    id={transportItem.uuid}
+                    value={transportItem.uuid}
+                    fieldRef={fieldRef}
+                    image={transportItem.image}
+                    checked={isActive}
+                    uncheckCallback={resetTransportAndPayment}
+                    label={
+                        <SelectItemLabel
+                            name={transportItem.name}
+                            daysUntilDelivery={transportItem.daysUntilDelivery}
+                            price={transportItem.price}
+                            description={transportItem.description}
+                            pickupPlaceDetail={
+                                transportValue === transportItem.uuid &&
+                                transportItem.stores.some((store) => store.identifier === pickupPlace?.identifier)
+                                    ? pickupPlace
+                                    : null
+                            }
+                        />
+                    }
+                />
+            </ListItemStyled>
+        );
+    };
+
+    const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean, fieldRef: ControllerRenderProps) => {
+        return (
+            <ListItemStyled key={paymentItem.uuid} isActive={isActive}>
+                <Radiobutton
+                    name={formMeta.fields.payment.name}
+                    id={paymentItem.uuid}
+                    value={paymentItem.uuid}
+                    fieldRef={fieldRef}
+                    image={paymentItem.image}
+                    checked={isActive}
+                    uncheckCallback={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                    label={
+                        <SelectItemLabel
+                            name={paymentItem.name}
+                            price={paymentItem.price}
+                            description={paymentItem.description}
+                        />
+                    }
+                />
+            </ListItemStyled>
+        );
+    };
+
     return (
         <>
             <PacketeryContainer />
@@ -170,37 +229,11 @@ const Select: FC<SelectProps> = (props) => {
                         name={formMeta.fields.transport.name}
                         render={({ field }) => (
                             <ul>
-                                {props.transports.map((transportItem) => (
-                                    <ListItemStyled
-                                        key={transportItem.uuid}
-                                        isActive={transportValue === transportItem.uuid}
-                                    >
-                                        <Radiobutton
-                                            name={formMeta.fields.transport.name}
-                                            id={transportItem.uuid}
-                                            value={transportItem.uuid}
-                                            fieldRef={field}
-                                            image={transportItem.image}
-                                            disabled={transportValue !== null && transportItem.uuid !== transportValue}
-                                            checked={transportValue === transportItem.uuid}
-                                            uncheckCallback={resetTransportAndPayment}
-                                            label={
-                                                <SelectItemLabel
-                                                    name={transportItem.name}
-                                                    daysUntilDelivery={transportItem.daysUntilDelivery}
-                                                    price={transportItem.price}
-                                                    description={transportItem.description}
-                                                    pickupPlaceDetail={getSelectedPickupPlace(
-                                                        transportItem,
-                                                        updatedPickupPlace?.identifier === undefined
-                                                            ? null
-                                                            : updatedPickupPlace.identifier,
-                                                    )}
-                                                />
-                                            }
-                                        />
-                                    </ListItemStyled>
-                                ))}
+                                {transportValue !== null && updatedTransport !== null
+                                    ? renderTransportListItem(updatedTransport, true, field)
+                                    : props.transports.map((transportItem) =>
+                                          renderTransportListItem(transportItem, false, field),
+                                      )}
                             </ul>
                         )}
                     />
@@ -219,53 +252,35 @@ const Select: FC<SelectProps> = (props) => {
                         />
                     )}
                 </div>
-                {transport !== null && !isPreSelectingTransport && (
-                    <PaymentListWrapper>
-                        <Heading type="h3">{formMeta.fields.payment.label}</Heading>
-                        <Controller
-                            name={formMeta.fields.payment.name}
-                            render={({ field }) => (
-                                <ul>
-                                    {transport.payments.map((paymentItem) => (
-                                        <ListItemStyled
-                                            key={paymentItem.uuid}
-                                            isActive={paymentValue === paymentItem.uuid}
-                                        >
-                                            <Radiobutton
-                                                name={formMeta.fields.payment.name}
-                                                id={paymentItem.uuid}
-                                                value={paymentItem.uuid}
-                                                fieldRef={field}
-                                                image={paymentItem.image}
-                                                disabled={paymentValue !== null && paymentValue !== paymentItem.uuid}
-                                                checked={paymentValue === paymentItem.uuid}
-                                                uncheckCallback={() =>
-                                                    formProviderMethods.setValue(formMeta.fields.payment.name, null)
-                                                }
-                                                label={
-                                                    <SelectItemLabel
-                                                        name={paymentItem.name}
-                                                        price={paymentItem.price}
-                                                        description={paymentItem.description}
-                                                    />
-                                                }
-                                            />
-                                        </ListItemStyled>
-                                    ))}
-                                </ul>
+                {transport !== null &&
+                    transportValue !== null &&
+                    transport.uuid === transportValue &&
+                    !isPreSelectingTransport && (
+                        <PaymentListWrapper>
+                            <Heading type="h3">{formMeta.fields.payment.label}</Heading>
+                            <Controller
+                                name={formMeta.fields.payment.name}
+                                render={({ field }) => (
+                                    <ul>
+                                        {paymentValue !== null && payment !== null
+                                            ? renderPaymentListItem(payment, true, field)
+                                            : transport.payments.map((paymentItem) =>
+                                                  renderPaymentListItem(paymentItem, false, field),
+                                              )}
+                                    </ul>
+                                )}
+                            />
+                            {paymentValue !== null && payment !== null && (
+                                <ResetButtonStyled
+                                    type="button"
+                                    onClick={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                                >
+                                    {t('Change payment type')}
+                                    <Icon iconType="icon" icon="Arrow" />
+                                </ResetButtonStyled>
                             )}
-                        />
-                        {paymentValue !== null && (
-                            <ResetButtonStyled
-                                type="button"
-                                onClick={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
-                            >
-                                {t('Change payment type')}
-                                <Icon iconType="icon" icon="Arrow" />
-                            </ResetButtonStyled>
-                        )}
-                    </PaymentListWrapper>
-                )}
+                        </PaymentListWrapper>
+                    )}
             </div>
         </>
     );

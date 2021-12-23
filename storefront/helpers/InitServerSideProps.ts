@@ -1,9 +1,7 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import { AppStore } from 'redux/main';
-import { cartInputActions } from 'redux/slices/cartInput';
 import { DocumentNode } from 'graphql';
-import { getCartInputCookie } from './Cookies';
 import getConfig from 'next/config';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { hasTokenInCookie } from 'utils/Auth/TokensFromCookies';
@@ -22,7 +20,6 @@ export async function initServerSideProps(
     store: AppStore,
     prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
-    store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
     store.dispatch(userActions.setIsUserLoggedIn(hasTokenInCookie(context)));
 
     const domainConfig = store.getState().domain;

@@ -68,6 +68,9 @@ const cache = cacheExchange({
     },
     updates: {
         Mutation: {
+            AddToCart(_result, _args, cache) {
+                invalidateFields(cache, ['cart']);
+            },
             Login(_result, _args, cache) {
                 invalidateFields(cache, ['cart']);
             },

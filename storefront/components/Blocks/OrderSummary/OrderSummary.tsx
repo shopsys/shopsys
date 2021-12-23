@@ -13,7 +13,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const OrderSummary: FC = () => {
     const t = useTypedTranslationFunction();
-    const { cart, transport, payment } = useShopsysSelector((state) => state.user);
+    const { cart, transport, payment } = useShopsysSelector((state) => state.cart);
 
     if (cart === null) {
         return null;

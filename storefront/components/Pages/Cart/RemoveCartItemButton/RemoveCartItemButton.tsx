@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import Icon from 'components/Basic/Icon';
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
-import { useHandleRemoveFromCart } from 'hooks/cart/UseHandleRemoveFromCart';
-import { useRemoveFromCartMutationApi } from 'graphql/generated';
+import { useRemoveFromCart } from 'connectors/cart/Cart';
 import { useShopsysSelector } from 'redux/main';
 
 type RemoveCartItemButtonProps = {
@@ -10,13 +9,11 @@ type RemoveCartItemButtonProps = {
 };
 
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
-    const { cartUuid, isCartEmpty, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
-    useHandleRemoveFromCart(
-        removeItemFromCartResult,
-        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-        promoCode,
-    );
+    const {
+        isCartEmpty,
+        cartInput: { cartUuid, transport, payment, promoCode },
+    } = useShopsysSelector((state) => state.cart);
+    const [, removeItemFromCart] = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
         if (isCartEmpty) {
@@ -25,6 +22,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
 
         removeItemFromCart({ cartItemUuid: props.cartItemUuid, cartUuid, transport, payment, promoCode });
     };
+
     return (
         <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler}>
             <Icon iconType="icon" icon="RemoveBold" />

@@ -7,11 +7,11 @@ import {
     LoginProfileTextStyled,
 } from './Registration.style';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Address from './Address';
 import Button from 'components/Forms/Button';
+import { cartActions } from 'redux/slices/cart';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import Company from './Company';
@@ -56,7 +56,7 @@ const Registration: FC = () => {
 
             if (accessToken !== undefined && refreshToken !== undefined) {
                 dispatch(userActions.setIsUserLoggedIn(true));
-                updateCartInputCookie(initCartInputCookie(true));
+                dispatch(cartActions.setIsCartEmpty(false));
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
             } else {

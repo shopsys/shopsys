@@ -22,7 +22,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const { pickupPlace } = useShopsysSelector((state) => state.user);
+    const { pickupPlace } = useShopsysSelector((state) => state.cart);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);

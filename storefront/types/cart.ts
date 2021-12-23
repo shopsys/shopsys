@@ -1,12 +1,12 @@
 import { FlagType, ProductPriceType } from 'types/product';
+import { PaymentInputType, PaymentType } from 'types/payment';
+import { TransportInputType, TransportType } from 'types/transport';
 import { ImageType } from 'types/image';
-import { PaymentInputType } from 'types/payment';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
-import { TransportInputType } from 'types/transport';
 
 export type CartInput = {
     cartUuid: string | null;
-    isCartEmpty: boolean;
     transport: TransportInputType | null;
     payment: PaymentInputType | null;
     promoCode: string | null;
@@ -35,11 +35,19 @@ export type CartItemType = {
 };
 
 export type CartType = {
-    uuid: string | null;
     items: CartItemType[];
     totalPrice: PriceType;
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
+};
+
+export type CartResultValues = {
+    cartUuid: string | null;
+    cart: CartType | null;
+    transport: TransportType | null;
+    pickupPlace: PickupPlaceType | null;
+    payment: PaymentType | null;
+    promoCode: string | null;
 };
 
 export type AddToCartPopupDataType = {

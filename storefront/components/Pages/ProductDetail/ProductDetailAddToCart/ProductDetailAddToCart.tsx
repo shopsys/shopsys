@@ -11,8 +11,7 @@ import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import { formatPrice } from 'utils/formatting';
 import { ProductDetailType } from 'types/product';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCartMutationApi } from 'graphql/generated';
-import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
+import { useAddToCart } from 'connectors/cart/Cart';
 import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -24,16 +23,8 @@ type ProductDetailAddToCartProps = {
 const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.cartInput);
-    const { transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
-
-    useHandleAddToCart(
-        changeCartItemQuantityResult,
-        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-        promoCode,
-    );
-
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
     const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.product.uuid);
 
     const onAddToCartHandler = async () => {

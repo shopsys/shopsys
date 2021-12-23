@@ -1,39 +1,21 @@
-import { CartQueryApi, CartQueryVariablesApi } from 'graphql/generated';
+import { CartFragmentApi, Maybe } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
-import { updateCartInputCookie } from 'helpers/Cookies';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useEffect } from 'react';
-import { useHandleCartErrors } from './UseHandleCartErrors';
-import { UseQueryState } from 'urql';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-export const useHandleCartUpdate = (
-    result: UseQueryState<CartQueryApi, CartQueryVariablesApi>,
-    pickupPlaceIdentifier: string | null,
-    promoCode: string | null,
-): void => {
+export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined): void => {
+    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
-    const t = useTypedTranslationFunction();
-
-    useHandleCartErrors(result.error, t('Could not load your cart'));
 
     useEffect(() => {
-        if (result.data?.cart === undefined || result.data.cart === null) {
+        if (result === undefined || result === null) {
             return;
         }
 
         // TODO handle modifications
-        const cartResultValues = getValuesFromCartResult(
-            result.data.cart,
-            pickupPlaceIdentifier,
-            promoCode,
-            currencyCode,
-        );
-        const updatedCartInputData = getCartInputFromCartResult(cartResultValues);
-        updateCartState(dispatch, cartResultValues, updatedCartInputData);
-        updateCartInputCookie(updatedCartInputData);
-    }, [result.data]);
+        const cartResultValues = getValuesFromCartResult(result, currencyCode, isUserLoggedIn);
+        updateCartState(dispatch, cartResultValues);
+    }, [result]);
 };
