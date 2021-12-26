@@ -10,8 +10,8 @@ export type NewsletterFormType = {
     privacyPolicy: boolean;
 };
 
-export type SearchFormType = {
-    searchQuery: string;
+export type AutocompleteSearchFormType = {
+    autocompleteSearchQuery: string;
 };
 
 export type ContactInformationFormType = {

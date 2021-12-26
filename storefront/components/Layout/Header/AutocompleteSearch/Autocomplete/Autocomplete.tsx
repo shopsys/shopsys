@@ -14,13 +14,13 @@ import {
     SearchResultLinkStyled,
     ShowAllResultsButtonWrapper,
 } from './Autocomplete.style';
+import { AutocompleteSearchType } from 'types/search';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
-import { SearchType } from 'types/search';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
@@ -32,9 +32,9 @@ const AUTOCOMPLETE_CATEGORY_LIMIT = 3 as const;
 const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
 
 type AutocompleteProps = {
-    searchResults: SearchType | undefined;
+    autocompleteSearchResults: AutocompleteSearchType | undefined;
     isAutocompleteActive: boolean;
-    searchQueryValue: string;
+    autocompleteSearchQueryValue: string;
 };
 
 const Autocomplete: FC<AutocompleteProps> = (props) => {
@@ -47,11 +47,11 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
         <AutocompleteStyled isActive={props.isAutocompleteActive}>
             <AutocompleteBodyStyled isActive={props.isAutocompleteActive}>
                 {(() => {
-                    if (props.searchResults === undefined) {
+                    if (props.autocompleteSearchResults === undefined) {
                         return null;
                     }
 
-                    if (areAllResultsEmpty(props.searchResults)) {
+                    if (areAllResultsEmpty(props.autocompleteSearchResults)) {
                         return (
                             <NoResultsMessageWrapperStyled>
                                 <Icon iconType="image" icon="warning" alt="warning" />
@@ -64,13 +64,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
 
                     return (
                         <>
-                            {props.searchResults.productsSearch.totalCount > 0 && (
+                            {props.autocompleteSearchResults.productsSearch.totalCount > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Products')} (${props.searchResults.productsSearch.totalCount})`}
+                                        {`${t('Products')} (${
+                                            props.autocompleteSearchResults.productsSearch.totalCount
+                                        })`}
                                     </SearchResultGroupTitleStyled>
                                     <ProductsSearchResultStyled>
-                                        {props.searchResults.productsSearch.products.map(
+                                        {props.autocompleteSearchResults.productsSearch.products.map(
                                             (product, index) =>
                                                 index < AUTOCOMPLETE_PRODUCT_LIMIT && (
                                                     <ProductSearchResultItemStyled key={product.slug}>
@@ -97,13 +99,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </ProductsSearchResultStyled>
                                 </>
                             )}
-                            {props.searchResults.brandSearch.length > 0 && (
+                            {props.autocompleteSearchResults.brandSearch.length > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Brands')} (${props.searchResults.brandSearch.length})`}
+                                        {`${t('Brands')} (${props.autocompleteSearchResults.brandSearch.length})`}
                                     </SearchResultGroupTitleStyled>
                                     <SearchResultGroupStyled>
-                                        {props.searchResults.brandSearch.map(
+                                        {props.autocompleteSearchResults.brandSearch.map(
                                             (brand, index) =>
                                                 index < AUTOCOMPLETE_BRAND_LIMIT && (
                                                     <li key={brand.slug}>
@@ -118,13 +120,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </SearchResultGroupStyled>
                                 </>
                             )}
-                            {props.searchResults.categoriesSearch.totalCount > 0 && (
+                            {props.autocompleteSearchResults.categoriesSearch.totalCount > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Categories')} (${props.searchResults.categoriesSearch.totalCount})`}
+                                        {`${t('Categories')} (${
+                                            props.autocompleteSearchResults.categoriesSearch.totalCount
+                                        })`}
                                     </SearchResultGroupTitleStyled>
                                     <SearchResultGroupStyled>
-                                        {props.searchResults.categoriesSearch.categories.map(
+                                        {props.autocompleteSearchResults.categoriesSearch.categories.map(
                                             (category, index) =>
                                                 index < AUTOCOMPLETE_CATEGORY_LIMIT && (
                                                     <li key={category.slug}>
@@ -139,13 +143,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </SearchResultGroupStyled>
                                 </>
                             )}
-                            {props.searchResults.articlesSearch.length > 0 && (
+                            {props.autocompleteSearchResults.articlesSearch.length > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Articles')} (${props.searchResults.articlesSearch.length})`}
+                                        {`${t('Articles')} (${props.autocompleteSearchResults.articlesSearch.length})`}
                                     </SearchResultGroupTitleStyled>
                                     <SearchResultGroupStyled>
-                                        {props.searchResults.articlesSearch.map(
+                                        {props.autocompleteSearchResults.articlesSearch.map(
                                             (article, index) =>
                                                 index < AUTOCOMPLETE_ARTICLE_LIMIT && (
                                                     <li key={article.slug}>
@@ -165,7 +169,10 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     type="button"
                                     size="small"
                                     onClick={() =>
-                                        router.push({ pathname: searchUrl, query: { q: props.searchQueryValue } })
+                                        router.push({
+                                            pathname: searchUrl,
+                                            query: { q: props.autocompleteSearchQueryValue },
+                                        })
                                     }
                                 >
                                     {t('View all results')}
@@ -179,16 +186,16 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     );
 };
 
-const areAllResultsEmpty = (searchResults: SearchType | undefined) => {
-    if (searchResults === undefined) {
+const areAllResultsEmpty = (autocompleteSearchResults: AutocompleteSearchType | undefined) => {
+    if (autocompleteSearchResults === undefined) {
         return false;
     }
 
     return (
-        searchResults.articlesSearch.length === 0 &&
-        searchResults.brandSearch.length === 0 &&
-        searchResults.categoriesSearch.totalCount === 0 &&
-        searchResults.productsSearch.totalCount === 0
+        autocompleteSearchResults.articlesSearch.length === 0 &&
+        autocompleteSearchResults.brandSearch.length === 0 &&
+        autocompleteSearchResults.categoriesSearch.totalCount === 0 &&
+        autocompleteSearchResults.productsSearch.totalCount === 0
     );
 };
 

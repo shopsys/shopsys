@@ -1,12 +1,12 @@
-import { EnrichedSearchQueryDocumentApi, NavigationQueryDocumentApi } from 'graphql/generated';
 import { FC, useEffect } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { NavigationQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { getEnrichedSearch } from 'connectors/search/EnrichedSearch';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
+import { getSearch } from 'connectors/search/Search';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
@@ -20,7 +20,7 @@ const Search: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const searchProductsSort = useShopsysSelector((state) => state.user.sort);
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
-    const searchResults = getEnrichedSearch(getParsedSearchQuery(router.query.q), searchProductsSort, paginationCursor);
+    const searchResults = getSearch(getParsedSearchQuery(router.query.q), searchProductsSort, paginationCursor);
 
     useEffect(() => {
         dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
@@ -55,7 +55,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
         {
-            query: EnrichedSearchQueryDocumentApi,
+            query: SearchQueryDocumentApi,
             variables: {
                 search: getParsedSearchQuery(context.query.q),
                 orderingMode: store.getState().user.sort,

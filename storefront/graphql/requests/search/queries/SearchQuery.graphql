@@ -1,14 +1,24 @@
-query SearchQuery($search: String!) {
+query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {
     articlesSearch(search: $search) {
-        ...SimpleArticleFragment
+        ...ListedArticleFragment
     }
     brandSearch(search: $search) {
-        ...SimpleBrandFragment
+        ...ListedBrandFragment
     }
     categoriesSearch(search: $search) {
-        ...CategoriesSearchFragment
+        totalCount
+        edges {
+            node {
+                ...ListedCategoryFragment
+            }
+        }
     }
-    productsSearch: products(search: $search) {
-        ...ProductsSearchFragment
+    productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after) {
+        totalCount
+        edges {
+            node {
+                ...ListedProductFragment
+            }
+        }
     }
 }

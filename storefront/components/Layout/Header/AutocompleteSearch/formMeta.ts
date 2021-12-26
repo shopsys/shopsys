@@ -1,17 +1,20 @@
 import * as Yup from 'yup';
-import { SearchFormType } from 'types/form';
+import { AutocompleteSearchFormType } from 'types/form';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export const useSearchForm = (): [UseFormReturn<SearchFormType>, SearchFormType] => {
+export const useAutocompleteSearchForm = (): [
+    UseFormReturn<AutocompleteSearchFormType>,
+    AutocompleteSearchFormType,
+] => {
     const resolver = yupResolver(
         Yup.object().shape({
-            searchQuery: Yup.string().required().min(3),
+            autocompleteSearchQuery: Yup.string().required().min(3),
         }),
     );
-    const defaultValues = { searchQuery: '' };
+    const defaultValues = { autocompleteSearchQuery: '' };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };
@@ -19,7 +22,7 @@ export const useSearchForm = (): [UseFormReturn<SearchFormType>, SearchFormType]
 type SearchFormMetaType = {
     formName: string;
     fields: {
-        [key in keyof SearchFormType]: {
+        [key in keyof AutocompleteSearchFormType]: {
             name: key;
             label: string;
             errorMessage: string | undefined;
@@ -27,16 +30,18 @@ type SearchFormMetaType = {
     };
 };
 
-export const useSearchFormMeta = (formProviderMethods: UseFormReturn<SearchFormType>): SearchFormMetaType => {
+export const useAutocompleteSearchFormMeta = (
+    formProviderMethods: UseFormReturn<AutocompleteSearchFormType>,
+): SearchFormMetaType => {
     const t = useTypedTranslationFunction();
 
     const formMeta = {
         formName: 'search-query-form',
         fields: {
-            searchQuery: {
-                name: 'searchQuery' as const,
+            autocompleteSearchQuery: {
+                name: 'autocompleteSearchQuery' as const,
                 label: t("Type what you're looking for"),
-                errorMessage: formProviderMethods.formState.errors.searchQuery?.message,
+                errorMessage: formProviderMethods.formState.errors.autocompleteSearchQuery?.message,
             },
         },
     };

@@ -2571,21 +2571,21 @@ export type EnrichedCategoriesSearchFragmentApi = { __typename?: 'CategoryConnec
 
 export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined };
 
-export type EnrichedSearchQueryVariablesApi = Exact<{
+export type AutocompleteSearchQueryVariablesApi = Exact<{
+  search: Scalars['String'];
+}>;
+
+
+export type AutocompleteSearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
+export type SearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
   orderingMode?: Maybe<ProductOrderingModeEnumApi>;
   after?: Maybe<Scalars['String']>;
 }>;
 
 
-export type EnrichedSearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
-
-export type SearchQueryVariablesApi = Exact<{
-  search: Scalars['String'];
-}>;
-
-
-export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type SliderItemImagesWebDefaultFragmentApi = { __typename?: 'SliderItem', images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
@@ -3780,8 +3780,31 @@ export const RegistrationMutationDocumentApi = gql`
 export function useRegistrationMutationApi() {
   return Urql.useMutation<RegistrationMutationApi, RegistrationMutationVariablesApi>(RegistrationMutationDocumentApi);
 };
-export const EnrichedSearchQueryDocumentApi = gql`
-    query EnrichedSearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {
+export const AutocompleteSearchQueryDocumentApi = gql`
+    query AutocompleteSearchQuery($search: String!) {
+  articlesSearch(search: $search) {
+    ...SimpleArticleFragment
+  }
+  brandSearch(search: $search) {
+    ...SimpleBrandFragment
+  }
+  categoriesSearch(search: $search) {
+    ...CategoriesSearchFragment
+  }
+  productsSearch: products(search: $search) {
+    ...ProductsSearchFragment
+  }
+}
+    ${SimpleArticleFragmentApi}
+${SimpleBrandFragmentApi}
+${CategoriesSearchFragmentApi}
+${ProductsSearchFragmentApi}`;
+
+export function useAutocompleteSearchQueryApi(options: Omit<Urql.UseQueryArgs<AutocompleteSearchQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<AutocompleteSearchQueryApi>({ query: AutocompleteSearchQueryDocumentApi, ...options });
+};
+export const SearchQueryDocumentApi = gql`
+    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {
   articlesSearch(search: $search) {
     ...ListedArticleFragment
   }
@@ -3813,29 +3836,6 @@ export const EnrichedSearchQueryDocumentApi = gql`
 ${ListedBrandFragmentApi}
 ${ListedCategoryFragmentApi}
 ${ListedProductFragmentApi}`;
-
-export function useEnrichedSearchQueryApi(options: Omit<Urql.UseQueryArgs<EnrichedSearchQueryVariablesApi>, 'query'> = {}) {
-  return Urql.useQuery<EnrichedSearchQueryApi>({ query: EnrichedSearchQueryDocumentApi, ...options });
-};
-export const SearchQueryDocumentApi = gql`
-    query SearchQuery($search: String!) {
-  articlesSearch(search: $search) {
-    ...SimpleArticleFragment
-  }
-  brandSearch(search: $search) {
-    ...SimpleBrandFragment
-  }
-  categoriesSearch(search: $search) {
-    ...CategoriesSearchFragment
-  }
-  productsSearch: products(search: $search) {
-    ...ProductsSearchFragment
-  }
-}
-    ${SimpleArticleFragmentApi}
-${SimpleBrandFragmentApi}
-${CategoriesSearchFragmentApi}
-${ProductsSearchFragmentApi}`;
 
 export function useSearchQueryApi(options: Omit<Urql.UseQueryArgs<SearchQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<SearchQueryApi>({ query: SearchQueryDocumentApi, ...options });
