@@ -104,7 +104,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             ],
             [
                 'foo',
-                'Order with urlHash "foo" was not found.',
+                'Order not found',
             ],
         ];
     }

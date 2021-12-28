@@ -1733,8 +1733,8 @@ type Query {
   """
   orders(after: String, first: Int, before: String, last: Int): OrderConnection
 
-  """Returns order filtered using UUID or urlHash"""
-  order(uuid: Uuid, urlHash: String): Order
+  """Returns order filtered using UUID, orderNumber, or urlHash"""
+  order(uuid: Uuid, urlHash: String, orderNumber: String): Order
 
   """
   Returns list of articles that can be paginated using `first`, `last`, `before`

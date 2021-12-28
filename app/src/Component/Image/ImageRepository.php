@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository as BaseImageReposito
  * @method \App\Component\Image\Image[] getAllImagesByEntity(string $entityName, int $entityId)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getMainImagesByEntitiesIndexedByEntityId(array $entitiesOrEntityIds, string $entityName)
+ * @method \App\Component\Image\Image[] getMainImagesByEntitiesIndexedByEntityId(array $entities, string $entityName)
  */
 class ImageRepository extends BaseImageRepository
 {
