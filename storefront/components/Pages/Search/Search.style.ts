@@ -14,6 +14,10 @@ type SearchResultsBlockStyledProps = {
     areAllResultsVisible: boolean;
 };
 
+type SearchResultsContentStyledProps = {
+    isPanelActive: boolean;
+};
+
 export const SearchResultsStyled = styled.div`
     ${({ theme }) =>
         css`
@@ -50,14 +54,30 @@ export const SearchResultsPanelStyled = styled.div<SearchResultsPanelStyledProps
     `}
 `;
 
-export const SearchResultsContentStyled = styled.div`
-    ${({ theme }) => css`
+export const SearchResultsContentStyled = styled.div<SearchResultsContentStyledProps>`
+    ${({ theme, isPanelActive }) => css`
         display: flex;
         flex: 1;
         flex-direction: column;
 
-        @media ${theme.mediaQueries.queryVl} {
-            padding-left: 50px;
+        ${isPanelActive &&
+        css`
+            @media ${theme.mediaQueries.queryVl} {
+                padding-left: 50px;
+            }
+        `}
+    `}
+`;
+
+export const SearchResultsContentMessageStyled = styled.div`
+    ${({ theme }) => css`
+        padding: 50px;
+        text-align: center;
+
+        font-size: ${theme.fontSize.default};
+
+        div:first-of-type {
+            margin-bottom: 20px;
         }
     `}
 `;

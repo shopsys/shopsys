@@ -2,6 +2,7 @@ import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueri
 import { FC, useRef, useState } from 'react';
 import {
     SearchResultsBlockStyled,
+    SearchResultsContentMessageStyled,
     SearchResultsContentStyled,
     SearchResultsPanelStyled,
     SearchResultsStyled,
@@ -13,10 +14,12 @@ import Button from 'components/Forms/Button';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
+import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
+import { Trans } from 'next-i18next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
@@ -165,24 +168,53 @@ const Search: FC<SearchProps> = (props) => {
                     )}
                 </>
             )}
-            {props.searchResults.productsSearch.totalCount > 0 && (
-                <SearchResultsWeblineStyled>
-                    <Heading type={'h3'}>{t('Found products')}</Heading>
-                    <SearchResultsStyled ref={containerWrapRef}>
-                        <SearchResultsPanelStyled>
-                            <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
-                        </SearchResultsPanelStyled>
-                        <SearchResultsContentStyled>
-                            <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
+
+            <SearchResultsWeblineStyled>
+                <Heading type={'h3'}>{t('Found products')}</Heading>
+                <SearchResultsStyled ref={containerWrapRef}>
+                    {props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0 &&
+                        props.searchResults.productsSearch.productFilterOptions !== null && (
+                            <SearchResultsPanelStyled>
+                                <ProductFilter
+                                    productFilterOptions={props.searchResults.productsSearch.productFilterOptions}
+                                    slug="dd"
+                                />
+                                <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
+                            </SearchResultsPanelStyled>
+                        )}
+                    <SearchResultsContentStyled
+                        isPanelActive={props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
+                    >
+                        <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
+                        {props.searchResults.productsSearch.totalCount > 0 ? (
                             <ProductsList products={props.searchResults.productsSearch.products} />
-                            <Pagination
-                                totalCount={props.searchResults.productsSearch.totalCount}
-                                containerWrapRef={containerWrapRef}
-                            />
-                        </SearchResultsContentStyled>
-                    </SearchResultsStyled>
-                </SearchResultsWeblineStyled>
-            )}
+                        ) : props.searchResults.productsSearch.productFilterOptions?.maximalPrice === 0 ? (
+                            <SearchResultsContentMessageStyled>
+                                <div>
+                                    <strong>{t('No products matched your search')}</strong>
+                                </div>
+                            </SearchResultsContentMessageStyled>
+                        ) : (
+                            <SearchResultsContentMessageStyled>
+                                <div>
+                                    <strong>{t('No results match the filter')}</strong>
+                                </div>
+                                <div>
+                                    <Trans i18nKey="ProductsNoResults">
+                                        We currently have no results for your exact search.
+                                        <br />
+                                        Try to be more specific, or see if you have filtered out non-existent data.
+                                    </Trans>
+                                </div>
+                            </SearchResultsContentMessageStyled>
+                        )}
+                        <Pagination
+                            totalCount={props.searchResults.productsSearch.totalCount}
+                            containerWrapRef={containerWrapRef}
+                        />
+                    </SearchResultsContentStyled>
+                </SearchResultsStyled>
+            </SearchResultsWeblineStyled>
         </>
     );
 };

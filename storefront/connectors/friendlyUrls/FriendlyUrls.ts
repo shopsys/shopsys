@@ -1,4 +1,3 @@
-import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categories/Categories';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'types/blogArticle';
@@ -11,7 +10,9 @@ import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
+import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'types/product';
 import { StoreDetailType } from 'types/store';

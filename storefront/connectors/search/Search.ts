@@ -1,3 +1,4 @@
+import { FilterOptionsParameterTypeEnum, FilterOptionsStateType } from 'types/productFilter';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { ListedArticleType } from 'types/article';
@@ -9,6 +10,7 @@ import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -18,9 +20,15 @@ export const getSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi,
     searchProductsPagination: PaginationType['paginationCursor'],
+    optionsFilter: FilterOptionsStateType,
 ): SearchType | undefined => {
     const [result] = useSearchQueryApi({
-        variables: { search: searchQuery, orderingMode: searchProductsSort, after: searchProductsPagination },
+        variables: {
+            search: searchQuery,
+            orderingMode: searchProductsSort,
+            after: searchProductsPagination,
+            filter: mapParametersFilter(optionsFilter),
+        },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [mappedResult, setMappedResult] = useState<SearchType | undefined>(
@@ -29,7 +37,9 @@ export const getSearch = (
 
     useQueryError(result.error);
     useEffect(() => {
-        setMappedResult(mapSearchResult(result.data, currencyCode));
+        if (result.stale === false) {
+            setMappedResult(mapSearchResult(result.data, currencyCode));
+        }
     }, [result.data]);
 
     if (typeof window === 'undefined' && result.data !== undefined) {
@@ -53,6 +63,43 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
         },
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
+            productFilterOptions:
+                apiData.productsSearch !== undefined && apiData.productsSearch !== null
+                    ? {
+                          ...apiData.productsSearch.productFilterOptions,
+                          minimalPrice: parseFloat(apiData.productsSearch.productFilterOptions.minimalPrice),
+                          maximalPrice: parseFloat(apiData.productsSearch.productFilterOptions.maximalPrice),
+                          brands:
+                              apiData.productsSearch.productFilterOptions.brands !== null &&
+                              apiData.productsSearch.productFilterOptions.brands !== undefined
+                                  ? apiData.productsSearch.productFilterOptions.brands
+                                  : [],
+                          flags:
+                              apiData.productsSearch.productFilterOptions.flags !== null &&
+                              apiData.productsSearch.productFilterOptions.flags !== undefined
+                                  ? apiData.productsSearch.productFilterOptions.flags
+                                  : [],
+                          parameters:
+                              apiData.productsSearch.productFilterOptions.parameters !== null &&
+                              apiData.productsSearch.productFilterOptions.parameters !== undefined
+                                  ? apiData.productsSearch.productFilterOptions.parameters.map((item) => ({
+                                        ...item,
+                                        type:
+                                            item.type === FilterOptionsParameterTypeEnum.ColorPicker
+                                                ? FilterOptionsParameterTypeEnum.ColorPicker
+                                                : FilterOptionsParameterTypeEnum.Checkbox,
+                                        values: item.values.map((value) => ({
+                                            ...value,
+                                            rgbHex:
+                                                value.rgbHex !== undefined && value.rgbHex !== null
+                                                    ? value.rgbHex
+                                                    : undefined,
+                                        })),
+                                    }))
+                                  : [],
+                          currencyCode,
+                      }
+                    : null,
             products: mapProductsSearchResults(apiData.productsSearch, currencyCode),
         },
     };

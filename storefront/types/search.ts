@@ -3,6 +3,7 @@ import { ListedBlogArticleType, SimpleBlogArticleType } from 'types/blogArticle'
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
 import { ListedCategoryType, SimpleCategoryType } from 'types/category';
 import { ListedProductType, SimpleProductType } from 'types/product';
+import { FilterOptionsType } from './productFilter';
 
 export type AutocompleteSearchType = {
     articlesSearch: (SimpleArticleType | SimpleBlogArticleType)[];
@@ -14,6 +15,13 @@ export type AutocompleteSearchType = {
 export type SearchType = {
     articlesSearch: (ListedArticleType | ListedBlogArticleType)[];
     brandSearch: ListedBrandType[];
-    productsSearch: { totalCount: number; products: ListedProductType[] };
-    categoriesSearch: { totalCount: number; categories: ListedCategoryType[] };
+    productsSearch: {
+        totalCount: number;
+        productFilterOptions: FilterOptionsType | null;
+        products: ListedProductType[];
+    };
+    categoriesSearch: {
+        totalCount: number;
+        categories: ListedCategoryType[];
+    };
 };
