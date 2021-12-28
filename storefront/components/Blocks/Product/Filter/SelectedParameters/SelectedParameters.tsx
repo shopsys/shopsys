@@ -19,7 +19,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
-    slug: string;
 };
 
 const SelectedParameters: FC<SelectedParametersProps> = (props) => {

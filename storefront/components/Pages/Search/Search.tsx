@@ -20,6 +20,7 @@ import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import { Trans } from 'next-i18next';
+import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
@@ -53,6 +54,10 @@ const Search: FC<SearchProps> = (props) => {
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
+    const [oldRouterQuery, setOldRouterQuery] = useState(router.query.q);
+    const [queryPathWasChanged, setQueryPathWasChanged] = useState(false);
+    const [routerQueryChanged, setRouterQueryChanged] = useState(false);
+
     useResizeWidthEffect(
         width,
         desktopFirstSizes.notLargeDesktop,
@@ -94,6 +99,20 @@ const Search: FC<SearchProps> = (props) => {
     if (props.searchResults === undefined) {
         return null;
     }
+
+    useComponentUpdate(() => {
+        if (oldRouterQuery !== router.query.q) {
+            setQueryPathWasChanged(true);
+            setOldRouterQuery(router.query.q);
+        }
+    }, [router.query.q]);
+
+    useComponentUpdate(() => {
+        if (queryPathWasChanged) {
+            setRouterQueryChanged(!routerQueryChanged);
+            setQueryPathWasChanged(false);
+        }
+    }, [props.searchResults.productsSearch.productFilterOptions]);
 
     return (
         <>
@@ -177,7 +196,7 @@ const Search: FC<SearchProps> = (props) => {
                             <SearchResultsPanelStyled>
                                 <ProductFilter
                                     productFilterOptions={props.searchResults.productsSearch.productFilterOptions}
-                                    slug="dd"
+                                    formUpdateDepency={routerQueryChanged}
                                 />
                                 <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>
