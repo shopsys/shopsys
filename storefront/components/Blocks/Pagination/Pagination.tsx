@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, RefObject, useEffect, useMemo, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 
 type PaginationProps = {
     totalCount: number;
+    containerWrapRef: RefObject<HTMLDivElement> | null;
 };
 
 const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
@@ -66,6 +67,16 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         updateUrlWithCurrentPage(paginationState.currentPage);
     }
 
+    const scrollToListTop = () => {
+        if (
+            props.containerWrapRef !== null &&
+            props.containerWrapRef !== undefined &&
+            props.containerWrapRef.current !== null
+        ) {
+            props.containerWrapRef.current.scrollIntoView();
+        }
+    };
+
     let previousPageButton: number | null = null;
 
     return (
@@ -98,6 +109,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
                                         ...getNewPagination(pageButton, initialState.pagination.pageSize),
                                     }),
                                 );
+                                scrollToListTop();
                             }}
                         >
                             {pageButton}
