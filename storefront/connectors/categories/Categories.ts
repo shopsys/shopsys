@@ -1,11 +1,11 @@
 import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
 import { CategoryDetailType } from 'types/category';
-import { FilterOptionsParameterTypeEnum } from 'types/productFilter';
 import { ListedCategoryType } from 'types/category';
 import { ListedProductEdgesType } from 'types/product';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,
@@ -19,33 +19,7 @@ export const mapCategoryDetailData = (
         edges: [],
         productFilterOptions:
             apiCategoryDetailData.products !== undefined && apiCategoryDetailData.products !== null
-                ? {
-                      ...apiCategoryDetailData.products.productFilterOptions,
-                      minimalPrice: parseFloat(apiCategoryDetailData.products.productFilterOptions.minimalPrice),
-                      maximalPrice: parseFloat(apiCategoryDetailData.products.productFilterOptions.maximalPrice),
-                      brands:
-                          apiCategoryDetailData.products.productFilterOptions.brands !== null &&
-                          apiCategoryDetailData.products.productFilterOptions.brands !== undefined
-                              ? apiCategoryDetailData.products.productFilterOptions.brands
-                              : [],
-                      flags:
-                          apiCategoryDetailData.products.productFilterOptions.flags !== null &&
-                          apiCategoryDetailData.products.productFilterOptions.flags !== undefined
-                              ? apiCategoryDetailData.products.productFilterOptions.flags
-                              : [],
-                      parameters: apiCategoryDetailData.products.productFilterOptions.parameters?.map((item) => ({
-                          ...item,
-                          type:
-                              item.type === FilterOptionsParameterTypeEnum.ColorPicker
-                                  ? FilterOptionsParameterTypeEnum.ColorPicker
-                                  : FilterOptionsParameterTypeEnum.Checkbox,
-                          values: item.values.map((value) => ({
-                              ...value,
-                              rgbHex: value.rgbHex !== undefined && value.rgbHex !== null ? value.rgbHex : undefined,
-                          })),
-                      })),
-                      currencyCode,
-                  }
+                ? mapProductFilterOptions(apiCategoryDetailData.products.productFilterOptions, currencyCode)
                 : null,
     };
 

@@ -1,6 +1,6 @@
-import { FilterOptionsParameterTypeEnum, FilterOptionsStateType } from 'types/productFilter';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
+import { FilterOptionsStateType } from 'types/productFilter';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
@@ -11,6 +11,7 @@ import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -65,40 +66,7 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
             productFilterOptions:
                 apiData.productsSearch !== undefined && apiData.productsSearch !== null
-                    ? {
-                          ...apiData.productsSearch.productFilterOptions,
-                          minimalPrice: parseFloat(apiData.productsSearch.productFilterOptions.minimalPrice),
-                          maximalPrice: parseFloat(apiData.productsSearch.productFilterOptions.maximalPrice),
-                          brands:
-                              apiData.productsSearch.productFilterOptions.brands !== null &&
-                              apiData.productsSearch.productFilterOptions.brands !== undefined
-                                  ? apiData.productsSearch.productFilterOptions.brands
-                                  : [],
-                          flags:
-                              apiData.productsSearch.productFilterOptions.flags !== null &&
-                              apiData.productsSearch.productFilterOptions.flags !== undefined
-                                  ? apiData.productsSearch.productFilterOptions.flags
-                                  : [],
-                          parameters:
-                              apiData.productsSearch.productFilterOptions.parameters !== null &&
-                              apiData.productsSearch.productFilterOptions.parameters !== undefined
-                                  ? apiData.productsSearch.productFilterOptions.parameters.map((item) => ({
-                                        ...item,
-                                        type:
-                                            item.type === FilterOptionsParameterTypeEnum.ColorPicker
-                                                ? FilterOptionsParameterTypeEnum.ColorPicker
-                                                : FilterOptionsParameterTypeEnum.Checkbox,
-                                        values: item.values.map((value) => ({
-                                            ...value,
-                                            rgbHex:
-                                                value.rgbHex !== undefined && value.rgbHex !== null
-                                                    ? value.rgbHex
-                                                    : undefined,
-                                        })),
-                                    }))
-                                  : [],
-                          currencyCode,
-                      }
+                    ? mapProductFilterOptions(apiData.productsSearch.productFilterOptions, currencyCode)
                     : null,
             products: mapProductsSearchResults(apiData.productsSearch, currencyCode),
         },
