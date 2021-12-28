@@ -31,12 +31,18 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     private DataLoaderInterface $categoriesBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $flagsBatchLoader;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -44,11 +50,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         BrandFacade $brandFacade,
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        DataLoaderInterface $categoriesBatchLoader
+        DataLoaderInterface $categoriesBatchLoader,
+        DataLoaderInterface $flagsBatchLoader
     ) {
         parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
 
         $this->categoriesBatchLoader = $categoriesBatchLoader;
+        $this->flagsBatchLoader = $flagsBatchLoader;
     }
 
     /**
@@ -235,5 +243,14 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getCategoriesPromise(array $data): Promise
     {
         return $this->categoriesBatchLoader->load($data['categories']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getFlagsPromise(array $data): Promise
+    {
+        return $this->flagsBatchLoader->load($data['flags']);
     }
 }
