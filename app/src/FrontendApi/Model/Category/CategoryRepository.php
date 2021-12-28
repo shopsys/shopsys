@@ -93,4 +93,34 @@ class CategoryRepository extends BaseCategoryRepository
 
         return array_values($visibleLinkedCategories);
     }
+
+    /**
+     * @param int[][] $categoriesIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[][]
+     */
+    public function getCategoriesByIds(array $categoriesIds, DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
+            ->addSelect('cd')
+            ->andWhere('c.id IN(:categoryIds)')
+            ->indexBy('c', 'c.id')
+            ->setParameter('categoryIds', array_merge(...$categoriesIds));
+        $this->categoryRepository->addTranslationPublic($queryBuilder, $domainConfig->getLocale());
+        $result = $queryBuilder->getQuery()->execute();
+
+        $allCategories = [];
+        foreach ($categoriesIds as $key => $categoryIds) {
+            $allCategories[$key] = [];
+            foreach ($categoryIds as $categoryId) {
+                if (!array_key_exists($categoryId, $result)) {
+                    continue;
+                }
+
+                $allCategories[$key][] = $result[$categoryId];
+            }
+        }
+
+        return array_values($allCategories);
+    }
 }
