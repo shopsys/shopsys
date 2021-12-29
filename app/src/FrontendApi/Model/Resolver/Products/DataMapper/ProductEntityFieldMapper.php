@@ -80,6 +80,11 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     private DataLoaderInterface $categoriesBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsSellableByIdsBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
@@ -93,6 +98,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
         Domain $domain,
@@ -107,7 +113,8 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ParameterRepository $parameterRepository,
         BreadcrumbFacade $breadcrumbFacade,
-        DataLoaderInterface $categoriesBatchLoader
+        DataLoaderInterface $categoriesBatchLoader,
+        DataLoaderInterface $productsSellableByIdsBatchLoader
     ) {
         parent::__construct(
             $domain,
@@ -125,6 +132,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $this->parameterRepository = $parameterRepository;
         $this->breadcrumbFacade = $breadcrumbFacade;
         $this->categoriesBatchLoader = $categoriesBatchLoader;
+        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
     }
 
     /**
@@ -399,5 +407,17 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $categoryIds = array_map(fn (Category $category) => $category->getId(), $categories);
 
         return $this->categoriesBatchLoader->load($categoryIds);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(Product $product): Promise
+    {
+        $relatedProducts = $product->getRelatedProducts();
+        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
+
+        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
     }
 }

@@ -270,4 +270,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
     }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(array $data): Promise
+    {
+        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
+    }
 }
