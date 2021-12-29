@@ -36,6 +36,11 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     private DataLoaderInterface $flagsBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsSellableByIdsBatchLoader;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
@@ -43,6 +48,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -51,12 +57,14 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
         DataLoaderInterface $categoriesBatchLoader,
-        DataLoaderInterface $flagsBatchLoader
+        DataLoaderInterface $flagsBatchLoader,
+        DataLoaderInterface $productsSellableByIdsBatchLoader
     ) {
         parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
 
         $this->categoriesBatchLoader = $categoriesBatchLoader;
         $this->flagsBatchLoader = $flagsBatchLoader;
+        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
     }
 
     /**
@@ -252,5 +260,14 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getFlagsPromise(array $data): Promise
     {
         return $this->flagsBatchLoader->load($data['flags']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getAccessoriesPromise(array $data): Promise
+    {
+        return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
     }
 }
