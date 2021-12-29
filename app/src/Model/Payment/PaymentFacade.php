@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @method edit(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
  * @method \App\Model\Payment\Payment getById(int $id)
  * @method setAdditionalDataAndFlush(\App\Model\Payment\Payment $payment, \App\Model\Payment\PaymentData $paymentData)
- * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomain()
  * @method \App\Model\Payment\Payment[] getVisibleByDomainId(int $domainId)
  * @method updatePaymentPrices(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId)
  * @method \App\Model\Payment\Payment[] getAllIncludingDeleted()
@@ -143,5 +142,18 @@ class PaymentFacade extends BasePaymentFacade
         }
 
         return $allowedPayments;
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment[]
+     */
+    public function getVisibleOnCurrentDomain()
+    {
+        $allPayments = $this->paymentRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig());
+
+        /** @var \App\Model\Payment\Payment[] $visiblePayments */
+        $visiblePayments = $this->paymentVisibilityCalculation->filterVisible($allPayments, $this->domain->getId());
+
+        return $visiblePayments;
     }
 }
