@@ -2,7 +2,6 @@ import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueri
 import { FC, useRef, useState } from 'react';
 import {
     SearchResultsBlockStyled,
-    SearchResultsContentMessageStyled,
     SearchResultsContentStyled,
     SearchResultsPanelStyled,
     SearchResultsStyled,
@@ -15,11 +14,10 @@ import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
-import ProductsList from 'components/Blocks/Product/List/ProductsList';
+import ResultProducts from './ResultProducts';
 import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
-import { Trans } from 'next-i18next';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -205,28 +203,13 @@ const Search: FC<SearchProps> = (props) => {
                         isPanelActive={props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
                     >
                         <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
-                        {props.searchResults.productsSearch.totalCount > 0 ? (
-                            <ProductsList products={props.searchResults.productsSearch.products} />
-                        ) : props.searchResults.productsSearch.productFilterOptions?.maximalPrice === 0 ? (
-                            <SearchResultsContentMessageStyled>
-                                <div>
-                                    <strong>{t('No products matched your search')}</strong>
-                                </div>
-                            </SearchResultsContentMessageStyled>
-                        ) : (
-                            <SearchResultsContentMessageStyled>
-                                <div>
-                                    <strong>{t('No results match the filter')}</strong>
-                                </div>
-                                <div>
-                                    <Trans i18nKey="ProductsNoResults">
-                                        We currently have no results for your exact search.
-                                        <br />
-                                        Try to be more specific, or see if you have filtered out non-existent data.
-                                    </Trans>
-                                </div>
-                            </SearchResultsContentMessageStyled>
-                        )}
+                        <ResultProducts
+                            products={props.searchResults.productsSearch.products}
+                            areProductsShowed={props.searchResults.productsSearch.totalCount > 0}
+                            noProductsFound={
+                                props.searchResults.productsSearch.productFilterOptions?.maximalPrice === 0
+                            }
+                        />
                         <Pagination
                             totalCount={props.searchResults.productsSearch.totalCount}
                             containerWrapRef={containerWrapRef}

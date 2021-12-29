@@ -69,19 +69,6 @@ export const SearchResultsContentStyled = styled.div<SearchResultsContentStyledP
     `}
 `;
 
-export const SearchResultsContentMessageStyled = styled.div`
-    ${({ theme }) => css`
-        padding: 50px;
-        text-align: center;
-
-        font-size: ${theme.fontSize.default};
-
-        div:first-of-type {
-            margin-bottom: 20px;
-        }
-    `}
-`;
-
 export const SearchResultsBlockStyled = styled.div<SearchResultsBlockStyledProps>`
     ${({ theme, areAllResultsVisible }) => css`
         @media ${theme.mediaQueries.queryLg} {
