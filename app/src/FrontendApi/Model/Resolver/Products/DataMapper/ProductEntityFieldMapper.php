@@ -85,6 +85,11 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     private DataLoaderInterface $productsSellableByIdsBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $brandsBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
@@ -99,6 +104,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
         Domain $domain,
@@ -114,7 +120,8 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ParameterRepository $parameterRepository,
         BreadcrumbFacade $breadcrumbFacade,
         DataLoaderInterface $categoriesBatchLoader,
-        DataLoaderInterface $productsSellableByIdsBatchLoader
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
+        DataLoaderInterface $brandsBatchLoader
     ) {
         parent::__construct(
             $domain,
@@ -133,6 +140,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $this->breadcrumbFacade = $breadcrumbFacade;
         $this->categoriesBatchLoader = $categoriesBatchLoader;
         $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
+        $this->brandsBatchLoader = $brandsBatchLoader;
     }
 
     /**
@@ -419,5 +427,16 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
 
         return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise|null
+     */
+    public function getBrandPromise(Product $product): ?Promise
+    {
+        $brand = $product->getBrand();
+
+        return $brand !== null ? $this->brandsBatchLoader->load($brand->getId()) : null;
     }
 }

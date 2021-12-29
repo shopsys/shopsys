@@ -41,6 +41,11 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     private DataLoaderInterface $productsSellableByIdsBatchLoader;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $brandsBatchLoader;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
@@ -49,6 +54,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -58,13 +64,15 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ParameterWithValuesFactory $parameterWithValuesFactory,
         DataLoaderInterface $categoriesBatchLoader,
         DataLoaderInterface $flagsBatchLoader,
-        DataLoaderInterface $productsSellableByIdsBatchLoader
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
+        DataLoaderInterface $brandsBatchLoader
     ) {
         parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
 
         $this->categoriesBatchLoader = $categoriesBatchLoader;
         $this->flagsBatchLoader = $flagsBatchLoader;
         $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
+        $this->brandsBatchLoader = $brandsBatchLoader;
     }
 
     /**
@@ -278,5 +286,16 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getRelatedProductsPromise(array $data): Promise
     {
         return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise|null
+     */
+    public function getBrandPromise(array $data): ?Promise
+    {
+        $brandId = $data['brand'];
+
+        return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 }

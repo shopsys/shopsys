@@ -13,6 +13,7 @@ services:
             Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\

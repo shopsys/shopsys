@@ -29,4 +29,14 @@ class BrandFacade
     {
         return $this->brandRepository->getAllWithDomainsAndTranslations($domainConfig);
     }
+
+    /**
+     * @param int[] $brandIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return array<int, \App\Model\Product\Brand\Brand|null>
+     */
+    public function getByIds(array $brandIds, DomainConfig $domainConfig): array
+    {
+        return $this->brandRepository->getByIds($brandIds, $domainConfig);
+    }
 }

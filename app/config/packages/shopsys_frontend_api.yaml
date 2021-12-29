@@ -50,3 +50,6 @@ overblog_dataloader:
         flagsBatchLoader:
             alias: "flags_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Flag\\FlagsBatchLoader:loadByIds"
+        brandsBatchLoader:
+            alias: "brands_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Brand\\BrandsBatchLoader:loadByIds"
