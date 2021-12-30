@@ -52,17 +52,16 @@ class TransportsResolver extends BaseTransportsResolver
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         if ($customerUser === null && $cartUuid === null) {
-            return $this->transportFacade->getVisibleOnCurrentDomain($payments);
+            return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
         }
 
         $cart = $this->cartFacade->findCart($customerUser, $cartUuid);
         if ($cart === null) {
-            return $this->transportFacade->getVisibleOnCurrentDomain($payments);
+            return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
         }
 
-        return $this->transportFacade->getVisibleOnCurrentDomainAcceptingWeight($payments, $cart->getTotalWeight());
+        return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart->getTotalWeight());
     }
 }
