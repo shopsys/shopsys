@@ -225,5 +225,14 @@
     "Your account has been created and you are logged in now": "Váš účet byl vytvořen a nyní jste přihlášen",
     "Passwords must match": "Hesla se musí shodovat",
     "GdprAgreementCheckbox": "Souhlasím se <lnk1>zpracováním osobních údajů</lnk1>.",
-    "No products matched your search": "Hledání neodpovídají žádné produkty"
+    "No products matched your search": "Hledání neodpovídají žádné produkty",
+    "Set new password": "Nastavit nové heslo",
+    "Fill first password": "Vyplňte nové heslo",
+    "Fill second password": "Vyplňte heslo znovu",
+    "Error occured while changing your password": "Při změně hesla nastala chyba",
+    "Your password has been changed": "Vaše heslo je změněno",
+    "New password": "Nové heslo",
+    "New password again": "Nové heslo znovu",
+    "Error occured while loading form data": "Nastala chyba při načítání formuláře",
+    "ResendRecoveryLink": "Nastala chyba při načítání formuláře pro obnovu hesla. <br> Zkuste si prosím nechat zaslat odkaz znovu <lnk1>na této stránce</lnk1>"
 }
