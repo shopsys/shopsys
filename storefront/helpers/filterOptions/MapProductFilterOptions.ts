@@ -7,8 +7,8 @@ export const mapProductFilterOptions = (
 ): FilterOptionsType | null => {
     return {
         ...productFilterOptionsApiData,
-        minimalPrice: parseFloat(productFilterOptionsApiData.minimalPrice),
-        maximalPrice: parseFloat(productFilterOptionsApiData.maximalPrice),
+        minimalPrice: Math.round((parseFloat(productFilterOptionsApiData.minimalPrice) + Number.EPSILON) * 100) / 100,
+        maximalPrice: Math.round((parseFloat(productFilterOptionsApiData.maximalPrice) + Number.EPSILON) * 100) / 100,
         brands:
             productFilterOptionsApiData.brands !== null && productFilterOptionsApiData.brands !== undefined
                 ? productFilterOptionsApiData.brands

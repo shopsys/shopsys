@@ -43,7 +43,7 @@ export const TextInputStyled = styled.input<TextInputStyledProps>`
         color: ${theme.color.base};
         background-color: ${theme.color.white};
         border-radius: ${theme.radius.big};
-        font-size: ${theme.fontSize.default};
+        font-size: ${inputSize === 'small' ? '13px' : theme.fontSize.default};
 
         // iOS ugly appearance fix
         -webkit-appearance: none !important;
