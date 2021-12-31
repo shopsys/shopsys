@@ -9,7 +9,7 @@ import { MainVariantDetailType } from 'types/product';
 import { mapArticleDetail } from 'connectors/articleInterface/article/Article';
 import { mapBlogArticleDetail } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { mapBlogCategoryDetail } from 'connectors/blogCategory/BlogCategory';
-import { mapBrandDetailApiData } from 'connectors/brands/Brands';
+import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -68,7 +68,7 @@ export function getFriendlyUrlResolvedData(
         case 'BlogArticle':
             return mapBlogArticleDetail(data.slug, currentDomainConfig);
         case 'Brand':
-            return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
+            return mapBrandDetail(data.slug, currentDomainConfig.currencyCode);
         case 'Flag':
             return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
         case 'BlogCategory':

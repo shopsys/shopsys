@@ -6,10 +6,6 @@ import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const mapListedBrandApiData = (apiData: ListedBrandFragmentApi): ListedBrandType => {
-    return { ...apiData, image: mapImageApiData(apiData.images) };
-};
-
 export function getBrands(): ListedBrandType[] | undefined {
     const [{ data, error }] = useBrandsQueryApi();
     useQueryError(error);
@@ -18,10 +14,10 @@ export function getBrands(): ListedBrandType[] | undefined {
         return undefined;
     }
 
-    return data.brands.map((apiBrand) => mapListedBrandApiData(apiBrand));
+    return data.brands.map((apiBrand) => mapListedBrand(apiBrand));
 }
 
-export const mapBrandDetailApiData = (apiData: BrandDetailFragmentApi, currencyCode: string): BrandDetailType => {
+export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: string): BrandDetailType => {
     const products: ListedProductEdgesType = {
         ...apiData.products,
         totalCount: apiData.products?.totalCount !== undefined ? apiData.products.totalCount : 0,
@@ -49,5 +45,12 @@ export const mapBrandDetailApiData = (apiData: BrandDetailFragmentApi, currencyC
         description: apiData.description !== undefined ? apiData.description : null,
         image: mapImageApiData(apiData.brandImages),
         products: products,
+    };
+};
+
+export const mapListedBrand = (apiData: ListedBrandFragmentApi): ListedBrandType => {
+    return {
+        ...apiData,
+        image: mapImageApiData(apiData.images),
     };
 };

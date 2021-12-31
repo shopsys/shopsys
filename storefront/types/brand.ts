@@ -2,19 +2,6 @@ import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
 import { ListedProductEdgesType } from 'types/product';
 
-export type SimpleBrandType = {
-    __typename?: 'Brand';
-    name: string;
-    slug: string;
-};
-
-export type ListedBrandType = {
-    uuid: string;
-    name: string;
-    slug: string;
-    image: ImageType | null;
-};
-
 export type BrandDetailType = {
     __typename: 'Brand';
     slug: string;
@@ -25,4 +12,17 @@ export type BrandDetailType = {
     image: ImageType | null;
     description: string | null;
     products: ListedProductEdgesType;
+};
+
+export type ListedBrandType = {
+    uuid: string;
+    name: string;
+    slug: string;
+    image: ImageType | null;
+};
+
+export type SimpleBrandType = {
+    __typename?: 'Brand';
+    name: string;
+    slug: string;
 };

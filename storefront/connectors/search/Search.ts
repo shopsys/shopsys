@@ -4,7 +4,7 @@ import { FilterOptionsStateType } from 'types/productFilter';
 import { ListedBrandType } from 'types/brand';
 import { ListedCategoryType } from 'types/category';
 import { ListedProductType } from 'types/product';
-import { mapListedBrandApiData } from 'connectors/brands/Brands';
+import { mapListedBrand } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -104,7 +104,7 @@ const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch'])
 };
 
 export const mapBrandSearchResults = (apiData: SearchQueryApi['brandSearch']): ListedBrandType[] => {
-    return apiData.map((brand) => mapListedBrandApiData(brand));
+    return apiData.map((brand) => mapListedBrand(brand));
 };
 
 export const mapArticlesSearchResults = (apiData: SearchQueryApi['articlesSearch']): SimpleArticleInterfaceType[] => {
