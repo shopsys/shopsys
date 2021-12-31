@@ -11,7 +11,7 @@ import {
 import { FC, useState } from 'react';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getBlogPreviewArticles } from 'connectors/blogPreview/blogPreview';
-import { getBlogUrl } from 'connectors/blogCategories/BlogCategories';
+import { getBlogUrl } from 'connectors/blogCategory/BlogCategory';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import Main from './Main';
 import Side from './Side';

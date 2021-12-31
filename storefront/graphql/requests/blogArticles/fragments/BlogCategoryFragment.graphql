@@ -1,7 +1,0 @@
-fragment BlogCategoryFragment on BlogCategory {
-    name
-    link
-    parent {
-        name
-    }
-}

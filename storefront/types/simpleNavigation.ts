@@ -11,4 +11,8 @@ export type ListedItemPropType =
           slug: string;
           image: ImageType | null;
           name: string;
+      }
+    | {
+          slug: string;
+          name: string;
       };

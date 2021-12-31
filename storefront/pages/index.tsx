@@ -1,5 +1,5 @@
 import {
-    BlogListQueryDocumentApi,
+    BlogArticlesQueryDocumentApi,
     NavigationQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,
     PromotedProductsQueryDocumentApi,
@@ -8,7 +8,7 @@ import {
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
-import { blogPreviewVariables } from 'connectors/blogPreview/blogPreview';
+import { blogPreviewVariables } from 'connectors/blogArticle/BlogArticle';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
@@ -50,7 +50,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         { query: SliderItemsQueryDocumentApi },
         { query: PromotedProductsQueryDocumentApi },
         { query: NavigationQueryDocumentApi },
-        { query: BlogListQueryDocumentApi, variables: blogPreviewVariables },
+        { query: BlogArticlesQueryDocumentApi, variables: blogPreviewVariables },
     ]);
 });
 

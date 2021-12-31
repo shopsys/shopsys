@@ -7,8 +7,8 @@ import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'types/blogArticle';
 import BlogArticlePage from 'components/Pages/BlogArticle';
+import { BlogCategoryDetailType } from 'types/blogCategory';
 import BlogCategoryPage from 'components/Pages/BlogCategory';
-import { BlogCategoryType } from 'types/blogCategory';
 import BrandDetailPage from 'components/Pages/BrandDetail';
 import { BrandDetailType } from 'types/brand';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
@@ -76,7 +76,7 @@ function renderContent(
         | StoreDetailType
         | ArticleDetailType
         | BlogArticleDetailType
-        | BlogCategoryType
+        | BlogCategoryDetailType
         | BrandDetailType
         | FlagDetailType,
 ) {
@@ -97,7 +97,7 @@ function renderContent(
     } else if (data.__typename === 'Flag') {
         return <FlagDetailPage flag={data as FlagDetailType} />;
     } else if (data.__typename === 'BlogCategory') {
-        return <BlogCategoryPage blogCategory={data as BlogCategoryType} />;
+        return <BlogCategoryPage blogCategory={data as BlogCategoryDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;

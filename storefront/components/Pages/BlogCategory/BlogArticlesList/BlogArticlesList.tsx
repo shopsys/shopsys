@@ -8,14 +8,14 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import { BlogArticlesType } from 'types/blogArticle';
+import { BlogArticleConnectionType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
 import { useShopsysSelector } from 'redux/main';
 
 type ListProps = {
-    blogArticles: BlogArticlesType;
+    blogArticles: BlogArticleConnectionType;
 };
 
 const List: FC<ListProps> = (props) => {

@@ -9,6 +9,7 @@ import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapProductPriceApiData } from 'connectors/products/Products';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
+import { mapSimpleArticleApiData } from 'connectors/articles/Articles';
 
 export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
@@ -51,7 +52,7 @@ const mapArticlesSearchResults = (
     if (apiData !== undefined && apiData !== null) {
         for (const article of apiData) {
             if (article !== undefined && article !== null) {
-                mappedArticles.push(article);
+                mappedArticles.push(mapSimpleArticleApiData(article));
             }
         }
     }

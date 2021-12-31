@@ -1,0 +1,5 @@
+fragment BlogArticleImageListGridFragment on BlogArticle {
+    image(sizes: "listGrid") {
+        ...ImageSizesFragment
+    }
+}

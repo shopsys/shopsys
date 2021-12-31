@@ -2,4 +2,7 @@ fragment SimpleBlogCategoryFragment on BlogCategory {
     uuid
     name
     link
+    parent {
+        name
+    }
 }

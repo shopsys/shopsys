@@ -59,7 +59,7 @@ export const useLoadCart = (
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     const [result, refresh] = useCartQueryApi({
-        variables: { cartUuid, transport, payment, promoCode },
+        variables: { cartUuid, transport, payment, promoCode } as CartQueryVariablesApi,
         pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: 'network-only',
     });

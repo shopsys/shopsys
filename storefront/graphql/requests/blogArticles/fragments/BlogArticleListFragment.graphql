@@ -1,9 +1,0 @@
-fragment BlogArticleListFragment on BlogArticle {
-    name
-    link
-    perex
-    ... BlogArticleImageListFragment
-    blogCategories {
-        ... BlogCategoryFragment
-    }
-}

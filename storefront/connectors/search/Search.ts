@@ -1,19 +1,19 @@
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { FilterOptionsStateType } from 'types/productFilter';
-import { ListedArticleType } from 'types/article';
-import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
 import { ListedCategoryType } from 'types/category';
 import { ListedProductType } from 'types/product';
-import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
+import { mapSimpleArticleApiData } from 'connectors/articles/Articles';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
+import { SimpleArticleType } from 'types/article';
+import { SimpleBlogArticleType } from 'types/blogArticle';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -110,7 +110,7 @@ export const mapBrandSearchResults = (apiData: SearchQueryApi['brandSearch']): L
 
 export const mapArticlesSearchResults = (
     apiData: SearchQueryApi['articlesSearch'],
-): (ListedArticleType | ListedBlogArticleType)[] => {
+): (SimpleArticleType | SimpleBlogArticleType)[] => {
     const mappedArticles = [];
 
     if (apiData !== undefined && apiData !== null) {
@@ -118,7 +118,7 @@ export const mapArticlesSearchResults = (
             if (article === undefined || article === null) {
                 continue;
             }
-            const mappedArticle = mapListedArticleApiData(article);
+            const mappedArticle = mapSimpleArticleApiData(article);
             if (mappedArticle !== undefined) {
                 mappedArticles.push(mappedArticle);
             }

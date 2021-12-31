@@ -1,15 +1,14 @@
-import { ListedArticleFragmentApi } from 'graphql/generated';
-import { ListedArticleType } from 'types/article';
-import { ListedBlogArticleType } from 'types/blogArticle';
+import { SimpleArticleFragmentApi, SimpleBlogArticleFragmentApi } from 'graphql/generated';
 import { mapImageApiData } from 'connectors/image/Image';
+import { SimpleArticleType } from 'types/article';
+import { SimpleBlogArticleType } from 'types/blogArticle';
 
-export const mapListedArticleApiData = (
-    apiData: ListedArticleFragmentApi,
-): ListedArticleType | ListedBlogArticleType | undefined => {
+export const mapSimpleArticleApiData = (
+    apiData: SimpleArticleFragmentApi | SimpleBlogArticleFragmentApi,
+): SimpleArticleType | SimpleBlogArticleType => {
     if (apiData.__typename === 'Article') {
         return {
             ...apiData,
-            image: null,
         };
     }
 
@@ -20,5 +19,5 @@ export const mapListedArticleApiData = (
         };
     }
 
-    return undefined;
+    throw new Error('Unknown article typename');
 };

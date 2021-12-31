@@ -7,16 +7,16 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import { BlogPreviewType } from 'types/blogArticle';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
+import { ListedBlogArticleType } from 'types/blogArticle';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type MainProps = {
-    blogMainItems: BlogPreviewType[];
+    blogMainItems: ListedBlogArticleType[];
 };
 
 const Main: FC<MainProps> = (props) => {

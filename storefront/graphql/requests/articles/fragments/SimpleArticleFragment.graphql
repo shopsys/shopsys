@@ -1,4 +1,4 @@
-fragment SimpleArticleFragment on ArticleInterface {
+fragment SimpleArticleFragment on Article {
     name
     slug
 }

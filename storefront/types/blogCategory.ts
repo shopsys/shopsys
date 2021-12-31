@@ -1,26 +1,23 @@
-import { BlogArticlesType } from './blogArticle';
+import { BlogArticleConnectionType } from './blogArticle';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
-export type BlogCategoryItem = {
+export type BlogCategoryDetailType = {
+    __typename: 'BlogCategory';
     uuid: string;
     name: string;
-    link: string;
-    children: BlogCategoryItem[];
+    blogArticles: BlogArticleConnectionType | null;
+    breadcrumb: BreadcrumbItemType[];
 };
 
-export type BlogArticleCategoryType = {
+export type ListedBlogCategoryType = SimpleBlogCategoryType & {
+    children: ListedBlogCategoryType[];
+};
+
+export type SimpleBlogCategoryType = {
     uuid: string;
     name: string;
     link: string;
     parent: {
         name: string;
     } | null;
-};
-
-export type BlogCategoryType = {
-    __typename: 'BlogCategory';
-    uuid: string;
-    name: string;
-    blogArticles: BlogArticlesType;
-    breadcrumb: BreadcrumbItemType[];
 };

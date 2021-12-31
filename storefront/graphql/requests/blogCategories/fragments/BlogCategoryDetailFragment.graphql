@@ -1,0 +1,8 @@
+fragment BlogCategoryDetailFragment on BlogCategory {
+    uuid
+    name
+    blogArticles(after: $endCursorForPagination, first: $pageSize) {
+        ...BlogArticleConnectionFragment
+    }
+    ...BreadcrumbFragment
+}

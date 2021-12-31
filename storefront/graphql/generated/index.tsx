@@ -26,28 +26,28 @@ export type AddProductResultApi = {
   __typename?: 'AddProductResult';
   addedQuantity: Scalars['Int'];
   isNew: Scalars['Boolean'];
-  isQuantityOverLimit?: Maybe<Scalars['Boolean']>;
+  isQuantityOverLimit: Maybe<Scalars['Boolean']>;
   notOnStockQuantity: Scalars['Int'];
-  overLimitQuantity?: Maybe<Scalars['Int']>;
+  overLimitQuantity: Maybe<Scalars['Int']>;
 };
 
 export type AddToCartInputApi = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /**
    * True if quantity should be set no matter the current state of the cart. False
    * if quantity should be added to the already existing same item in the cart
    */
-  isAbsoluteQuantity?: Maybe<Scalars['Boolean']>;
+  isAbsoluteQuantity: Maybe<Scalars['Boolean']>;
   /** Represents a payment in order */
-  payment?: Maybe<PaymentInputApi>;
+  payment: Maybe<PaymentInputApi>;
   /** Product UUID */
   productUuid: Scalars['Uuid'];
-  promoCode?: Maybe<Scalars['String']>;
+  promoCode: Maybe<Scalars['String']>;
   /** Item quantity */
   quantity: Scalars['Int'];
   /** Represents a transport in order */
-  transport?: Maybe<TransportInputApi>;
+  transport: Maybe<TransportInputApi>;
 };
 
 export type AddToCartResultApi = CartInterfaceApi & {
@@ -57,32 +57,32 @@ export type AddToCartResultApi = CartInterfaceApi & {
   items: Array<CartItemApi>;
   modifications: CartModificationsResultApi;
   /** Selected payment if payment provided */
-  payment?: Maybe<PaymentApi>;
+  payment: Maybe<PaymentApi>;
   /** Applied promo code if provided */
-  promoCode?: Maybe<Scalars['String']>;
+  promoCode: Maybe<Scalars['String']>;
   /** Remaining amount for free transport and payment; null = transport cannot be free */
-  remainingAmountWithVatForFreeTransport?: Maybe<Scalars['Money']>;
+  remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']>;
   /** Selected pickup place identifier if provided */
-  selectedPickupPlaceIdentifier?: Maybe<Scalars['String']>;
+  selectedPickupPlaceIdentifier: Maybe<Scalars['String']>;
   totalDiscountPrice: PriceApi;
   totalPrice: PriceApi;
   /** Selected transport if transport provided */
-  transport?: Maybe<TransportApi>;
+  transport: Maybe<TransportApi>;
   /** UUID of the cart, null for authenticated user */
-  uuid?: Maybe<Scalars['Uuid']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 /** Represents a singe additional image size */
 export type AdditionalSizeApi = {
   __typename?: 'AdditionalSize';
   /** Height in pixels defined in images.yaml */
-  height?: Maybe<Scalars['Int']>;
+  height: Maybe<Scalars['Int']>;
   /** Recommended media query defined in images.yaml */
   media: Scalars['String'];
   /** URL address of image */
   url: Scalars['String'];
   /** Width in pixels defined in images.yaml */
-  width?: Maybe<Scalars['Int']>;
+  width: Maybe<Scalars['Int']>;
 };
 
 export type AdvertApi = {
@@ -115,7 +115,7 @@ export type AdvertImageApi = AdvertApi & {
   /** Advert image */
   image: Array<Maybe<ImageApi>>;
   /** Advert link */
-  link?: Maybe<Scalars['String']>;
+  link: Maybe<Scalars['String']>;
   /** Name of advert */
   name: Scalars['String'];
   /** Position of advert */
@@ -150,15 +150,15 @@ export type ArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
   /** Placement of article */
   placement: Scalars['String'];
   /** Seo first level heading of article */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of article */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of article */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Article URL slug */
   slug: Scalars['String'];
   /** Text of article */
-  text?: Maybe<Scalars['String']>;
+  text: Maybe<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
 };
@@ -167,7 +167,7 @@ export type ArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
 export type ArticleConnectionApi = {
   __typename?: 'ArticleConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<ArticleEdgeApi>>>;
+  edges: Maybe<Array<Maybe<ArticleEdgeApi>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
   /** Total number of articles */
@@ -180,18 +180,18 @@ export type ArticleEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<ArticleApi>;
+  node: Maybe<ArticleApi>;
 };
 
 /** Represents entity that is considered to be an article on the eshop */
 export type ArticleInterfaceApi = {
   breadcrumb: Array<LinkApi>;
   name: Scalars['String'];
-  seoH1?: Maybe<Scalars['String']>;
-  seoMetaDescription?: Maybe<Scalars['String']>;
-  seoTitle?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   slug: Scalars['String'];
-  text?: Maybe<Scalars['String']>;
+  text: Maybe<Scalars['String']>;
   uuid: Scalars['Uuid'];
 };
 
@@ -213,27 +213,27 @@ export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
   /** Date and time of the blog article creation */
   createdAt: Scalars['DateTime'];
   /** Blog article image */
-  image?: Maybe<ImageApi>;
+  image: Maybe<ImageApi>;
   /** The blog article absolute URL */
   link: Scalars['String'];
   /** The blog article title */
   name: Scalars['String'];
   /** The blog article perex */
-  perex?: Maybe<Scalars['String']>;
+  perex: Maybe<Scalars['String']>;
   /** The list of the products assigned to the blog article */
   products: Array<ProductApi>;
   /** Date and time of the blog article publishing */
   publishDate: Scalars['DateTime'];
   /** The blog article SEO H1 heading */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** The blog article SEO meta description */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** The blog article SEO title */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** The blog article URL slug */
   slug: Scalars['String'];
   /** The blog article text */
-  text?: Maybe<Scalars['String']>;
+  text: Maybe<Scalars['String']>;
   /** The blog article UUID */
   uuid: Scalars['Uuid'];
   /** Indicates whether the blog article is displayed on homepage */
@@ -250,7 +250,7 @@ export type BlogArticleImageArgsApi = {
 export type BlogArticleConnectionApi = {
   __typename?: 'BlogArticleConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<BlogArticleEdgeApi>>>;
+  edges: Maybe<Array<Maybe<BlogArticleEdgeApi>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
   /** Total number of the blog articles */
@@ -263,31 +263,31 @@ export type BlogArticleEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<BlogArticleApi>;
+  node: Maybe<BlogArticleApi>;
 };
 
 export type BlogCategoryApi = BreadcrumbApi & SlugApi & {
   __typename?: 'BlogCategory';
   /** Paginated blog articles of the given blog category */
-  blogArticles?: Maybe<BlogArticleConnectionApi>;
+  blogArticles: Maybe<BlogArticleConnectionApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** The blog category children */
   children: Array<BlogCategoryApi>;
   /** The blog category description */
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** The blog category absolute URL */
   link: Scalars['String'];
   /** The blog category name */
   name: Scalars['String'];
   /** The blog category parent */
-  parent?: Maybe<BlogCategoryApi>;
+  parent: Maybe<BlogCategoryApi>;
   /** The blog category SEO H1 heading */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** The blog category SEO meta description */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** The blog category SEO title */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** The blog category URL slug */
   slug: Scalars['String'];
   /** The blog category UUID */
@@ -296,10 +296,10 @@ export type BlogCategoryApi = BreadcrumbApi & SlugApi & {
 
 
 export type BlogCategoryBlogArticlesArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
   onlyHomepageArticles?: Maybe<Scalars['Boolean']>;
 };
 
@@ -309,7 +309,7 @@ export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Brand description */
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** Brand images */
   images: Array<ImageApi>;
   /** Brand main URL */
@@ -317,13 +317,13 @@ export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   /** Brand name */
   name: Scalars['String'];
   /** Paginated and ordered products of brand */
-  products?: Maybe<ProductConnectionApi>;
+  products: Maybe<ProductConnectionApi>;
   /** Brand SEO H1 */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Brand SEO meta description */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Brand SEO title */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Brand URL slug */
   slug: Scalars['String'];
   /** UUID */
@@ -333,7 +333,7 @@ export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
 
 /** Represents a brand */
 export type BrandImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -341,12 +341,12 @@ export type BrandImagesArgsApi = {
 
 /** Represents a brand */
 export type BrandProductsArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search?: Maybe<Scalars['String']>;
 };
 
@@ -377,42 +377,42 @@ export type CartApi = CartInterfaceApi & {
   items: Array<CartItemApi>;
   modifications: CartModificationsResultApi;
   /** Selected payment if payment provided */
-  payment?: Maybe<PaymentApi>;
+  payment: Maybe<PaymentApi>;
   /** Applied promo code if provided */
-  promoCode?: Maybe<Scalars['String']>;
+  promoCode: Maybe<Scalars['String']>;
   /** Remaining amount for free transport and payment; null = transport cannot be free */
-  remainingAmountWithVatForFreeTransport?: Maybe<Scalars['Money']>;
+  remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']>;
   /** Selected pickup place identifier if provided */
-  selectedPickupPlaceIdentifier?: Maybe<Scalars['String']>;
+  selectedPickupPlaceIdentifier: Maybe<Scalars['String']>;
   totalDiscountPrice: PriceApi;
   totalPrice: PriceApi;
   /** Selected transport if transport provided */
-  transport?: Maybe<TransportApi>;
+  transport: Maybe<TransportApi>;
   /** UUID of the cart, null for authenticated user */
-  uuid?: Maybe<Scalars['Uuid']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 export type CartInputApi = {
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /** Represents a payment in order */
-  payment?: Maybe<PaymentInputApi>;
-  promoCode?: Maybe<Scalars['String']>;
+  payment: Maybe<PaymentInputApi>;
+  promoCode: Maybe<Scalars['String']>;
   /** Represents a transport in order */
-  transport?: Maybe<TransportInputApi>;
+  transport: Maybe<TransportInputApi>;
 };
 
 export type CartInterfaceApi = {
   items: Array<CartItemApi>;
   modifications: CartModificationsResultApi;
-  payment?: Maybe<PaymentApi>;
-  promoCode?: Maybe<Scalars['String']>;
-  remainingAmountWithVatForFreeTransport?: Maybe<Scalars['Money']>;
-  selectedPickupPlaceIdentifier?: Maybe<Scalars['String']>;
+  payment: Maybe<PaymentApi>;
+  promoCode: Maybe<Scalars['String']>;
+  remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']>;
+  selectedPickupPlaceIdentifier: Maybe<Scalars['String']>;
   totalDiscountPrice: PriceApi;
   totalPrice: PriceApi;
-  transport?: Maybe<TransportApi>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  transport: Maybe<TransportApi>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 /** Represent one item in the cart */
@@ -474,19 +474,19 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
    * Original category URL slug (for CategorySeoMixes slug of assigned category is
    * returned, null is returned for regular category)
    */
-  originalCategorySlug?: Maybe<Scalars['String']>;
+  originalCategorySlug: Maybe<Scalars['String']>;
   /** Ancestor category */
-  parent?: Maybe<CategoryApi>;
+  parent: Maybe<CategoryApi>;
   /** Paginated and ordered products of category */
-  products?: Maybe<ProductConnectionApi>;
+  products: Maybe<ProductConnectionApi>;
   /** An array of links of prepared category SEO mixes of a given category */
   readyCategorySeoMixLinks: Array<LinkApi>;
   /** Seo first level heading of category */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of category */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of category */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Category URL slug */
   slug: Scalars['String'];
   /** UUID */
@@ -496,7 +496,7 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
 
 /** Represents a category */
 export type CategoryImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -504,12 +504,12 @@ export type CategoryImagesArgsApi = {
 
 /** Represents a category */
 export type CategoryProductsArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search?: Maybe<Scalars['String']>;
 };
 
@@ -517,7 +517,7 @@ export type CategoryProductsArgsApi = {
 export type CategoryConnectionApi = {
   __typename?: 'CategoryConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<CategoryEdgeApi>>>;
+  edges: Maybe<Array<Maybe<CategoryEdgeApi>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
   /** Total number of categories */
@@ -530,7 +530,7 @@ export type CategoryEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<CategoryApi>;
+  node: Maybe<CategoryApi>;
 };
 
 export type ChangePasswordInputApi = {
@@ -567,15 +567,15 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   /** Billing address city name */
   city: Scalars['String'];
   /** The customer’s company name (only when customer is a company) */
-  companyName?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
   /** The customer’s company identification number (only when customer is a company) */
-  companyNumber?: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
   /** The customer’s company tax number (only when customer is a company) */
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   /** Billing address country */
   country: CountryApi;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress?: Maybe<DeliveryAddressApi>;
+  defaultDeliveryAddress: Maybe<DeliveryAddressApi>;
   /** List of delivery addresses */
   deliveryAddresses: Array<DeliveryAddressApi>;
   /** Email address */
@@ -591,7 +591,7 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   /** Billing address street name */
   street: Scalars['String'];
   /** Phone number */
-  telephone?: Maybe<Scalars['String']>;
+  telephone: Maybe<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
 };
@@ -612,7 +612,7 @@ export type CustomerUserApi = {
   /** Billing address country */
   country: CountryApi;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress?: Maybe<DeliveryAddressApi>;
+  defaultDeliveryAddress: Maybe<DeliveryAddressApi>;
   /** List of delivery addresses */
   deliveryAddresses: Array<DeliveryAddressApi>;
   /** Email address */
@@ -628,7 +628,7 @@ export type CustomerUserApi = {
   /** Billing address street name */
   street: Scalars['String'];
   /** Phone number */
-  telephone?: Maybe<Scalars['String']>;
+  telephone: Maybe<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
 };
@@ -652,7 +652,7 @@ export type DeliveryAddressApi = {
   /** Delivery address telephone */
   telephone: Scalars['String'];
   /** UUID */
-  uuid?: Maybe<Scalars['Uuid']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 /** Represents a downloadable file */
@@ -674,7 +674,7 @@ export type FlagApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   /** Localized flag name (domain dependent) */
   name: Scalars['String'];
   /** Paginated and ordered products of flag */
-  products?: Maybe<ProductConnectionApi>;
+  products: Maybe<ProductConnectionApi>;
   /** Flag color in rgb format */
   rgbColor: Scalars['String'];
   /** URL slug of flag */
@@ -686,18 +686,18 @@ export type FlagApi = BreadcrumbApi & ProductListableApi & SlugApi & {
 
 /** Represents a flag */
 export type FlagCategoriesArgsApi = {
-  productFilter?: Maybe<ProductFilterApi>;
+  productFilter: Maybe<ProductFilterApi>;
 };
 
 
 /** Represents a flag */
 export type FlagProductsArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search?: Maybe<Scalars['String']>;
 };
 
@@ -734,10 +734,10 @@ export type GoPayPaymentMethodApi = {
 export type ImageApi = {
   __typename?: 'Image';
   /** Position of image in list */
-  position?: Maybe<Scalars['Int']>;
+  position: Maybe<Scalars['Int']>;
   sizes: Array<ImageSizeApi>;
   /** Image type */
-  type?: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
 };
 
 /** Represents a single image size */
@@ -746,13 +746,13 @@ export type ImageSizeApi = {
   /** Additional sizes for different screen types */
   additionalSizes: Array<AdditionalSizeApi>;
   /** Height in pixels defined in images.yaml */
-  height?: Maybe<Scalars['Int']>;
+  height: Maybe<Scalars['Int']>;
   /** Image size defined in images.yaml */
   size: Scalars['String'];
   /** URL address of image */
   url: Scalars['String'];
   /** Width in pixels defined in images.yaml */
-  width?: Maybe<Scalars['Int']>;
+  width: Maybe<Scalars['Int']>;
 };
 
 /** Represents an internal link */
@@ -766,7 +766,7 @@ export type LinkApi = {
 
 export type LoginInputApi = {
   /** Uuid of the cart that should be merged to the cart of the user */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /** The user email. */
   email: Scalars['String'];
   /** The user password. */
@@ -781,16 +781,16 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int'];
   /** Brand of product */
-  brand?: Maybe<BrandApi>;
+  brand: Maybe<BrandApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Product catalog number */
   catalogNumber: Scalars['String'];
   /** List of categories */
   categories: Array<CategoryApi>;
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** EAN */
-  ean?: Maybe<Scalars['String']>;
+  ean: Maybe<Scalars['String']>;
   /** Number of the stores where the product is exposed */
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
@@ -812,25 +812,25 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** Localized product name (domain dependent) */
   name: Scalars['String'];
   /** Name prefix */
-  namePrefix?: Maybe<Scalars['String']>;
+  namePrefix: Maybe<Scalars['String']>;
   /** Name suffix */
-  nameSuffix?: Maybe<Scalars['String']>;
+  nameSuffix: Maybe<Scalars['String']>;
   orderingPriority: Scalars['Int'];
   parameters: Array<ParameterApi>;
   /** Product part number */
-  partNumber?: Maybe<Scalars['String']>;
+  partNumber: Maybe<Scalars['String']>;
   /** Product price */
   price: ProductPriceApi;
   /** List of related products */
   relatedProducts: Array<ProductApi>;
   /** Seo first level heading of product */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of product */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of product */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Localized product short description (domain dependent) */
-  shortDescription?: Maybe<Scalars['String']>;
+  shortDescription: Maybe<Scalars['String']>;
   /** Product URL slug */
   slug: Scalars['String'];
   /** Count of quantity on stock */
@@ -848,7 +848,7 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
 
 /** Represents a product */
 export type MainVariantImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -1006,43 +1006,43 @@ export type OrderApi = {
   /** Billing address city name */
   city: Scalars['String'];
   /** The customer’s company name (only when ordered on the company behalf) */
-  companyName?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
   /** The customer’s company identification number (only when ordered on the company behalf) */
-  companyNumber?: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
   /** The customer’s company tax number (only when ordered on the company behalf) */
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   /** Billing address country */
   country: CountryApi;
   /** Date and time when the order was created */
   creationDate: Scalars['DateTime'];
   /** City name for delivery */
-  deliveryCity?: Maybe<Scalars['String']>;
+  deliveryCity: Maybe<Scalars['String']>;
   /** Company name for delivery */
-  deliveryCompanyName?: Maybe<Scalars['String']>;
+  deliveryCompanyName: Maybe<Scalars['String']>;
   /** Country for delivery */
-  deliveryCountry?: Maybe<CountryApi>;
+  deliveryCountry: Maybe<CountryApi>;
   /** First name of the contact person for delivery */
-  deliveryFirstName?: Maybe<Scalars['String']>;
+  deliveryFirstName: Maybe<Scalars['String']>;
   /** Last name of the contact person for delivery */
-  deliveryLastName?: Maybe<Scalars['String']>;
+  deliveryLastName: Maybe<Scalars['String']>;
   /** Zip code for delivery */
-  deliveryPostcode?: Maybe<Scalars['String']>;
+  deliveryPostcode: Maybe<Scalars['String']>;
   /** Street name for delivery */
-  deliveryStreet?: Maybe<Scalars['String']>;
+  deliveryStreet: Maybe<Scalars['String']>;
   /** Contact telephone number for delivery */
-  deliveryTelephone?: Maybe<Scalars['String']>;
+  deliveryTelephone: Maybe<Scalars['String']>;
   /** Indicates whether the billing address is other than a delivery address */
   differentDeliveryAddress: Scalars['Boolean'];
   /** The customer's email address */
   email: Scalars['String'];
   /** The customer's first name */
-  firstName?: Maybe<Scalars['String']>;
+  firstName: Maybe<Scalars['String']>;
   /** All items in the order including payment and transport */
   items: Array<OrderItemApi>;
   /** The customer's last name */
-  lastName?: Maybe<Scalars['String']>;
+  lastName: Maybe<Scalars['String']>;
   /** Other information related to the order */
-  note?: Maybe<Scalars['String']>;
+  note: Maybe<Scalars['String']>;
   /** Unique order number */
   number: Scalars['String'];
   /** Payment method applied to the order */
@@ -1050,7 +1050,7 @@ export type OrderApi = {
   /** Billing address zip code */
   postcode: Scalars['String'];
   /** Promo code (coupon) used in the order */
-  promoCode?: Maybe<Scalars['String']>;
+  promoCode: Maybe<Scalars['String']>;
   /** Current status of the order */
   status: Scalars['String'];
   /** Billing address street name  */
@@ -1060,9 +1060,9 @@ export type OrderApi = {
   /** Total price of the order including transport and payment prices */
   totalPrice: PriceApi;
   /** The order tracking number */
-  trackingNumber?: Maybe<Scalars['String']>;
+  trackingNumber: Maybe<Scalars['String']>;
   /** The order tracking link */
-  trackingUrl?: Maybe<Scalars['String']>;
+  trackingUrl: Maybe<Scalars['String']>;
   /** Transport method applied to the order */
   transport: TransportApi;
   /** Unique url hash that can be used to  */
@@ -1075,7 +1075,7 @@ export type OrderApi = {
 export type OrderConnectionApi = {
   __typename?: 'OrderConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<OrderEdgeApi>>>;
+  edges: Maybe<Array<Maybe<OrderEdgeApi>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
   /** Total number of orders */
@@ -1088,39 +1088,39 @@ export type OrderEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<OrderApi>;
+  node: Maybe<OrderApi>;
 };
 
 /** Represents the main input object to create orders */
 export type OrderInputApi = {
   /** Cart identifier used for getting carts of not logged customers */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
   /** The customer’s company name (required when onCompanyBehalf is true) */
-  companyName?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
   /** The customer’s company identification number (required when onCompanyBehalf is true) */
-  companyNumber?: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
   /** The customer’s company tax number (required when onCompanyBehalf is true) */
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String'];
   /** City name for delivery (required when differentDeliveryAddress is true) */
-  deliveryCity?: Maybe<Scalars['String']>;
+  deliveryCity: Maybe<Scalars['String']>;
   /** Company name for delivery */
-  deliveryCompanyName?: Maybe<Scalars['String']>;
+  deliveryCompanyName: Maybe<Scalars['String']>;
   /** Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true) */
-  deliveryCountry?: Maybe<Scalars['String']>;
+  deliveryCountry: Maybe<Scalars['String']>;
   /** First name of the contact person for delivery (required when differentDeliveryAddress is true) */
-  deliveryFirstName?: Maybe<Scalars['String']>;
+  deliveryFirstName: Maybe<Scalars['String']>;
   /** Last name of the contact person for delivery (required when differentDeliveryAddress is true) */
-  deliveryLastName?: Maybe<Scalars['String']>;
+  deliveryLastName: Maybe<Scalars['String']>;
   /** Zip code for delivery (required when differentDeliveryAddress is true) */
-  deliveryPostcode?: Maybe<Scalars['String']>;
+  deliveryPostcode: Maybe<Scalars['String']>;
   /** Street name for delivery (required when differentDeliveryAddress is true) */
-  deliveryStreet?: Maybe<Scalars['String']>;
+  deliveryStreet: Maybe<Scalars['String']>;
   /** Contact telephone number for delivery */
-  deliveryTelephone?: Maybe<Scalars['String']>;
+  deliveryTelephone: Maybe<Scalars['String']>;
   /** Determines whether to deliver products to a different address than the billing one */
   differentDeliveryAddress: Scalars['Boolean'];
   /** The customer's email address */
@@ -1130,7 +1130,7 @@ export type OrderInputApi = {
   /** The customer's last name */
   lastName: Scalars['String'];
   /** Other information related to the order */
-  note?: Maybe<Scalars['String']>;
+  note: Maybe<Scalars['String']>;
   /** Determines whether the order is made on the company behalf. */
   onCompanyBehalf: Scalars['Boolean'];
   /** Payment method applied to the order */
@@ -1138,9 +1138,9 @@ export type OrderInputApi = {
   /** Billing address zip code (will be on the tax invoice) */
   postcode: Scalars['String'];
   /** Deprecated, this field is not used, the products are taken from the server cart instead. */
-  products?: Maybe<Array<OrderProductInputApi>>;
+  products: Maybe<Array<OrderProductInputApi>>;
   /** The promo code used in the order */
-  promoCode?: Maybe<Scalars['String']>;
+  promoCode: Maybe<Scalars['String']>;
   /** Billing address street name (will be on the tax invoice) */
   street: Scalars['String'];
   /** The customer's phone number */
@@ -1159,7 +1159,7 @@ export type OrderItemApi = {
   /** Total price for the quantity of order item */
   totalPrice: PriceApi;
   /** Unit of measurement used for the order item */
-  unit?: Maybe<Scalars['String']>;
+  unit: Maybe<Scalars['String']>;
   /** Order item price per unit */
   unitPrice: PriceApi;
   /** Applied VAT rate percentage applied to the order item */
@@ -1180,24 +1180,24 @@ export type OrderProductInputApi = {
 export type PageInfoApi = {
   __typename?: 'PageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor: Maybe<Scalars['String']>;
   /** When paginating forwards, are there more items? */
   hasNextPage: Scalars['Boolean'];
   /** When paginating backwards, are there more items? */
   hasPreviousPage: Scalars['Boolean'];
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor: Maybe<Scalars['String']>;
 };
 
 /** Represents a parameter */
 export type ParameterApi = {
   __typename?: 'Parameter';
   /** Parameter group to which the parameter is assigned */
-  group?: Maybe<Scalars['String']>;
+  group: Maybe<Scalars['String']>;
   /** Parameter name */
   name: Scalars['String'];
   /** Unit of the parameter */
-  unit?: Maybe<UnitApi>;
+  unit: Maybe<UnitApi>;
   /** UUID */
   uuid: Scalars['Uuid'];
   values: Array<ParameterValueApi>;
@@ -1218,7 +1218,7 @@ export type ParameterFilterOptionApi = {
   /** Parameter name */
   name: Scalars['String'];
   type: Scalars['String'];
-  unit?: Maybe<UnitApi>;
+  unit: Maybe<UnitApi>;
   /** UUID */
   uuid: Scalars['Uuid'];
   /** Filter options of parameter values */
@@ -1248,7 +1248,7 @@ export type ParameterValueFilterOptionApi = {
    */
   isAbsolute: Scalars['Boolean'];
   /** RGB hex of color parameter */
-  rgbHex?: Maybe<Scalars['String']>;
+  rgbHex: Maybe<Scalars['String']>;
   /** Parameter value */
   text: Scalars['String'];
   /** UUID */
@@ -1259,13 +1259,13 @@ export type ParameterValueFilterOptionApi = {
 export type PaymentApi = {
   __typename?: 'Payment';
   /** Localized payment description (domain dependent) */
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** Additional data for GoPay payment */
-  goPayPaymentMethod?: Maybe<GoPayPaymentMethodApi>;
+  goPayPaymentMethod: Maybe<GoPayPaymentMethodApi>;
   /** Payment images */
   images: Array<Maybe<ImageApi>>;
   /** Localized payment instruction (domain dependent) */
-  instruction?: Maybe<Scalars['String']>;
+  instruction: Maybe<Scalars['String']>;
   /** Payment name */
   name: Scalars['String'];
   /** Payment position */
@@ -1283,7 +1283,7 @@ export type PaymentApi = {
 
 /** Represents a payment */
 export type PaymentImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -1305,9 +1305,9 @@ export type PaymentInputApi = {
 export type PersonalDataApi = {
   __typename?: 'PersonalData';
   /** Customer user data */
-  customerUser?: Maybe<CustomerUserApi>;
+  customerUser: Maybe<CustomerUserApi>;
   /** Newsletter subscription */
-  newsletterSubscriber?: Maybe<NewsletterSubscriberApi>;
+  newsletterSubscriber: Maybe<NewsletterSubscriberApi>;
   /** Customer orders */
   orders: Array<OrderApi>;
 };
@@ -1316,7 +1316,7 @@ export type PersonalDataAccessRequestInputApi = {
   /** The customer's email address */
   email: Scalars['String'];
   /** One of two possible types for personal data access request - display or export */
-  type?: Maybe<PersonalDataAccessRequestTypeEnumApi>;
+  type: Maybe<PersonalDataAccessRequestTypeEnumApi>;
 };
 
 /** One of two possible types for personal data access request */
@@ -1367,16 +1367,16 @@ export type ProductApi = {
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int'];
   /** Brand of product */
-  brand?: Maybe<BrandApi>;
+  brand: Maybe<BrandApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Product catalog number */
   catalogNumber: Scalars['String'];
   /** List of categories */
   categories: Array<CategoryApi>;
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** EAN */
-  ean?: Maybe<Scalars['String']>;
+  ean: Maybe<Scalars['String']>;
   /** Number of the stores where the product is exposed */
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
@@ -1398,25 +1398,25 @@ export type ProductApi = {
   /** Localized product name (domain dependent) */
   name: Scalars['String'];
   /** Name prefix */
-  namePrefix?: Maybe<Scalars['String']>;
+  namePrefix: Maybe<Scalars['String']>;
   /** Name suffix */
-  nameSuffix?: Maybe<Scalars['String']>;
+  nameSuffix: Maybe<Scalars['String']>;
   orderingPriority: Scalars['Int'];
   parameters: Array<ParameterApi>;
   /** Product part number */
-  partNumber?: Maybe<Scalars['String']>;
+  partNumber: Maybe<Scalars['String']>;
   /** Product price */
   price: ProductPriceApi;
   /** List of related products */
   relatedProducts: Array<ProductApi>;
   /** Seo first level heading of product */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of product */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of product */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Localized product short description (domain dependent) */
-  shortDescription?: Maybe<Scalars['String']>;
+  shortDescription: Maybe<Scalars['String']>;
   /** Product URL slug */
   slug: Scalars['String'];
   /** Count of quantity on stock */
@@ -1433,7 +1433,7 @@ export type ProductApi = {
 
 /** Represents a product */
 export type ProductImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -1442,7 +1442,7 @@ export type ProductImagesArgsApi = {
 export type ProductConnectionApi = {
   __typename?: 'ProductConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<ProductEdgeApi>>>;
+  edges: Maybe<Array<Maybe<ProductEdgeApi>>>;
   orderingMode: ProductOrderingModeEnumApi;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
@@ -1457,32 +1457,32 @@ export type ProductEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<ProductApi>;
+  node: Maybe<ProductApi>;
 };
 
 /** Represents a product filter */
 export type ProductFilterApi = {
   /** Array of uuids of brands filter */
-  brands?: Maybe<Array<Scalars['Uuid']>>;
+  brands: Maybe<Array<Scalars['Uuid']>>;
   /** Array of uuids of flags filter */
-  flags?: Maybe<Array<Scalars['Uuid']>>;
+  flags: Maybe<Array<Scalars['Uuid']>>;
   /** Maximal price filter */
-  maximalPrice?: Maybe<Scalars['Money']>;
+  maximalPrice: Maybe<Scalars['Money']>;
   /** Minimal price filter */
-  minimalPrice?: Maybe<Scalars['Money']>;
+  minimalPrice: Maybe<Scalars['Money']>;
   /** Only in stock filter */
-  onlyInStock?: Maybe<Scalars['Boolean']>;
+  onlyInStock: Maybe<Scalars['Boolean']>;
   /** Parameter filter */
-  parameters?: Maybe<Array<ParameterFilterApi>>;
+  parameters: Maybe<Array<ParameterFilterApi>>;
 };
 
 /** Represents a product filter options */
 export type ProductFilterOptionsApi = {
   __typename?: 'ProductFilterOptions';
   /** Brands filter options */
-  brands?: Maybe<Array<BrandFilterOptionApi>>;
+  brands: Maybe<Array<BrandFilterOptionApi>>;
   /** Flags filter options */
-  flags?: Maybe<Array<FlagFilterOptionApi>>;
+  flags: Maybe<Array<FlagFilterOptionApi>>;
   /** Number of products in stock that will be filtered */
   inStock: Scalars['Int'];
   /** Maximal price of products for filtering */
@@ -1490,24 +1490,24 @@ export type ProductFilterOptionsApi = {
   /** Minimal price of products for filtering */
   minimalPrice: Scalars['Money'];
   /** Parameter filter options */
-  parameters?: Maybe<Array<ParameterFilterOptionApi>>;
+  parameters: Maybe<Array<ParameterFilterOptionApi>>;
 };
 
 /** Paginated and ordered products */
 export type ProductListableApi = {
   /** Paginated and ordered products */
-  products?: Maybe<ProductConnectionApi>;
+  products: Maybe<ProductConnectionApi>;
 };
 
 
 /** Paginated and ordered products */
 export type ProductListableProductsArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search?: Maybe<Scalars['String']>;
 };
 
@@ -1542,13 +1542,13 @@ export type ProductPriceApi = {
 
 export type QueryApi = {
   __typename?: 'Query';
-  AdvertCode?: Maybe<AdvertCodeApi>;
-  AdvertImage?: Maybe<AdvertImageApi>;
-  CompanyCustomerUser?: Maybe<CompanyCustomerUserApi>;
-  MainVariant?: Maybe<MainVariantApi>;
-  RegularCustomerUser?: Maybe<RegularCustomerUserApi>;
-  RegularProduct?: Maybe<RegularProductApi>;
-  Variant?: Maybe<VariantApi>;
+  AdvertCode: Maybe<AdvertCodeApi>;
+  AdvertImage: Maybe<AdvertImageApi>;
+  CompanyCustomerUser: Maybe<CompanyCustomerUserApi>;
+  MainVariant: Maybe<MainVariantApi>;
+  RegularCustomerUser: Maybe<RegularCustomerUserApi>;
+  RegularProduct: Maybe<RegularProductApi>;
+  Variant: Maybe<VariantApi>;
   /** Access personal data using hash received in email from personal data access request */
   accessPersonalData: PersonalDataApi;
   /** Returns list of advert positions. */
@@ -1556,66 +1556,66 @@ export type QueryApi = {
   /** Returns list of adverts, optionally filtered by `positionName` */
   adverts: Array<AdvertApi>;
   /** Returns article filtered using UUID or URL slug */
-  article?: Maybe<ArticleApi>;
+  article: Maybe<ArticleApi>;
   /**
    * Returns list of articles that can be paginated using `first`, `last`, `before`
    * and `after` keywords and filtered by `placement`
    */
-  articles?: Maybe<ArticleConnectionApi>;
+  articles: Maybe<ArticleConnectionApi>;
   /** Returns list of searched articles and blog articles */
-  articlesSearch?: Maybe<Array<Maybe<ArticleInterfaceApi>>>;
+  articlesSearch: Maybe<Array<Maybe<ArticleInterfaceApi>>>;
   /** Returns blog article filtered using UUID or URL slug */
-  blogArticle?: Maybe<BlogArticleApi>;
+  blogArticle: Maybe<BlogArticleApi>;
   /** Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords */
-  blogArticles?: Maybe<BlogArticleConnectionApi>;
+  blogArticles: Maybe<BlogArticleConnectionApi>;
   /** Returns a complete list of the blog categories */
   blogCategories: Array<BlogCategoryApi>;
   /** Returns blog category filtered using UUID or URL slug */
-  blogCategory?: Maybe<BlogCategoryApi>;
+  blogCategory: Maybe<BlogCategoryApi>;
   /** Returns brand filtered using UUID or URL slug */
-  brand?: Maybe<BrandApi>;
+  brand: Maybe<BrandApi>;
   /** Returns list of searched brands */
   brandSearch: Array<BrandApi>;
   /** Returns complete list of brands */
   brands: Array<BrandApi>;
   /** Return cart of logged customer or cart by UUID for anonymous user */
-  cart?: Maybe<CartApi>;
+  cart: Maybe<CartApi>;
   /** Returns complete list of categories */
   categories: Array<CategoryApi>;
   /** Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords */
-  categoriesSearch?: Maybe<CategoryConnectionApi>;
+  categoriesSearch: Maybe<CategoryConnectionApi>;
   /** Returns category filtered using UUID or URL slug */
-  category?: Maybe<CategoryApi>;
+  category: Maybe<CategoryApi>;
   /** Returns information about cookies article */
-  cookiesArticle?: Maybe<ArticleApi>;
+  cookiesArticle: Maybe<ArticleApi>;
   /** Returns available countries */
   countries: Array<CountryApi>;
   /** Returns currently logged in customer user */
   currentCustomerUser: CustomerUserApi;
   /** Returns a flag by uuid or url slug */
-  flag?: Maybe<FlagApi>;
+  flag: Maybe<FlagApi>;
   /** Returns a complete list of the flags */
-  flags?: Maybe<Array<FlagApi>>;
+  flags: Maybe<Array<FlagApi>>;
   /** Returns complete navigation menu */
   navigation: Array<NavigationItemApi>;
   /** Returns a list of notifications supposed to be displayed on all pages */
-  notificationBars?: Maybe<Array<NotificationBarApi>>;
+  notificationBars: Maybe<Array<NotificationBarApi>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
-  order?: Maybe<OrderApi>;
+  order: Maybe<OrderApi>;
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
-  orders?: Maybe<OrderConnectionApi>;
+  orders: Maybe<OrderConnectionApi>;
   /** Returns payment filtered using UUID */
-  payment?: Maybe<PaymentApi>;
+  payment: Maybe<PaymentApi>;
   /** Returns complete list of payment methods */
   payments: Array<PaymentApi>;
   /** Return personal data page content and URL */
-  personalDataPage?: Maybe<PersonalDataPageApi>;
+  personalDataPage: Maybe<PersonalDataPageApi>;
   /** Returns privacy policy article */
-  privacyPolicyArticle?: Maybe<ArticleApi>;
+  privacyPolicyArticle: Maybe<ArticleApi>;
   /** Returns product filtered using UUID or URL slug */
-  product?: Maybe<ProductApi>;
+  product: Maybe<ProductApi>;
   /** Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords */
-  products?: Maybe<ProductConnectionApi>;
+  products: Maybe<ProductConnectionApi>;
   /** Returns promoted categories */
   promotedCategories: Array<CategoryApi>;
   /** Returns promoted products */
@@ -1623,15 +1623,15 @@ export type QueryApi = {
   /** Returns a complete list of the slider items */
   sliderItems: Array<SliderItemApi>;
   /** Returns entity by slug */
-  slug?: Maybe<SlugApi>;
+  slug: Maybe<SlugApi>;
   /** Returns store filtered using UUID or URL slug */
-  store?: Maybe<StoreApi>;
+  store: Maybe<StoreApi>;
   /** Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords */
-  stores?: Maybe<StoreConnectionApi>;
+  stores: Maybe<StoreConnectionApi>;
   /** Returns Terms and Conditions article */
-  termsAndConditionsArticle?: Maybe<ArticleApi>;
+  termsAndConditionsArticle: Maybe<ArticleApi>;
   /** Returns complete list of transport methods */
-  transport?: Maybe<TransportApi>;
+  transport: Maybe<TransportApi>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TransportApi>;
 };
@@ -1643,22 +1643,22 @@ export type QueryAccessPersonalDataArgsApi = {
 
 
 export type QueryAdvertsArgsApi = {
-  positionName?: Maybe<Scalars['String']>;
+  positionName: Maybe<Scalars['String']>;
 };
 
 
 export type QueryArticleArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryArticlesArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  placement?: Maybe<Scalars['String']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  placement: Maybe<Scalars['String']>;
 };
 
 
@@ -1668,29 +1668,29 @@ export type QueryArticlesSearchArgsApi = {
 
 
 export type QueryBlogArticleArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryBlogArticlesArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
   onlyHomepageArticles?: Maybe<Scalars['Boolean']>;
 };
 
 
 export type QueryBlogCategoryArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryBrandArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
@@ -1705,38 +1705,38 @@ export type QueryCartArgsApi = {
 
 
 export type QueryCategoriesSearchArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
   search: Scalars['String'];
 };
 
 
 export type QueryCategoryArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryFlagArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryOrderArgsApi = {
-  orderNumber?: Maybe<Scalars['String']>;
-  urlHash?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  orderNumber: Maybe<Scalars['String']>;
+  urlHash: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryOrdersArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -1746,18 +1746,18 @@ export type QueryPaymentArgsApi = {
 
 
 export type QueryProductArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryProductsArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
   search?: Maybe<Scalars['String']>;
 };
 
@@ -1768,16 +1768,16 @@ export type QuerySlugArgsApi = {
 
 
 export type QueryStoreArgsApi = {
-  urlSlug?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
 };
 
 
 export type QueryStoresArgsApi = {
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  before: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
+  last: Maybe<Scalars['Int']>;
 };
 
 
@@ -1787,7 +1787,7 @@ export type QueryTransportArgsApi = {
 
 
 export type QueryTransportsArgsApi = {
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
 };
 
 export type RecoverPasswordInputApi = {
@@ -1807,17 +1807,17 @@ export type RefreshTokenInputApi = {
 /** Represents the main input object to register customer user */
 export type RegistrationDataInputApi = {
   /** Uuid of the cart that should be merged to the cart of the newly registered user */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
   /** Determines whether the registered customer is a company or not. */
   companyCustomer: Scalars['Boolean'];
   /** The customer’s company name (required when companyCustomer is true) */
-  companyName?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
   /** The customer’s company identification number (required when companyCustomer is true) */
-  companyNumber?: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
   /** The customer’s company tax number (required when companyCustomer is true) */
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String'];
   /** The customer's email address */
@@ -1846,7 +1846,7 @@ export type RegularCustomerUserApi = CustomerUserApi & {
   /** Billing address country */
   country: CountryApi;
   /** Default customer delivery addresses */
-  defaultDeliveryAddress?: Maybe<DeliveryAddressApi>;
+  defaultDeliveryAddress: Maybe<DeliveryAddressApi>;
   /** List of delivery addresses */
   deliveryAddresses: Array<DeliveryAddressApi>;
   /** Email address */
@@ -1862,7 +1862,7 @@ export type RegularCustomerUserApi = CustomerUserApi & {
   /** Billing address street name */
   street: Scalars['String'];
   /** Phone number */
-  telephone?: Maybe<Scalars['String']>;
+  telephone: Maybe<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
 };
@@ -1875,16 +1875,16 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int'];
   /** Brand of product */
-  brand?: Maybe<BrandApi>;
+  brand: Maybe<BrandApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Product catalog number */
   catalogNumber: Scalars['String'];
   /** List of categories */
   categories: Array<CategoryApi>;
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** EAN */
-  ean?: Maybe<Scalars['String']>;
+  ean: Maybe<Scalars['String']>;
   /** Number of the stores where the product is exposed */
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
@@ -1906,25 +1906,25 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** Localized product name (domain dependent) */
   name: Scalars['String'];
   /** Name prefix */
-  namePrefix?: Maybe<Scalars['String']>;
+  namePrefix: Maybe<Scalars['String']>;
   /** Name suffix */
-  nameSuffix?: Maybe<Scalars['String']>;
+  nameSuffix: Maybe<Scalars['String']>;
   orderingPriority: Scalars['Int'];
   parameters: Array<ParameterApi>;
   /** Product part number */
-  partNumber?: Maybe<Scalars['String']>;
+  partNumber: Maybe<Scalars['String']>;
   /** Product price */
   price: ProductPriceApi;
   /** List of related products */
   relatedProducts: Array<ProductApi>;
   /** Seo first level heading of product */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of product */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of product */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Localized product short description (domain dependent) */
-  shortDescription?: Maybe<Scalars['String']>;
+  shortDescription: Maybe<Scalars['String']>;
   /** Product URL slug */
   slug: Scalars['String'];
   /** Count of quantity on stock */
@@ -1941,7 +1941,7 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
 
 /** Represents a product */
 export type RegularProductImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -1950,22 +1950,22 @@ export type RemoveFromCartInputApi = {
   /** Cart item UUID */
   cartItemUuid: Scalars['Uuid'];
   /** Cart identifier, new cart will be created if not provided and customer is not logged in */
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   /** Represents a payment in order */
-  payment?: Maybe<PaymentInputApi>;
-  promoCode?: Maybe<Scalars['String']>;
+  payment: Maybe<PaymentInputApi>;
+  promoCode: Maybe<Scalars['String']>;
   /** Represents a transport in order */
-  transport?: Maybe<TransportInputApi>;
+  transport: Maybe<TransportInputApi>;
 };
 
 export type SliderItemApi = {
   __typename?: 'SliderItem';
   /** Text below slider */
-  extendedText?: Maybe<Scalars['String']>;
+  extendedText: Maybe<Scalars['String']>;
   /** Target link of text below slider */
-  extendedTextLink?: Maybe<Scalars['String']>;
+  extendedTextLink: Maybe<Scalars['String']>;
   /** GTM creative */
-  gtmCreative?: Maybe<Scalars['String']>;
+  gtmCreative: Maybe<Scalars['String']>;
   /** GTM ID */
   gtmId: Scalars['String'];
   /** Slider item images */
@@ -1986,7 +1986,7 @@ export type SliderItemImagesArgsApi = {
 
 /** Represents entity retrievable by slug */
 export type SlugApi = {
-  name?: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   slug: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
@@ -1998,28 +1998,28 @@ export type StoreApi = BreadcrumbApi & SlugApi & {
   breadcrumb: Array<LinkApi>;
   /** Store address city */
   city: Scalars['String'];
-  contactInfo?: Maybe<Scalars['String']>;
+  contactInfo: Maybe<Scalars['String']>;
   /** Store address country */
   country: CountryApi;
   /** Store description */
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** Is set as default store */
   isDefault: Scalars['Boolean'];
   /** Store location latitude */
-  locationLatitude?: Maybe<Scalars['String']>;
+  locationLatitude: Maybe<Scalars['String']>;
   /** Store location longitude */
-  locationLongitude?: Maybe<Scalars['String']>;
+  locationLongitude: Maybe<Scalars['String']>;
   /** Store name */
   name: Scalars['String'];
   /** Store opening hours */
-  openingHours?: Maybe<Scalars['String']>;
+  openingHours: Maybe<Scalars['String']>;
   /** Store opening hours, newlines are rendered as HTML breakline */
-  openingHoursHtml?: Maybe<Scalars['String']>;
+  openingHoursHtml: Maybe<Scalars['String']>;
   /** Store address postcode */
   postcode: Scalars['String'];
   /** Store URL slug */
   slug: Scalars['String'];
-  specialMessage?: Maybe<Scalars['String']>;
+  specialMessage: Maybe<Scalars['String']>;
   /** Store address street */
   street: Scalars['String'];
   /** UUID */
@@ -2036,14 +2036,14 @@ export type StoreAvailabilityApi = {
   /** Is product exposed on this store */
   exposed: Scalars['Boolean'];
   /** Store */
-  store?: Maybe<StoreApi>;
+  store: Maybe<StoreApi>;
 };
 
 /** A connection to a list of items. */
 export type StoreConnectionApi = {
   __typename?: 'StoreConnection';
   /** Information to aid in pagination. */
-  edges?: Maybe<Array<Maybe<StoreEdgeApi>>>;
+  edges: Maybe<Array<Maybe<StoreEdgeApi>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfoApi;
   /** Total number of stores */
@@ -2056,7 +2056,7 @@ export type StoreEdgeApi = {
   /** A cursor for use in pagination. */
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
-  node?: Maybe<StoreApi>;
+  node: Maybe<StoreApi>;
 };
 
 export type TokenApi = {
@@ -2071,11 +2071,11 @@ export type TransportApi = {
   /** Number of days until goods are delivered */
   daysUntilDelivery: Scalars['Int'];
   /** Localized transport description (domain dependent) */
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** Transport images */
   images: Array<Maybe<ImageApi>>;
   /** Localized transport instruction (domain dependent) */
-  instruction?: Maybe<Scalars['String']>;
+  instruction: Maybe<Scalars['String']>;
   /** Transport name */
   name: Scalars['String'];
   /** List of assigned payments */
@@ -2085,7 +2085,7 @@ export type TransportApi = {
   /** Transport price */
   price: PriceApi;
   /** Stores available for personal pickup */
-  stores?: Maybe<StoreConnectionApi>;
+  stores: Maybe<StoreConnectionApi>;
   /** Type of transport */
   transportType: TransportTypeApi;
   /** UUID */
@@ -2095,7 +2095,7 @@ export type TransportApi = {
 
 /** Represents a transport */
 export type TransportImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
@@ -2109,7 +2109,7 @@ export type TransportPriceArgsApi = {
 /** Represents a transport in order */
 export type TransportInputApi = {
   /** The identifier of selected personal pickup place */
-  pickupPlaceIdentifier?: Maybe<Scalars['String']>;
+  pickupPlaceIdentifier: Maybe<Scalars['String']>;
   /** Price for transport */
   price: PriceInputApi;
   /** UUID */
@@ -2140,16 +2140,16 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** Number of the stores where the product is available */
   availableStoresCount: Scalars['Int'];
   /** Brand of product */
-  brand?: Maybe<BrandApi>;
+  brand: Maybe<BrandApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** Product catalog number */
   catalogNumber: Scalars['String'];
   /** List of categories */
   categories: Array<CategoryApi>;
-  description?: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
   /** EAN */
-  ean?: Maybe<Scalars['String']>;
+  ean: Maybe<Scalars['String']>;
   /** Number of the stores where the product is exposed */
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
@@ -2168,29 +2168,29 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   isUsingStock: Scalars['Boolean'];
   /** Product link */
   link: Scalars['String'];
-  mainVariant?: Maybe<MainVariantApi>;
+  mainVariant: Maybe<MainVariantApi>;
   /** Localized product name (domain dependent) */
   name: Scalars['String'];
   /** Name prefix */
-  namePrefix?: Maybe<Scalars['String']>;
+  namePrefix: Maybe<Scalars['String']>;
   /** Name suffix */
-  nameSuffix?: Maybe<Scalars['String']>;
+  nameSuffix: Maybe<Scalars['String']>;
   orderingPriority: Scalars['Int'];
   parameters: Array<ParameterApi>;
   /** Product part number */
-  partNumber?: Maybe<Scalars['String']>;
+  partNumber: Maybe<Scalars['String']>;
   /** Product price */
   price: ProductPriceApi;
   /** List of related products */
   relatedProducts: Array<ProductApi>;
   /** Seo first level heading of product */
-  seoH1?: Maybe<Scalars['String']>;
+  seoH1: Maybe<Scalars['String']>;
   /** Seo meta description of product */
-  seoMetaDescription?: Maybe<Scalars['String']>;
+  seoMetaDescription: Maybe<Scalars['String']>;
   /** Seo title of product */
-  seoTitle?: Maybe<Scalars['String']>;
+  seoTitle: Maybe<Scalars['String']>;
   /** Localized product short description (domain dependent) */
-  shortDescription?: Maybe<Scalars['String']>;
+  shortDescription: Maybe<Scalars['String']>;
   /** Product URL slug */
   slug: Scalars['String'];
   /** Count of quantity on stock */
@@ -2207,29 +2207,19 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
 
 /** Represents a product */
 export type VariantImagesArgsApi = {
-  size?: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['String']>;
   sizes?: Maybe<Array<Scalars['String']>>;
   type?: Maybe<Scalars['String']>;
 };
 
-export type ArticleDetailFragmentApi = { __typename?: 'Article', uuid: string, slug: string, placement: string, text?: string | null | undefined, articleName: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+export type ArticleDetailFragmentApi = { __typename?: 'Article', uuid: string, slug: string, placement: string, text: string | null, articleName: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
-type ListedArticleFragment_Article_Api = { __typename?: 'Article', name: string, slug: string };
-
-type ListedArticleFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
-
-export type ListedArticleFragmentApi = ListedArticleFragment_Article_Api | ListedArticleFragment_BlogArticle_Api;
-
-type SimpleArticleFragment_Article_Api = { __typename?: 'Article', name: string, slug: string };
-
-type SimpleArticleFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name: string, slug: string };
-
-export type SimpleArticleFragmentApi = SimpleArticleFragment_Article_Api | SimpleArticleFragment_BlogArticle_Api;
+export type SimpleArticleFragmentApi = { __typename?: 'Article', name: string, slug: string };
 
 export type LoginVariablesApi = Exact<{
   email: Scalars['String'];
   password: Scalars['Password'];
-  previousCartUuid?: Maybe<Scalars['Uuid']>;
+  previousCartUuid: Maybe<Scalars['Uuid']>;
 }>;
 
 
@@ -2249,49 +2239,47 @@ export type RefreshTokensApi = { __typename?: 'Mutation', RefreshTokens: { __typ
 
 export type AvailabilityFragmentApi = { __typename?: 'Availability', name: string, status: string };
 
-export type BlogArticleDetailFragmentApi = { __typename?: 'BlogArticle', uuid: string, name: string, text?: string | null | undefined, publishDate: any, link: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogArticleProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+export type BlogArticleConnectionFragmentApi = { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'BlogArticleEdge', node: { __typename?: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null } | null> | null };
 
-export type BlogListQueryVariablesApi = Exact<{
-  first?: Maybe<Scalars['Int']>;
-  onlyHomepageArticles?: Maybe<Scalars['Boolean']>;
+export type BlogArticleDetailFragmentApi = { __typename?: 'BlogArticle', uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, blogArticleProducts: Array<{ __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+
+export type ListedBlogArticleFragmentApi = { __typename?: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null };
+
+export type SimpleBlogArticleFragmentApi = { __typename?: 'BlogArticle', name: string, slug: string, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null };
+
+export type BlogArticleImageListFragmentApi = { __typename?: 'BlogArticle', image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null };
+
+export type BlogArticleImageListGridFragmentApi = { __typename?: 'BlogArticle', image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null };
+
+export type BlogArticlesQueryVariablesApi = Exact<{
+  first: Maybe<Scalars['Int']>;
+  onlyHomepageArticles: Maybe<Scalars['Boolean']>;
 }>;
 
 
-export type BlogListQueryApi = { __typename?: 'Query', blogArticles?: { __typename?: 'BlogArticleConnection', edges?: Array<{ __typename?: 'BlogArticleEdge', node?: { __typename?: 'BlogArticle', name: string, link: string, perex?: string | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }>, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type BlogArticlesQueryApi = { __typename?: 'Query', blogArticles: { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'BlogArticleEdge', node: { __typename?: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null } | null> | null } | null };
 
-export type SimpleBlogArticleFragmentApi = { __typename?: 'BlogArticle', name: string, slug: string };
+export type BlogCategoryDetailFragmentApi = { __typename?: 'BlogCategory', uuid: string, name: string, blogArticles: { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'BlogArticleEdge', node: { __typename?: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null } | null> | null } | null, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
-export type BlogArticleImageListFragmentApi = { __typename?: 'BlogArticle', image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
-
-export type BlogArticleListFragmentApi = { __typename?: 'BlogArticle', name: string, link: string, perex?: string | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }>, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
-
-export type BlogCategoryFragmentApi = { __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined };
-
-export type SimpleBlogCategoryFragmentApi = { __typename?: 'BlogCategory', uuid: string, name: string, link: string };
+export type SimpleBlogCategoryFragmentApi = { __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null };
 
 export type BlogCategoriesVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type BlogCategoriesApi = { __typename?: 'Query', blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string }> }> }> }> }> };
+export type BlogCategoriesApi = { __typename?: 'Query', blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }>, parent: { __typename?: 'BlogCategory', name: string } | null }> };
 
-export type BlogCategoryCategoriesFragmentApi = { __typename?: 'BlogArticle', blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }> };
+export type BrandDetailFragmentApi = { __typename?: 'Brand', uuid: string, slug: string, name: string, seoH1: string | null, description: string | null, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-export type BlogCategoryDetailFragmentApi = { __typename?: 'BlogCategory', uuid: string, name: string, blogArticles?: { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'BlogArticleEdge', node?: { __typename?: 'BlogArticle', uuid: string, name: string, publishDate: any, perex?: string | null | undefined, link: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+export type BrandImagesListFragmentApi = { __typename?: 'Brand', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-export type BlogCategoryImageListFragmentApi = { __typename?: 'BlogArticle', image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
-
-export type BrandDetailFragmentApi = { __typename?: 'Brand', uuid: string, slug: string, name: string, seoH1?: string | null | undefined, description?: string | null | undefined, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
-
-export type BrandImagesListFragmentApi = { __typename?: 'Brand', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
-
-export type ListedBrandFragmentApi = { __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+export type ListedBrandFragmentApi = { __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type SimpleBrandFragmentApi = { __typename?: 'Brand', name: string, slug: string };
 
 export type BrandsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type BrandsQueryApi = { __typename?: 'Query', brands: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
+export type BrandsQueryApi = { __typename?: 'Query', brands: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }> };
 
 type BreadcrumbFragment_Article_Api = { __typename?: 'Article', breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
@@ -2315,61 +2303,61 @@ type BreadcrumbFragment_Variant_Api = { __typename?: 'Variant', breadcrumb: Arra
 
 export type BreadcrumbFragmentApi = BreadcrumbFragment_Article_Api | BreadcrumbFragment_BlogArticle_Api | BreadcrumbFragment_BlogCategory_Api | BreadcrumbFragment_Brand_Api | BreadcrumbFragment_Category_Api | BreadcrumbFragment_Flag_Api | BreadcrumbFragment_MainVariant_Api | BreadcrumbFragment_RegularProduct_Api | BreadcrumbFragment_Store_Api | BreadcrumbFragment_Variant_Api;
 
-type CartFragment_AddToCartResult_Api = { __typename?: 'AddToCartResult', uuid?: string | null | undefined, remainingAmountWithVatForFreeTransport?: string | null | undefined, promoCode?: string | null | undefined, selectedPickupPlaceIdentifier?: string | null | undefined, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport?: { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } } | null | undefined, payment?: { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> } | null | undefined, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
+type CartFragment_AddToCartResult_Api = { __typename?: 'AddToCartResult', uuid: string | null, remainingAmountWithVatForFreeTransport: string | null, promoCode: string | null, selectedPickupPlaceIdentifier: string | null, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport: { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } } | null, payment: { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> } | null, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
 
-type CartFragment_Cart_Api = { __typename?: 'Cart', uuid?: string | null | undefined, remainingAmountWithVatForFreeTransport?: string | null | undefined, promoCode?: string | null | undefined, selectedPickupPlaceIdentifier?: string | null | undefined, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport?: { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } } | null | undefined, payment?: { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> } | null | undefined, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
+type CartFragment_Cart_Api = { __typename?: 'Cart', uuid: string | null, remainingAmountWithVatForFreeTransport: string | null, promoCode: string | null, selectedPickupPlaceIdentifier: string | null, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport: { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } } | null, payment: { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> } | null, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
 
 export type CartFragmentApi = CartFragment_AddToCartResult_Api | CartFragment_Cart_Api;
 
-export type CartItemFragmentApi = { __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } };
+export type CartItemFragmentApi = { __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } };
 
-type CartModificationsFragment_AddToCartResult_Api = { __typename?: 'AddToCartResult', modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
+type CartModificationsFragment_AddToCartResult_Api = { __typename?: 'AddToCartResult', modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
 
-type CartModificationsFragment_Cart_Api = { __typename?: 'Cart', modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
+type CartModificationsFragment_Cart_Api = { __typename?: 'Cart', modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } };
 
 export type CartModificationsFragmentApi = CartModificationsFragment_AddToCartResult_Api | CartModificationsFragment_Cart_Api;
 
 export type AddToCartMutationVariablesApi = Exact<{
-  cartUuid?: Maybe<Scalars['Uuid']>;
-  transport?: Maybe<TransportInputApi>;
-  payment?: Maybe<PaymentInputApi>;
-  promoCode?: Maybe<Scalars['String']>;
-  isAbsoluteQuantity?: Maybe<Scalars['Boolean']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
+  transport: Maybe<TransportInputApi>;
+  payment: Maybe<PaymentInputApi>;
+  promoCode: Maybe<Scalars['String']>;
+  isAbsoluteQuantity: Maybe<Scalars['Boolean']>;
   productUuid: Scalars['Uuid'];
   quantity: Scalars['Int'];
 }>;
 
 
-export type AddToCartMutationApi = { __typename?: 'Mutation', AddToCart: { __typename?: 'AddToCartResult', uuid?: string | null | undefined, remainingAmountWithVatForFreeTransport?: string | null | undefined, promoCode?: string | null | undefined, selectedPickupPlaceIdentifier?: string | null | undefined, addProductResult: { __typename?: 'AddProductResult', addedQuantity: number, isNew: boolean, isQuantityOverLimit?: boolean | null | undefined, notOnStockQuantity: number, overLimitQuantity?: number | null | undefined }, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport?: { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } } | null | undefined, payment?: { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> } | null | undefined, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } };
+export type AddToCartMutationApi = { __typename?: 'Mutation', AddToCart: { __typename?: 'AddToCartResult', uuid: string | null, remainingAmountWithVatForFreeTransport: string | null, promoCode: string | null, selectedPickupPlaceIdentifier: string | null, addProductResult: { __typename?: 'AddProductResult', addedQuantity: number, isNew: boolean, isQuantityOverLimit: boolean | null, notOnStockQuantity: number, overLimitQuantity: number | null }, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport: { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } } | null, payment: { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> } | null, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } };
 
 export type RemoveFromCartMutationVariablesApi = Exact<{
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
   cartItemUuid: Scalars['Uuid'];
-  transport?: Maybe<TransportInputApi>;
-  payment?: Maybe<PaymentInputApi>;
-  promoCode?: Maybe<Scalars['String']>;
+  transport: Maybe<TransportInputApi>;
+  payment: Maybe<PaymentInputApi>;
+  promoCode: Maybe<Scalars['String']>;
 }>;
 
 
-export type RemoveFromCartMutationApi = { __typename?: 'Mutation', RemoveFromCart: { __typename?: 'Cart', uuid?: string | null | undefined, remainingAmountWithVatForFreeTransport?: string | null | undefined, promoCode?: string | null | undefined, selectedPickupPlaceIdentifier?: string | null | undefined, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport?: { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } } | null | undefined, payment?: { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> } | null | undefined, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } };
+export type RemoveFromCartMutationApi = { __typename?: 'Mutation', RemoveFromCart: { __typename?: 'Cart', uuid: string | null, remainingAmountWithVatForFreeTransport: string | null, promoCode: string | null, selectedPickupPlaceIdentifier: string | null, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport: { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } } | null, payment: { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> } | null, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } };
 
 export type CartQueryVariablesApi = Exact<{
-  cartUuid?: Maybe<Scalars['Uuid']>;
-  transport?: Maybe<TransportInputApi>;
-  payment?: Maybe<PaymentInputApi>;
-  promoCode?: Maybe<Scalars['String']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
+  transport: Maybe<TransportInputApi>;
+  payment: Maybe<PaymentInputApi>;
+  promoCode: Maybe<Scalars['String']>;
 }>;
 
 
-export type CartQueryApi = { __typename?: 'Query', cart?: { __typename?: 'Cart', uuid?: string | null | undefined, remainingAmountWithVatForFreeTransport?: string | null | undefined, promoCode?: string | null | undefined, selectedPickupPlaceIdentifier?: string | null | undefined, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport?: { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } } | null | undefined, payment?: { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> } | null | undefined, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } | null | undefined };
+export type CartQueryApi = { __typename?: 'Query', cart: { __typename?: 'Cart', uuid: string | null, remainingAmountWithVatForFreeTransport: string | null, promoCode: string | null, selectedPickupPlaceIdentifier: string | null, items: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalDiscountPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, transport: { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } } | null, payment: { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> } | null, modifications: { __typename?: 'CartModificationsResult', itemModifications: { __typename?: 'CartItemModificationsResult', noLongerListableCartItems: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithModifiedPrice: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, cartItemsWithChangedQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }>, noLongerAvailableCartItemsDueToQuantity: Array<{ __typename?: 'CartItem', uuid: string, quantity: number, product: { __typename?: 'MainVariant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, unit: { __typename?: 'Unit', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } }> }, transportModifications: { __typename?: 'CartTransportModificationsResult', transportPriceChanged: boolean, transportUnavailable: boolean, transportWeightLimitExceeded: boolean }, paymentModifications: { __typename?: 'CartPaymentModificationsResult', paymentPriceChanged: boolean, paymentUnavailable: boolean } } } | null };
 
-export type CategoryDetailFragmentApi = { __typename?: 'Category', uuid: string, slug: string, originalCategorySlug?: string | null | undefined, name: string, seoH1?: string | null | undefined, children: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, linkedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, readyCategorySeoMixLinks: Array<{ __typename?: 'Link', name: string, slug: string }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type CategoryDetailFragmentApi = { __typename?: 'Category', uuid: string, slug: string, originalCategorySlug: string | null, name: string, seoH1: string | null, children: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, linkedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, readyCategorySeoMixLinks: Array<{ __typename?: 'Link', name: string, slug: string }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-export type CategoryImagesDefaultFragmentApi = { __typename?: 'Category', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+export type CategoryImagesDefaultFragmentApi = { __typename?: 'Category', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-export type CategoryPreviewFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+export type CategoryPreviewFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-export type ListedCategoryFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+export type ListedCategoryFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type NavigationSubCategoriesLinkFragmentApi = { __typename?: 'Category', children: Array<{ __typename?: 'Category', name: string, slug: string }> };
 
@@ -2378,7 +2366,7 @@ export type SimpleCategoryFragmentApi = { __typename?: 'Category', name: string,
 export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
+export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }> };
 
 export type CountryFragmentApi = { __typename?: 'Country', name: string, code: string };
 
@@ -2390,24 +2378,24 @@ export type CountriesQueryApi = { __typename?: 'Query', countries: Array<{ __typ
 export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName?: string | null | undefined, companyNumber?: string | null | undefined, companyTaxNumber?: string | null | undefined, firstName: string, lastName: string, email: string, telephone?: string | null | undefined, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone?: string | null | undefined, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
+export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
 
-export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
+export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
 
-export type FlagDetailFragmentApi = { __typename?: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type FlagDetailFragmentApi = { __typename?: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
 export type FlagLabelFragmentApi = { __typename?: 'Flag', name: string, rgbColor: string };
 
-export type ImageSizesFragmentApi = { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> };
+export type ImageSizesFragmentApi = { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> };
 
-export type CategoriesByColumnFragmentApi = { __typename?: 'NavigationItem', categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> };
+export type CategoriesByColumnFragmentApi = { __typename?: 'NavigationItem', categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> };
 
-export type ColumnCategoriesFragmentApi = { __typename?: 'NavigationItemCategoriesByColumns', categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
+export type ColumnCategoriesFragmentApi = { __typename?: 'NavigationItemCategoriesByColumns', categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 export type NavigationQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQueryApi = { __typename?: 'Query', navigation: Array<{ __typename?: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> }> };
+export type NavigationQueryApi = { __typename?: 'Query', navigation: Array<{ __typename?: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> }> };
 
 export type NewsletterSubscribeMutationVariablesApi = Exact<{
   email: Scalars['String'];
@@ -2416,11 +2404,11 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
-export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
-export type OrderDetailItemFragmentApi = { __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit?: string | null | undefined, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type OrderDetailItemFragmentApi = { __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
-export type OrderListFragmentApi = { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'OrderEdge', cursor: string, node?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null | undefined } | null | undefined> | null | undefined };
+export type OrderListFragmentApi = { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'OrderEdge', cursor: string, node: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
 
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String'];
@@ -2428,48 +2416,48 @@ export type CreateOrderMutationVariablesApi = Exact<{
   email: Scalars['String'];
   telephone: Scalars['String'];
   onCompanyBehalf: Scalars['Boolean'];
-  companyName?: Maybe<Scalars['String']>;
-  companyNumber?: Maybe<Scalars['String']>;
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   street: Scalars['String'];
   city: Scalars['String'];
   postcode: Scalars['String'];
   country: Scalars['String'];
   differentDeliveryAddress: Scalars['Boolean'];
-  deliveryFirstName?: Maybe<Scalars['String']>;
-  deliveryLastName?: Maybe<Scalars['String']>;
-  deliveryCompanyName?: Maybe<Scalars['String']>;
-  deliveryTelephone?: Maybe<Scalars['String']>;
-  deliveryStreet?: Maybe<Scalars['String']>;
-  deliveryCity?: Maybe<Scalars['String']>;
-  deliveryPostcode?: Maybe<Scalars['String']>;
-  deliveryCountry?: Maybe<Scalars['String']>;
-  note?: Maybe<Scalars['String']>;
+  deliveryFirstName: Maybe<Scalars['String']>;
+  deliveryLastName: Maybe<Scalars['String']>;
+  deliveryCompanyName: Maybe<Scalars['String']>;
+  deliveryTelephone: Maybe<Scalars['String']>;
+  deliveryStreet: Maybe<Scalars['String']>;
+  deliveryCity: Maybe<Scalars['String']>;
+  deliveryPostcode: Maybe<Scalars['String']>;
+  deliveryCountry: Maybe<Scalars['String']>;
+  note: Maybe<Scalars['String']>;
   payment: PaymentInputApi;
   transport: TransportInputApi;
-  cartUuid?: Maybe<Scalars['Uuid']>;
-  promoCode?: Maybe<Scalars['String']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
+  promoCode: Maybe<Scalars['String']>;
 }>;
 
 
 export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string } };
 
 export type OrderDetailQueryVariablesApi = Exact<{
-  orderNumber?: Maybe<Scalars['String']>;
+  orderNumber: Maybe<Scalars['String']>;
 }>;
 
 
-export type OrderDetailQueryApi = { __typename?: 'Query', order?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName?: string | null | undefined, lastName?: string | null | undefined, email: string, telephone: string, companyName?: string | null | undefined, companyNumber?: string | null | undefined, companyTaxNumber?: string | null | undefined, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName?: string | null | undefined, deliveryLastName?: string | null | undefined, deliveryCompanyName?: string | null | undefined, deliveryTelephone?: string | null | undefined, deliveryStreet?: string | null | undefined, deliveryCity?: string | null | undefined, deliveryPostcode?: string | null | undefined, note?: string | null | undefined, urlHash: string, promoCode?: string | null | undefined, trackingNumber?: string | null | undefined, trackingUrl?: string | null | undefined, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit?: string | null | undefined, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry?: { __typename?: 'Country', name: string } | null | undefined } | null | undefined };
+export type OrderDetailQueryApi = { __typename?: 'Query', order: { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry: { __typename?: 'Country', name: string } | null } | null };
 
 export type OrdersQueryVariablesApi = Exact<{
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
+  after: Maybe<Scalars['String']>;
+  first: Maybe<Scalars['Int']>;
 }>;
 
 
-export type OrdersQueryApi = { __typename?: 'Query', orders?: { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'OrderEdge', cursor: string, node?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type OrdersQueryApi = { __typename?: 'Query', orders: { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'OrderEdge', cursor: string, node: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null } | null };
 
-export type PageInfoFragmentApi = { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined };
+export type PageInfoFragmentApi = { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null };
 
 export type ParameterFragmentApi = { __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> };
 
@@ -2489,11 +2477,11 @@ export type RecoverPasswordMutationVariablesApi = Exact<{
 
 export type RecoverPasswordMutationApi = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'Token', accessToken: string, refreshToken: string } };
 
-export type SimplePaymentFragmentApi = { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> };
+export type SimplePaymentFragmentApi = { __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> };
 
 export type PersonalDataRequestMutationVariablesApi = Exact<{
   email: Scalars['String'];
-  type?: Maybe<PersonalDataAccessRequestTypeEnumApi>;
+  type: Maybe<PersonalDataAccessRequestTypeEnumApi>;
 }>;
 
 
@@ -2502,7 +2490,7 @@ export type PersonalDataRequestMutationApi = { __typename?: 'Mutation', RequestP
 export type PersonalDataPageTextQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type PersonalDataPageTextQueryApi = { __typename?: 'Query', personalDataPage?: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null | undefined };
+export type PersonalDataPageTextQueryApi = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null };
 
 export type PriceFragmentApi = { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string };
 
@@ -2510,59 +2498,59 @@ export type ProductFilterOptionsBrandsFragmentApi = { __typename?: 'BrandFilterO
 
 export type ProductFilterOptionsFlagsFragmentApi = { __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } };
 
-export type ProductFilterOptionsFragmentApi = { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined };
+export type ProductFilterOptionsFragmentApi = { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null };
 
-export type ProductFilterOptionsParametersFragmentApi = { __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> };
+export type ProductFilterOptionsParametersFragmentApi = { __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> };
 
-type ListedProductFragment_MainVariant_Api = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ListedProductFragment_MainVariant_Api = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type ListedProductFragment_RegularProduct_Api = { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ListedProductFragment_RegularProduct_Api = { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type ListedProductFragment_Variant_Api = { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ListedProductFragment_Variant_Api = { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
 export type ListedProductFragmentApi = ListedProductFragment_MainVariant_Api | ListedProductFragment_RegularProduct_Api | ListedProductFragment_Variant_Api;
 
-type ListedProductsFragment_Brand_Api = { __typename?: 'Brand', products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+type ListedProductsFragment_Brand_Api = { __typename?: 'Brand', products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-type ListedProductsFragment_Category_Api = { __typename?: 'Category', products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+type ListedProductsFragment_Category_Api = { __typename?: 'Category', products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-type ListedProductsFragment_Flag_Api = { __typename?: 'Flag', products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+type ListedProductsFragment_Flag_Api = { __typename?: 'Flag', products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
 export type ListedProductsFragmentApi = ListedProductsFragment_Brand_Api | ListedProductsFragment_Category_Api | ListedProductsFragment_Flag_Api;
 
-export type ListedVariantFragmentApi = { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+export type ListedVariantFragmentApi = { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-export type MainVariantDetailFragmentApi = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, catalogNumber: string, stockQuantity: number, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, variants: Array<{ __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+export type MainVariantDetailFragmentApi = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, catalogNumber: string, stockQuantity: number, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, variants: Array<{ __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
-type ProductDetailFragment_MainVariant_Api = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+type ProductDetailFragment_MainVariant_Api = { __typename?: 'MainVariant', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
-type ProductDetailFragment_RegularProduct_Api = { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+type ProductDetailFragment_RegularProduct_Api = { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
-type ProductDetailFragment_Variant_Api = { __typename?: 'Variant', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+type ProductDetailFragment_Variant_Api = { __typename?: 'Variant', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
 export type ProductDetailFragmentApi = ProductDetailFragment_MainVariant_Api | ProductDetailFragment_RegularProduct_Api | ProductDetailFragment_Variant_Api;
 
-type ProductDetailImagesFragment_MainVariant_Api = { __typename?: 'MainVariant', images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductDetailImagesFragment_MainVariant_Api = { __typename?: 'MainVariant', images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type ProductDetailImagesFragment_RegularProduct_Api = { __typename?: 'RegularProduct', images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductDetailImagesFragment_RegularProduct_Api = { __typename?: 'RegularProduct', images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type ProductDetailImagesFragment_Variant_Api = { __typename?: 'Variant', images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductDetailImagesFragment_Variant_Api = { __typename?: 'Variant', images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type ProductDetailImagesFragmentApi = ProductDetailImagesFragment_MainVariant_Api | ProductDetailImagesFragment_RegularProduct_Api | ProductDetailImagesFragment_Variant_Api;
 
-type ProductImagesListFragment_MainVariant_Api = { __typename?: 'MainVariant', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductImagesListFragment_MainVariant_Api = { __typename?: 'MainVariant', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type ProductImagesListFragment_RegularProduct_Api = { __typename?: 'RegularProduct', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductImagesListFragment_RegularProduct_Api = { __typename?: 'RegularProduct', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type ProductImagesListFragment_Variant_Api = { __typename?: 'Variant', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type ProductImagesListFragment_Variant_Api = { __typename?: 'Variant', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type ProductImagesListFragmentApi = ProductImagesListFragment_MainVariant_Api | ProductImagesListFragment_RegularProduct_Api | ProductImagesListFragment_Variant_Api;
 
-type ProductListFragment_MainVariant_Api = { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ProductListFragment_MainVariant_Api = { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type ProductListFragment_RegularProduct_Api = { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ProductListFragment_RegularProduct_Api = { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type ProductListFragment_Variant_Api = { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type ProductListFragment_Variant_Api = { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
 export type ProductListFragmentApi = ProductListFragment_MainVariant_Api | ProductListFragment_RegularProduct_Api | ProductListFragment_Variant_Api;
 
@@ -2574,26 +2562,26 @@ type ProductPriceFragment_Variant_Api = { __typename?: 'Variant', price: { __typ
 
 export type ProductPriceFragmentApi = ProductPriceFragment_MainVariant_Api | ProductPriceFragment_RegularProduct_Api | ProductPriceFragment_Variant_Api;
 
-type SimpleProductFragment_MainVariant_Api = { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type SimpleProductFragment_MainVariant_Api = { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type SimpleProductFragment_RegularProduct_Api = { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type SimpleProductFragment_RegularProduct_Api = { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
-type SimpleProductFragment_Variant_Api = { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+type SimpleProductFragment_Variant_Api = { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type SimpleProductFragmentApi = SimpleProductFragment_MainVariant_Api | SimpleProductFragment_RegularProduct_Api | SimpleProductFragment_Variant_Api;
 
-type SliderProductFragment_MainVariant_Api = { __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type SliderProductFragment_MainVariant_Api = { __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type SliderProductFragment_RegularProduct_Api = { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type SliderProductFragment_RegularProduct_Api = { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
-type SliderProductFragment_Variant_Api = { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
+type SliderProductFragment_Variant_Api = { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
 export type SliderProductFragmentApi = SliderProductFragment_MainVariant_Api | SliderProductFragment_RegularProduct_Api | SliderProductFragment_Variant_Api;
 
 export type PromotedProductsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }> };
+export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }> };
 
 export type RegistrationMutationVariablesApi = Exact<{
   firstName: Scalars['String'];
@@ -2606,78 +2594,78 @@ export type RegistrationMutationVariablesApi = Exact<{
   postcode: Scalars['String'];
   country: Scalars['String'];
   companyCustomer: Scalars['Boolean'];
-  companyName?: Maybe<Scalars['String']>;
-  companyNumber?: Maybe<Scalars['String']>;
-  companyTaxNumber?: Maybe<Scalars['String']>;
+  companyName: Maybe<Scalars['String']>;
+  companyNumber: Maybe<Scalars['String']>;
+  companyTaxNumber: Maybe<Scalars['String']>;
   newsletterSubscription: Scalars['Boolean'];
-  previousCartUuid?: Maybe<Scalars['Uuid']>;
+  previousCartUuid: Maybe<Scalars['Uuid']>;
 }>;
 
 
 export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'Token', accessToken: string, refreshToken: string } };
 
-export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined };
+export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', name: string, slug: string } | null } | null> | null };
 
-export type EnrichedCategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined };
+export type EnrichedCategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | null } | null> | null };
 
-export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined };
+export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', totalCount: number, edges: Array<{ __typename?: 'ProductEdge', node: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | null } | null> | null };
 
 export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
 }>;
 
 
-export type AutocompleteSearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type AutocompleteSearchQueryApi = { __typename?: 'Query', articlesSearch: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null> | null, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch: { __typename?: 'CategoryConnection', totalCount: number, edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', name: string, slug: string } | null } | null> | null } | null, productsSearch: { __typename?: 'ProductConnection', totalCount: number, edges: Array<{ __typename?: 'ProductEdge', node: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | null } | null> | null } | null };
 
 export type SearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
-  orderingMode?: Maybe<ProductOrderingModeEnumApi>;
-  after?: Maybe<Scalars['String']>;
-  filter?: Maybe<ProductFilterApi>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
+  after: Maybe<Scalars['String']>;
+  filter: Maybe<ProductFilterApi>;
 }>;
 
 
-export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type SearchQueryApi = { __typename?: 'Query', articlesSearch: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null> | null, brandSearch: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, categoriesSearch: { __typename?: 'CategoryConnection', totalCount: number, edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> } | null } | null> | null } | null, productsSearch: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-export type SliderItemImagesWebDefaultFragmentApi = { __typename?: 'SliderItem', images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+export type SliderItemImagesWebDefaultFragmentApi = { __typename?: 'SliderItem', images: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type SliderItemsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SliderItemsQueryApi = { __typename?: 'Query', sliderItems: Array<{ __typename?: 'SliderItem', uuid: string, name: string, link: string, extendedText?: string | null | undefined, extendedTextLink?: string | null | undefined, images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
+export type SliderItemsQueryApi = { __typename?: 'Query', sliderItems: Array<{ __typename?: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, images: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }> };
 
 export type SlugQueryVariablesApi = Exact<{
   slug: Scalars['String'];
-  sortingMode?: Maybe<ProductOrderingModeEnumApi>;
-  endCursorForPagination?: Maybe<Scalars['String']>;
-  pageSize?: Maybe<Scalars['Int']>;
-  filter?: Maybe<ProductFilterApi>;
+  sortingMode: Maybe<ProductOrderingModeEnumApi>;
+  endCursorForPagination: Maybe<Scalars['String']>;
+  pageSize: Maybe<Scalars['Int']>;
+  filter: Maybe<ProductFilterApi>;
 }>;
 
 
-export type SlugQueryApi = { __typename?: 'Query', slug?: { __typename: 'Article', uuid: string, slug: string, placement: string, text?: string | null | undefined, articleName: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'BlogArticle', uuid: string, name: string, text?: string | null | undefined, publishDate: any, link: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogArticleProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'BlogCategory', uuid: string, name: string, blogArticles?: { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'BlogArticleEdge', node?: { __typename?: 'BlogArticle', uuid: string, name: string, publishDate: any, perex?: string | null | undefined, link: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Brand', uuid: string, slug: string, name: string, seoH1?: string | null | undefined, description?: string | null | undefined, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename: 'Category', uuid: string, slug: string, originalCategorySlug?: string | null | undefined, name: string, seoH1?: string | null | undefined, children: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, linkedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }>, readyCategorySeoMixLinks: Array<{ __typename?: 'Link', name: string, slug: string }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | { __typename: 'MainVariant', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, variants: Array<{ __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Variant', uuid: string, slug: string, name: string, namePrefix?: string | null | undefined, nameSuffix?: string | null | undefined, description?: string | null | undefined, shortDescription?: string | null | undefined, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position?: number | null | undefined, type?: string | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined };
+export type SlugQueryApi = { __typename?: 'Query', slug: { __typename: 'Article', uuid: string, slug: string, placement: string, text: string | null, articleName: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'BlogArticle', uuid: string, name: string, slug: string, link: string, text: string | null, publishDate: any, blogArticleProducts: Array<{ __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'BlogCategory', uuid: string, name: string, blogArticles: { __typename?: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'BlogArticleEdge', node: { __typename?: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename?: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, image: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null } | null } | null> | null } | null, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Brand', uuid: string, slug: string, name: string, seoH1: string | null, description: string | null, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null } | { __typename: 'Category', uuid: string, slug: string, originalCategorySlug: string | null, name: string, seoH1: string | null, children: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, linkedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number } | null, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, readyCategorySeoMixLinks: Array<{ __typename?: 'Link', name: string, slug: string }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null } | { __typename: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null } | { __typename: 'MainVariant', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, variants: Array<{ __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | { __typename: 'Variant', uuid: string, slug: string, name: string, namePrefix: string | null, nameSuffix: string | null, description: string | null, shortDescription: string | null, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, availability: { __typename?: 'Availability', name: string, status: string }, storeAvailabilities: Array<{ __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null }>, accessories: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, parameters: Array<{ __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', position: number | null, type: string | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null };
 
-export type StoreAvailabilityFragmentApi = { __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store?: { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null | undefined };
+export type StoreAvailabilityFragmentApi = { __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null };
 
-export type ListedStoreFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHours?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string };
+export type ListedStoreFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string };
 
-export type StoreDetailFragmentApi = { __typename?: 'Store', uuid: string, slug: string, description?: string | null | undefined, street: string, city: string, postcode: string, openingHours?: string | null | undefined, contactInfo?: string | null | undefined, specialMessage?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
+export type StoreDetailFragmentApi = { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
 export type StoresQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type StoresQueryApi = { __typename?: 'Query', stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHours?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type StoresQueryApi = { __typename?: 'Query', stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string } | null } | null> | null } | null };
 
-export type ListedPickupPlaceFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } };
+export type ListedPickupPlaceFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } };
 
-export type TransportWithAvailablePaymentsAndStoresFragmentApi = { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } };
+export type TransportWithAvailablePaymentsAndStoresFragmentApi = { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } };
 
 export type TransportsQueryVariablesApi = Exact<{
-  cartUuid?: Maybe<Scalars['Uuid']>;
+  cartUuid: Maybe<Scalars['Uuid']>;
 }>;
 
 
-export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } }> };
+export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> } | null> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } }> };
 
 
       export interface PossibleTypesResultData {
@@ -2759,6 +2747,12 @@ export const ArticleDetailFragmentApi = gql`
   ...BreadcrumbFragment
 }
     ${BreadcrumbFragmentApi}`;
+export const SimpleArticleFragmentApi = gql`
+    fragment SimpleArticleFragment on Article {
+  name
+  slug
+}
+    `;
 export const ImageSizesFragmentApi = gql`
     fragment ImageSizesFragment on Image {
   sizes {
@@ -2769,26 +2763,13 @@ export const ImageSizesFragmentApi = gql`
   }
 }
     `;
-export const BlogArticleImageListFragmentApi = gql`
-    fragment BlogArticleImageListFragment on BlogArticle {
-  image(sizes: "list") {
+export const BlogArticleImageListGridFragmentApi = gql`
+    fragment BlogArticleImageListGridFragment on BlogArticle {
+  image(sizes: "listGrid") {
     ...ImageSizesFragment
   }
 }
     ${ImageSizesFragmentApi}`;
-export const ListedArticleFragmentApi = gql`
-    fragment ListedArticleFragment on ArticleInterface {
-  name
-  slug
-  ...BlogArticleImageListFragment
-}
-    ${BlogArticleImageListFragmentApi}`;
-export const SimpleArticleFragmentApi = gql`
-    fragment SimpleArticleFragment on ArticleInterface {
-  name
-  slug
-}
-    `;
 export const FlagLabelFragmentApi = gql`
     fragment FlagLabelFragment on Flag {
   name
@@ -2802,12 +2783,6 @@ export const ProductImagesListFragmentApi = gql`
   }
 }
     ${ImageSizesFragmentApi}`;
-export const AvailabilityFragmentApi = gql`
-    fragment AvailabilityFragment on Availability {
-  name
-  status
-}
-    `;
 export const ProductPriceFragmentApi = gql`
     fragment ProductPriceFragment on Product {
   price {
@@ -2818,82 +2793,65 @@ export const ProductPriceFragmentApi = gql`
   }
 }
     `;
-export const ProductListFragmentApi = gql`
-    fragment ProductListFragment on Product {
-  __typename
+export const AvailabilityFragmentApi = gql`
+    fragment AvailabilityFragment on Availability {
+  name
+  status
+}
+    `;
+export const ListedProductFragmentApi = gql`
+    fragment ListedProductFragment on Product {
   uuid
   slug
   name
+  stockQuantity
   flags {
     ...FlagLabelFragment
   }
-  stockQuantity
   ...ProductImagesListFragment
+  ...ProductPriceFragment
   availability {
     ...AvailabilityFragment
   }
-  ...ProductPriceFragment
   availableStoresCount
   exposedStoresCount
   catalogNumber
 }
     ${FlagLabelFragmentApi}
 ${ProductImagesListFragmentApi}
-${AvailabilityFragmentApi}
-${ProductPriceFragmentApi}`;
+${ProductPriceFragmentApi}
+${AvailabilityFragmentApi}`;
 export const BlogArticleDetailFragmentApi = gql`
     fragment BlogArticleDetailFragment on BlogArticle {
   uuid
   name
+  slug
+  link
+  ...BlogArticleImageListGridFragment
+  ...BreadcrumbFragment
   text
   publishDate
-  link
-  slug
-  image(sizes: "listGrid") {
-    ...ImageSizesFragment
-  }
-  ...BreadcrumbFragment
   blogArticleProducts: products {
-    ...ProductListFragment
+    ...ListedProductFragment
   }
 }
-    ${ImageSizesFragmentApi}
+    ${BlogArticleImageListGridFragmentApi}
 ${BreadcrumbFragmentApi}
-${ProductListFragmentApi}`;
+${ListedProductFragmentApi}`;
+export const BlogArticleImageListFragmentApi = gql`
+    fragment BlogArticleImageListFragment on BlogArticle {
+  image(sizes: "list") {
+    ...ImageSizesFragment
+  }
+}
+    ${ImageSizesFragmentApi}`;
 export const SimpleBlogArticleFragmentApi = gql`
     fragment SimpleBlogArticleFragment on BlogArticle {
   name
   slug
-}
-    `;
-export const BlogCategoryFragmentApi = gql`
-    fragment BlogCategoryFragment on BlogCategory {
-  name
-  link
-  parent {
-    name
-  }
-}
-    `;
-export const BlogArticleListFragmentApi = gql`
-    fragment BlogArticleListFragment on BlogArticle {
-  name
-  link
-  perex
   ...BlogArticleImageListFragment
-  blogCategories {
-    ...BlogCategoryFragment
-  }
 }
-    ${BlogArticleImageListFragmentApi}
-${BlogCategoryFragmentApi}`;
-export const SimpleBlogCategoryFragmentApi = gql`
-    fragment SimpleBlogCategoryFragment on BlogCategory {
-  uuid
-  name
-  link
-}
-    `;
+    ${BlogArticleImageListFragmentApi}`;
 export const PageInfoFragmentApi = gql`
     fragment PageInfoFragment on PageInfo {
   hasNextPage
@@ -2902,51 +2860,55 @@ export const PageInfoFragmentApi = gql`
   endCursor
 }
     `;
-export const BlogCategoryImageListFragmentApi = gql`
-    fragment BlogCategoryImageListFragment on BlogArticle {
-  image(sizes: "list") {
-    ...ImageSizesFragment
-  }
-}
-    ${ImageSizesFragmentApi}`;
-export const BlogCategoryCategoriesFragmentApi = gql`
-    fragment BlogCategoryCategoriesFragment on BlogArticle {
-  blogCategories {
-    uuid
+export const SimpleBlogCategoryFragmentApi = gql`
+    fragment SimpleBlogCategoryFragment on BlogCategory {
+  uuid
+  name
+  link
+  parent {
     name
-    link
-    parent {
-      name
-    }
   }
 }
     `;
+export const ListedBlogArticleFragmentApi = gql`
+    fragment ListedBlogArticleFragment on BlogArticle {
+  uuid
+  name
+  link
+  ...BlogArticleImageListFragment
+  publishDate
+  perex
+  slug
+  blogCategories {
+    ...SimpleBlogCategoryFragment
+  }
+}
+    ${BlogArticleImageListFragmentApi}
+${SimpleBlogCategoryFragmentApi}`;
+export const BlogArticleConnectionFragmentApi = gql`
+    fragment BlogArticleConnectionFragment on BlogArticleConnection {
+  totalCount
+  pageInfo {
+    ...PageInfoFragment
+  }
+  edges {
+    node {
+      ...ListedBlogArticleFragment
+    }
+  }
+}
+    ${PageInfoFragmentApi}
+${ListedBlogArticleFragmentApi}`;
 export const BlogCategoryDetailFragmentApi = gql`
     fragment BlogCategoryDetailFragment on BlogCategory {
   uuid
   name
   blogArticles(after: $endCursorForPagination, first: $pageSize) {
-    totalCount
-    pageInfo {
-      ...PageInfoFragment
-    }
-    edges {
-      node {
-        uuid
-        name
-        publishDate
-        perex
-        link
-        ...BlogCategoryImageListFragment
-        ...BlogCategoryCategoriesFragment
-      }
-    }
+    ...BlogArticleConnectionFragment
   }
   ...BreadcrumbFragment
 }
-    ${PageInfoFragmentApi}
-${BlogCategoryImageListFragmentApi}
-${BlogCategoryCategoriesFragmentApi}
+    ${BlogArticleConnectionFragmentApi}
 ${BreadcrumbFragmentApi}`;
 export const ProductFilterOptionsBrandsFragmentApi = gql`
     fragment ProductFilterOptionsBrandsFragment on BrandFilterOption {
@@ -2997,6 +2959,29 @@ export const ProductFilterOptionsFragmentApi = gql`
     ${ProductFilterOptionsBrandsFragmentApi}
 ${ProductFilterOptionsFlagsFragmentApi}
 ${ProductFilterOptionsParametersFragmentApi}`;
+export const ProductListFragmentApi = gql`
+    fragment ProductListFragment on Product {
+  __typename
+  uuid
+  slug
+  name
+  flags {
+    ...FlagLabelFragment
+  }
+  stockQuantity
+  ...ProductImagesListFragment
+  availability {
+    ...AvailabilityFragment
+  }
+  ...ProductPriceFragment
+  availableStoresCount
+  exposedStoresCount
+  catalogNumber
+}
+    ${FlagLabelFragmentApi}
+${ProductImagesListFragmentApi}
+${AvailabilityFragmentApi}
+${ProductPriceFragmentApi}`;
 export const ListedProductsFragmentApi = gql`
     fragment ListedProductsFragment on ProductListable {
   products(
@@ -3366,28 +3351,6 @@ export const OrderListFragmentApi = gql`
 }
     ${PageInfoFragmentApi}
 ${OrderDetailFragmentApi}`;
-export const ListedProductFragmentApi = gql`
-    fragment ListedProductFragment on Product {
-  uuid
-  slug
-  name
-  stockQuantity
-  flags {
-    ...FlagLabelFragment
-  }
-  ...ProductImagesListFragment
-  ...ProductPriceFragment
-  availability {
-    ...AvailabilityFragment
-  }
-  availableStoresCount
-  exposedStoresCount
-  catalogNumber
-}
-    ${FlagLabelFragmentApi}
-${ProductImagesListFragmentApi}
-${ProductPriceFragmentApi}
-${AvailabilityFragmentApi}`;
 export const ProductDetailImagesFragmentApi = gql`
     fragment ProductDetailImagesFragment on Product {
   images(sizes: ["default", "galleryThumbnail"]) {
@@ -3664,20 +3627,16 @@ export const RefreshTokensDocumentApi = gql`
 export function useRefreshTokensApi() {
   return Urql.useMutation<RefreshTokensApi, RefreshTokensVariablesApi>(RefreshTokensDocumentApi);
 };
-export const BlogListQueryDocumentApi = gql`
-    query BlogListQuery($first: Int, $onlyHomepageArticles: Boolean) {
+export const BlogArticlesQueryDocumentApi = gql`
+    query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) {
   blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
-    edges {
-      node {
-        ...BlogArticleListFragment
-      }
-    }
+    ...BlogArticleConnectionFragment
   }
 }
-    ${BlogArticleListFragmentApi}`;
+    ${BlogArticleConnectionFragmentApi}`;
 
-export function useBlogListQueryApi(options: Omit<Urql.UseQueryArgs<BlogListQueryVariablesApi>, 'query'> = {}) {
-  return Urql.useQuery<BlogListQueryApi>({ query: BlogListQueryDocumentApi, ...options });
+export function useBlogArticlesQueryApi(options: Omit<Urql.UseQueryArgs<BlogArticlesQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BlogArticlesQueryApi>({ query: BlogArticlesQueryDocumentApi, ...options });
 };
 export const BlogCategoriesDocumentApi = gql`
     query BlogCategories {
@@ -3985,6 +3944,7 @@ export const AutocompleteSearchQueryDocumentApi = gql`
     query AutocompleteSearchQuery($search: String!) {
   articlesSearch(search: $search) {
     ...SimpleArticleFragment
+    ...SimpleBlogArticleFragment
   }
   brandSearch(search: $search) {
     ...SimpleBrandFragment
@@ -3997,6 +3957,7 @@ export const AutocompleteSearchQueryDocumentApi = gql`
   }
 }
     ${SimpleArticleFragmentApi}
+${SimpleBlogArticleFragmentApi}
 ${SimpleBrandFragmentApi}
 ${CategoriesSearchFragmentApi}
 ${ProductsSearchFragmentApi}`;
@@ -4007,7 +3968,8 @@ export function useAutocompleteSearchQueryApi(options: Omit<Urql.UseQueryArgs<Au
 export const SearchQueryDocumentApi = gql`
     query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter) {
   articlesSearch(search: $search) {
-    ...ListedArticleFragment
+    ...SimpleArticleFragment
+    ...SimpleBlogArticleFragment
   }
   brandSearch(search: $search) {
     ...ListedBrandFragment
@@ -4037,7 +3999,8 @@ export const SearchQueryDocumentApi = gql`
     }
   }
 }
-    ${ListedArticleFragmentApi}
+    ${SimpleArticleFragmentApi}
+${SimpleBlogArticleFragmentApi}
 ${ListedBrandFragmentApi}
 ${ListedCategoryFragmentApi}
 ${ProductFilterOptionsFragmentApi}

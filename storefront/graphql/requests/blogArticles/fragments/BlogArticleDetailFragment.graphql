@@ -1,15 +1,13 @@
 fragment BlogArticleDetailFragment on BlogArticle {
     uuid
     name
+    slug
+    link
+    ...BlogArticleImageListGridFragment
+    ...BreadcrumbFragment
     text
     publishDate
-    link
-    slug
-    image(sizes: "listGrid") {
-        ...ImageSizesFragment
-    }
-    ...BreadcrumbFragment
     blogArticleProducts: products {
-        ...ProductListFragment
+        ...ListedProductFragment
     }
 }
