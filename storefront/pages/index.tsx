@@ -8,7 +8,7 @@ import {
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
-import { blogPreviewVariables } from 'connectors/blogArticle/BlogArticle';
+import { blogPreviewVariables } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';

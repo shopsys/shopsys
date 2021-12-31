@@ -10,7 +10,7 @@ import {
 } from './BlogPreview.style';
 import { FC, useState } from 'react';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getBlogPreviewArticles } from 'connectors/blogPreview/blogPreview';
+import { getBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { getBlogUrl } from 'connectors/blogCategory/BlogCategory';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import Main from './Main';

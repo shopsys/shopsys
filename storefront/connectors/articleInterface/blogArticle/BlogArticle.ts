@@ -2,9 +2,15 @@ import {
     BlogArticleConnectionFragmentApi,
     BlogArticleDetailFragmentApi,
     ListedBlogArticleFragmentApi,
+    SimpleBlogArticleFragmentApi,
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
-import { BlogArticleConnectionType, BlogArticleDetailType, ListedBlogArticleType } from 'types/blogArticle';
+import {
+    BlogArticleConnectionType,
+    BlogArticleDetailType,
+    ListedBlogArticleType,
+    SimpleBlogArticleType,
+} from 'types/blogArticle';
 import { DomainConfigType } from 'utils/Domain/Domain';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { mapImageApiData } from 'connectors/image/Image';
@@ -61,6 +67,13 @@ export const mapBlogArticleConnection = (
 };
 
 export const mapListedBlogArticle = (apiData: ListedBlogArticleFragmentApi): ListedBlogArticleType => {
+    return {
+        ...apiData,
+        image: mapImageApiData([apiData.image]),
+    };
+};
+
+export const mapSimpleBlogArticle = (apiData: SimpleBlogArticleFragmentApi): SimpleBlogArticleType => {
     return {
         ...apiData,
         image: mapImageApiData([apiData.image]),

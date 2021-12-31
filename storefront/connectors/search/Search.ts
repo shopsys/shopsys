@@ -9,11 +9,10 @@ import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
-import { mapSimpleArticleApiData } from 'connectors/articles/Articles';
+import { mapSimpleArticleInterface } from 'connectors/articleInterface/ArticleInterface';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
-import { SimpleArticleType } from 'types/article';
-import { SimpleBlogArticleType } from 'types/blogArticle';
+import { SimpleArticleInterfaceType } from 'types/articleInterface';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -108,20 +107,20 @@ export const mapBrandSearchResults = (apiData: SearchQueryApi['brandSearch']): L
     return apiData.map((brand) => mapListedBrandApiData(brand));
 };
 
-export const mapArticlesSearchResults = (
-    apiData: SearchQueryApi['articlesSearch'],
-): (SimpleArticleType | SimpleBlogArticleType)[] => {
+export const mapArticlesSearchResults = (apiData: SearchQueryApi['articlesSearch']): SimpleArticleInterfaceType[] => {
     const mappedArticles = [];
 
-    if (apiData !== undefined && apiData !== null) {
-        for (const article of apiData) {
-            if (article === undefined || article === null) {
-                continue;
-            }
-            const mappedArticle = mapSimpleArticleApiData(article);
-            if (mappedArticle !== undefined) {
-                mappedArticles.push(mappedArticle);
-            }
+    if (apiData === null) {
+        return [];
+    }
+
+    for (const article of apiData) {
+        if (article === null) {
+            continue;
+        }
+        const mappedArticle = mapSimpleArticleInterface(article);
+        if (mappedArticle !== undefined) {
+            mappedArticles.push(mappedArticle);
         }
     }
 

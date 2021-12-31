@@ -1,7 +1,6 @@
 query AutocompleteSearchQuery($search: String!) {
     articlesSearch(search: $search) {
-        ...SimpleArticleFragment
-        ...SimpleBlogArticleFragment
+        ...SimpleArticleInterfaceFragment
     }
     brandSearch(search: $search) {
         ...SimpleBrandFragment

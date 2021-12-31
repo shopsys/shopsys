@@ -1,6 +1,6 @@
 import { BlogCategoryDetailFragmentApi, useBlogCategoriesApi } from 'graphql/generated';
 import { BlogCategoryDetailType, ListedBlogCategoryType } from 'types/blogCategory';
-import { mapBlogArticleConnection } from 'connectors/blogArticle/BlogArticle';
+import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const getBlogCategoryItems = (): ListedBlogCategoryType[] | undefined => {

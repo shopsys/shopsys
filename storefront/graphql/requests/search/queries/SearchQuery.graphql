@@ -1,7 +1,6 @@
 query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter) {
     articlesSearch(search: $search) {
-        ...SimpleArticleFragment
-        ...SimpleBlogArticleFragment
+        ...SimpleArticleInterfaceFragment
     }
     brandSearch(search: $search) {
         ...ListedBrandFragment
