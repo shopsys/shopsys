@@ -347,7 +347,7 @@ export type BrandProductsArgsApi = {
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
-  search?: Maybe<Scalars['String']>;
+  search: Maybe<Scalars['String']>;
 };
 
 /** Brand filter option */
@@ -510,7 +510,7 @@ export type CategoryProductsArgsApi = {
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
-  search?: Maybe<Scalars['String']>;
+  search: Maybe<Scalars['String']>;
 };
 
 /** A connection to a list of items. */
@@ -698,7 +698,7 @@ export type FlagProductsArgsApi = {
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
-  search?: Maybe<Scalars['String']>;
+  search: Maybe<Scalars['String']>;
 };
 
 /** Flag filter option */
@@ -1508,7 +1508,7 @@ export type ProductListableProductsArgsApi = {
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
-  search?: Maybe<Scalars['String']>;
+  search: Maybe<Scalars['String']>;
 };
 
 /** One of possible ordering modes for product */
@@ -1758,7 +1758,7 @@ export type QueryProductsArgsApi = {
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
-  search?: Maybe<Scalars['String']>;
+  search: Maybe<Scalars['String']>;
 };
 
 
@@ -2276,11 +2276,11 @@ export type BlogCategoriesApi = { __typename?: 'Query', blogCategories: Array<{ 
 
 export type BrandDetailFragmentApi = { __typename?: 'Brand', uuid: string, slug: string, name: string, seoH1: string | null, description: string | null, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } | null };
 
-export type BrandImagesListFragmentApi = { __typename?: 'Brand', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
-
 export type ListedBrandFragmentApi = { __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type SimpleBrandFragmentApi = { __typename?: 'Brand', name: string, slug: string };
+
+export type BrandImageDefaultFragmentApi = { __typename?: 'Brand', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
 
 export type BrandsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -3037,8 +3037,8 @@ export const BrandDetailFragmentApi = gql`
     ${BreadcrumbFragmentApi}
 ${ImageSizesFragmentApi}
 ${ListedProductsFragmentApi}`;
-export const BrandImagesListFragmentApi = gql`
-    fragment BrandImagesListFragment on Brand {
+export const BrandImageDefaultFragmentApi = gql`
+    fragment BrandImageDefaultFragment on Brand {
   images(sizes: ["default"]) {
     ...ImageSizesFragment
   }
@@ -3049,9 +3049,9 @@ export const ListedBrandFragmentApi = gql`
   uuid
   name
   slug
-  ...BrandImagesListFragment
+  ...BrandImageDefaultFragment
 }
-    ${BrandImagesListFragmentApi}`;
+    ${BrandImageDefaultFragmentApi}`;
 export const SimpleBrandFragmentApi = gql`
     fragment SimpleBrandFragment on Brand {
   name

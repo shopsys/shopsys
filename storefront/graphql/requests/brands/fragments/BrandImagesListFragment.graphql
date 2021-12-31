@@ -1,5 +1,0 @@
-fragment BrandImagesListFragment on Brand {
-    images (sizes: ["default"]) {
-        ...ImageSizesFragment
-    }
-}

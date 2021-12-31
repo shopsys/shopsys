@@ -362,7 +362,7 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <td valign="top"><a href="#order">Order</a></td>
 <td>
 
-Returns order filtered using UUID, orderNumber, or urlHash
+Returns order filtered using UUID or urlHash
 
 </td>
 </tr>
@@ -373,11 +373,6 @@ Returns order filtered using UUID, orderNumber, or urlHash
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">urlHash</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderNumber</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
@@ -2968,7 +2963,7 @@ Country code in ISO 3166-1 alpha-2
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
 UUID
