@@ -53,3 +53,6 @@ overblog_dataloader:
         brandsBatchLoader:
             alias: "brands_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Brand\\BrandsBatchLoader:loadByIds"
+        orderItemsBatchLoader:
+            alias: "order_items_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Order\\OrderItemsBatchLoader:loadAllByOrders"
