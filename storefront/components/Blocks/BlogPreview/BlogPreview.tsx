@@ -11,6 +11,7 @@ import {
 import { FC, useState } from 'react';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getBlogPreviewArticles } from 'connectors/blogPreview/blogPreview';
+import { getBlogUrl } from 'connectors/blogCategories/BlogCategories';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import Main from './Main';
 import Side from './Side';
@@ -22,6 +23,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
     const blogPreviewItems = getBlogPreviewArticles();
+    const blogUrl = getBlogUrl();
     const { width } = useGetWindowSize();
     const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);
     const blogMainItems = blogPreviewItems.slice(0, 2);
@@ -42,10 +44,12 @@ const BlogPreview: FC = () => {
         <BlogPreviewStyled>
             <BlogPreviewHeadingStyled>
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
-                <BlogPreviewHeadingLinkStyled href="#">
-                    <span>{t('View all')}</span>
-                    <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
-                </BlogPreviewHeadingLinkStyled>
+                {blogUrl !== undefined && (
+                    <BlogPreviewHeadingLinkStyled href={blogUrl}>
+                        <span>{t('View all')}</span>
+                        <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
+                    </BlogPreviewHeadingLinkStyled>
+                )}
             </BlogPreviewHeadingStyled>
 
             <BlogPreviewArticlesStyled>
