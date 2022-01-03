@@ -6,6 +6,7 @@ namespace App\Model\Navigation;
 
 use App\Component\Cache\TwigCachedMenuFacade;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 
 class NavigationItemFacade
@@ -75,14 +76,14 @@ class NavigationItemFacade
     }
 
     /**
-     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Navigation\NavigationItemDetail[]
      */
-    public function getOrderedNavigationItemDetails(int $domainId): array
+    public function getOrderedNavigationItemDetails(DomainConfig $domainConfig): array
     {
-        $navigationItems = $this->getOrderedItemsByDomainQueryBuilder($domainId)->getQuery()->execute();
+        $navigationItems = $this->getOrderedItemsByDomainQueryBuilder($domainConfig->getId())->getQuery()->execute();
 
-        return $this->navigationItemDetailFactory->createDetails($navigationItems, $domainId);
+        return $this->navigationItemDetailFactory->createDetails($navigationItems, $domainConfig);
     }
 
     /**

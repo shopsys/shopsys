@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Navigation;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryFacade
 {
@@ -96,17 +97,17 @@ class NavigationItemCategoryFacade
 
     /**
      * @param \App\Model\Navigation\NavigationItem[] $navigationItems
-     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[][][]
      */
     public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(
         array $navigationItems,
-        int $domainId
+        DomainConfig $domainConfig
     ): array {
         $categoriesIndexedByNavigationItemIdAndColumnNumber = [];
 
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedVisibleNavigationItemCategoriesByNavigationItems($navigationItems, $domainId);
+            ->getSortedVisibleNavigationItemCategoriesByNavigationItems($navigationItems, $domainConfig);
 
         foreach ($navigationItems as $navigationItem) {
             $navigationItemId = $navigationItem->getId();

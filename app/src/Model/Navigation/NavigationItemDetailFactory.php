@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+
 class NavigationItemDetailFactory
 {
     /**
@@ -22,14 +24,14 @@ class NavigationItemDetailFactory
 
     /**
      * @param \App\Model\Navigation\NavigationItem[] $navigationItems
-     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Navigation\NavigationItemDetail[]
      */
-    public function createDetails(array $navigationItems, int $domainId): array
+    public function createDetails(array $navigationItems, DomainConfig $domainConfig): array
     {
         $details = [];
         $categoriesIndexedByNavigationItemIdAndColumnNumber = $this->navigationItemCategoryFacade
-            ->getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber($navigationItems, $domainId);
+            ->getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber($navigationItems, $domainConfig);
 
         foreach ($navigationItems as $navigationItem) {
             if (!isset($categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()])) {
