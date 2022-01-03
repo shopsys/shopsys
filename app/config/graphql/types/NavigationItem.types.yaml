@@ -5,7 +5,7 @@ NavigationItem:
         fields:
             name:
                 type: "String!"
-                description: "Localized navigation item name (domain dependent)"
+                description: "Navigation item name"
             link:
                 type: "String!"
                 description: "Target URL"

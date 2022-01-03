@@ -968,7 +968,7 @@ type Mutation {
 
 """Represents a navigation structure item"""
 type NavigationItem {
-  """Localized navigation item name (domain dependent)"""
+  """Navigation item name"""
   name: String!
 
   """Target URL"""
