@@ -39,7 +39,7 @@ class NavigationItemCategoryFacade
         NavigationItemData $navigationItemData
     ): void {
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedNavigationItemCategoriesByNavigationItem($navigationItem);
+            ->getSortedNavigationItemCategoriesByNavigationItems([$navigationItem]);
 
         foreach ($navigationItemCategories as $navigationItemCategory) {
             $this->em->remove($navigationItemCategory);
@@ -84,7 +84,7 @@ class NavigationItemCategoryFacade
         $categoriesByColumnNumber = [];
 
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedNavigationItemCategoriesByNavigationItem($navigationItem);
+            ->getSortedNavigationItemCategoriesByNavigationItems([$navigationItem]);
 
         foreach ($navigationItemCategories as $navigationItemCategory) {
             $categoriesByColumnNumber[$navigationItemCategory->getColumnNumber()][]
@@ -95,24 +95,30 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @param int $domainId
-     * @return \App\Model\Category\Category[][]
+     * @return \App\Model\Category\Category[][][]
      */
-    public function getSortedVisibleCategoriesIndexedByColumnNumberForNavigationItem(
-        NavigationItem $navigationItem,
+    public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(
+        array $navigationItems,
         int $domainId
     ): array {
-        $categoriesByColumnNumber = [];
+        $categoriesIndexedByNavigationItemIdAndColumnNumber = [];
 
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedVisibleNavigationItemCategoriesByNavigationItem($navigationItem, $domainId);
+            ->getSortedVisibleNavigationItemCategoriesByNavigationItems($navigationItems, $domainId);
 
-        foreach ($navigationItemCategories as $navigationItemCategory) {
-            $categoriesByColumnNumber[$navigationItemCategory->getColumnNumber()][]
-                = $navigationItemCategory->getCategory();
+        foreach ($navigationItems as $navigationItem) {
+            $navigationItemId = $navigationItem->getId();
+            $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId] = [];
+            foreach ($navigationItemCategories as $navigationItemCategory) {
+                if ($navigationItemCategory->getNavigationItem()->getId() === $navigationItemId) {
+                    $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId][$navigationItemCategory->getColumnNumber()][]
+                        = $navigationItemCategory->getCategory();
+                }
+            }
         }
 
-        return $categoriesByColumnNumber;
+        return $categoriesIndexedByNavigationItemIdAndColumnNumber;
     }
 }

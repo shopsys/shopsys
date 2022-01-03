@@ -28,27 +28,19 @@ class NavigationItemDetailFactory
     public function createDetails(array $navigationItems, int $domainId): array
     {
         $details = [];
+        $categoriesIndexedByNavigationItemIdAndColumnNumber = $this->navigationItemCategoryFacade
+            ->getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber($navigationItems, $domainId);
 
         foreach ($navigationItems as $navigationItem) {
-            $details[] = $this->createDetail($navigationItem, $domainId);
+            if (!isset($categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()])) {
+                continue;
+            }
+            $details[] = new NavigationItemDetail(
+                $navigationItem,
+                $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()]
+            );
         }
 
         return $details;
-    }
-
-    /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @param int $domainId
-     * @return \App\Model\Navigation\NavigationItemDetail
-     */
-    private function createDetail(NavigationItem $navigationItem, int $domainId): NavigationItemDetail
-    {
-        $categoriesByColumnNumber = $this->navigationItemCategoryFacade
-            ->getSortedVisibleCategoriesIndexedByColumnNumberForNavigationItem($navigationItem, $domainId);
-
-        return new NavigationItemDetail(
-            $navigationItem,
-            $categoriesByColumnNumber
-        );
     }
 }

@@ -25,40 +25,40 @@ class NavigationItemCategoryRepository
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(NavigationItem $navigationItem): QueryBuilder
+    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(array $navigationItems): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('nic')
             ->from(NavigationItemCategory::class, 'nic')
-            ->where('nic.navigationItem = :navigationItem')
-            ->setParameter('navigationItem', $navigationItem)
+            ->where('nic.navigationItem IN(:navigationItems)')
+            ->setParameter('navigationItems', $navigationItems)
             ->orderBy('nic.columnNumber', 'asc')
             ->addOrderBy('nic.position', 'asc');
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @return \App\Model\Navigation\NavigationItemCategory[]
      */
-    public function getSortedNavigationItemCategoriesByNavigationItem(NavigationItem $navigationItem): array
+    public function getSortedNavigationItemCategoriesByNavigationItems(array $navigationItems): array
     {
-        return $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItem)
+        return $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems)
             ->getQuery()->execute();
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @param int $domainId
      * @return \App\Model\Navigation\NavigationItemCategory[]
      */
-    public function getSortedVisibleNavigationItemCategoriesByNavigationItem(
-        NavigationItem $navigationItem,
+    public function getSortedVisibleNavigationItemCategoriesByNavigationItems(
+        array $navigationItems,
         int $domainId
     ): array {
-        $queryBuilder = $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItem);
+        $queryBuilder = $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems);
 
         $queryBuilder->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = nic.category')
             ->andWhere('cd.domainId = :domainId')
