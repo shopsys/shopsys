@@ -677,4 +677,66 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             }
         ';
     }
+
+    public function testGetProductFilterOptionsForSencorSearch()
+    {
+        $query = 'query {
+          products (search:"sencor") {
+            productFilterOptions {
+              minimalPrice
+              maximalPrice
+              inStock
+              flags {
+                count
+                flag {
+                  name
+                }
+              }
+              brands {
+                count
+                brand {
+                  name
+                }
+              }
+              parameters {
+                name        
+              }
+            }
+          }
+        }';
+
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('699');
+        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
+
+        $expectedResult = '{
+          "data": {
+            "products": {
+              "productFilterOptions": {
+                "minimalPrice": "' . $minimalPrice . '",
+                "maximalPrice": "' . $maximalPrice . '",
+                "inStock": 2,
+                "flags": [
+                  {
+                    "count": 2,
+                    "flag": {
+                      "name": "' . t('Akce', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                    }
+                  }
+                ],
+                "brands": [
+                  {
+                    "count": 2,
+                    "brand": {
+                      "name": "Sencor"
+                    }
+                  }
+                ],
+                "parameters": null
+              }
+            }
+          }
+        }';
+
+        $this->assertQueryWithExpectedJson($query, $expectedResult);
+    }
 }

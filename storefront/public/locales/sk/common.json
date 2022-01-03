@@ -224,5 +224,6 @@
     "Your account has been created": "Vaše konto bolo vytvorené",
     "Your account has been created and you are logged in now": "Vaše konto bolo vytvorené a teraz ste prihlásení",
     "Passwords must match": "Heslá sa musia zhodovať",
-    "GdprAgreementCheckbox": "Súhlasím so <lnk1>spracovaním osobných údajov</lnk1>."
+    "GdprAgreementCheckbox": "Súhlasím so <lnk1>spracovaním osobných údajov</lnk1>.",
+    "No products matched your search": "Hľadaniu neodpovedajú žiadne produkty"
 }

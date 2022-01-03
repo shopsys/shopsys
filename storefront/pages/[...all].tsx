@@ -24,7 +24,7 @@ import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { MainVariantDetailType } from 'types/product';
-import { mapParametersFilter } from 'connectors/categories/Categories';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';

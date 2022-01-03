@@ -1,4 +1,4 @@
-query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {
+query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter) {
     articlesSearch(search: $search) {
         ...ListedArticleFragment
     }
@@ -13,8 +13,11 @@ query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $aft
             }
         }
     }
-    productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after) {
+    productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after, filter: $filter) {
         totalCount
+        productFilterOptions {
+            ...ProductFilterOptionsFragment
+        }
         edges {
             node {
                 ...ListedProductFragment

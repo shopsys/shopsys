@@ -19,6 +19,7 @@ type RangeSliderThumbStyledProps = {
 const getThumbStyle = () => {
     return css`
         -webkit-appearance: none;
+        pointer-events: none;
         -webkit-tap-highlight-color: transparent;
         position: absolute;
         height: 0;

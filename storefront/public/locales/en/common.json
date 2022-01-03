@@ -224,5 +224,6 @@
     "Your account has been created": "Your account has been created",
     "Your account has been created and you are logged in now": "Your account has been created and you are logged in now",
     "Passwords must match": "Passwords must match",
-    "GdprAgreementCheckbox": "I agree with <lnk1>processing of privacy policy</lnk1>."
+    "GdprAgreementCheckbox": "I agree with <lnk1>processing of privacy policy</lnk1>.",
+    "No products matched your search": "No products matched your search"
 }

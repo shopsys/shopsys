@@ -1,5 +1,6 @@
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
+import { FilterOptionsStateType } from 'types/productFilter';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
@@ -9,6 +10,8 @@ import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
 import { mapListedProductType } from 'connectors/products/Products';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -18,9 +21,15 @@ export const getSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi,
     searchProductsPagination: PaginationType['paginationCursor'],
+    optionsFilter: FilterOptionsStateType,
 ): SearchType | undefined => {
     const [result] = useSearchQueryApi({
-        variables: { search: searchQuery, orderingMode: searchProductsSort, after: searchProductsPagination },
+        variables: {
+            search: searchQuery,
+            orderingMode: searchProductsSort,
+            after: searchProductsPagination,
+            filter: mapParametersFilter(optionsFilter),
+        },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [mappedResult, setMappedResult] = useState<SearchType | undefined>(
@@ -29,7 +38,9 @@ export const getSearch = (
 
     useQueryError(result.error);
     useEffect(() => {
-        setMappedResult(mapSearchResult(result.data, currencyCode));
+        if (result.stale === false) {
+            setMappedResult(mapSearchResult(result.data, currencyCode));
+        }
     }, [result.data]);
 
     if (typeof window === 'undefined' && result.data !== undefined) {
@@ -53,6 +64,10 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
         },
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
+            productFilterOptions:
+                apiData.productsSearch !== undefined && apiData.productsSearch !== null
+                    ? mapProductFilterOptions(apiData.productsSearch.productFilterOptions, currencyCode)
+                    : null,
             products: mapProductsSearchResults(apiData.productsSearch, currencyCode),
         },
     };

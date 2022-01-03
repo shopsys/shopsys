@@ -18,7 +18,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 type FilterProps = {
     productFilterOptions: FilterOptionsType;
-    slug: string;
+    slug?: string;
+    formUpdateDepency?: boolean;
 };
 
 const Filter: FC<FilterProps> = (props) => {
@@ -141,10 +142,11 @@ const Filter: FC<FilterProps> = (props) => {
         formProviderMethods.setValue(`onlyInStock`, false);
         formProviderMethods.setValue(`minimalPrice`, props.productFilterOptions.minimalPrice);
         formProviderMethods.setValue(`maximalPrice`, props.productFilterOptions.maximalPrice);
-    }, [props.slug]);
+    }, [props.slug, props.formUpdateDepency]);
 
     useEffect(() => {
         const queryParams = router.query;
+        const routerPathName = router.asPath.split('?')[0];
 
         if (isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions)) {
             delete queryParams.filter;
@@ -152,7 +154,7 @@ const Filter: FC<FilterProps> = (props) => {
             queryParams.filter = JSON.stringify(parametersFilterState);
         }
 
-        router.replace({ query: queryParams }, undefined, { scroll: false });
+        router.replace({ pathname: routerPathName, query: queryParams }, undefined, { scroll: false });
     }, [parametersFilterState]);
 
     const onBrandCheck = (uuid: string) => {
@@ -196,7 +198,7 @@ const Filter: FC<FilterProps> = (props) => {
 
     return (
         <FormProvider {...formProviderMethods}>
-            <SelectedParameters productFilterOptions={props.productFilterOptions} slug={props.slug} />
+            <SelectedParameters productFilterOptions={props.productFilterOptions} />
             <FilterStyled>
                 <Form>
                     <FilterGroupPrice

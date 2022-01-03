@@ -150,7 +150,29 @@ class ProductsResolver extends BaseProductsResolver
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        return parent::resolve($argument);
+        $search = $argument['search'] ?? '';
+
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
+            $argument
+        );
+
+        return $this->productConnectionFactory->createConnectionForAll(
+            function ($offset, $limit) use ($argument, $productFilterData, $search) {
+                return $this->productFacade->getFilteredProductsOnCurrentDomain(
+                    $limit,
+                    $offset,
+                    $this->getOrderingModeFromArgument($argument),
+                    $productFilterData,
+                    $search
+                );
+            },
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
+            $argument,
+            $productFilterData,
+            $argument['search'] ?? null
+        );
     }
 
     /**

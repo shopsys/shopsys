@@ -4,10 +4,14 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { NavigationQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
+import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { getSearch } from 'connectors/search/Search';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { optionsFilterActions } from 'redux/slices/optionsFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import SearchPage from 'components/Pages/Search';
@@ -20,7 +24,13 @@ const Search: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const searchProductsSort = useShopsysSelector((state) => state.user.sort);
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
-    const searchResults = getSearch(getParsedSearchQuery(router.query.q), searchProductsSort, paginationCursor);
+    const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
+    const searchResults = getSearch(
+        getParsedSearchQuery(router.query.q),
+        searchProductsSort,
+        paginationCursor,
+        optionsFilter,
+    );
 
     useEffect(() => {
         dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
@@ -51,6 +61,9 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
         ),
     );
+    store.dispatch(
+        optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
+    );
 
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
@@ -60,6 +73,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 search: getParsedSearchQuery(context.query.q),
                 orderingMode: store.getState().user.sort,
                 after: store.getState().user.pagination.paginationCursor,
+                filter: mapParametersFilter(store.getState().optionsFilter),
             },
         },
     ]);
