@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import tinycolor from 'tinycolor2';
 
 export const ProductSliderWrapperStyled = styled.div`
     position: relative;
@@ -35,7 +36,7 @@ export const ProductSliderControlsStyled = styled.div`
             cursor: pointer;
 
             &:hover {
-                background-color: ${theme.color.greyDarker};
+                background-color: ${tinycolor(theme.color.grey).darken(10).toString()};
             }
         }
 
