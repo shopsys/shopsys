@@ -225,5 +225,14 @@
     "Your account has been created and you are logged in now": "Your account has been created and you are logged in now",
     "Passwords must match": "Passwords must match",
     "GdprAgreementCheckbox": "I agree with <lnk1>processing of privacy policy</lnk1>.",
-    "No products matched your search": "No products matched your search"
+    "No products matched your search": "No products matched your search",
+    "Set new password": "Set new password",
+    "Fill first password": "Fill first password",
+    "Fill second password": "Fill second password",
+    "Error occured while changing your password": "Error occured while changing your password",
+    "Your password has been changed": "Your password has been changed",
+    "New password": "New password",
+    "New password again": "New password again",
+    "Error occured while loading form data": "Error occured while loading form data",
+    "ResendRecoveryLink": "Error occured while loading form data. <br> Please try to resend new password recovery link <lnk1>on this page</lnk1>"
 }

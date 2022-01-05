@@ -65,6 +65,7 @@ const moduleExports = {
                 '/registration': '/registrace',
                 '/terms-and-conditions': '/obchodni-podminky',
                 '/gdpr': '/zasady-ochrany-osobnich-udaju',
+                '/new-password': '/nove-heslo',
             },
             ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
@@ -79,6 +80,7 @@ const moduleExports = {
                 '/registration': '/registrace',
                 '/terms-and-conditions': '/obchodni-podminky',
                 '/gdpr': '/zasady-ochrany-osobnich-udaju',
+                '/new-password': '/nove-heslo',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/search': '/hladanie',
@@ -94,6 +96,7 @@ const moduleExports = {
                 '/registration': '/registracia',
                 '/terms-and-conditions': '/podmienky-a-ustanovenia',
                 '/gdpr': '/zasady-ochrany-osobnych-udajov',
+                '/new-password': '/nove-heslo',
             },
         },
     },

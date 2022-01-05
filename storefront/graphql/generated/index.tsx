@@ -1592,7 +1592,7 @@ export type QueryApi = {
   navigation: Array<NavigationItemApi>;
   /** Returns a list of notifications supposed to be displayed on all pages */
   notificationBars?: Maybe<Array<NotificationBarApi>>;
-  /** Returns order filtered using UUID or urlHash */
+  /** Returns order filtered using UUID, orderNumber, or urlHash */
   order?: Maybe<OrderApi>;
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
   orders?: Maybe<OrderConnectionApi>;
@@ -1718,6 +1718,7 @@ export type QueryFlagArgsApi = {
 
 
 export type QueryOrderArgsApi = {
+  orderNumber?: Maybe<Scalars['String']>;
   urlHash?: Maybe<Scalars['String']>;
   uuid?: Maybe<Scalars['Uuid']>;
 };
@@ -2451,6 +2452,15 @@ export type PasswordRecoveryMutationVariablesApi = Exact<{
 
 
 export type PasswordRecoveryMutationApi = { __typename?: 'Mutation', RequestPasswordRecovery: string };
+
+export type RecoverPasswordMutationVariablesApi = Exact<{
+  email: Scalars['String'];
+  hash: Scalars['String'];
+  newPassword: Scalars['Password'];
+}>;
+
+
+export type RecoverPasswordMutationApi = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'Token', accessToken: string, refreshToken: string } };
 
 export type SimplePaymentFragmentApi = { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> };
 
@@ -3755,6 +3765,18 @@ export const PasswordRecoveryMutationDocumentApi = gql`
 
 export function usePasswordRecoveryMutationApi() {
   return Urql.useMutation<PasswordRecoveryMutationApi, PasswordRecoveryMutationVariablesApi>(PasswordRecoveryMutationDocumentApi);
+};
+export const RecoverPasswordMutationDocumentApi = gql`
+    mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {
+  RecoverPassword(input: {email: $email, hash: $hash, newPassword: $newPassword}) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+export function useRecoverPasswordMutationApi() {
+  return Urql.useMutation<RecoverPasswordMutationApi, RecoverPasswordMutationVariablesApi>(RecoverPasswordMutationDocumentApi);
 };
 export const PromotedProductsQueryDocumentApi = gql`
     query PromotedProductsQuery {

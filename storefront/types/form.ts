@@ -59,3 +59,8 @@ export type RegistrationAfterOrderFormType = {
 export type PasswordResetFormType = {
     email: string;
 };
+
+export type NewPasswordFormType = {
+    newPasswordFirst: string;
+    newPasswordSecond: string;
+};

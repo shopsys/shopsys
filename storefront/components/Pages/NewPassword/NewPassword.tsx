@@ -1,0 +1,167 @@
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FC, useEffect } from 'react';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta';
+import Button from 'components/Forms/Button';
+import { ButtonWrapperStyled } from './NewPassword.style';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import Form from 'components/Forms/Form';
+import FormLine from 'components/Forms/Lib/FormLine';
+import FormLineError from 'components/Forms/Lib/FormLineError';
+import Link from 'components/Basic/Link';
+import { NewPasswordFormType } from 'types/form';
+import SimpleLayout from 'components/Layout/SimpleLayout';
+import TextInput from 'components/Forms/TextInput';
+import { Trans } from 'react-i18next';
+import { useAuth } from 'hooks/auth/UseAuth';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { useRouter } from 'next/router';
+import { useShopsysSelector } from 'redux/main';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+
+type NewPasswordPageProps = {
+    hash: string;
+    email: string;
+};
+
+const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
+    const t = useTypedTranslationFunction();
+    const [newPasswordResult, newPassword] = useRecoverPasswordMutationApi();
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [newPasswordUrl, resetPasswordUrl] = useGetInternationalizedStaticUrls(
+        ['/new-password', '/reset-password'],
+        url,
+    );
+    const [formProviderMethods, defaultValues] = useRecoveryPasswordForm();
+    const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [[, login]] = useAuth();
+    const router = useRouter();
+
+    useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormSuccessfulSubmit(
+        newPasswordResult,
+        formProviderMethods,
+        defaultValues,
+        () => {
+            showSuccessMessage(formMeta.messages.success);
+            if (
+                newPasswordResult.data?.RecoverPassword.accessToken !== undefined &&
+                newPasswordResult.data?.RecoverPassword.refreshToken !== undefined
+            ) {
+                login({ email: props.email, password: formProviderMethods.getValues('newPasswordFirst') });
+                router.push('/');
+            }
+        },
+        { blur: true, reset: true },
+    );
+
+    const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (data, event) => {
+        event?.preventDefault();
+        const formData = {
+            hash: props.hash,
+            email: props.email,
+            newPassword: data.newPasswordFirst,
+        };
+        await newPassword(formData);
+    };
+
+    useEffect(() => {
+        if (props.hash === '' || props.email === '') {
+            showErrorMessage('Error occured while loading form data');
+        }
+    }, []);
+
+    if (props.hash === '' || props.email === '') {
+        return (
+            <SimpleLayout
+                heading={t('Set new password')}
+                breadcrumb={[{ name: t('Set new password'), slug: newPasswordUrl }]}
+            >
+                <Trans
+                    i18nKey="ResendRecoveryLink"
+                    defaults="Error occured while loading form data. <br> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
+                    components={{
+                        lnk1: <Link href={resetPasswordUrl} />,
+                    }}
+                />
+            </SimpleLayout>
+        );
+    }
+
+    return (
+        <>
+            <SimpleLayout
+                heading={t('Set new password')}
+                breadcrumb={[{ name: t('Set new password'), slug: newPasswordUrl }]}
+            >
+                <FormProvider {...formProviderMethods}>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)} noValidate>
+                        <Controller
+                            name={formMeta.fields.newPasswordFirst.name}
+                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                <FormLine bottomGap={true}>
+                                    <TextInput
+                                        id={formMeta.formName + '-' + formMeta.fields.newPasswordFirst.name}
+                                        name={formMeta.fields.newPasswordFirst.name}
+                                        label={formMeta.fields.newPasswordFirst.label}
+                                        required={true}
+                                        type="password"
+                                        isTouched={isTouched}
+                                        hasError={invalid}
+                                        fieldRef={field}
+                                    />
+                                    <FormLineError
+                                        textInputSize="small"
+                                        error={error}
+                                        inputType="text-input-password"
+                                    />
+                                </FormLine>
+                            )}
+                        />
+                        <Controller
+                            name={formMeta.fields.newPasswordSecond.name}
+                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                <>
+                                    <FormLine>
+                                        <TextInput
+                                            id={formMeta.formName + '-' + formMeta.fields.newPasswordSecond.name}
+                                            name={formMeta.fields.newPasswordSecond.name}
+                                            label={formMeta.fields.newPasswordSecond.label}
+                                            required={true}
+                                            type="password"
+                                            isTouched={isTouched}
+                                            hasError={invalid}
+                                            fieldRef={field}
+                                        />
+                                        <FormLineError
+                                            textInputSize="small"
+                                            error={error}
+                                            inputType="text-input-password"
+                                        />
+                                    </FormLine>
+                                    <ButtonWrapperStyled>
+                                        <Button type="submit" hasDisabledLook={invalid || field.value.length === 0}>
+                                            {t('Set new password')}
+                                        </Button>
+                                    </ButtonWrapperStyled>
+                                </>
+                            )}
+                        />
+                    </Form>
+                </FormProvider>
+            </SimpleLayout>
+            <ErrorPopup
+                isVisible={isErrorPopupVisible}
+                onCloseCallback={() => setErrorPopupVisibility(false)}
+                fields={formMeta.fields}
+            />
+        </>
+    );
+};
+
+export default NewPasswordPage;
