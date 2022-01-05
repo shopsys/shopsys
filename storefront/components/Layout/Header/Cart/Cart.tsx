@@ -44,7 +44,7 @@ const Cart: FC = () => {
                     </CartPiecesStyled>
                     <CartValueStyled>
                         {formatPrice(
-                            cart?.totalPrice.priceWithVat === undefined ? 0 : cart.totalPrice.priceWithVat,
+                            cart?.totalItemsPrice.priceWithVat === undefined ? 0 : cart.totalItemsPrice.priceWithVat,
                             domainConfig.currencyCode,
                             t,
                             {

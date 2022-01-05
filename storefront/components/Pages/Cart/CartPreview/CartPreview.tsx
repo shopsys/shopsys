@@ -15,7 +15,7 @@ const CartPreview: FC = () => {
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
-    if (cart === null || isCartEmpty) {
+    if (cart === null || isCartEmpty === true) {
         return null;
     }
 
@@ -36,7 +36,7 @@ const CartPreview: FC = () => {
                     <CartPreviewCellStyled>{t('You pay')}</CartPreviewCellStyled>
                     <CartPreviewCellStyled textAlign="right">
                         <CartPreviewCellTotalPrice>
-                            {formatPrice(cart.totalPrice.priceWithVat, currencyCode, t)}
+                            {formatPrice(cart.totalItemsPrice.priceWithVat, currencyCode, t)}
                         </CartPreviewCellTotalPrice>
                     </CartPreviewCellStyled>
                 </CartPreviewRowStyled>
