@@ -5,6 +5,12 @@ type WithIsActiveStyledProps = {
     isActive: boolean;
 };
 
+const localVariables = {
+    imageMaxWidth: '72px',
+    imageMaxWidthMobile: '48px',
+    imageMaxHeight: '48px',
+};
+
 export const AutocompleteStyled = styled.div<WithIsActiveStyledProps>`
     ${({ theme, isActive }) => css`
         @media ${theme.mediaQueries.queryLg} {
@@ -44,7 +50,7 @@ export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
 
         ${isActive &&
         css`
-            padding: 120px;
+            padding-top: 120px;
         `}
 
         @media ${theme.mediaQueries.queryLg} {
@@ -61,6 +67,7 @@ export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
             transform: scaleY(0.9);
             transition: all ${theme.transition};
             transform-origin: center top;
+            pointer-events: none;
 
             ${isActive &&
             css`
@@ -150,10 +157,20 @@ export const ProductSearchResultLinkStyled = styled.a`
 `;
 
 export const ProductSearchResultImageWrapperStyled = styled.div`
-    height: 48px;
-    margin-right: 10px;
-    position: relative;
-    width: 72px;
+    ${({ theme }) => css`
+        margin-right: 10px;
+        position: relative;
+        max-width: ${localVariables.imageMaxWidth};
+
+        img {
+            max-width: ${localVariables.imageMaxWidthMobile};
+            max-height: ${localVariables.imageMaxHeight};
+
+            @media ${theme.mediaQueries.queryLg} {
+                max-width: ${localVariables.imageMaxWidth};
+            }
+        }
+    `}
 `;
 
 export const ProductSearchResultNameStyled = styled.span`
