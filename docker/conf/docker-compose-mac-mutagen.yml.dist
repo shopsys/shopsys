@@ -136,7 +136,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - ./app/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
         environment:
             - discovery.type=single-node
             - cluster.routing.allocation.disk.watermark.flood_stage=0.99
@@ -175,8 +175,8 @@ x-mutagen:
                     - ./.npm-global
                     - ./nbproject
                     - ./storefront
-                    - ./var/elasticsearch-data
-                    - ./var/postgres-data
+                    - ./app/var/elasticsearch-data
+                    - ./app/var/postgres-data
         storefront:
             alpha: "./storefront"
             beta: "volume://storefront"
