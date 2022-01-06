@@ -8,3 +8,14 @@ export const getBlogCategoriesItems = (): BlogCategoryItem[] | undefined => {
 
     return data?.blogCategories;
 };
+
+export const getBlogUrl = (): string | undefined => {
+    const [{ data, error }] = useBlogCategoriesApi();
+    useQueryError(error);
+
+    if (data?.blogCategories !== undefined && data?.blogCategories !== null) {
+        return data?.blogCategories[0].link;
+    }
+
+    return undefined;
+};
