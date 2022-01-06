@@ -2658,6 +2658,16 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>originalCategorySlug</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Original category URL slug (for CategorySeoMixes slug of assigned category is
+returned, null is returned for regular category)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>readyCategorySeoMixLinks</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
@@ -4972,6 +4982,11 @@ Total number of products
 <tr>
 <td colspan="2" valign="top"><strong>productFilterOptions</strong></td>
 <td valign="top"><a href="#productfilteroptions">ProductFilterOptions</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderingMode</strong></td>
+<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>

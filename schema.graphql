@@ -505,6 +505,12 @@ type Category implements Breadcrumb & Slug & ProductListable {
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
 
+  """
+  Original category URL slug (for CategorySeoMixes slug of assigned category is
+  returned, null is returned for regular category)
+  """
+  originalCategorySlug: String
+
   """An array of links of prepared category SEO mixes of a given category"""
   readyCategorySeoMixLinks: [Link!]!
 
@@ -1592,6 +1598,7 @@ type ProductConnection {
   """Total number of products"""
   totalCount: Int!
   productFilterOptions: ProductFilterOptions!
+  orderingMode: ProductOrderingModeEnum!
 
   """Information to aid in pagination."""
   pageInfo: PageInfo!

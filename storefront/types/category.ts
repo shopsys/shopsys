@@ -27,6 +27,7 @@ export type CategoryDetailType = {
     uuid: string;
     name: string;
     slug: string;
+    originalCategorySlug: string | null;
     seoH1: string | null;
     children: ListedCategoryType[];
     products: ListedProductEdgesType;

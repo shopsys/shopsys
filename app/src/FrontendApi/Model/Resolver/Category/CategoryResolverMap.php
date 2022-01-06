@@ -128,6 +128,8 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $category->getSeoMetaDescription($this->domain->getId());
             case 'slug':
                 return $this->getSlug($category->getId(), 'front_product_list');
+            case 'originalCategorySlug':
+                return null;
             case 'readyCategorySeoMixLinks':
                 return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
@@ -164,6 +166,8 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $readyCategorySeoMix->getMetaDescription() ?? $category->getSeoMetaDescription($this->domain->getId());
             case 'slug':
                 return $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo');
+            case 'originalCategorySlug':
+                return $this->getSlug($category->getId(), 'front_product_list');
             case 'readyCategorySeoMixLinks':
                 return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':

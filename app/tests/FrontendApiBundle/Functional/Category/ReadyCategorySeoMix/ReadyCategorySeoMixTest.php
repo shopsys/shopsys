@@ -101,6 +101,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 slug(slug: "' . $urlSlug . '") {
                     ... on Category {
                         products(first:1) {
+                            orderingMode
                             edges {
                                 node {
                                   name
@@ -116,6 +117,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             'data' => [
                 'slug' => [
                     'products' => [
+                        'orderingMode' => 'PRICE_ASC',
                         'edges' => [
                             ['node' => ['name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -138,6 +140,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             'data' => [
                 'slug' => [
                     'products' => [
+                        'orderingMode' => 'PRIORITY',
                         'edges' => [
                             ['node' => ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -160,6 +163,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             'data' => [
                 'slug' => [
                     'products' => [
+                        'orderingMode' => 'PRIORITY',
                         'edges' => [
                             ['node' => ['name' => t('Hyundai 32PFL4400', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -182,6 +186,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 slug(slug: "' . $urlSlug . '") {
                     ... on Category {
                         products {
+                        orderingMode
                             edges {
                                 node {
                                   name

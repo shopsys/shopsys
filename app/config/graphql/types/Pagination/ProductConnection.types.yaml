@@ -8,5 +8,7 @@ ProductConnection:
                 description: "Total number of products"
             productFilterOptions:
                 type: "ProductFilterOptions!"
+            orderingMode:
+                type: "ProductOrderingModeEnum!"
     inherits:
         - 'ProductConnectionDecorator'
