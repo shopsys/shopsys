@@ -115,7 +115,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
         $products = [];
         $totals = [];
         foreach ($result['responses'] as $index => $response) {
-            $products[] = $this->extractHits($response);
+            $products[$keys[$index]] = $this->extractHits($response);
             $totals[$keys[$index]] = $this->extractTotalCount($response);
         }
 

@@ -63,7 +63,12 @@ class ProductsBatchLoader
         $batchedByEntities = $this->productElasticsearchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
         self::$totalsIndexedByEntityId = $batchedByEntities[ProductElasticsearchRepository::TOTALS_KEY];
 
-        return $this->promiseAdapter->all($batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY]);
+        $result = [];
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $result[] = $batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getEntityId()];
+        }
+
+        return $this->promiseAdapter->all($result);
     }
 
     /**
