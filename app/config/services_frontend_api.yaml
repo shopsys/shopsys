@@ -19,7 +19,7 @@ services:
             - { name: overblog_graphql.resolver_map, schema: default }
 
     App\FrontendApi\:
-        resource: '../src/FrontendApi/**/*{Mutation,Resolver}.php'
+        resource: '../src/FrontendApi/**/*{Mutation,Resolver,Mapper}.php'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
         alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
