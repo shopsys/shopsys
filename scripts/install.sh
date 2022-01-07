@@ -17,6 +17,7 @@ echo "Start with specifying your operating system: \
 
     1) Linux or Windows with WSL 2
     2) Mac
+    3) Mac - mutagen
     "
 
 while [[ 1 -eq 1 ]]
@@ -57,19 +58,42 @@ case "$operatingSystem" in
             sudo ifconfig lo0 alias 127.0.0.2 up
         fi
 
-        mkdir -p ./var/postgres-data ./var/elasticsearch-data ${projectPathPrefix}/vendor
+        mkdir -p ./app/var/postgres-data ./app/var/elasticsearch-data ${projectPathPrefix}/vendor
         docker-sync start
+        ;;
+    "3")
+        cp -f ./docker/conf/docker-compose-mac-mutagen.yml.dist docker-compose.yml
+
+        sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
+        sed -i '' -E "s#id:[0-9]+#id:$(id -u)#" ./docker-compose.yml
+        sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+
+        if [[ $1 != --skip-aliasing ]]; then
+            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
+            sudo ifconfig lo0 alias 127.0.0.2 up
+        fi
+
+        mkdir -p ./app/var/postgres-data ./app/var/elasticsearch-data ${projectPathPrefix}/vendor
         ;;
 esac
 
-echo "Starting docker-compose.."
 
-docker-compose up -d --build
+case "$operatingSystem" in
+    "1"|"2")
+        echo "Starting docker-compose.."
+        docker-compose up -d --build
+        ;;
+    "3")
+        echo "Starting mutagen compose.."
+        mutagen compose up -d --build
+        docker-compose exec -u root php-fpm chown -R www-data:www-data /var/www/html
+        ;;
+esac
 
 echo "Installing application inside a php-fpm container"
 
 docker-compose exec -T php-fpm composer install
-docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick error-pages-generate
+docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev-quick frontend-api-generate-new-keys error-pages-generate
 
 echo "Your application is now ready under http://127.0.0.1:8000 and second domain under http://127.0.0.2:8000"
 echo "Administration is ready under http://127.0.0.1:8000/admin, you can log in using username 'admin' and password 'admin123'"
