@@ -444,7 +444,11 @@ class ProductExportRepository extends BaseProductExportRepository
             $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
         }
 
-        return array_values(array_unique($flagIds));
+        $uniqueFlagsIds = array_unique($flagIds);
+        $resultArray = array_combine($uniqueFlagsIds, $uniqueFlagsIds);
+        ksort($resultArray);
+
+        return array_values($resultArray);
     }
 
     /**
