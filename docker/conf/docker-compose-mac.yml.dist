@@ -136,7 +136,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - ./app/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
         environment:
             - discovery.type=single-node
 
