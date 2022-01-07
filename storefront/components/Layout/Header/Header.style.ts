@@ -66,7 +66,6 @@ export const HeaderMiddleStyled = styled.div`
         }
 
         @media ${theme.mediaQueries.queryXl} {
-            flex: none;
             margin-right: ${localVariables.headerItemGap};
         }
     `}

@@ -53,7 +53,7 @@ export const ListItemPriceStyled = styled.span`
         line-height: 1.3;
         padding-right: 18px;
         text-align: right;
-        width: 110px;
+        width: 118px;
 
         color: ${theme.color.primary};
         font-size: 14px;

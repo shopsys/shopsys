@@ -15,8 +15,8 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
+import { FC, useState } from 'react';
 import Button from 'components/Forms/Button';
-import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import ListItem from './ListItem';
 import NextLink from 'next/link';
@@ -28,19 +28,18 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const Cart: FC = () => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const { cart } = useShopsysSelector((state) => state.cart);
+    const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
+    const [isCartHovered, setIsCartHovered] = useState(false);
 
     return (
-        <CartStyled>
+        <CartStyled onMouseEnter={() => setIsCartHovered(true)} onMouseLeave={() => setIsCartHovered(false)}>
             <NextLink href={cartUrl} passHref>
-                <CartBlockStyled>
+                <CartBlockStyled isHovered={isCartHovered}>
                     <CartPiecesStyled>
                         <CartIconStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled>
-                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
-                        </CartCountStyled>
+                        <CartCountStyled>{cart !== null && !isCartEmpty ? cart.items.length : 0}</CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled>
                         {formatPrice(
@@ -54,8 +53,8 @@ const Cart: FC = () => {
                     </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
-            <CartDetailStyled containsProducts={cart !== null && Array.isArray(cart?.items) && cart.items.length > 0}>
-                {cart !== null && Array.isArray(cart?.items) && cart.items.length > 0 ? (
+            <CartDetailStyled containsProducts={!isCartEmpty} isHovered={isCartHovered}>
+                {cart !== null && !isCartEmpty ? (
                     <>
                         <CartDetailList>
                             {cart.items.map((cartItem) => (
@@ -79,9 +78,7 @@ const Cart: FC = () => {
                 <NextLink href={cartUrl} passHref>
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled>
-                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
-                        </CartCountStyled>
+                        <CartCountStyled>{cart !== null && !isCartEmpty ? cart.items.length : 0}</CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>
             </CartButtonMobileStyled>
