@@ -1,6 +1,6 @@
 import initialStyled, { ThemedStyledInterface } from 'styled-components';
-
 import mediaQueries from './mediaQueries';
+import tinycolor from 'tinycolor2';
 
 /* Main theme */
 export const theme = {
@@ -9,13 +9,11 @@ export const theme = {
         base: '#0d0d0d',
         primary: '#4c5bfd',
         primaryLight: '#a3abff',
-        primaryDarker: '#3b4cfc',
         white: '#fff',
         whitesmoke: '#e8e8ea',
         black: '#000',
         orange: '#ecb200',
         orangeLight: '#fff0c4',
-        orangeDarker: '#dea700',
         border: '#c4c9ff',
         red: '#ec5353',
         redLight: '#f2a2a2',
@@ -27,7 +25,6 @@ export const theme = {
         greyLight: '#a4a7c1',
         greyVeryLight: '#f5f5f6',
         greyDark: '#414353',
-        greyDarker: '#363745',
         greyLighter: '#e2e3eb',
         blueLight: '#f2f2ff',
         blue: '#d9d9ff',
@@ -105,13 +102,13 @@ export const theme = {
                 color: () => theme.color.white,
                 background: () => theme.color.orange,
                 colorHover: () => theme.color.white,
-                backgroundHover: () => theme.color.orangeDarker,
+                backgroundHover: () => tinycolor(theme.color.orange).darken(10).toString(),
             },
             primary: {
                 color: () => theme.color.white,
                 background: () => theme.color.primary,
                 colorHover: () => theme.color.white,
-                backgroundHover: () => theme.color.primaryDarker,
+                backgroundHover: () => tinycolor(theme.color.primary).darken(10).toString(),
             },
             secondary: {
                 color: () => theme.color.black,

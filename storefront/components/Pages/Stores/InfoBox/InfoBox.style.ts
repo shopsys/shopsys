@@ -3,6 +3,7 @@ import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import Link from 'components/Basic/Link';
 import { styled } from 'components/Theme/main';
+import tinycolor from 'tinycolor2';
 
 export const InfoBoxStyled = styled.div`
     ${({ theme }) => css`
@@ -48,7 +49,7 @@ export const ButtonCloseStyled = styled(Icon)`
         color: ${theme.color.primary};
 
         &:hover {
-            color: ${theme.color.orangeDarker};
+            color: ${tinycolor(theme.color.orange).darken(10).toString()};
         }
     `}
 `;
