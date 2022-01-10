@@ -2400,6 +2400,8 @@ export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', Newslett
 
 export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
+export type OrderDetailItemFragmentApi = { __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit?: string | null | undefined, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+
 export type OrderListFragmentApi = { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'OrderEdge', cursor: string, node?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null | undefined } | null | undefined> | null | undefined };
 
 export type CreateOrderMutationVariablesApi = Exact<{
@@ -2433,6 +2435,13 @@ export type CreateOrderMutationVariablesApi = Exact<{
 
 
 export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string } };
+
+export type OrderDetailQueryVariablesApi = Exact<{
+  orderNumber?: Maybe<Scalars['String']>;
+}>;
+
+
+export type OrderDetailQueryApi = { __typename?: 'Query', order?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName?: string | null | undefined, lastName?: string | null | undefined, email: string, telephone: string, companyName?: string | null | undefined, companyNumber?: string | null | undefined, companyTaxNumber?: string | null | undefined, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName?: string | null | undefined, deliveryLastName?: string | null | undefined, deliveryCompanyName?: string | null | undefined, deliveryTelephone?: string | null | undefined, deliveryStreet?: string | null | undefined, deliveryCity?: string | null | undefined, deliveryPostcode?: string | null | undefined, note?: string | null | undefined, urlHash: string, promoCode?: string | null | undefined, trackingNumber?: string | null | undefined, trackingUrl?: string | null | undefined, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit?: string | null | undefined, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry?: { __typename?: 'Country', name: string } | null | undefined } | null | undefined };
 
 export type OrdersQueryVariablesApi = Exact<{
   after?: Maybe<Scalars['String']>;
@@ -3270,6 +3279,20 @@ export const CategoriesByColumnFragmentApi = gql`
   }
 }
     ${ColumnCategoriesFragmentApi}`;
+export const OrderDetailItemFragmentApi = gql`
+    fragment OrderDetailItemFragment on OrderItem {
+  name
+  unitPrice {
+    ...PriceFragment
+  }
+  totalPrice {
+    ...PriceFragment
+  }
+  vatRate
+  quantity
+  unit
+}
+    ${PriceFragmentApi}`;
 export const OrderDetailFragmentApi = gql`
     fragment OrderDetailFragment on Order {
   uuid
@@ -3758,6 +3781,58 @@ export const CreateOrderMutationDocumentApi = gql`
 
 export function useCreateOrderMutationApi() {
   return Urql.useMutation<CreateOrderMutationApi, CreateOrderMutationVariablesApi>(CreateOrderMutationDocumentApi);
+};
+export const OrderDetailQueryDocumentApi = gql`
+    query OrderDetailQuery($orderNumber: String) {
+  order(orderNumber: $orderNumber) {
+    uuid
+    number
+    creationDate
+    items {
+      ...OrderDetailItemFragment
+    }
+    transport {
+      name
+    }
+    payment {
+      name
+    }
+    status
+    firstName
+    lastName
+    email
+    telephone
+    companyName
+    companyNumber
+    companyTaxNumber
+    street
+    city
+    postcode
+    country {
+      name
+    }
+    differentDeliveryAddress
+    deliveryFirstName
+    deliveryLastName
+    deliveryCompanyName
+    deliveryTelephone
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+      name
+    }
+    note
+    urlHash
+    promoCode
+    trackingNumber
+    trackingUrl
+  }
+}
+    ${OrderDetailItemFragmentApi}`;
+
+export function useOrderDetailQueryApi(options: Omit<Urql.UseQueryArgs<OrderDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<OrderDetailQueryApi>({ query: OrderDetailQueryDocumentApi, ...options });
 };
 export const OrdersQueryDocumentApi = gql`
     query OrdersQuery($after: String, $first: Int) {

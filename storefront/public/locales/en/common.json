@@ -240,5 +240,17 @@
     "Personal Data Overview": "Personal Data Overview",
     "Personal Data Export": "Personal Data Export",
     "Could not sent personal data export request": "Could not sent personal data export request",
-    "We sent an email with link to export your personal data": "We sent an email with link to export your personal data"
+    "We sent an email with link to export your personal data": "We sent an email with link to export your personal data",
+    "Basic information": "Basic information",
+    "Delivery address": "Delivery address",
+    "Product name": "Product name",
+    "Price per piece incl. VAT": "Price per piece incl. VAT",
+    "Amount": "Amount",
+    "VAT": "VAT",
+    "Total price excl. VAT": "Total price excl. VAT",
+    "Total price incl. VAT": "Total price incl. VAT",
+    "Tracking package": "Tracking package",
+    "Package number": "Package number",
+    "Error occured when loading order detail": "Error occured when loading order detail",
+    "Your purchase": "Your purchase"
 }

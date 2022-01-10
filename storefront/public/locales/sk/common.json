@@ -240,5 +240,17 @@
     "Personal Data Overview": "Prehľad osobných údajov",
     "Personal Data Export": "Export osobných údajov",
     "Could not sent personal data export request": "Nepodarilo sa odoslať email s odkazom na export osobných údajov",
-    "We sent an email with link to export your personal data": "Odoslali sme Vám na mail odkaz na export osobných údajov"
+    "We sent an email with link to export your personal data": "Odoslali sme Vám na mail odkaz na export osobných údajov",
+    "Basic information": "Základné údaje",
+    "Delivery address": "Dodacia adresa",
+    "Product name": "Názov",
+    "Price per piece incl. VAT": "Jednotková cena s DPH",
+    "Amount": "Množství",
+    "VAT": "DPH",
+    "Total price excl. VAT": "Celková cena bez DPH",
+    "Total price incl. VAT": "Celková cena s DPH",
+    "Tracking package": "Sledovanie zásielky",
+    "Package number": "Číslo zásielky",
+    "Error occured when loading order detail": "Nastala chyba pri načítaní detailu objednávky ",
+    "Your purchase": "Váš nákup"
 }
