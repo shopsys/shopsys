@@ -2464,6 +2464,19 @@ export type RecoverPasswordMutationApi = { __typename?: 'Mutation', RecoverPassw
 
 export type SimplePaymentFragmentApi = { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> };
 
+export type PersonalDataRequestMutationVariablesApi = Exact<{
+  email: Scalars['String'];
+  type?: Maybe<PersonalDataAccessRequestTypeEnumApi>;
+}>;
+
+
+export type PersonalDataRequestMutationApi = { __typename?: 'Mutation', RequestPersonalDataAccess: { __typename?: 'PersonalDataPage', displaySiteSlug: string, exportSiteSlug: string } };
+
+export type PersonalDataPageTextQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type PersonalDataPageTextQueryApi = { __typename?: 'Query', personalDataPage?: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null | undefined };
+
 export type PriceFragmentApi = { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string };
 
 export type ProductFilterOptionsBrandsFragmentApi = { __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } };
@@ -3777,6 +3790,30 @@ export const RecoverPasswordMutationDocumentApi = gql`
 
 export function useRecoverPasswordMutationApi() {
   return Urql.useMutation<RecoverPasswordMutationApi, RecoverPasswordMutationVariablesApi>(RecoverPasswordMutationDocumentApi);
+};
+export const PersonalDataRequestMutationDocumentApi = gql`
+    mutation PersonalDataRequestMutation($email: String!, $type: PersonalDataAccessRequestTypeEnum) {
+  RequestPersonalDataAccess(input: {email: $email, type: $type}) {
+    displaySiteSlug
+    exportSiteSlug
+  }
+}
+    `;
+
+export function usePersonalDataRequestMutationApi() {
+  return Urql.useMutation<PersonalDataRequestMutationApi, PersonalDataRequestMutationVariablesApi>(PersonalDataRequestMutationDocumentApi);
+};
+export const PersonalDataPageTextQueryDocumentApi = gql`
+    query PersonalDataPageTextQuery {
+  personalDataPage {
+    displaySiteContent
+    exportSiteContent
+  }
+}
+    `;
+
+export function usePersonalDataPageTextQueryApi(options: Omit<Urql.UseQueryArgs<PersonalDataPageTextQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<PersonalDataPageTextQueryApi>({ query: PersonalDataPageTextQueryDocumentApi, ...options });
 };
 export const PromotedProductsQueryDocumentApi = gql`
     query PromotedProductsQuery {

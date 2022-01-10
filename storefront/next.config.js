@@ -66,6 +66,8 @@ const moduleExports = {
                 '/terms-and-conditions': '/obchodni-podminky',
                 '/gdpr': '/zasady-ochrany-osobnich-udaju',
                 '/new-password': '/nove-heslo',
+                '/personal-data-overview': '/prehled-osobnich-udaju',
+                '/personal-data-export': '/export-osobnich-udaju',
             },
             ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
@@ -81,6 +83,8 @@ const moduleExports = {
                 '/terms-and-conditions': '/obchodni-podminky',
                 '/gdpr': '/zasady-ochrany-osobnich-udaju',
                 '/new-password': '/nove-heslo',
+                '/personal-data-overview': '/prehled-osobnich-udaju',
+                '/personal-data-export': '/export-osobnich-udaju',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/search': '/hladanie',
@@ -97,6 +101,8 @@ const moduleExports = {
                 '/terms-and-conditions': '/podmienky-a-ustanovenia',
                 '/gdpr': '/zasady-ochrany-osobnych-udajov',
                 '/new-password': '/nove-heslo',
+                '/personal-data-overview': '/prehlad-osobnych-udajov',
+                '/personal-data-export': '/export-osobnych-udajov',
             },
         },
     },

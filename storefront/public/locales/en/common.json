@@ -234,5 +234,11 @@
     "New password": "New password",
     "New password again": "New password again",
     "Error occured while loading form data": "Error occured while loading form data",
-    "ResendRecoveryLink": "Error occured while loading form data. <br> Please try to resend new password recovery link <lnk1>on this page</lnk1>"
+    "ResendRecoveryLink": "Error occured while loading form data. <br> Please try to resend new password recovery link <lnk1>on this page</lnk1>",
+    "Could not sent personal data request": "Could not sent personal data request",
+    "We sent an email with link to your personal data": "We sent an email with link to your personal data",
+    "Personal Data Overview": "Personal Data Overview",
+    "Personal Data Export": "Personal Data Export",
+    "Could not sent personal data export request": "Could not sent personal data export request",
+    "We sent an email with link to export your personal data": "We sent an email with link to export your personal data"
 }

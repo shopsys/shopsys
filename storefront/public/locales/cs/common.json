@@ -234,5 +234,11 @@
     "New password": "Nové heslo",
     "New password again": "Nové heslo znovu",
     "Error occured while loading form data": "Nastala chyba při načítání formuláře",
-    "ResendRecoveryLink": "Nastala chyba při načítání formuláře pro obnovu hesla. <br> Zkuste si prosím nechat zaslat odkaz znovu <lnk1>na této stránce</lnk1>"
+    "ResendRecoveryLink": "Nastala chyba při načítání formuláře pro obnovu hesla. <br> Zkuste si prosím nechat zaslat odkaz znovu <lnk1>na této stránce</lnk1>",
+    "Could not sent personal data request": "Nepodařilo se odeslat email s odkazem na výpis osobních dat",
+    "We sent an email with link to your personal data": "Odeslali jsme Vám na mail odkaz s výpisem osobních dat",
+    "Personal Data Overview": "Přehled osobních údajů",
+    "Personal Data Export": "Export osobních údajů",
+    "Could not sent personal data export request": "Nepodařilo se odeslat email s odkazem na export osobních dat",
+    "We sent an email with link to export your personal data": "Odeslali jsme Vám na mail odkaz pro export osobních dat"
 }
