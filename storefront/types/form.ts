@@ -64,3 +64,11 @@ export type NewPasswordFormType = {
     newPasswordFirst: string;
     newPasswordSecond: string;
 };
+
+export type PersonalDataOverviewFormType = {
+    email: string;
+};
+
+export type PersonalDataExportFormType = {
+    email: string;
+};
