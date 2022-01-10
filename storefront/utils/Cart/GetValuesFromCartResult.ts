@@ -4,22 +4,19 @@ import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/Pickup
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
+import { PriceType } from 'types/price';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
     currencyCode: string,
     isUserLoggedIn: boolean,
 ): CartResultValues => {
-    const cart = mapCart(
-        {
-            items: resultData.items,
-            modifications: resultData.modifications,
-            totalPrice: resultData.totalPrice,
-            totalDiscountPrice: resultData.totalDiscountPrice,
-            remainingAmountWithVatForFreeTransport: resultData.remainingAmountWithVatForFreeTransport,
-        },
-        currencyCode,
-    );
+    const emptyPriceArray: PriceType = {
+        priceWithVat: 0,
+        priceWithoutVat: 0,
+        vatAmount: 0,
+        currencyCode: currencyCode,
+    };
     const cartUuid = isUserLoggedIn || resultData.uuid === undefined ? null : resultData.uuid;
     const transport =
         resultData.transport === null || resultData.transport === undefined
@@ -30,6 +27,18 @@ export const getValuesFromCartResult = (
         resultData.payment === null || resultData.payment === undefined || transport === null
             ? null
             : mapPayment(resultData.payment, currencyCode);
+    const cart = mapCart(
+        {
+            items: resultData.items,
+            modifications: resultData.modifications,
+            totalPrice: resultData.totalPrice,
+            totalDiscountPrice: resultData.totalDiscountPrice,
+            remainingAmountWithVatForFreeTransport: resultData.remainingAmountWithVatForFreeTransport,
+        },
+        transport !== null ? transport.price : { ...emptyPriceArray },
+        payment !== null ? payment.price : { ...emptyPriceArray },
+        currencyCode,
+    );
     const updatedPromoCode = resultData.promoCode === undefined ? null : resultData.promoCode;
 
     return {

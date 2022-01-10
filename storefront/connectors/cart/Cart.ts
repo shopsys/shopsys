@@ -18,6 +18,7 @@ import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
+import { PriceType } from 'types/price';
 import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -88,8 +89,22 @@ export const useRemoveFromCart = (): UseMutationResponse<RemoveFromCartMutationA
     return [removeItemFromCartResult, removeItemFromCart];
 };
 
-export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {
+export const mapCart = (
+    apiData: CartFragmentApi,
+    transportPrice: PriceType,
+    paymentPrice: PriceType,
+    currencyCode: string,
+): CartType => {
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
+
+    const totalPrice = mapPriceData(apiData.totalPrice, currencyCode);
+    const totalItemsPrice: PriceType = {
+        priceWithVat: totalPrice.priceWithVat - transportPrice.priceWithVat - paymentPrice.priceWithVat,
+        priceWithoutVat: totalPrice.priceWithoutVat - transportPrice.priceWithoutVat - paymentPrice.priceWithoutVat,
+        vatAmount: totalPrice.vatAmount - transportPrice.vatAmount - paymentPrice.vatAmount,
+        currencyCode: currencyCode,
+    };
+
     return {
         items: apiData.items.map((item) => {
             return {
@@ -108,7 +123,8 @@ export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartTyp
                 },
             };
         }),
-        totalPrice: mapPriceData(apiData.totalPrice, currencyCode),
+        totalPrice: totalPrice,
+        totalItemsPrice: totalItemsPrice,
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
         remainingAmountWithVatForFreeTransport:
             remainingFreeTransport !== undefined && remainingFreeTransport !== null

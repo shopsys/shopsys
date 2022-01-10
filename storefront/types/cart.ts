@@ -37,6 +37,7 @@ export type CartItemType = {
 export type CartType = {
     items: CartItemType[];
     totalPrice: PriceType;
+    totalItemsPrice: PriceType;
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
 };
