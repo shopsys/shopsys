@@ -37,7 +37,6 @@ const Select: FC<SelectProps> = (props) => {
         payment,
         transport,
         pickupPlace,
-        isCartEmpty,
         cartInput: { cartUuid, promoCode, transport: transportInput, payment: paymentInput },
     } = useShopsysSelector((state) => state.cart);
 
@@ -49,7 +48,7 @@ const Select: FC<SelectProps> = (props) => {
     const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
     const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
 
-    useLoadCart(cartUuid, isCartEmpty, mappedTransportInput, mappedPaymentInput, promoCode);
+    useLoadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode);
 
     useEffect(() => {
         formProviderMethods.setValue(

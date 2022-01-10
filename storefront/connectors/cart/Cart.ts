@@ -21,6 +21,7 @@ import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
 import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const mapTransportToTransportInput = (
@@ -51,14 +52,15 @@ export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType
 
 export const useLoadCart = (
     cartUuid: CartInput['cartUuid'],
-    isCartEmpty: boolean,
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
 ): UseQueryResponse<CartQueryApi, CartQueryVariablesApi> => {
+    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
+
     const [result, refresh] = useCartQueryApi({
         variables: { cartUuid, transport, payment, promoCode },
-        pause: isCartEmpty,
+        pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: 'network-only',
     });
     const t = useTypedTranslationFunction();
