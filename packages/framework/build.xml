@@ -460,6 +460,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
+            <arg path="${path.assets}"/>
         </exec>
 
         <exec executable="${path.git.executable}" outputProperty="git.files.unstaged">
