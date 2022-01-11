@@ -4,6 +4,11 @@ import { styled } from 'components/Theme/main';
 
 type CartDetailStyledProps = {
     containsProducts: boolean;
+    isHovered: boolean;
+};
+
+type CartBlockStyledProps = {
+    isHovered: boolean;
 };
 
 const localVariables = {
@@ -18,25 +23,11 @@ export const CartStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             display: flex;
         }
-
-        &:hover {
-            ${CartBlockStyled} {
-                border-radius: ${theme.radius.big} ${theme.radius.big} 0 0;
-                box-shadow: 0 10px 20px 0 rgba(${theme.color.black}, 0.15);
-                background-color: ${theme.color.white};
-            }
-
-            ${CartDetailStyled} {
-                opacity: 1;
-                transform: scale(1);
-                pointer-events: auto;
-            }
-        }
     `}
 `;
 
-export const CartBlockStyled = styled.a`
-    ${({ theme }) => css`
+export const CartBlockStyled = styled.a<CartBlockStyledProps>`
+    ${({ theme, isHovered }) => css`
         display: none;
         align-items: center;
         padding: 15px 7px 15px 15px;
@@ -50,6 +41,13 @@ export const CartBlockStyled = styled.a`
         @media ${theme.mediaQueries.queryLg} {
             display: flex;
         }
+
+        ${isHovered &&
+        css`
+            border-radius: ${theme.radius.big} ${theme.radius.big} 0 0;
+            box-shadow: 0 10px 20px 0 rgba(${theme.color.black}, 0.15);
+            background-color: ${theme.color.white};
+        `}
 
         &:hover {
             text-decoration: none;
@@ -107,7 +105,7 @@ export const CartCountStyled = styled.span`
 `;
 
 export const CartDetailStyled = styled.div<CartDetailStyledProps>`
-    ${({ theme, containsProducts }) => css`
+    ${({ theme, containsProducts, isHovered }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -129,6 +127,13 @@ export const CartDetailStyled = styled.div<CartDetailStyledProps>`
             box-shadow: 0 5px 10px 0 rgba(164, 167, 193, 0.34);
             border-radius: ${theme.radius.big} 0 ${theme.radius.big} ${theme.radius.big};
             background-color: ${theme.color.white};
+
+            ${isHovered &&
+            css`
+                opacity: 1;
+                transform: scale(1);
+                pointer-events: auto;
+            `}
         }
     `}
 `;
