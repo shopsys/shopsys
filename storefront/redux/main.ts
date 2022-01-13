@@ -21,7 +21,7 @@ const makeStore = wrapMakeStore(() =>
             getDefaultMiddleware().prepend(
                 nextReduxCookieMiddleware({
                     compress: false,
-                    subtrees: ['cart.cartInput', 'cart.isCartEmpty', 'user', 'domain'],
+                    subtrees: ['cart.cartInput', 'cart.isCartEmpty', 'user', 'domain', 'contactInformation'],
                 }),
             ),
     }),

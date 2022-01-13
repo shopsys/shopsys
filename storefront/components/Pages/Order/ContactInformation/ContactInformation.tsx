@@ -23,6 +23,7 @@ const ContactInformation: FC = () => {
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
     const { url } = useShopsysSelector((state) => state.domain);
     const [TermsAndConditionUrl, GdprUrl] = useGetInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
+    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     useEffect(() => {
         if (formProviderMethods.formState.touchedFields.email !== undefined) {
@@ -48,6 +49,7 @@ const ContactInformation: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.email.name}
                                 name={formMeta.fields.email.name}
                                 label={formMeta.fields.email.label}
+                                disabled={isUserLoggedIn}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}

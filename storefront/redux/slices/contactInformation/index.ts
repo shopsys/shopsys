@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInformationFormType } from 'types/form';
 import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
+import { HYDRATE } from 'next-redux-wrapper';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const initialState = {
@@ -148,6 +149,17 @@ export const contactInformationSlice = createSlice({
             state.deliveryCity = action.payload.city;
             state.deliveryPostcode = action.payload.postcode;
             state.deliveryCountry = action.payload.country;
+        },
+    },
+    extraReducers: {
+        /**
+         * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
+         */
+        [HYDRATE]: (state, action) => {
+            return {
+                ...state,
+                ...action.payload.contactInformation,
+            };
         },
     },
 });
