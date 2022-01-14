@@ -15,7 +15,7 @@ export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryDetailFragm
         edges: [],
     };
 
-    if (apiBlogCategoryData?.blogArticles?.edges !== undefined && apiBlogCategoryData.blogArticles.edges !== null) {
+    if (apiBlogCategoryData.blogArticles?.edges !== undefined && apiBlogCategoryData.blogArticles.edges !== null) {
         for (const edge of apiBlogCategoryData.blogArticles.edges) {
             if (edge?.node === undefined || edge.node === null) {
                 continue;

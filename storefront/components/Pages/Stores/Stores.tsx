@@ -50,31 +50,26 @@ const Stores: FC = () => {
                     <GoogleMap markers={stores} activeMarker={activeMarkerHandler} closeMarkers={closeInfoBox} />
                 </MapStyled>
                 <InfoStyled>
-                    {`/images/stores_${defaultLocale}.png` !== undefined &&
-                        `/images/stores_${defaultLocale}2x.png` !== undefined && (
-                            <ImageStyled>
-                                <ImageTextStyled>{stores.length}x</ImageTextStyled>
-                                <picture>
-                                    <source
-                                        srcSet={`/images/stores_${defaultLocale}2x.png 2x, /images/stores_${defaultLocale}.png 1x`}
-                                    />
-                                    <Image
-                                        src={`/images/stores_${defaultLocale}.png`}
-                                        alt={t('Stores')}
-                                        width={210}
-                                        height={160}
-                                    />
-                                </picture>
-                            </ImageStyled>
-                        )}
+                    <ImageStyled>
+                        <ImageTextStyled>{stores.length}x</ImageTextStyled>
+                        <picture>
+                            <source
+                                srcSet={`/images/stores_${defaultLocale}2x.png 2x, /images/stores_${defaultLocale}.png 1x`}
+                            />
+                            <Image
+                                src={`/images/stores_${defaultLocale}.png`}
+                                alt={t('Stores')}
+                                width={210}
+                                height={160}
+                            />
+                        </picture>
+                    </ImageStyled>
                     <InfoTitleStyled type={'h3'}>{t('Stores')}</InfoTitleStyled>
                     {activeInfoBox !== -1 && <InfoBox isClosed={closeInfoBoxHandler} {...stores[activeInfoBox]} />}
                 </InfoStyled>
             </StoresStyled>
             <StoresList>
-                {stores !== undefined &&
-                    Array.isArray(stores) &&
-                    stores.length !== 0 &&
+                {stores.length !== 0 &&
                     stores.map((store, index) => (
                         <ButtonBottomStyled key={index} href={store.slug}>
                             <ButtonBottomItemStyled>

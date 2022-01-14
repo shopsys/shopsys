@@ -17,11 +17,7 @@ type BreadcrumbsProps = {
 const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     const t = useTypedTranslationFunction();
 
-    if (
-        props.breadcrumb === undefined ||
-        props.breadcrumb === null ||
-        (Array.isArray(props.breadcrumb) && props.breadcrumb.length === 0)
-    ) {
+    if (props.breadcrumb.length === 0) {
         return null;
     }
 

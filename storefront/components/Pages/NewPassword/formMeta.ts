@@ -72,12 +72,12 @@ export const useRecoveryPasswordFormMeta = (
             newPasswordFirst: {
                 name: 'newPasswordFirst' as const,
                 label: t('New password'),
-                errorMessage: formProviderMethods.formState.errors?.newPasswordFirst?.message,
+                errorMessage: formProviderMethods.formState.errors.newPasswordFirst?.message,
             },
             newPasswordSecond: {
                 name: 'newPasswordSecond' as const,
                 label: t('New password again'),
-                errorMessage: formProviderMethods.formState.errors?.newPasswordSecond?.message,
+                errorMessage: formProviderMethods.formState.errors.newPasswordSecond?.message,
             },
         },
     };

@@ -19,20 +19,19 @@ export const mapBlogArticleDetailApiData = (
                 ...blogArticleProduct,
                 __typename: apiData.__typename === undefined ? undefined : apiData.__typename,
                 image:
-                    blogArticleProduct.images[0]?.sizes[0] === null ||
-                    blogArticleProduct.images[0]?.sizes[0] === undefined
+                    !(0 in blogArticleProduct.images) || !(0 in blogArticleProduct.images[0].sizes)
                         ? null
                         : {
-                              ...blogArticleProduct.images[0]?.sizes[0],
+                              ...blogArticleProduct.images[0].sizes[0],
                               width:
-                                  blogArticleProduct.images[0]?.sizes[0].width !== undefined &&
-                                  blogArticleProduct.images[0]?.sizes[0].width !== null
-                                      ? blogArticleProduct.images[0]?.sizes[0].width
+                                  blogArticleProduct.images[0].sizes[0].width !== undefined &&
+                                  blogArticleProduct.images[0].sizes[0].width !== null
+                                      ? blogArticleProduct.images[0].sizes[0].width
                                       : 0,
                               height:
-                                  blogArticleProduct.images[0]?.sizes[0].height !== undefined &&
-                                  blogArticleProduct.images[0]?.sizes[0].height !== null
-                                      ? blogArticleProduct.images[0]?.sizes[0].height
+                                  blogArticleProduct.images[0].sizes[0].height !== undefined &&
+                                  blogArticleProduct.images[0].sizes[0].height !== null
+                                      ? blogArticleProduct.images[0].sizes[0].height
                                       : 0,
                           },
                 price: mapProductPriceApiData(blogArticleProduct.price, currencyCode),

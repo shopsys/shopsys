@@ -41,7 +41,7 @@ const mapOrdersApiData = (
         orders: [],
     };
 
-    if (apiCustomerOrdersData?.orders?.edges !== undefined && apiCustomerOrdersData.orders.edges !== null) {
+    if (apiCustomerOrdersData.orders?.edges !== undefined && apiCustomerOrdersData.orders.edges !== null) {
         for (const edge of apiCustomerOrdersData.orders.edges) {
             if (edge?.node === undefined || edge.node === null) {
                 continue;
@@ -101,22 +101,7 @@ export function mapOrderDetailApiData(
                 apiOrderDetailData.companyTaxNumber !== null && apiOrderDetailData.companyTaxNumber !== undefined
                     ? apiOrderDetailData.companyTaxNumber
                     : '',
-            street:
-                apiOrderDetailData.street !== null && apiOrderDetailData.street !== undefined
-                    ? apiOrderDetailData.street
-                    : '',
-            city:
-                apiOrderDetailData.city !== null && apiOrderDetailData.city !== undefined
-                    ? apiOrderDetailData.city
-                    : '',
-            postcode:
-                apiOrderDetailData.postcode !== null && apiOrderDetailData.postcode !== undefined
-                    ? apiOrderDetailData.postcode
-                    : '',
-            country:
-                apiOrderDetailData.country !== null && apiOrderDetailData.country !== undefined
-                    ? apiOrderDetailData.country.name
-                    : '',
+            country: apiOrderDetailData.country.name,
             deliveryFirstName:
                 apiOrderDetailData.deliveryFirstName !== null && apiOrderDetailData.deliveryFirstName !== undefined
                     ? apiOrderDetailData.deliveryFirstName
@@ -152,10 +137,6 @@ export function mapOrderDetailApiData(
             note:
                 apiOrderDetailData.note !== null && apiOrderDetailData.note !== undefined
                     ? apiOrderDetailData.note
-                    : '',
-            urlHash:
-                apiOrderDetailData.urlHash !== null && apiOrderDetailData.urlHash !== undefined
-                    ? apiOrderDetailData.urlHash
                     : '',
             promoCode:
                 apiOrderDetailData.promoCode !== null && apiOrderDetailData.promoCode !== undefined

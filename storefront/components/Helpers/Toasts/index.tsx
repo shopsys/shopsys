@@ -3,9 +3,11 @@ import { toast } from 'react-toastify';
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
         toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }}></span>);
-    } else if (type === 'info') {
+    }
+    if (type === 'info') {
         toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }}></span>);
-    } else if (type === 'success') {
+    }
+    if (type === 'success') {
         toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }}></span>);
     }
 };

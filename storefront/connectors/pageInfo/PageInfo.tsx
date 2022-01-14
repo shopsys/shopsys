@@ -11,13 +11,7 @@ export const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined): Pa
             pageInfoApiData?.endCursor !== undefined && pageInfoApiData.endCursor !== null
                 ? pageInfoApiData.endCursor
                 : '',
-        hasNextPage:
-            pageInfoApiData?.hasNextPage !== undefined && pageInfoApiData.hasNextPage !== null
-                ? pageInfoApiData.hasNextPage
-                : false,
-        hasPreviousPage:
-            pageInfoApiData?.hasPreviousPage !== undefined && pageInfoApiData.hasPreviousPage !== null
-                ? pageInfoApiData.hasPreviousPage
-                : false,
+        hasNextPage: pageInfoApiData?.hasNextPage !== undefined ? pageInfoApiData.hasNextPage : false,
+        hasPreviousPage: pageInfoApiData?.hasPreviousPage !== undefined ? pageInfoApiData.hasPreviousPage : false,
     };
 };

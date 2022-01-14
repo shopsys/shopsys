@@ -25,7 +25,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<FilterFormType>();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
-    const isOnlyInStock = parametersFilterState !== null && parametersFilterState.onlyInStock;
+    const isOnlyInStock = parametersFilterState.onlyInStock;
     const [brandsValue, flagsValue, parametersValue] = useWatch({
         name: ['brands', 'flags', 'parameters'],
         control: formProviderMethods.control,

@@ -56,6 +56,8 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
         setLoadedImageUrls((currentLoadedImageUrls) => {
             const newLoadedImageUrls = { ...currentLoadedImageUrls };
             newLoadedImageUrls[currentSlide] = true;
+
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (slider !== null && slider.options().centered) {
                 newLoadedImageUrls[Math.min(currentSlide + 1, props.galleryItems.length - 1)] = true;
             }
@@ -80,6 +82,7 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
                     </ProductDetailImageSliderItemStyled>
                 ))}
             </ProductDetailImageSliderStyled>
+            {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
             {slider !== null && areControlsVisible ? (
                 <>
                     <ImageSliderControlPreviousStyled onClick={onMoveToPreviousSlideHandler}>

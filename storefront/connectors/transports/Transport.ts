@@ -26,7 +26,7 @@ export const mapTransport = (
             apiData.transportType.code === 'packetery',
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores:
-            apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores?.edges)
+            apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores.edges)
                 ? mapPickupPlacesApiData(apiData.stores)
                 : [],
     };

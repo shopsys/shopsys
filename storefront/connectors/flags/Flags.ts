@@ -13,7 +13,7 @@ export const mapFlagDetailApiData = (apiData: FlagDetailFragmentApi, currencyCod
         productFilterOptions: null,
     };
 
-    if (apiData?.products?.edges !== undefined && apiData.products.edges !== null) {
+    if (apiData.products?.edges !== undefined && apiData.products.edges !== null) {
         for (const edge of apiData.products.edges) {
             if (edge?.node === undefined || edge.node === null) {
                 continue;

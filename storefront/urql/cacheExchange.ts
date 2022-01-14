@@ -3,9 +3,9 @@ import { IntrospectionQuery } from 'graphql';
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
-const keyUuid = (data: Data) => data?.uuid as string | null;
-const keyName = (data: Data) => data?.name as string | null;
-const keyCode = (data: Data) => data?.code as string | null;
+const keyUuid = (data: Data) => data.uuid as string | null;
+const keyName = (data: Data) => data.name as string | null;
+const keyCode = (data: Data) => data.code as string | null;
 
 const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,

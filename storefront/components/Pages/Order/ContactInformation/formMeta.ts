@@ -81,7 +81,7 @@ export const useContactInformationForm = (): [
                 .test(
                     'non-null-or-empty-string',
                     t('Please enter country'),
-                    (value: { label: string; value: string }) => value.value !== undefined && value.value !== '',
+                    (value: { label: string; value: string }) => value.value !== '',
                 ),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
@@ -157,7 +157,7 @@ export const useContactInformationForm = (): [
                     .test(
                         'non-null-or-empty-string',
                         t('Please enter country'),
-                        (value: { label: string; value: string }) => value.value !== undefined && value.value !== '',
+                        (value: { label: string; value: string }) => value.value !== '',
                     ),
             }),
 

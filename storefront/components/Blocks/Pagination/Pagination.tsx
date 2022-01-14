@@ -41,7 +41,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         dispatch(userActions.setPagination({ ...initialState.pagination }));
     }, [router.asPath]);
 
-    if (paginationButtons === undefined || paginationButtons === null || paginationButtons.length === 1) {
+    if (paginationButtons === null || paginationButtons.length === 1) {
         return null;
     }
 
@@ -68,11 +68,7 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
     }
 
     const scrollToListTop = () => {
-        if (
-            props.containerWrapRef !== null &&
-            props.containerWrapRef !== undefined &&
-            props.containerWrapRef.current !== null
-        ) {
+        if (props.containerWrapRef !== null && props.containerWrapRef.current !== null) {
             props.containerWrapRef.current.scrollIntoView();
         }
     };

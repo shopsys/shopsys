@@ -43,11 +43,9 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
-                        {props.product.shortDescription !== undefined && (
-                            <ProductDetailShortDescriptionStyled>
-                                {props.product.shortDescription}
-                            </ProductDetailShortDescriptionStyled>
-                        )}
+                        <ProductDetailShortDescriptionStyled>
+                            {props.product.shortDescription}
+                        </ProductDetailShortDescriptionStyled>
                         <ProductDetailAddToCart {...props} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>

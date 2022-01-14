@@ -16,7 +16,7 @@ export type DomainConfigType = {
 };
 
 function getCurrentDomainFromWindow(): string {
-    if (window === undefined || window.location.host === undefined) {
+    if (typeof window === 'undefined') {
         throw new Error('Impossible to get domain from window');
     }
 

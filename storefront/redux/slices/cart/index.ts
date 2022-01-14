@@ -83,8 +83,8 @@ export const cartSlice = createSlice({
         /**
          * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
          */
-        [HYDRATE]: (state, action: PayloadAction<{ cart: InitialState }>) => {
-            if (action.payload.cart?.cartInput === undefined || action.payload.cart?.isCartEmpty === undefined) {
+        [HYDRATE]: (state, action: PayloadAction<{ cart: InitialState | undefined }>) => {
+            if (action.payload.cart?.cartInput === undefined) {
                 return state;
             }
 

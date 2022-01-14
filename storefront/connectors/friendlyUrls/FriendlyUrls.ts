@@ -53,25 +53,27 @@ export function getFriendlyUrlResolvedData(
         return undefined;
     }
 
-    if (data.slug.__typename === 'RegularProduct' || data.slug.__typename === 'Variant') {
-        return mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode);
-    } else if (data.slug.__typename === 'MainVariant') {
-        return mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode);
-    } else if (data.slug.__typename === 'Category') {
-        return mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode);
-    } else if (data.slug.__typename === 'Store') {
-        return mapStoreDetailApiData(data.slug);
-    } else if (data.slug.__typename === 'Article') {
-        return mapArticleDetailApiData(data.slug);
-    } else if (data.slug.__typename === 'BlogArticle') {
-        return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
-    } else if (data.slug.__typename === 'Brand') {
-        return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
-    } else if (data.slug.__typename === 'Flag') {
-        return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
-    } else if (data.slug.__typename === 'BlogCategory') {
-        return mapBlogCategoryData(data.slug);
+    switch (data.slug.__typename) {
+        case 'RegularProduct':
+        case 'Variant':
+            return mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode);
+        case 'MainVariant':
+            return mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode);
+        case 'Category':
+            return mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode);
+        case 'Store':
+            return mapStoreDetailApiData(data.slug);
+        case 'Article':
+            return mapArticleDetailApiData(data.slug);
+        case 'BlogArticle':
+            return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
+        case 'Brand':
+            return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
+        case 'Flag':
+            return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
+        case 'BlogCategory':
+            return mapBlogCategoryData(data.slug);
+        default:
+            return undefined;
     }
-
-    return undefined;
 }

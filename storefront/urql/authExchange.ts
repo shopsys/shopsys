@@ -54,7 +54,7 @@ const addAuthToOperation = (params: { authState: TokenType | null; operation: Op
  * Check whether error returned from API is an authentication error
  */
 const didAuthError = (params: { error: CombinedError }): boolean => {
-    return params.error?.response?.status === 401;
+    return params.error.response?.status === 401;
 };
 
 async function doTryRefreshToken(

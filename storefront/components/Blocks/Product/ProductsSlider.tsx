@@ -60,6 +60,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
                     <SliderProductItem key={index} {...productItemData} />
                 ))}
             </ProductSliderStyled>
+            {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
             {slider !== null && areControlsVisible ? (
                 <ProductSliderControlsStyled>
                     <button onClick={onMoveToPreviousSlideHandler}>p</button>
