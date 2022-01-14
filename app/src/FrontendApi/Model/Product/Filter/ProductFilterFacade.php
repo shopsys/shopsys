@@ -151,7 +151,7 @@ class ProductFilterFacade extends BaseProductFilterFacade
      */
     public function getProductFilterConfigForSearch(string $searchText): ProductFilterConfig
     {
-        $cacheKey = 'search';
+        $cacheKey = 'search_' . $searchText;
 
         if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
