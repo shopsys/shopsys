@@ -1,6 +1,7 @@
 fragment CategoryDetailFragment on Category {
     uuid
     slug
+    originalCategorySlug
     name
     seoH1
     ...BreadcrumbFragment

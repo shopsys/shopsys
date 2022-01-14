@@ -134,7 +134,8 @@ class ProductsResolver extends BaseProductsResolver
                 );
             },
             $argument,
-            $productFilterData
+            $productFilterData,
+            $this->getOrderingModeFromArgument($argument)
         );
     }
 
@@ -166,7 +167,8 @@ class ProductsResolver extends BaseProductsResolver
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData,
-            $argument['search'] ?? null
+            $argument['search'] ?? null,
+            $this->getOrderingModeFromArgument($argument)
         );
     }
 
@@ -221,7 +223,8 @@ class ProductsResolver extends BaseProductsResolver
                 );
             },
             $argument,
-            $productFilterData
+            $productFilterData,
+            $this->getOrderingModeFromArgument($argument)
         );
     }
 
@@ -270,7 +273,8 @@ class ProductsResolver extends BaseProductsResolver
                 );
             },
             $argument,
-            $productFilterData
+            $productFilterData,
+            $orderingMode
         );
     }
 }

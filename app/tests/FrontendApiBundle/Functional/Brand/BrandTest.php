@@ -41,6 +41,7 @@ class BrandTest extends GraphQlTestCase
                     seoMetaDescription
                     seoH1
                     products (first: 5) {
+                        orderingMode
                         edges {
                             node {
                                 name
@@ -86,6 +87,7 @@ class BrandTest extends GraphQlTestCase
         ) . '",
             "seoH1": "' . t('%brandName% SEO H1', ['%brandName%' => 'Canon'], 'dataFixtures', $this->getFirstDomainLocale()) . '",
             "products": {
+                "orderingMode": "PRIORITY",
                 "edges": [
                     {
                         "node": {

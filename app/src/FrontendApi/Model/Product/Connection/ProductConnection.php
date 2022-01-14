@@ -16,18 +16,26 @@ class ProductConnection extends Connection
     private $productFilterOptionsClosure;
 
     /**
+     * @var string
+     */
+    private string $orderingMode;
+
+    /**
      * @param \Overblog\GraphQLBundle\Relay\Connection\EdgeInterface[] $edges
      * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
      * @param callable $productFilterOptionsClosure
+     * @param string $orderingMode
      */
     public function __construct(
         array $edges,
         ?PageInfoInterface $pageInfo,
-        callable $productFilterOptionsClosure
+        callable $productFilterOptionsClosure,
+        string $orderingMode
     ) {
         parent::__construct($edges, $pageInfo);
 
         $this->productFilterOptionsClosure = $productFilterOptionsClosure;
+        $this->orderingMode = $orderingMode;
     }
 
     /**
@@ -36,5 +44,13 @@ class ProductConnection extends Connection
     public function getProductFilterOptions(): ProductFilterOptions
     {
         return ($this->productFilterOptionsClosure)();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderingMode(): string
+    {
+        return $this->orderingMode;
     }
 }

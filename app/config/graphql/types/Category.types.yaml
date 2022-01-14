@@ -44,6 +44,9 @@ Category:
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategoryOrReadyCategorySeoMix(args, value)'
+            originalCategorySlug:
+                type: "String"
+                description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"
             readyCategorySeoMixLinks:
                 type: "[Link!]!"
                 description: "An array of links of prepared category SEO mixes of a given category"

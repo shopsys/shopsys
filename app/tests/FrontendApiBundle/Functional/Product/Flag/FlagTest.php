@@ -37,6 +37,7 @@ class FlagTest extends GraphQlTestCase
                         slug
                     }
                     products {
+                        orderingMode
                         edges {
                             node {
                                 name
@@ -63,6 +64,7 @@ class FlagTest extends GraphQlTestCase
                 }
             ],
             "products": {
+                "orderingMode": "PRIORITY",
                 "edges": [
                     {
                         "node": {
