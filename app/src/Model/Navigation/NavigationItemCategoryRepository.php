@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Navigation;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryRepository
 {
@@ -25,45 +24,51 @@ class NavigationItemCategoryRepository
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(NavigationItem $navigationItem): QueryBuilder
+    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(array $navigationItems): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('nic')
             ->from(NavigationItemCategory::class, 'nic')
-            ->where('nic.navigationItem = :navigationItem')
-            ->setParameter('navigationItem', $navigationItem)
+            ->where('nic.navigationItem IN(:navigationItems)')
+            ->setParameter('navigationItems', $navigationItems)
             ->orderBy('nic.columnNumber', 'asc')
             ->addOrderBy('nic.position', 'asc');
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @return \App\Model\Navigation\NavigationItemCategory[]
      */
-    public function getSortedNavigationItemCategoriesByNavigationItem(NavigationItem $navigationItem): array
+    public function getSortedNavigationItemCategoriesByNavigationItems(array $navigationItems): array
     {
-        return $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItem)
+        return $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems)
             ->getQuery()->execute();
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @param int $domainId
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Navigation\NavigationItemCategory[]
      */
-    public function getSortedVisibleNavigationItemCategoriesByNavigationItem(
-        NavigationItem $navigationItem,
-        int $domainId
+    public function getSortedVisibleNavigationItemCategoriesByNavigationItems(
+        array $navigationItems,
+        DomainConfig $domainConfig
     ): array {
-        $queryBuilder = $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItem);
+        $queryBuilder = $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems);
 
-        $queryBuilder->join(CategoryDomain::class, 'cd', Join::WITH, 'cd.category = nic.category')
+        $queryBuilder
+            ->addSelect('c, cd, ct')
+            ->join('nic.category', 'c')
+            ->join('c.domains', 'cd')
+            ->join('c.translations', 'ct')
             ->andWhere('cd.domainId = :domainId')
+            ->andWhere('ct.locale = :locale')
             ->andWhere('cd.visible = TRUE')
-            ->setParameter('domainId', $domainId);
+            ->setParameter('domainId', $domainConfig->getId())
+            ->setParameter('locale', $domainConfig->getLocale());
 
         return $queryBuilder->getQuery()->getResult();
     }

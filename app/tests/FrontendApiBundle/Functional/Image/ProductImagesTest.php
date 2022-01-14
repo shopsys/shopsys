@@ -405,4 +405,113 @@ class ProductImagesTest extends GraphQlTestCase
 
         $this->assertQueryWithExpectedJson($query, $jsonExpected);
     }
+
+    public function testFirstTwoProductsWithListImagesAndCategoriesWithAllImages(): void
+    {
+        $query = '
+            query {
+  products(first:2) {
+    edges {
+      node {
+        images(sizes:["list"]) {
+          sizes {
+            url
+          }
+        }
+        categories {
+          images {
+            sizes {
+              url
+            }            
+          }            
+        }
+      }
+    }
+  }
+}
+        ';
+
+        $jsonExpected = '{
+  "data": {
+    "products": {
+      "edges": [
+        {
+          "node": {
+            "images": [],
+            "categories": [
+              {
+                "images": [
+                  {
+                    "sizes": [
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/default/knihy_75.jpg') . '"
+                      },
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/original/knihy_75.jpg') . '"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": {
+            "images": [
+              {
+                "sizes": [
+                  {
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '"
+                  }
+                ]
+              },
+              {
+                "sizes": [
+                  {
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '"
+                  }
+                ]
+              }
+            ],
+            "categories": [
+              {
+                "images": [
+                  {
+                    "sizes": [
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/default/elektro_68.jpg') . '"
+                      },
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/original/elektro_68.jpg') . '"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "images": [
+                  {
+                    "sizes": [
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/default/televize-audio_69.jpg') . '"
+                      },
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/original/televize-audio_69.jpg') . '"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+        ';
+
+        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+    }
 }

@@ -8,6 +8,7 @@ use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
@@ -253,5 +254,40 @@ class CategoryRepository extends BaseCategoryRepository
         $queryPaginator = new QueryPaginator($queryBuilder);
 
         return $queryPaginator->getResult($page, $limit);
+    }
+
+    /**
+     * Thanks to joining "c.domains" instead of "CategoryDomain::class",
+     * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
+     *
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllVisibleByDomainIdQueryBuilder($domainId)
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->join('c.domains', 'cd')
+            ->andWhere('cd.domainId = :domainId')
+            ->andWhere('cd.visible = TRUE');
+
+        $queryBuilder->setParameter('domainId', $domainId);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[]
+     */
+    public function getAllVisibleChildrenByCategoryAndDomainConfig(Category $category, DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
+            ->addSelect('cd')
+            ->andWhere('c.parent = :category')
+            ->setParameter('category', $category);
+        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
+
+        return $queryBuilder->getQuery()->execute();
     }
 }

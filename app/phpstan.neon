@@ -48,6 +48,10 @@ parameters:
         -
             message: "#^PHPDoc tag @param for parameter \\$function with type callable is not subtype of native type Closure\\.$#"
             path: tests/App/Test/Codeception/AcceptanceTester.php
+        -
+            # in fact, anything can be passed to the load function, it just has a bad annotation
+            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
+            path: %currentWorkingDirectory%/src/FrontendApi/*
 
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

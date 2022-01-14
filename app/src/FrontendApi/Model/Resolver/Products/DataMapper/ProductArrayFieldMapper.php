@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products\DataMapper;
 
 use App\FrontendApi\Exception\DeprecatedMethodException;
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
 /**
@@ -12,13 +19,62 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \App\Model\Product\Brand\BrandFacade $brandFacade
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
- * @method __construct(\App\Model\Category\CategoryFacade $categoryFacade, \App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Product\Brand\BrandFacade $brandFacade, \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider, \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory)
  * @method \App\Model\Category\Category[] getCategories(array $data)
  * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
  * @method \App\Model\Product\Brand\Brand|null getBrand(array $data)
  */
 class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $categoriesBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $flagsBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsSellableByIdsBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $brandsBatchLoader;
+
+    /**
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
+     */
+    public function __construct(
+        CategoryFacade $categoryFacade,
+        FlagFacade $flagFacade,
+        BrandFacade $brandFacade,
+        ProductElasticsearchProvider $productElasticsearchProvider,
+        ParameterWithValuesFactory $parameterWithValuesFactory,
+        DataLoaderInterface $categoriesBatchLoader,
+        DataLoaderInterface $flagsBatchLoader,
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
+        DataLoaderInterface $brandsBatchLoader
+    ) {
+        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
+
+        $this->categoriesBatchLoader = $categoriesBatchLoader;
+        $this->flagsBatchLoader = $flagsBatchLoader;
+        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
+        $this->brandsBatchLoader = $brandsBatchLoader;
+    }
+
     /**
      * @param array $data
      * @return int
@@ -194,5 +250,52 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getBreadcrumb(array $data): array
     {
         return $data['breadcrumb'];
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getCategoriesPromise(array $data): Promise
+    {
+        return $this->categoriesBatchLoader->load($data['categories']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getFlagsPromise(array $data): Promise
+    {
+        return $this->flagsBatchLoader->load($data['flags']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getAccessoriesPromise(array $data): Promise
+    {
+        return $this->productsSellableByIdsBatchLoader->load($data['accessories']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(array $data): Promise
+    {
+        return $this->productsSellableByIdsBatchLoader->load($data['related_products']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise|null
+     */
+    public function getBrandPromise(array $data): ?Promise
+    {
+        $brandId = $data['brand'];
+
+        return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
     }
 }

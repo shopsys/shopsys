@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\FrontendApi\Component\Validation\PageSizeValidator;
+use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\Product\Brand\Brand;
+use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
+use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
-use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -37,44 +41,51 @@ class ProductsResolver extends BaseProductsResolver
     private ProductFilterDataFactory $productFilterDataFactory;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsByEntitiesBatchLoader;
+
+    /**
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      */
     public function __construct(
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ProductFacade $productFacade,
         ProductFilterFacade $productFilterFacade,
         ProductConnectionFactory $productConnectionFactory,
-        ProductFilterDataFactory $productFilterDataFactory
+        ProductFilterDataFactory $productFilterDataFactory,
+        DataLoaderInterface $productsByEntitiesBatchLoader
     ) {
         parent::__construct($productOnCurrentDomainFacade, $productFacade, $productFilterFacade, $productConnectionFactory);
 
         $this->productFilterDataFactory = $productFilterDataFactory;
+        $this->productsByEntitiesBatchLoader = $productsByEntitiesBatchLoader;
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): ProductConnection
+    public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
-        $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
-            /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
                 $argument,
                 $category
             );
+            $orderingMode = $this->getOrderingModeFromArgument($argument);
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
-            $seoMixOrderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
             $productFilterData = $this->productFilterDataFactory->createProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix);
+            $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
         } else {
             throw new InvalidArgumentException(
                 sprintf(
@@ -85,34 +96,15 @@ class ProductsResolver extends BaseProductsResolver
             );
         }
 
-        $search = $argument['search'] ?? '';
-
-        $this->setDefaultFirstOffsetIfNecessary($argument);
-
-        return $this->productConnectionFactory->createConnectionForCategory(
-            $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $seoMixOrderingMode) {
-                return $this->productFacade->getFilteredProductsByCategory(
-                    $category,
-                    $limit,
-                    $offset,
-                    $seoMixOrderingMode ?? $this->getOrderingModeFromArgument($argument),
-                    $productFilterData,
-                    $search
-                );
-            },
-            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
-            $argument,
-            $productFilterData
-        );
+        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode);
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Flag\Flag $flag
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByFlag(Argument $argument, Flag $flag)
+    public function resolveByFlag(Argument $argument, Flag $flag): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $search = $argument['search'] ?? '';
@@ -126,18 +118,21 @@ class ProductsResolver extends BaseProductsResolver
 
         $productFilterData->flags[] = $flag;
 
-        return $this->productConnectionFactory->createConnectionForFlag(
+        return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
-            function ($offset, $limit) use ($argument, $productFilterData, $search) {
-                return $this->productFacade->getFilteredProductsOnCurrentDomain(
-                    $limit,
-                    $offset,
-                    $this->getOrderingModeFromArgument($argument),
-                    $productFilterData,
-                    $search
+            function ($offset, $limit) use ($argument, $productFilterData, $search, $flag) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $flag->getId(),
+                        Flag::class,
+                        $limit,
+                        $offset,
+                        $this->getOrderingModeFromArgument($argument),
+                        $productFilterData,
+                        $search
+                    )
                 );
             },
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -176,23 +171,58 @@ class ProductsResolver extends BaseProductsResolver
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Category\Category $category
+     * @return \GraphQL\Executor\Promise\Promise
      */
     public function resolveByCategory(Argument $argument, BaseCategory $category)
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        return parent::resolveByCategory($argument, $category);
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
+            $argument,
+            $category
+        );
+
+        return $this->getPromiseByCategory($argument, $category, $productFilterData);
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByBrand(Argument $argument, Brand $brand)
+    public function resolveByBrand(Argument $argument, BaseBrand $brand)
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        return parent::resolveByBrand($argument, $brand);
+        $search = $argument['search'] ?? '';
+
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
+            $argument,
+            $brand
+        );
+
+        return $this->productConnectionFactory->createConnectionPromiseForBrand(
+            $brand,
+            function ($offset, $limit) use ($argument, $productFilterData, $search, $brand) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $brand->getId(),
+                        Brand::class,
+                        $limit,
+                        $offset,
+                        $this->getOrderingModeFromArgument($argument),
+                        $productFilterData,
+                        $search
+                    )
+                );
+            },
+            $argument,
+            $productFilterData
+        );
     }
 
     /**
@@ -205,5 +235,42 @@ class ProductsResolver extends BaseProductsResolver
         $aliases['resolveByFlag'] = 'productsByFlag';
 
         return $aliases;
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Category\Category $category
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string|null $orderingMode
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    private function getPromiseByCategory(
+        Argument $argument,
+        Category $category,
+        ProductFilterData $productFilterData,
+        ?string $orderingMode = null
+    ): Promise {
+        $search = $argument['search'] ?? '';
+
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        return $this->productConnectionFactory->createConnectionPromiseForCategory(
+            $category,
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $orderingMode) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $category->getId(),
+                        Category::class,
+                        $limit,
+                        $offset,
+                        $orderingMode ?? $this->getOrderingModeFromArgument($argument),
+                        $productFilterData,
+                        $search
+                    )
+                );
+            },
+            $argument,
+            $productFilterData
+        );
     }
 }

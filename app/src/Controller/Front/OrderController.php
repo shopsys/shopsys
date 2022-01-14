@@ -322,7 +322,7 @@ class OrderController extends FrontBaseController
         /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
-        $transports = $this->transportFacade->getVisibleOnCurrentDomainAcceptingWeight($payments, $cart->getTotalWeight());
+        $transports = $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart->getTotalWeight());
 
         $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);

@@ -24,7 +24,9 @@ services:
 
     App\:
         resource: '../src/**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer,Validator,Transfer,Helper,Converter,DataFetcher}.php'
-        exclude: '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+        exclude:
+            - '../src/{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
+            - '../src/FrontendApi/**/*{Resolver,Mapper}.php'
 
     League\Flysystem\MountManager:
         arguments:

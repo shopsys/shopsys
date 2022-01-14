@@ -8,11 +8,14 @@ use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Parameter\ParameterWithValuesFactory;
+use App\Model\Category\Category;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductRepository;
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -72,6 +75,21 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     private BreadcrumbFacade $breadcrumbFacade;
 
     /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $categoriesBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $productsSellableByIdsBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $brandsBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
@@ -84,6 +102,9 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
      */
     public function __construct(
         Domain $domain,
@@ -97,7 +118,10 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductRepository $productRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ParameterRepository $parameterRepository,
-        BreadcrumbFacade $breadcrumbFacade
+        BreadcrumbFacade $breadcrumbFacade,
+        DataLoaderInterface $categoriesBatchLoader,
+        DataLoaderInterface $productsSellableByIdsBatchLoader,
+        DataLoaderInterface $brandsBatchLoader
     ) {
         parent::__construct(
             $domain,
@@ -114,6 +138,9 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->parameterRepository = $parameterRepository;
         $this->breadcrumbFacade = $breadcrumbFacade;
+        $this->categoriesBatchLoader = $categoriesBatchLoader;
+        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
+        $this->brandsBatchLoader = $brandsBatchLoader;
     }
 
     /**
@@ -376,5 +403,40 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $this->domain->getId(),
             $this->domain->getLocale()
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getCategoriesPromise(Product $product): Promise
+    {
+        $categories = $product->getCategoriesIndexedByDomainId()[$this->domain->getId()];
+        $categoryIds = array_map(fn (Category $category) => $category->getId(), $categories);
+
+        return $this->categoriesBatchLoader->load($categoryIds);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getRelatedProductsPromise(Product $product): Promise
+    {
+        $relatedProducts = $product->getRelatedProducts();
+        $relatedProductsIds = array_map(fn (Product $relatedProduct) => $relatedProduct->getId(), $relatedProducts);
+
+        return $this->productsSellableByIdsBatchLoader->load($relatedProductsIds);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise|null
+     */
+    public function getBrandPromise(Product $product): ?Promise
+    {
+        $brand = $product->getBrand();
+
+        return $brand !== null ? $this->brandsBatchLoader->load($brand->getId()) : null;
     }
 }

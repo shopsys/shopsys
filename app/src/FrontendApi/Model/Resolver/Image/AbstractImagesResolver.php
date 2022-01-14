@@ -4,35 +4,24 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Image;
 
-use App\Component\Image\ImageFacade;
+use App\FrontendApi\Model\Image\ImageBatchLoadData;
+use GraphQL\Executor\Promise\Promise;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
-use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
 
 abstract class AbstractImagesResolver implements ResolverInterface
 {
     /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private ImageFacade $imageFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
     private ImageConfig $imageConfig;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
 
     /**
      * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade
@@ -45,91 +34,34 @@ abstract class AbstractImagesResolver implements ResolverInterface
     protected static string $entityName;
 
     /**
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    protected DataLoaderInterface $imagesBatchLoader;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader
      */
     public function __construct(
-        ImageFacade $imageFacade,
         ImageConfig $imageConfig,
-        Domain $domain,
-        FrontendApiImageFacade $frontendApiImageFacade
+        FrontendApiImageFacade $frontendApiImageFacade,
+        DataLoaderInterface $imagesBatchLoader
     ) {
-        $this->imageFacade = $imageFacade;
         $this->imageConfig = $imageConfig;
-        $this->domain = $domain;
         $this->frontendApiImageFacade = $frontendApiImageFacade;
+        $this->imagesBatchLoader = $imagesBatchLoader;
     }
 
     /**
      * @param object $entity
      * @param string|null $type
      * @param array|null $sizes
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByEntity(object $entity, ?string $type, ?array $sizes): array
+    public function resolveByEntity(object $entity, ?string $type, ?array $sizes): Promise
     {
         return $this->resolveByEntityId($entity->getId(), static::$entityName, $type, $sizes);
-    }
-
-    /**
-     * @param \App\Component\Image\Image[] $images
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @return array
-     */
-    protected function getResolvedImages(array $images, array $sizeConfigs): array
-    {
-        $resolvedImages = [];
-
-        foreach ($images as $image) {
-            $imageSizes = [];
-            foreach ($sizeConfigs as $sizeConfig) {
-                try {
-                    $imageSizes[] = $this->getResolvedImage($image, $sizeConfig);
-                } catch (ImageNotFoundException $exception) {
-                    continue;
-                }
-            }
-
-            if ($imageSizes === []) {
-                continue;
-            }
-
-            $resolvedImages[] = [
-                'position' => $image->getPosition(),
-                'type' => $image->getType(),
-                'sizes' => $imageSizes,
-            ];
-        }
-
-        return $resolvedImages;
-    }
-
-    /**
-     * @param \App\Component\Image\Image $image
-     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
-     * @return array
-     */
-    private function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
-    {
-        return [
-            'width' => $sizeConfig->getWidth(),
-            'height' => $sizeConfig->getHeight(),
-            'size' => $sizeConfig->getName() ?? ImageConfig::DEFAULT_SIZE_NAME,
-            'url' => $this->imageFacade->getImageUrl(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $sizeConfig->getName(),
-                $image->getType()
-            ),
-            'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
-                $this->domain->getCurrentDomainConfig(),
-                $image,
-                $sizeConfig->getName(),
-                $image->getType()
-            ),
-        ];
     }
 
     /**
@@ -137,15 +69,20 @@ abstract class AbstractImagesResolver implements ResolverInterface
      * @param string $entityName
      * @param string|null $type
      * @param array|null $sizes
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?array $sizes): array
+    protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?array $sizes): Promise
     {
         $sizeConfigs = $this->getSizeConfigs($type, $sizes, $entityName);
-        /** @var \App\Component\Image\Image[] $images */
-        $images = $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById($entityId, $entityName, $type);
 
-        return $this->getResolvedImages($images, $sizeConfigs);
+        return $this->imagesBatchLoader->load(
+            new ImageBatchLoadData(
+                $entityId,
+                $entityName,
+                $sizeConfigs,
+                $type
+            )
+        );
     }
 
     /**

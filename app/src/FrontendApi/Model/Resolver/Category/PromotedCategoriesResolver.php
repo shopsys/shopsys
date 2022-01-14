@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Category;
 
-use App\Model\Category\TopCategory\TopCategoryFacade;
+use App\FrontendApi\Model\Resolver\Category\PromotedCategory\PromotedCategoryFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \App\Model\Category\TopCategory\TopCategoryFacade
+     * @var \App\FrontendApi\Model\Resolver\Category\PromotedCategory\PromotedCategoryFacade
      */
-    protected TopCategoryFacade $topCategoryFacade;
+    private PromotedCategoryFacade $promotedCategoryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -22,14 +22,14 @@ class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
     protected Domain $domain;
 
     /**
-     * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
+     * @param \App\FrontendApi\Model\Resolver\Category\PromotedCategory\PromotedCategoryFacade $promotedCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        TopCategoryFacade $topCategoryFacade,
+        PromotedCategoryFacade $promotedCategoryFacade,
         Domain $domain
     ) {
-        $this->topCategoryFacade = $topCategoryFacade;
+        $this->promotedCategoryFacade = $promotedCategoryFacade;
         $this->domain = $domain;
     }
 
@@ -38,7 +38,7 @@ class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(): array
     {
-        return $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId());
+        return $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($this->domain->getCurrentDomainConfig());
     }
 
     /**

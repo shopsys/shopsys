@@ -6,12 +6,11 @@ namespace App\FrontendApi\Model\Resolver\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\Category;
-use App\Model\Category\CategoryFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
@@ -24,32 +23,40 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     * @var \Overblog\DataLoader\DataLoaderInterface
      */
-    private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
+    private DataLoaderInterface $readyCategorySeoMixesBatchLoader;
 
     /**
-     * @var \App\Model\Category\CategoryFacade
+     * @var \Overblog\DataLoader\DataLoaderInterface
      */
-    private CategoryFacade $categoryFacade;
+    private DataLoaderInterface $categoryChildrenBatchLoader;
+
+    /**
+     * @var \Overblog\DataLoader\DataLoaderInterface
+     */
+    private DataLoaderInterface $linkedCategoriesBatchLoader;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader
      */
     public function __construct(
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        CategoryFacade $categoryFacade
+        DataLoaderInterface $readyCategorySeoMixesBatchLoader,
+        DataLoaderInterface $categoryChildrenBatchLoader,
+        DataLoaderInterface $linkedCategoriesBatchLoader
     ) {
         parent::__construct($domain);
 
         $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->categoryFacade = $categoryFacade;
+        $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
+        $this->categoryChildrenBatchLoader = $categoryChildrenBatchLoader;
+        $this->linkedCategoriesBatchLoader = $linkedCategoriesBatchLoader;
     }
 
     /**
@@ -96,25 +103,6 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     }
 
     /**
-     * @param \App\Model\Category\Category $category
-     * @return array<array<string, string>>
-     */
-    private function getLinksByCategory(Category $category): array
-    {
-        return array_map(
-            fn (ReadyCategorySeoMix $readyCategorySeoMix) => [
-                'name' => $readyCategorySeoMix->getH1(),
-                'slug' => $this->friendlyUrlFacade->getMainFriendlyUrl(
-                    $this->domain->getId(),
-                    'front_category_seo',
-                    $readyCategorySeoMix->getId()
-                )->getSlug(),
-            ],
-            $this->readyCategorySeoMixFacade->getAllForShowInCategory($category, $this->domain->getId())
-        );
-    }
-
-    /**
      * @param string $fieldName
      * @param \App\Model\Category\Category $category
      * @return mixed
@@ -127,7 +115,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
-                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+                return $this->categoryChildrenBatchLoader->load($category);
             case 'parent':
                 $parent = $category->getParent();
 
@@ -141,9 +129,9 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'slug':
                 return $this->getSlug($category->getId(), 'front_product_list');
             case 'readyCategorySeoMixLinks':
-                return $this->getLinksByCategory($category);
+                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
-                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
+                return $this->linkedCategoriesBatchLoader->load($category);
             default:
                 throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
@@ -163,7 +151,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
-                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+                return $this->categoryChildrenBatchLoader->load($category);
             case 'parent':
                 $parent = $category->getParent();
 
@@ -177,9 +165,9 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'slug':
                 return $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo');
             case 'readyCategorySeoMixLinks':
-                return $this->getLinksByCategory($category);
+                return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
-                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
+                return $this->linkedCategoriesBatchLoader->load($category);
             default:
                 throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }

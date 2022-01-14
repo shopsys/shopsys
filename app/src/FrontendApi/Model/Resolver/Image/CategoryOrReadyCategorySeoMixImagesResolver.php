@@ -6,6 +6,7 @@ namespace App\FrontendApi\Model\Resolver\Image;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
@@ -15,9 +16,9 @@ class CategoryOrReadyCategorySeoMixImagesResolver extends AbstractImagesResolver
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
      * @param array|null $sizes
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix, ?string $type, ?array $sizes): array
+    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix, ?string $type, ?array $sizes): Promise
     {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();

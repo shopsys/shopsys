@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+
 class NavigationItemDetailFactory
 {
     /**
@@ -22,33 +24,25 @@ class NavigationItemDetailFactory
 
     /**
      * @param \App\Model\Navigation\NavigationItem[] $navigationItems
-     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Navigation\NavigationItemDetail[]
      */
-    public function createDetails(array $navigationItems, int $domainId): array
+    public function createDetails(array $navigationItems, DomainConfig $domainConfig): array
     {
         $details = [];
+        $categoriesIndexedByNavigationItemIdAndColumnNumber = $this->navigationItemCategoryFacade
+            ->getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber($navigationItems, $domainConfig);
 
         foreach ($navigationItems as $navigationItem) {
-            $details[] = $this->createDetail($navigationItem, $domainId);
+            if (!isset($categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()])) {
+                continue;
+            }
+            $details[] = new NavigationItemDetail(
+                $navigationItem,
+                $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()]
+            );
         }
 
         return $details;
-    }
-
-    /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @param int $domainId
-     * @return \App\Model\Navigation\NavigationItemDetail
-     */
-    private function createDetail(NavigationItem $navigationItem, int $domainId): NavigationItemDetail
-    {
-        $categoriesByColumnNumber = $this->navigationItemCategoryFacade
-            ->getSortedVisibleCategoriesIndexedByColumnNumberForNavigationItem($navigationItem, $domainId);
-
-        return new NavigationItemDetail(
-            $navigationItem,
-            $categoriesByColumnNumber
-        );
     }
 }

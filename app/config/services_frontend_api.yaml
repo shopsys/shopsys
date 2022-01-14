@@ -3,6 +3,18 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $orderItemsBatchLoader: '@order_items_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\
@@ -11,7 +23,7 @@ services:
             - { name: overblog_graphql.resolver_map, schema: default }
 
     App\FrontendApi\:
-        resource: '../src/FrontendApi/**/*{Mutation}.php'
+        resource: '../src/FrontendApi/**/*{Mutation,Resolver,Mapper}.php'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
         alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
@@ -110,3 +122,17 @@ services:
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
         alias: App\FrontendApi\Model\Mutation\Login\LoginMutation
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver:
+        alias: App\FrontendApi\Model\Resolver\Brand\BrandsResolver
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver:
+        alias: App\FrontendApi\Model\Resolver\Category\CategoriesResolver
+        public: true
+
+    Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
+        alias: App\FrontendApi\Model\Image\ImageFacade
+
+    Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
+        alias: App\FrontendApi\Model\Category\CategoryFacade

@@ -247,6 +247,36 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
+     * @param int[] $categoryIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[][]
+     */
+    public function getAllIndexedByCategoryId(array $categoryIds, DomainConfig $domainConfig): array
+    {
+        $allReadyCategorySeoMixes = array_fill_keys($categoryIds, []);
+        $result = $this->em->createQueryBuilder()
+            ->select('rcsm')
+            ->from(ReadyCategorySeoMix::class, 'rcsm')
+            ->andWhere('rcsm.category IN(:categories)')
+            ->andWhere('rcsm.domainId = :domainId')
+            ->andWhere('rcsm.showInCategory = true')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
+            ->setParameters([
+                'categories' => $categoryIds,
+                'domainId' => $domainConfig->getId(),
+            ])
+            ->getQuery()
+            ->execute();
+
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
+        foreach ($result as $readyCategorySeoMix) {
+            $allReadyCategorySeoMixes[$readyCategorySeoMix->getCategory()->getId()][] = $readyCategorySeoMix;
+        }
+
+        return $allReadyCategorySeoMixes;
+    }
+
+    /**
      * @return array<int>
      */
     public function getAllCategoryIdsInSeoMixes(): array

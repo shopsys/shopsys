@@ -6,6 +6,7 @@ namespace App\Model\Payment;
 
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
@@ -54,5 +55,21 @@ class PaymentRepository extends BasePaymentRepository
         }
 
         return $payment;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Payment\Payment[]
+     */
+    public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig): array
+    {
+        return $this->getQueryBuilderForAll()
+            ->addSelect('pd')
+            ->addSelect('pt')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId')
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->setParameter('domainId', $domainConfig->getId())
+            ->getQuery()->execute();
     }
 }

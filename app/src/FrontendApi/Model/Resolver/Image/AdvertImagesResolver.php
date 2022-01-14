@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Image;
 
+use App\FrontendApi\Model\Image\ImageBatchLoadData;
+use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
@@ -16,20 +18,19 @@ class AdvertImagesResolver extends AbstractImagesResolver implements AliasedInte
      * @param \App\Model\Advert\Advert $advert
      * @param string|null $type
      * @param array|null $sizes
-     * @return array
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByAdvert(Advert $advert, ?string $type, ?array $sizes): array
+    public function resolveByAdvert(Advert $advert, ?string $type, ?array $sizes): Promise
     {
-        /** @var \App\Component\Image\Image[] $images */
-        $images = $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById(
-            $advert->getId(),
-            self::ENTITY_NAME,
-            $type
-        );
+        $sizeConfigs = $this->getSizeConfigsForAdvert($advert, $type, $sizes);
 
-        return $this->getResolvedImages(
-            $images,
-            $this->getSizeConfigsForAdvert($advert, $type, $sizes)
+        return $this->imagesBatchLoader->load(
+            new ImageBatchLoadData(
+                $advert->getId(),
+                self::ENTITY_NAME,
+                $sizeConfigs,
+                $type
+            )
         );
     }
 

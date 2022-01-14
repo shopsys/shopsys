@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Transport;
 
 use Doctrine\ORM\Query\Expr\Join;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDomain;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository as BaseTransportRepository;
 
 /**
@@ -21,17 +21,26 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository as BaseTransport
 class TransportRepository extends BaseTransportRepository
 {
     /**
-     * @param int $domainId
-     * @param int $totalWeight
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param int|null $totalWeight
      * @return \App\Model\Transport\Transport[]
      */
-    public function getAllByDomainIdAndAcceptingWeight(int $domainId, int $totalWeight): array
+    public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig, ?int $totalWeight = null): array
     {
-        return $this->getQueryBuilderForAll()
-            ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
-            ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')
-            ->setParameter('domainId', $domainId)
-            ->setParameter('maxWeight', $totalWeight)
+        $queryBuilder = $this->getQueryBuilderForAll()
+            ->addSelect('td')
+            ->addSelect('tt')
+            ->join('t.domains', 'td', Join::WITH, 'td.domainId = :domainId')
+            ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
+            ->setParameter('domainId', $domainConfig->getId())
+            ->setParameter('locale', $domainConfig->getLocale());
+        if ($totalWeight !== null) {
+            $queryBuilder
+                ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')
+                ->setParameter('maxWeight', $totalWeight);
+        }
+
+        return $queryBuilder
             ->getQuery()
             ->getResult();
     }

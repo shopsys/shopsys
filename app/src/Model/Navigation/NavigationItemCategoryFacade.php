@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Navigation;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryFacade
 {
@@ -39,7 +40,7 @@ class NavigationItemCategoryFacade
         NavigationItemData $navigationItemData
     ): void {
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedNavigationItemCategoriesByNavigationItem($navigationItem);
+            ->getSortedNavigationItemCategoriesByNavigationItems([$navigationItem]);
 
         foreach ($navigationItemCategories as $navigationItemCategory) {
             $this->em->remove($navigationItemCategory);
@@ -84,7 +85,7 @@ class NavigationItemCategoryFacade
         $categoriesByColumnNumber = [];
 
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedNavigationItemCategoriesByNavigationItem($navigationItem);
+            ->getSortedNavigationItemCategoriesByNavigationItems([$navigationItem]);
 
         foreach ($navigationItemCategories as $navigationItemCategory) {
             $categoriesByColumnNumber[$navigationItemCategory->getColumnNumber()][]
@@ -95,24 +96,30 @@ class NavigationItemCategoryFacade
     }
 
     /**
-     * @param \App\Model\Navigation\NavigationItem $navigationItem
-     * @param int $domainId
-     * @return \App\Model\Category\Category[][]
+     * @param \App\Model\Navigation\NavigationItem[] $navigationItems
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[][][]
      */
-    public function getSortedVisibleCategoriesIndexedByColumnNumberForNavigationItem(
-        NavigationItem $navigationItem,
-        int $domainId
+    public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(
+        array $navigationItems,
+        DomainConfig $domainConfig
     ): array {
-        $categoriesByColumnNumber = [];
+        $categoriesIndexedByNavigationItemIdAndColumnNumber = [];
 
         $navigationItemCategories = $this->navigationItemCategoryRepository
-            ->getSortedVisibleNavigationItemCategoriesByNavigationItem($navigationItem, $domainId);
+            ->getSortedVisibleNavigationItemCategoriesByNavigationItems($navigationItems, $domainConfig);
 
-        foreach ($navigationItemCategories as $navigationItemCategory) {
-            $categoriesByColumnNumber[$navigationItemCategory->getColumnNumber()][]
-                = $navigationItemCategory->getCategory();
+        foreach ($navigationItems as $navigationItem) {
+            $navigationItemId = $navigationItem->getId();
+            $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId] = [];
+            foreach ($navigationItemCategories as $navigationItemCategory) {
+                if ($navigationItemCategory->getNavigationItem()->getId() === $navigationItemId) {
+                    $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId][$navigationItemCategory->getColumnNumber()][]
+                        = $navigationItemCategory->getCategory();
+                }
+            }
         }
 
-        return $categoriesByColumnNumber;
+        return $categoriesIndexedByNavigationItemIdAndColumnNumber;
     }
 }

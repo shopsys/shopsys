@@ -37,8 +37,7 @@ class NavigationController extends FrontBaseController
      */
     public function menuAction(): Response
     {
-        $domainId = $this->domain->getId();
-        $itemDetails = $this->navigationItemFacade->getOrderedNavigationItemDetails($domainId);
+        $itemDetails = $this->navigationItemFacade->getOrderedNavigationItemDetails($this->domain->getCurrentDomainConfig());
         $countOfRecentlyBoughtProducts = 0;
 
         return $this->render('Front/Inline/Navigation/menu.html.twig', [
