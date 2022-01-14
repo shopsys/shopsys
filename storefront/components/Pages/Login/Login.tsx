@@ -30,6 +30,7 @@ const getLoginFormResolver = (t: TFunction) => {
 
 const Login: FC = () => {
     const t = useTypedTranslationFunction();
+    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const { url } = useShopsysSelector((state) => state.domain);
     const [loginUrl] = useGetInternationalizedStaticUrls(['/login'], url);
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
@@ -47,7 +48,7 @@ const Login: FC = () => {
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data, event) => {
         event?.preventDefault();
-        await login({ email: data.email, password: data.password });
+        await login({ email: data.email, password: data.password, previousCartUuid: cartUuid });
     };
 
     return (

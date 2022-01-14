@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
+use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
@@ -171,6 +172,10 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      */
     protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array
     {
+        if (!array_key_exists('data', $response)) {
+            $this->fail('Invalid GraphQL response: ' . Json::encode($response));
+        }
+
         return $response['data'][$graphQlType];
     }
 

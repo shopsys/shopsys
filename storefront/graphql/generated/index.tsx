@@ -760,6 +760,8 @@ export type LinkApi = {
 };
 
 export type LoginInputApi = {
+  /** Uuid of the cart that should be merged to the cart of the user */
+  cartUuid?: Maybe<Scalars['Uuid']>;
   /** The user email. */
   email: Scalars['String'];
   /** The user password. */
@@ -1798,6 +1800,8 @@ export type RefreshTokenInputApi = {
 
 /** Represents the main input object to register customer user */
 export type RegistrationDataInputApi = {
+  /** Uuid of the cart that should be merged to the cart of the newly registered user */
+  cartUuid?: Maybe<Scalars['Uuid']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
   /** Determines whether the registered customer is a company or not. */
@@ -2219,6 +2223,7 @@ export type SimpleArticleFragmentApi = SimpleArticleFragment_Article_Api | Simpl
 export type LoginVariablesApi = Exact<{
   email: Scalars['String'];
   password: Scalars['Password'];
+  previousCartUuid?: Maybe<Scalars['Uuid']>;
 }>;
 
 
@@ -2592,6 +2597,7 @@ export type RegistrationMutationVariablesApi = Exact<{
   companyNumber?: Maybe<Scalars['String']>;
   companyTaxNumber?: Maybe<Scalars['String']>;
   newsletterSubscription: Scalars['Boolean'];
+  previousCartUuid?: Maybe<Scalars['Uuid']>;
 }>;
 
 
@@ -3597,8 +3603,8 @@ export const ListedStoreFragmentApi = gql`
 }
     `;
 export const LoginDocumentApi = gql`
-    mutation Login($email: String!, $password: Password!) {
-  Login(input: {email: $email, password: $password}) {
+    mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
+  Login(input: {email: $email, password: $password, cartUuid: $previousCartUuid}) {
     accessToken
     refreshToken
   }
@@ -3902,9 +3908,9 @@ export function usePromotedProductsQueryApi(options: Omit<Urql.UseQueryArgs<Prom
   return Urql.useQuery<PromotedProductsQueryApi>({ query: PromotedProductsQueryDocumentApi, ...options });
 };
 export const RegistrationMutationDocumentApi = gql`
-    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!) {
+    mutation RegistrationMutation($firstName: String!, $lastName: String!, $email: String!, $password: Password!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $companyCustomer: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $newsletterSubscription: Boolean!, $previousCartUuid: Uuid) {
   Register(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription}
+    input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription, cartUuid: $previousCartUuid}
   ) {
     accessToken
     refreshToken

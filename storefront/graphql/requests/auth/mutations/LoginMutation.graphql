@@ -1,5 +1,5 @@
-mutation Login($email: String!, $password: Password!) {
-    Login(input: { email: $email, password: $password }) {
+mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
+    Login(input: { email: $email, password: $password, cartUuid: $previousCartUuid }) {
         accessToken
         refreshToken
     }

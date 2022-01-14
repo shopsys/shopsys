@@ -6830,6 +6830,15 @@ The user password.
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the cart that should be merged to the cart of the user
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -7569,6 +7578,15 @@ The customer’s company tax number (required when companyCustomer is true)
 <td>
 
 Whether customer user should receive newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the cart that should be merged to the cart of the newly registered user
 
 </td>
 </tr>

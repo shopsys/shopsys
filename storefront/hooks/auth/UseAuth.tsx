@@ -1,4 +1,11 @@
-import { Exact, LoginApi, LogoutApi, useLoginApi, useLogoutApi } from 'graphql/generated';
+import {
+    LoginApi,
+    LoginVariablesApi,
+    LogoutApi,
+    LogoutVariablesApi,
+    useLoginApi,
+    useLogoutApi,
+} from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { cartActions } from 'redux/slices/cart';
@@ -12,19 +19,8 @@ import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useAuth = (): [
-    UseMutationResponse<
-        LoginApi,
-        Exact<{
-            email: string;
-            password: any;
-        }>
-    >,
-    UseMutationResponse<
-        LogoutApi,
-        Exact<{
-            [key: string]: never;
-        }>
-    >,
+    UseMutationResponse<LoginApi, LoginVariablesApi>,
+    UseMutationResponse<LogoutApi, LogoutVariablesApi>,
 ] => {
     const [loginUseMutationResponse, login] = useLoginApi();
     const [logoutUseMutationResponse, logout] = useLogoutApi();

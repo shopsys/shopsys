@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Mutation\Customer\User;
 
+use App\FrontendApi\Model\Cart\MergeCartFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -43,6 +44,11 @@ class CustomerUserMutation extends BaseCustomerUserMutation
     protected RegistrationDataFactoryInterface $registrationDataFactory;
 
     /**
+     * @var \App\FrontendApi\Model\Cart\MergeCartFacade
+     */
+    private MergeCartFacade $mergeCartFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -54,6 +60,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
+     * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
      */
     public function __construct(
         FrontendCustomerUserProvider $frontendCustomerUserProvider,
@@ -66,7 +73,8 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         CustomerUserDataFactory $customerUserDataFactory,
         TokenFacade $tokenFacade,
         RegistrationFacadeInterface $registrationFacade,
-        RegistrationDataFactoryInterface $registrationDataFactory
+        RegistrationDataFactoryInterface $registrationDataFactory,
+        MergeCartFacade $mergeCartFacade
     ) {
         parent::__construct(
             $frontendCustomerUserProvider,
@@ -82,6 +90,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
 
         $this->registrationFacade = $registrationFacade;
         $this->registrationDataFactory = $registrationDataFactory;
+        $this->mergeCartFacade = $mergeCartFacade;
     }
 
     /**
@@ -96,6 +105,10 @@ class CustomerUserMutation extends BaseCustomerUserMutation
 
         $registrationData = $this->registrationDataFactory->createWithArgument($argument);
         $customerUser = $this->registrationFacade->register($registrationData);
+
+        if ($argument['input']['cartUuid'] !== null) {
+            $this->mergeCartFacade->mergeCartByUuidToCustomerCart($argument['input']['cartUuid'], $customerUser);
+        }
 
         $deviceId = Uuid::uuid4()->toString();
 

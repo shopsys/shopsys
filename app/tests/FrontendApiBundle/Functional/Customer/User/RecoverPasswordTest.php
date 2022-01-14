@@ -27,7 +27,7 @@ class RecoverPasswordTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForQuery($query);
 
-        $recoverPasswordData = $response['data']['RecoverPassword'];
+        $recoverPasswordData = $this->getResponseDataForGraphQlType($response, 'RecoverPassword');
 
         $this->assertArrayHasKey('accessToken', $recoverPasswordData);
         $this->assertIsString($recoverPasswordData['accessToken']);
