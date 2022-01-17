@@ -252,5 +252,8 @@
     "Tracking package": "Tracking package",
     "Package number": "Package number",
     "Error occured when loading order detail": "Error occured when loading order detail",
-    "Your purchase": "Your purchase"
+    "Your purchase": "Your purchase",
+    "We have nothing to show you at this url.": "We have nothing to show you at this url.",
+    "But at other addresses we have a lot for you...": "But at other addresses we have a lot for you...",
+    "404": "404"
 }

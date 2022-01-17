@@ -15,7 +15,7 @@ import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'types/category';
 import CommonLayout from 'components/Layout/CommonLayout';
-import DefaultErrorPage from 'next/error';
+import Error404 from 'components/Pages/ErrorPage/404';
 import FlagDetailPage from 'components/Pages/FlagDetail';
 import { FlagDetailType } from 'types/flag';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
@@ -55,7 +55,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 
     const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
     if (data === null || data === undefined) {
-        return <DefaultErrorPage statusCode={404} />;
+        return <Error404 />;
     }
 
     return (
@@ -100,7 +100,7 @@ function renderContent(
         return <BlogCategoryPage blogCategory={data as BlogCategoryDetailType} />;
     }
 
-    return <DefaultErrorPage statusCode={404} />;
+    return <Error404 />;
 }
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {

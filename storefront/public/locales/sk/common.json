@@ -252,5 +252,8 @@
     "Tracking package": "Sledovanie zásielky",
     "Package number": "Číslo zásielky",
     "Error occured when loading order detail": "Nastala chyba pri načítaní detailu objednávky ",
-    "Your purchase": "Váš nákup"
+    "Your purchase": "Váš nákup",
+    "We have nothing to show you at this url.": "Na tejto url adrese nemáme nič, čo by sme Vám ukázali.",
+    "But at other addresses we have a lot for you...": "Ale na iných adresách toho máme pre Vás veľa...",
+    "404": "404"
 }
