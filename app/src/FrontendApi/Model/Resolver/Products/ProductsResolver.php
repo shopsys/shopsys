@@ -168,7 +168,7 @@ class ProductsResolver extends BaseProductsResolver
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData,
-            $argument['search'] ?? null,
+            $search,
             $this->getOrderingModeFromArgument($argument)
         );
     }

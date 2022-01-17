@@ -85,19 +85,19 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string|null $searchText
+     * @param string $searchText
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
-        ?string $searchText = null
+        string $searchText = ''
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
         }
 
-        if ($searchText !== null) {
+        if ($searchText !== '') {
             $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
                 $searchText,
                 $productFilterConfig,
