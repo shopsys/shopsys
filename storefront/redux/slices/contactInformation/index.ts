@@ -36,9 +36,6 @@ export const contactInformationSlice = createSlice({
     name: 'contactInformation',
     initialState,
     reducers: {
-        resetContactInformation() {
-            return initialState;
-        },
         setContactInformation(state, action: PayloadAction<ContactInformationFormType>) {
             state.email = action.payload.email;
             state.register = action.payload.register;

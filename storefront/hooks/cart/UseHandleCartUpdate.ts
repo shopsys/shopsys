@@ -12,7 +12,11 @@ export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined):
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
     const currentCustomerUser = getCurrentCustomerUser();
-    const cookies = nookies.get();
+    const contactInformationCookies = nookies.get();
+    const isContactInformationCacheSet =
+        'contactInformation' in contactInformationCookies
+            ? JSON.parse(contactInformationCookies.contactInformation).email !== ''
+            : false;
 
     useEffect(() => {
         if (result === undefined || result === null) {
@@ -24,8 +28,12 @@ export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined):
         updateCartState(dispatch, cartResultValues);
 
         if (isUserLoggedIn) {
-            if (cookies.contactInformation !== undefined) {
-                dispatch(contactInformationActions.setContactInformation(JSON.parse(cookies.contactInformation)));
+            if (isContactInformationCacheSet) {
+                dispatch(
+                    contactInformationActions.setContactInformation(
+                        JSON.parse(contactInformationCookies.contactInformation),
+                    ),
+                );
             } else if (currentCustomerUser !== undefined) {
                 dispatch(contactInformationActions.setContactInformation(currentCustomerUser));
             }

@@ -15,9 +15,6 @@ export function getCurrentCustomerUser(): ContactInformationFormType | undefined
 const mapCurrentCustomerUserApiData = (
     apiCurrentCustomerUserData: CurrentCustomerUserQueryApi,
 ): ContactInformationFormType | undefined => {
-    if (apiCurrentCustomerUserData === undefined) {
-        return undefined;
-    }
     const companyCustomerUser = apiCurrentCustomerUserData.currentCustomerUser;
 
     const mappedCurrentCustomerUserData = {
