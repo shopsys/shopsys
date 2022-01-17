@@ -14,8 +14,12 @@ export const usePagination = (
 ): number[] | null => {
     const lastPage = Math.ceil(totalCount / pageSize);
     const firstPage = 1;
-    const totalPageNumbers = 6;
-    if (totalPageNumbers > lastPage) {
+    const totalPageNumbers = 7;
+    const totalMobilePageNumbers = totalPageNumbers - 2;
+    if (
+        (isMobilePaginationVisible && totalMobilePageNumbers >= lastPage) ||
+        (!isMobilePaginationVisible && totalPageNumbers >= lastPage)
+    ) {
         return range(1, lastPage);
     }
     const leftPaginationBreakpoint = 3;
@@ -27,7 +31,7 @@ export const usePagination = (
         return [...firstNumbersOfPagination, lastPage];
     } else if (
         !isMobilePaginationVisible &&
-        currentPage < leftPaginationBreakpoint + 1 &&
+        currentPage < leftPaginationBreakpoint + 2 &&
         currentPage < thirdToLastPage
     ) {
         const firstNumbersOfPagination = range(firstPage, leftPaginationBreakpoint + 2);
