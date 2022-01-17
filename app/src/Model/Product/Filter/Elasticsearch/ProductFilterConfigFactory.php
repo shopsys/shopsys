@@ -157,13 +157,15 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
     /**
      * @param \App\Model\Product\Flag\Flag $flag
      * @param string $locale
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForFlag(Flag $flag, string $locale): ProductFilterConfig
+    public function createForFlag(Flag $flag, string $locale, string $searchText = ''): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
             $flag->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
+            $searchText
         );
 
         return new ProductFilterConfig(

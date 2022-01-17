@@ -108,7 +108,6 @@ class ProductsResolver extends BaseProductsResolver
     public function resolveByFlag(Argument $argument, Flag $flag): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
-        $search = $argument['search'] ?? '';
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -121,7 +120,7 @@ class ProductsResolver extends BaseProductsResolver
 
         return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
-            function ($offset, $limit) use ($argument, $productFilterData, $search, $flag) {
+            function ($offset, $limit) use ($argument, $productFilterData, $flag) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $flag->getId(),
@@ -130,7 +129,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },

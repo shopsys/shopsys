@@ -871,4 +871,65 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $this->assertQueryWithExpectedJson($query, $expectedResult);
     }
+
+    public function testGetProductFilterOptionsForSearchWhenListingByFlag(): void
+    {
+        $price = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
+
+        $query = 'query {
+          flag(urlSlug: "akce") {
+            products(search: "Hello") {      
+              productFilterOptions {
+                minimalPrice
+                maximalPrice
+                inStock
+                flags {
+                  count
+                  isAbsolute
+                  flag {
+                    name
+                  }
+                }
+                brands {
+                  count
+                  brand {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }';
+        $expectedResult = '{
+          "data": {
+            "flag": {
+              "products": {
+                "productFilterOptions": {
+                  "minimalPrice": "' . $price . '",
+                  "maximalPrice": "' . $price . '",
+                  "inStock": 1,
+                  "flags": [
+                    {
+                      "count": 0,
+                      "isAbsolute": false,
+                      "flag": {
+                        "name": "' . t('Akce', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                      }
+                    }
+                  ],
+                  "brands": [
+                    {
+                      "count": 1,
+                      "brand": {
+                        "name": "' . t('Sencor', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }';
+        $this->assertQueryWithExpectedJson($query, $expectedResult);
+    }
 }

@@ -64,24 +64,26 @@ class ProductFilterFacade extends BaseProductFilterFacade
             return $this->productFilterDataFactory->create();
         }
 
-        $productFilterConfig = $this->getProductFilterConfigForFlag($flag);
+        $productFilterConfig = $this->getProductFilterConfigForFlag($flag, $argument['search'] ?? '');
 
         return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
     /**
      * @param \App\Model\Product\Flag\Flag $flag
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
+    public function getProductFilterConfigForFlag(Flag $flag, string $searchText = ''): ProductFilterConfig
     {
         $locale = $this->domain->getLocale();
-        $cacheKey = sprintf('flag_%s_%s', $locale, $flag->getId());
+        $cacheKey = sprintf('flag_%s_%s_search_%s', $locale, $flag->getId(), $searchText);
 
         if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForFlag(
                 $flag,
-                $locale
+                $locale,
+                $searchText
             );
         }
 

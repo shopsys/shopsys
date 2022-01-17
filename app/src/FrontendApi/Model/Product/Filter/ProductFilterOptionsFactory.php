@@ -56,12 +56,14 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\Product\Flag\Flag $flag
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForFlag(
         Flag $flag,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
+        string $searchText = ''
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -69,7 +71,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
             $flag->getId(),
-            $productFilterData
+            $productFilterData,
+            $searchText
         );
 
         $productFilterOptions = $this->createProductFilterOptions(

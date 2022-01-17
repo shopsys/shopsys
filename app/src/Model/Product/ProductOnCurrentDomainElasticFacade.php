@@ -169,18 +169,25 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     /**
      * @param int $flagId
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForFlag(
         int $flagId,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
+        string $searchText = ''
     ): ProductFilterCountData {
+        $filterQuery = $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
+            $flagId,
+            $productFilterData
+        );
+        if ($searchText !== '') {
+            $filterQuery = $filterQuery->search($searchText);
+        }
+
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
-                $flagId,
-                $productFilterData
-            )
+            $filterQuery
         );
     }
 
