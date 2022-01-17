@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
  * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
  * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForBrand(int $brandId, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsForSearchTextFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string|null $searchText)
@@ -335,6 +334,31 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
             $baseFilterQuery
+        );
+    }
+
+    /**
+     * @param int $brandId
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataForBrand(
+        int $brandId,
+        ProductFilterData $productFilterData,
+        string $searchText = ''
+    ): ProductFilterCountData {
+        $filterQuery = $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
+            $brandId,
+            $productFilterData
+        );
+        if ($searchText !== '') {
+            $filterQuery = $filterQuery->search($searchText);
+        }
+
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
+            $productFilterData,
+            $filterQuery
         );
     }
 }

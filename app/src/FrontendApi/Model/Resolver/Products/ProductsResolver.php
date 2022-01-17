@@ -198,8 +198,6 @@ class ProductsResolver extends BaseProductsResolver
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        $search = $argument['search'] ?? '';
-
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
@@ -209,7 +207,7 @@ class ProductsResolver extends BaseProductsResolver
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
             $brand,
-            function ($offset, $limit) use ($argument, $productFilterData, $search, $brand) {
+            function ($offset, $limit) use ($argument, $productFilterData, $brand) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $brand->getId(),
@@ -218,7 +216,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },

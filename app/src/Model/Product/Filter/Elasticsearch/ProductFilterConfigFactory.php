@@ -137,13 +137,15 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param int $domainId
      * @param string $locale
      * @param \App\Model\Product\Brand\Brand $brand
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForBrand(int $domainId, string $locale, Brand $brand): ProductFilterConfig
+    public function createForBrand(int $domainId, string $locale, Brand $brand, string $searchText = ''): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
             $brand->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
+            $searchText
         );
 
         return new ProductFilterConfig(

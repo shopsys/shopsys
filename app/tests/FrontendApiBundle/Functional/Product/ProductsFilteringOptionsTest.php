@@ -932,4 +932,53 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         }';
         $this->assertQueryWithExpectedJson($query, $expectedResult);
     }
+
+    public function testGetProductFilterOptionsForSearchWhenListingByBrand(): void
+    {
+        $price = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
+
+        $query = 'query {
+          brand(urlSlug: "sencor") {
+            products(search:"Hello") {    
+              productFilterOptions {
+                minimalPrice
+                maximalPrice
+                inStock
+                flags {
+                  count
+                  isAbsolute
+                  flag {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }';
+
+        $expectedResult = '{
+          "data": {
+            "brand": {
+              "products": {
+                "productFilterOptions": {
+                  "minimalPrice": "' . $price . '",
+                  "maximalPrice": "' . $price . '",
+                  "inStock": 1,
+                  "flags": [
+                    {
+                      "count": 1,
+                      "isAbsolute": true,
+                      "flag": {
+                        "name": "' . t('Akce', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }';
+
+        $this->assertQueryWithExpectedJson($query, $expectedResult);
+    }
 }

@@ -8,6 +8,7 @@ use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
@@ -21,7 +22,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory a
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption createFlagFilterOption(\App\Model\Product\Flag\Flag $flag, int $count, bool $isAbsolute)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\BrandFilterOption createBrandFilterOption(\App\Model\Product\Brand\Brand $brand, int $count, bool $isAbsolute)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptions(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptionsForBrand(\App\Model\Product\Brand\Brand $brand, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillFlags(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillBrands(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillParameters(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
@@ -170,5 +170,35 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         );
 
         return $productFilterOptions;
+    }
+
+    /**
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
+     */
+    public function createProductFilterOptionsForBrand(
+        Brand $brand,
+        ProductFilterConfig $productFilterConfig,
+        BaseProductFilterData $productFilterData,
+        string $searchText = ''
+    ): ProductFilterOptions {
+        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
+            return $this->createProductFilterOptionsInstance();
+        }
+
+        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForBrand(
+            $brand->getId(),
+            $productFilterData,
+            $searchText
+        );
+
+        return $this->createProductFilterOptions(
+            $productFilterConfig,
+            $productFilterCountData,
+            $productFilterData
+        );
     }
 }
