@@ -15,11 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProduc
 class ProductFilterData extends BaseProductFilterData
 {
     /**
-     * @var string|null
-     */
-    private ?string $searchText = null;
-
-    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return bool
      */
@@ -42,21 +37,5 @@ class ProductFilterData extends BaseProductFilterData
             && $this->minimalPrice === null
             && $this->maximalPrice === null
         );
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSearchText(): ?string
-    {
-        return $this->searchText;
-    }
-
-    /**
-     * @param string|null $searchText
-     */
-    public function setSearchText(?string $searchText): void
-    {
-        $this->searchText = $searchText;
     }
 }

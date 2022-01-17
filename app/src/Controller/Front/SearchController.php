@@ -85,7 +85,6 @@ class SearchController extends FrontBaseController
         );
 
         $productFilterData = $this->productFilterDataFactory->create();
-        $productFilterData->setSearchText($searchText);
         $productsPaginationResult = $this->listedProductViewFacade->getFilteredPaginatedForSearch(
             $searchText,
             $productFilterData,
