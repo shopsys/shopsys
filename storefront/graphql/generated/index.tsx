@@ -2387,6 +2387,13 @@ export type CountriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type CountriesQueryApi = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', name: string, code: string }> };
 
+export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName?: string | null | undefined, companyNumber?: string | null | undefined, companyTaxNumber?: string | null | undefined, firstName: string, lastName: string, email: string, telephone?: string | null | undefined, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone?: string | null | undefined, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
+
+export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid?: string | null | undefined, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
+
 export type FlagDetailFragmentApi = { __typename?: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type FlagLabelFragmentApi = { __typename?: 'Flag', name: string, rgbColor: string };
@@ -3255,6 +3262,21 @@ export const CategoryDetailFragmentApi = gql`
     ${BreadcrumbFragmentApi}
 ${CategoryPreviewFragmentApi}
 ${ListedProductsFragmentApi}`;
+export const DeliveryAddressFragmentApi = gql`
+    fragment DeliveryAddressFragment on DeliveryAddress {
+  uuid
+  companyName
+  street
+  city
+  postcode
+  telephone
+  country {
+    ...CountryFragment
+  }
+  firstName
+  lastName
+}
+    ${CountryFragmentApi}`;
 export const FlagDetailFragmentApi = gql`
     fragment FlagDetailFragment on Flag {
   uuid
@@ -3759,6 +3781,37 @@ export const CountriesQueryDocumentApi = gql`
 
 export function useCountriesQueryApi(options: Omit<Urql.UseQueryArgs<CountriesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<CountriesQueryApi>({ query: CountriesQueryDocumentApi, ...options });
+};
+export const CurrentCustomerUserQueryDocumentApi = gql`
+    query CurrentCustomerUserQuery {
+  currentCustomerUser {
+    __typename
+    firstName
+    lastName
+    email
+    telephone
+    street
+    city
+    postcode
+    country {
+      ...CountryFragment
+    }
+    newsletterSubscription
+    deliveryAddresses {
+      ...DeliveryAddressFragment
+    }
+    ... on CompanyCustomerUser {
+      companyName
+      companyNumber
+      companyTaxNumber
+    }
+  }
+}
+    ${CountryFragmentApi}
+${DeliveryAddressFragmentApi}`;
+
+export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<CurrentCustomerUserQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<CurrentCustomerUserQueryApi>({ query: CurrentCustomerUserQueryDocumentApi, ...options });
 };
 export const NavigationQueryDocumentApi = gql`
     query NavigationQuery {

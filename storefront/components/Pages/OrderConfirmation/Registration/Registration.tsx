@@ -14,7 +14,6 @@ import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { contactInformationActions } from 'redux/slices/contactInformation';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
@@ -44,7 +43,6 @@ const Registration: FC = () => {
     useEffect(() => {
         return () => {
             dispatch(userActions.setOrderConfirmationAccess(false));
-            dispatch(contactInformationActions.resetContactInformation());
         };
     }, []);
 

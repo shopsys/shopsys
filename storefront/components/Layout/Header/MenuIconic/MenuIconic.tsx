@@ -13,6 +13,7 @@ import {
 import Heading from 'components/Basic/Heading';
 import Login from 'components/Blocks/Popup/Login';
 import NextLink from 'next/link';
+import nookies from 'nookies';
 import Popup from 'components/Layout/Popup';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
@@ -36,6 +37,7 @@ const MenuIconic: FC = () => {
 
     const logoutHandler = () => {
         logout();
+        nookies.destroy(null, 'contactInformation');
     };
 
     useEffect(() => {
