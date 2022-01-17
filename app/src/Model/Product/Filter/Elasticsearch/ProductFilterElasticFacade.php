@@ -43,13 +43,18 @@ class ProductFilterElasticFacade
     /**
      * @param int $categoryId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $search
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataInCategory(int $categoryId, PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    public function getProductFilterDataInCategory(int $categoryId, PricingGroup $pricingGroup, string $search): ProductFilterConfigIdsData
     {
-        $aggregationQuery = $this->filterQueryFactory->createVisible()
+        $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
-            ->filterByCategory([$categoryId])
+            ->filterByCategory([$categoryId]);
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
+        $aggregationQuery = $filterQuery
             ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
         $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
 

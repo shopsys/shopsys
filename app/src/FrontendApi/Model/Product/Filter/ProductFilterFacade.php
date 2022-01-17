@@ -20,7 +20,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
  * @property \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForBrand(\App\Model\Product\Brand\Brand $brand)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForCategory(\App\Model\Category\Category $category)
  * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
  */
 class ProductFilterFacade extends BaseProductFilterFacade
@@ -120,10 +119,9 @@ class ProductFilterFacade extends BaseProductFilterFacade
             return $this->productFilterDataFactory->create();
         }
 
-        /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
-        $productFilterData = parent::getValidatedProductFilterDataForCategory($argument, $category);
+        $productFilterConfig = $this->getProductFilterConfigForCategory($category, $argument['search'] ?? '');
 
-        return $productFilterData;
+        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
     }
 
     /**
@@ -157,6 +155,27 @@ class ProductFilterFacade extends BaseProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
+                $searchText
+            );
+        }
+
+        return $this->productFilterConfigCache[$cacheKey];
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param string $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function getProductFilterConfigForCategory(Category $category, string $searchText = ''): ProductFilterConfig
+    {
+        $cacheKey = 'category_' . $category->getId() . '_search_' . $searchText;
+
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $category,
                 $searchText
             );
         }

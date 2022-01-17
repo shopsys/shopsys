@@ -40,11 +40,13 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode
     ): Promise {
-        $productFilterOptionsClosure = function () use ($category, $productFilterData) {
+        $searchText = $argument['search'] ?? '';
+        $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
                 $category,
-                $this->productFilterFacade->getProductFilterConfigForCategory($category),
-                $productFilterData
+                $this->productFilterFacade->getProductFilterConfigForCategory($category, $searchText),
+                $productFilterData,
+                $searchText
             );
         };
 

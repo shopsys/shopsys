@@ -88,13 +88,15 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param int $domainId
      * @param string $locale
      * @param \App\Model\Category\Category $category
+     * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForCategory($domainId, $locale, BaseCategory $category): ProductFilterConfig
+    public function createForCategory($domainId, $locale, BaseCategory $category, string $searchText = ''): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
             $category->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
+            $searchText
         );
 
         $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(

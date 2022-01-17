@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
  * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
  * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForBrand(int $brandId, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
@@ -303,5 +302,32 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData)
     {
         return $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
+    }
+
+    /**
+     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataInCategory(
+        int $categoryId,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterData $productFilterData,
+        string $searchText = ''
+    ): ProductFilterCountData {
+        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
+            $categoryId,
+            $productFilterData
+        );
+        if ($searchText !== '') {
+            $baseFilterQuery = $baseFilterQuery->search($searchText);
+        }
+
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
+            $productFilterData,
+            $baseFilterQuery
+        );
     }
 }

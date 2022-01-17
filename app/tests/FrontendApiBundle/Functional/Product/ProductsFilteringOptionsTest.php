@@ -739,4 +739,136 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $this->assertQueryWithExpectedJson($query, $expectedResult);
     }
+
+    public function testGetProductFilterOptionsForSearchInCategory(): void
+    {
+        $query = 'query {
+          category(urlSlug: "televize-audio") {
+            products(search: "FHD") {
+              productFilterOptions {
+                minimalPrice
+                maximalPrice
+                inStock
+                flags {
+                  count
+                  flag {
+                    name
+                  }
+                }
+                brands {
+                  count
+                  brand {
+                    name
+                  }
+                }
+                parameters {
+                  name
+                  values {text count}
+                }
+              }
+            }
+          }
+        }';
+
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('21590');
+        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('24010');
+
+        $expectedResult = '{
+          "data": {
+            "category": {
+              "products": {
+                "productFilterOptions": {
+                  "minimalPrice": "' . $minimalPrice . '",
+                  "maximalPrice": "' . $maximalPrice . '",
+                  "inStock": 2,
+                  "flags": null,
+                  "brands": [
+                    {
+                      "count": 2,
+                      "brand": {
+                        "name": "' . t('LG', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                      }
+                    }
+                  ],
+                  "parameters": [
+                    {
+                      "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "plast",
+                          "count": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('Barva', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('červená', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('Ano', [], 'messages', $this->firstDomainLocale) . '",
+                          "count": 2
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('Rozlišení', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('1366×768 (HD Ready)', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 1
+                        },
+                        {
+                          "text": "' . t('1920×1080 (Full HD)', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('Úhlopříčka', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 1
+                        },
+                        {
+                          "text": "' . t('60\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 1
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('Ne', [], 'messages', $this->firstDomainLocale) . '",
+                          "count": 2
+                        }
+                      ]
+                    },
+                    {
+                      "name": "' . t('Technologie', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "values": [
+                        {
+                          "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "count": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }';
+
+        $this->assertQueryWithExpectedJson($query, $expectedResult);
+    }
 }

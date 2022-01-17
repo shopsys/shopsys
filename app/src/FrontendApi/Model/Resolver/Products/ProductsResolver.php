@@ -75,6 +75,7 @@ class ProductsResolver extends BaseProductsResolver
     public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
+
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
@@ -253,13 +254,11 @@ class ProductsResolver extends BaseProductsResolver
         ProductFilterData $productFilterData,
         ?string $orderingMode = null
     ): Promise {
-        $search = $argument['search'] ?? '';
-
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         return $this->productConnectionFactory->createConnectionPromiseForCategory(
             $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $orderingMode) {
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $category->getId(),
@@ -268,7 +267,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $orderingMode ?? $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },
