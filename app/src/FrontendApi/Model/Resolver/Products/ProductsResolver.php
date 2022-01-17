@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\FrontendApi\Component\Validation\PageSizeValidator;
+use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
@@ -176,17 +177,11 @@ class ProductsResolver extends BaseProductsResolver
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category $category
      * @return \GraphQL\Executor\Promise\Promise
+     * @deprecated Method is deprecated. Use "resolveByCategoryOrReadyCategorySeoMix()" instead.
      */
     public function resolveByCategory(Argument $argument, BaseCategory $category)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
-
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-            $argument,
-            $category
-        );
-
-        return $this->getPromiseByCategory($argument, $category, $productFilterData);
+        throw new DeprecatedMethodException();
     }
 
     /**
