@@ -62,14 +62,12 @@ class ProductFilterElasticFacade
     }
 
     /**
-     * @param string|null $searchText
+     * @param string $searchText
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataForSearch(?string $searchText, PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    public function getProductFilterDataForSearch(string $searchText, PricingGroup $pricingGroup): ProductFilterConfigIdsData
     {
-        $searchText = $searchText ?? '';
-
         $aggregationQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->search($searchText)

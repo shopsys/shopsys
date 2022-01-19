@@ -114,7 +114,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $searchText
      * @param string|null $orderingMode
      * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection
      */
@@ -123,9 +122,9 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         int $countOfProducts,
         Argument $argument,
         BaseProductFilterData $productFilterData,
-        string $searchText = '',
         ?string $orderingMode = null
     ): ProductExtendedConnection {
+        $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
             if ($searchText === '') {
                 $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
