@@ -3,4 +3,7 @@ fragment SimpleProductFragment on Product {
     slug
     ...ProductPriceFragment
     ...ProductImagesListFragment
+    unit {
+        name
+    }
 }

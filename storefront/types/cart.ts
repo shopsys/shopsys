@@ -1,4 +1,4 @@
-import { FlagType, ProductPriceType } from 'types/product';
+import { FlagType, ProductPriceType, SimpleProductType } from 'types/product';
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import { ImageType } from 'types/image';
@@ -51,11 +51,6 @@ export type CartResultValues = {
     promoCode: string | null;
 };
 
-export type AddToCartPopupDataType = {
-    name: string;
-    slug: string;
-    image: ImageType | null;
+export type AddToCartPopupDataType = SimpleProductType & {
     quantity: number;
-    unitName: string;
-    price: ProductPriceType;
 };

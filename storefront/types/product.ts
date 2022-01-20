@@ -9,6 +9,7 @@ export type SimpleProductType = {
     name: string;
     price: ProductPriceType;
     image: ImageType | null;
+    unitName: string;
 };
 
 export type ListedProductType = {

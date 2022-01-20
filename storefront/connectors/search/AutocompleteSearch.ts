@@ -76,6 +76,7 @@ const mapProductsSearchResults = (
                     name: productEdge.node.name,
                     price: mapProductPriceApiData(productEdge.node.price, currencyCode),
                     image: mapProductsSearchResultImage(productEdge.node.images),
+                    unitName: productEdge.node.unit.name,
                 });
             }
         }
