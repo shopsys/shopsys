@@ -13,10 +13,7 @@ export const mapProductFilterOptions = (
             productFilterOptionsApiData.brands !== null && productFilterOptionsApiData.brands !== undefined
                 ? productFilterOptionsApiData.brands
                 : [],
-        flags:
-            productFilterOptionsApiData.flags !== null && productFilterOptionsApiData.flags !== undefined
-                ? productFilterOptionsApiData.flags
-                : [],
+        flags: productFilterOptionsApiData.flags !== null ? productFilterOptionsApiData.flags : [],
         parameters: productFilterOptionsApiData.parameters?.map((item) => ({
             ...item,
             type:

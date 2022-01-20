@@ -1,9 +1,10 @@
-import { FlagType, ProductPriceType, SimpleProductType } from 'types/product';
 import { PaymentInputType, PaymentType } from 'types/payment';
+import { ProductPriceType, SimpleProductType } from 'types/product';
 import { TransportInputType, TransportType } from 'types/transport';
 import { ImageType } from 'types/image';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
+import { SimpleFlagType } from 'types/flag';
 
 export type CartInput = {
     cartUuid: string | null;
@@ -16,7 +17,7 @@ export type ProductCartItemType = {
     uuid: string;
     slug: string;
     fullName: string;
-    flags: FlagType[];
+    flags: SimpleFlagType[];
     image: ImageType | null;
     price: ProductPriceType;
     availability: string;

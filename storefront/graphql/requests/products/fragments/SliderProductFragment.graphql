@@ -6,7 +6,7 @@ fragment SliderProductFragment on Product {
     catalogNumber
     stockQuantity
     flags {
-        ...FlagLabelFragment
+        ...SimpleFlagFragment
     }
     ...ProductImagesListFragment
     availability {

@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { FlagType } from 'types/product';
 import { ProductFlagsItemStyled } from './ProductFlags.style';
+import { SimpleFlagType } from 'types/flag';
 
-type ProductFlagsProps = { flags: FlagType[] };
+type ProductFlagsProps = { flags: SimpleFlagType[] };
 
 const ProductFlags: FC<ProductFlagsProps> = (props) => {
     const testIdentifier = 'blocks-product-flags-';

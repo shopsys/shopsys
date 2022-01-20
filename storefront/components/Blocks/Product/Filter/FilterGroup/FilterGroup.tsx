@@ -1,4 +1,4 @@
-import { BrandsType, FilterFormType, FlagsType } from 'types/productFilter';
+import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { FC, Fragment, useState } from 'react';
 import {
@@ -26,7 +26,7 @@ type FilterGroupProps = {
     /**
      * Parameters data of product filter
      */
-    data?: FlagsType[] | BrandsType[];
+    data?: FilterOptionFlagsType[] | BrandsType[];
 };
 
 const FilterGroup: FC<FilterGroupProps> = (props) => {

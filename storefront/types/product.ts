@@ -1,6 +1,7 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
 import { ImageType } from 'types/image';
+import { SimpleFlagType } from 'types/flag';
 import { StoreDetailType } from 'types/store';
 
 export type SimpleProductType = {
@@ -19,7 +20,7 @@ export type ListedProductType = {
     stockQuantity: number;
     availableStoresCount: number;
     exposedStoresCount: number;
-    flags: FlagType[];
+    flags: SimpleFlagType[];
     availability: string;
     image: ImageType | null;
     price: ProductPriceType;
@@ -34,7 +35,7 @@ export type ListedVariantType = {
     stockQuantity: number;
     availableStoresCount: number;
     exposedStoresCount: number;
-    flags: FlagType[];
+    flags: SimpleFlagType[];
     availability: string;
     images: ProductDetailImageType[];
     price: ProductPriceType;
@@ -107,11 +108,6 @@ export type ProductDetailType = {
     images: ProductDetailImageType[];
 };
 
-export type FlagType = {
-    name: string;
-    rgbColor: string;
-};
-
 export type ProductPriceType = {
     priceWithVat: number;
     priceWithoutVat: number;
@@ -131,7 +127,7 @@ export type SliderProductItemType = {
     uuid: string;
     slug: string;
     name: string;
-    flags: FlagType[];
+    flags: SimpleFlagType[];
     image: ImageType | null;
     stockQuantity: number;
     price: ProductPriceType;
@@ -146,7 +142,7 @@ export type ListedProductItemType = {
     uuid: string;
     slug: string;
     name: string;
-    flags: FlagType[];
+    flags: SimpleFlagType[];
     image: ImageType | null;
     stockQuantity: number;
     price: ProductPriceType;

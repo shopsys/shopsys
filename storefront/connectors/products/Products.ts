@@ -1,14 +1,13 @@
 import {
-    FlagLabelFragmentApi,
     ListedProductFragmentApi,
     ListedVariantFragmentApi,
     ProductPriceFragmentApi,
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
-import { FlagType, ProductPriceType, SliderProductItemType } from 'types/product';
 import { ListedProductType, ListedVariantType } from 'types/product';
 import { mapProductDetailImages, mapStoreAvailabilities } from './ProductDetail';
+import { ProductPriceType, SliderProductItemType } from 'types/product';
 import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
@@ -29,7 +28,6 @@ export const mapProductPriceData = (
 export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
     return {
         ...apiData,
-        flags: mapFlagsApiData(apiData.flags),
         isMainVariant: apiData.__typename === 'MainVariant',
         slug: apiData.slug,
         availability: apiData.availability.name,
@@ -43,7 +41,6 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
 export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currencyCode: string): ListedVariantType => {
     return {
         ...apiData,
-        flags: mapFlagsApiData(apiData.flags),
         slug: apiData.slug,
         availability: apiData.availability.name,
         name: apiData.name,
@@ -78,7 +75,6 @@ export const mapSliderProductApiData = (
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability: apiProduct.availability.name,
-            flags: mapFlagsApiData(apiProduct.flags),
             stockQuantity: apiProduct.stockQuantity,
         };
     });
@@ -95,13 +91,4 @@ export const mapProductPriceApiData = (
         isPriceFrom: price.isPriceFrom,
         currencyCode,
     };
-};
-
-export const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
-    return flags.map((flagApi) => {
-        return {
-            name: flagApi.name,
-            rgbColor: flagApi.rgbColor,
-        };
-    });
 };
