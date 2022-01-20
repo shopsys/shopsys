@@ -1,9 +1,9 @@
 import { FC, Fragment } from 'react';
 import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
-import { DropdownListType } from 'types/dropdown';
+import { DropdownListProps } from 'types/dropdown';
 import { SecondaryListTitleStyled } from './SecondaryList.style';
 
-const SecondaryList: FC<DropdownListType> = (props) => {
+const SecondaryList: FC<DropdownListProps> = (props) => {
     const testIdentifier = 'layout-header-dropdownmenu-secondarylist-';
 
     return (
