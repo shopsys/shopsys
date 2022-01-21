@@ -20,6 +20,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
+    const testIdentifier = 'blocks-promocode';
+
     const { cartUuid, payment, transport, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
     const [updatedPromoCode, updatePromoCode] = useState(promoCode);
     const [result] = useLoadCart(cartUuid, transport, payment, updatedPromoCode);
@@ -58,12 +60,15 @@ const PromoCode: FC = () => {
     };
 
     return (
-        <PromoCodeStyled contentElementHeight={contentElementHeight}>
+        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
             {promoCode !== null ? (
                 <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
             ) : (
                 <>
-                    <PromoCodeButtonStyled onClick={() => setIsContentVisible(!isContentVisible)}>
+                    <PromoCodeButtonStyled
+                        onClick={() => setIsContentVisible(!isContentVisible)}
+                        data-testid={testIdentifier + '-add-button'}
+                    >
                         <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
                         {t('I have a discount coupon')}
                     </PromoCodeButtonStyled>

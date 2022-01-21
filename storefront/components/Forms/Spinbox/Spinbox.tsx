@@ -16,6 +16,8 @@ type SpinboxProps = {
  * Global component for spinbox input.
  */
 const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>((props, spinboxForwardedRef) => {
+    const testIdentifier = 'forms-spinbox-';
+
     const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
     const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
     const intervalRef = useRef<NodeJS.Timer | null>(null);
@@ -90,6 +92,7 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>((props, spinboxForwar
                 onMouseDown={() => setIsHoldingDecrease(true)}
                 onMouseUp={() => setIsHoldingDecrease(false)}
                 onMouseLeave={() => setIsHoldingDecrease(false)}
+                data-testid={testIdentifier + 'decrease'}
             >
                 -
             </SpinboxButtonStyled>
@@ -100,12 +103,14 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>((props, spinboxForwar
                 type="number"
                 min={props.min}
                 max={props.max}
+                data-testid={testIdentifier + 'input'}
             />
             <SpinboxButtonStyled
                 onClick={() => onChangeValueHandler(props.step)}
                 onMouseDown={() => setIsHoldingIncrease(true)}
                 onMouseUp={() => setIsHoldingIncrease(false)}
                 onMouseLeave={() => setIsHoldingIncrease(false)}
+                data-testid={testIdentifier + 'increase'}
             >
                 +
             </SpinboxButtonStyled>

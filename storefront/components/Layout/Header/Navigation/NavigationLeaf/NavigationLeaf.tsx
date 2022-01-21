@@ -8,10 +8,12 @@ type NavigationLeafProps = {
 };
 
 const NavigationLeaf: FC<NavigationLeafProps> = (props) => {
+    const testIdentifier = 'layout-header-navigation-navigationleaf-';
+
     return (
         <>
             {props.columnCategories.map((columnCategories, columnIndex) => (
-                <NavigationLeafColumnStyled key={columnIndex}>
+                <NavigationLeafColumnStyled key={columnIndex} data-testid={testIdentifier + columnIndex}>
                     {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                         <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
                     ))}

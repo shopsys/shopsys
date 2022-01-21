@@ -15,14 +15,16 @@ type TotalPriceProps = {
 };
 
 const TotalPrice: FC<TotalPriceProps> = (props) => {
+    const testIdentifier = 'blocks-ordersummary-totalprice';
+
     const t = useTypedTranslationFunction();
 
     return (
-        <OrderSummaryTotalPriceWrapper>
+        <OrderSummaryTotalPriceWrapper data-testid={testIdentifier}>
             <OrderSummaryContent>
                 <PriceWrapper>
                     <OrderSummaryTotalPriceText>{t('Total price')}</OrderSummaryTotalPriceText>
-                    <OrderSummaryTotalPriceAmount>
+                    <OrderSummaryTotalPriceAmount data-testid={testIdentifier + '-amount'}>
                         {formatPrice(props.totalPrice.priceWithVat, props.totalPrice.currencyCode, t)}
                     </OrderSummaryTotalPriceAmount>
                 </PriceWrapper>

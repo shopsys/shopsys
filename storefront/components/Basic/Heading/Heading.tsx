@@ -9,14 +9,21 @@ type HeadingProps = NativeProps & {
      * A enumerator-like list of all available types of the custom Heading element
      */
     type: 'h1' | 'h2' | 'h3' | 'h4';
+    'data-testid'?: string;
 };
 
 /**
  * A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
  */
 const Heading: FC<HeadingProps> = (props) => {
+    const testIdentifier = 'basic-heading-' + props.type;
+
     const Component = renderHeading(props.type);
-    return <Component {...props}>{props.children}</Component>;
+    return (
+        <Component {...props} data-testid={testIdentifier}>
+            {props.children}
+        </Component>
+    );
 };
 
 const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {

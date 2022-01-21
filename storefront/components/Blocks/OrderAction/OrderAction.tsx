@@ -23,6 +23,8 @@ type OrderActionProps = {
 };
 
 const OrderAction: FC<OrderActionProps> = (props) => {
+    const testIdentifier = 'blocks-orderaction-';
+
     const router = useRouter();
 
     const onNextStepHandler = () => {
@@ -33,7 +35,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
 
     return (
         <OrderActionStyled withGapBottom={props.withGapBottom} withGapTop={props.withGapTop}>
-            <OrderActionLeftStyled>
+            <OrderActionLeftStyled data-testid={testIdentifier + 'back'}>
                 <NextLink href={props.buttonBackLink} passHref>
                     <OrderActionLinkBackStyled>
                         <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
@@ -41,7 +43,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                     </OrderActionLinkBackStyled>
                 </NextLink>
             </OrderActionLeftStyled>
-            <OrderActionRightStyled>
+            <OrderActionRightStyled data-testid={testIdentifier + 'next'}>
                 <Button
                     type="submit"
                     borderRadius="big"

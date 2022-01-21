@@ -19,36 +19,52 @@ type ListProps = {
 };
 
 const List: FC<ListProps> = (props) => {
+    const testIdentifier = 'pages-blogcategory-blogarticleslist-';
+
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     return (
         <ListStyled>
-            {props.blogArticles.edges.map((blogArticle) => (
-                <ListItemStyled key={blogArticle.uuid}>
-                    <ListItemImageStyled>
+            {props.blogArticles.edges.map((blogArticle, blogArticleIndex) => (
+                <ListItemStyled key={blogArticle.uuid} data-testid={testIdentifier + blogArticleIndex}>
+                    <ListItemImageStyled data-testid={testIdentifier + blogArticleIndex + '-image'}>
                         <a href={blogArticle.link}>
                             <Image image={blogArticle.image} alt={blogArticle.name} />
                         </a>
                     </ListItemImageStyled>
                     <ListItemContentStyled>
                         <div>
-                            {blogArticle.blogCategories.map((blogArticleCategory) => (
+                            {blogArticle.blogCategories.map((blogArticleCategory, blogArticleCategoryIndex) => (
                                 <Fragment key={blogArticleCategory.uuid}>
                                     {blogArticleCategory.parent !== null && (
-                                        <Flag href={blogArticleCategory.link} color="#cdb3ff">
+                                        <Flag
+                                            href={blogArticleCategory.link}
+                                            color="#cdb3ff"
+                                            data-testid={
+                                                testIdentifier +
+                                                blogArticleIndex +
+                                                '-section-' +
+                                                blogArticleCategoryIndex
+                                            }
+                                        >
                                             {blogArticleCategory.name}
                                         </Flag>
                                     )}
                                 </Fragment>
                             ))}
                         </div>
-                        <ListItemTitleStyled href={blogArticle.link}>
+                        <ListItemTitleStyled
+                            href={blogArticle.link}
+                            data-testid={testIdentifier + blogArticleIndex + '-title'}
+                        >
                             <Heading type="h2">{blogArticle.name}</Heading>
                         </ListItemTitleStyled>
                         {blogArticle.perex !== undefined && (
-                            <ListItemContentTextStyled>{blogArticle.perex}</ListItemContentTextStyled>
+                            <ListItemContentTextStyled data-testid={testIdentifier + blogArticleIndex + '-perex'}>
+                                {blogArticle.perex}
+                            </ListItemContentTextStyled>
                         )}
-                        <ListItemContentDateStyled>
+                        <ListItemContentDateStyled data-testid={testIdentifier + blogArticleIndex + '-date'}>
                             {new Date(blogArticle.publishDate).toLocaleDateString(currentDomainConfig.defaultLocale)}
                         </ListItemContentDateStyled>
                     </ListItemContentStyled>

@@ -12,6 +12,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const OrderSummary: FC = () => {
+    const testIdentifier = 'blocks-ordersummary';
+
     const t = useTypedTranslationFunction();
     const { cart, transport, payment } = useShopsysSelector((state) => state.cart);
 
@@ -20,7 +22,7 @@ const OrderSummary: FC = () => {
     }
 
     return (
-        <OrderSummaryWrapperStyled>
+        <OrderSummaryWrapperStyled data-testid={testIdentifier}>
             <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
             <OrderSummaryContentWrapperStyled>
                 <OrderSummaryContentStyled>

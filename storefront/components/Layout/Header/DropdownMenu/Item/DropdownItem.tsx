@@ -19,6 +19,8 @@ type DropdownItemProps = DropdownItemType & {
 };
 
 const DropdownItem: FC<DropdownItemProps> = (props) => {
+    const testIdentifier = 'layout-header-dropdownmenu-item';
+
     const context = useContext(DropdownMenuContext);
     const [hasChildren, setHasChildren] = useState(false);
     const [itemLink, setItemLink] = useState('');
@@ -48,7 +50,7 @@ const DropdownItem: FC<DropdownItemProps> = (props) => {
     }, [hasChildren, itemLink, itemName]);
 
     return (
-        <DropdownItemStyled variant={props.variant} onClick={scrollToTop}>
+        <DropdownItemStyled variant={props.variant} onClick={scrollToTop} data-testid={testIdentifier}>
             <Link href={itemLink} passHref>
                 <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={props.variant}>
                     {itemName}

@@ -88,6 +88,7 @@ exports[`test render list item 1`] = `
 
 <a
   className="c0"
+  data-testid="blocks-simplenavigation-listitem"
   href="/item-slug"
   onClick={[Function]}
   onMouseEnter={[Function]}
@@ -97,6 +98,7 @@ exports[`test render list item 1`] = `
   >
     <img
       alt="Item name"
+      data-testid="basic-image-empty"
       src="/images/optimized-noimage.png"
     />
   </div>

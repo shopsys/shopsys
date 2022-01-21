@@ -6,11 +6,14 @@ type NativeProps = ExtractNativePropsFromDefault<AnchorHTMLAttributes<HTMLAnchor
 
 type FlagProps = NativeProps & {
     color?: string;
+    'data-testid'?: string;
 };
 
 const Flag: FC<FlagProps> = (props) => {
+    const testIdentifier = props['data-testid'] ?? 'basic-flag';
+
     return (
-        <FlagStyled href={props.href} color={props.color}>
+        <FlagStyled href={props.href} color={props.color} data-testid={testIdentifier}>
             {props.children}
         </FlagStyled>
     );

@@ -17,6 +17,8 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const FooterContact: FC = () => {
+    const testIdentifier = 'layout-footer-footercontact';
+
     const t = useTypedTranslationFunction();
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();
@@ -29,7 +31,7 @@ const FooterContact: FC = () => {
     );
 
     return (
-        <FooterContactStyled>
+        <FooterContactStyled data-testid={testIdentifier}>
             {isDesktop && (
                 <>
                     <FooterContactHeadingStyled type="h4">{t('Follow Us')}</FooterContactHeadingStyled>

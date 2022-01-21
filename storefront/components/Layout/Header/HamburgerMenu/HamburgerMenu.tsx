@@ -9,10 +9,16 @@ type HamburgerMenuProps = {
 };
 
 const HamburgerMenu: FC<HamburgerMenuProps> = (props) => {
+    const testIdentifier = 'layout-header-hamburgermenu';
+
     const t = useTypedTranslationFunction();
 
     return (
-        <HamburgerMenuStyled onClick={props.onMenuToggleHandler} isOpen={props.isMenuOpened}>
+        <HamburgerMenuStyled
+            onClick={props.onMenuToggleHandler}
+            isOpen={props.isMenuOpened}
+            data-testid={testIdentifier}
+        >
             <HamburgerMenuImageStyled>
                 <HamburgerIcon isMenuOpened={props.isMenuOpened} />
             </HamburgerMenuImageStyled>

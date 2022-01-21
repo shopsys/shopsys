@@ -4,12 +4,16 @@ import { DropdownListType } from 'types/dropdown';
 import { SecondaryListTitleStyled } from './SecondaryList.style';
 
 const SecondaryList: FC<DropdownListType> = (props) => {
+    const testIdentifier = 'layout-header-dropdownmenu-secondarylist-';
+
     return (
         <>
             {props.navigationItems
                 .map((navigationItem, index) => (
                     <Fragment key={index}>
-                        <SecondaryListTitleStyled>{navigationItem.name}</SecondaryListTitleStyled>
+                        <SecondaryListTitleStyled data-testid={testIdentifier + index}>
+                            {navigationItem.name}
+                        </SecondaryListTitleStyled>
                         {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
                             <Fragment key={columnIndex}>
                                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (

@@ -8,8 +8,10 @@ type ProductsPreviewProps = {
 };
 
 const ProductsPreview: FC<ProductsPreviewProps> = (props) => {
+    const testIdentifier = 'blocks-ordersummary-productspreview';
+
     return (
-        <ProductsPreviewStyled>
+        <ProductsPreviewStyled data-testid={testIdentifier}>
             <OrderSummaryListStyled>
                 {props.cartItems.map((item) => (
                     <SingleProduct key={item.uuid} item={item} />

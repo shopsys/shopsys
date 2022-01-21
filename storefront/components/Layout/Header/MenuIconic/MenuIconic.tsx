@@ -21,6 +21,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const MenuIconic: FC = () => {
+    const testIdentifier = 'layout-header-menuiconic';
+
     const t = useTypedTranslationFunction();
     const [, [, logout]] = useAuth();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
@@ -52,8 +54,8 @@ const MenuIconic: FC = () => {
 
     return (
         <>
-            <MenuIconicListStyled>
-                <MenuIconicItemStyled>
+            <MenuIconicListStyled data-testid={testIdentifier}>
+                <MenuIconicItemStyled data-testid={testIdentifier + '-0'}>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled iconType="icon" icon="Chat" />
@@ -61,7 +63,7 @@ const MenuIconic: FC = () => {
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
-                <MenuIconicItemStyled>
+                <MenuIconicItemStyled data-testid={testIdentifier + '-1'}>
                     <NextLink href={storesUrl} passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled iconType="icon" icon="Marker" />
@@ -69,21 +71,21 @@ const MenuIconic: FC = () => {
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
-                <MenuIconicItemStyled>
+                <MenuIconicItemStyled data-testid={testIdentifier + '-2'}>
                     {isUserLoggedIn === true ? (
                         <MenuIconicItemLinkStyled hasSubmenu={true}>
                             <MenuIconicItemIconStyled iconType="icon" icon="User" />
                             {t('My account')}
                             <MenuIconicSubStyled>
-                                <MenuIconicSubItemStyled>
+                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-0'}>
                                     <NextLink href={myOrdersUrl} passHref>
                                         <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
                                     </NextLink>
                                 </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled>
+                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-1'}>
                                     <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
                                 </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled>
+                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-2'}>
                                     <MenuIconicSubItemLinkStyled onClick={logoutHandler}>
                                         {t('Logout')}
                                     </MenuIconicSubItemLinkStyled>

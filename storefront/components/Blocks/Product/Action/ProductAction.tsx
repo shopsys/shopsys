@@ -7,6 +7,8 @@ import { useRouter } from 'next/dist/client/router';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
+    const testIdentifier = 'blocks-product-action';
+
     const router = useRouter();
     const t = useTypedTranslationFunction();
 
@@ -21,7 +23,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     }
 
     return (
-        <ProductActionWrapperStyled>
+        <ProductActionWrapperStyled data-testid={testIdentifier}>
             <ProductActionStyled isButtonFullWidth={false}>
                 <AddToCart
                     productUuid={props.uuid}

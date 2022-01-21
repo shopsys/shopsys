@@ -13,8 +13,10 @@ type NavigationColumnCategoryProps = {
 };
 
 const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
+    const testIdentifier = 'layout-header-navigation-navigationcolumncategory';
+
     return (
-        <NavigationColumnCategoryStyled>
+        <NavigationColumnCategoryStyled data-testid={testIdentifier}>
             <NextLink href={props.columnCategory.slug} passHref>
                 <NavigationColumnCategoryImageStyled>
                     <img src={props.columnCategory.image.url} width={props.columnCategory.image.width} />

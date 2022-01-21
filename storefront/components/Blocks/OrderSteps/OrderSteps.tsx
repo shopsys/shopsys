@@ -11,6 +11,8 @@ type OrderStepsProps = {
 };
 
 const OrderSteps: FC<OrderStepsProps> = (props) => {
+    const testIdentifier = 'blocks-ordersteps-';
+
     const t = useTypedTranslationFunction();
     const [cartUrl, transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment'],
@@ -20,7 +22,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
     return (
         <Webline>
             <OrderStepsListStyled>
-                <OrderStepsListItemStyled>
+                <OrderStepsListItemStyled data-testid={testIdentifier + '1'}>
                     {props.activeStep > 1 ? (
                         <NextLink href={cartUrl} passHref>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
@@ -33,7 +35,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                         </OrderStepsListItemLinkStyled>
                     )}
                 </OrderStepsListItemStyled>
-                <OrderStepsListItemStyled>
+                <OrderStepsListItemStyled data-testid={testIdentifier + '2'}>
                     {props.activeStep > 2 ? (
                         <NextLink href={transportAndPaymentUrl} passHref>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
@@ -46,7 +48,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                         </OrderStepsListItemLinkStyled>
                     )}
                 </OrderStepsListItemStyled>
-                <OrderStepsListItemStyled>
+                <OrderStepsListItemStyled data-testid={testIdentifier + '3'}>
                     <OrderStepsListItemLinkStyled isActive={props.activeStep === 3}>
                         {'3. ' + t('Contact information')}
                     </OrderStepsListItemLinkStyled>

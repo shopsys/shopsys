@@ -23,6 +23,8 @@ type DropdownMenuProps = {
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
+    const testIdentifier = 'layout-header-dropdownmenu';
+
     const navigationItems = getNavigationItems();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
@@ -57,7 +59,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     };
 
     return (
-        <DropdownMenuWrapperStyled>
+        <DropdownMenuWrapperStyled data-testid={testIdentifier}>
             <CSSTransition
                 in={props.isMenuOpened}
                 timeout={500}

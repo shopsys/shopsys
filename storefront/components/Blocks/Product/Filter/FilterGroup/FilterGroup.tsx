@@ -30,6 +30,8 @@ type FilterGroupProps = {
 };
 
 const FilterGroup: FC<FilterGroupProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter-filtergroup-' + props.filterField;
+
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
     const { fields } = useFieldArray({
@@ -42,7 +44,7 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
     };
 
     return (
-        <FilterGroupStyled>
+        <FilterGroupStyled data-testid={testIdentifier}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {props.title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
@@ -57,6 +59,7 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
                                     key={dataItem.uuid}
                                     isDisabled={props.data?.[index]?.count === 0}
                                     isActive={field.value}
+                                    data-testid={testIdentifier + '-' + index}
                                 >
                                     <Checkbox
                                         name={field.name}

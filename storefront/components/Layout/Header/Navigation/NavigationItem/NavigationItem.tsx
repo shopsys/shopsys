@@ -19,6 +19,8 @@ type NavigationItemProps = {
 };
 
 const NavigationItem: FC<NavigationItemProps> = (props) => {
+    const testIdentifier = 'layout-header-navigation-navigationitem';
+
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const openSubmenu = () => {
@@ -43,6 +45,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
                     onMouseLeave={hideSubmenu}
                     isOpen={isHovered}
                     onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
+                    data-testid={testIdentifier}
                 >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>
@@ -61,7 +64,12 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
                     )}
                 </NavigationItemStyled>
             ) : (
-                <NavigationItemStyled onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} isOpen={isHovered}>
+                <NavigationItemStyled
+                    onMouseEnter={openSubmenu}
+                    onMouseLeave={hideSubmenu}
+                    isOpen={isHovered}
+                    data-testid={testIdentifier}
+                >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>
                             {props.navigationItem.name}

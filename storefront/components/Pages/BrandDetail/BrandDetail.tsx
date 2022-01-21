@@ -18,6 +18,8 @@ type BrandDetailProps = {
 };
 
 const BrandDetail: FC<BrandDetailProps> = (props) => {
+    const testIdentifier = 'pages-branddetail-';
+
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (
@@ -25,10 +27,10 @@ const BrandDetail: FC<BrandDetailProps> = (props) => {
             <Webline>
                 <Heading type={'h1'}>{props.brand.seoH1 !== null ? props.brand.seoH1 : props.brand.name}</Heading>
                 <BrandDetailStyled>
-                    <BrandDetailImageStyled>
+                    <BrandDetailImageStyled data-testid={testIdentifier + 'image'}>
                         <Image image={props.brand.image} alt={props.brand.name} />
                     </BrandDetailImageStyled>
-                    <BrandDetailTextStyled>
+                    <BrandDetailTextStyled data-testid={testIdentifier + 'description'}>
                         {props.brand.description !== null ? <UserText htmlContent={props.brand.description} /> : null}
                     </BrandDetailTextStyled>
                 </BrandDetailStyled>

@@ -39,8 +39,10 @@ const dummyData = {
 };
 
 const FooterMenu: FC = () => {
+    const testIdentifier = 'layout-footer-footermenu';
+
     return (
-        <FooterMenuStyled>
+        <FooterMenuStyled data-testid={testIdentifier}>
             {dummyData.items.map((item, index) => (
                 <FooterMenuItem key={index} title={item.title} items={item.items} />
             ))}

@@ -26,6 +26,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC = () => {
+    const testIdentifier = 'layout-header-cart-';
+
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
@@ -36,12 +38,14 @@ const Cart: FC = () => {
     return (
         <CartStyled onMouseEnter={() => setIsCartHovered(true)} onMouseLeave={() => setIsCartHovered(false)}>
             <NextLink href={cartUrl} passHref>
-                <CartBlockStyled isHovered={isCartHovered}>
+                <CartBlockStyled isHovered={isCartHovered} data-testid={testIdentifier + 'block'}>
                     <CartPiecesStyled>
                         <CartIconStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled>{cart !== null && !isCartEmpty ? cart.items.length : 0}</CartCountStyled>
+                        <CartCountStyled data-testid={testIdentifier + 'itemcount'}>
+                            {cart !== null && !isCartEmpty ? cart.items.length : 0}
+                        </CartCountStyled>
                     </CartPiecesStyled>
-                    <CartValueStyled>
+                    <CartValueStyled data-testid={testIdentifier + 'totalprice'}>
                         {formatPrice(
                             cart?.totalItemsPrice.priceWithVat === undefined ? 0 : cart.totalItemsPrice.priceWithVat,
                             domainConfig.currencyCode,
@@ -53,7 +57,11 @@ const Cart: FC = () => {
                     </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
-            <CartDetailStyled containsProducts={!isCartEmpty} isHovered={isCartHovered}>
+            <CartDetailStyled
+                containsProducts={!isCartEmpty}
+                isHovered={isCartHovered}
+                data-testid={testIdentifier + 'detail'}
+            >
                 {cart !== null && !isCartEmpty ? (
                     <>
                         <CartDetailList>
@@ -62,7 +70,12 @@ const Cart: FC = () => {
                             ))}
                         </CartDetailList>
                         <CartDetailButtonWrapperStyled>
-                            <Button type="button" size="small" onClick={() => router.push(cartUrl)}>
+                            <Button
+                                type="button"
+                                size="small"
+                                onClick={() => router.push(cartUrl)}
+                                data-testid={testIdentifier + 'button'}
+                            >
                                 {t('Go to cart')}
                             </Button>
                         </CartDetailButtonWrapperStyled>

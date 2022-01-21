@@ -16,11 +16,13 @@ type ItemInfoProps = {
 };
 
 const ItemInfo: FC<ItemInfoProps> = (props) => {
+    const testIdentifier = 'pages-cart-list-item-iteminfo-';
+
     const t = useTypedTranslationFunction();
 
     return (
         <>
-            <NameStyled>
+            <NameStyled data-testid={testIdentifier + 'name'}>
                 <NextLink href={props.item.product.slug} passHref>
                     <NameTitleStyled>
                         <NameTitleTextStyled>{props.item.product.fullName}</NameTitleTextStyled>
@@ -30,7 +32,7 @@ const ItemInfo: FC<ItemInfoProps> = (props) => {
                     {t('Code')}: {props.item.product.catalogNumber}
                 </CodeStyled>
             </NameStyled>
-            <AvailabilityStyled>
+            <AvailabilityStyled data-testid={testIdentifier + 'availability'}>
                 {props.item.product.availability}
                 {props.item.product.availableStoresCount > 0 && (
                     <AvailabilityMessageStyled>

@@ -8,6 +8,8 @@ type ProductExposedStoresCountProps = {
 };
 
 const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) => {
+    const testIdentifier = 'blocks-product-exposed';
+
     const t = useTypedTranslationFunction();
 
     if (props.isMainVariant || props.exposedStoresCount === 0) {
@@ -15,7 +17,7 @@ const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) =>
     }
 
     return (
-        <ProductExposedStoreCountStyled>
+        <ProductExposedStoreCountStyled data-testid={testIdentifier}>
             {t(
                 '(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];',
                 { postProcess: 'interval', count: props.exposedStoresCount },

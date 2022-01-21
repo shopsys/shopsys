@@ -5,7 +5,9 @@ import { TableStyled } from './Table.style';
  * Wrapping element for html table - it gives table styling.
  */
 const Table: FC = (props) => {
-    return <TableStyled>{props.children}</TableStyled>;
+    const testIdentifier = 'basic-table';
+
+    return <TableStyled data-testid={testIdentifier}>{props.children}</TableStyled>;
 };
 
 /* @component */

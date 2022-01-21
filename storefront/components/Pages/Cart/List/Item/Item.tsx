@@ -27,6 +27,9 @@ type ItemProps = {
 };
 
 const Item: FC<ItemProps> = (props) => {
+    const testIdentifier = 'pages-cart-list-item-';
+    const itemCatnum = props.item.product.catalogNumber;
+
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
@@ -57,8 +60,8 @@ const Item: FC<ItemProps> = (props) => {
     };
 
     return (
-        <ItemStyled>
-            <ImageCellStyled>
+        <ItemStyled data-testid={testIdentifier + itemCatnum}>
+            <ImageCellStyled data-testid={testIdentifier + 'image'}>
                 <NextLink href={props.item.product.slug} passHref>
                     <ImageWrapperStyled>
                         <Image image={props.item.product.image} alt={props.item.product.fullName} />
@@ -68,7 +71,7 @@ const Item: FC<ItemProps> = (props) => {
             <InfoCellStyled>
                 <ItemInfo item={props.item} />
             </InfoCellStyled>
-            <SpinboxCellStyled>
+            <SpinboxCellStyled data-testid={testIdentifier + 'spinbox'}>
                 <Spinbox
                     min={1}
                     max={props.item.product.stockQuantity}
@@ -78,14 +81,14 @@ const Item: FC<ItemProps> = (props) => {
                     onChangeValueCallback={onChangeValueHandler}
                 />
             </SpinboxCellStyled>
-            <ItemPriceCellStyled>
+            <ItemPriceCellStyled data-testid={testIdentifier + 'itemprice'}>
                 <ItemPriceStyled>
                     {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t) +
                         '\u00A0/\u00A0' +
                         t('pc')}
                 </ItemPriceStyled>
             </ItemPriceCellStyled>
-            <TotalPriceCellStyled>
+            <TotalPriceCellStyled data-testid={testIdentifier + 'totalprice'}>
                 <TotalPriceStyled>
                     {formatPrice(
                         props.item.product.price.priceWithVat * props.item.quantity,

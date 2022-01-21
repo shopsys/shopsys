@@ -17,6 +17,8 @@ import Webline from 'components/Layout/Webline';
 type ListedOrdersProps = { orders: ListedOrderType[] | undefined; totalCount: number | undefined };
 
 const Orders: FC<ListedOrdersProps> = (props) => {
+    const testIdentifier = 'pages-customer-orders-';
+
     const t = useTypedTranslationFunction();
     const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
@@ -53,8 +55,8 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                         {orders !== undefined &&
                             orders.length !== 0 &&
                             orders.map((order, index) => (
-                                <tr key={index}>
-                                    <td>
+                                <tr key={index} data-testid={testIdentifier + index}>
+                                    <td data-testid={testIdentifier + 'number'}>
                                         <NextLink
                                             href={{
                                                 pathname: customerOrderDetailUrl,
@@ -64,19 +66,23 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                                             {order.number}
                                         </NextLink>
                                     </td>
-                                    <td className="text-right">{order.creationDate}</td>
-                                    <td className="text-right">{order.items.quantity}</td>
-                                    <td>
+                                    <td className="text-right" data-testid={testIdentifier + 'creation-date'}>
+                                        {order.creationDate}
+                                    </td>
+                                    <td className="text-right" data-testid={testIdentifier + 'quantity'}>
+                                        {order.items.quantity}
+                                    </td>
+                                    <td data-testid={testIdentifier + 'transport'}>
                                         <TransportImageWrapperStyled>
                                             <Image image={order.transport.image} alt={order.transport.name} />
                                         </TransportImageWrapperStyled>
                                         {order.transport.name}
                                     </td>
-                                    <td>{order.payment}</td>
-                                    <td className="text-right">
+                                    <td data-testid={testIdentifier + 'payment'}>{order.payment}</td>
+                                    <td className="text-right" data-testid={testIdentifier + 'total-price'}>
                                         {formatPrice(order.totalPrice.priceWithVat, currencyCode, t)}
                                     </td>
-                                    <td>
+                                    <td data-testid={testIdentifier + 'detail-link'}>
                                         <NextLink
                                             href={{
                                                 pathname: customerOrderDetailUrl,

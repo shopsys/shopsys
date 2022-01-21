@@ -4,10 +4,12 @@ import Image from 'next/image';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const FooterCopyright: FC = () => {
+    const testIdentifier = 'layout-footer-footercopyright';
+
     const t = useTypedTranslationFunction();
 
     return (
-        <FooterCopyrightStyled>
+        <FooterCopyrightStyled data-testid={testIdentifier}>
             <FooterCopyrightTextStyled>
                 {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
             </FooterCopyrightTextStyled>

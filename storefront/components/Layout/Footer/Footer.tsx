@@ -7,10 +7,12 @@ import FooterMenu from './FooterMenu';
 import { useRouter } from 'next/router';
 
 const Footer: FC = () => {
+    const testIdentifier = 'layout-footer';
+
     const router = useRouter();
     const isOrderPageLayoutVisible = router.route.slice(0, 6) === '/order';
     return (
-        <FooterStyled>
+        <FooterStyled data-testid={testIdentifier}>
             <FooterBottomStyled>
                 {isOrderPageLayoutVisible === true ? (
                     <FooterCopyright />

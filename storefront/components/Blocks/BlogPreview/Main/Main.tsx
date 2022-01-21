@@ -20,6 +20,8 @@ type MainProps = {
 };
 
 const Main: FC<MainProps> = (props) => {
+    const testIdentifier = 'blocks-blogpreview-main-';
+
     const { width } = useGetWindowSize();
     const [isOneMainArticle, setOnlyOneMainArticle] = useState(false);
     const visibleArticles = isOneMainArticle ? 1 : 2;
@@ -37,7 +39,7 @@ const Main: FC<MainProps> = (props) => {
             {props.blogMainItems.map(
                 (blogMainItem, index) =>
                     index < visibleArticles && (
-                        <MainItemStyled key={index}>
+                        <MainItemStyled key={index} data-testid={testIdentifier + index}>
                             <MainImageStyled>
                                 <MainImageLinkStyled href={blogMainItem.link}>
                                     <Image image={blogMainItem.image} alt="alt" />

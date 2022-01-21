@@ -24,6 +24,8 @@ type SelectProps = {
 };
 
 const Select: FC<SelectProps> = (props) => {
+    const testIdentifier = 'pages-order-';
+
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<TransportAndPaymentFormType>();
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
@@ -167,7 +169,11 @@ const Select: FC<SelectProps> = (props) => {
         fieldRef: ControllerRenderProps,
     ) => {
         return (
-            <ListItemStyled key={transportItem.uuid} isActive={isActive}>
+            <ListItemStyled
+                key={transportItem.uuid}
+                isActive={isActive}
+                data-testid={testIdentifier + 'transport-item' + (isActive ? '-active' : '')}
+            >
                 <Radiobutton
                     name={formMeta.fields.transport.name}
                     id={transportItem.uuid}
@@ -197,7 +203,11 @@ const Select: FC<SelectProps> = (props) => {
 
     const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean, fieldRef: ControllerRenderProps) => {
         return (
-            <ListItemStyled key={paymentItem.uuid} isActive={isActive}>
+            <ListItemStyled
+                key={paymentItem.uuid}
+                isActive={isActive}
+                data-testid={testIdentifier + 'payment-item' + (isActive ? '-active' : '')}
+            >
                 <Radiobutton
                     name={formMeta.fields.payment.name}
                     id={paymentItem.uuid}
@@ -221,8 +231,8 @@ const Select: FC<SelectProps> = (props) => {
     return (
         <>
             <PacketeryContainer />
-            <div>
-                <div>
+            <div data-testid={testIdentifier + 'transport-and-payment'}>
+                <div data-testid={testIdentifier + 'transport'}>
                     <Heading type="h3">{formMeta.fields.transport.label}</Heading>
                     <Controller
                         name={formMeta.fields.transport.name}
@@ -237,7 +247,11 @@ const Select: FC<SelectProps> = (props) => {
                         )}
                     />
                     {transportValue !== null && (
-                        <ResetButtonStyled type="button" onClick={resetTransportAndPayment}>
+                        <ResetButtonStyled
+                            type="button"
+                            onClick={resetTransportAndPayment}
+                            data-testid={testIdentifier + 'reset-transport'}
+                        >
                             {t('Change transport type')}
                             <Icon iconType="icon" icon="Arrow" />
                         </ResetButtonStyled>
@@ -255,7 +269,7 @@ const Select: FC<SelectProps> = (props) => {
                     transportValue !== null &&
                     transport.uuid === transportValue &&
                     !isPreSelectingTransport && (
-                        <PaymentListWrapper>
+                        <PaymentListWrapper data-testid={testIdentifier + 'payment'}>
                             <Heading type="h3">{formMeta.fields.payment.label}</Heading>
                             <Controller
                                 name={formMeta.fields.payment.name}
@@ -273,6 +287,7 @@ const Select: FC<SelectProps> = (props) => {
                                 <ResetButtonStyled
                                     type="button"
                                     onClick={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                                    data-testid={testIdentifier + 'reset-payment'}
                                 >
                                     {t('Change payment type')}
                                     <Icon iconType="icon" icon="Arrow" />

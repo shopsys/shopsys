@@ -9,15 +9,18 @@ type ChildrenProps = {
 };
 
 const Children: FC<ChildrenProps> = (props) => {
+    const testIdentifier = 'blocks-blogsignpost-children-';
+
     return (
         <>
-            {props.blogCategory.children.map((blogCategoryChild) => (
+            {props.blogCategory.children.map((blogCategoryChild, index) => (
                 <>
                     <BlogSignpostItemStyled
                         key={blogCategoryChild.uuid}
                         href={blogCategoryChild.link}
                         isActive={props.activeItem === blogCategoryChild.uuid}
                         itemLevel={props.itemLevel}
+                        data-testid={testIdentifier + index}
                     >
                         <BlogSignpostItemIconStyled
                             iconType="icon"

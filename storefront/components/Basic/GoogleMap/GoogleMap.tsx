@@ -20,6 +20,8 @@ type GoogleMapProps = {
 };
 
 const GoogleMap: FC<GoogleMapProps> = (props) => {
+    const testIdentifier = 'basic-googlemap';
+
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useShopsysSelector((state) => state.domain);
     const lat = props.lat === null || props.lat === undefined ? mapSetting.latitude : props.lat;
@@ -46,7 +48,7 @@ const GoogleMap: FC<GoogleMapProps> = (props) => {
     }, [activeMarker]);
 
     return (
-        <GoogleMapWrapStyled>
+        <GoogleMapWrapStyled data-testid={testIdentifier}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: publicRuntimeConfig.googleMapApiKey }}
                 defaultCenter={{ lat: lat, lng: lng }}

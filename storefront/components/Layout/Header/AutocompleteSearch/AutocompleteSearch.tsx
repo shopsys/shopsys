@@ -25,6 +25,8 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const AutocompleteSearch: FC = () => {
+    const testIdentifier = 'layout-header-search-autocomplete-input';
+
     const router = useRouter();
     const [formProviderMethods] = useAutocompleteSearchForm();
     const formMeta = useAutocompleteSearchFormMeta(formProviderMethods);
@@ -112,6 +114,7 @@ const AutocompleteSearch: FC = () => {
                                         variant="searchInHeader"
                                         label={formMeta.fields.autocompleteSearchQuery.label}
                                         fieldRef={field}
+                                        data-testid={testIdentifier}
                                     />
                                 )}
                             />

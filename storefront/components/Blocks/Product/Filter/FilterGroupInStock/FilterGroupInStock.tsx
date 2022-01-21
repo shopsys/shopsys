@@ -26,6 +26,8 @@ type FilterGroupInStockProps = {
 };
 
 const FilterGroupInStock: FC<FilterGroupInStockProps> = (props) => {
+    const testIdentifier = 'blocks-product-filter-filtergroup-instock';
+
     const t = useTypedTranslationFunction();
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
 
@@ -34,7 +36,7 @@ const FilterGroupInStock: FC<FilterGroupInStockProps> = (props) => {
     };
 
     return (
-        <FilterGroupStyled>
+        <FilterGroupStyled data-testid={testIdentifier}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {props.title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />

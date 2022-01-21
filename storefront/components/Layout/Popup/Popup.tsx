@@ -21,6 +21,8 @@ type PopupProps = {
  * Popup component used for displaying any type of content above the main page content.
  */
 const Popup: FC<PopupProps> = (props) => {
+    const testIdentifier = 'layout-popup';
+
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             props.onCloseCallback();
@@ -45,7 +47,7 @@ const Popup: FC<PopupProps> = (props) => {
         return (
             <Portal>
                 <Overlay onClick={onClickCloseActionHandler}></Overlay>
-                <PopupWrapper role="dialog" aria-modal={true}>
+                <PopupWrapper role="dialog" aria-modal={true} data-testid={testIdentifier}>
                     {props.hideCloseButton !== true && (
                         <PopupHeaderStyled>
                             <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>

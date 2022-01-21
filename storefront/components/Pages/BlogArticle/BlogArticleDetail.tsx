@@ -19,6 +19,8 @@ type BlogArticleDetailProps = {
     blogArticle: BlogArticleDetailType;
 };
 const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
+    const testIdentifier = 'pages-blogarticle-';
+
     const t = useTypedTranslationFunction();
 
     const addProductNamesToText = function useRegex(text: string | null): string | null {
@@ -47,20 +49,24 @@ const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
 
     return (
         <Webline>
-            <ArticleTitle>{props.blogArticle.name}</ArticleTitle>
+            <ArticleTitle data-testid={testIdentifier + 'title'}>{props.blogArticle.name}</ArticleTitle>
             <BlogArticleWrapper>
                 <BlogArticleTextContent>
                     {props.blogArticle.image === null ? null : (
-                        <ArticleImageWrapper>
+                        <ArticleImageWrapper data-testid={testIdentifier + 'image'}>
                             <Image image={props.blogArticle.image} alt={props.blogArticle.name} />
                         </ArticleImageWrapper>
                     )}
-                    <BlogArticleDate>{props.blogArticle.publishDate}</BlogArticleDate>
-                    {textWithProductNames === null ? null : <UserText htmlContent={textWithProductNames} />}
+                    <BlogArticleDate data-testid={testIdentifier + 'date'}>
+                        {props.blogArticle.publishDate}
+                    </BlogArticleDate>
+                    {textWithProductNames === null ? null : (
+                        <UserText htmlContent={textWithProductNames} data-testid={testIdentifier + 'content'} />
+                    )}
                 </BlogArticleTextContent>
 
                 {props.blogArticle.blogArticleProducts.length === 0 ? null : (
-                    <ProductSectionWrapper>
+                    <ProductSectionWrapper data-testid={testIdentifier + 'products'}>
                         <ProductSectionTitle>{t('Products mentioned in this article')}</ProductSectionTitle>
                         <ProductsSlider products={props.blogArticle.blogArticleProducts} />
                     </ProductSectionWrapper>
