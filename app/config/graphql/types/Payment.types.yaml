@@ -19,7 +19,7 @@ Payment:
                         type: "Uuid"
                         defaultValue: null
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Payment images"
                 resolve: '@=resolver("paymentImageResolver", [value, args["type"], args["sizes"]])'
                 args:

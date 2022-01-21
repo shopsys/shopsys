@@ -1,7 +1,7 @@
 import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AddToCartPopupDataType } from 'types/cart';
-import { mapImageApiData } from 'connectors/image/Image';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { mapProductPriceApiData } from 'connectors/products/Products';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { UseMutationState } from 'urql';
@@ -48,7 +48,7 @@ export const useHandleAddToCartMessage = (
             const mappedPopupData = {
                 name: cartItem.product.fullName,
                 slug: cartItem.product.slug,
-                image: mapImageApiData(cartItem.product.images),
+                image: getFirstImageSize(cartItem.product.images),
                 quantity: result.data.AddToCart.addProductResult.addedQuantity,
                 unitName: cartItem.product.unit.name,
                 price: mapProductPriceApiData(cartItem.product.price, currencyCode),

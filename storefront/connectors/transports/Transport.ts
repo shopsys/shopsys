@@ -1,4 +1,4 @@
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPickupPlacesApiData } from './pickupPlace/PickupPlace';
 import { mapPriceData } from './Transports';
@@ -13,13 +13,7 @@ export const mapTransport = (
         ...apiData,
         description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
         instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
-        image:
-            apiData.images.length > 0 &&
-            0 in apiData.images &&
-            apiData.images[0]?.sizes !== undefined &&
-            0 in apiData.images[0].sizes
-                ? mapImageSizeApiData(apiData.images[0].sizes[0])
-                : null,
+        image: getFirstImageSize(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         isPersonalPickup:
             (apiData.stores?.edges !== undefined && apiData.stores.edges !== null && apiData.stores.edges.length > 0) ||

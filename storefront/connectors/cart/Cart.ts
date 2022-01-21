@@ -14,7 +14,7 @@ import { CartInput, CartType } from 'types/cart';
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -115,10 +115,7 @@ export const mapCart = (
                     ...item.product,
                     price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
-                    image:
-                        0 in item.product.images && 0 in item.product.images[0].sizes
-                            ? mapImageSizeApiData(item.product.images[0].sizes[0])
-                            : null,
+                    image: getFirstImageSize(item.product.images),
                 },
             };
         }),

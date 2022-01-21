@@ -1,5 +1,5 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 import { ListedProductEdgesType } from 'types/product';
 
 export type BrandDetailType = {
@@ -9,7 +9,7 @@ export type BrandDetailType = {
     breadcrumb: BreadcrumbItemType[];
     name: string;
     seoH1: string | null;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     description: string | null;
     products: ListedProductEdgesType;
 };
@@ -18,7 +18,7 @@ export type ListedBrandType = {
     uuid: string;
     name: string;
     slug: string;
-    image: ImageType | null;
+    image: ImageSizeType | null;
 };
 
 export type SimpleBrandType = {

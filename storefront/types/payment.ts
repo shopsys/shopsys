@@ -1,5 +1,5 @@
 import { PriceApiType, PriceType } from 'types/price';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 
 export type PaymentInputType = {
     uuid: string;
@@ -12,5 +12,5 @@ export type PaymentType = {
     description: string;
     instruction: string;
     price: PriceType;
-    image: ImageType | null;
+    image: ImageSizeType | null;
 };

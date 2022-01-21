@@ -8,8 +8,8 @@ import {
 } from 'graphql/generated';
 
 import { DomainConfigType } from 'utils/Domain/Domain';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { initialState } from 'redux/slices/user';
-import { mapImageApiData } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -53,7 +53,7 @@ const mapOrdersApiData = (
                 items: { quantity: edge.node.items.length - 2 }, // -2 => we need to remove transport and payment
                 transport: {
                     name: edge.node.transport.name,
-                    image: mapImageApiData(edge.node.transport.images),
+                    image: getFirstImageSize(edge.node.transport.images),
                 },
                 payment: edge.node.payment.name,
                 totalPrice: mapPriceData(edge.node.totalPrice, currentDomainConfig.currencyCode),

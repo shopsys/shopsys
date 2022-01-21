@@ -1347,7 +1347,7 @@ Advert link
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>image</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Advert image
@@ -1763,11 +1763,11 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>image</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-Blog article image
+Blog article images
 
 </td>
 </tr>
@@ -3932,7 +3932,7 @@ Color of the notification
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Notification bar images
@@ -4767,7 +4767,7 @@ Payment price
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Payment images
@@ -6107,7 +6107,7 @@ Transport price
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Transport images

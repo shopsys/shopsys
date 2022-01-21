@@ -1,8 +1,8 @@
 import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
 import { CategoryDetailType } from 'types/category';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { ListedCategoryType } from 'types/category';
 import { ListedProductEdgesType } from 'types/product';
-import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
@@ -55,6 +55,6 @@ export const mapCategoryDetailData = (
 export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFragmentApi): ListedCategoryType => {
     return {
         ...listedCategoryApiData,
-        image: mapImageApiData(listedCategoryApiData.images),
+        image: getFirstImageSize(listedCategoryApiData.images),
     };
 };

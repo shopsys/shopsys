@@ -1,0 +1,6 @@
+fragment ImageSizeFragment on ImageSize {
+    size
+    url
+    width
+    height
+}

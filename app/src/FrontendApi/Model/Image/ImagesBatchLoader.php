@@ -6,7 +6,6 @@ namespace App\FrontendApi\Model\Image;
 
 use App\Component\Image\ImageFacade;
 use App\FrontendApi\Model\Image\ImageFacade as FrontendApiImageFacade;
-use App\FrontendApi\Model\Resolver\Image\BlogArticleImagesResolver;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\Cdn\Component\Domain\Domain;
@@ -96,9 +95,6 @@ class ImagesBatchLoader
                 continue;
             }
             $entityResolvedImages = $this->getResolvedImages($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()], $imageBatchLoadData->getSizeConfigs());
-            if ($entityName === BlogArticleImagesResolver::ENTITY_NAME) {
-                $entityResolvedImages = array_shift($entityResolvedImages);
-            }
             $images[$imageBatchLoadData->getId()] = $entityResolvedImages;
         }
 

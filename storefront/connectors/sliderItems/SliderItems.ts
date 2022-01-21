@@ -1,6 +1,5 @@
-import { SliderItemImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
-import { ImageApiType } from 'types/image';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { SliderItem } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
@@ -29,25 +28,7 @@ const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): Sli
                 sliderItem.extendedTextLink === undefined || sliderItem.extendedTextLink === null
                     ? ''
                     : sliderItem.extendedTextLink,
-            images: mapSliderItemImagesApiData(sliderItem.images),
+            image: getFirstImageSize(sliderItem.images),
         };
     });
-};
-
-const mapSliderItemImagesApiData = (apiData: SliderItemImagesWebDefaultFragmentApi['images']): ImageApiType[] => {
-    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
-        return [];
-    }
-
-    const mappedImageSizes = mapImageSizeApiData(apiData[0].sizes[0]);
-    if (mappedImageSizes === null) {
-        return [];
-    }
-
-    return [
-        {
-            ...apiData[0],
-            sizes: [mappedImageSizes],
-        },
-    ];
 };

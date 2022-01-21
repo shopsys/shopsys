@@ -124,7 +124,7 @@ type AdvertImage implements Advert {
   link: String
 
   """Advert image"""
-  image(type: String = null, size: String = null, sizes: [String!] = null): [Image]!
+  image(type: String = null, size: String = null, sizes: [String!] = null): [Image!]!
 }
 
 type AdvertPosition {
@@ -252,8 +252,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
 
-  """Blog article image"""
-  image(type: String = null, sizes: [String!] = null): Image
+  """Blog article images"""
+  images(type: String = null, sizes: [String!] = null): [Image!]!
 }
 
 """A connection to a list of items."""
@@ -1015,7 +1015,7 @@ type NotificationBar {
   rgbColor: String!
 
   """Notification bar images"""
-  images(type: String = null, sizes: [String!] = null): [Image]!
+  images(type: String = null, sizes: [String!] = null): [Image!]!
 }
 
 type Order {
@@ -1400,7 +1400,7 @@ type Payment {
   price(cartUuid: Uuid = null): Price!
 
   """Payment images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image]!
+  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """List of assigned transports"""
   transports: [Transport!]!
@@ -2220,7 +2220,7 @@ type Transport {
   price(cartUuid: Uuid = null): Price!
 
   """Transport images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image]!
+  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """List of assigned payments"""
   payments: [Payment!]!

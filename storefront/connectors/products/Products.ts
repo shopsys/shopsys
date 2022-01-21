@@ -1,3 +1,4 @@
+import { getFirstImageSize, mapImageSizesTypeApiData } from 'connectors/image/Image';
 import {
     ListedProductFragmentApi,
     ListedVariantFragmentApi,
@@ -6,9 +7,8 @@ import {
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
 import { ListedProductType, ListedVariantType } from 'types/product';
-import { mapProductDetailImages, mapStoreAvailabilities } from './ProductDetail';
 import { ProductPriceType, SliderProductItemType } from 'types/product';
-import { mapImageApiData } from 'connectors/image/Image';
+import { mapStoreAvailabilities } from './ProductDetail';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -33,7 +33,7 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
         availability: apiData.availability.name,
         name: apiData.name,
         price: mapProductPriceApiData(apiData.price, currencyCode),
-        image: mapImageApiData(apiData.images),
+        image: getFirstImageSize(apiData.images),
         catalogNumber: apiData.catalogNumber,
     };
 };
@@ -45,7 +45,7 @@ export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currency
         availability: apiData.availability.name,
         name: apiData.name,
         price: mapProductPriceApiData(apiData.price, currencyCode),
-        images: mapProductDetailImages(apiData.images),
+        images: mapImageSizesTypeApiData(apiData.images),
         catalogNumber: apiData.catalogNumber,
         storeAvailabilities: mapStoreAvailabilities(apiData.storeAvailabilities),
     };
@@ -71,7 +71,7 @@ export const mapSliderProductApiData = (
         return {
             ...apiProduct,
             name: apiProduct.name,
-            image: mapImageApiData(apiProduct.images),
+            image: getFirstImageSize(apiProduct.images),
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability: apiProduct.availability.name,

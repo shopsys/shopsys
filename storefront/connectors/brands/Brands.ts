@@ -1,7 +1,7 @@
 import { BrandDetailFragmentApi, ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
 import { BrandDetailType, ListedBrandType } from 'types/brand';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { ListedProductEdgesType } from 'types/product';
-import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -41,7 +41,7 @@ export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: st
     return {
         ...apiData,
         __typename: 'Brand',
-        image: mapImageApiData(apiData.brandImages),
+        image: getFirstImageSize(apiData.brandImages),
         products: products,
     };
 };
@@ -49,6 +49,6 @@ export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: st
 export const mapListedBrand = (apiData: ListedBrandFragmentApi): ListedBrandType => {
     return {
         ...apiData,
-        image: mapImageApiData(apiData.images),
+        image: getFirstImageSize(apiData.images),
     };
 };

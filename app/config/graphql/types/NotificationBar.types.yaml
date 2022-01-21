@@ -10,7 +10,7 @@ NotificationBar:
                 type: "String!"
                 description: "Color of the notification"
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Notification bar images"
                 resolve: '@=resolver("notificationBarImageResolver", [value, args["type"], args["sizes"]])'
                 args:

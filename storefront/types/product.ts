@@ -1,6 +1,6 @@
+import { ImageSizesType, ImageSizeType } from 'types/image';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
-import { ImageType } from 'types/image';
 import { SimpleFlagType } from 'types/flag';
 import { StoreDetailType } from 'types/store';
 
@@ -9,7 +9,7 @@ export type SimpleProductType = {
     slug: string;
     name: string;
     price: ProductPriceType;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     unitName: string;
 };
 
@@ -22,7 +22,7 @@ export type ListedProductType = {
     exposedStoresCount: number;
     flags: SimpleFlagType[];
     availability: string;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     price: ProductPriceType;
     isMainVariant: boolean;
     catalogNumber: string;
@@ -37,7 +37,7 @@ export type ListedVariantType = {
     exposedStoresCount: number;
     flags: SimpleFlagType[];
     availability: string;
-    images: ProductDetailImageType[];
+    images: ImageSizesType[];
     price: ProductPriceType;
     catalogNumber: string;
     storeAvailabilities: StoreAvailability[];
@@ -56,7 +56,7 @@ export type MainVariantDetailType = {
     price: ProductPriceType;
     accessories: ListedProductType[];
     parameters: ProductParameterType[];
-    images: ProductDetailImageType[];
+    images: ImageSizesType[];
     variants: ListedVariantType[];
 };
 
@@ -82,10 +82,6 @@ export type ProductParameterType = {
     }[];
 };
 
-export type ProductDetailImageType = {
-    [sizeName: string]: ImageType;
-};
-
 export type ProductDetailType = {
     __typename: 'MainVariant' | 'RegularProduct' | 'Variant';
     uuid: string;
@@ -105,7 +101,7 @@ export type ProductDetailType = {
     exposedStoresCount: number;
     accessories: SliderProductItemType[];
     parameters: ProductParameterType[];
-    images: ProductDetailImageType[];
+    images: ImageSizesType[];
 };
 
 export type ProductPriceType = {
@@ -128,7 +124,7 @@ export type SliderProductItemType = {
     slug: string;
     name: string;
     flags: SimpleFlagType[];
-    image: ImageType | null;
+    image: ImageSizeType | null;
     stockQuantity: number;
     price: ProductPriceType;
     isMainVariant: boolean;
@@ -143,7 +139,7 @@ export type ListedProductItemType = {
     slug: string;
     name: string;
     flags: SimpleFlagType[];
-    image: ImageType | null;
+    image: ImageSizeType | null;
     stockQuantity: number;
     price: ProductPriceType;
     isMainVariant: boolean;

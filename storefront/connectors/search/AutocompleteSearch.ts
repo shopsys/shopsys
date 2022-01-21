@@ -1,12 +1,8 @@
-import {
-    AutocompleteSearchQueryApi,
-    ProductImagesListFragmentApi,
-    useAutocompleteSearchQueryApi,
-} from 'graphql/generated';
+import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { AutocompleteSearchType } from 'types/search';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { mapArticlesSearchResults } from './Search';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapProductPriceApiData } from 'connectors/products/Products';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
@@ -75,7 +71,7 @@ const mapProductsSearchResults = (
                     ...productEdge.node,
                     name: productEdge.node.name,
                     price: mapProductPriceApiData(productEdge.node.price, currencyCode),
-                    image: mapProductsSearchResultImage(productEdge.node.images),
+                    image: getFirstImageSize(productEdge.node.images),
                     unitName: productEdge.node.unit.name,
                 });
             }
@@ -83,11 +79,4 @@ const mapProductsSearchResults = (
     }
 
     return { totalCount: apiData.totalCount, products: mappedProducts };
-};
-
-const mapProductsSearchResultImage = (apiData: ProductImagesListFragmentApi['images']) => {
-    if (!(0 in apiData)) {
-        return null;
-    }
-    return mapImageSizeApiData(apiData[0].sizes[0]);
 };

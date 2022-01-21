@@ -11,7 +11,7 @@ import {
     NavigationItem,
     NavigationSubCategory,
 } from 'types/navigation';
-import { mapImageApiData } from 'connectors/image/Image';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function getNavigationItems(): NavigationItem[] {
@@ -65,8 +65,8 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
         if (!(0 in category.images)) {
             continue;
         }
-        const mappedImages = mapImageApiData(category.images);
-        if (mappedImages === null) {
+        const mappedImage = getFirstImageSize(category.images);
+        if (mappedImage === null) {
             continue;
         }
 
@@ -74,7 +74,7 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
             name: category.name,
             slug: category.slug,
             children: mapSubCategories(category.children),
-            image: mappedImages,
+            image: mappedImage,
         });
     }
     return mappedCategories;

@@ -12,8 +12,8 @@ import {
     SimpleBlogArticleType,
 } from 'types/blogArticle';
 import { DomainConfigType } from 'utils/Domain/Domain';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -42,7 +42,7 @@ export const mapBlogArticleDetail = (
     return {
         ...apiData,
         __typename: 'BlogArticle',
-        image: mapImageApiData([apiData.image]),
+        image: getFirstImageSize(apiData.blogArticlesGridImages),
         blogArticleProducts: apiData.blogArticleProducts.map((product) =>
             mapListedProductType(product, currentDomainConfig.currencyCode),
         ),
@@ -69,13 +69,13 @@ export const mapBlogArticleConnection = (
 export const mapListedBlogArticle = (apiData: ListedBlogArticleFragmentApi): ListedBlogArticleType => {
     return {
         ...apiData,
-        image: mapImageApiData([apiData.image]),
+        image: getFirstImageSize(apiData.images),
     };
 };
 
 export const mapSimpleBlogArticle = (apiData: SimpleBlogArticleFragmentApi): SimpleBlogArticleType => {
     return {
         ...apiData,
-        image: mapImageApiData([apiData.image]),
+        image: getFirstImageSize(apiData.images),
     };
 };

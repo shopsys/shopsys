@@ -1,11 +1,10 @@
-export type ImageType = {
+export type ImageSizeType = {
     size: string;
     url: string;
     width: number;
     height: number;
 };
 
-export type ImageApiType = {
-    position?: number | null;
-    sizes: ImageType[];
+export type ImageSizesType = {
+    [sizeName: string]: ImageSizeType;
 };

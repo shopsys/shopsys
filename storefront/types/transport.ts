@@ -1,5 +1,5 @@
 import { PriceApiType, PriceType } from 'types/price';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 
@@ -15,7 +15,7 @@ export type TransportType = {
     description: string;
     instruction: string;
     price: PriceType;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     payments: PaymentType[];
     daysUntilDelivery: number;
     isPersonalPickup: boolean;

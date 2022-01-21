@@ -1,7 +1,7 @@
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { ProductPriceType, SimpleProductType } from 'types/product';
 import { TransportInputType, TransportType } from 'types/transport';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
 import { SimpleFlagType } from 'types/flag';
@@ -18,7 +18,7 @@ export type ProductCartItemType = {
     slug: string;
     fullName: string;
     flags: SimpleFlagType[];
-    image: ImageType | null;
+    image: ImageSizeType | null;
     price: ProductPriceType;
     availability: string;
     stockQuantity: number;
