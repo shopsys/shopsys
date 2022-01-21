@@ -18,7 +18,7 @@ export const mapCategoryDetailData = (
         pageInfo: mapPageInfoApiData(apiCategoryDetailData.products?.pageInfo),
         edges: [],
         productFilterOptions:
-            apiCategoryDetailData.products !== undefined && apiCategoryDetailData.products !== null
+            apiCategoryDetailData.products !== null
                 ? mapProductFilterOptions(apiCategoryDetailData.products.productFilterOptions, currencyCode)
                 : null,
     };
@@ -38,14 +38,6 @@ export const mapCategoryDetailData = (
     return {
         ...apiCategoryDetailData,
         __typename: 'Category',
-        originalCategorySlug:
-            apiCategoryDetailData.originalCategorySlug !== undefined
-                ? apiCategoryDetailData.originalCategorySlug
-                : null,
-        seoH1:
-            apiCategoryDetailData.seoH1 !== undefined && apiCategoryDetailData.seoH1 !== null
-                ? apiCategoryDetailData.seoH1
-                : null,
         products: products,
         children: apiCategoryDetailData.children.map((child) => mapListedCategoryApiData(child)),
         linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => mapListedCategoryApiData(child)),

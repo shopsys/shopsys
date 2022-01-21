@@ -17,16 +17,11 @@ export const getValuesFromCartResult = (
         vatAmount: 0,
         currencyCode: currencyCode,
     };
-    const cartUuid = isUserLoggedIn || resultData.uuid === undefined ? null : resultData.uuid;
-    const transport =
-        resultData.transport === null || resultData.transport === undefined
-            ? null
-            : mapTransport(resultData.transport, currencyCode);
+    const cartUuid = isUserLoggedIn ? null : resultData.uuid;
+    const transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
     const pickupPlace = getSelectedPickupPlace(transport, resultData.selectedPickupPlaceIdentifier);
     const payment =
-        resultData.payment === null || resultData.payment === undefined || transport === null
-            ? null
-            : mapPayment(resultData.payment, currencyCode);
+        resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode);
     const cart = mapCart(
         {
             ...resultData,
@@ -35,7 +30,7 @@ export const getValuesFromCartResult = (
         payment !== null ? payment.price : { ...emptyPriceArray },
         currencyCode,
     );
-    const updatedPromoCode = resultData.promoCode === undefined ? null : resultData.promoCode;
+    const updatedPromoCode = resultData.promoCode;
 
     return {
         cartUuid,

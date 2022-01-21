@@ -11,8 +11,8 @@ export const mapTransport = (
 ): TransportType => {
     return {
         ...apiData,
-        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
-        instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
+        description: apiData.description !== null ? apiData.description : '',
+        instruction: apiData.instruction !== null ? apiData.instruction : '',
         image: getFirstImageSize(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         isPersonalPickup:
@@ -20,7 +20,7 @@ export const mapTransport = (
             apiData.transportType.code === 'packetery',
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores:
-            apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores.edges)
+            apiData.stores !== null && Array.isArray(apiData.stores.edges)
                 ? mapPickupPlacesApiData(apiData.stores)
                 : [],
     };

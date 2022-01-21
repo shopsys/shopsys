@@ -64,7 +64,7 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
             productFilterOptions:
-                apiData.productsSearch !== undefined && apiData.productsSearch !== null
+                apiData.productsSearch !== null
                     ? mapProductFilterOptions(apiData.productsSearch.productFilterOptions, currencyCode)
                     : null,
             products: mapProductsSearchResults(apiData.productsSearch, currencyCode),

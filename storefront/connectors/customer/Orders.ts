@@ -81,69 +81,25 @@ export function mapOrderDetailApiData(
             creationDate: new Date(apiOrderDetailData.creationDate).toLocaleDateString(
                 currentDomainConfig.defaultLocale,
             ),
-            firstName:
-                apiOrderDetailData.firstName !== null && apiOrderDetailData.firstName !== undefined
-                    ? apiOrderDetailData.firstName
-                    : '',
-            lastName:
-                apiOrderDetailData.lastName !== null && apiOrderDetailData.lastName !== undefined
-                    ? apiOrderDetailData.lastName
-                    : '',
-            companyName:
-                apiOrderDetailData.companyName !== null && apiOrderDetailData.companyName !== undefined
-                    ? apiOrderDetailData.companyName
-                    : '',
-            companyNumber:
-                apiOrderDetailData.companyNumber !== null && apiOrderDetailData.companyNumber !== undefined
-                    ? apiOrderDetailData.companyNumber
-                    : '',
-            companyTaxNumber:
-                apiOrderDetailData.companyTaxNumber !== null && apiOrderDetailData.companyTaxNumber !== undefined
-                    ? apiOrderDetailData.companyTaxNumber
-                    : '',
+            firstName: apiOrderDetailData.firstName !== null ? apiOrderDetailData.firstName : '',
+            lastName: apiOrderDetailData.lastName !== null ? apiOrderDetailData.lastName : '',
+            companyName: apiOrderDetailData.companyName !== null ? apiOrderDetailData.companyName : '',
+            companyNumber: apiOrderDetailData.companyNumber !== null ? apiOrderDetailData.companyNumber : '',
+            companyTaxNumber: apiOrderDetailData.companyTaxNumber !== null ? apiOrderDetailData.companyTaxNumber : '',
             country: apiOrderDetailData.country.name,
             deliveryFirstName:
-                apiOrderDetailData.deliveryFirstName !== null && apiOrderDetailData.deliveryFirstName !== undefined
-                    ? apiOrderDetailData.deliveryFirstName
-                    : '',
-            deliveryLastName:
-                apiOrderDetailData.deliveryLastName !== null && apiOrderDetailData.deliveryLastName !== undefined
-                    ? apiOrderDetailData.deliveryLastName
-                    : '',
+                apiOrderDetailData.deliveryFirstName !== null ? apiOrderDetailData.deliveryFirstName : '',
+            deliveryLastName: apiOrderDetailData.deliveryLastName !== null ? apiOrderDetailData.deliveryLastName : '',
             deliveryCompanyName:
-                apiOrderDetailData.deliveryCompanyName !== null && apiOrderDetailData.deliveryCompanyName !== undefined
-                    ? apiOrderDetailData.deliveryCompanyName
-                    : '',
+                apiOrderDetailData.deliveryCompanyName !== null ? apiOrderDetailData.deliveryCompanyName : '',
             deliveryTelephone:
-                apiOrderDetailData.deliveryTelephone !== null && apiOrderDetailData.deliveryTelephone !== undefined
-                    ? apiOrderDetailData.deliveryTelephone
-                    : '',
-            deliveryStreet:
-                apiOrderDetailData.deliveryStreet !== null && apiOrderDetailData.deliveryStreet !== undefined
-                    ? apiOrderDetailData.deliveryStreet
-                    : '',
-            deliveryCity:
-                apiOrderDetailData.deliveryCity !== null && apiOrderDetailData.deliveryCity !== undefined
-                    ? apiOrderDetailData.deliveryCity
-                    : '',
-            deliveryPostcode:
-                apiOrderDetailData.deliveryPostcode !== null && apiOrderDetailData.deliveryPostcode !== undefined
-                    ? apiOrderDetailData.deliveryPostcode
-                    : '',
-            deliveryCountry:
-                apiOrderDetailData.deliveryCountry !== null && apiOrderDetailData.deliveryCountry !== undefined
-                    ? apiOrderDetailData.deliveryCountry.name
-                    : '',
-            note:
-                apiOrderDetailData.note !== null && apiOrderDetailData.note !== undefined
-                    ? apiOrderDetailData.note
-                    : '',
-            promoCode:
-                apiOrderDetailData.promoCode !== null && apiOrderDetailData.promoCode !== undefined
-                    ? apiOrderDetailData.promoCode
-                    : '',
-            trackingNumber: apiOrderDetailData.trackingNumber !== undefined ? apiOrderDetailData.trackingNumber : null,
-            trackingUrl: apiOrderDetailData.trackingUrl !== undefined ? apiOrderDetailData.trackingUrl : null,
+                apiOrderDetailData.deliveryTelephone !== null ? apiOrderDetailData.deliveryTelephone : '',
+            deliveryStreet: apiOrderDetailData.deliveryStreet !== null ? apiOrderDetailData.deliveryStreet : '',
+            deliveryCity: apiOrderDetailData.deliveryCity !== null ? apiOrderDetailData.deliveryCity : '',
+            deliveryPostcode: apiOrderDetailData.deliveryPostcode !== null ? apiOrderDetailData.deliveryPostcode : '',
+            deliveryCountry: apiOrderDetailData.deliveryCountry !== null ? apiOrderDetailData.deliveryCountry.name : '',
+            note: apiOrderDetailData.note !== null ? apiOrderDetailData.note : '',
+            promoCode: apiOrderDetailData.promoCode !== null ? apiOrderDetailData.promoCode : '',
             items: mapOrderDetailItems(apiOrderDetailData.items, currentDomainConfig.currencyCode),
         };
     }
@@ -158,7 +114,7 @@ export function mapOrderDetailItems(
         ...item,
         unitPrice: mapPriceData(item.unitPrice, currencyCode),
         totalPrice: mapPriceData(item.totalPrice, currencyCode),
-        unit: item.unit !== null && item.unit !== undefined ? item.unit : '',
+        unit: item.unit !== null ? item.unit : '',
     }));
 
     return mappedItems;

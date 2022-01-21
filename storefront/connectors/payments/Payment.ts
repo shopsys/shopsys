@@ -6,8 +6,8 @@ import { SimplePaymentFragmentApi } from 'graphql/generated';
 export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
     return {
         ...apiData,
-        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
-        instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
+        description: apiData.description !== null ? apiData.description : '',
+        instruction: apiData.instruction !== null ? apiData.instruction : '',
         image: getFirstImageSize(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
     };

@@ -20,14 +20,8 @@ const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): Sli
             uuid: sliderItem.uuid,
             name: sliderItem.name,
             link: sliderItem.link,
-            extendedText:
-                sliderItem.extendedText === undefined || sliderItem.extendedText === null
-                    ? ''
-                    : sliderItem.extendedText,
-            extendedTextLink:
-                sliderItem.extendedTextLink === undefined || sliderItem.extendedTextLink === null
-                    ? ''
-                    : sliderItem.extendedTextLink,
+            extendedText: sliderItem.extendedText === null ? '' : sliderItem.extendedText,
+            extendedTextLink: sliderItem.extendedTextLink === null ? '' : sliderItem.extendedTextLink,
             image: getFirstImageSize(sliderItem.images),
         };
     });

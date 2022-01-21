@@ -32,12 +32,8 @@ export const mapPickupPlacesApiData = (
             mappedStores.push({
                 ...edge.node,
                 identifier: edge.node.uuid,
-                description:
-                    edge.node.description !== undefined && edge.node.description !== null ? edge.node.description : '',
-                openingHours:
-                    edge.node.openingHoursHtml !== undefined && edge.node.openingHoursHtml !== null
-                        ? edge.node.openingHoursHtml
-                        : '',
+                description: edge.node.description !== null ? edge.node.description : '',
+                openingHours: edge.node.openingHoursHtml !== null ? edge.node.openingHoursHtml : '',
             });
         }
     }

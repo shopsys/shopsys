@@ -29,13 +29,9 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
             slug: edge.node.slug,
             name: edge.node.name,
             locationLatitude:
-                edge.node.locationLatitude !== undefined && edge.node.locationLatitude !== null
-                    ? Number.parseFloat(edge.node.locationLatitude)
-                    : null,
+                edge.node.locationLatitude !== null ? Number.parseFloat(edge.node.locationLatitude) : null,
             locationLongitude:
-                edge.node.locationLongitude !== undefined && edge.node.locationLongitude !== null
-                    ? Number.parseFloat(edge.node.locationLongitude)
-                    : null,
+                edge.node.locationLongitude !== null ? Number.parseFloat(edge.node.locationLongitude) : null,
             address: edge.node.street + '<br />' + edge.node.postcode + ' ' + edge.node.city,
             openingHours: edge.node.openingHours,
         };

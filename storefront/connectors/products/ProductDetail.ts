@@ -24,22 +24,10 @@ export const mapProductDetailApiData = (
             status: productDetailApiData.availability.status === 'in-stock' ? 'in-stock' : 'out-of-stock',
         },
         storeAvailabilities: mapStoreAvailabilities(productDetailApiData.storeAvailabilities),
-        namePrefix:
-            productDetailApiData.namePrefix !== undefined && productDetailApiData.namePrefix !== null
-                ? productDetailApiData.namePrefix
-                : '',
-        nameSuffix:
-            productDetailApiData.nameSuffix !== undefined && productDetailApiData.nameSuffix !== null
-                ? productDetailApiData.nameSuffix
-                : '',
-        description:
-            productDetailApiData.description !== undefined && productDetailApiData.description !== null
-                ? productDetailApiData.description
-                : '',
-        shortDescription:
-            productDetailApiData.shortDescription !== undefined && productDetailApiData.shortDescription !== null
-                ? productDetailApiData.shortDescription
-                : '',
+        namePrefix: productDetailApiData.namePrefix !== null ? productDetailApiData.namePrefix : '',
+        nameSuffix: productDetailApiData.nameSuffix !== null ? productDetailApiData.nameSuffix : '',
+        description: productDetailApiData.description !== null ? productDetailApiData.description : '',
+        shortDescription: productDetailApiData.shortDescription !== null ? productDetailApiData.shortDescription : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
         parameters: mapParametersApiData(productDetailApiData.parameters),
@@ -51,7 +39,7 @@ export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]):
     const mappedStoreAvailabilities = [];
 
     for (const storeAvailabilityApiData of apiData) {
-        if (storeAvailabilityApiData.store !== null && storeAvailabilityApiData.store !== undefined) {
+        if (storeAvailabilityApiData.store !== null) {
             mappedStoreAvailabilities.push({
                 ...storeAvailabilityApiData,
                 availabilityStatus:
@@ -81,9 +69,9 @@ export const mapMainVariantDetailApiData = (
     return {
         ...apiData,
         __typename: 'MainVariant',
-        namePrefix: apiData.namePrefix !== undefined && apiData.namePrefix !== null ? apiData.namePrefix : '',
-        nameSuffix: apiData.nameSuffix !== undefined && apiData.nameSuffix !== null ? apiData.nameSuffix : '',
-        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
+        namePrefix: apiData.namePrefix !== null ? apiData.namePrefix : '',
+        nameSuffix: apiData.nameSuffix !== null ? apiData.nameSuffix : '',
+        description: apiData.description !== null ? apiData.description : '',
         price: mapProductPriceData(apiData.price, currencyCode),
         accessories: mapSliderProductApiData(apiData.accessories, currencyCode),
         parameters: mapParametersApiData(apiData.parameters),
