@@ -6,10 +6,11 @@ import {
     ProductDetailImagesFragmentApi,
     StoreAvailabilityFragmentApi,
 } from 'graphql/generated';
-import { mapListedVariantType, mapProductPriceData, mapSliderProductApiData } from './Products';
+import { mapListedVariantType, mapSliderProductApiData } from './Products';
 import { ProductDetailType, ProductParameterType, StoreAvailability } from 'types/product';
 import { MainVariantDetailType } from 'types/product';
 import { mapImageSizesTypeApiData } from 'connectors/image/Image';
+import { mapProductPriceData } from 'connectors/price/Prices';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 
 export const mapProductDetailApiData = (

@@ -11,11 +11,10 @@ import {
     useRemoveFromCartMutationApi,
 } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
-import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
+import { mapPriceData, mapPriceInputData, mapProductPriceData } from 'connectors/price/Prices';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
 import { getFirstImageSize } from 'connectors/image/Image';
-import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
 import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';

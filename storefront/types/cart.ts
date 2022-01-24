@@ -1,10 +1,10 @@
 import { PaymentInputType, PaymentType } from 'types/payment';
-import { ProductPriceType, SimpleProductType } from 'types/product';
+import { PriceType, ProductPriceType } from 'types/price';
 import { TransportInputType, TransportType } from 'types/transport';
 import { ImageSizeType } from 'types/image';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { PriceType } from 'types/price';
 import { SimpleFlagType } from 'types/flag';
+import { SimpleProductType } from 'types/product';
 
 export type CartInput = {
     cartUuid: string | null;

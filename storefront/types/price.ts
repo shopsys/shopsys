@@ -4,3 +4,7 @@ export type PriceType = {
     vatAmount: number;
     currencyCode: string;
 };
+
+export type ProductPriceType = PriceType & {
+    isPriceFrom: boolean;
+};

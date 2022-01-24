@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { AutocompleteSearchType } from 'types/search';
 import { getFirstImageSize } from 'connectors/image/Image';
 import { mapArticlesSearchResults } from './Search';
-import { mapProductPriceApiData } from 'connectors/products/Products';
+import { mapProductPriceData } from 'connectors/price/Prices';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -70,7 +70,7 @@ const mapProductsSearchResults = (
                 mappedProducts.push({
                     ...productEdge.node,
                     name: productEdge.node.name,
-                    price: mapProductPriceApiData(productEdge.node.price, currencyCode),
+                    price: mapProductPriceData(productEdge.node.price, currencyCode),
                     image: getFirstImageSize(productEdge.node.images),
                     unitName: productEdge.node.unit.name,
                 });
