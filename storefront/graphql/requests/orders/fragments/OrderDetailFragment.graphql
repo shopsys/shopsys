@@ -3,18 +3,42 @@ fragment OrderDetailFragment on Order {
     number
     creationDate
     items {
-        quantity
+        ...OrderDetailItemFragment
     }
     transport {
         name
-        images(sizes: ["default"]) {
-            ...ImageSizesFragment
-        }
     }
     payment {
         name
     }
-    totalPrice {
-        ...PriceFragment
+    status
+    firstName
+    lastName
+    email
+    telephone
+    companyName
+    companyNumber
+    companyTaxNumber
+    street
+    city
+    postcode
+    country {
+        name
     }
+    differentDeliveryAddress
+    deliveryFirstName
+    deliveryLastName
+    deliveryCompanyName
+    deliveryTelephone
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+        name
+    }
+    note
+    urlHash
+    promoCode
+    trackingNumber
+    trackingUrl
 }

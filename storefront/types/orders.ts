@@ -17,7 +17,7 @@ export type ListedOrderType = {
     totalPrice: PriceType;
 };
 
-export type ListedOrdersType = {
+export type ListedOrderConnectionType = {
     orders: ListedOrderType[];
     totalCount: number;
     pageInfo: PageInfoType;

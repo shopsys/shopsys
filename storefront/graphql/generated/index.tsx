@@ -2412,7 +2412,9 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
-export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type ListedOrderFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+
+export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry: { __typename?: 'Country', name: string } | null };
 
 export type OrderDetailItemFragmentApi = { __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
@@ -3340,6 +3342,52 @@ export const OrderDetailFragmentApi = gql`
   number
   creationDate
   items {
+    ...OrderDetailItemFragment
+  }
+  transport {
+    name
+  }
+  payment {
+    name
+  }
+  status
+  firstName
+  lastName
+  email
+  telephone
+  companyName
+  companyNumber
+  companyTaxNumber
+  street
+  city
+  postcode
+  country {
+    name
+  }
+  differentDeliveryAddress
+  deliveryFirstName
+  deliveryLastName
+  deliveryCompanyName
+  deliveryTelephone
+  deliveryStreet
+  deliveryCity
+  deliveryPostcode
+  deliveryCountry {
+    name
+  }
+  note
+  urlHash
+  promoCode
+  trackingNumber
+  trackingUrl
+}
+    ${OrderDetailItemFragmentApi}`;
+export const ListedOrderFragmentApi = gql`
+    fragment ListedOrderFragment on Order {
+  uuid
+  number
+  creationDate
+  items {
     quantity
   }
   transport {
@@ -3365,13 +3413,13 @@ export const OrderListFragmentApi = gql`
   }
   edges {
     node {
-      ...OrderDetailFragment
+      ...ListedOrderFragment
     }
     cursor
   }
 }
     ${PageInfoFragmentApi}
-${OrderDetailFragmentApi}`;
+${ListedOrderFragmentApi}`;
 export const ProductDetailImagesFragmentApi = gql`
     fragment ProductDetailImagesFragment on Product {
   images(sizes: ["default", "galleryThumbnail"]) {
@@ -3831,51 +3879,10 @@ export function useCreateOrderMutationApi() {
 export const OrderDetailQueryDocumentApi = gql`
     query OrderDetailQuery($orderNumber: String) {
   order(orderNumber: $orderNumber) {
-    uuid
-    number
-    creationDate
-    items {
-      ...OrderDetailItemFragment
-    }
-    transport {
-      name
-    }
-    payment {
-      name
-    }
-    status
-    firstName
-    lastName
-    email
-    telephone
-    companyName
-    companyNumber
-    companyTaxNumber
-    street
-    city
-    postcode
-    country {
-      name
-    }
-    differentDeliveryAddress
-    deliveryFirstName
-    deliveryLastName
-    deliveryCompanyName
-    deliveryTelephone
-    deliveryStreet
-    deliveryCity
-    deliveryPostcode
-    deliveryCountry {
-      name
-    }
-    note
-    urlHash
-    promoCode
-    trackingNumber
-    trackingUrl
+    ...OrderDetailFragment
   }
 }
-    ${OrderDetailItemFragmentApi}`;
+    ${OrderDetailFragmentApi}`;
 
 export function useOrderDetailQueryApi(options: Omit<Urql.UseQueryArgs<OrderDetailQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<OrderDetailQueryApi>({ query: OrderDetailQueryDocumentApi, ...options });
