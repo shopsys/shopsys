@@ -515,7 +515,6 @@ class ProductController extends FrontBaseController
         );
 
         $productFilterData = $this->productFilterDataFactory->create();
-        $productFilterData->setSearchText($searchText);
 
         $productFilterConfig = $this->createProductFilterConfigForSearch($searchText);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [

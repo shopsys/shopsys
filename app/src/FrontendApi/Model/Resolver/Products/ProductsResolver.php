@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\FrontendApi\Component\Validation\PageSizeValidator;
+use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
@@ -75,6 +76,7 @@ class ProductsResolver extends BaseProductsResolver
     public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
+
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
@@ -107,7 +109,6 @@ class ProductsResolver extends BaseProductsResolver
     public function resolveByFlag(Argument $argument, Flag $flag): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
-        $search = $argument['search'] ?? '';
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -120,7 +121,7 @@ class ProductsResolver extends BaseProductsResolver
 
         return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
-            function ($offset, $limit) use ($argument, $productFilterData, $search, $flag) {
+            function ($offset, $limit) use ($argument, $productFilterData, $flag) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $flag->getId(),
@@ -129,7 +130,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },
@@ -167,7 +168,6 @@ class ProductsResolver extends BaseProductsResolver
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData,
-            $argument['search'] ?? null,
             $this->getOrderingModeFromArgument($argument)
         );
     }
@@ -176,17 +176,11 @@ class ProductsResolver extends BaseProductsResolver
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category $category
      * @return \GraphQL\Executor\Promise\Promise
+     * @deprecated Method is deprecated. Use "resolveByCategoryOrReadyCategorySeoMix()" instead.
      */
     public function resolveByCategory(Argument $argument, BaseCategory $category)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
-
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-            $argument,
-            $category
-        );
-
-        return $this->getPromiseByCategory($argument, $category, $productFilterData);
+        throw new DeprecatedMethodException();
     }
 
     /**
@@ -198,8 +192,6 @@ class ProductsResolver extends BaseProductsResolver
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        $search = $argument['search'] ?? '';
-
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
@@ -209,7 +201,7 @@ class ProductsResolver extends BaseProductsResolver
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
             $brand,
-            function ($offset, $limit) use ($argument, $productFilterData, $search, $brand) {
+            function ($offset, $limit) use ($argument, $productFilterData, $brand) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $brand->getId(),
@@ -218,7 +210,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },
@@ -253,13 +245,11 @@ class ProductsResolver extends BaseProductsResolver
         ProductFilterData $productFilterData,
         ?string $orderingMode = null
     ): Promise {
-        $search = $argument['search'] ?? '';
-
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         return $this->productConnectionFactory->createConnectionPromiseForCategory(
             $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $orderingMode) {
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $category->getId(),
@@ -268,7 +258,7 @@ class ProductsResolver extends BaseProductsResolver
                         $offset,
                         $orderingMode ?? $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $search
+                        $argument['search'] ?? ''
                     )
                 );
             },

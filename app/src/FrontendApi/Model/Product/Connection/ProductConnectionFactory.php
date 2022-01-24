@@ -40,11 +40,13 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode
     ): Promise {
-        $productFilterOptionsClosure = function () use ($category, $productFilterData) {
+        $searchText = $argument['search'] ?? '';
+        $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
                 $category,
-                $this->productFilterFacade->getProductFilterConfigForCategory($category),
-                $productFilterData
+                $this->productFilterFacade->getProductFilterConfigForCategory($category, $searchText),
+                $productFilterData,
+                $searchText
             );
         };
 
@@ -66,11 +68,13 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode
     ): Promise {
-        $productFilterOptionsClosure = function () use ($flag, $productFilterData) {
+        $searchText = $argument['search'] ?? '';
+        $productFilterOptionsClosure = function () use ($flag, $productFilterData, $searchText) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
                 $flag,
-                $this->productFilterFacade->getProductFilterConfigForFlag($flag),
-                $productFilterData
+                $this->productFilterFacade->getProductFilterConfigForFlag($flag, $searchText),
+                $productFilterData,
+                $searchText
             );
         };
 
@@ -92,11 +96,13 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode
     ): Promise {
-        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
+        $searchText = $argument['search'] ?? '';
+        $productFilterOptionsClosure = function () use ($brand, $productFilterData, $searchText) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
                 $brand,
-                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
-                $productFilterData
+                $this->productFilterFacade->getProductFilterConfigForBrand($brand, $searchText),
+                $productFilterData,
+                $searchText
             );
         };
 
@@ -108,7 +114,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string|null $searchText
      * @param string|null $orderingMode
      * @return \App\FrontendApi\Model\Product\Connection\ProductExtendedConnection
      */
@@ -117,11 +122,11 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         int $countOfProducts,
         Argument $argument,
         BaseProductFilterData $productFilterData,
-        ?string $searchText = null,
         ?string $orderingMode = null
     ): ProductExtendedConnection {
+        $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
-            if ($searchText === null) {
+            if ($searchText === '') {
                 $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
             } else {
                 $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
