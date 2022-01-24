@@ -11,10 +11,10 @@ import {
     useRemoveFromCartMutationApi,
 } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
+import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
 import { getFirstImageSize } from 'connectors/image/Image';
-import { mapPriceData } from 'connectors/price/Prices';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
@@ -29,11 +29,7 @@ export const mapTransportToTransportInput = (
 ): TransportInputType => {
     return {
         uuid: transport.uuid,
-        price: {
-            priceWithVat: transport.price.priceWithVat.toString(),
-            priceWithoutVat: transport.price.priceWithoutVat.toString(),
-            vatAmount: transport.price.vatAmount.toString(),
-        },
+        price: mapPriceInputData(transport.price),
         pickupPlaceIdentifier: pickupPlace === null ? null : pickupPlace.identifier,
     };
 };

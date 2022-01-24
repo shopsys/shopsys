@@ -9,3 +9,11 @@ export const mapPriceData = (price: PriceFragmentApi, currencyCode: string): Pri
         currencyCode,
     };
 };
+
+export const mapPriceInputData = (price: PriceType): PriceFragmentApi => {
+    return {
+        priceWithVat: price.priceWithVat.toString(),
+        priceWithoutVat: price.priceWithoutVat.toString(),
+        vatAmount: price.vatAmount.toString(),
+    };
+};

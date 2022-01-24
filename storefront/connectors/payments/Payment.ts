@@ -1,6 +1,6 @@
+import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { getFirstImageSize } from 'connectors/image/Image';
-import { mapPriceData } from 'connectors/price/Prices';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
 
 export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
@@ -16,10 +16,6 @@ export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: stri
 export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType => {
     return {
         uuid: payment.uuid,
-        price: {
-            priceWithVat: payment.price.priceWithVat.toString(),
-            priceWithoutVat: payment.price.priceWithoutVat.toString(),
-            vatAmount: payment.price.vatAmount.toString(),
-        },
+        price: mapPriceInputData(payment.price),
     };
 };
