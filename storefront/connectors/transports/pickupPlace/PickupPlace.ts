@@ -1,7 +1,7 @@
+import { ListedPickupPlaceFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { getPacketeryCookie } from 'helpers/packetery';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
-import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
 export const getSelectedPickupPlace = (
     transport: TransportType | null,
@@ -19,6 +19,15 @@ export const getSelectedPickupPlace = (
     return pickupPlace === undefined ? null : pickupPlace;
 };
 
+const mapPickupPlaceApiData = (pickupPlace: ListedPickupPlaceFragmentApi): PickupPlaceType => {
+    return {
+        ...pickupPlace,
+        identifier: pickupPlace.uuid,
+        description: pickupPlace.description !== null ? pickupPlace.description : '',
+        openingHours: pickupPlace.openingHoursHtml !== null ? pickupPlace.openingHoursHtml : '',
+    };
+};
+
 export const mapPickupPlacesApiData = (
     storesConnectionApi: TransportWithAvailablePaymentsAndStoresFragmentApi['stores'],
 ): PickupPlaceType[] => {
@@ -29,12 +38,7 @@ export const mapPickupPlacesApiData = (
     const mappedStores = [];
     for (const edge of storesConnectionApi.edges) {
         if (edge?.node !== undefined && edge.node !== null) {
-            mappedStores.push({
-                ...edge.node,
-                identifier: edge.node.uuid,
-                description: edge.node.description !== null ? edge.node.description : '',
-                openingHours: edge.node.openingHoursHtml !== null ? edge.node.openingHoursHtml : '',
-            });
+            mappedStores.push(mapPickupPlaceApiData(edge.node));
         }
     }
 
