@@ -12,7 +12,7 @@ import { DomainConfigType } from 'utils/Domain/Domain';
 import { getFirstImageSize } from 'connectors/image/Image';
 import { initialState } from 'redux/slices/user';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapPriceData } from 'connectors/transports/Transports';
+import { mapPriceData } from 'connectors/price/Prices';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 

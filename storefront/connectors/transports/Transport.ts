@@ -1,7 +1,7 @@
 import { getFirstImageSize } from 'connectors/image/Image';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPickupPlacesApiData } from './pickupPlace/PickupPlace';
-import { mapPriceData } from './Transports';
+import { mapPriceData } from 'connectors/price/Prices';
 import { TransportType } from 'types/transport';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
