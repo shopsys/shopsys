@@ -1340,7 +1340,7 @@ export type PersonalDataPageApi = {
 };
 
 /** Represents the price */
-export type PriceApi = {
+export type PriceApi = PriceInterfaceApi & {
   __typename?: 'Price';
   /** Price with VAT */
   priceWithVat: Scalars['Money'];
@@ -1352,6 +1352,16 @@ export type PriceApi = {
 
 /** Represents the price */
 export type PriceInputApi = {
+  /** Price with VAT */
+  priceWithVat: Scalars['Money'];
+  /** Price without VAT */
+  priceWithoutVat: Scalars['Money'];
+  /** Total value of VAT */
+  vatAmount: Scalars['Money'];
+};
+
+/** Represents the price */
+export type PriceInterfaceApi = {
   /** Price with VAT */
   priceWithVat: Scalars['Money'];
   /** Price without VAT */
@@ -1528,7 +1538,7 @@ export enum ProductOrderingModeEnumApi {
 }
 
 /** Represents the price of the product */
-export type ProductPriceApi = {
+export type ProductPriceApi = PriceInterfaceApi & {
   __typename?: 'ProductPrice';
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean'];
@@ -2712,6 +2722,10 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
     "CustomerUser": [
       "CompanyCustomerUser",
       "RegularCustomerUser"
+    ],
+    "PriceInterface": [
+      "Price",
+      "ProductPrice"
     ],
     "Product": [
       "MainVariant",

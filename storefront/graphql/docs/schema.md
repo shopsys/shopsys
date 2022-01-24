@@ -111,6 +111,7 @@
     * [Breadcrumb](#breadcrumb)
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
+    * [PriceInterface](#priceinterface)
     * [Product](#product)
     * [ProductListable](#productlistable)
     * [Slug](#slug)
@@ -8150,6 +8151,50 @@ Default customer delivery addresses
 <td>
 
 List of delivery addresses
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PriceInterface
+
+Represents the price
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price without VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>vatAmount</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total value of VAT
 
 </td>
 </tr>

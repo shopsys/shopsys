@@ -1,10 +1,6 @@
-Price:
-    type: object
-    inherits:
-        - 'PriceDecorator'
+PriceInterface:
+    type: interface
     config:
-        interfaces:
-            - 'PriceInterface'
         description: "Represents the price"
         fields:
             priceWithVat:

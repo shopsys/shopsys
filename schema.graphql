@@ -1470,7 +1470,7 @@ type PersonalDataPage {
 }
 
 """Represents the price"""
-type Price {
+type Price implements PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
@@ -1483,6 +1483,18 @@ type Price {
 
 """Represents the price"""
 input PriceInput {
+  """Price with VAT"""
+  priceWithVat: Money!
+
+  """Price without VAT"""
+  priceWithoutVat: Money!
+
+  """Total value of VAT"""
+  vatAmount: Money!
+}
+
+"""Represents the price"""
+interface PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
@@ -1686,7 +1698,7 @@ enum ProductOrderingModeEnum {
 }
 
 """Represents the price of the product"""
-type ProductPrice {
+type ProductPrice implements PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
