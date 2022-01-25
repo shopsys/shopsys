@@ -84,10 +84,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         <NextLink href={product.slug}>
                                                             <ProductSearchResultLinkStyled>
                                                                 <ProductSearchResultImageWrapperStyled>
-                                                                    <Image image={product.image} alt={product.name} />
+                                                                    <Image
+                                                                        image={product.image}
+                                                                        alt={product.fullName}
+                                                                    />
                                                                 </ProductSearchResultImageWrapperStyled>
                                                                 <ProductSearchResultNameStyled>
-                                                                    {product.name}
+                                                                    {product.fullName}
                                                                 </ProductSearchResultNameStyled>
                                                                 <ProductSearchResultPriceStyled>
                                                                     {formatPrice(

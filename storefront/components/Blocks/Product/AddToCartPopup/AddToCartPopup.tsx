@@ -49,12 +49,12 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
             <ProductStyled data-testid={testIdentifier}>
                 {props.product.image !== null && (
                     <ImageStyled>
-                        <Image image={props.product.image} alt={props.product.name} />
+                        <Image image={props.product.image} alt={props.product.fullName} />
                     </ImageStyled>
                 )}
                 <ContentStyled>
                     <NameStyled data-testid={testIdentifier + '-name'}>
-                        <NextLink href={props.product.slug}>{props.product.name}</NextLink>
+                        <NextLink href={props.product.slug}>{props.product.fullName}</NextLink>
                     </NameStyled>
                     <PriceInfoStyled>
                         <PriceStyled data-testid={testIdentifier + '-price'}>

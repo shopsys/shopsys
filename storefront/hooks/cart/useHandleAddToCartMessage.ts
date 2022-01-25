@@ -1,8 +1,7 @@
 import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { AddToCartPopupDataType } from 'types/cart';
-import { getFirstImageSize } from 'connectors/image/Image';
-import { mapProductPriceData } from 'connectors/price/Prices';
+import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { UseMutationState } from 'urql';
 import { useShopsysSelector } from 'redux/main';
@@ -46,12 +45,8 @@ export const useHandleAddToCartMessage = (
             );
         } else {
             const mappedPopupData = {
-                name: cartItem.product.fullName,
-                slug: cartItem.product.slug,
-                image: getFirstImageSize(cartItem.product.images),
+                ...mapSimpleProductApiData(cartItem.product, currencyCode),
                 quantity: result.data.AddToCart.addProductResult.addedQuantity,
-                unitName: cartItem.product.unit.name,
-                price: mapProductPriceData(cartItem.product.price, currencyCode),
             };
 
             setPopupData(mappedPopupData);
