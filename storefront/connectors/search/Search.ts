@@ -56,7 +56,7 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
         articlesSearch: mapArticlesSearchResults(apiData.articlesSearch),
         brandSearch: mapBrandSearchResults(apiData.brandSearch),
         categoriesSearch: {
-            totalCount: apiData.categoriesSearch?.totalCount === undefined ? 0 : apiData.categoriesSearch.totalCount,
+            totalCount: apiData.categoriesSearch.totalCount,
             categories: mapCategoriesSearchResults(apiData.categoriesSearch),
         },
         productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
@@ -66,7 +66,7 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
 const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch']): ListedCategoryType[] => {
     const mappedCategories = [];
 
-    if (apiData?.edges !== undefined && apiData.edges !== null) {
+    if (apiData.edges !== null) {
         for (const categoryEdge of apiData.edges) {
             if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
                 mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));

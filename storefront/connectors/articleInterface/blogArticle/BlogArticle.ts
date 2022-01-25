@@ -25,7 +25,7 @@ export const getBlogPreviewArticles = (): ListedBlogArticleType[] => {
 
     useQueryError(error);
 
-    if (data?.blogArticles?.edges === undefined || data.blogArticles.edges === null) {
+    if (data?.blogArticles.edges === undefined || data.blogArticles.edges === null) {
         return [];
     }
 

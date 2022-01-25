@@ -303,7 +303,7 @@ type BlogCategory implements Breadcrumb & Slug {
   seoH1: String
 
   """Paginated blog articles of the given blog category"""
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
 
   """The blog category absolute URL"""
   link: String!
@@ -1719,7 +1719,7 @@ type Query {
   """
   Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  categoriesSearch(after: String, first: Int, before: String, last: Int, search: String!): CategoryConnection
+  categoriesSearch(after: String, first: Int, before: String, last: Int, search: String!): CategoryConnection!
 
   """
   Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -1762,7 +1762,7 @@ type Query {
   Returns list of articles that can be paginated using `first`, `last`, `before`
   and `after` keywords and filtered by `placement`
   """
-  articles(after: String, first: Int, before: String, last: Int, placement: String): ArticleConnection
+  articles(after: String, first: Int, before: String, last: Int, placement: String): ArticleConnection!
 
   """Returns article filtered using UUID or URL slug"""
   article(uuid: Uuid, urlSlug: String): Article
@@ -1804,7 +1804,7 @@ type Query {
   """
   Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  stores(after: String, first: Int, before: String, last: Int): StoreConnection
+  stores(after: String, first: Int, before: String, last: Int): StoreConnection!
 
   """Returns store filtered using UUID or URL slug"""
   store(uuid: Uuid, urlSlug: String): Store
@@ -1815,7 +1815,7 @@ type Query {
   """
   Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
 
   """Returns blog category filtered using UUID or URL slug"""
   blogCategory(uuid: Uuid, urlSlug: String): BlogCategory

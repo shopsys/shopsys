@@ -14,7 +14,7 @@ export function getStores(): StoreListType[] {
 }
 
 const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
-    if (data?.edges === undefined || data.edges === null) {
+    if (data.edges === null) {
         return [];
     }
 

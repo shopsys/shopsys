@@ -140,7 +140,7 @@ Returns complete list of categories
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>categoriesSearch</strong></td>
-<td valign="top"><a href="#categoryconnection">CategoryConnection</a></td>
+<td valign="top"><a href="#categoryconnection">CategoryConnection</a>!</td>
 <td>
 
 Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -384,7 +384,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>articles</strong></td>
-<td valign="top"><a href="#articleconnection">ArticleConnection</a></td>
+<td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
 <td>
 
 Returns list of articles that can be paginated using `first`, `last`, `before`
@@ -563,7 +563,7 @@ Returns promoted categories
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>stores</strong></td>
-<td valign="top"><a href="#storeconnection">StoreConnection</a></td>
+<td valign="top"><a href="#storeconnection">StoreConnection</a>!</td>
 <td>
 
 Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -630,7 +630,7 @@ Returns blog article filtered using UUID or URL slug
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
-<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a></td>
+<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
 Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -1950,7 +1950,7 @@ The blog category SEO H1 heading
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
-<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a></td>
+<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
 Paginated blog articles of the given blog category
