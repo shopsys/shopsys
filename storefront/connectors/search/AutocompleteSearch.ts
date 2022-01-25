@@ -1,3 +1,7 @@
+import {
+    AUTOCOMPLETE_CATEGORY_LIMIT,
+    AUTOCOMPLETE_PRODUCT_LIMIT,
+} from 'components/Layout/Header/AutocompleteSearch/Autocomplete/Autocomplete';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { AutocompleteSearchType } from 'types/search';
@@ -8,7 +12,11 @@ import { useShopsysSelector } from 'redux/main';
 
 export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
-        variables: { search: autocompleteSearch },
+        variables: {
+            search: autocompleteSearch,
+            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
+            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+        },
         pause: autocompleteSearch.length < 3,
         requestPolicy: 'network-only',
     });

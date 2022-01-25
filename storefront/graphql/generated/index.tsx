@@ -2640,6 +2640,8 @@ export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', tota
 
 export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
+  maxProductCount: Maybe<Scalars['Int']>;
+  maxCategoryCount: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -3959,17 +3961,17 @@ export function useRegistrationMutationApi() {
   return Urql.useMutation<RegistrationMutationApi, RegistrationMutationVariablesApi>(RegistrationMutationDocumentApi);
 };
 export const AutocompleteSearchQueryDocumentApi = gql`
-    query AutocompleteSearchQuery($search: String!) {
+    query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int) {
   articlesSearch(search: $search) {
     ...SimpleArticleInterfaceFragment
   }
   brandSearch(search: $search) {
     ...SimpleBrandFragment
   }
-  categoriesSearch(search: $search) {
+  categoriesSearch(search: $search, first: $maxCategoryCount) {
     ...CategoriesSearchFragment
   }
-  productsSearch: products(search: $search) {
+  productsSearch: products(search: $search, first: $maxProductCount) {
     ...ProductsSearchFragment
   }
 }
