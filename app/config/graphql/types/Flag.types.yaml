@@ -15,7 +15,7 @@ Flag:
                 type: "String!"
                 description: "URL slug of flag"
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 description: "Paginated and ordered products of flag"
                 argsBuilder:
                     builder: "PaginatorArgumentsBuilder"

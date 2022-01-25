@@ -65,3 +65,15 @@ export const mapSliderProductApiData = (
         };
     });
 };
+
+export const mapListedProductConnectionType = (
+    apiData: ListedProductsFragmentApi['products'],
+    currencyCode: string,
+): ListedProductConnectionType => {
+    return {
+        ...apiData,
+        pageInfo: mapPageInfoApiData(apiData.pageInfo),
+        products: mapListedProductTypes(apiData, currencyCode),
+        productFilterOptions: mapProductFilterOptions(apiData.productFilterOptions, currencyCode),
+    };
+};

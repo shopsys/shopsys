@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageSizeType } from 'types/image';
-import { ListedProductEdgesType } from 'types/product';
+import { ListedProductConnectionType } from 'types/product';
 
 export type BrandDetailType = {
     __typename: 'Brand';
@@ -11,7 +11,7 @@ export type BrandDetailType = {
     seoH1: string | null;
     image: ImageSizeType | null;
     description: string | null;
-    products: ListedProductEdgesType;
+    productConnection: ListedProductConnectionType;
 };
 
 export type ListedBrandType = {

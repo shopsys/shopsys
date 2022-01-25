@@ -37,7 +37,7 @@ Category:
                         type: "[String!]"
                         defaultValue: null
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 description: "Paginated and ordered products of category"
                 argsBuilder:
                     builder: "PaginatorArgumentsBuilder"

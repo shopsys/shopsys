@@ -14,6 +14,13 @@ export type SimpleProductType = {
     unitName: string;
 };
 
+export type ListedProductConnectionType = {
+    products: ListedProductType[];
+    productFilterOptions: FilterOptionsType | null;
+    totalCount: number;
+    pageInfo: PageInfoType;
+};
+
 export type ListedProductType = {
     uuid: string;
     slug: string;
