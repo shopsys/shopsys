@@ -7,7 +7,7 @@ import {
 } from 'graphql/generated';
 import { ListedProductType, ListedVariantType, SliderProductItemType } from 'types/product';
 import { mapProductPriceData } from 'connectors/price/Prices';
-import { mapStoreAvailabilities } from './ProductDetail';
+import { mapStoreAvailabilities } from 'connectors/availability/Availability';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 

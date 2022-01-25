@@ -6,6 +6,7 @@ import {
     ProductDetailImagesFragmentApi,
     StoreAvailabilityFragmentApi,
 } from 'graphql/generated';
+import { mapAvailabilityData, mapStoreAvailabilities } from 'connectors/availability/Availability';
 import { mapListedVariantType, mapSliderProductApiData } from './Products';
 import { ProductDetailType, ProductParameterType, StoreAvailability } from 'types/product';
 import { MainVariantDetailType } from 'types/product';
@@ -20,11 +21,6 @@ export const mapProductDetailApiData = (
     return {
         ...productDetailApiData,
         __typename: productDetailApiData.__typename !== undefined ? productDetailApiData.__typename : 'RegularProduct',
-        availability: {
-            name: productDetailApiData.availability.name,
-            status: productDetailApiData.availability.status === 'in-stock' ? 'in-stock' : 'out-of-stock',
-        },
-        storeAvailabilities: mapStoreAvailabilities(productDetailApiData.storeAvailabilities),
         namePrefix: productDetailApiData.namePrefix !== null ? productDetailApiData.namePrefix : '',
         nameSuffix: productDetailApiData.nameSuffix !== null ? productDetailApiData.nameSuffix : '',
         description: productDetailApiData.description !== null ? productDetailApiData.description : '',
@@ -36,23 +32,6 @@ export const mapProductDetailApiData = (
     };
 };
 
-export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]): StoreAvailability[] => {
-    const mappedStoreAvailabilities = [];
-
-    for (const storeAvailabilityApiData of apiData) {
-        if (storeAvailabilityApiData.store !== null) {
-            mappedStoreAvailabilities.push({
-                ...storeAvailabilityApiData,
-                availabilityStatus:
-                    storeAvailabilityApiData.availabilityStatus === 'in-stock'
-                        ? ('in-stock' as const)
-                        : ('out-of-stock' as const),
-                store: mapStoreDetailApiData(storeAvailabilityApiData.store),
-            });
-        }
-    }
-
-    return mappedStoreAvailabilities;
 };
 
 const mapVariantImages = (variants: ListedVariantFragmentApi[]): ProductDetailImagesFragmentApi['images'] => {

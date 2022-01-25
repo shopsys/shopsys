@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { StoreAvailability } from 'types/product';
+import { StoreAvailabilityType } from 'types/availability';
 
-type ProductDetailAvailabilityListItemStatusStyledProps = Pick<StoreAvailability, 'availabilityStatus'>;
+type ProductDetailAvailabilityListItemStatusStyledProps = Pick<StoreAvailabilityType, 'availabilityStatus'>;
 
 export const ProductDetailAvailabilityListWrapperStyled = styled.div`
     ${({ theme }) => css`

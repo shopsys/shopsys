@@ -1,3 +1,4 @@
+import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
 import { ImageSizesType, ImageSizeType } from 'types/image';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
@@ -69,17 +70,6 @@ export type MainVariantDetailType = {
     variants: ListedVariantType[];
 };
 
-export type Availability = {
-    name: string;
-    status: 'in-stock' | 'out-of-stock';
-};
-
-export type StoreAvailability = {
-    exposed: boolean;
-    availabilityInformation: string;
-    availabilityStatus: 'in-stock' | 'out-of-stock';
-    store: StoreDetailType;
-};
 
 export type ProductParameterType = {
     uuid: string;
