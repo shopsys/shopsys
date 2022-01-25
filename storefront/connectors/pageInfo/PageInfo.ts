@@ -1,5 +1,5 @@
 import { PageInfoApi } from 'graphql/generated';
-import { PageInfoType } from 'types/product';
+import { PageInfoType } from 'types/pageInfo';
 
 export const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined): PageInfoType => {
     return {

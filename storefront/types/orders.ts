@@ -1,5 +1,5 @@
 import { ImageSizeType } from './image';
-import { PageInfoType } from './product';
+import { PageInfoType } from 'types/pageInfo';
 import { PriceType } from './price';
 
 export type ListedOrderType = {

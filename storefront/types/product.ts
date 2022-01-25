@@ -1,6 +1,7 @@
 import { ImageSizesType, ImageSizeType } from 'types/image';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
+import { PageInfoType } from 'types/pageInfo';
 import { ProductPriceType } from 'types/price';
 import { SimpleFlagType } from 'types/flag';
 import { StoreDetailType } from 'types/store';
@@ -110,13 +111,6 @@ export type ProductDetailType = {
     accessories: SliderProductItemType[];
     parameters: ProductParameterType[];
     images: ImageSizesType[];
-};
-
-export type PageInfoType = {
-    startCursor: string;
-    endCursor: string;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
 };
 
 export type SliderProductItemType = {

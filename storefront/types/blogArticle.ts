@@ -1,6 +1,6 @@
-import { PageInfoType, SliderProductItemType } from 'types/product';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageSizeType } from 'types/image';
+import { PageInfoType } from 'types/pageInfo';
 import { SimpleBlogCategoryType } from './blogCategory';
 
 export type BlogArticleDetailType = {
