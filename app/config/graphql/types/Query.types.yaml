@@ -151,7 +151,7 @@ Query:
                         type: "String!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 argsBuilder:
                     builder: "PaginatorArgumentsBuilder"
                     config:

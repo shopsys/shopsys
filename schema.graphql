@@ -1673,7 +1673,7 @@ type ProductFilterOptions {
 """Paginated and ordered products"""
 interface ProductListable {
   """Paginated and ordered products"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 }
 
 """One of possible ordering modes for product"""
@@ -1724,7 +1724,7 @@ type Query {
   """
   Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Returns product filtered using UUID or URL slug"""
   product(uuid: Uuid, urlSlug: String): Product

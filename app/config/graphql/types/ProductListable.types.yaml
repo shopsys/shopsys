@@ -4,7 +4,7 @@ ProductListable:
         description: "Paginated and ordered products"
         fields:
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 description: "Paginated and ordered products"
                 argsBuilder:
                     builder: "PaginatorArgumentsBuilder"

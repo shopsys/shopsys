@@ -18,6 +18,9 @@ query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $aft
         productFilterOptions {
             ...ProductFilterOptionsFragment
         }
+        pageInfo {
+            ...PageInfoFragment
+        }
         edges {
             node {
                 ...ListedProductFragment

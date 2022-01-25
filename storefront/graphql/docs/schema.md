@@ -174,7 +174,7 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -8550,7 +8550,7 @@ Paginated and ordered products
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products

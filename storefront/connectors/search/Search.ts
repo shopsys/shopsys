@@ -3,12 +3,10 @@ import { useEffect, useState } from 'react';
 import { FilterOptionsStateType } from 'types/productFilter';
 import { ListedBrandType } from 'types/brand';
 import { ListedCategoryType } from 'types/category';
-import { ListedProductType } from 'types/product';
 import { mapListedBrand } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';
-import { mapListedProductType } from 'connectors/products/Products';
+import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
-import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 import { mapSimpleArticleInterface } from 'connectors/articleInterface/ArticleInterface';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
@@ -61,32 +59,8 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
             totalCount: apiData.categoriesSearch?.totalCount === undefined ? 0 : apiData.categoriesSearch.totalCount,
             categories: mapCategoriesSearchResults(apiData.categoriesSearch),
         },
-        productsSearch: {
-            totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
-            productFilterOptions:
-                apiData.productsSearch !== null
-                    ? mapProductFilterOptions(apiData.productsSearch.productFilterOptions, currencyCode)
-                    : null,
-            products: mapProductsSearchResults(apiData.productsSearch, currencyCode),
-        },
+        productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
     };
-};
-
-const mapProductsSearchResults = (
-    apiData: SearchQueryApi['productsSearch'],
-    currencyCode: string,
-): ListedProductType[] => {
-    const mappedProducts = [];
-
-    if (apiData?.edges !== undefined && apiData.edges !== null) {
-        for (const productEdge of apiData.edges) {
-            if (productEdge?.node !== undefined && productEdge.node !== null) {
-                mappedProducts.push(mapListedProductType(productEdge.node, currencyCode));
-            }
-        }
-    }
-
-    return mappedProducts;
 };
 
 const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch']): ListedCategoryType[] => {
