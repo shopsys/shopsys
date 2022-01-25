@@ -342,7 +342,7 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """Paginated and ordered products of brand"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Brand URL slug"""
   slug: String!
@@ -485,7 +485,7 @@ type Category implements Breadcrumb & Slug & ProductListable {
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """Paginated and ordered products of category"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Seo first level heading of category"""
   seoH1: String
@@ -732,7 +732,7 @@ type Flag implements Breadcrumb & Slug & ProductListable {
   slug: String!
 
   """Paginated and ordered products of flag"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!

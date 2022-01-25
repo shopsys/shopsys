@@ -29,17 +29,13 @@ const Variant: FC<VariantProps> = (props) => {
     const t = useTypedTranslationFunction();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
-    const variantGalleryThumbnailImage =
-        0 in props.variant.images && 'galleryThumbnail' in props.variant.images[0]
-            ? props.variant.images[0]?.galleryThumbnail
-            : null;
 
     return (
         <>
             <VariantsTableRowStyled key={props.variant.uuid}>
                 <VariantImageCellStyled>
                     <VariantImageWrapperStyled>
-                        <Image alt={props.variant.name} image={variantGalleryThumbnailImage} />
+                        <Image alt={props.variant.name} image={props.variant.image} />
                     </VariantImageWrapperStyled>
                 </VariantImageCellStyled>
                 <VariantCellStyled>{props.variant.name}</VariantCellStyled>

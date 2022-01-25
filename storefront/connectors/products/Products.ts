@@ -1,11 +1,19 @@
-import { getFirstImageSize, mapImageSizesTypeApiData } from 'connectors/image/Image';
+import {
+    ListedProductConnectionType,
+    ListedProductType,
+    ListedVariantType,
+    SliderProductItemType,
+} from 'types/product';
 import {
     ListedProductFragmentApi,
+    ListedProductsFragmentApi,
     ListedVariantFragmentApi,
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
-import { ListedProductType, ListedVariantType, SliderProductItemType } from 'types/product';
+import { getFirstImageSize } from 'connectors/image/Image';
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import { mapStoreAvailabilities } from 'connectors/availability/Availability';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -15,27 +23,19 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        slug: apiData.slug,
         availability: apiData.availability.name,
-        name: apiData.name,
         price: mapProductPriceData(apiData.price, currencyCode),
         image: getFirstImageSize(apiData.images),
-        catalogNumber: apiData.catalogNumber,
     };
 };
 
 export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currencyCode: string): ListedVariantType => {
     return {
-        ...apiData,
-        slug: apiData.slug,
-        availability: apiData.availability.name,
-        name: apiData.name,
-        price: mapProductPriceData(apiData.price, currencyCode),
-        images: mapImageSizesTypeApiData(apiData.images),
-        catalogNumber: apiData.catalogNumber,
+        ...mapListedProductType(apiData, currencyCode),
         storeAvailabilities: mapStoreAvailabilities(apiData.storeAvailabilities),
     };
 };
+
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [{ data, error }] = usePromotedProductsQueryApi();
@@ -54,16 +54,18 @@ export const mapSliderProductApiData = (
     currencyCode: string,
 ): SliderProductItemType[] => {
     return apiData.map((apiProduct) => {
-        return {
-            ...apiProduct,
-            name: apiProduct.name,
-            image: getFirstImageSize(apiProduct.images),
-            price: mapProductPriceData(apiProduct.price, currencyCode),
-            isMainVariant: apiProduct.__typename === 'MainVariant',
-            availability: apiProduct.availability.name,
-            stockQuantity: apiProduct.stockQuantity,
-        };
+        return mapSliderItemProductType(apiProduct, currencyCode);
     });
+};
+
+const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCode: string): SliderProductItemType => {
+    return {
+        ...apiData,
+        isMainVariant: apiData.__typename === 'MainVariant',
+        availability: apiData.availability.name,
+        price: mapProductPriceData(apiData.price, currencyCode),
+        image: getFirstImageSize(apiData.images),
+    };
 };
 
 export const mapListedProductConnectionType = (
@@ -76,4 +78,22 @@ export const mapListedProductConnectionType = (
         products: mapListedProductTypes(apiData, currencyCode),
         productFilterOptions: mapProductFilterOptions(apiData.productFilterOptions, currencyCode),
     };
+};
+
+const mapListedProductTypes = (
+    apiData: ListedProductsFragmentApi['products'],
+    currencyCode: string,
+): ListedProductType[] => {
+    const result = [];
+
+    if (apiData.edges !== null) {
+        for (const edge of apiData.edges) {
+            if (edge?.node === undefined || edge.node === null) {
+                continue;
+            }
+            result.push(mapListedProductType(edge.node, currencyCode));
+        }
+    }
+
+    return result;
 };

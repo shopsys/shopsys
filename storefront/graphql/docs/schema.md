@@ -2115,7 +2115,7 @@ Brand images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of brand
@@ -2562,7 +2562,7 @@ Category images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of category
@@ -3138,7 +3138,7 @@ URL slug of flag
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of flag

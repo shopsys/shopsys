@@ -1,0 +1,5 @@
+fragment ProductImagesThumbnailFragment on Product {
+    images (sizes: "galleryThumbnail") {
+        ...ImageSizesFragment
+    }
+}

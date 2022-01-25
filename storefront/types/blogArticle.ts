@@ -2,6 +2,7 @@ import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageSizeType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { SimpleBlogCategoryType } from './blogCategory';
+import { SliderProductItemType } from 'types/product';
 
 export type BlogArticleDetailType = {
     __typename: string | undefined;

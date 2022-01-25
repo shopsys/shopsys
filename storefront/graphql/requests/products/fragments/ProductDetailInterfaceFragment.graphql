@@ -1,0 +1,19 @@
+fragment ProductDetailInterfaceFragment on Product {
+    uuid
+    slug
+    name
+    namePrefix
+    nameSuffix
+    ...BreadcrumbFragment
+    catalogNumber
+    description
+    ...ProductDetailImagesFragment
+    ...ProductPriceFragment
+    parameters {
+        ...ParameterFragment
+    }
+    stockQuantity
+    accessories {
+        ...SliderProductFragment
+    }
+}
