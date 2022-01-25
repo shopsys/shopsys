@@ -27,7 +27,6 @@ export const mapProductDetailApiData = (
         shortDescription: productDetailApiData.shortDescription !== null ? productDetailApiData.shortDescription : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
-        parameters: mapParametersApiData(productDetailApiData.parameters),
         images: mapImageSizesTypeApiData(productDetailApiData.images),
     };
 };

@@ -3,6 +3,7 @@ import { ImageSizesType, ImageSizeType } from 'types/image';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
 import { PageInfoType } from 'types/pageInfo';
+import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
 import { SimpleFlagType } from 'types/flag';
 import { StoreDetailType } from 'types/store';
@@ -71,15 +72,6 @@ export type MainVariantDetailType = {
 };
 
 
-export type ProductParameterType = {
-    uuid: string;
-    name: string;
-    visible: boolean;
-    values: {
-        uuid: string;
-        text: string;
-    }[];
-};
 
 export type ProductDetailType = {
     __typename: 'MainVariant' | 'RegularProduct' | 'Variant';
