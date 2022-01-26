@@ -72,6 +72,11 @@ class ProductExportRepository extends BaseProductExportRepository
     private BreadcrumbFacade $breadcrumbFacade;
 
     /**
+     * @var \App\Model\Product\Product[]|null
+     */
+    private ?array $variantCache = null;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -126,6 +131,56 @@ class ProductExportRepository extends BaseProductExportRepository
     }
 
     /**
+     * @param int $domainId
+     * @param string $locale
+     * @param int $lastProcessedId
+     * @param int $batchSize
+     * @return array
+     */
+    public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
+    {
+        $queryBuilder = $this->createQueryBuilder($domainId)
+            ->andWhere('p.id > :lastProcessedId')
+            ->setParameter('lastProcessedId', $lastProcessedId)
+            ->setMaxResults($batchSize);
+
+        $query = $queryBuilder->getQuery();
+
+        $results = [];
+        /** @var \App\Model\Product\Product $product */
+        foreach ($query->getResult() as $product) {
+            $results[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $this->clearVariantCache();
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @param int[] $productIds
+     * @return array
+     */
+    public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
+    {
+        $queryBuilder = $this->createQueryBuilder($domainId)
+            ->andWhere('p.id IN (:productIds)')
+            ->setParameter('productIds', $productIds);
+
+        $query = $queryBuilder->getQuery();
+
+        $result = [];
+        /** @var \App\Model\Product\Product $product */
+        foreach ($query->getResult() as $product) {
+            $result[$product->getId()] = $this->extractResult($product, $domainId, $locale);
+            $this->clearVariantCache();
+        }
+
+        return $result;
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
@@ -141,11 +196,11 @@ class ProductExportRepository extends BaseProductExportRepository
         $visibility = $this->extractVisibility($domainId, $product);
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
-        $searchingNames = $this->extractSearchingNames($product, $locale);
+        $searchingNames = $this->extractSearchingNames($product, $domainId, $locale);
         $searchingDescriptions = $this->extractSearchingDescriptions($product, $domainId);
-        $searchingCatnums = $this->extractSearchingCatnums($product);
-        $searchingEans = $this->extractSearchingEans($product);
-        $searchingPartnos = $this->extractSearchingPartnos($product);
+        $searchingCatnums = $this->extractSearchingCatnums($product, $domainId);
+        $searchingEans = $this->extractSearchingEans($product, $domainId);
+        $searchingPartnos = $this->extractSearchingPartnos($product, $domainId);
         $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
         $relatedProductsId = $this->extractRelatedProductsId($product);
 
@@ -237,8 +292,8 @@ class ProductExportRepository extends BaseProductExportRepository
                 'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
                 'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
                 'price_from' => $priceFrom,
-                'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup)->getAmount(),
-                'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup)->getAmount(),
+                'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
+                'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
             ];
         }
 
@@ -248,9 +303,10 @@ class ProductExportRepository extends BaseProductExportRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    private function getMaximalVariantPriceForFilteringMinimalPrice(Product $product, PricingGroup $pricingGroup): ?Money
+    private function getMaximalVariantPriceForFilteringMinimalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): ?Money
     {
         $price = null;
         if (!$product->isMainVariant()) {
@@ -261,7 +317,9 @@ class ProductExportRepository extends BaseProductExportRepository
             )->getPriceWithVat();
         }
 
-        foreach ($product->getVariants() as $variant) {
+        $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
+
+        foreach ($variants as $variant) {
             $variantPrice = $this->productPriceCalculation->calculatePrice(
                 $variant,
                 $pricingGroup->getDomainId(),
@@ -279,9 +337,10 @@ class ProductExportRepository extends BaseProductExportRepository
     /**
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getMinimalVariantPriceForFilteringMaximalPrice(Product $product, PricingGroup $pricingGroup): ?Money
+    public function getMinimalVariantPriceForFilteringMaximalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): ?Money
     {
         $price = null;
         if (!$product->isMainVariant()) {
@@ -292,7 +351,9 @@ class ProductExportRepository extends BaseProductExportRepository
             )->getPriceWithVat();
         }
 
-        foreach ($product->getVariants() as $variant) {
+        $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
+
+        foreach ($variants as $variant) {
             $variantPrice = $this->productPriceCalculation->calculatePrice(
                 $variant,
                 $pricingGroup->getDomainId(),
@@ -308,14 +369,17 @@ class ProductExportRepository extends BaseProductExportRepository
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return string
      */
-    private function extractSearchingCatnums(Product $product): string
+    private function extractSearchingCatnums(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
             $variantCatnums = [];
             $variantCatnums[] = $product->getCatnum() ?? '';
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantCatnums[] = $variant->getCatnum() ?? '';
             }
 
@@ -326,14 +390,17 @@ class ProductExportRepository extends BaseProductExportRepository
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return string
      */
-    private function extractSearchingEans(Product $product): string
+    private function extractSearchingEans(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
             $variantEans = [];
             $variantEans[] = $product->getEan() ?? '';
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantEans[] = $variant->getEan() ?? '';
             }
 
@@ -344,14 +411,17 @@ class ProductExportRepository extends BaseProductExportRepository
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return string
      */
-    private function extractSearchingPartnos(Product $product): string
+    private function extractSearchingPartnos(Product $product, int $domainId): string
     {
         if ($product->isMainVariant()) {
             $variantEans = [];
             $variantEans[] = $product->getPartno() ?? '';
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantEans[] = $variant->getPartno() ?? '';
             }
 
@@ -362,14 +432,17 @@ class ProductExportRepository extends BaseProductExportRepository
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @param string $locale
      * @return string
      */
-    private function extractSearchingNames(Product $product, string $locale): string
+    private function extractSearchingNames(Product $product, int $domainId, string $locale): string
     {
         if ($product->isMainVariant()) {
             $variantNames = $product->getFullname($locale);
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantFullName = $variant->getFullname($locale);
                 if ($variantFullName !== '' && strpos($variantNames, $variantFullName) === false) {
                     $variantNames .= ' ' . $variantFullName;
@@ -390,7 +463,9 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantDescriptions = $product->getDescription($domainId) ?? '';
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantDescription = $variant->getDescription($domainId);
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
@@ -411,7 +486,9 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantDescriptions = $product->getShortDescription($domainId) ?? '';
-            foreach ($product->getVariants() as $variant) {
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
+
+            foreach ($variants as $variant) {
                 $variantDescription = $variant->getShortDescription($domainId);
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
@@ -433,11 +510,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $flagIds = $product->getFlagsIdsForDomain($domainId);
         $variants = [];
         if ($product->isMainVariant() === true) {
-            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $product,
-                $domainId,
-                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
-            );
+            $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
 
         foreach ($variants as $variant) {
@@ -461,11 +534,7 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         $products = [];
         if ($product->isMainVariant() === true) {
-            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $product,
-                $domainId,
-                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
-            );
+            $products = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
         $products[] = $product;
 
@@ -518,5 +587,25 @@ class ProductExportRepository extends BaseProductExportRepository
     private function extractBreadcrumb(Product $product, int $domainId, string $locale): array
     {
         return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), 'front_product_detail', $domainId, $locale);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $mainVariant
+     * @param int $domainId
+     * @return \App\Model\Product\Product[]
+     */
+    private function getVariantsForDefaultPricingGroup(Product $mainVariant, int $domainId): array
+    {
+        if ($this->variantCache === null) {
+            $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
+            $this->variantCache = $this->productRepository->getAllSellableVariantsByMainVariant($mainVariant, $domainId, $pricingGroup);
+        }
+
+        return $this->variantCache;
+    }
+
+    private function clearVariantCache(): void
+    {
+        $this->variantCache = null;
     }
 }
