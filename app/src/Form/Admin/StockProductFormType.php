@@ -20,6 +20,8 @@ class StockProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('productQuantity', TextType::class, [
+            'empty_data' => 0,
+            'attr' => ['placeholder' => '0'],
             'constraints' => [
                 new Constraints\GreaterThanOrEqual(['value' => 0]),
                 new Constraints\Regex(['pattern' => '/^\d+$/']),
