@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\Model\Customer\User\CustomerUserFacade;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
@@ -172,6 +175,86 @@ mutation {
         $this->assertQueryWithExpectedJson($query, $jsonExpected);
     }
 
+    public function testEditCustomerCompany(): void
+    {
+        $mutation = 'mutation {
+            ChangePersonalData(input: {
+                telephone: "123456321"
+                firstName: "John"
+                lastName: "Doe"
+                newsletterSubscription: false
+                street: "123 Fake street"
+                city: "Springfield"
+                country: "CZ"
+                postcode: "54321"
+                companyCustomer: true
+                companyName: "AirLocks inc."
+                companyNumber: "98765432"
+                companyTaxNumber: "AL987654321"
+            }) {
+                firstName
+                lastName
+                telephone
+                email
+                street
+                city
+                country {
+                    code
+                }
+                postcode
+                ...on CompanyCustomerUser {
+                    companyName
+                    companyNumber
+                    companyTaxNumber
+                }
+            }
+        }';
+
+        $jsonExpectedTemplate = '{
+            "data": {
+                "%s": {
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "telephone": "123456321",
+                    "email": "no-reply@shopsys.com",
+                    "street": "123 Fake street",
+                    "city": "Springfield",
+                    "country": {
+                        "code": "CZ"
+                    },
+                    "postcode": "54321",
+                    "companyName" : "AirLocks inc.",
+                    "companyNumber" : "98765432",
+                    "companyTaxNumber" : "AL987654321"
+                }
+            }
+        }';
+
+        $this->assertQueryWithExpectedJson($mutation, sprintf($jsonExpectedTemplate, 'ChangePersonalData'));
+
+        $query = '{
+            currentCustomerUser {
+                firstName
+                lastName
+                telephone
+                email
+                street
+                city
+                country {
+                    code
+                }
+                postcode
+                ...on CompanyCustomerUser {
+                    companyName
+                    companyNumber
+                    companyTaxNumber
+                }
+            }
+        }';
+
+        $this->assertQueryWithExpectedJson($query, sprintf($jsonExpectedTemplate, 'currentCustomerUser'));
+    }
+
     public function testChangePersonalDataWithWrongData(): void
     {
         $query = '
@@ -224,6 +307,61 @@ mutation {
             foreach ($responseRow as $validationError) {
                 $this->assertArrayHasKey('message', $validationError);
                 $this->assertEquals($expectedViolationMessages[$i], $validationError['message']);
+                $i++;
+            }
+        }
+    }
+
+    public function testChangePersonalDataWithWrongCompanyData(): void
+    {
+        $mutation = 'mutation {
+            ChangePersonalData(input: {
+                telephone: "123456321"
+                firstName: "John"
+                lastName: "Doe"
+                newsletterSubscription: false
+                street: "123 Fake street"
+                city: "Springfield"
+                country: "CZ"
+                postcode: "54321"
+                companyCustomer: true
+                companyName: "  "
+                companyNumber: "9876543210"
+                companyTaxNumber: "123"
+            }) {
+                firstName
+                lastName
+                telephone
+                email
+                street
+                city
+                country {
+                    code
+                }
+                postcode
+                ...on CompanyCustomerUser {
+                    companyName
+                    companyNumber
+                    companyTaxNumber
+                }
+            }
+        }';
+
+        $expectedViolationCodes = [
+            0 => NotBlank::IS_BLANK_ERROR,
+            1 => Length::TOO_LONG_ERROR,
+            2 => Regex::REGEX_FAILED_ERROR,
+        ];
+
+        $response = $this->getResponseContentForQuery($mutation);
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $responseData = $this->getErrorsExtensionValidationFromResponse($response);
+
+        $i = 0;
+        foreach ($responseData as $responseRow) {
+            foreach ($responseRow as $validationError) {
+                $this->assertArrayHasKey('code', $validationError);
+                $this->assertEquals($expectedViolationCodes[$i], $validationError['code']);
                 $i++;
             }
         }

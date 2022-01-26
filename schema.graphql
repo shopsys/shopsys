@@ -574,6 +574,22 @@ input ChangePersonalDataInput {
   """
   country: String!
 
+  """Determines whether the customer is a company or not."""
+  companyCustomer: Boolean = false
+
+  """The customer’s company name (required when companyCustomer is true)"""
+  companyName: String
+
+  """
+  The customer’s company identification number (required when companyCustomer is true)
+  """
+  companyNumber: String
+
+  """
+  The customer’s company tax number (required when companyCustomer is true)
+  """
+  companyTaxNumber: String
+
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
 }
@@ -1909,8 +1925,8 @@ input RegistrationDataInput {
   """
   country: String!
 
-  """Determines whether the registered customer is a company or not."""
-  companyCustomer: Boolean!
+  """Determines whether the customer is a company or not."""
+  companyCustomer: Boolean = false
 
   """The customer’s company name (required when companyCustomer is true)"""
   companyName: String

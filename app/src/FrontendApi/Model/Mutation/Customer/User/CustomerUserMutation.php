@@ -10,6 +10,7 @@ use App\Model\Customer\User\RegistrationFacadeInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
@@ -24,8 +25,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 /**
  * @property \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
  * @property \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+ * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
  * @method \App\Model\Customer\User\CustomerUser changePassword(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
- * @method \App\Model\Customer\User\CustomerUser changePersonalData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
  */
@@ -55,7 +56,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
@@ -116,6 +117,28 @@ class CustomerUserMutation extends BaseCustomerUserMutation
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
         ];
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \App\Model\Customer\User\CustomerUser
+     */
+    public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
+    {
+        $user = $this->runCheckUserIsLogged();
+
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
+
+        $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
+            $customerUser,
+            $argument
+        );
+        $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
+
+        return $customerUser;
     }
 
     /**

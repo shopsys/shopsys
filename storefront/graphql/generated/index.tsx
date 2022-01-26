@@ -545,6 +545,14 @@ export type ChangePasswordInputApi = {
 export type ChangePersonalDataInputApi = {
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
+  /** Determines whether the customer is a company or not. */
+  companyCustomer?: Maybe<Scalars['Boolean']>;
+  /** The customer’s company name (required when companyCustomer is true) */
+  companyName?: Maybe<Scalars['String']>;
+  /** The customer’s company identification number (required when companyCustomer is true) */
+  companyNumber?: Maybe<Scalars['String']>;
+  /** The customer’s company tax number (required when companyCustomer is true) */
+  companyTaxNumber?: Maybe<Scalars['String']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String'];
   /** Customer user first name */
@@ -1820,8 +1828,8 @@ export type RegistrationDataInputApi = {
   cartUuid: Maybe<Scalars['Uuid']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
-  /** Determines whether the registered customer is a company or not. */
-  companyCustomer: Scalars['Boolean'];
+  /** Determines whether the customer is a company or not. */
+  companyCustomer?: Maybe<Scalars['Boolean']>;
   /** The customer’s company name (required when companyCustomer is true) */
   companyName: Maybe<Scalars['String']>;
   /** The customer’s company identification number (required when companyCustomer is true) */

@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 /**
  * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
+ * @method \App\Model\Customer\User\CustomerUser getByUuid(string $uuid)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
