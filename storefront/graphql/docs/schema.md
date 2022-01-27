@@ -80,6 +80,7 @@
     * [CartInput](#cartinput)
     * [ChangePasswordInput](#changepasswordinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
+    * [ContactInput](#contactinput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
     * [OrderInput](#orderinput)
@@ -1031,6 +1032,20 @@ Delete delivery address by Uuid
 <tr>
 <td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>Contact</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Send message to the site owner
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#contactinput">ContactInput</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -6847,6 +6862,47 @@ The customer’s company tax number (required when companyCustomer is true)
 <td>
 
 Whether customer user should receive newsletters or not
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ContactInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the sender
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address of the sender
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>message</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Message sent to recipient
 
 </td>
 </tr>
