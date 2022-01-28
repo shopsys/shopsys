@@ -3,5 +3,6 @@ describe('Homepage promoted products', () => {
         cy.visit('/')
         cy.contains('22" Sencor SLE 22F46DM4 HELLO KITTY').click()
         cy.url().should('contain', '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova')
+        cy.contains('Do košíku').click()
     })
 })
