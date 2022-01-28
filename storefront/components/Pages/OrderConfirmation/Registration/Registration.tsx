@@ -65,6 +65,7 @@ const Registration: FC = () => {
             ...contactInformation,
             country: contactInformation.country.value,
             companyCustomer: contactInformation.customer === 'companyCustomer',
+            previousCartUuid: null,
         });
     };
 

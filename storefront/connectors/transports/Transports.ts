@@ -29,7 +29,7 @@ const mapTransports = (
     return mappedTransports;
 };
 
-export const getTransports = (cartUuid?: string | null): TransportType[] => {
+export const getTransports = (cartUuid: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [result] = useTransportsQueryApi({ variables: { cartUuid } });
     const transportsApiData = result.data?.transports;

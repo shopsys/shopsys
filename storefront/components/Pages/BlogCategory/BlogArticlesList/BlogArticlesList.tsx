@@ -59,7 +59,7 @@ const List: FC<ListProps> = (props) => {
                         >
                             <Heading type="h2">{blogArticle.name}</Heading>
                         </ListItemTitleStyled>
-                        {blogArticle.perex !== undefined && (
+                        {blogArticle.perex !== null && (
                             <ListItemContentTextStyled data-testid={testIdentifier + blogArticleIndex + '-perex'}>
                                 {blogArticle.perex}
                             </ListItemContentTextStyled>

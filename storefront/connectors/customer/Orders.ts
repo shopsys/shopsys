@@ -72,7 +72,7 @@ export function getOrderDetail(orderNumber: string, currentDomainConfig: DomainC
 }
 
 export function mapOrderDetailApiData(
-    apiOrderDetailData: OrderDetailQueryApi['order'],
+    apiOrderDetailData: OrderDetailQueryApi['order'] | undefined,
     currentDomainConfig: DomainConfigType,
 ): OrderDetailType | null {
     if (apiOrderDetailData !== null && apiOrderDetailData !== undefined) {

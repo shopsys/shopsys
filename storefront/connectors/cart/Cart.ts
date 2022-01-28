@@ -55,7 +55,7 @@ export const useLoadCart = (
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
-): UseQueryResponse<CartQueryApi, CartQueryVariablesApi> => {
+): UseQueryResponse<CartQueryApi> => {
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     const [result, refresh] = useCartQueryApi({
@@ -126,8 +126,6 @@ export const mapCart = (
         totalItemsPrice: totalItemsPrice,
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
         remainingAmountWithVatForFreeTransport:
-            remainingFreeTransport !== undefined && remainingFreeTransport !== null
-                ? Number.parseFloat(remainingFreeTransport)
-                : null,
+            remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
     };
 };

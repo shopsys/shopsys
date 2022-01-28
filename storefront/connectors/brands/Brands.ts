@@ -41,8 +41,6 @@ export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: st
     return {
         ...apiData,
         __typename: 'Brand',
-        seoH1: apiData.seoH1 !== undefined ? apiData.seoH1 : null,
-        description: apiData.description !== undefined ? apiData.description : null,
         image: mapImageApiData(apiData.brandImages),
         products: products,
     };
