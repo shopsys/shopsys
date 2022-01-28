@@ -1,0 +1,7 @@
+fragment ListedStoreConnectionFragment on StoreConnection {
+    edges {
+        node {
+            ...ListedStoreFragment
+        }
+    }
+}

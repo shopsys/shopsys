@@ -19,7 +19,7 @@ export type StoreDetailType = {
     breadcrumb: BreadcrumbItemType[];
 };
 
-export type StoreListType = {
+export type ListedStoreType = {
     slug: string;
     name: string;
     locationLatitude: number | null;

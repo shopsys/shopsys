@@ -2681,6 +2681,8 @@ export type SlugQueryApi = { __typename?: 'Query', slug: { __typename: 'Article'
 
 export type StoreAvailabilityFragmentApi = { __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null };
 
+export type ListedStoreConnectionFragmentApi = { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string } | null } | null> | null };
+
 export type ListedStoreFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string };
 
 export type StoreDetailFragmentApi = { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
@@ -3674,6 +3676,15 @@ export const ListedStoreFragmentApi = gql`
   city
 }
     `;
+export const ListedStoreConnectionFragmentApi = gql`
+    fragment ListedStoreConnectionFragment on StoreConnection {
+  edges {
+    node {
+      ...ListedStoreFragment
+    }
+  }
+}
+    ${ListedStoreFragmentApi}`;
 export const BlogArticlesQueryDocumentApi = gql`
     query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) {
   blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
@@ -4090,14 +4101,10 @@ export function useSlugQueryApi(options: Omit<Urql.UseQueryArgs<SlugQueryVariabl
 export const StoresQueryDocumentApi = gql`
     query StoresQuery {
   stores {
-    edges {
-      node {
-        ...ListedStoreFragment
-      }
-    }
+    ...ListedStoreConnectionFragment
   }
 }
-    ${ListedStoreFragmentApi}`;
+    ${ListedStoreConnectionFragmentApi}`;
 
 export function useStoresQueryApi(options: Omit<Urql.UseQueryArgs<StoresQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<StoresQueryApi>({ query: StoresQueryDocumentApi, ...options });

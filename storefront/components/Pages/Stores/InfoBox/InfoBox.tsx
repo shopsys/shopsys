@@ -6,10 +6,10 @@ import {
     LinkStyled,
 } from './InfoBox.style';
 import { FC } from 'react';
-import { StoreListType } from 'types/store';
+import { ListedStoreType } from 'types/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-type InfoBoxProps = StoreListType & {
+type InfoBoxProps = ListedStoreType & {
     isClosed: () => void;
 };
 
