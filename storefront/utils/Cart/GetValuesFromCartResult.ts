@@ -29,11 +29,7 @@ export const getValuesFromCartResult = (
             : mapPayment(resultData.payment, currencyCode);
     const cart = mapCart(
         {
-            items: resultData.items,
-            modifications: resultData.modifications,
-            totalPrice: resultData.totalPrice,
-            totalDiscountPrice: resultData.totalDiscountPrice,
-            remainingAmountWithVatForFreeTransport: resultData.remainingAmountWithVatForFreeTransport,
+            ...resultData,
         },
         transport !== null ? transport.price : { ...emptyPriceArray },
         payment !== null ? payment.price : { ...emptyPriceArray },
