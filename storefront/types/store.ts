@@ -24,6 +24,9 @@ export type ListedStoreType = {
     name: string;
     locationLatitude: number | null;
     locationLongitude: number | null;
-    address: string;
-    openingHours?: string | null;
+    street: string;
+    city: string;
+    postcode: string;
+    country: CountryType;
+    openingHoursHtml: string | null;
 };

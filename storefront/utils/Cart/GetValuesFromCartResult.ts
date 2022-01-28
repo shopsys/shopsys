@@ -3,7 +3,7 @@ import { CartResultValues } from 'types/cart';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
-import { mapTransport } from 'connectors/transports/Transport';
+import { mapTransport } from 'connectors/transports/Transports';
 import { PriceType } from 'types/price';
 
 export const getValuesFromCartResult = (

@@ -1,4 +1,4 @@
-import { ListedPickupPlaceFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { getPacketeryCookie } from 'helpers/packetery';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
@@ -19,19 +19,17 @@ export const getSelectedPickupPlace = (
     return pickupPlace === undefined ? null : pickupPlace;
 };
 
-const mapPickupPlaceApiData = (pickupPlace: ListedPickupPlaceFragmentApi): PickupPlaceType => {
+const mapPickupPlaceApiData = (pickupPlace: ListedStoreFragmentApi): PickupPlaceType => {
     return {
         ...pickupPlace,
         identifier: pickupPlace.uuid,
         description: pickupPlace.description !== null ? pickupPlace.description : '',
-        openingHours: pickupPlace.openingHoursHtml !== null ? pickupPlace.openingHoursHtml : '',
+        openingHoursHtml: pickupPlace.openingHoursHtml !== null ? pickupPlace.openingHoursHtml : '',
     };
 };
 
-export const mapPickupPlacesApiData = (
-    storesConnectionApi: TransportWithAvailablePaymentsAndStoresFragmentApi['stores'],
-): PickupPlaceType[] => {
-    if (storesConnectionApi?.edges === undefined || storesConnectionApi.edges === null) {
+export const mapPickupPlacesApiData = (storesConnectionApi: ListedStoreConnectionFragmentApi): PickupPlaceType[] => {
+    if (storesConnectionApi.edges === null) {
         return [];
     }
 

@@ -2681,18 +2681,16 @@ export type SlugQueryApi = { __typename?: 'Query', slug: { __typename: 'Article'
 
 export type StoreAvailabilityFragmentApi = { __typename?: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: string, store: { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> } | null };
 
-export type ListedStoreConnectionFragmentApi = { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string } | null } | null> | null };
+export type ListedStoreConnectionFragmentApi = { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null };
 
-export type ListedStoreFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string };
+export type ListedStoreFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } };
 
 export type StoreDetailFragmentApi = { __typename?: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, openingHours: string | null, contactInfo: string | null, specialMessage: string | null, locationLatitude: string | null, locationLongitude: string | null, storeName: string, country: { __typename?: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
 export type StoresQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type StoresQueryApi = { __typename?: 'Query', stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHours: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string } | null } | null> | null } };
-
-export type ListedPickupPlaceFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } };
+export type StoresQueryApi = { __typename?: 'Query', stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } };
 
 export type TransportWithAvailablePaymentsAndStoresFragmentApi = { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } };
 
@@ -3165,8 +3163,8 @@ export const CountryFragmentApi = gql`
   code
 }
     `;
-export const ListedPickupPlaceFragmentApi = gql`
-    fragment ListedPickupPlaceFragment on Store {
+export const ListedStoreFragmentApi = gql`
+    fragment ListedStoreFragment on Store {
   slug
   uuid
   name
@@ -3182,6 +3180,15 @@ export const ListedPickupPlaceFragmentApi = gql`
   }
 }
     ${CountryFragmentApi}`;
+export const ListedStoreConnectionFragmentApi = gql`
+    fragment ListedStoreConnectionFragment on StoreConnection {
+  edges {
+    node {
+      ...ListedStoreFragment
+    }
+  }
+}
+    ${ListedStoreFragmentApi}`;
 export const TransportWithAvailablePaymentsAndStoresFragmentApi = gql`
     fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
   uuid
@@ -3199,11 +3206,7 @@ export const TransportWithAvailablePaymentsAndStoresFragmentApi = gql`
   }
   daysUntilDelivery
   stores {
-    edges {
-      node {
-        ...ListedPickupPlaceFragment
-      }
-    }
+    ...ListedStoreConnectionFragment
   }
   transportType {
     code
@@ -3212,7 +3215,7 @@ export const TransportWithAvailablePaymentsAndStoresFragmentApi = gql`
     ${PriceFragmentApi}
 ${ImageSizesFragmentApi}
 ${SimplePaymentFragmentApi}
-${ListedPickupPlaceFragmentApi}`;
+${ListedStoreConnectionFragmentApi}`;
 export const CartFragmentApi = gql`
     fragment CartFragment on CartInterface {
   uuid
@@ -3662,29 +3665,6 @@ export const SliderItemFragmentApi = gql`
   ...SliderItemImagesWebDefaultFragment
 }
     ${SliderItemImagesWebDefaultFragmentApi}`;
-export const ListedStoreFragmentApi = gql`
-    fragment ListedStoreFragment on Store {
-  slug
-  uuid
-  name
-  description
-  openingHours
-  locationLatitude
-  locationLongitude
-  street
-  postcode
-  city
-}
-    `;
-export const ListedStoreConnectionFragmentApi = gql`
-    fragment ListedStoreConnectionFragment on StoreConnection {
-  edges {
-    node {
-      ...ListedStoreFragment
-    }
-  }
-}
-    ${ListedStoreFragmentApi}`;
 export const BlogArticlesQueryDocumentApi = gql`
     query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) {
   blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {

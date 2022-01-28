@@ -38,7 +38,7 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     street: packeteryExtendedPoint.street,
     country: { code: packeteryExtendedPoint.country.toUpperCase(), name: packeteryExtendedPoint.country.toUpperCase() },
     postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
-    openingHours: parsePacketeryOpeningHours(packeteryExtendedPoint.openingHours.compactShort),
+    openingHoursHtml: parsePacketeryOpeningHours(packeteryExtendedPoint.openingHours.compactShort),
 });
 
 /**

@@ -44,7 +44,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                         </InfoStyled>
                         <InfoStyled>{t('Open') + ': '}</InfoStyled>
                         <InfoStyled
-                            dangerouslySetInnerHTML={{ __html: props.pickupPlaceDetail.openingHours }}
+                            dangerouslySetInnerHTML={{ __html: props.pickupPlaceDetail.openingHoursHtml }}
                             data-testid={testIdentifier + '-openinghours'}
                         />
                     </>

@@ -18,7 +18,6 @@ const mapStoreApiData = (apiData: ListedStoreFragmentApi): ListedStoreType => {
         ...apiData,
         locationLatitude: apiData.locationLatitude !== null ? Number.parseFloat(apiData.locationLatitude) : null,
         locationLongitude: apiData.locationLongitude !== null ? Number.parseFloat(apiData.locationLongitude) : null,
-        address: apiData.street + '<br />' + apiData.postcode + ' ' + apiData.city,
     };
 };
 
