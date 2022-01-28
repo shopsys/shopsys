@@ -1,6 +1,6 @@
 import { ImageSizeType } from 'types/image';
 
-export type SliderItem = {
+export type SliderItemType = {
     uuid: string;
     name: string;
     link: string;

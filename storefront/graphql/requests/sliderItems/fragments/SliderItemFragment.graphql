@@ -1,0 +1,8 @@
+fragment SliderItemFragment on SliderItem {
+    uuid
+    name
+    link
+    extendedText
+    extendedTextLink
+    ...SliderItemImagesWebDefaultFragment
+}

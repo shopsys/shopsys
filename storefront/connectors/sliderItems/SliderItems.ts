@@ -1,9 +1,9 @@
-import { SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
+import { SliderItemFragmentApi, useSliderItemsQueryApi } from 'graphql/generated';
 import { getFirstImageSize } from 'connectors/image/Image';
-import { SliderItem } from 'types/sliderItem';
+import { SliderItemType } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getSliderItems = (): SliderItem[] | undefined => {
+export const getSliderItems = (): SliderItemType[] | undefined => {
     const [{ data, error }] = useSliderItemsQueryApi();
     useQueryError(error);
 
@@ -14,15 +14,15 @@ export const getSliderItems = (): SliderItem[] | undefined => {
     return mapSliderItemsApiData(data.sliderItems);
 };
 
-const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): SliderItem[] => {
-    return apiData.map((sliderItem) => {
-        return {
-            uuid: sliderItem.uuid,
-            name: sliderItem.name,
-            link: sliderItem.link,
-            extendedText: sliderItem.extendedText === null ? '' : sliderItem.extendedText,
-            extendedTextLink: sliderItem.extendedTextLink === null ? '' : sliderItem.extendedTextLink,
-            image: getFirstImageSize(sliderItem.images),
-        };
-    });
+const mapSliderItemApiData = (apiData: SliderItemFragmentApi): SliderItemType => {
+    return {
+        ...apiData,
+        extendedText: apiData.extendedText === null ? '' : apiData.extendedText,
+        extendedTextLink: apiData.extendedTextLink === null ? '' : apiData.extendedTextLink,
+        image: getFirstImageSize(apiData.images),
+    };
+};
+
+const mapSliderItemsApiData = (apiData: SliderItemFragmentApi[]): SliderItemType[] => {
+    return apiData.map((sliderItem) => mapSliderItemApiData(sliderItem));
 };
