@@ -4,7 +4,7 @@ import { productClickFromPromoProductsOnHomepage } from "./HomepageFunctions"
 import { addProductToCartFromProductDetail } from "./ProductDetailPageFunctions"
 
 describe('Homepage promoted products', () => {
-    it('Visits homepage, clicks on Hello Kitty, add product to the cart and checks if redirected correctly', () => {
+    it('Adding product to cart from promo products on homepage and check product in cart', () => {
         cy.visit('/')
         productClickFromPromoProductsOnHomepage('9177759','22" Sencor SLE 22F46DM4 HELLO KITTY')
         cy.url().should('contain', '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova')

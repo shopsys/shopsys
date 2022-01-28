@@ -3,4 +3,5 @@ export function checkProductInCart(catnum, product_name){
 	const productCatnum = 'Kód' + ': ' + catnum 
 	cy.get(cartProductItemSelector).contains(product_name)
 	cy.get(cartProductItemSelector).contains(productCatnum) 
+	cy.url().should('contain', '/kosik')
 }
