@@ -1,13 +1,13 @@
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
-import { ListedCategoryType, SimpleCategoryType } from 'types/category';
-import { ListedProductConnectionType, SimpleProductType } from 'types/product';
+import { ListedCategoryType, SimpleCategoryConnectionType } from 'types/category';
+import { ListedProductConnectionType, SimpleProductConnectionType } from 'types/product';
 import { SimpleArticleInterfaceType } from './articleInterface';
 
 export type AutocompleteSearchType = {
     articlesSearch: SimpleArticleInterfaceType[];
     brandSearch: SimpleBrandType[];
-    categoriesSearch: { totalCount: number; categories: SimpleCategoryType[] };
-    productsSearch: { totalCount: number; products: SimpleProductType[] };
+    categoriesSearch: SimpleCategoryConnectionType;
+    productsSearch: SimpleProductConnectionType;
 };
 
 export type SearchType = {

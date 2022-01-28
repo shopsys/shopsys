@@ -1,16 +1,16 @@
 import {
+    ListedProductConnectionFragmentApi,
+    ListedProductFragmentApi,
+    ListedVariantFragmentApi,
+    SliderProductFragmentApi,
+    usePromotedProductsQueryApi,
+} from 'graphql/generated';
+import {
     ListedProductConnectionType,
     ListedProductType,
     ListedVariantType,
     SliderProductItemType,
 } from 'types/product';
-import {
-    ListedProductFragmentApi,
-    ListedProductsFragmentApi,
-    ListedVariantFragmentApi,
-    SliderProductFragmentApi,
-    usePromotedProductsQueryApi,
-} from 'graphql/generated';
 import { getFirstImageSize } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
@@ -69,7 +69,7 @@ const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCod
 };
 
 export const mapListedProductConnectionType = (
-    apiData: ListedProductsFragmentApi['products'],
+    apiData: ListedProductConnectionFragmentApi,
     currencyCode: string,
 ): ListedProductConnectionType => {
     return {
@@ -81,7 +81,7 @@ export const mapListedProductConnectionType = (
 };
 
 const mapListedProductTypes = (
-    apiData: ListedProductsFragmentApi['products'],
+    apiData: ListedProductConnectionFragmentApi,
     currencyCode: string,
 ): ListedProductType[] => {
     const result = [];

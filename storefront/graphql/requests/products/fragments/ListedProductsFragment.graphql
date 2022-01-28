@@ -1,16 +1,5 @@
 fragment ListedProductsFragment on ProductListable {
     products(orderingMode: $sortingMode, after: $endCursorForPagination, first: $pageSize, filter: $filter) {
-        totalCount
-        productFilterOptions {
-            ...ProductFilterOptionsFragment
-        }
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            node {
-                ...ListedProductFragment
-            }
-        }
+        ...ListedProductConnectionFragment
     }
 }

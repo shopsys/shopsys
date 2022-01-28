@@ -3,7 +3,7 @@ import { mapSimpleBlogArticle } from './blogArticle/BlogArticle';
 import { SimpleArticleInterfaceFragmentApi } from 'graphql/generated';
 import { SimpleArticleInterfaceType } from 'types/articleInterface';
 
-export const mapSimpleArticleInterface = (
+const mapSimpleArticleInterface = (
     apiData: SimpleArticleInterfaceFragmentApi,
 ): SimpleArticleInterfaceType | undefined => {
     switch (apiData.__typename) {
@@ -14,4 +14,19 @@ export const mapSimpleArticleInterface = (
         default:
             return undefined;
     }
+};
+
+export const mapSimpleArticlesInterface = (
+    apiData: SimpleArticleInterfaceFragmentApi[],
+): SimpleArticleInterfaceType[] => {
+    const mappedArticles = [];
+
+    for (const article of apiData) {
+        const mappedArticle = mapSimpleArticleInterface(article);
+        if (mappedArticle !== undefined) {
+            mappedArticles.push(mappedArticle);
+        }
+    }
+
+    return mappedArticles;
 };

@@ -8,12 +8,22 @@ export type SimpleCategoryType = {
     slug: string;
 };
 
+export type SimpleCategoryConnectionType = {
+    totalCount: number;
+    categories: SimpleCategoryType[];
+};
+
 export type ListedCategoryType = {
     uuid: string;
     name: string;
     slug: string;
     image: ImageSizeType | null;
     totalCount?: number;
+};
+
+export type ListedCategoryConnectionType = {
+    totalCount: number;
+    categories: ListedCategoryType[];
 };
 
 export type ReadyCategorySeoMixLink = {

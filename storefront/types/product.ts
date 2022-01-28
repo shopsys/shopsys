@@ -16,6 +16,11 @@ export type SimpleProductType = {
     unitName: string;
 };
 
+export type SimpleProductConnectionType = {
+    totalCount: number;
+    products: SimpleProductType[];
+};
+
 export type ListedProductConnectionType = {
     products: ListedProductType[];
     productFilterOptions: FilterOptionsType | null;

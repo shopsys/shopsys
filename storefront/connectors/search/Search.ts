@@ -1,16 +1,13 @@
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { FilterOptionsStateType } from 'types/productFilter';
-import { ListedBrandType } from 'types/brand';
-import { ListedCategoryType } from 'types/category';
-import { mapListedBrand } from 'connectors/brands/Brands';
-import { mapListedCategoryApiData } from 'connectors/categories/Categories';
+import { mapListedBrandsApiData } from 'connectors/brands/Brands';
+import { mapListedCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
-import { mapSimpleArticleInterface } from 'connectors/articleInterface/ArticleInterface';
+import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { PaginationType } from 'redux/slices/user';
 import { SearchType } from 'types/search';
-import { SimpleArticleInterfaceType } from 'types/articleInterface';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -53,50 +50,9 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
     }
 
     return {
-        articlesSearch: mapArticlesSearchResults(apiData.articlesSearch),
-        brandSearch: mapBrandSearchResults(apiData.brandSearch),
-        categoriesSearch: {
-            totalCount: apiData.categoriesSearch.totalCount,
-            categories: mapCategoriesSearchResults(apiData.categoriesSearch),
-        },
+        articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
+        brandSearch: mapListedBrandsApiData(apiData.brandSearch),
+        categoriesSearch: mapListedCategoryConnectionApiData(apiData.categoriesSearch),
         productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
     };
-};
-
-const mapCategoriesSearchResults = (apiData: SearchQueryApi['categoriesSearch']): ListedCategoryType[] => {
-    const mappedCategories = [];
-
-    if (apiData.edges !== null) {
-        for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
-                mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
-            }
-        }
-    }
-
-    return mappedCategories;
-};
-
-export const mapBrandSearchResults = (apiData: SearchQueryApi['brandSearch']): ListedBrandType[] => {
-    return apiData.map((brand) => mapListedBrand(brand));
-};
-
-export const mapArticlesSearchResults = (apiData: SearchQueryApi['articlesSearch']): SimpleArticleInterfaceType[] => {
-    const mappedArticles = [];
-
-    if (apiData === null) {
-        return [];
-    }
-
-    for (const article of apiData) {
-        if (article === null) {
-            continue;
-        }
-        const mappedArticle = mapSimpleArticleInterface(article);
-        if (mappedArticle !== undefined) {
-            mappedArticles.push(mappedArticle);
-        }
-    }
-
-    return mappedArticles;
 };

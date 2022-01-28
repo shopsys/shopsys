@@ -1,4 +1,4 @@
-fragment ProductsSearchFragment on ProductConnection {
+fragment SimpleProductConnectionFragment on ProductConnection {
     totalCount
     edges {
         node {

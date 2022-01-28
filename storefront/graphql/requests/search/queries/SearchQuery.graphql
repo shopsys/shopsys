@@ -6,25 +6,9 @@ query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $aft
         ...ListedBrandFragment
     }
     categoriesSearch(search: $search) {
-        totalCount
-        edges {
-            node {
-                ...ListedCategoryFragment
-            }
-        }
+        ...ListedCategoryConnectionFragment
     }
     productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after, filter: $filter) {
-        totalCount
-        productFilterOptions {
-            ...ProductFilterOptionsFragment
-        }
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            node {
-                ...ListedProductFragment
-            }
-        }
+       ...ListedProductConnectionFragment
     }
 }

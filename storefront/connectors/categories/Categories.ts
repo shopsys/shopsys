@@ -1,5 +1,17 @@
-import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
-import { CategoryDetailType, ListedCategoryType } from 'types/category';
+import {
+    CategoryDetailFragmentApi,
+    ListedCategoryConnectionFragmentApi,
+    ListedCategoryFragmentApi,
+    SimpleCategoryConnectionFragmentApi,
+    SimpleCategoryFragmentApi,
+} from 'graphql/generated';
+import {
+    CategoryDetailType,
+    ListedCategoryConnectionType,
+    ListedCategoryType,
+    SimpleCategoryConnectionType,
+    SimpleCategoryType,
+} from 'types/category';
 import { getFirstImageSize } from 'connectors/image/Image';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 
@@ -21,4 +33,39 @@ export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFr
         ...listedCategoryApiData,
         image: getFirstImageSize(listedCategoryApiData.images),
     };
+};
+
+export const mapSimpleCategoryConnectionApiData = (
+    apiData: SimpleCategoryConnectionFragmentApi,
+): SimpleCategoryConnectionType => {
+    const mappedCategories = [];
+
+    if (apiData.edges !== null) {
+        for (const categoryEdge of apiData.edges) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
+                mappedCategories.push(mapSimpleCategoryApiData(categoryEdge.node));
+            }
+        }
+    }
+    return { totalCount: apiData.totalCount, categories: mappedCategories };
+};
+
+const mapSimpleCategoryApiData = (apiData: SimpleCategoryFragmentApi): SimpleCategoryType => {
+    return apiData;
+};
+
+export const mapListedCategoryConnectionApiData = (
+    apiData: ListedCategoryConnectionFragmentApi,
+): ListedCategoryConnectionType => {
+    const mappedCategories = [];
+
+    if (apiData.edges !== null) {
+        for (const categoryEdge of apiData.edges) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
+                mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
+            }
+        }
+    }
+
+    return { totalCount: apiData.totalCount, categories: mappedCategories };
 };

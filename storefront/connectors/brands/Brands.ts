@@ -12,7 +12,7 @@ export function getBrands(): ListedBrandType[] | undefined {
         return undefined;
     }
 
-    return data.brands.map((apiBrand) => mapListedBrand(apiBrand));
+    return mapListedBrandsApiData(data.brands);
 }
 
 export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: string): BrandDetailType => {
@@ -29,4 +29,8 @@ export const mapListedBrand = (apiData: ListedBrandFragmentApi): ListedBrandType
         ...apiData,
         image: getFirstImageSize(apiData.images),
     };
+};
+
+export const mapListedBrandsApiData = (apiData: ListedBrandFragmentApi[]): ListedBrandType[] => {
+    return apiData.map((brand) => mapListedBrand(brand));
 };

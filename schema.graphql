@@ -1833,7 +1833,7 @@ type Query {
   notificationBars: [NotificationBar!]
 
   """Returns list of searched articles and blog articles"""
-  articlesSearch(search: String!): [ArticleInterface]
+  articlesSearch(search: String!): [ArticleInterface!]!
 
   """Return cart of logged customer or cart by UUID for anonymous user"""
   cart(cartInput: CartInput = {cartUuid: null}): Cart

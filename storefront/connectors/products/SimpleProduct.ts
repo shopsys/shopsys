@@ -1,7 +1,7 @@
+import { SimpleProductConnectionFragmentApi, SimpleProductFragmentApi } from 'graphql/generated';
+import { SimpleProductConnectionType, SimpleProductType } from 'types/product';
 import { getFirstImageSize } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
-import { SimpleProductFragmentApi } from 'graphql/generated';
-import { SimpleProductType } from 'types/product';
 
 export const mapSimpleProductApiData = (
     simpleProductApiData: SimpleProductFragmentApi,
@@ -13,4 +13,21 @@ export const mapSimpleProductApiData = (
         image: getFirstImageSize(simpleProductApiData.images),
         unitName: simpleProductApiData.unit.name,
     };
+};
+
+export const mapSimpleProductConnectionApiData = (
+    apiData: SimpleProductConnectionFragmentApi,
+    currencyCode: string,
+): SimpleProductConnectionType => {
+    const mappedProducts = [];
+
+    if (apiData.edges !== null) {
+        for (const productEdge of apiData.edges) {
+            if (productEdge?.node !== undefined && productEdge.node !== null) {
+                mappedProducts.push(mapSimpleProductApiData(productEdge.node, currencyCode));
+            }
+        }
+    }
+
+    return { totalCount: apiData.totalCount, products: mappedProducts };
 };

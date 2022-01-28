@@ -724,7 +724,7 @@ Returns a list of notifications supposed to be displayed on all pages
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>articlesSearch</strong></td>
-<td valign="top">[<a href="#articleinterface">ArticleInterface</a>]</td>
+<td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
 <td>
 
 Returns list of searched articles and blog articles
