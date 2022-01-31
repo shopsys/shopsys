@@ -35,10 +35,15 @@ const PromoCode: FC = () => {
     const promoCodeValue = useWatch({ name: formMeta.fields.promoCode.name, control: formProviderMethods.control });
 
     useEffect(() => {
-        if (result.data === undefined || updatedPromoCode === promoCode || updatedPromoCode === null) {
+        if (
+            result.data === undefined ||
+            result.error !== undefined ||
+            updatedPromoCode === promoCode ||
+            updatedPromoCode === null
+        ) {
             return;
         }
-        if (result.data.cart !== null && result.error === undefined) {
+        if (result.data.cart !== null) {
             showSuccessMessage(formMeta.messages.success);
         }
     }, [result.data]);
