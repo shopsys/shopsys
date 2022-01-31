@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use App\Model\Order\Mail\OrderMail;
+use App\Model\Payment\Transaction\PaymentTransaction;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
@@ -104,6 +105,12 @@ class Order extends BaseOrder
     private ?string $pickupPlaceIdentifier;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Payment\Transaction\PaymentTransaction[]
+     * @ORM\OneToMany(targetEntity="App\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
+     */
+    private ArrayCollection $paymentTransactions;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -135,6 +142,7 @@ class Order extends BaseOrder
         $this->isOverLimit = $orderData->isOverLimit;
         $this->trackingNumber = $orderData->trackingNumber;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
+        $this->paymentTransactions = new ArrayCollection();
     }
 
     /**
@@ -204,6 +212,22 @@ class Order extends BaseOrder
         }
 
         return false;
+    }
+
+    /**
+     * @return \App\Model\Payment\Transaction\PaymentTransaction[]
+     */
+    public function getPaymentTransactions(): array
+    {
+        return $this->paymentTransactions->toArray();
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
+     */
+    public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
+    {
+        $this->paymentTransactions->add($paymentTransaction);
     }
 
     /**
