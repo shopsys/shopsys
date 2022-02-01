@@ -160,7 +160,7 @@
     },
     "require-dev": {
         "ext-pgsql": "*",
-        "codeception/codeception": "^4.1",
+        "codeception/codeception": "^4.1.22",
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/phpunit-wrapper": "^8.0",
@@ -182,7 +182,6 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "codeception/codeception": ">=4.1.19",
         "friendsofphp/php-cs-fixer": "2.19.0"
     },
     "scripts": {
