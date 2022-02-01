@@ -30,8 +30,7 @@ class PaymentMutation implements MutationInterface, AliasedInterface
     public function __construct(
         OrderFacade $orderFacade,
         PaymentServiceFacade $paymentServiceFacade
-    )
-    {
+    ) {
         $this->orderFacade = $orderFacade;
         $this->paymentServiceFacade = $paymentServiceFacade;
     }

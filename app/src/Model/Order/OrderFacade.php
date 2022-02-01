@@ -12,6 +12,8 @@ use App\Model\GoPay\GoPayTransaction;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
+use App\Model\Payment\Service\PaymentServiceFacade;
+use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use App\Model\Transport\Type\TransportType;
 use BadMethodCallException;
 use DateTime;
@@ -113,6 +115,17 @@ class OrderFacade extends BaseOrderFacade
      */
     private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
 
+
+    /**
+     * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
+     */
+    private PaymentTransactionFacade $paymentTransactionFacade;
+
+    /**
+     * @var \App\Model\Payment\Service\PaymentServiceFacade
+     */
+    private PaymentServiceFacade $paymentServiceFacade;
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
@@ -145,6 +158,8 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -177,7 +192,9 @@ class OrderFacade extends BaseOrderFacade
         OrderDataFactory $orderDataFactory,
         RegistrationDataFactory $registrationDataFactory,
         RegistrationFacade $registrationFacade,
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        PaymentTransactionFacade $paymentTransactionFacade,
+        PaymentServiceFacade $paymentServiceFacade
     ) {
         parent::__construct(
             $em,
@@ -213,6 +230,8 @@ class OrderFacade extends BaseOrderFacade
         $this->registrationDataFactory = $registrationDataFactory;
         $this->registrationFacade = $registrationFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
+        $this->paymentTransactionFacade = $paymentTransactionFacade;
+        $this->paymentServiceFacade = $paymentServiceFacade;
     }
 
     /**
@@ -307,11 +326,26 @@ class OrderFacade extends BaseOrderFacade
 
         parent::edit($orderId, $orderData);
 
+        $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
+
         if ($oldOrderStatus !== $order->getStatus()) {
             $this->orderMailFacade->sendOrderStatusMailByOrder($order);
         }
 
         return $order;
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[] $transactionsIndexedByPaymentTransactionId
+     */
+    private function handleRefundTransactions(array $transactionsIndexedByPaymentTransactionId): void
+    {
+        foreach ($transactionsIndexedByPaymentTransactionId as $paymentTransactionId => $paymentTransactionRefundData) {
+            if ($paymentTransactionRefundData->executeRefund) {
+                $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
+                $this->paymentServiceFacade->refundTransaction($paymentTransaction, $paymentTransactionRefundData->refundAmount);
+            }
+        }
     }
 
     /**

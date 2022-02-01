@@ -59,4 +59,13 @@ class PaymentTransactionFacade
 
         return $paymentTransaction;
     }
+
+    /**
+     * @param int $id
+     * @return \App\Model\Payment\Transaction\PaymentTransaction
+     */
+    public function getById(int $id): PaymentTransaction
+    {
+        return $this->paymentTransactionRepository->getById($id);
+    }
 }

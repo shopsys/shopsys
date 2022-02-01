@@ -7,6 +7,7 @@ namespace App\Model\Payment\Transaction;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use Doctrine\ORM\Mapping as ORM;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
@@ -56,6 +57,12 @@ class PaymentTransaction
     private Money $paidAmount;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money
+     * @ORM\Column(type="money", precision=20, scale=6)
+     */
+    private Money $refundedAmount;
+
+    /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      */
     public function __construct(PaymentTransactionData $paymentTransactionData)
@@ -73,6 +80,7 @@ class PaymentTransaction
         $this->paidAmount = $paymentTransactionData->paidAmount;
         $this->externalPaymentIdentifier = $paymentTransactionData->externalPaymentIdentifier;
         $this->externalPaymentStatus = $paymentTransactionData->externalPaymentStatus;
+        $this->refundedAmount = $paymentTransactionData->refundedAmount;
     }
 
     /**
@@ -129,5 +137,29 @@ class PaymentTransaction
     public function getPaidAmount(): Money
     {
         return $this->paidAmount;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getRefundedAmount(): Money
+    {
+        return $this->refundedAmount;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getRefundableAmount(): Money
+    {
+        return $this->getPaidAmount()->subtract($this->getRefundedAmount());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRefundable(): bool
+    {
+        return $this->payment->isGoPay() && in_array($this->externalPaymentStatus, [PaymentStatus::PARTIALLY_REFUNDED, PaymentStatus::PAID], true);
     }
 }

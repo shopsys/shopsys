@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Admin\PaymentTransaction\PaymentTransactionsType;
+use App\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use App\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -64,6 +67,30 @@ class OrderFormTypeExtension extends AbstractTypeExtension
                     ]),
                 ],
             ]);
+
+        $this->createPaymentGroup($builder, $order);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Order\Order $order
+     */
+    public function createPaymentGroup(FormBuilderInterface $builder, Order $order): void
+    {
+        $builderPaymentGroup = $builder->create('paymentGroup', GroupType::class, [
+            'label' => t('Payment transactions'),
+        ]);
+
+        $builderPaymentGroup->add('paymentTransactionRefunds', PaymentTransactionsType::class, [
+            'entry_type' => PaymentTransactionType::class,
+            'error_bubbling' => false,
+            'allow_add' => false,
+            'allow_delete' => false,
+            'required' => false,
+            'order' => $order,
+        ]);
+
+        $builder->add($builderPaymentGroup);
     }
 
     /**

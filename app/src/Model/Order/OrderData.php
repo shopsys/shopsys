@@ -61,7 +61,12 @@ class OrderData extends BaseOrderData
     /**
      * @var string|null
      */
-    public $goPayBankSwift;
+    public ?string $goPayBankSwift = null;
+
+    /**
+     * @var \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[]
+     */
+    public array $paymentTransactionRefunds;
 
     public function __construct()
     {
@@ -70,5 +75,6 @@ class OrderData extends BaseOrderData
         $this->isCompanyCustomer = false;
         $this->trackingNumber = null;
         $this->pickupPlaceIdentifier = null;
+        $this->paymentTransactionRefunds = [];
     }
 }

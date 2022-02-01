@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory;
@@ -51,5 +52,8 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->isOverLimit = $order->getIsOverLimit();
         $orderData->trackingNumber = $order->getTrackingNumber();
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = new PaymentTransactionRefundData();
+        }
     }
 }

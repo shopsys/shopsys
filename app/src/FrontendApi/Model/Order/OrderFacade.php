@@ -27,7 +27,6 @@ class OrderFacade extends BaseOrderFacade
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
 
-
     /**
      * @param string $uuid
      * @return \App\Model\Order\Order

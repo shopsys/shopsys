@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Payment\Transaction;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+
 class PaymentTransactionDataFactory
 {
     /**
@@ -11,7 +13,10 @@ class PaymentTransactionDataFactory
      */
     public function create(): PaymentTransactionData
     {
-        return new PaymentTransactionData();
+        $paymentTransaction = new PaymentTransactionData();
+        $paymentTransaction->refundedAmount = Money::zero();
+
+        return $paymentTransaction;
     }
 
     /**
@@ -26,6 +31,7 @@ class PaymentTransactionDataFactory
         $paymentTransactionData->paidAmount = $paymentTransaction->getPaidAmount();
         $paymentTransactionData->externalPaymentIdentifier = $paymentTransaction->getExternalPaymentIdentifier();
         $paymentTransactionData->externalPaymentStatus = $paymentTransaction->getExternalPaymentStatus();
+        $paymentTransactionData->refundedAmount = $paymentTransaction->getRefundedAmount();
 
         return $paymentTransactionData;
     }

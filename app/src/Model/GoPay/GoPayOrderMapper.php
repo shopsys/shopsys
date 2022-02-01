@@ -87,7 +87,7 @@ class GoPayOrderMapper
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @return int
      */
-    private function formatPriceForGoPay(Money $price): int
+    public function formatPriceForGoPay(Money $price): int
     {
         return (int)round((float)$price->multiply(100)->getAmount());
     }

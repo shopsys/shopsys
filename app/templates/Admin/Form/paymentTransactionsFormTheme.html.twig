@@ -1,0 +1,74 @@
+{% block payment_transactions_row %}
+    {% import _self as self %}
+    <div class="wrap-divider">
+        <div class="form-line form-line--no-padd">
+            <div class="table-touch-always">
+                <div class="table-touch-always__in">
+                    <table class="table-main">
+                        <thead>
+                        <tr>
+                            <th>{{ 'Payment method name'|trans }}</th>
+                            <th>{{ 'External transaction ID'|trans }}</th>
+                            <th>{{ 'External transaction status'|trans }}</th>
+                            <th class="text-right">{{ 'Paid amount'|trans }}</th>
+                            <th class="text-right">{{ 'Refunded amount'|trans }}</th>
+                            <th class="text-right">{{ 'Refundable amount'|trans }}</th>
+                            <th>{{ 'Refund amount'|trans }}</th>
+                            <th>{{ 'Execute refund'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for paymentTransaction in order.paymentTransactions %}
+                            {{ self.paymentTransaction(form[paymentTransaction.id], paymentTransaction, order) }}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock payment_transactions_row %}
+
+
+{% macro paymentTransaction(paymentTransactionForm, paymentTransaction, order) %}
+    {% import _self as self %}
+    <tr id="{{ paymentTransactionForm.vars.id }}" data-index="{{ paymentTransaction.id }}">
+        <td>
+            {{ paymentTransaction.payment.name }}
+        </td>
+        <td>
+            {{ paymentTransaction.externalPaymentIdentifier }}
+        </td>
+        <td>
+            {{ paymentTransaction.externalPaymentStatus }}
+        </td>
+        <td class="text-right">
+            {{ paymentTransaction.paidAmount|priceWithCurrency(order.currency) }}
+        </td>
+        <td class="text-right">
+            {{ paymentTransaction.refundedAmount|priceWithCurrency(order.currency) }}
+        </td>
+        <td class="text-right">
+            {{ paymentTransaction.refundableAmount|priceWithCurrency(order.currency) }}
+        </td>
+        <td>
+            {% if paymentTransaction.refundable %}
+                {{ form_widget(paymentTransactionForm.refundAmount, {attr: { class: 'input--small text-right'}}) }}
+                {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: false }}) }}
+                {{ currencySymbolByCurrencyId(order.currency.id) }}
+            {% else %}
+                {{ 'Not refundable'|trans }}
+                {% do paymentTransactionForm.refundAmount.setRendered %}
+            {% endif %}
+        </td>
+        <td>
+            {% if paymentTransaction.refundable %}
+                {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'input--small text-right'}}) }}
+                {{ form_errors(paymentTransactionForm.executeRefund) }}
+            {% else %}
+                {{ 'Not refundable'|trans }}
+                {% do paymentTransactionForm.executeRefund.setRendered %}
+            {% endif %}
+        </td>
+    </tr>
+{% endmacro %}
