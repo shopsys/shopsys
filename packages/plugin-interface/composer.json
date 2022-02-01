@@ -21,5 +21,10 @@
     },
     "require-dev": {
         "shopsys/coding-standards": "9.1.x-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

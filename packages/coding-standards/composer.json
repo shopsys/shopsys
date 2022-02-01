@@ -38,5 +38,10 @@
         "psr-4": {
             "Tests\\CodingStandards\\": "tests/"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

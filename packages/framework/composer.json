@@ -114,5 +114,11 @@
         "symfony": {
             "require": "^4.4.0"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

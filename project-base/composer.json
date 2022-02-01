@@ -150,6 +150,11 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.1"
+        },
+        "allow-plugins": {
+            "ocramius/package-versions": true,
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {
