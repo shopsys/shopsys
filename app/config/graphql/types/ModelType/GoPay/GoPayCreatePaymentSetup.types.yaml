@@ -1,0 +1,13 @@
+GoPayCreatePaymentSetup:
+    type: object
+    config:
+        fields:
+            gatewayUrl:
+                type: "String!"
+                description: "redirect URL to payment gateway"
+            goPayId:
+                type: "String!"
+                description: "payment transaction identifier"
+            embedJs:
+                type: "String!"
+                description: "url of gopay embedJs file"

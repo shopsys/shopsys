@@ -56,3 +56,10 @@ services:
             -   method: setTracer
                 arguments:
                     - '@shopsys.component.elasticsearch.tracer'
+
+    Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory:
+        arguments:
+            - '%gopay_config%'
+
+    App\Model\GoPay\GoPayClientFactory:
+        alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
