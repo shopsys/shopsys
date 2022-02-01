@@ -67,7 +67,7 @@ You can find all the necessary information in our [Contribution Guide](./CONTRIB
 
 ## Support
 What to do when you are in troubles or need some help?
-The best way is to contact us on our [Slack](http://slack.shopsys-framework.com/).
+The best way is to join our [Slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ).
 
 If you are experiencing problems during installation or running Shopsys Framework on Docker,
 please see our [Docker troubleshooting](https://docs.shopsys.com/en/latest/docker/docker-troubleshooting/).
