@@ -1,18 +1,17 @@
 fragment SliderProductFragment on Product {
-    __typename
     uuid
     slug
     name
-    catalogNumber
     stockQuantity
     flags {
-        ...FlagLabelFragment
+        ...SimpleFlagFragment
     }
     ...ProductImagesListFragment
+    ...ProductPriceFragment
     availability {
         ...AvailabilityFragment
     }
-    ...ProductPriceFragment
     availableStoresCount
     exposedStoresCount
+    catalogNumber
 }

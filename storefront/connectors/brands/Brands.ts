@@ -1,14 +1,8 @@
 import { BrandDetailFragmentApi, ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
 import { BrandDetailType, ListedBrandType } from 'types/brand';
-import { ListedProductEdgesType } from 'types/product';
-import { mapImageApiData } from 'connectors/image/Image';
-import { mapListedProductType } from 'connectors/products/Products';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { getFirstImageSize } from 'connectors/image/Image';
+import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
-
-export const mapListedBrandApiData = (apiData: ListedBrandFragmentApi): ListedBrandType => {
-    return { ...apiData, image: mapImageApiData(apiData.images) };
-};
 
 export function getBrands(): ListedBrandType[] | undefined {
     const [{ data, error }] = useBrandsQueryApi();
@@ -18,36 +12,25 @@ export function getBrands(): ListedBrandType[] | undefined {
         return undefined;
     }
 
-    return data.brands.map((apiBrand) => mapListedBrandApiData(apiBrand));
+    return mapListedBrandsApiData(data.brands);
 }
 
-export const mapBrandDetailApiData = (apiData: BrandDetailFragmentApi, currencyCode: string): BrandDetailType => {
-    const products: ListedProductEdgesType = {
-        ...apiData.products,
-        totalCount: apiData.products?.totalCount !== undefined ? apiData.products.totalCount : 0,
-        pageInfo: mapPageInfoApiData(apiData.products?.pageInfo),
-        edges: [],
-        productFilterOptions: null,
-    };
-
-    if (apiData.products?.edges !== undefined && apiData.products.edges !== null) {
-        for (const edge of apiData.products.edges) {
-            if (edge?.node === undefined || edge.node === null) {
-                continue;
-            }
-            products.edges.push({
-                ...edge,
-                node: mapListedProductType(edge.node, currencyCode),
-            });
-        }
-    }
-
+export const mapBrandDetail = (apiData: BrandDetailFragmentApi, currencyCode: string): BrandDetailType => {
     return {
         ...apiData,
         __typename: 'Brand',
-        seoH1: apiData.seoH1 !== undefined ? apiData.seoH1 : null,
-        description: apiData.description !== undefined ? apiData.description : null,
-        image: mapImageApiData(apiData.brandImages),
-        products: products,
+        productConnection: mapListedProductConnectionType(apiData.products, currencyCode),
+        image: getFirstImageSize(apiData.brandImages),
     };
+};
+
+export const mapListedBrand = (apiData: ListedBrandFragmentApi): ListedBrandType => {
+    return {
+        ...apiData,
+        image: getFirstImageSize(apiData.images),
+    };
+};
+
+export const mapListedBrandsApiData = (apiData: ListedBrandFragmentApi[]): ListedBrandType[] => {
+    return apiData.map((brand) => mapListedBrand(brand));
 };

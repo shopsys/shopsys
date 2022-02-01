@@ -1,0 +1,9 @@
+query BlogArticlesQuery(
+    $first: Int,
+    $onlyHomepageArticles: Boolean
+) {
+    blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+        ...BlogArticleConnectionFragment
+    }
+}
+ 

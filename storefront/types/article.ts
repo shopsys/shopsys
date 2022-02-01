@@ -15,9 +15,3 @@ export type SimpleArticleType = {
     name: string;
     slug: string;
 };
-
-export type ListedArticleType = {
-    name: string;
-    slug: string;
-    image: null;
-};

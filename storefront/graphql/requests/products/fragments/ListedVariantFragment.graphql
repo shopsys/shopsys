@@ -4,9 +4,9 @@ fragment ListedVariantFragment on Variant {
     name
     stockQuantity
     flags {
-        ...FlagLabelFragment
+        ...SimpleFlagFragment
     }
-    ...ProductDetailImagesFragment
+    ...ProductImagesThumbnailFragment
     ...ProductPriceFragment
     availability {
         ...AvailabilityFragment

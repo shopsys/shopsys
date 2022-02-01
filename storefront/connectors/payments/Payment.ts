@@ -1,20 +1,21 @@
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { mapPriceData } from 'connectors/transports/Transports';
-import { PaymentType } from 'types/payment';
+import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
+import { PaymentInputType, PaymentType } from 'types/payment';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
 
 export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
     return {
         ...apiData,
-        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
-        instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
-        image:
-            apiData.images.length > 0 &&
-            0 in apiData.images &&
-            apiData.images[0]?.sizes !== undefined &&
-            0 in apiData.images[0].sizes
-                ? mapImageSizeApiData(apiData.images[0].sizes[0])
-                : null,
+        description: apiData.description !== null ? apiData.description : '',
+        instruction: apiData.instruction !== null ? apiData.instruction : '',
+        image: getFirstImageSize(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
+    };
+};
+
+export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType => {
+    return {
+        uuid: payment.uuid,
+        price: mapPriceInputData(payment.price),
     };
 };

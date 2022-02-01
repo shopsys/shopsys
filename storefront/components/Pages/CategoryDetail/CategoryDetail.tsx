@@ -32,7 +32,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
     const [productFilterOptionsData, setProductFilterOptionsData] = useState<FilterOptionsType>(
-        props.category.products.productFilterOptions as FilterOptionsType,
+        props.category.productConnection.productFilterOptions as FilterOptionsType,
     );
     const [categorySlug, setCategorySlug] = useState(props.category.slug);
 
@@ -52,11 +52,11 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     };
 
     useEffect(() => {
-        if (props.category.products.productFilterOptions !== null) {
-            setProductFilterOptionsData(props.category.products.productFilterOptions);
+        if (props.category.productConnection.productFilterOptions !== null) {
+            setProductFilterOptionsData(props.category.productConnection.productFilterOptions);
             setCategorySlug(props.category.slug);
         }
-    }, [props.category.products.productFilterOptions]);
+    }, [props.category.productConnection.productFilterOptions]);
 
     return (
         <Webline>
@@ -84,9 +84,9 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
                         {t('Filtrovat')}
                     </CategoryDetailPanelOpenerStyled>
-                    <SortingBar totalCount={props.category.products.totalCount} />
-                    {props.category.products.edges.length !== 0 ? (
-                        <ProductsList products={props.category.products.edges.map((edge) => edge.node)} />
+                    <SortingBar totalCount={props.category.productConnection.totalCount} />
+                    {props.category.productConnection.products.length !== 0 ? (
+                        <ProductsList products={props.category.productConnection.products} />
                     ) : (
                         <CategoryDetailContentMessageStyled>
                             <div>
@@ -101,7 +101,10 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                             </div>
                         </CategoryDetailContentMessageStyled>
                     )}
-                    <Pagination totalCount={props.category.products.totalCount} containerWrapRef={containerWrapRef} />
+                    <Pagination
+                        totalCount={props.category.productConnection.totalCount}
+                        containerWrapRef={containerWrapRef}
+                    />
                 </CategoryDetailContentStyled>
             </CategoryDetailStyled>
         </Webline>

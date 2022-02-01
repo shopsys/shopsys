@@ -11,12 +11,10 @@ import {
     useRemoveFromCartMutationApi,
 } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
-import { PaymentInputType, PaymentType } from 'types/payment';
+import { mapPriceData, mapPriceInputData, mapProductPriceData } from 'connectors/price/Prices';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { mapPriceData } from 'connectors/transports/Transports';
-import { mapProductPriceData } from 'connectors/products/Products';
+import { getFirstImageSize } from 'connectors/image/Image';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
 import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
@@ -30,23 +28,8 @@ export const mapTransportToTransportInput = (
 ): TransportInputType => {
     return {
         uuid: transport.uuid,
-        price: {
-            priceWithVat: transport.price.priceWithVat.toString(),
-            priceWithoutVat: transport.price.priceWithoutVat.toString(),
-            vatAmount: transport.price.vatAmount.toString(),
-        },
+        price: mapPriceInputData(transport.price),
         pickupPlaceIdentifier: pickupPlace === null ? null : pickupPlace.identifier,
-    };
-};
-
-export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType => {
-    return {
-        uuid: payment.uuid,
-        price: {
-            priceWithVat: payment.price.priceWithVat.toString(),
-            priceWithoutVat: payment.price.priceWithoutVat.toString(),
-            vatAmount: payment.price.vatAmount.toString(),
-        },
     };
 };
 
@@ -55,11 +38,11 @@ export const useLoadCart = (
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
-): UseQueryResponse<CartQueryApi, CartQueryVariablesApi> => {
+): UseQueryResponse<CartQueryApi> => {
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     const [result, refresh] = useCartQueryApi({
-        variables: { cartUuid, transport, payment, promoCode },
+        variables: { cartUuid, transport, payment, promoCode } as CartQueryVariablesApi,
         pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: 'network-only',
     });
@@ -115,10 +98,7 @@ export const mapCart = (
                     ...item.product,
                     price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
-                    image:
-                        0 in item.product.images && 0 in item.product.images[0].sizes
-                            ? mapImageSizeApiData(item.product.images[0].sizes[0])
-                            : null,
+                    image: getFirstImageSize(item.product.images),
                 },
             };
         }),
@@ -126,8 +106,6 @@ export const mapCart = (
         totalItemsPrice: totalItemsPrice,
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
         remainingAmountWithVatForFreeTransport:
-            remainingFreeTransport !== undefined && remainingFreeTransport !== null
-                ? Number.parseFloat(remainingFreeTransport)
-                : null,
+            remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
     };
 };

@@ -2,11 +2,12 @@ import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'rea
 import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
-import { mapPaymentToPaymentInput, mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
+import { mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
+import { mapPaymentToPaymentInput } from 'connectors/payments/Payment';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';

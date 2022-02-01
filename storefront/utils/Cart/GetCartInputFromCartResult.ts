@@ -1,17 +1,8 @@
-import { CartInput, CartType } from 'types/cart';
-import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
-import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
+import { CartInput, CartResultValues } from 'types/cart';
+import { mapPaymentToPaymentInput } from 'connectors/payments/Payment';
+import { mapTransportToTransportInput } from 'connectors/cart/Cart';
 
-export const getCartInputFromCartResult = (resultData: {
-    cartUuid: string | null;
-    cart: CartType | null;
-    transport: TransportType | null;
-    pickupPlace: PickupPlaceType | null;
-    payment: PaymentType | null;
-    promoCode: string | null;
-}): CartInput => {
+export const getCartInputFromCartResult = (resultData: CartResultValues): CartInput => {
     return {
         cartUuid: resultData.cartUuid,
         promoCode: resultData.promoCode,

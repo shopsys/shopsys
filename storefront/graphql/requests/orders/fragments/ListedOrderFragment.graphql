@@ -1,0 +1,20 @@
+fragment ListedOrderFragment on Order {
+    uuid
+    number
+    creationDate
+    items {
+        quantity
+    }
+    transport {
+        name
+        images(sizes: ["default"]) {
+            ...ImageSizesFragment
+        }
+    }
+    payment {
+        name
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+}

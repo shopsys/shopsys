@@ -7,7 +7,7 @@ export type DropdownItemType = {
     index?: number | string;
 };
 
-export type DropdownListType = {
+export type DropdownListProps = {
     navigationItems: NavigationItemType[];
     historyOfIndexes: (number | string | undefined)[];
 };

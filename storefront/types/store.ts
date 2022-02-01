@@ -19,11 +19,14 @@ export type StoreDetailType = {
     breadcrumb: BreadcrumbItemType[];
 };
 
-export type StoreListType = {
+export type ListedStoreType = {
     slug: string;
     name: string;
     locationLatitude: number | null;
     locationLongitude: number | null;
-    address: string;
-    openingHours?: string | null;
+    street: string;
+    city: string;
+    postcode: string;
+    country: CountryType;
+    openingHoursHtml: string | null;
 };

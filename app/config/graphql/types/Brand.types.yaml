@@ -26,3 +26,11 @@ Brand:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_brand_detail"])'
+            products:
+                type: "ProductConnection!"
+                description: "Paginated and ordered products of brand"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByBrand(args, value)'

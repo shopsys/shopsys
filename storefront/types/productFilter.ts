@@ -1,3 +1,5 @@
+import { SimpleFlagType } from 'types/flag';
+
 export enum FilterOptionsParameterTypeEnum {
     Checkbox = 'checkbox',
     ColorPicker = 'colorPicker',
@@ -17,12 +19,9 @@ export type ParametersType = {
     values: ParametersValuesType[];
 };
 
-export type FlagsType = {
+export type FilterOptionFlagsType = {
     count: number;
-    flag: {
-        uuid: string;
-        name: string;
-    };
+    flag: SimpleFlagType;
 };
 
 export type BrandsType = {
@@ -38,7 +37,7 @@ export type FilterOptionsType = {
     maximalPrice: number;
     inStock: number;
     brands: BrandsType[];
-    flags: FlagsType[];
+    flags: FilterOptionFlagsType[];
     parameters?: ParametersType[];
     currencyCode: string;
 };

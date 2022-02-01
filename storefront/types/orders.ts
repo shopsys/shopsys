@@ -1,5 +1,5 @@
-import { ImageType } from './image';
-import { PageInfoType } from './product';
+import { ImageSizeType } from './image';
+import { PageInfoType } from 'types/pageInfo';
 import { PriceType } from './price';
 
 export type ListedOrderType = {
@@ -11,13 +11,13 @@ export type ListedOrderType = {
     };
     transport: {
         name: string;
-        image: ImageType | null;
+        image: ImageSizeType | null;
     };
     payment: string;
     totalPrice: PriceType;
 };
 
-export type ListedOrdersType = {
+export type ListedOrderConnectionType = {
     orders: ListedOrderType[];
     totalCount: number;
     pageInfo: PageInfoType;

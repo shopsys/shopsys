@@ -8,12 +8,12 @@ import {
     ProductDetailImageSliderStyled,
     SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
-import { ProductDetailImageType } from 'types/product';
+import { ImageSizesType } from 'types/image';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductDetailImageSliderProps = {
-    galleryItems: ProductDetailImageType[];
+    galleryItems: ImageSizesType[];
 };
 
 const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {

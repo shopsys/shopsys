@@ -23,7 +23,7 @@ Transport:
                         type: "Uuid"
                         defaultValue: null
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Transport images"
                 resolve: '@=resolver("transportImageResolver", [value, args["type"], args["sizes"]])'
                 args:

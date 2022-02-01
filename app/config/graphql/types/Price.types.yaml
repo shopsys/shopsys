@@ -3,6 +3,8 @@ Price:
     inherits:
         - 'PriceDecorator'
     config:
+        interfaces:
+            - 'PriceInterface'
         description: "Represents the price"
         fields:
             priceWithVat:

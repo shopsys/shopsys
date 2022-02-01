@@ -1,18 +1,23 @@
 import {
-    AutocompleteSearchQueryApi,
-    ProductImagesListFragmentApi,
-    useAutocompleteSearchQueryApi,
-} from 'graphql/generated';
+    AUTOCOMPLETE_CATEGORY_LIMIT,
+    AUTOCOMPLETE_PRODUCT_LIMIT,
+} from 'components/Layout/Header/AutocompleteSearch/Autocomplete/Autocomplete';
+import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { AutocompleteSearchType } from 'types/search';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { mapProductPriceApiData } from 'connectors/products/Products';
+import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
+import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
+import { mapSimpleProductConnectionApiData } from 'connectors/products/SimpleProduct';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
 export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
-        variables: { search: autocompleteSearch },
+        variables: {
+            search: autocompleteSearch,
+            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
+            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+        },
         pause: autocompleteSearch.length < 3,
         requestPolicy: 'network-only',
     });
@@ -37,70 +42,8 @@ export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteS
 const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: string): AutocompleteSearchType => {
     return {
         ...apiData,
-        articlesSearch: mapArticlesSearchResults(apiData.articlesSearch),
-        categoriesSearch: mapCategoriesSearchResults(apiData.categoriesSearch),
-        productsSearch: mapProductsSearchResults(apiData.productsSearch, currencyCode),
+        articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
+        categoriesSearch: mapSimpleCategoryConnectionApiData(apiData.categoriesSearch),
+        productsSearch: mapSimpleProductConnectionApiData(apiData.productsSearch, currencyCode),
     };
-};
-
-const mapArticlesSearchResults = (
-    apiData: AutocompleteSearchQueryApi['articlesSearch'],
-): AutocompleteSearchType['articlesSearch'] => {
-    const mappedArticles = [];
-
-    if (apiData !== undefined && apiData !== null) {
-        for (const article of apiData) {
-            if (article !== undefined && article !== null) {
-                mappedArticles.push(article);
-            }
-        }
-    }
-    return mappedArticles;
-};
-
-const mapCategoriesSearchResults = (
-    apiData: AutocompleteSearchQueryApi['categoriesSearch'],
-): AutocompleteSearchType['categoriesSearch'] => {
-    const mappedCategories = [];
-
-    if (apiData?.edges !== undefined && apiData.edges !== null) {
-        for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
-                mappedCategories.push({
-                    ...categoryEdge.node,
-                    name: categoryEdge.node.name,
-                });
-            }
-        }
-    }
-    return { totalCount: apiData?.totalCount === undefined ? 0 : apiData.totalCount, categories: mappedCategories };
-};
-
-const mapProductsSearchResults = (
-    apiData: AutocompleteSearchQueryApi['productsSearch'],
-    currencyCode: string,
-): AutocompleteSearchType['productsSearch'] => {
-    const mappedProducts = [];
-
-    if (apiData?.edges !== undefined && apiData.edges !== null) {
-        for (const productEdge of apiData.edges) {
-            if (productEdge?.node !== undefined && productEdge.node !== null) {
-                mappedProducts.push({
-                    ...productEdge.node,
-                    name: productEdge.node.name,
-                    price: mapProductPriceApiData(productEdge.node.price, currencyCode),
-                    image: mapProductsSearchResultImage(productEdge.node.images),
-                });
-            }
-        }
-    }
-
-    return { totalCount: apiData?.totalCount === undefined ? 0 : apiData.totalCount, products: mappedProducts };
-};
-
-const mapProductsSearchResultImage = (apiData: ProductImagesListFragmentApi['images']) => {
-    if (!(0 in apiData)) {
-        return null;
-    }
-    return mapImageSizeApiData(apiData[0].sizes[0]);
 };

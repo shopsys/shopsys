@@ -1,0 +1,14 @@
+fragment ListedProductConnectionFragment on ProductConnection {
+    totalCount
+    productFilterOptions {
+        ...ProductFilterOptionsFragment
+    }
+    pageInfo {
+        ...PageInfoFragment
+    }
+    edges {
+        node {
+            ...ListedProductFragment
+        }
+    }
+}

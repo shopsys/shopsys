@@ -1,0 +1,5 @@
+fragment SimpleFlagFragment on Flag {
+    uuid
+    name
+    rgbColor
+}

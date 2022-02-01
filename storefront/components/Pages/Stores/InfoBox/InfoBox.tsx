@@ -6,10 +6,10 @@ import {
     LinkStyled,
 } from './InfoBox.style';
 import { FC } from 'react';
-import { StoreListType } from 'types/store';
+import { ListedStoreType } from 'types/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-type InfoBoxProps = StoreListType & {
+type InfoBoxProps = ListedStoreType & {
     isClosed: () => void;
 };
 
@@ -20,11 +20,15 @@ const InfoBox: FC<InfoBoxProps> = (props) => {
         <InfoBoxStyled>
             <ButtonCloseStyled onClick={props.isClosed} iconType="icon" icon="Remove" />
             <HeadingStyled type="h2">{props.name}</HeadingStyled>
-            <div dangerouslySetInnerHTML={{ __html: props.address }}></div>
-            {props.openingHours !== null && props.openingHours !== undefined && (
+            <div>
+                {props.street}
+                <br />
+                {props.postcode} {props.city}
+            </div>
+            {props.openingHoursHtml !== null && (
                 <>
                     <HeadingOpeningHoursStyled type="h3">{t('Opening hours')}</HeadingOpeningHoursStyled>
-                    {props.openingHours}
+                    <div dangerouslySetInnerHTML={{ __html: props.openingHoursHtml }} />
                 </>
             )}
             <br />

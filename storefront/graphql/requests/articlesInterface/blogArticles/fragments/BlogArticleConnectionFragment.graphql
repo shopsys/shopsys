@@ -1,0 +1,11 @@
+fragment BlogArticleConnectionFragment on BlogArticleConnection {
+    totalCount
+    pageInfo {
+        ...PageInfoFragment
+    }
+    edges {
+        node {
+            ...ListedBlogArticleFragment
+        }
+    }
+}

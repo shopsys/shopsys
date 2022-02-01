@@ -1,0 +1,5 @@
+fragment SimpleBlogArticleFragment on BlogArticle {
+    name
+    slug
+    ...BlogArticleImageListFragment
+}

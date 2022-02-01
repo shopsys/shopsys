@@ -9,11 +9,11 @@ import { forwardRef } from 'react';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import NextLink from 'next/link';
-import { StoreAvailability } from 'types/product';
+import { StoreAvailabilityType } from 'types/availability';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityListProps = {
-    storeAvailabilities: StoreAvailability[];
+    storeAvailabilities: StoreAvailabilityType[];
 };
 
 const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>((props, ref) => {

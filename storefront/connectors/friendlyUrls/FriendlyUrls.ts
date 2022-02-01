@@ -1,15 +1,15 @@
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'types/blogArticle';
-import { BlogCategoryType } from 'types/blogCategory';
+import { BlogCategoryDetailType } from 'types/blogCategory';
 import { BrandDetailType } from 'types/brand';
 import { CategoryDetailType } from 'types/category';
 import { FlagDetailType } from 'types/flag';
 import { MainVariantDetailType } from 'types/product';
-import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
-import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
-import { mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';
-import { mapBrandDetailApiData } from 'connectors/brands/Brands';
+import { mapArticleDetail } from 'connectors/articleInterface/article/Article';
+import { mapBlogArticleDetail } from 'connectors/articleInterface/blogArticle/BlogArticle';
+import { mapBlogCategoryDetail } from 'connectors/blogCategory/BlogCategory';
+import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -29,7 +29,7 @@ export function getFriendlyUrlResolvedData(
     | StoreDetailType
     | ArticleDetailType
     | BlogArticleDetailType
-    | BlogCategoryType
+    | BlogCategoryDetailType
     | BrandDetailType
     | FlagDetailType
     | undefined
@@ -64,15 +64,15 @@ export function getFriendlyUrlResolvedData(
         case 'Store':
             return mapStoreDetailApiData(data.slug);
         case 'Article':
-            return mapArticleDetailApiData(data.slug);
+            return mapArticleDetail(data.slug);
         case 'BlogArticle':
-            return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
+            return mapBlogArticleDetail(data.slug, currentDomainConfig);
         case 'Brand':
-            return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
+            return mapBrandDetail(data.slug, currentDomainConfig.currencyCode);
         case 'Flag':
             return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
         case 'BlogCategory':
-            return mapBlogCategoryData(data.slug);
+            return mapBlogCategoryDetail(data.slug);
         default:
             return undefined;
     }

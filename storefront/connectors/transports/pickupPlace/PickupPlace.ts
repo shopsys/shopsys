@@ -1,7 +1,7 @@
+import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { getPacketeryCookie } from 'helpers/packetery';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
-import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
 export const getSelectedPickupPlace = (
     transport: TransportType | null,
@@ -19,26 +19,24 @@ export const getSelectedPickupPlace = (
     return pickupPlace === undefined ? null : pickupPlace;
 };
 
-export const mapPickupPlacesApiData = (
-    storesConnectionApi: TransportWithAvailablePaymentsAndStoresFragmentApi['stores'],
-): PickupPlaceType[] => {
-    if (storesConnectionApi?.edges === undefined || storesConnectionApi.edges === null) {
+const mapPickupPlaceApiData = (pickupPlace: ListedStoreFragmentApi): PickupPlaceType => {
+    return {
+        ...pickupPlace,
+        identifier: pickupPlace.uuid,
+        description: pickupPlace.description !== null ? pickupPlace.description : '',
+        openingHoursHtml: pickupPlace.openingHoursHtml !== null ? pickupPlace.openingHoursHtml : '',
+    };
+};
+
+export const mapPickupPlacesApiData = (storesConnectionApi: ListedStoreConnectionFragmentApi): PickupPlaceType[] => {
+    if (storesConnectionApi.edges === null) {
         return [];
     }
 
     const mappedStores = [];
     for (const edge of storesConnectionApi.edges) {
         if (edge?.node !== undefined && edge.node !== null) {
-            mappedStores.push({
-                ...edge.node,
-                identifier: edge.node.uuid,
-                description:
-                    edge.node.description !== undefined && edge.node.description !== null ? edge.node.description : '',
-                openingHours:
-                    edge.node.openingHoursHtml !== undefined && edge.node.openingHoursHtml !== null
-                        ? edge.node.openingHoursHtml
-                        : '',
-            });
+            mappedStores.push(mapPickupPlaceApiData(edge.node));
         }
     }
 

@@ -1,25 +1,19 @@
-import { ListedArticleType, SimpleArticleType } from 'types/article';
-import { ListedBlogArticleType, SimpleBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
-import { ListedCategoryType, SimpleCategoryType } from 'types/category';
-import { ListedProductType, SimpleProductType } from 'types/product';
-import { FilterOptionsType } from './productFilter';
+import { ListedCategoryType, SimpleCategoryConnectionType } from 'types/category';
+import { ListedProductConnectionType, SimpleProductConnectionType } from 'types/product';
+import { SimpleArticleInterfaceType } from './articleInterface';
 
 export type AutocompleteSearchType = {
-    articlesSearch: (SimpleArticleType | SimpleBlogArticleType)[];
+    articlesSearch: SimpleArticleInterfaceType[];
     brandSearch: SimpleBrandType[];
-    categoriesSearch: { totalCount: number; categories: SimpleCategoryType[] };
-    productsSearch: { totalCount: number; products: SimpleProductType[] };
+    categoriesSearch: SimpleCategoryConnectionType;
+    productsSearch: SimpleProductConnectionType;
 };
 
 export type SearchType = {
-    articlesSearch: (ListedArticleType | ListedBlogArticleType)[];
+    articlesSearch: SimpleArticleInterfaceType[];
     brandSearch: ListedBrandType[];
-    productsSearch: {
-        totalCount: number;
-        productFilterOptions: FilterOptionsType | null;
-        products: ListedProductType[];
-    };
+    productsSearch: ListedProductConnectionType;
     categoriesSearch: {
         totalCount: number;
         categories: ListedCategoryType[];

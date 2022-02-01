@@ -8,14 +8,14 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import { BlogArticlesType } from 'types/blogArticle';
+import { BlogArticleConnectionType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
 import { useShopsysSelector } from 'redux/main';
 
 type ListProps = {
-    blogArticles: BlogArticlesType;
+    blogArticles: BlogArticleConnectionType;
 };
 
 const List: FC<ListProps> = (props) => {
@@ -59,7 +59,7 @@ const List: FC<ListProps> = (props) => {
                         >
                             <Heading type="h2">{blogArticle.name}</Heading>
                         </ListItemTitleStyled>
-                        {blogArticle.perex !== undefined && (
+                        {blogArticle.perex !== null && (
                             <ListItemContentTextStyled data-testid={testIdentifier + blogArticleIndex + '-perex'}>
                                 {blogArticle.perex}
                             </ListItemContentTextStyled>

@@ -1,28 +1,12 @@
 fragment ProductDetailFragment on Product {
-    uuid
-    slug
-    name
-    namePrefix
-    nameSuffix
-    description
+    ... ProductDetailInterfaceFragment
     shortDescription
-    catalogNumber
-    stockQuantity
-    ...ProductPriceFragment
-    ...ProductDetailImagesFragment
     availability {
         ...AvailabilityFragment
     }
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }
-    ...BreadcrumbFragment
     availableStoresCount
     exposedStoresCount
-    accessories {
-        ...SliderProductFragment
-    }
-    parameters {
-        ...ParameterFragment
-    }
 }

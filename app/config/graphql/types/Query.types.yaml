@@ -17,7 +17,7 @@ Query:
                 resolve: "@=resolver('promotedCategoriesResolver')"
                 description: "Returns promoted categories"
             stores:
-                type: "StoreConnection"
+                type: "StoreConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('stores', [args])"
                 complexity: "@=dynamicPaginationComplexity(args)"
@@ -41,7 +41,7 @@ Query:
                         type: "String"
                 description: "Returns blog article filtered using UUID or URL slug"
             blogArticles:
-                type: "BlogArticleConnection"
+                type: "BlogArticleConnection!"
                 argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
                 resolve: "@=resolver('blogArticles', [args])"
                 complexity: "@=dynamicPaginationComplexity(args)"
@@ -75,7 +75,7 @@ Query:
                 resolve: "@=resolver('notificationBars')"
                 description: "Returns a list of notifications supposed to be displayed on all pages"
             articlesSearch:
-                type: "[ArticleInterface]"
+                type: "[ArticleInterface!]!"
                 resolve: "@=resolver('articlesSearch', [args])"
                 args:
                     search:
@@ -142,7 +142,7 @@ Query:
                         type: "String!"
                 description: "Returns list of searched brands"
             categoriesSearch:
-                type: "CategoryConnection"
+                type: "CategoryConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('categoriesSearch', [args])"
                 complexity: "@=dynamicPaginationComplexity(args)"
@@ -151,7 +151,7 @@ Query:
                         type: "String!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 argsBuilder:
                     builder: "PaginatorArgumentsBuilder"
                     config:
@@ -160,7 +160,7 @@ Query:
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             articles:
-                type: "ArticleConnection"
+                type: "ArticleConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('articles', [args, args['placement']])"
                 complexity: "@=dynamicPaginationComplexity(args)"

@@ -1,5 +1,0 @@
-fragment BlogArticleImageListFragment on BlogArticle {
-    image (sizes: "list") {
-        ...ImageSizesFragment
-    }
-}

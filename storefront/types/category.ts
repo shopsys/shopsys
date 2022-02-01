@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
-import { ListedProductEdgesType } from 'types/product';
+import { ImageSizeType } from 'types/image';
+import { ListedProductConnectionType } from 'types/product';
 
 export type SimpleCategoryType = {
     __typename?: 'Category';
@@ -8,12 +8,22 @@ export type SimpleCategoryType = {
     slug: string;
 };
 
+export type SimpleCategoryConnectionType = {
+    totalCount: number;
+    categories: SimpleCategoryType[];
+};
+
 export type ListedCategoryType = {
     uuid: string;
     name: string;
     slug: string;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     totalCount?: number;
+};
+
+export type ListedCategoryConnectionType = {
+    totalCount: number;
+    categories: ListedCategoryType[];
 };
 
 export type ReadyCategorySeoMixLink = {
@@ -30,7 +40,7 @@ export type CategoryDetailType = {
     originalCategorySlug: string | null;
     seoH1: string | null;
     children: ListedCategoryType[];
-    products: ListedProductEdgesType;
+    productConnection: ListedProductConnectionType;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     linkedCategories: ListedCategoryType[];
 };

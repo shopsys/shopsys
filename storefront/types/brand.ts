@@ -1,19 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
-import { ListedProductEdgesType } from 'types/product';
-
-export type SimpleBrandType = {
-    __typename?: 'Brand';
-    name: string;
-    slug: string;
-};
-
-export type ListedBrandType = {
-    uuid: string;
-    name: string;
-    slug: string;
-    image: ImageType | null;
-};
+import { ImageSizeType } from 'types/image';
+import { ListedProductConnectionType } from 'types/product';
 
 export type BrandDetailType = {
     __typename: 'Brand';
@@ -22,7 +9,20 @@ export type BrandDetailType = {
     breadcrumb: BreadcrumbItemType[];
     name: string;
     seoH1: string | null;
-    image: ImageType | null;
+    image: ImageSizeType | null;
     description: string | null;
-    products: ListedProductEdgesType;
+    productConnection: ListedProductConnectionType;
+};
+
+export type ListedBrandType = {
+    uuid: string;
+    name: string;
+    slug: string;
+    image: ImageSizeType | null;
+};
+
+export type SimpleBrandType = {
+    __typename?: 'Brand';
+    name: string;
+    slug: string;
 };

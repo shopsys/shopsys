@@ -124,7 +124,7 @@ type AdvertImage implements Advert {
   link: String
 
   """Advert image"""
-  image(type: String = null, size: String = null, sizes: [String!] = null): [Image]!
+  image(type: String = null, size: String = null, sizes: [String!] = null): [Image!]!
 }
 
 type AdvertPosition {
@@ -252,8 +252,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
 
-  """Blog article image"""
-  image(type: String = null, sizes: [String!] = null): Image
+  """Blog article images"""
+  images(type: String = null, sizes: [String!] = null): [Image!]!
 }
 
 """A connection to a list of items."""
@@ -303,7 +303,7 @@ type BlogCategory implements Breadcrumb & Slug {
   seoH1: String
 
   """Paginated blog articles of the given blog category"""
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
 
   """The blog category absolute URL"""
   link: String!
@@ -342,7 +342,7 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """Paginated and ordered products of brand"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Brand URL slug"""
   slug: String!
@@ -485,7 +485,7 @@ type Category implements Breadcrumb & Slug & ProductListable {
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """Paginated and ordered products of category"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Seo first level heading of category"""
   seoH1: String
@@ -732,7 +732,7 @@ type Flag implements Breadcrumb & Slug & ProductListable {
   slug: String!
 
   """Paginated and ordered products of flag"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
@@ -1015,7 +1015,7 @@ type NotificationBar {
   rgbColor: String!
 
   """Notification bar images"""
-  images(type: String = null, sizes: [String!] = null): [Image]!
+  images(type: String = null, sizes: [String!] = null): [Image!]!
 }
 
 type Order {
@@ -1400,7 +1400,7 @@ type Payment {
   price(cartUuid: Uuid = null): Price!
 
   """Payment images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image]!
+  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """List of assigned transports"""
   transports: [Transport!]!
@@ -1470,7 +1470,7 @@ type PersonalDataPage {
 }
 
 """Represents the price"""
-type Price {
+type Price implements PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
@@ -1483,6 +1483,18 @@ type Price {
 
 """Represents the price"""
 input PriceInput {
+  """Price with VAT"""
+  priceWithVat: Money!
+
+  """Price without VAT"""
+  priceWithoutVat: Money!
+
+  """Total value of VAT"""
+  vatAmount: Money!
+}
+
+"""Represents the price"""
+interface PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
@@ -1661,7 +1673,7 @@ type ProductFilterOptions {
 """Paginated and ordered products"""
 interface ProductListable {
   """Paginated and ordered products"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 }
 
 """One of possible ordering modes for product"""
@@ -1686,7 +1698,7 @@ enum ProductOrderingModeEnum {
 }
 
 """Represents the price of the product"""
-type ProductPrice {
+type ProductPrice implements PriceInterface {
   """Price with VAT"""
   priceWithVat: Money!
 
@@ -1707,12 +1719,12 @@ type Query {
   """
   Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  categoriesSearch(after: String, first: Int, before: String, last: Int, search: String!): CategoryConnection
+  categoriesSearch(after: String, first: Int, before: String, last: Int, search: String!): CategoryConnection!
 
   """
   Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
 
   """Returns product filtered using UUID or URL slug"""
   product(uuid: Uuid, urlSlug: String): Product
@@ -1750,7 +1762,7 @@ type Query {
   Returns list of articles that can be paginated using `first`, `last`, `before`
   and `after` keywords and filtered by `placement`
   """
-  articles(after: String, first: Int, before: String, last: Int, placement: String): ArticleConnection
+  articles(after: String, first: Int, before: String, last: Int, placement: String): ArticleConnection!
 
   """Returns article filtered using UUID or URL slug"""
   article(uuid: Uuid, urlSlug: String): Article
@@ -1792,7 +1804,7 @@ type Query {
   """
   Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  stores(after: String, first: Int, before: String, last: Int): StoreConnection
+  stores(after: String, first: Int, before: String, last: Int): StoreConnection!
 
   """Returns store filtered using UUID or URL slug"""
   store(uuid: Uuid, urlSlug: String): Store
@@ -1803,7 +1815,7 @@ type Query {
   """
   Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
 
   """Returns blog category filtered using UUID or URL slug"""
   blogCategory(uuid: Uuid, urlSlug: String): BlogCategory
@@ -1821,7 +1833,7 @@ type Query {
   notificationBars: [NotificationBar!]
 
   """Returns list of searched articles and blog articles"""
-  articlesSearch(search: String!): [ArticleInterface]
+  articlesSearch(search: String!): [ArticleInterface!]!
 
   """Return cart of logged customer or cart by UUID for anonymous user"""
   cart(cartInput: CartInput = {cartUuid: null}): Cart
@@ -2220,7 +2232,7 @@ type Transport {
   price(cartUuid: Uuid = null): Price!
 
   """Transport images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image]!
+  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """List of assigned payments"""
   payments: [Payment!]!

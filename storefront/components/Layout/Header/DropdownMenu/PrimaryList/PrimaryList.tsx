@@ -2,11 +2,11 @@ import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
 import { FC } from 'react';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 
-type PrimaryListType = {
+type PrimaryListProps = {
     navigationItems: NavigationItemType[];
 };
 
-const PrimaryList: FC<PrimaryListType> = (props) => {
+const PrimaryList: FC<PrimaryListProps> = (props) => {
     return (
         <>
             {props.navigationItems.map((navigationItem, index) => (

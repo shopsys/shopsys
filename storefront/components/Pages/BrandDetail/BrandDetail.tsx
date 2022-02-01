@@ -37,11 +37,14 @@ const BrandDetail: FC<BrandDetailProps> = (props) => {
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar totalCount={props.brand.products.totalCount} />
-                    {props.brand.products.edges.length !== 0 && (
-                        <ProductsList products={props.brand.products.edges.map((edge) => edge.node)} />
+                    <SortingBar totalCount={props.brand.productConnection.totalCount} />
+                    {props.brand.productConnection.products.length !== 0 && (
+                        <ProductsList products={props.brand.productConnection.products} />
                     )}
-                    <Pagination totalCount={props.brand.products.totalCount} containerWrapRef={containerWrapRef} />
+                    <Pagination
+                        totalCount={props.brand.productConnection.totalCount}
+                        containerWrapRef={containerWrapRef}
+                    />
                 </div>
             </Webline>
         </>

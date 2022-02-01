@@ -7,14 +7,14 @@ import {
     SideSliderItemStyled,
     SideSliderNameStyled,
 } from './SideSlider.style';
-import { BlogPreviewType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
+import { ListedBlogArticleType } from 'types/blogArticle';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type SideSliderProps = {
-    blogSideItems: BlogPreviewType[];
+    blogSideItems: ListedBlogArticleType[];
 };
 
 const SideSlider: FC<SideSliderProps> = (props) => {

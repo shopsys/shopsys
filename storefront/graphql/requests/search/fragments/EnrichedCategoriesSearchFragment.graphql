@@ -1,8 +1,0 @@
-fragment EnrichedCategoriesSearchFragment on CategoryConnection {
-    totalCount
-    edges {
-        node {
-            ...ListedCategoryFragment
-        }
-    }
-}

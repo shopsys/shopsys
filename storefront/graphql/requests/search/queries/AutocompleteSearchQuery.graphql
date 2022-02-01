@@ -1,14 +1,14 @@
-query AutocompleteSearchQuery($search: String!) {
+query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int) {
     articlesSearch(search: $search) {
-        ...SimpleArticleFragment
+        ...SimpleArticleInterfaceFragment
     }
     brandSearch(search: $search) {
         ...SimpleBrandFragment
     }
-    categoriesSearch(search: $search) {
-        ...CategoriesSearchFragment
+    categoriesSearch(search: $search, first: $maxCategoryCount) {
+        ...SimpleCategoryConnectionFragment
     }
-    productsSearch: products(search: $search) {
-        ...ProductsSearchFragment
+    productsSearch: products(search: $search, first: $maxProductCount) {
+        ...SimpleProductConnectionFragment
     }
 }

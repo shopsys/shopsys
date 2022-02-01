@@ -8,7 +8,7 @@ fragment CartItemFragment on CartItem {
         catalogNumber
         stockQuantity
         flags {
-            ...FlagLabelFragment
+            ...SimpleFlagFragment
         }
         ...ProductImagesListFragment
         stockQuantity

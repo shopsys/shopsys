@@ -20,11 +20,14 @@ const FlagDetail: FC<FlagDetailProps> = (props) => {
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar totalCount={props.flag.products.totalCount} />
-                    {props.flag.products.edges.length !== 0 && (
-                        <ProductsList products={props.flag.products.edges.map((edge) => edge.node)} />
+                    <SortingBar totalCount={props.flag.productConnection.totalCount} />
+                    {props.flag.productConnection.products.length !== 0 && (
+                        <ProductsList products={props.flag.productConnection.products} />
                     )}
-                    <Pagination totalCount={props.flag.products.totalCount} containerWrapRef={containerWrapRef} />
+                    <Pagination
+                        totalCount={props.flag.productConnection.totalCount}
+                        containerWrapRef={containerWrapRef}
+                    />
                 </div>
             </Webline>
         </>

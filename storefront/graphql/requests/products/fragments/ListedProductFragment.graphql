@@ -4,7 +4,7 @@ fragment ListedProductFragment on Product {
     name
     stockQuantity
     flags {
-        ...FlagLabelFragment
+        ...SimpleFlagFragment
     }
     ...ProductImagesListFragment
     ...ProductPriceFragment

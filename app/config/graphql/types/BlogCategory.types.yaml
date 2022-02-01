@@ -30,7 +30,7 @@ BlogCategory:
                 type: "String"
                 description: "The blog category SEO H1 heading"
             blogArticles:
-                type: "BlogArticleConnection"
+                type: "BlogArticleConnection!"
                 description: "Paginated blog articles of the given blog category"
                 argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
                 resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Blog\\Article\\BlogArticlesResolver").resolveByCategory(args, value)'

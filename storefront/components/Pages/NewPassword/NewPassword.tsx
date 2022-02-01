@@ -41,6 +41,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const [[, login]] = useAuth();
     const router = useRouter();
+    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
 
     useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
@@ -50,7 +51,11 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
         () => {
             showSuccessMessage(formMeta.messages.success);
             if (newPasswordResult.data?.RecoverPassword.accessToken !== undefined) {
-                login({ email: props.email, password: formProviderMethods.getValues('newPasswordFirst') });
+                login({
+                    email: props.email,
+                    password: formProviderMethods.getValues('newPasswordFirst'),
+                    previousCartUuid: cartUuid,
+                });
                 router.push('/');
             }
         },

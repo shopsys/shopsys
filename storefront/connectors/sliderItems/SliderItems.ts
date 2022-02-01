@@ -1,10 +1,9 @@
-import { SliderItemImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
-import { ImageApiType } from 'types/image';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { SliderItem } from 'types/sliderItem';
+import { SliderItemFragmentApi, useSliderItemsQueryApi } from 'graphql/generated';
+import { getFirstImageSize } from 'connectors/image/Image';
+import { SliderItemType } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getSliderItems = (): SliderItem[] | undefined => {
+export const getSliderItems = (): SliderItemType[] | undefined => {
     const [{ data, error }] = useSliderItemsQueryApi();
     useQueryError(error);
 
@@ -15,39 +14,15 @@ export const getSliderItems = (): SliderItem[] | undefined => {
     return mapSliderItemsApiData(data.sliderItems);
 };
 
-const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): SliderItem[] => {
-    return apiData.map((sliderItem) => {
-        return {
-            uuid: sliderItem.uuid,
-            name: sliderItem.name,
-            link: sliderItem.link,
-            extendedText:
-                sliderItem.extendedText === undefined || sliderItem.extendedText === null
-                    ? ''
-                    : sliderItem.extendedText,
-            extendedTextLink:
-                sliderItem.extendedTextLink === undefined || sliderItem.extendedTextLink === null
-                    ? ''
-                    : sliderItem.extendedTextLink,
-            images: mapSliderItemImagesApiData(sliderItem.images),
-        };
-    });
+const mapSliderItemApiData = (apiData: SliderItemFragmentApi): SliderItemType => {
+    return {
+        ...apiData,
+        extendedText: apiData.extendedText === null ? '' : apiData.extendedText,
+        extendedTextLink: apiData.extendedTextLink === null ? '' : apiData.extendedTextLink,
+        image: getFirstImageSize(apiData.images),
+    };
 };
 
-const mapSliderItemImagesApiData = (apiData: SliderItemImagesWebDefaultFragmentApi['images']): ImageApiType[] => {
-    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
-        return [];
-    }
-
-    const mappedImageSizes = mapImageSizeApiData(apiData[0].sizes[0]);
-    if (mappedImageSizes === null) {
-        return [];
-    }
-
-    return [
-        {
-            ...apiData[0],
-            sizes: [mappedImageSizes],
-        },
-    ];
+const mapSliderItemsApiData = (apiData: SliderItemFragmentApi[]): SliderItemType[] => {
+    return apiData.map((sliderItem) => mapSliderItemApiData(sliderItem));
 };

@@ -5,7 +5,7 @@ fragment OrderListFragment on OrderConnection {
     }
     edges {
         node {
-            ...OrderDetailFragment
+            ...ListedOrderFragment
         }
         cursor
     }

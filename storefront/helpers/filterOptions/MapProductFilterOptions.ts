@@ -9,14 +9,8 @@ export const mapProductFilterOptions = (
         ...productFilterOptionsApiData,
         minimalPrice: Math.round((parseFloat(productFilterOptionsApiData.minimalPrice) + Number.EPSILON) * 100) / 100,
         maximalPrice: Math.round((parseFloat(productFilterOptionsApiData.maximalPrice) + Number.EPSILON) * 100) / 100,
-        brands:
-            productFilterOptionsApiData.brands !== null && productFilterOptionsApiData.brands !== undefined
-                ? productFilterOptionsApiData.brands
-                : [],
-        flags:
-            productFilterOptionsApiData.flags !== null && productFilterOptionsApiData.flags !== undefined
-                ? productFilterOptionsApiData.flags
-                : [],
+        brands: productFilterOptionsApiData.brands !== null ? productFilterOptionsApiData.brands : [],
+        flags: productFilterOptionsApiData.flags !== null ? productFilterOptionsApiData.flags : [],
         parameters: productFilterOptionsApiData.parameters?.map((item) => ({
             ...item,
             type:
@@ -25,7 +19,7 @@ export const mapProductFilterOptions = (
                     : FilterOptionsParameterTypeEnum.Checkbox,
             values: item.values.map((value) => ({
                 ...value,
-                rgbHex: value.rgbHex !== undefined && value.rgbHex !== null ? value.rgbHex : undefined,
+                rgbHex: value.rgbHex !== null ? value.rgbHex : undefined,
             })),
         })),
         currencyCode,

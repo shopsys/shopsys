@@ -5,12 +5,12 @@ import {
     BlogSignpostStyled,
 } from './BlogSignpost.style';
 import { FC, Fragment } from 'react';
-import { BlogCategoryItem } from 'types/blogCategory';
 import Children from './Children';
+import { ListedBlogCategoryType } from 'types/blogCategory';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type BlogSingpostProps = {
-    blogCategoriesItems?: BlogCategoryItem[];
+    blogCategoryItems?: ListedBlogCategoryType[];
     activeItem: string;
 };
 
@@ -22,8 +22,8 @@ const BlogSignpost: FC<BlogSingpostProps> = (props) => {
     return (
         <BlogSignpostStyled>
             <BlogSignpostHeadingStyled type="h2">{t('Article categories')}</BlogSignpostHeadingStyled>
-            {props.blogCategoriesItems !== undefined &&
-                props.blogCategoriesItems.map((blogCategory, index) => (
+            {props.blogCategoryItems !== undefined &&
+                props.blogCategoryItems.map((blogCategory, index) => (
                     <Fragment key={blogCategory.uuid}>
                         <BlogSignpostItemStyled
                             href={blogCategory.link}

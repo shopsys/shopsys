@@ -6,14 +6,14 @@ import {
 } from './ProductDetailGallery.style';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { ImageSizesType } from 'types/image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
-import { ProductDetailImageType } from 'types/product';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type ProductDetailGalleryProps = {
-    images: ProductDetailImageType[];
+    images: ImageSizesType[];
     productName: string;
 };
 

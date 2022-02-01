@@ -1,0 +1,13 @@
+fragment BlogArticleDetailFragment on BlogArticle {
+    uuid
+    name
+    slug
+    link
+    ...BlogArticleImageListGridFragment
+    ...BreadcrumbFragment
+    text
+    publishDate
+    blogArticleProducts: products {
+        ...ListedProductFragment
+    }
+}

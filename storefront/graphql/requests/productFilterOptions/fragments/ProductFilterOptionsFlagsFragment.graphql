@@ -1,7 +1,6 @@
 fragment ProductFilterOptionsFlagsFragment on FlagFilterOption {
     count
     flag {
-        uuid
-        name
+        ...SimpleFlagFragment
     }
 }

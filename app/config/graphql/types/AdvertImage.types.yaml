@@ -5,7 +5,7 @@ AdvertImage:
     config:
         fields:
             image:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Advert image"
                 resolve: '@=resolver("advertImageResolver", [value, args["type"], args["sizes"]])'
                 args:

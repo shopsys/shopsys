@@ -2,5 +2,5 @@ fragment ListedBrandFragment on Brand {
     uuid
     name
     slug
-    ...BrandImagesListFragment
+    ...BrandImageDefaultFragment
 }

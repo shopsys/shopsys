@@ -1,9 +1,10 @@
-import { FlagType, ProductPriceType } from 'types/product';
 import { PaymentInputType, PaymentType } from 'types/payment';
+import { PriceType, ProductPriceType } from 'types/price';
 import { TransportInputType, TransportType } from 'types/transport';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { PriceType } from 'types/price';
+import { SimpleFlagType } from 'types/flag';
+import { SimpleProductType } from 'types/product';
 
 export type CartInput = {
     cartUuid: string | null;
@@ -16,8 +17,8 @@ export type ProductCartItemType = {
     uuid: string;
     slug: string;
     fullName: string;
-    flags: FlagType[];
-    image: ImageType | null;
+    flags: SimpleFlagType[];
+    image: ImageSizeType | null;
     price: ProductPriceType;
     availability: string;
     stockQuantity: number;
@@ -51,11 +52,6 @@ export type CartResultValues = {
     promoCode: string | null;
 };
 
-export type AddToCartPopupDataType = {
-    name: string;
-    slug: string;
-    image: ImageType | null;
+export type AddToCartPopupDataType = SimpleProductType & {
     quantity: number;
-    unitName: string;
-    price: ProductPriceType;
 };

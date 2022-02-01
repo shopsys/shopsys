@@ -4,7 +4,7 @@ export type PickupPlaceType = {
     identifier: string;
     name: string;
     description: string;
-    openingHours: string;
+    openingHoursHtml: string;
     street: string;
     postcode: string;
     city: string;

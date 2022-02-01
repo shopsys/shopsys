@@ -1,9 +1,10 @@
-import { PriceApiType, PriceType } from 'types/price';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
+import { PriceFragmentApi } from 'graphql/generated';
+import { PriceType } from 'types/price';
 
 export type PaymentInputType = {
     uuid: string;
-    price: PriceApiType;
+    price: PriceFragmentApi;
 };
 
 export type PaymentType = {
@@ -12,5 +13,5 @@ export type PaymentType = {
     description: string;
     instruction: string;
     price: PriceType;
-    image: ImageType | null;
+    image: ImageSizeType | null;
 };

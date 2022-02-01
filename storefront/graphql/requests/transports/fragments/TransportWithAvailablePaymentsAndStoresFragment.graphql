@@ -14,11 +14,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     }
     daysUntilDelivery
     stores {
-        edges {
-            node {
-                ...ListedPickupPlaceFragment
-            }
-        }
+        ...ListedStoreConnectionFragment
     }
     transportType {
         code

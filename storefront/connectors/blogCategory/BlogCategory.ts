@@ -1,41 +1,31 @@
-import { BlogArticlesType } from 'types/blogArticle';
-import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
-import { BlogCategoryType } from 'types/blogCategory';
-import { mapImageApiData } from 'connectors/image/Image';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { BlogCategoryDetailFragmentApi, useBlogCategoriesApi } from 'graphql/generated';
+import { BlogCategoryDetailType, ListedBlogCategoryType } from 'types/blogCategory';
+import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryDetailFragmentApi): BlogCategoryType {
-    const blogArticles: BlogArticlesType = {
-        ...apiBlogCategoryData.blogArticles,
-        totalCount:
-            apiBlogCategoryData.blogArticles?.totalCount !== undefined
-                ? apiBlogCategoryData.blogArticles.totalCount
-                : 0,
-        pageInfo: mapPageInfoApiData(apiBlogCategoryData.blogArticles?.pageInfo),
-        edges: [],
-    };
+export const getBlogCategoryItems = (): ListedBlogCategoryType[] | undefined => {
+    const [{ data, error }] = useBlogCategoriesApi();
 
-    if (apiBlogCategoryData.blogArticles?.edges !== undefined && apiBlogCategoryData.blogArticles.edges !== null) {
-        for (const edge of apiBlogCategoryData.blogArticles.edges) {
-            if (edge?.node === undefined || edge.node === null) {
-                continue;
-            }
-            blogArticles.edges.push({
-                ...edge.node,
-                perex: edge.node.perex !== null && edge.node.perex !== undefined ? edge.node.perex : undefined,
-                image: mapImageApiData([edge.node.image]),
-                blogCategories: edge.node.blogCategories.map((blogCategory) => ({
-                    ...blogCategory,
-                    parent:
-                        blogCategory.parent !== null && blogCategory.parent !== undefined ? blogCategory.parent : null,
-                })),
-            });
-        }
+    useQueryError(error);
+
+    return data?.blogCategories;
+};
+
+export const getBlogUrl = (): string | undefined => {
+    const [{ data, error }] = useBlogCategoriesApi();
+    useQueryError(error);
+
+    if (data?.blogCategories !== undefined) {
+        return data.blogCategories[0].link;
     }
 
+    return undefined;
+};
+
+export const mapBlogCategoryDetail = (apiData: BlogCategoryDetailFragmentApi): BlogCategoryDetailType => {
     return {
-        ...apiBlogCategoryData,
+        ...apiData,
         __typename: 'BlogCategory',
-        blogArticles: blogArticles,
+        blogArticles: mapBlogArticleConnection(apiData.blogArticles),
     };
-}
+};

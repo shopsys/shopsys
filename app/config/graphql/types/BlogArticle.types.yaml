@@ -51,9 +51,9 @@ BlogArticle:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-            image:
-                type: "Image"
-                description: "Blog article image"
+            images:
+                type: "[Image!]!"
+                description: "Blog article images"
                 resolve: '@=resolver("blogArticleImageResolver", [value, args["type"], args["sizes"]])'
                 args:
                     type:

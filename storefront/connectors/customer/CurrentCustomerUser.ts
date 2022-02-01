@@ -21,26 +21,20 @@ const mapCurrentCustomerUserApiData = (
         ...companyCustomerUser,
         companyName:
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyName !== undefined &&
             apiCurrentCustomerUserData.currentCustomerUser.companyName !== null
                 ? apiCurrentCustomerUserData.currentCustomerUser.companyName
                 : '',
         companyNumber:
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyNumber !== undefined &&
             apiCurrentCustomerUserData.currentCustomerUser.companyNumber !== null
                 ? apiCurrentCustomerUserData.currentCustomerUser.companyNumber
                 : '',
         companyTaxNumber:
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyTaxNumber !== undefined &&
             apiCurrentCustomerUserData.currentCustomerUser.companyTaxNumber !== null
                 ? apiCurrentCustomerUserData.currentCustomerUser.companyTaxNumber
                 : '',
-        telephone:
-            companyCustomerUser.telephone !== undefined && companyCustomerUser.telephone !== null
-                ? companyCustomerUser.telephone
-                : '',
+        telephone: companyCustomerUser.telephone !== null ? companyCustomerUser.telephone : '',
         country: {
             value: companyCustomerUser.country.code,
             label: companyCustomerUser.country.name,

@@ -1,8 +1,0 @@
-fragment CategoriesSearchFragment on CategoryConnection {
-    totalCount
-    edges {
-        node {
-            ...SimpleCategoryFragment
-        }
-    }
-}

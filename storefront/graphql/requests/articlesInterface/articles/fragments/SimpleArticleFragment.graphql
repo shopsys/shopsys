@@ -1,0 +1,4 @@
+fragment SimpleArticleFragment on Article {
+    name
+    slug
+}

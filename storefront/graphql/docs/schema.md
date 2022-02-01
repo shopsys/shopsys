@@ -111,6 +111,7 @@
     * [Breadcrumb](#breadcrumb)
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
+    * [PriceInterface](#priceinterface)
     * [Product](#product)
     * [ProductListable](#productlistable)
     * [Slug](#slug)
@@ -139,7 +140,7 @@ Returns complete list of categories
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>categoriesSearch</strong></td>
-<td valign="top"><a href="#categoryconnection">CategoryConnection</a></td>
+<td valign="top"><a href="#categoryconnection">CategoryConnection</a>!</td>
 <td>
 
 Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -173,7 +174,7 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -383,7 +384,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>articles</strong></td>
-<td valign="top"><a href="#articleconnection">ArticleConnection</a></td>
+<td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
 <td>
 
 Returns list of articles that can be paginated using `first`, `last`, `before`
@@ -562,7 +563,7 @@ Returns promoted categories
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>stores</strong></td>
-<td valign="top"><a href="#storeconnection">StoreConnection</a></td>
+<td valign="top"><a href="#storeconnection">StoreConnection</a>!</td>
 <td>
 
 Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -629,7 +630,7 @@ Returns blog article filtered using UUID or URL slug
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
-<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a></td>
+<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
 Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
@@ -723,7 +724,7 @@ Returns a list of notifications supposed to be displayed on all pages
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>articlesSearch</strong></td>
-<td valign="top">[<a href="#articleinterface">ArticleInterface</a>]</td>
+<td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
 <td>
 
 Returns list of searched articles and blog articles
@@ -1347,7 +1348,7 @@ Advert link
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>image</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Advert image
@@ -1763,11 +1764,11 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>image</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-Blog article image
+Blog article images
 
 </td>
 </tr>
@@ -1949,7 +1950,7 @@ The blog category SEO H1 heading
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
-<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a></td>
+<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
 Paginated blog articles of the given blog category
@@ -2114,7 +2115,7 @@ Brand images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of brand
@@ -2561,7 +2562,7 @@ Category images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of category
@@ -3137,7 +3138,7 @@ URL slug of flag
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products of flag
@@ -3805,7 +3806,7 @@ Represents a navigation structure item
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Localized navigation item name (domain dependent)
+Navigation item name
 
 </td>
 </tr>
@@ -3932,7 +3933,7 @@ Color of the notification
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Notification bar images
@@ -4767,7 +4768,7 @@ Payment price
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Payment images
@@ -6107,7 +6108,7 @@ Transport price
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Transport images
@@ -8156,6 +8157,50 @@ List of delivery addresses
 </tbody>
 </table>
 
+### PriceInterface
+
+Represents the price
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price without VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>vatAmount</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Total value of VAT
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Product
 
 Represents a product
@@ -8505,7 +8550,7 @@ Paginated and ordered products
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
 Paginated and ordered products

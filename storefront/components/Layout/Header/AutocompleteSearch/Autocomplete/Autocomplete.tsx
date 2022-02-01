@@ -26,10 +26,10 @@ import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
-const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
-const AUTOCOMPLETE_CATEGORY_LIMIT = 3 as const;
-const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
+export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
+export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
+export const AUTOCOMPLETE_CATEGORY_LIMIT = 3 as const;
+export const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
 
 type AutocompleteProps = {
     autocompleteSearchResults: AutocompleteSearchType | undefined;
@@ -84,10 +84,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         <NextLink href={product.slug}>
                                                             <ProductSearchResultLinkStyled>
                                                                 <ProductSearchResultImageWrapperStyled>
-                                                                    <Image image={product.image} alt={product.name} />
+                                                                    <Image
+                                                                        image={product.image}
+                                                                        alt={product.fullName}
+                                                                    />
                                                                 </ProductSearchResultImageWrapperStyled>
                                                                 <ProductSearchResultNameStyled>
-                                                                    {product.name}
+                                                                    {product.fullName}
                                                                 </ProductSearchResultNameStyled>
                                                                 <ProductSearchResultPriceStyled>
                                                                     {formatPrice(

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
 import NextImage from 'next/image';
 
 type ImageProps = {
-    image: ImageType | null;
+    image: ImageSizeType | null;
     alt: string;
 };
 

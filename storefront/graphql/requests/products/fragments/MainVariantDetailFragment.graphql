@@ -1,21 +1,5 @@
 fragment MainVariantDetailFragment on MainVariant {
-    uuid
-    slug
-    name
-    namePrefix
-    nameSuffix
-    description
-    catalogNumber
-    stockQuantity
-    ...ProductPriceFragment
-    ...ProductDetailImagesFragment
-    accessories {
-        ...SliderProductFragment
-    }
-    parameters {
-        ...ParameterFragment
-    }
-    ...BreadcrumbFragment
+    ...ProductDetailInterfaceFragment
     variants {
         ...ListedVariantFragment
     }

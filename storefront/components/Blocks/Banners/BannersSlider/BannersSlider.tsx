@@ -8,12 +8,12 @@ import {
 } from './BannersSlider.style';
 import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
-import { SliderItem } from 'types/sliderItem';
+import { SliderItemType } from 'types/sliderItem';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type BannersSliderProps = {
-    sliderItems: SliderItem[];
+    sliderItems: SliderItemType[];
 };
 
 const BannersSlider: FC<BannersSliderProps> = (props) => {
@@ -134,8 +134,16 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     );
 };
 
-export const getBannersSliderItemImageUrl = (sliderItem: SliderItem, isImageLoaded: boolean): string => {
-    return isImageLoaded ? sliderItem.images[0]?.sizes[0]?.url || 'images/optimized-noimage.png' : '';
+export const getBannersSliderItemImageUrl = (sliderItem: SliderItemType, isImageLoaded: boolean): string => {
+    if (!isImageLoaded) {
+        return '';
+    }
+
+    if (sliderItem.image === null) {
+        return 'images/optimized-noimage.png';
+    }
+
+    return sliderItem.image.url;
 };
 
 export default BannersSlider;

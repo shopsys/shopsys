@@ -1,11 +1,11 @@
 import { FC, Fragment } from 'react';
 import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
-import { BlogPreviewType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
+import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideProps = {
-    blogSideItems: BlogPreviewType[];
+    blogSideItems: ListedBlogArticleType[];
 };
 
 const Side: FC<SideProps> = (props) => {

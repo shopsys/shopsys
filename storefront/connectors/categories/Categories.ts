@@ -1,52 +1,28 @@
-import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
-import { CategoryDetailType } from 'types/category';
-import { ListedCategoryType } from 'types/category';
-import { ListedProductEdgesType } from 'types/product';
-import { mapImageApiData } from 'connectors/image/Image';
-import { mapListedProductType } from 'connectors/products/Products';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
+import {
+    CategoryDetailFragmentApi,
+    ListedCategoryConnectionFragmentApi,
+    ListedCategoryFragmentApi,
+    SimpleCategoryConnectionFragmentApi,
+    SimpleCategoryFragmentApi,
+} from 'graphql/generated';
+import {
+    CategoryDetailType,
+    ListedCategoryConnectionType,
+    ListedCategoryType,
+    SimpleCategoryConnectionType,
+    SimpleCategoryType,
+} from 'types/category';
+import { getFirstImageSize } from 'connectors/image/Image';
+import { mapListedProductConnectionType } from 'connectors/products/Products';
 
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,
     currencyCode: string,
 ): CategoryDetailType => {
-    const products: ListedProductEdgesType = {
-        ...apiCategoryDetailData.products,
-        totalCount:
-            apiCategoryDetailData.products?.totalCount !== undefined ? apiCategoryDetailData.products.totalCount : 0,
-        pageInfo: mapPageInfoApiData(apiCategoryDetailData.products?.pageInfo),
-        edges: [],
-        productFilterOptions:
-            apiCategoryDetailData.products !== undefined && apiCategoryDetailData.products !== null
-                ? mapProductFilterOptions(apiCategoryDetailData.products.productFilterOptions, currencyCode)
-                : null,
-    };
-
-    if (apiCategoryDetailData.products?.edges !== undefined && apiCategoryDetailData.products.edges !== null) {
-        for (const edge of apiCategoryDetailData.products.edges) {
-            if (edge?.node === undefined || edge.node === null) {
-                continue;
-            }
-            products.edges.push({
-                ...edge,
-                node: mapListedProductType(edge.node, currencyCode),
-            });
-        }
-    }
-
     return {
         ...apiCategoryDetailData,
         __typename: 'Category',
-        originalCategorySlug:
-            apiCategoryDetailData.originalCategorySlug !== undefined
-                ? apiCategoryDetailData.originalCategorySlug
-                : null,
-        seoH1:
-            apiCategoryDetailData.seoH1 !== undefined && apiCategoryDetailData.seoH1 !== null
-                ? apiCategoryDetailData.seoH1
-                : null,
-        products: products,
+        productConnection: mapListedProductConnectionType(apiCategoryDetailData.products, currencyCode),
         children: apiCategoryDetailData.children.map((child) => mapListedCategoryApiData(child)),
         linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => mapListedCategoryApiData(child)),
     };
@@ -55,6 +31,41 @@ export const mapCategoryDetailData = (
 export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFragmentApi): ListedCategoryType => {
     return {
         ...listedCategoryApiData,
-        image: mapImageApiData(listedCategoryApiData.images),
+        image: getFirstImageSize(listedCategoryApiData.images),
     };
+};
+
+export const mapSimpleCategoryConnectionApiData = (
+    apiData: SimpleCategoryConnectionFragmentApi,
+): SimpleCategoryConnectionType => {
+    const mappedCategories = [];
+
+    if (apiData.edges !== null) {
+        for (const categoryEdge of apiData.edges) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
+                mappedCategories.push(mapSimpleCategoryApiData(categoryEdge.node));
+            }
+        }
+    }
+    return { totalCount: apiData.totalCount, categories: mappedCategories };
+};
+
+const mapSimpleCategoryApiData = (apiData: SimpleCategoryFragmentApi): SimpleCategoryType => {
+    return apiData;
+};
+
+export const mapListedCategoryConnectionApiData = (
+    apiData: ListedCategoryConnectionFragmentApi,
+): ListedCategoryConnectionType => {
+    const mappedCategories = [];
+
+    if (apiData.edges !== null) {
+        for (const categoryEdge of apiData.edges) {
+            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
+                mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
+            }
+        }
+    }
+
+    return { totalCount: apiData.totalCount, categories: mappedCategories };
 };

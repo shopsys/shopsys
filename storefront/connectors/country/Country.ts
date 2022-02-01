@@ -1,11 +1,7 @@
-import { CountryApiType, CountryType } from 'types/country';
+import { CountryType } from 'types/country';
 import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
-
-const mapCountries = (apiData: CountryApiType[]): CountryType[] => {
-    return apiData.map((country) => country);
-};
 
 export const getCountries = (): CountryType[] => {
     const [{ data, error }] = useCountriesQueryApi();
@@ -15,7 +11,7 @@ export const getCountries = (): CountryType[] => {
         return [];
     }
 
-    return mapCountries(data.countries);
+    return data.countries;
 };
 
 export const getCountriesAsSelectOptions = (): SelectOptionType[] => {

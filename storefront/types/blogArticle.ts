@@ -1,54 +1,42 @@
-import { PageInfoType, SliderProductItemType } from 'types/product';
-import { BlogArticleCategoryType } from './blogCategory';
-import { BlogCategoryFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
+import { ImageSizeType } from 'types/image';
+import { PageInfoType } from 'types/pageInfo';
+import { SimpleBlogCategoryType } from './blogCategory';
+import { SliderProductItemType } from 'types/product';
+
+export type BlogArticleDetailType = {
+    __typename: string | undefined;
+    uuid: string;
+    name: string;
+    slug: string;
+    link: string;
+    image: ImageSizeType | null;
+    breadcrumb: BreadcrumbItemType[];
+    text: string | null;
+    publishDate: string;
+    blogArticleProducts: SliderProductItemType[];
+};
+
+export type BlogArticleConnectionType = {
+    totalCount: number;
+    pageInfo: PageInfoType;
+    edges: ListedBlogArticleType[];
+};
+
+export type ListedBlogArticleType = {
+    uuid: string;
+    name: string;
+    link: string;
+    slug: string;
+    image: ImageSizeType | null;
+    publishDate: string;
+    perex: string | null;
+    blogCategories: SimpleBlogCategoryType[];
+};
 
 export type SimpleBlogArticleType = {
     __typename?: 'BlogArticle';
     name: string;
     slug: string;
-};
-
-export type ListedBlogArticleType = {
-    name: string;
-    slug: string;
-    image: ImageType | null;
-};
-
-type BlogArticleType = {
-    uuid: string;
-    name: string;
-    publishDate: string;
-    perex?: string;
-    link: string;
-    image: ImageType | null;
-    blogCategories: BlogArticleCategoryType[];
-};
-
-export type BlogPreviewType = {
-    name: string;
-    link: string;
-    perex: string;
-    image: ImageType | null;
-    blogCategories: BlogCategoryFragmentApi[];
-};
-
-export type BlogArticleDetailType = {
-    __typename: string | undefined;
-    breadcrumb: BreadcrumbItemType[];
-    uuid: string;
-    name: string;
-    text: string | null;
-    publishDate: string;
-    slug: string;
-    link: string;
-    image: ImageType | null;
-    blogArticleProducts: SliderProductItemType[];
-};
-
-export type BlogArticlesType = {
-    totalCount: number;
-    pageInfo: PageInfoType;
-    edges: BlogArticleType[];
+    image: ImageSizeType | null;
 };

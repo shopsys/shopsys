@@ -1,9 +1,9 @@
 import { BlogSignpostItemIconStyled, BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
-import { BlogCategoryItem } from 'types/blogCategory';
 import { FC } from 'react';
+import { ListedBlogCategoryType } from 'types/blogCategory';
 
 type ChildrenProps = {
-    blogCategory: BlogCategoryItem;
+    blogCategory: ListedBlogCategoryType;
     activeItem: string;
     itemLevel: number;
 };

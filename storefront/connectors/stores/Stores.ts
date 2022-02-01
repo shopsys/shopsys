@@ -1,8 +1,8 @@
-import { StoresQueryApi, useStoresQueryApi } from 'graphql/generated';
-import { StoreListType } from 'types/store';
+import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi, useStoresQueryApi } from 'graphql/generated';
+import { ListedStoreType } from 'types/store';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getStores(): StoreListType[] {
+export function getStores(): ListedStoreType[] {
     const [{ data, error }] = useStoresQueryApi();
     useQueryError(error);
 
@@ -13,8 +13,16 @@ export function getStores(): StoreListType[] {
     return mapStoresApiData(data.stores);
 }
 
-const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
-    if (data?.edges === undefined || data.edges === null) {
+const mapStoreApiData = (apiData: ListedStoreFragmentApi): ListedStoreType => {
+    return {
+        ...apiData,
+        locationLatitude: apiData.locationLatitude !== null ? Number.parseFloat(apiData.locationLatitude) : null,
+        locationLongitude: apiData.locationLongitude !== null ? Number.parseFloat(apiData.locationLongitude) : null,
+    };
+};
+
+const mapStoresApiData = (data: ListedStoreConnectionFragmentApi): ListedStoreType[] => {
+    if (data.edges === null) {
         return [];
     }
 
@@ -25,22 +33,7 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
             continue;
         }
 
-        const mappedStore: StoreListType = {
-            slug: edge.node.slug,
-            name: edge.node.name,
-            locationLatitude:
-                edge.node.locationLatitude !== undefined && edge.node.locationLatitude !== null
-                    ? Number.parseFloat(edge.node.locationLatitude)
-                    : null,
-            locationLongitude:
-                edge.node.locationLongitude !== undefined && edge.node.locationLongitude !== null
-                    ? Number.parseFloat(edge.node.locationLongitude)
-                    : null,
-            address: edge.node.street + '<br />' + edge.node.postcode + ' ' + edge.node.city,
-            openingHours: edge.node.openingHours,
-        };
-
-        mappedStores.push(mappedStore);
+        mappedStores.push(mapStoreApiData(edge.node));
     }
 
     return mappedStores;
