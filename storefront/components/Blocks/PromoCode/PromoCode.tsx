@@ -113,6 +113,7 @@ const PromoCode: FC = () => {
                                                             result.fetching ||
                                                             promoCodeValue === updatedPromoCode
                                                         }
+                                                        data-testid={testIdentifier + '-apply-button'}
                                                     >
                                                         {t('Apply')}
                                                     </PromoCodeContentButtonStyled>
