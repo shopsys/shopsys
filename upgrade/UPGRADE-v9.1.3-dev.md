@@ -13,3 +13,4 @@ There you can find links to upgrade notes for other versions too.
     - in `StrictWebDriver::seeInElement`, use `assertStringContainsString` instead of `assertContains`
   - allow plugins in your `composer.json`
     - this is required when using composer in version `2.2.0` and above. If you are running your project in docker, you might need to re-build your docker image to get the upgraded composer.
+  - upgrade `composer/composer` to `^1.10.23` so you get rid of [the security problem](https://github.com/composer/composer/security/advisories/GHSA-frqg-7g38-6gcf) 
