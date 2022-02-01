@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay\BankSwift;
 
-use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GoPayBankSwiftFacade
@@ -15,27 +14,19 @@ class GoPayBankSwiftFacade
     private $em;
 
     /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository
-     */
-    private $goPayPaymentMethodRepository;
-
-    /**
      * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory
      */
     private $goPayBankSwiftDataFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository $goPayPaymentMethodRepository
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
      */
     public function __construct(
         EntityManagerInterface $em,
-        GoPayPaymentMethodRepository $goPayPaymentMethodRepository,
         GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
     ) {
         $this->em = $em;
-        $this->goPayPaymentMethodRepository = $goPayPaymentMethodRepository;
         $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
     }
 
@@ -50,15 +41,6 @@ class GoPayBankSwiftFacade
         $this->em->flush();
 
         return $bankSwift;
-    }
-
-    /**
-     * @param int $currencyId
-     * @return \App\Model\GoPay\BankSwift\GoPayBankSwift[]
-     */
-    public function getAllByCurrencyId(int $currencyId): array
-    {
-        return $this->goPayPaymentMethodRepository->getBankSwiftsByCurrencyId($currencyId);
     }
 
     /**

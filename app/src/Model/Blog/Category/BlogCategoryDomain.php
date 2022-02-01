@@ -150,12 +150,4 @@ class BlogCategoryDomain
     {
         return $this->visible;
     }
-
-    /**
-     * @return \App\Model\Blog\Category\BlogCategory
-     */
-    public function getBlogCategory(): BlogCategory
-    {
-        return $this->blogCategory;
-    }
 }

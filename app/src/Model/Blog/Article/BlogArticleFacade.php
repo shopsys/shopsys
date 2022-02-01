@@ -10,13 +10,9 @@ use App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Product\ProductFacade;
-use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class BlogArticleFacade
 {
@@ -56,19 +52,9 @@ class BlogArticleFacade
     private $blogVisibilityRecalculationScheduler;
 
     /**
-     * @var \App\Twig\Cache\TwigCacheFacade
-     */
-    private $twigCacheFacade;
-
-    /**
      * @var \App\Model\Product\ProductFacade
      */
     private ProductFacade $productFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
 
     /**
      * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler
@@ -83,9 +69,7 @@ class BlogArticleFacade
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
-     * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
      */
     public function __construct(
@@ -96,9 +80,7 @@ class BlogArticleFacade
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
         ImageFacade $imageFacade,
         BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
-        TwigCacheFacade $twigCacheFacade,
         ProductFacade $productFacade,
-        Domain $domain,
         BlogArticleExportScheduler $blogArticleExportScheduler
     ) {
         $this->em = $em;
@@ -108,19 +90,8 @@ class BlogArticleFacade
         $this->blogArticleBlogCategoryDomainFactory = $blogArticleBlogCategoryDomainFactory;
         $this->imageFacade = $imageFacade;
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
-        $this->twigCacheFacade = $twigCacheFacade;
         $this->productFacade = $productFacade;
-        $this->domain = $domain;
         $this->blogArticleExportScheduler = $blogArticleExportScheduler;
-    }
-
-    /**
-     * @param int $blogArticleId
-     * @return \App\Model\Blog\Article\BlogArticle|null
-     */
-    public function findById(int $blogArticleId): ?BlogArticle
-    {
-        return $this->blogArticleRepository->findById($blogArticleId);
     }
 
     /**
@@ -130,16 +101,6 @@ class BlogArticleFacade
     public function getById(int $blogArticleId): BlogArticle
     {
         return $this->blogArticleRepository->getById($blogArticleId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $blogArticleId
-     * @return \App\Model\Blog\Article\BlogArticle
-     */
-    public function getVisibleOnDomainById(DomainConfig $domainConfig, int $blogArticleId): BlogArticle
-    {
-        return $this->blogArticleRepository->getVisibleOnDomainById($domainConfig, $blogArticleId);
     }
 
     /**
@@ -153,7 +114,6 @@ class BlogArticleFacade
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      * @return \App\Model\Blog\Article\BlogArticle
      */
     public function create(BlogArticleData $blogArticleData): BlogArticle
@@ -174,10 +134,6 @@ class BlogArticleFacade
 
         $this->em->flush();
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
-        }
-
         $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticle->getId());
 
         return $blogArticle;
@@ -186,7 +142,6 @@ class BlogArticleFacade
     /**
      * @param int $blogArticleId
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
-     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      * @return \App\Model\Blog\Article\BlogArticle
      */
     public function edit(int $blogArticleId, BlogArticleData $blogArticleData): BlogArticle
@@ -205,10 +160,6 @@ class BlogArticleFacade
 
         $this->em->flush();
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
-        }
-
         $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticle->getId());
 
         return $blogArticle;
@@ -216,7 +167,6 @@ class BlogArticleFacade
 
     /**
      * @param int $blogArticleId
-     * @throws \App\Twig\Cache\Exception\InvalidCacheLifetimeException
      */
     public function delete(int $blogArticleId): void
     {
@@ -225,10 +175,6 @@ class BlogArticleFacade
         $this->em->remove($blogArticle);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
         $this->em->flush();
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
-        }
 
         $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticleId);
     }
@@ -240,77 +186,6 @@ class BlogArticleFacade
     public function getAllByDomainId(int $domainId): array
     {
         return $this->blogArticleRepository->getAllByDomainId($domainId);
-    }
-
-    /**
-     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
-     * @param int $domainId
-     * @param string $locale
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForListableInBlogCategory(
-        BlogCategory $blogCategory,
-        int $domainId,
-        string $locale,
-        int $page,
-        int $limit
-    ): PaginationResult {
-        return $this->blogArticleRepository->getPaginationResultForListableInBlogCategory($blogCategory, $domainId, $locale, $page, $limit);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @param int $limit
-     * @return \App\Model\Blog\Article\BlogArticle[]
-     */
-    public function getHomepageBlogArticlesByDomainId(int $domainId, string $locale, int $limit): array
-    {
-        return $this->blogArticleRepository->getHomepageBlogArticlesByDomainId($domainId, $locale, $limit);
-    }
-
-    /**
-     * @param \App\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $domainId
-     * @return \App\Model\Blog\Category\BlogCategory
-     */
-    public function findBlogArticleMainCategoryOnDomain(BlogArticle $blogArticle, int $domainId): ?BlogCategory
-    {
-        return $this->blogArticleRepository->findBlogArticleMainCategoryOnDomain($blogArticle, $domainId);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @param string $locale
-     * @param int $limit
-     * @return \App\Model\Blog\Article\BlogArticle[]
-     */
-    public function getVisibleByProduct(Product $product, int $domainId, string $locale, int $limit): array
-    {
-        return $this->blogArticleRepository->getVisibleByProduct($product, $domainId, $locale, $limit);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $locale
-     * @return \App\Model\Blog\Article\BlogArticle[]
-     */
-    public function getByProduct(Product $product, string $locale): array
-    {
-        return $this->blogArticleRepository->getByProduct($product, $locale);
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $locale
-     * @return string[]
-     */
-    public function getAllBlogArticlesNamesIndexedByIdByDomainId(int $domainId, string $locale): array
-    {
-        return $this->blogArticleRepository->getAllBlogArticlesNamesIndexedByIdByDomainId($domainId, $locale);
     }
 
     /**

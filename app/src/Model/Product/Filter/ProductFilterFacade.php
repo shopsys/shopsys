@@ -134,15 +134,6 @@ class ProductFilterFacade
      * @param array $productFilterFormRequestData
      * @return array
      */
-    public function getProductFilterSetupByProductFilterFormRequestData(array $productFilterFormRequestData): array
-    {
-        return $this->processProductFilterFormRequestData($productFilterFormRequestData);
-    }
-
-    /**
-     * @param array $productFilterFormRequestData
-     * @return array
-     */
     private function processProductFilterFormRequestData(array $productFilterFormRequestData): array
     {
         $setup = [];

@@ -4,20 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
-use App\Model\Cart\CartFacade;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\Transport\Transport;
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
@@ -36,56 +25,10 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory)
  */
 class PaymentFacade extends BasePaymentFacade
 {
-    /**
-     * @var \App\Model\Cart\CartFacade
-     */
-    private $cartFacade;
-
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Payment\PaymentRepository $paymentRepository
-     * @param \App\Model\Transport\TransportRepository $transportRepository
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
-     * @param \App\Model\Cart\CartFacade $cartFacade
-     */
-    public function __construct(
-        EntityManagerInterface $em,
-        PaymentRepository $paymentRepository,
-        TransportRepository $transportRepository,
-        PaymentVisibilityCalculation $paymentVisibilityCalculation,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        PaymentFactoryInterface $paymentFactory,
-        PaymentPriceFactoryInterface $paymentPriceFactory,
-        CartFacade $cartFacade
-    ) {
-        parent::__construct(
-            $em,
-            $paymentRepository,
-            $transportRepository,
-            $paymentVisibilityCalculation,
-            $domain,
-            $imageFacade,
-            $currencyFacade,
-            $paymentPriceCalculation,
-            $paymentFactory,
-            $paymentPriceFactory
-        );
-
-        $this->cartFacade = $cartFacade;
-    }
-
     /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
      */
@@ -125,23 +68,6 @@ class PaymentFacade extends BasePaymentFacade
         $payments = $this->paymentVisibilityCalculation->filterVisible($paymentsByTransport, $this->domain->getId());
 
         return $payments;
-    }
-
-    /**
-     * @param \App\Model\Payment\Payment[] $payments
-     * @return \App\Model\Payment\Payment[]
-     */
-    public function filterAllowedPaymentsForCurrentCart(array $payments): array
-    {
-        $isOverLimitPayment = $this->cartFacade->isCartContainsProductWithOverLimitQuantity();
-        $allowedPayments = [];
-        foreach ($payments as $payment) {
-            if ($isOverLimitPayment === $payment->isOverLimitPayment()) {
-                $allowedPayments[] = $payment;
-            }
-        }
-
-        return $allowedPayments;
     }
 
     /**

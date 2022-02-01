@@ -55,18 +55,6 @@ class GoPayTransactionFacade
 
     /**
      * @param \App\Model\Order\Order $order
-     * @param  string $goPayId
-     * @return \App\Model\GoPay\GoPayTransaction
-     */
-    public function createNewTransactionByOrder(Order $order, string $goPayId): GoPayTransaction
-    {
-        $goPayTransactionData = new GoPayTransactionData($goPayId, $order);
-
-        return $this->create($goPayTransactionData);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
      */
     public function updateOrderTransactions(Order $order): void
     {
@@ -91,14 +79,5 @@ class GoPayTransactionFacade
         if ($toFlush) {
             $this->em->flush();
         }
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return bool
-     */
-    public function isOrderPaid(Order $order): bool
-    {
-        return $this->goPayTransactionRepository->isOrderPaid($order);
     }
 }

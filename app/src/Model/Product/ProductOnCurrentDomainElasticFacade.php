@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Product\Filter\ProductFilterCacheFacade;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Search\FilterQueryFactory;
 use App\Model\Product\Search\ProductElasticsearchRepository;
@@ -45,11 +43,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterCacheFacade
-     */
-    private $productFilterCacheFacade;
-
-    /**
      * @var \App\Model\Product\Filter\ProductFilterDataFactory
      */
     private ProductFilterDataFactory $productFilterDataFactory;
@@ -64,7 +57,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
      * @param \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
-     * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
@@ -77,7 +69,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         FilterQueryFactory $filterQueryFactory,
         IndexDefinitionLoader $indexDefinitionLoader,
-        ProductFilterCacheFacade $productFilterCacheFacade,
         ProductFilterDataFactory $productFilterDataFactory
     ) {
         parent::__construct(
@@ -92,7 +83,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $indexDefinitionLoader
         );
 
-        $this->productFilterCacheFacade = $productFilterCacheFacade;
         $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
@@ -120,49 +110,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
         return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
-     * @param int $categoryId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
-     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
-     */
-    public function getCachedProductFilterCountDataInCategory(
-        int $categoryId,
-        ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData,
-        ?ReadyCategorySeoMix $readyCategorySeoMix
-    ): ?ProductFilterCountData {
-        $isFilterActive = $productFilterData->isFilterActive($readyCategorySeoMix);
-        if ($isFilterActive === false) {
-            $productFilterCountData = $this->productFilterCacheFacade->findProductFilterCountDataInCache(
-                $categoryId,
-                $this->domain->getId(),
-                $readyCategorySeoMix
-            );
-            if ($productFilterCountData !== null) {
-                return $productFilterCountData;
-            }
-        }
-
-        $productFilterCountData = $this->getProductFilterCountDataInCategory(
-            $categoryId,
-            $productFilterConfig,
-            $productFilterData
-        );
-
-        if ($isFilterActive === false) {
-            $this->productFilterCacheFacade->setProductFilterCountDataIntoCache(
-                $productFilterCountData,
-                $categoryId,
-                $this->domain->getId(),
-                $readyCategorySeoMix
-            );
-        }
-
-        return $productFilterCountData;
     }
 
     /**

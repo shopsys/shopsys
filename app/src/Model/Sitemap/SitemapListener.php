@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Sitemap;
 
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
+use Presta\SitemapBundle\Service\AbstractGenerator;
+use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade;
@@ -72,5 +75,21 @@ class SitemapListener extends BaseSitemapListener
 
         $blogArticleSitemapItems = $this->sitemapFacade->getSitemapItemsForBlogArticlesOnDomain($domainConfig);
         $this->addUrlsBySitemapItems($blogArticleSitemapItems, $generator, $domainConfig, 'articles', static::PRIORITY_ARTICLES);
+    }
+
+    /**
+     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string $section
+     * @param int $elementPriority
+     */
+    protected function addHomepageUrl(
+        AbstractGenerator $generator,
+        DomainConfig $domainConfig,
+        $section,
+        $elementPriority
+    ) {
+        $urlConcrete = new UrlConcrete($domainConfig->getUrl(), null, null, $elementPriority);
+        $generator->addUrl($urlConcrete, $section);
     }
 }

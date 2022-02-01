@@ -169,14 +169,6 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @return int|null
-     */
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    /**
      * @param int $position
      */
     public function setPosition($position): void

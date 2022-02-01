@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use function GuzzleHttp\json_decode as guzzle_json_decode;
 
 /**
  * @ORM\Table(
@@ -195,30 +194,6 @@ class ReadyCategorySeoMix
     public function getReadyCategorySeoMixParameterParameterValues(): array
     {
         return $this->readyCategorySeoMixParameterParameterValues->toArray();
-    }
-
-    /**
-     * @return int
-     */
-    public function countReadyCategorySeoMixParameterParameterValues()
-    {
-        return $this->readyCategorySeoMixParameterParameterValues->count();
-    }
-
-    /**
-     * @return string
-     */
-    public function getChoseCategorySeoMixCombinationJson(): string
-    {
-        return $this->choseCategorySeoMixCombinationJson;
-    }
-
-    /**
-     * @return array
-     */
-    public function getChoseCategorySeoMixCombination(): array
-    {
-        return guzzle_json_decode($this->choseCategorySeoMixCombinationJson, true);
     }
 
     /**

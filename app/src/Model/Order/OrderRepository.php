@@ -54,15 +54,6 @@ class OrderRepository extends BaseOrderRepository
     }
 
     /**
-     * @param string $number
-     * @return \App\Model\Order\Order|null
-     */
-    public function findByNumber(string $number): ?Order
-    {
-        return $this->getOrderRepository()->findOneBy(['number' => $number]);
-    }
-
-    /**
      * @param \App\Model\Transport\Type\TransportType $transportType
      * @return \App\Model\Order\Order[]
      */

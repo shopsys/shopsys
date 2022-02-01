@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Model\Gtm\GtmFacade;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
@@ -13,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
 use Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionController;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
 
-class ErrorController extends FrontBaseController
+class ErrorController extends AbstractController
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Error\ExceptionController
@@ -48,32 +48,24 @@ class ErrorController extends FrontBaseController
     private $environment;
 
     /**
-     * @var \App\Model\Gtm\GtmFacade
-     */
-    private $gtmFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $environment
-     * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */
     public function __construct(
         ExceptionController $exceptionController,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
         Domain $domain,
-        string $environment,
-        GtmFacade $gtmFacade
+        string $environment
     ) {
         $this->exceptionController = $exceptionController;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
         $this->environment = $environment;
-        $this->gtmFacade = $gtmFacade;
     }
 
     /**
@@ -97,8 +89,6 @@ class ErrorController extends FrontBaseController
         FlattenException $exception,
         ?DebugLoggerInterface $logger = null
     ) {
-        $this->gtmFacade->onErrorPage($exception->getStatusCode());
-
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
         }

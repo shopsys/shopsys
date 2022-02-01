@@ -25,7 +25,6 @@ twig:
         - 'Admin/Form/productDetailFormTheme.html.twig'
         - 'Admin/Form/blogArticleFormTheme.html.twig'
         - 'Admin/Form/productsFormTheme.html.twig'
-        - 'Front/Form/sliderFormTheme.html.twig'
         - 'Admin/Form/promoCodeLimitFormTheme.html.twig'
         - 'Admin/Form/imageuploadFields.html.twig'
         - 'Admin/Form/displayVariablesFormTheme.html.twig'

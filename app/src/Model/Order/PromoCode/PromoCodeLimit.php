@@ -65,12 +65,4 @@ class PromoCodeLimit
     {
         $this->promoCode = $promoCode;
     }
-
-    /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
 }

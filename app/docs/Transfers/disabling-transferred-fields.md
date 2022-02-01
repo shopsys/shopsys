@@ -17,5 +17,4 @@ Disabled fields are defined by constant `DISABLED_FIELDS` in following form type
 - `App\Form\Admin\ProductFormTypeExtension`
 - `App\Form\Admin\Customer\BillingAddressFormTypeExtension`
 - `App\Form\Admin\Customer\DeliveryAddressFormTypeExtension`
-- `App\Form\Admin\Product\Flag\FlagFormTypeExtension`
 - `App\Form\Admin\Product\Parameter\ParameterFormTypeExtension`

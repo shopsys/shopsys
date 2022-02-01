@@ -299,25 +299,6 @@ class BlogCategoryFacade
     }
 
     /**
-     * @param \App\Model\Blog\Article\BlogArticle $blogArticle
-     * @param int $domainId
-     * @return \App\Model\Blog\Category\BlogCategory[]
-     */
-    public function findBlogArticleAllCategoryOnDomain(BlogArticle $blogArticle, int $domainId): array
-    {
-        return $this->blogCategoryRepository->findBlogArticleAllCategoriesOnDomain($blogArticle, $domainId);
-    }
-
-    /**
-     * @param int $domainId
-     * @return \App\Model\Blog\Category\BlogCategory[]
-     */
-    public function getAllVisibleBlogCategoriesByDomainId(int $domainId): array
-    {
-        return $this->blogCategoryRepository->getAllVisibleBlogCategoriesByDomainId($domainId);
-    }
-
-    /**
      * @param int $domainId
      * @param string $uuid
      * @return \App\Model\Blog\Category\BlogCategory

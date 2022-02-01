@@ -11,7 +11,6 @@ use Generator;
 
 class FlagTransferAkeneoFacade
 {
-    public const PAGE_SIZE_LIMIT = 50;
     public const FLAG_GROUP_NAME = 'Flag';
 
     /**

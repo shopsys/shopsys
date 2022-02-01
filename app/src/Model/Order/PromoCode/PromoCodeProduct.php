@@ -40,14 +40,6 @@ class PromoCodeProduct
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
-
-    /**
      * @return \App\Model\Product\Product
      */
     public function getProduct(): Product

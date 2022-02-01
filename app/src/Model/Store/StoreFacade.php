@@ -172,21 +172,6 @@ class StoreFacade
     }
 
     /**
-     * @param int $domainId
-     * @return \App\Model\Store\Store[]
-     */
-    public function getStoresEnabledOnDomainIndexedByStoreId(int $domainId): array
-    {
-        $stores = $this->storeRepository->getStoresEnabledOnDomain($domainId);
-        $storesById = [];
-        foreach ($stores as $store) {
-            $storesById[$store->getId()] = $store;
-        }
-
-        return $storesById;
-    }
-
-    /**
      * @param string $externalId
      * @return \App\Model\Store\Store|null
      */

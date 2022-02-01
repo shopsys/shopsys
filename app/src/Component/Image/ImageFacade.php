@@ -7,7 +7,6 @@ namespace App\Component\Image;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Product;
-use App\Twig\ImageExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
@@ -41,6 +40,8 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class ImageFacade extends BaseImageFacade
 {
     public const AKENEO_MAIN_IMAGE_TYPE = 'image_main';
+    public const NOIMAGE_FILENAME = 'noimage.png';
+    public const OPTIMIZED_NOIMAGE_FILENAME = 'optimized-' . self::NOIMAGE_FILENAME;
 
     /**
      * @var \App\Component\Image\ImageCacheFacade
@@ -508,15 +509,6 @@ class ImageFacade extends BaseImageFacade
         $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
 
         parent::manageImages($entity, $imageUploadData, $type);
-    }
-
-    /**
-     * @param string $emptyImageUrl
-     * @return string
-     */
-    public function getEmptyImageUrl(string $emptyImageUrl): string
-    {
-        return str_replace(ImageExtension::NOIMAGE_FILENAME, ImageExtension::OPTIMIZED_NOIMAGE_FILENAME, $emptyImageUrl);
     }
 
     /**

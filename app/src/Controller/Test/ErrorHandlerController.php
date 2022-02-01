@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Test;
 
-use App\Controller\Front\FrontBaseController;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ErrorHandlerController extends FrontBaseController
+class ErrorHandlerController extends AbstractController
 {
     /**
      * @Route("/error-handler/notice")

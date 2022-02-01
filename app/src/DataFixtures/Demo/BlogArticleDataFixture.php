@@ -12,7 +12,6 @@ use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryData;
 use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
-use App\Model\Domain\DomainHelper;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -22,8 +21,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class BlogArticleDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PAGES_IN_CATEGORY = 15;
-
-    public const LOCALES = DomainHelper::LOCALES;
 
     public const FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
     public const FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
@@ -96,7 +93,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $mainPageBlogCategory = $this->blogCategoryFacade->getById(BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID);
 
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
-        foreach (self::LOCALES as $locale) {
+        foreach ($this->domain->getAll() as $domain) {
+            $locale = $domain->getLocale();
             $mainPageBlogCategoryData->names[$locale] = t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
             $mainPageBlogCategoryData->descriptions[$locale] = t('description - Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
@@ -154,29 +152,23 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogCategoryData = $this->blogCategoryDataFactory->create();
         $blogCategoryData->parent = $parentCategory;
 
-        foreach (self::LOCALES as $locale) {
-            if ($subcategoryOrder === 1) {
-                $name = t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $description = t('description - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-            } else {
-                $name = t('Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $description = t('description - Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-            }
-            $blogCategoryData->names[$locale] = $name;
-            $blogCategoryData->descriptions[$locale] = $description;
-        }
-
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
             if ($subcategoryOrder === 1) {
                 $h1 = t('První podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
                 $title = t('title - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $name = t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $description = t('description - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
             } else {
                 $h1 = t('Druhá podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
                 $title = t('title - Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $name = t('Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $description = t('description - Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
             }
             $blogCategoryData->seoH1s[$domain->getId()] = $h1;
             $blogCategoryData->seoTitles[$domain->getId()] = $title;
+            $blogCategoryData->names[$locale] = $name;
+            $blogCategoryData->descriptions[$locale] = $description;
         }
 
         return $blogCategoryData;

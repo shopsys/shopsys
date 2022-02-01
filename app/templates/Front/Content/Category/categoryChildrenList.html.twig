@@ -1,5 +1,0 @@
-{% if categories is not empty %}
-    <div class="box-list__section">
-        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories})) }}
-    </div>
-{% endif %}

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
-use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
@@ -35,48 +34,6 @@ class Cart extends BaseCart
         }
 
         return $quantifiedProducts;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \App\Model\Cart\Item\CartItem|null
-     */
-    public function findCartItemByProduct(Product $product): ?CartItem
-    {
-        foreach ($this->items as $item) {
-            if ($item->getProduct()->getId() === $product->getId()) {
-                return $item;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param int $productId
-     * @return \App\Model\Cart\Item\CartItem|null
-     */
-    public function findCartItemByProductId(int $productId): ?CartItem
-    {
-        foreach ($this->items as $item) {
-            if ($item->getProduct()->getId() === $productId) {
-                return $item;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $quantity
-     */
-    public function changeQuantity(Product $product, int $quantity): void
-    {
-        $item = $this->findCartItemByProduct($product);
-        $item->changeQuantity($quantity);
-
-        $this->setModifiedNow();
     }
 
     /**

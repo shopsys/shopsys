@@ -2,8 +2,6 @@ const Encore = require('@symfony/webpack-encore');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const processTrans = require('./assets/js/commands/translations/process');
 const CopyPlugin = require('copy-webpack-plugin');
-const yaml = require('js-yaml');
-const fs = require('fs');
 const path = require('path');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const sources = require('./assets/js/bin/helpers/sources');
@@ -19,12 +17,10 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
-    .addEntry('frontend', './assets/js/frontend.js')
     // hp entry?
     // order entry?
     // product entry?
     // cart entry?
-    .addEntry('styleguide', './assets/js/styleguide/styleguide.js')
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -81,28 +77,9 @@ Encore
     .addPlugin(new LiveReloadPlugin())
 ;
 
-const domainFile = './config/domains.yaml';
-const domains = yaml.safeLoad(fs.readFileSync(domainFile, 'utf8'));
-
-const domainStylesDirectories = new Set(domains.domains.map(domain => {
-    if (!domain.styles_directory) {
-        return 'common';
-    }
-
-    return domain.styles_directory;
-}));
-
-domainStylesDirectories.forEach(stylesDirectory => {
-    Encore
-        .addEntry('frontend-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/main.less')
-        .addEntry('frontend-print-style-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/print/main.less')
-        .addEntry('frontend-wysiwyg-' + stylesDirectory, './assets/styles/frontend/' + stylesDirectory + '/wysiwyg.less');
-});
-
 Encore
     .addEntry('admin-style', './assets/styles/admin/main.less')
     .addEntry('admin-wysiwyg', './assets/styles/admin/wysiwyg.less')
-    .addEntry('styleguide-style', './assets/styles/styleguide/main.less')
     .addPlugin(
         new StylelintPlugin({
             configFile: '.stylelintrc',

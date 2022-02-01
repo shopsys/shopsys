@@ -1,2 +1,0 @@
-import './RegistrationFillInformationForm';
-import './RegistrationForm';

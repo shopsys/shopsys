@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+ * @property \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
  * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade)
  */
 class LegalConditionsController extends BaseLegalConditionsController

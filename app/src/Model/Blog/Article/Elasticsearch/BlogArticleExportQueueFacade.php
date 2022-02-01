@@ -10,15 +10,6 @@ use Webmozart\Assert\Assert;
 class BlogArticleExportQueueFacade extends RedisDomainQueueFacade
 {
     /**
-     * @param int $id
-     * @param int $domainId
-     */
-    public function addId(int $id, int $domainId): void
-    {
-        $this->add($id, $domainId);
-    }
-
-    /**
      * @param int[] $ids
      * @param int $domainId
      */

@@ -7,9 +7,10 @@ namespace App\Controller\Front;
 use App\Model\ImageSitemap\ImageSitemapFilePrefixer;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class RobotsController extends FrontBaseController
+class RobotsController extends AbstractController
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain

@@ -52,14 +52,6 @@ class PromoCodeFlag
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
-
-    /**
      * @return \App\Model\Product\Flag\Flag
      */
     public function getFlag(): Flag

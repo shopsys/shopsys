@@ -55,14 +55,6 @@ class ProductStore
     }
 
     /**
-     * @return \App\Model\Product\Product
-     */
-    public function getProduct(): Product
-    {
-        return $this->product;
-    }
-
-    /**
      * @return \App\Model\Store\Store
      */
     public function getStore(): Store

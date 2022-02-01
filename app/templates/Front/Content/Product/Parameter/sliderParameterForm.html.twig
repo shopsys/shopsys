@@ -1,9 +1,0 @@
-<div class="box-filter__choice js-product-filter-parameter js-product-filter-box{% if filterCollapsedParameters[parameterId] is defined %} js-product-filter-close-parameter{% endif %}" data-product-filter-box-id="{{ parameterForm.vars.id }}">
-    <h3 class="box-filter__choice__title js-product-filter-box-label cursor-pointer js-product-filter-parameter-label js-product-filter-box-arrow">
-        {{ parameterForm.vars.label }}
-        <i class="svg svg-arrow"></i>
-    </h3>
-    <div class="box-filter__choice__content" id="{{ parameterForm.vars.id }}">
-        {{ form_row(parameterForm, { attr: {'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value }}) }}
-    </div>
-</div>

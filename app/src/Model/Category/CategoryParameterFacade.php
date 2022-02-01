@@ -91,20 +91,4 @@ class CategoryParameterFacade
             $this->em->flush();
         }
     }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return array
-     */
-    public function getParametersCollapsedIndexedByIdForCategory(Category $category): array
-    {
-        $parametersCollapsedByCategory = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
-
-        $parametersCollapsed = [];
-        foreach ($parametersCollapsedByCategory as $item) {
-            $parametersCollapsed[$item->getId()] = $item->getId();
-        }
-
-        return $parametersCollapsed;
-    }
 }

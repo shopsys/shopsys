@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Component\Cache\TwigCachedMenuFacade;
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
-use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -64,16 +62,6 @@ class CategoryFacade extends BaseCategoryFacade
     private $categoryParameterFacade;
 
     /**
-     * @var \App\Component\Cache\TwigCachedMenuFacade
-     */
-    private $twigCachedMenuFacade;
-
-    /**
-     * @var \App\Twig\Cache\TwigCacheFacade
-     */
-    private TwigCacheFacade $twigCacheFacade;
-
-    /**
      * @var \App\Model\Category\LinkedCategory\LinkedCategoryFacade
      */
     private LinkedCategoryFacade $linkedCategoryFacade;
@@ -100,8 +88,6 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
-     * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -118,8 +104,6 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
         CategoryParameterFacade $categoryParameterFacade,
-        TwigCachedMenuFacade $twigCachedMenuFacade,
-        TwigCacheFacade $twigCacheFacade,
         LinkedCategoryFacade $linkedCategoryFacade,
         ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
         ProductFacade $productFacade
@@ -138,8 +122,6 @@ class CategoryFacade extends BaseCategoryFacade
         );
 
         $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->twigCachedMenuFacade = $twigCachedMenuFacade;
-        $this->twigCacheFacade = $twigCacheFacade;
         $this->linkedCategoryFacade = $linkedCategoryFacade;
         $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainElasticFacade;
         $this->productFacade = $productFacade;
@@ -155,7 +137,6 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::create($categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
-        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
         return $category;
     }
@@ -171,11 +152,6 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::edit($categoryId, $categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
-        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
-        }
 
         $this->scheduleProductsToExportByCategory($category);
 
@@ -188,8 +164,6 @@ class CategoryFacade extends BaseCategoryFacade
     public function reorderByNestedSetValues(array $categoriesOrderingData): void
     {
         parent::reorderByNestedSetValues($categoriesOrderingData);
-
-        $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($this->getRootCategory());
 
         $this->productFacade->markAllProductsForExport();
     }
@@ -235,16 +209,6 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param \App\Model\Category\Category $parentCategory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Category\Category[]
-     */
-    public function getTranslatedVisibleSubcategoriesByDomain(Category $parentCategory, DomainConfig $domainConfig): array
-    {
-        return  $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain($parentCategory, $domainConfig);
-    }
-
-    /**
      * @param \App\Model\Category\Category $destinationCategory
      * @return array
      */
@@ -287,28 +251,11 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-    public function getAllVisibleCategoriesByDomainId(int $domainId): array
-    {
-        return $this->categoryRepository->getAllVisibleByDomainId($domainId);
-    }
-
-    /**
      * @param int $categoryId
      */
     public function deleteById($categoryId)
     {
         $category = $this->categoryRepository->getById($categoryId);
-        $parent = $category->getParent();
-        if ($parent !== null) {
-            $parentId = $parent->getId();
-            foreach ($this->domain->getAllIds() as $domainId) {
-                $this->twigCacheFacade->invalidateByKey('category_children_' . $parentId, $domainId);
-            }
-        }
-
         $this->scheduleProductsToExportByCategory($category);
 
         parent::deleteById($categoryId);
@@ -334,16 +281,6 @@ class CategoryFacade extends BaseCategoryFacade
         $categoriesFromLinkedCategories = $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, $children);
 
         return array_merge($children, $categoriesFromLinkedCategories);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $parentCategory
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-    public function getVisibleLinkedCategories(Category $parentCategory, int $domainId): array
-    {
-        return $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, []);
     }
 
     /**

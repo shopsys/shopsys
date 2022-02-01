@@ -6,13 +6,13 @@ namespace App\Model\Article\Elasticsearch;
 
 use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Article\Article;
-use App\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 class ArticleExportRepository
 {
     /**
-     * @var \App\Model\Article\ArticleRepository
+     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleRepository
      */
     private ArticleRepository $articleRepository;
 
@@ -27,7 +27,7 @@ class ArticleExportRepository
     protected BreadcrumbFacade $breadcrumbFacade;
 
     /**
-     * @param \App\Model\Article\ArticleRepository $articleRepository
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */

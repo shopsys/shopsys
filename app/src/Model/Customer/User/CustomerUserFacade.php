@@ -119,52 +119,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
     }
 
     /**
-     * @param string|null $email
-     * @param int $domainId
-     * @return bool[]
-     */
-    public function getCustomerInfo(?string $email, int $domainId): array
-    {
-        $customerInfo = [
-            'exists' => false,
-            'activated' => false,
-            'isCompanyCustomer' => false,
-        ];
-
-        $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
-        if ($customerUser !== null) {
-            /** @var \App\Model\Customer\BillingAddress $billingAddress */
-            $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-
-            $customerInfo['exists'] = true;
-            $customerInfo['activated'] = $billingAddress->isActivated();
-            $customerInfo['isCompanyCustomer'] = $billingAddress->isCompanyCustomer();
-        }
-
-        return $customerInfo;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     */
-    public function activeCustomerUser(CustomerUser $customerUser, CustomerUserUpdateData $customerUserUpdateData): void
-    {
-        /** @var \App\Model\Customer\BillingAddress $billingAddress */
-        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-
-        if ($billingAddress->isActivated()) {
-            return;
-        }
-
-        $this->edit($customerUser->getId(), $customerUserUpdateData);
-        $billingAddress->activate();
-        $this->em->flush();
-
-        $this->customerMailFacade->sendRegistrationMail($customerUser);
-    }
-
-    /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      */
     public function sendActivationMail(CustomerUser $customerUser): void

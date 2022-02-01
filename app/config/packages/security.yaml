@@ -181,7 +181,6 @@ security:
         # This ensures that the form can only be accessed when two-factor authentication is in progress.
         - { path: ^/%admin_url%/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         # same pattern must be in routing_front.yaml
-        - { path: ^/login-as-remembered-user/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/superadmin/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/cron/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/currency/, roles: ROLE_SUPER_ADMIN }

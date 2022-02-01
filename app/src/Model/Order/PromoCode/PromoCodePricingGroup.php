@@ -40,14 +40,6 @@ class PromoCodePricingGroup
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
     public function getPricingGroup(): PricingGroup

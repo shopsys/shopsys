@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
-use App\Component\Cache\TwigCachedMenuFacade;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -32,29 +31,21 @@ class NavigationItemFacade
     private NavigationItemDetailFactory $navigationItemDetailFactory;
 
     /**
-     * @var \App\Component\Cache\TwigCachedMenuFacade
-     */
-    private TwigCachedMenuFacade $twigCachedMenuFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \App\Model\Navigation\NavigationItemRepository $navigationItemRepository
      * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      * @param \App\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
-     * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      */
     public function __construct(
         EntityManagerDecorator $entityManager,
         NavigationItemRepository $navigationItemRepository,
         NavigationItemCategoryFacade $navigationItemCategoryFacade,
-        NavigationItemDetailFactory $navigationItemDetailFactory,
-        TwigCachedMenuFacade $twigCachedMenuFacade
+        NavigationItemDetailFactory $navigationItemDetailFactory
     ) {
         $this->em = $entityManager;
         $this->navigationItemRepository = $navigationItemRepository;
         $this->navigationItemCategoryFacade = $navigationItemCategoryFacade;
         $this->navigationItemDetailFactory = $navigationItemDetailFactory;
-        $this->twigCachedMenuFacade = $twigCachedMenuFacade;
     }
 
     /**
@@ -111,8 +102,6 @@ class NavigationItemFacade
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
 
-        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
-
         return $navigationItem;
     }
 
@@ -132,8 +121,6 @@ class NavigationItemFacade
 
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
-
-        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
 
         return $navigationItem;
     }
@@ -165,7 +152,6 @@ class NavigationItemFacade
      */
     public function delete(NavigationItem $navigationItem): void
     {
-        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
         $this->em->remove($navigationItem);
         $this->em->flush($navigationItem);
     }

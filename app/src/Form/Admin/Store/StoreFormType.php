@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Store;
 
-use App\Model\Country\CountryFacade;
 use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class StoreFormType extends AbstractType
 {
     /**
-     * @var \App\Model\Country\CountryFacade
+     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
      */
     private CountryFacade $countryFacade;
 
@@ -51,7 +51,7 @@ class StoreFormType extends AbstractType
     /**
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \App\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         StockFacade $stockFacade,

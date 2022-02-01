@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
@@ -95,32 +94,6 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-    public function getAllProductCategoriesOnDomain(Product $product, int $domainId): array
-    {
-        $qb = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->join(
-                ProductCategoryDomain::class,
-                'pcd',
-                Join::WITH,
-                'pcd.product = :product
-                    AND pcd.category = c
-                    AND pcd.domainId = :domainId'
-            )
-            ->orderBy('c.level DESC, c.lft');
-
-        $qb->setParameters([
-            'domainId' => $domainId,
-            'product' => $product,
-        ]);
-
-        return $qb->getQuery()->execute();
-    }
-
-    /**
      * @param \App\Model\Category\Category[] $categories
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
@@ -162,17 +135,6 @@ class CategoryRepository extends BaseCategoryRepository
         }
 
         return $listableProductCountsIndexedByCategoryId;
-    }
-
-    /**
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-    public function getAllVisibleByDomainId($domainId): array
-    {
-        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->getQuery()
-            ->getResult();
     }
 
     /**
