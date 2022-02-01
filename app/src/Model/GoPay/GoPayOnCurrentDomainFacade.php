@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use App\Model\GoPay\Exception\GoPaySendPaymentException;
+use App\Model\Order\Order;
+use App\Model\Payment\Service\PaymentServiceInterface;
+use App\Model\Payment\Transaction\PaymentTransactionData;
+use Shopsys\Cdn\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class GoPayOnCurrentDomainFacade
+class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
 {
+    private const GOPAY_RESULT_FAILED = 'FAILED';
+
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @var \App\Model\GoPay\GoPayOrderMapper
      */
-    private $domain;
+    private $goPayOrderMapper;
 
     /**
      * @var \App\Model\GoPay\GoPayClientFactory
@@ -19,35 +26,107 @@ class GoPayOnCurrentDomainFacade
     private $goPayClientFactory;
 
     /**
+     * @var \App\Model\GoPay\GoPayClient|null
+     */
+    private ?GoPayClient $goPayClient;
+
+    /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\GoPay\GoPayClientFactory $goPayClientFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\GoPay\GoPayOrderMapper $goPayOrderMapper
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      */
     public function __construct(
         GoPayClientFactory $goPayClientFactory,
+        GoPayOrderMapper $goPayOrderMapper,
         Domain $domain
     ) {
-        $this->domain = $domain;
+        $this->goPayOrderMapper = $goPayOrderMapper;
         $this->goPayClientFactory = $goPayClientFactory;
+        $this->goPayClient = null;
+        $this->domain = $domain;
     }
 
     /**
-     * @param \App\Model\GoPay\GoPayTransaction[] $goPayTransactions
-     * @param int $domainId
-     * @return \App\Model\GoPay\GoPayResponseData[]
+     * @return \App\Model\GoPay\GoPayClient
      */
-    public function getPaymentStatusesResponseDataByGoPayTransactionAndDomainId(array $goPayTransactions, int $domainId): array
+    private function getGoPayClient(): GoPayClient
     {
-        $responses = [];
-        $domainConfig = $this->domain->getDomainConfigById($domainId);
-        $goPayClient = $this->goPayClientFactory->createByLocale($domainConfig->getLocale());
-
-        foreach ($goPayTransactions as $goPayTransaction) {
-            $responses[] = new GoPayResponseData(
-                $goPayClient->getStatus($goPayTransaction->getGoPayId()),
-                $goPayTransaction
-            );
+        if ($this->goPayClient === null) {
+            $this->goPayClient = $this->goPayClientFactory->createByLocale($this->domain->getLocale());
         }
 
-        return $responses;
+        return $this->goPayClient;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param string|null $goPayBankSwift
+     * @return array
+     */
+    public function sendPaymentToGoPay(Order $order, ?string $goPayBankSwift): array
+    {
+        $goPayPaymentData = $this->goPayOrderMapper->createGoPayPaymentData($order, $goPayBankSwift);
+        $response = $this->getGoPayClient()->sendPaymentToGoPay($goPayPaymentData);
+
+        if ($response->hasSucceed()) {
+            return [
+                'gatewayUrl' => $response->json['gw_url'],
+                'embedJs' => $this->getGoPayClient()->urlToEmbedJs(),
+                'goPayId' => $response->json['id'],
+                'state' => $response->json['state'],
+            ];
+        }
+
+        throw new GoPaySendPaymentException('Creating gopay payment failed. (Details: ' . implode(' - ', $response->json['errors'][0] ?? ['unknown error']) . ')');
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
+     * @return array
+     */
+    public function createTransaction(PaymentTransactionData $paymentTransactionData): array
+    {
+        $goPayCreatePaymentSetup = $this->sendPaymentToGoPay($paymentTransactionData->order, $paymentTransactionData->order->getGoPayBankSwift());
+
+        $paymentTransactionData->externalPaymentIdentifier = (string)$goPayCreatePaymentSetup['goPayId'];
+        $paymentTransactionData->externalPaymentStatus = (string)$goPayCreatePaymentSetup['state'];
+
+        return $goPayCreatePaymentSetup;
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
+     * @return bool
+     */
+    public function updateTransaction(PaymentTransactionData $paymentTransactionData): bool
+    {
+        $goPayStatusResponse = $this->getGoPayClient()->getStatus($paymentTransactionData->externalPaymentIdentifier);
+        if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
+            $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $refundAmount
+     * @return bool
+     */
+    public function refundTransaction(PaymentTransactionData $paymentTransactionData, Money $refundAmount): bool
+    {
+        $refundResponse = $this->getGoPayClient()->refundTransaction($paymentTransactionData->externalPaymentIdentifier, $this->goPayOrderMapper->formatPriceForGoPay($refundAmount));
+        if (array_key_exists('result', (array)$refundResponse->json) && $refundResponse->json['result'] !== self::GOPAY_RESULT_FAILED) {
+            $paymentTransactionData->refundedAmount = $paymentTransactionData->refundedAmount->add($refundAmount);
+            return true;
+        }
+
+        return false;
     }
 }

@@ -66,9 +66,10 @@ class OrderDataFactory extends BaseOrderDataFactory
     {
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::createOrderDataFromArgument($argument);
-        $orderData->isCompanyCustomer = $argument['input']['onCompanyBehalf'];
 
         $input = $argument['input'];
+        $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
+        $orderData->goPayBankSwift = $input['payment']['goPayBankSwift'] ?? null;
 
         if (isset($input['transport']['pickupPlaceIdentifier'])) {
             $pickupPlaceIdentifier = $input['transport']['pickupPlaceIdentifier'];

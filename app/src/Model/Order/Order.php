@@ -108,7 +108,13 @@ class Order extends BaseOrder
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Payment\Transaction\PaymentTransaction[]
      * @ORM\OneToMany(targetEntity="App\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
      */
-    private ArrayCollection $paymentTransactions;
+    private $paymentTransactions;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private ?string $goPayBankSwift;
 
     /**
      * @param \App\Model\Order\OrderData $orderData
@@ -143,6 +149,7 @@ class Order extends BaseOrder
         $this->trackingNumber = $orderData->trackingNumber;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
         $this->paymentTransactions = new ArrayCollection();
+        $this->goPayBankSwift = $orderData->goPayBankSwift;
     }
 
     /**
@@ -285,5 +292,13 @@ class Order extends BaseOrder
     public function getPickupPlaceIdentifier(): ?string
     {
         return $this->pickupPlaceIdentifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayBankSwift(): ?string
+    {
+        return $this->goPayBankSwift;
     }
 }

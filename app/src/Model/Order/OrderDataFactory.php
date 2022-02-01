@@ -50,5 +50,6 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->gtmCoupon = $order->getGtmCoupon();
         $orderData->isOverLimit = $order->getIsOverLimit();
         $orderData->trackingNumber = $order->getTrackingNumber();
+        $orderData->goPayBankSwift = $order->getGoPayBankSwift();
     }
 }

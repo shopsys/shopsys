@@ -58,6 +58,11 @@ class OrderData extends BaseOrderData
      */
     public ?string $pickupPlaceIdentifier;
 
+    /**
+     * @var string|null
+     */
+    public $goPayBankSwift;
+
     public function __construct()
     {
         parent::__construct();
