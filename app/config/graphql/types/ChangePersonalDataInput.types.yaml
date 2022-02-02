@@ -5,6 +5,7 @@ ChangePersonalDataInput:
         - 'NameInputObjectDecorator'
         - 'TelephoneInputObjectDecorator'
         - 'BillingAddressInputObjectDecorator'
+        - 'CompanyInputObjectDecorator'
     config:
         fields:
             newsletterSubscription:

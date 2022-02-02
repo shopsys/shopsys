@@ -6806,6 +6806,42 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>companyCustomer</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td>
+
+Determines whether the customer is a company or not.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company name (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company identification number (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company tax number (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -7554,10 +7590,10 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>companyCustomer</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
-Determines whether the registered customer is a company or not.
+Determines whether the customer is a company or not.
 
 </td>
 </tr>
