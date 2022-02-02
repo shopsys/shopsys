@@ -644,6 +644,17 @@ type CompanyCustomerUser implements CustomerUser {
   companyTaxNumber: String
 }
 
+input ContactInput {
+  """Name of the sender"""
+  name: String!
+
+  """Email address of the sender"""
+  email: String!
+
+  """Message sent to recipient"""
+  message: String!
+}
+
 """Represents country"""
 type Country {
   """Localized country name"""
@@ -986,6 +997,9 @@ type Mutation {
 
   """Delete delivery address by Uuid"""
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
+
+  """Send message to the site owner"""
+  Contact(input: ContactInput!): Boolean!
 }
 
 """Represents a navigation structure item"""

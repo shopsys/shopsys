@@ -604,6 +604,15 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   uuid: Scalars['Uuid'];
 };
 
+export type ContactInputApi = {
+  /** Email address of the sender */
+  email: Scalars['String'];
+  /** Message sent to recipient */
+  message: Scalars['String'];
+  /** Name of the sender */
+  name: Scalars['String'];
+};
+
 /** Represents country */
 export type CountryApi = {
   __typename?: 'Country';
@@ -869,6 +878,8 @@ export type MutationApi = {
   ChangePassword: CustomerUserApi;
   /** Changes customer user personal data */
   ChangePersonalData: CustomerUserApi;
+  /** Send message to the site owner */
+  Contact: Scalars['Boolean'];
   /** Creates complete order with products and addresses */
   CreateOrder: OrderApi;
   /** Delete delivery address by Uuid */
@@ -906,6 +917,11 @@ export type MutationChangePasswordArgsApi = {
 
 export type MutationChangePersonalDataArgsApi = {
   input: ChangePersonalDataInputApi;
+};
+
+
+export type MutationContactArgsApi = {
+  input: ContactInputApi;
 };
 
 
