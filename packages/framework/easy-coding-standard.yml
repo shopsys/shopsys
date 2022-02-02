@@ -104,6 +104,7 @@ parameters:
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff.MaxExceeded:
             - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
+            - '*/src/Model/Product/Search/ProductElasticsearchConverter.php'
 
         # allow empty "catch (Exception $exception) { }"
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch:
