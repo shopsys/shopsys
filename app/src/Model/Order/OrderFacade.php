@@ -8,17 +8,16 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use App\Model\Customer\User\RegistrationDataFactory;
 use App\Model\Customer\User\RegistrationFacade;
-use App\Model\GoPay\GoPayTransaction;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Payment\Service\PaymentServiceFacade;
+use App\Model\Payment\Transaction\PaymentTransaction;
 use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use App\Model\Transport\Type\TransportType;
 use BadMethodCallException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
@@ -452,8 +451,8 @@ class OrderFacade extends BaseOrderFacade
             self::VARIABLE_NUMBER => $order->getNumber(),
         ];
 
-        if ($order->isGoPayPaid()) {
-            $variables[self::VARIABLE_PAYMENT_INSTRUCTIONS] = t('You have successfully paid order via GoPay.');
+        if ($order->isPaid()) {
+            $variables[self::VARIABLE_PAYMENT_INSTRUCTIONS] = t('You have successfully paid order.');
         }
 
         return strtr($orderSentPageContent, $variables);
@@ -476,8 +475,8 @@ class OrderFacade extends BaseOrderFacade
     {
         return $order->getStatus()->getType() === OrderStatus::TYPE_NEW &&
             $order->getPayment()->isGoPay() &&
-            count(array_filter($order->getGoPayTransactions(), function (GoPayTransaction $transaction) {
-                return $transaction->getGoPayStatus() === PaymentStatus::PAID;
+            count(array_filter($order->getGoPayTransactions(), function (PaymentTransaction $paymentTransaction) {
+                return $paymentTransaction->isPaid();
             })) === 0;
     }
 

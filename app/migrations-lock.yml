@@ -760,3 +760,6 @@
 20220201120501:
     class: App\Migrations\Version20220201120501
     skip: false
+20220202124636:
+    class: App\Migrations\Version20220202124636
+    skip: false

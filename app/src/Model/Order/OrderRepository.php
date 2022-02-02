@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\GoPay\GoPayTransaction;
 use App\Model\Payment\Payment;
+use App\Model\Payment\Transaction\PaymentTransaction;
 use App\Model\Transport\Transport;
 use App\Model\Transport\Type\TransportType;
 use DateTime;
@@ -41,10 +41,10 @@ class OrderRepository extends BaseOrderRepository
     {
         $queryBuilder = $this->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
-            ->join(GoPayTransaction::class, 'gpt', Join::WITH, 'o.id = gpt.order')
+            ->join(PaymentTransaction::class, 'pt', Join::WITH, 'o.id = pt.order AND p.id = pt.payment')
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
-            ->andWhere('gpt.goPayStatus NOT IN (:paymentStatuses)')
+            ->andWhere('pt.externalPaymentStatus NOT IN (:paymentStatuses)')
             ->orderBy('o.createdAt', 'ASC')
             ->setParameter('fromDate', $fromDate)
             ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])

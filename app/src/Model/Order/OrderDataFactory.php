@@ -47,7 +47,6 @@ class OrderDataFactory extends BaseOrderDataFactory
     {
         parent::fillFromOrder($orderData, $order);
 
-        $orderData->goPayTransactions = $order->getGoPayTransactions();
         $orderData->gtmCoupon = $order->getGtmCoupon();
         $orderData->isOverLimit = $order->getIsOverLimit();
         $orderData->trackingNumber = $order->getTrackingNumber();

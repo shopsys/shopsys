@@ -58,7 +58,7 @@ class PaymentMutation implements MutationInterface, AliasedInterface
 
         $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
 
-        return true;
+        return $order->isPaid();
     }
 
     /**

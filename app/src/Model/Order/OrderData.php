@@ -24,11 +24,6 @@ class OrderData extends BaseOrderData
     public $personalPickupStore;
 
     /**
-     * @var \App\Model\GoPay\GoPayTransaction[]
-     */
-    public $goPayTransactions;
-
-    /**
      * @var string|null
      */
     public $password;
