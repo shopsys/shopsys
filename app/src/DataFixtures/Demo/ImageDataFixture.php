@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use App\Model\Slider\SliderItemFacade;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -58,6 +60,16 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     private $em;
 
     /**
+     * @var \App\Model\Product\ProductDataFactory
+     */
+    private ProductDataFactory $productDataFactory;
+
+    /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private ProductFacade $productFacade;
+
+    /**
      * @param mixed $dataFixturesImagesDirectory
      * @param mixed $targetImagesDirectory
      * @param mixed $targetDomainImagesDirectory
@@ -65,6 +77,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\ProductDataFactory $productDataFactory
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         $dataFixturesImagesDirectory,
@@ -73,7 +87,9 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         FilesystemInterface $filesystem,
         Filesystem $symfonyFilesystem,
         MountManager $mountManager,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        ProductDataFactory $productDataFactory,
+        ProductFacade $productFacade
     ) {
         $this->dataFixturesImagesDirectory = $dataFixturesImagesDirectory;
         $this->targetDomainImagesDirectory = $targetDomainImagesDirectory;
@@ -82,6 +98,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->localFilesystem = $symfonyFilesystem;
         $this->mountManager = $mountManager;
         $this->em = $em;
+        $this->productDataFactory = $productDataFactory;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -224,10 +242,18 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $this->saveImageIntoDb($productId, 'product', $productId, null, 'image_main');
+            /** @var \App\Model\Product\Product $product */
+            $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
+            $productData = $this->productDataFactory->createFromProduct($product);
+            $this->productFacade->edit($productId, $productData);
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $maxImageId => $productId) {
             $this->saveImageIntoDb($productId, 'product', $maxImageId, null, 'image_main');
+            /** @var \App\Model\Product\Product $product */
+            $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
+            $productData = $this->productDataFactory->createFromProduct($product);
+            $this->productFacade->edit($productId, $productData);
         }
     }
 
