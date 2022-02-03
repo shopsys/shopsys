@@ -45,5 +45,11 @@
         "branch-alias": {
             "dev-master": "9.2.x-dev"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^7.4.1",
-        "lcobucci/jwt": "^3.3",
+        "lcobucci/jwt": "^3.4.6",
         "overblog/graphql-bundle": "^0.13",
         "overblog/graphiql-bundle": "^0.2",
         "shopsys/form-types-bundle": "9.2.x-dev",
@@ -42,6 +42,12 @@
     "extra": {
         "branch-alias": {
             "dev-master": "9.2.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

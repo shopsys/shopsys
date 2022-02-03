@@ -49,3 +49,6 @@ parameters:
 
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - 'utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php'
+
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff.MaxExceeded:
+            - 'packages/framework/src/Model/Product/Search/ProductElasticsearchConverter.php'

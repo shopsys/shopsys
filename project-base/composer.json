@@ -36,7 +36,7 @@
         "ext-xml": "*",
         "arvenil/ninja-mutex": "^0.4.1",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.10.22",
+        "composer/composer": "^1.10.23",
         "craue/formflow-bundle": "^3.0.3",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^2.8.1",
@@ -103,7 +103,7 @@
     "require-dev": {
         "ext-pgsql": "*",
         "ext-zip": "*",
-        "codeception/codeception": "^4.1",
+        "codeception/codeception": "^4.1.22",
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/phpunit-wrapper": "^8.0",
@@ -121,8 +121,7 @@
         "zalas/phpunit-injector": "^1.4"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "codeception/codeception": ">=4.1.19"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -151,6 +150,11 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.1"
+        },
+        "allow-plugins": {
+            "ocramius/package-versions": true,
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "extra": {

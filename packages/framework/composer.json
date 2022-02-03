@@ -40,7 +40,7 @@
         "arvenil/ninja-mutex": "^0.4.1",
         "barryvdh/elfinder-flysystem-driver": "^0.2",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.10.22",
+        "composer/composer": "^1.10.23",
         "craue/formflow-bundle": "^3.0.3",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6",
@@ -118,6 +118,12 @@
     "extra": {
         "symfony": {
             "require": "^4.4.0"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

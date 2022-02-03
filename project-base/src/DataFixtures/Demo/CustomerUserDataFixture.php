@@ -151,32 +151,49 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $customerUserData->telephone = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_TELEPHONE] ?? null;
         $customerUserData->customer = $customerUserUpdateData->customerUserData->customer;
 
-        $billingAddressData = $customerUserUpdateData->billingAddressData;
-        $billingAddressData->companyCustomer = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_CUSTOMER];
-        $billingAddressData->companyName = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
-        $billingAddressData->companyNumber = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COMPANY_NUMBER] ?? null;
-        $billingAddressData->city = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_CITY] ?? null;
-        $billingAddressData->street = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_STREET] ?? null;
-        $billingAddressData->postcode = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_POSTCODE] ?? null;
-        $billingAddressData->country = $data[self::KEY_BILLING_ADDRESS][self::KEY_ADDRESS_COUNTRY];
+        $this->setBillingAddressData($customerUserUpdateData, $data[self::KEY_BILLING_ADDRESS]);
 
         if (isset($data[self::KEY_DELIVERY_ADDRESS])) {
-            $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
-            $deliveryAddressData->addressFilled = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;
-            $deliveryAddressData->companyName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COMPANY_NAME] ?? null;
-            $deliveryAddressData->firstName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_FIRST_NAME] ?? null;
-            $deliveryAddressData->lastName = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_LAST_NAME] ?? null;
-            $deliveryAddressData->city = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_CITY] ?? null;
-            $deliveryAddressData->postcode = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_POSTCODE] ?? null;
-            $deliveryAddressData->street = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_STREET] ?? null;
-            $deliveryAddressData->telephone = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_TELEPHONE] ?? null;
-            $deliveryAddressData->country = $data[self::KEY_DELIVERY_ADDRESS][self::KEY_ADDRESS_COUNTRY];
+            $this->setDeliveryAddressData($customerUserUpdateData, $data[self::KEY_DELIVERY_ADDRESS]);
         }
 
         $customerUserUpdateData->customerUserData = $customerUserData;
-        $customerUserUpdateData->billingAddressData = $billingAddressData;
 
         return $customerUserUpdateData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @param array $billingAddressInputData
+     */
+    private function setBillingAddressData(CustomerUserUpdateData $customerUserUpdateData, array $billingAddressInputData): void
+    {
+        $billingAddressData = $customerUserUpdateData->billingAddressData;
+        $billingAddressData->companyCustomer = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_CUSTOMER];
+        $billingAddressData->companyName = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_NAME] ?? null;
+        $billingAddressData->companyNumber = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_NUMBER] ?? null;
+        $billingAddressData->city = $billingAddressInputData[self::KEY_ADDRESS_CITY] ?? null;
+        $billingAddressData->street = $billingAddressInputData[self::KEY_ADDRESS_STREET] ?? null;
+        $billingAddressData->postcode = $billingAddressInputData[self::KEY_ADDRESS_POSTCODE] ?? null;
+        $billingAddressData->country = $billingAddressInputData[self::KEY_ADDRESS_COUNTRY];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @param array $deliveryAddressInputData
+     */
+    private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void
+    {
+        $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
+        $deliveryAddressData->addressFilled = $deliveryAddressInputData[self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;
+        $deliveryAddressData->companyName = $deliveryAddressInputData[self::KEY_ADDRESS_COMPANY_NAME] ?? null;
+        $deliveryAddressData->firstName = $deliveryAddressInputData[self::KEY_ADDRESS_FIRST_NAME] ?? null;
+        $deliveryAddressData->lastName = $deliveryAddressInputData[self::KEY_ADDRESS_LAST_NAME] ?? null;
+        $deliveryAddressData->city = $deliveryAddressInputData[self::KEY_ADDRESS_CITY] ?? null;
+        $deliveryAddressData->postcode = $deliveryAddressInputData[self::KEY_ADDRESS_POSTCODE] ?? null;
+        $deliveryAddressData->street = $deliveryAddressInputData[self::KEY_ADDRESS_STREET] ?? null;
+        $deliveryAddressData->telephone = $deliveryAddressInputData[self::KEY_ADDRESS_TELEPHONE] ?? null;
+        $deliveryAddressData->country = $deliveryAddressInputData[self::KEY_ADDRESS_COUNTRY];
     }
 
     /**
