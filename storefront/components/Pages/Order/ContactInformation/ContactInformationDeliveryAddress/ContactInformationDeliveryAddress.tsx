@@ -348,6 +348,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     render={({ fieldState: { invalid, error }, field }) => (
                                         <>
                                             <Select
+                                                label={formMeta.fields.deliveryCountry.label}
                                                 hasError={invalid}
                                                 options={countrySelectOptions}
                                                 onChange={field.onChange}

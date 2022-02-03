@@ -1,7 +1,9 @@
+import { components, Props } from 'react-select';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { FC } from 'react';
-import { Props } from 'react-select';
+import Icon from 'components/Basic/Icon';
+import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 import { SelectStyled } from './Select.style';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -13,10 +15,35 @@ type NativeProps = ExtractNativePropsFromDefault<
 type SelectProps = NativeProps & {
     hasError: boolean;
     fieldRef?: ControllerRenderProps;
+    label: string | JSX.Element;
+    required?: boolean;
 };
 
 const customStyles = {
     indicatorSeparator: () => ({}),
+};
+
+const DropdownIndicator = (props: any) => {
+    return (
+        <components.DropdownIndicator {...props}>
+            <Icon iconType="icon" icon="Arrow" />
+        </components.DropdownIndicator>
+    );
+};
+
+const Control = (props: any) => {
+    return (
+        <LabelWrapper
+            {...props.children}
+            label={props.selectProps.label}
+            required={props.selectProps.required}
+            selectBoxLabelIsFloated={props.menuIsOpen === true || props.hasValue === true}
+            htmlFor={props.id}
+            inputType="selectbox"
+        >
+            <components.Control className="selectbox" {...props} />
+        </LabelWrapper>
+    );
 };
 
 const Select: FC<SelectProps> = (props) => {
@@ -27,6 +54,9 @@ const Select: FC<SelectProps> = (props) => {
             classNamePrefix="select"
             styles={customStyles}
             inputStateError={props.hasError}
+            placeholder={props.label}
+            components={{ Control, DropdownIndicator }}
+            isSearchable={false}
         />
     );
 };
