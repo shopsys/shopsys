@@ -45,27 +45,10 @@
         </delete>
     </target>
 
-    <target name="composer-dev" description="Installs dependencies for development if composer.lock is valid, otherwise runs composer update.">
-        <exec executable="${path.composer.executable}" returnProperty="composer.validate.returnCode">
-            <arg value="validate"/>
-            <arg value="--no-check-all"/>
-            <arg value="--no-check-publish"/>
-        </exec>
-        <if>
-            <equals arg1="${composer.validate.returnCode}" arg2="0"/>
-            <then>
-                <echo message="The lock file is valid, installing dependencies..."/>
-                <property name="composer.action" value="install"/>
-            </then>
-            <else>
-                <echo message="The lock file is invalid, updating dependencies..."/>
-                <property name="composer.action" value="update"/>
-            </else>
-        </if>
+    <target name="composer-dev" description="Runs composer update.">
         <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="${composer.action}"/>
+            <arg value="update"/>
         </exec>
-        <phingcall target="composer-check"/>
     </target>
 
     <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." hidden="true">
