@@ -41,5 +41,10 @@
     },
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

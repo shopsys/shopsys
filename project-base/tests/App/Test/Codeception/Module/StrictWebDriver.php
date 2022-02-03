@@ -261,7 +261,7 @@ class StrictWebDriver extends WebDriver
      */
     public function seeInElement(string $text, WebDriverElement $element): void
     {
-        $this->assertContains($text, $element->getText());
+        $this->assertStringContainsString($text, $element->getText());
     }
 
     /**

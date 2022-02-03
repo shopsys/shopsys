@@ -73,7 +73,7 @@
         "arvenil/ninja-mutex": "^0.4.1",
         "barryvdh/elfinder-flysystem-driver": "^0.2",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.10.22",
+        "composer/composer": "^1.10.23",
         "craue/formflow-bundle": "^3.0.3",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6.0",
@@ -106,7 +106,7 @@
         "jms/translation-bundle": "1.4.4",
         "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
-        "lcobucci/jwt": "^3.3",
+        "lcobucci/jwt": "^3.4.6",
         "league/flysystem": "^1.1.4",
         "litipk/php-bignumbers": "^0.8.6",
         "nikic/php-parser": "^4.0",
@@ -160,7 +160,7 @@
     },
     "require-dev": {
         "ext-pgsql": "*",
-        "codeception/codeception": "^4.1",
+        "codeception/codeception": "^4.1.22",
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/phpunit-wrapper": "^8.0",
@@ -182,7 +182,6 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "codeception/codeception": ">=4.1.19",
         "friendsofphp/php-cs-fixer": "2.19.0"
     },
     "scripts": {
@@ -212,6 +211,11 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.1"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "ocramius/package-versions": true,
+            "symfony/flex": true
         }
     },
     "extra": {

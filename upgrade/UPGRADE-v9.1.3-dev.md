@@ -7,3 +7,13 @@ There you can find links to upgrade notes for other versions too.
 
 - fix memory_limit set for PHPUnit ([#2398](https://github.com/shopsys/shopsys/pull/2398))
     - see #project-base-diff to update your project
+- update your composer dependencies ([#2397](https://github.com/shopsys/shopsys/pull/2397)) (see #project-base-diff)
+  - **\[BC break\]** upgrade `codeception/codeception` to `^4.1.22` so you get rid of [the security problem](https://github.com/advisories/GHSA-4574-qv3w-fcmg)
+    - you might need to update your `Tests\App\Test\Codeception\AcceptanceTester` to respect changes (added strict typehints) in `Tests\FrameworkBundle\Test\Codeception\ActorInterface`
+    - in `StrictWebDriver::seeInElement`, use `assertStringContainsString` instead of `assertContains`
+  - allow plugins in your `composer.json`
+    - this is required when using composer in version `2.2.0` and above. If you are running your project in docker, you might need to re-build your docker image to get the upgraded composer.
+  - upgrade `composer/composer` to `^1.10.23` so you get rid of [the security problem](https://github.com/composer/composer/security/advisories/GHSA-frqg-7g38-6gcf) 
+- fix your standards
+  - extract parts of `CustomerUserDataFixture::getCustomerUserUpdateData()` into private methods to lower the cyclomatic complexity of the method
+  - see #project-base-diff

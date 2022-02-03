@@ -40,5 +40,11 @@
     "require-dev": {
         "phpunit/phpunit": "^8.0",
         "shopsys/coding-standards": "9.1.x-dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

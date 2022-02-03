@@ -43,5 +43,11 @@
         "shopsys/coding-standards": "9.1.x-dev",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.12"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
