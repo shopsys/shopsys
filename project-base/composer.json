@@ -95,7 +95,10 @@
     "require-dev": {
         "ext-pgsql": "*",
         "ext-zip": "*",
-        "codeception/codeception": "^2.4.0",
+        "codeception/codeception": "^4.1.22",
+        "codeception/module-db": "^1.0",
+        "codeception/module-webdriver": "^1.0",
+        "codeception/phpunit-wrapper": "^7.0",
         "phpstan/phpstan": "^0.11",
         "phpunit/phpunit": "^7.0",
         "psr/event-dispatcher": "0.6.0",

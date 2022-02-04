@@ -14,3 +14,5 @@ There you can find links to upgrade notes for other versions too.
 - drop support for lower PHP versions than 7.4.1
   - see #project-base-diff to update your project
   - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
+- upgrade codeception/codeception to `^4.1.22`
+  - see #project-base-diff

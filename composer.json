@@ -147,7 +147,9 @@
   },
   "require-dev": {
     "ext-pgsql": "*",
-    "codeception/codeception": "^2.4.0",
+    "codeception/codeception": "^4.1.22",
+    "codeception/module-db": "^1.0",
+    "codeception/module-webdriver": "^1.0",
     "codeception/phpunit-wrapper": "^7.0",
     "nette/utils": "^2.5",
     "phpstan/phpstan": "^0.11",
