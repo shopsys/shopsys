@@ -45,6 +45,9 @@ RUN apt-get update && \
 # "gd" extension needs to have specified jpeg and freetype dir for jpg/jpeg images support
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
+# upgrade CA certificates
+RUN apt-get update && apt-get upgrade -y ca-certificates && apt-get clean
+
 # install necessary tools for running application
 RUN docker-php-ext-install \
     bcmath \
