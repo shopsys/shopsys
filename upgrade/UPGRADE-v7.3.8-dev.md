@@ -10,4 +10,7 @@ There you can find links to upgrade notes for other versions too.
 - add security check after your composer install/update commands
   - see #project-base-diff
 - update Redis client to version 5.2.1 and Redis server to 5.0
-    - see #project-base-diff
+  - see #project-base-diff
+- drop support for lower PHP versions than 7.4.1
+  - see #project-base-diff to update your project
+  - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
