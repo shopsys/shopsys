@@ -91,6 +91,7 @@
     "egeloen/ckeditor-bundle": "^4.0.6",
     "egeloen/ordered-form": "^3.0",
     "elasticsearch/elasticsearch": "^6.0.1",
+    "enlightn/security-checker": "^1.9",
     "friendsofphp/php-cs-fixer": "^2.14.0",
     "fp/jsformvalidator-bundle": "~1.5.1",
     "fzaninotto/faker": "^1.7.1",
@@ -163,17 +164,20 @@
     "friendsofphp/php-cs-fixer": "2.19.0"
   },
   "scripts": {
+    "security-check": "security-checker security:check",
     "post-install-cmd": [
       "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
       "Shopsys\\Environment::checkEnvironment",
-      "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall"
+      "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall",
+      "@security-check"
     ],
     "post-update-cmd": [
       "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
       "Shopsys\\Environment::checkEnvironment",
-      "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate"
+      "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate",
+      "@security-check"
     ]
   },
   "config": {

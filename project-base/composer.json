@@ -50,6 +50,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.3.0",
         "doctrine/persistence": "~1.2.0",
         "egeloen/ckeditor-bundle": "^4.0.6",
+        "enlightn/security-checker": "^1.9",
         "fp/jsformvalidator-bundle": "~1.5.1",
         "fzaninotto/faker": "^1.7.1",
         "helios-ag/fm-elfinder-bundle": "^9.2",
@@ -108,17 +109,20 @@
         "twig/twig": "2.6.1"
     },
     "scripts": {
+        "security-check": "security-checker security:check",
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall"
+            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postInstall",
+            "@security-check"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Shopsys\\Environment::checkEnvironment",
-            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate"
+            "Shopsys\\FrameworkBundle\\Command\\ComposerScriptHandler::postUpdate",
+            "@security-check"
         ]
     },
     "config": {

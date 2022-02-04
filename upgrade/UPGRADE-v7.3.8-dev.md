@@ -7,3 +7,5 @@ There you can find links to upgrade notes for other versions too.
 
 - upgrade CA certificates in your Dockerfile
   - see #project-base-diff
+- add security check after your composer install/update commands
+  - see #project-base-diff
