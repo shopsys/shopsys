@@ -76,7 +76,7 @@
         "sensio/distribution-bundle": "^5.0.21",
         "sensio/framework-extra-bundle": "^3.0.29",
         "shopsys/doctrine-orm": "^2.6.2",
-        "shopsys/jparser": "^0.1",
+        "shopsys/jparser": "^0.2",
         "shopsys/postgres-search-bundle": "^0.1",
         "shopsys/migrations": "7.3.x-dev",
         "shopsys/form-types-bundle": "7.3.x-dev",
