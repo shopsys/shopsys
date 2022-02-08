@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Blog\Article;
 
 use App\Component\Image\ImageFacade;
-use App\Component\Placeholder\Placeholder\ProductsSkuPlaceholder;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
@@ -16,6 +15,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogArticleFacade
 {
+    private const PRODUCT_CATNUMS_PLACEHOLDER = '/(\{products=(?<catnums>[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*)\})/sU';
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -219,7 +220,7 @@ class BlogArticleFacade
         $productsCatnums = [];
 
         $matches = [];
-        preg_match_all(ProductsSkuPlaceholder::PATTERN, $description, $matches);
+        preg_match_all(self::PRODUCT_CATNUMS_PLACEHOLDER, $description, $matches);
 
         foreach ($matches['catnums'] as $catnumsString) {
             $matchesCatnums = explode(',', $catnumsString);
