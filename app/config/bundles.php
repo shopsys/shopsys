@@ -32,7 +32,6 @@ return [
     Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle::class => ['all' => true],
     Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
-    Shopsys\ReadModelBundle\ShopsysReadModelBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],

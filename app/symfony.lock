@@ -774,9 +774,6 @@
     "shopsys/product-feed-zbozi": {
         "version": "9.1.x-dev"
     },
-    "shopsys/read-model": {
-        "version": "dev-mg-weird-flex-but-ok"
-    },
     "sinergi/browser-detector": {
         "version": "6.1.3"
     },
