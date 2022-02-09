@@ -1481,6 +1481,14 @@ input PaymentInput {
 
   """Price for payment"""
   price: PriceInput!
+
+  """Selected bank swift code of goPay payment bank transfer"""
+  goPayBankSwift: String = null
+}
+
+type PaymentSetupCreationData {
+  """Identifiers of GoPay payment method"""
+  goPayCreatePaymentSetup: GoPayCreatePaymentSetup
 }
 
 type PersonalData {
@@ -1854,6 +1862,9 @@ type Query {
 
   """Returns list of advert positions."""
   advertPositions: [AdvertPosition!]!
+
+  """List of available banks for GoPay bank transfer payment"""
+  GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
 
   """Returns complete navigation menu"""
   navigation: [NavigationItem!]!

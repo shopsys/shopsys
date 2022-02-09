@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory;
+use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodData;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory;
@@ -15,6 +17,23 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
+
+    private const SWIFT_DEMO_DATA = [
+        [
+            'name' => 'Airbank',
+            'swift' => '123456XZY',
+            'image_normal_url' => 'airbank image Url',
+            'image_large_url' => 'airbank large image Url',
+            'is_online' => true,
+        ],
+        [
+            'name' => 'Aqua bank',
+            'swift' => 'ABC123456',
+            'image_normal_url' => 'airbank image Url',
+            'image_large_url' => 'airbank large image Url',
+            'is_online' => true,
+        ],
+    ];
 
     private const DEMO_DATA = [
         [
@@ -165,15 +184,31 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     private $goPayPaymentMethodDataFactory;
 
     /**
+     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade
+     */
+    private GoPayBankSwiftFacade $goPayBankSwiftFacade;
+
+    /**
+     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory
+     */
+    private GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory;
+
+    /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
+     * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
+     * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
      */
     public function __construct(
         GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
-        GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
+        GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
+        GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
     ) {
         $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
         $this->goPayPaymentMethodDataFactory = $goPayPaymentMethodDataFactory;
+        $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
+        $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
     }
 
     /**
@@ -189,7 +224,22 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             $goPayPaymentMethodData->imageNormalUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_normal_url'] . '.png';
             $goPayPaymentMethodData->imageLargeUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_large_url'] . '.png';
             $goPayPaymentMethodData->paymentGroup = $data['payment_group'];
-            $this->createGoPayPaymentMethod($data['reference_name'], $goPayPaymentMethodData);
+            $goPayPaymentMethod = $this->createGoPayPaymentMethod($data['reference_name'], $goPayPaymentMethodData);
+
+            if ($data['identifier'] !== 'BANK_ACCOUNT') {
+                continue;
+            }
+
+            foreach (self::SWIFT_DEMO_DATA as $swiftData) {
+                $goPayBankSwiftData = $this->goPayBankSwiftDataFactory->create();
+                $goPayBankSwiftData->goPayPaymentMethod = $goPayPaymentMethod;
+                $goPayBankSwiftData->name = $swiftData['name'];
+                $goPayBankSwiftData->swift = $swiftData['swift'];
+                $goPayBankSwiftData->isOnline = $swiftData['is_online'];
+                $goPayBankSwiftData->imageNormalUrl = $swiftData['image_normal_url'];
+                $goPayBankSwiftData->imageLargeUrl = $swiftData['image_large_url'];
+                $this->goPayBankSwiftFacade->create($goPayBankSwiftData);
+            }
         }
     }
 
@@ -205,6 +255,8 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         if ($referenceName !== null) {
             $this->addReference($referenceName, $goPayPaymentMethod);
         }
+
+        return $goPayPaymentMethod;
     }
 
     /**
