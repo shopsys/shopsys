@@ -24,7 +24,7 @@ API_URL="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}"
 
 echo -e "cleaning merged branches: "
 
-BRANCHES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/repository/branches" | jq -c '.[] | {name: .name, merged: .merged}')"
+BRANCHES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/repository/branches?per_page=100" | jq -c '.[] | {name: .name, merged: .merged}')"
 
 for BRANCH in $BRANCHES; do
   BRANCH_NAME=$(echo "${BRANCH}" | jq -r '.name')
@@ -43,8 +43,8 @@ for BRANCH in $BRANCHES; do
 done
 
 echo "cleaning container registry for deleted branches: "
-PROJECT_BRANCHES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/repository/branches" | jq -r '.[].name' )"
-REGISTRY_REPOSITORIES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories")"
+PROJECT_BRANCHES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/repository/branches?per_page=100" | jq -r '.[].name' )"
+REGISTRY_REPOSITORIES="$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories?per_page=100")"
 
 for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
   REPOSITORY_ID=$(echo "${REGISTRY_REPOSITORY}" | jq -r '.id')
