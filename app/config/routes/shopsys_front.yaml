@@ -84,11 +84,6 @@ front_login_check:
     # controller's action is unnecessary, because firewall processes whole request
     path: /login/check
 
-front_robots_txt:
-    path: /robots.txt
-    defaults:
-        _controller: App\Controller\Front\RobotsController:indexAction
-
 front_export_personal_data:
     path: /personal-overview-export/xml/{hash}
 
