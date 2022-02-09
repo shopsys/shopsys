@@ -17,6 +17,12 @@ const Index: FC = () => {
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const ordersData = getOrders(currentDomainConfig);
 
+    useEffect(() => {
+        if (isUserLoggedIn === false) {
+            router.push('/');
+        }
+    }, []);
+
     if (isUserLoggedIn === true) {
         return (
             <StaticUrlGuard domainUrl={domainUrl}>
@@ -26,10 +32,6 @@ const Index: FC = () => {
             </StaticUrlGuard>
         );
     }
-
-    useEffect(() => {
-        router.push('/');
-    }, []);
 
     return null;
 };
