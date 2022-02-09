@@ -1,24 +1,35 @@
 import { css } from 'styled-components';
 import SelectReact from 'react-select';
 import { styled } from 'components/Theme/main';
+import tinycolor from 'tinycolor2';
 
 type SelectStyledProps = {
     inputStateError: boolean;
 };
 
+const localVariables = {
+    selectBorderWidth: '2px',
+    selectScrollbarSize: '5px',
+    selectScrollbarColor: '#828890',
+} as const;
+
 export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
     ${({ theme, inputStateError }) => css`
+        .select__placeholder {
+            display: none;
+        }
+
         .select__control {
             min-height: 54px;
 
-            border: 2px solid ${theme.color.border};
+            border: ${localVariables.selectBorderWidth} solid ${theme.color.border};
             border-radius: ${theme.radius.big};
             box-shadow: none;
             cursor: pointer;
             z-index: ${theme.zIndex.above} + 1;
 
             &:hover {
-                border: 2px solid ${theme.color.border};
+                border: ${localVariables.selectBorderWidth} solid ${theme.color.border};
             }
 
             ${inputStateError === true &&
@@ -28,7 +39,7 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
                 border-color: ${theme.color.red};
 
                 &:hover {
-                    border: 2px solid ${theme.color.red};
+                    border: ${localVariables.selectBorderWidth} solid ${theme.color.red};
                 }
             `}
         }
@@ -43,9 +54,9 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
 
             transition: ${theme.transition};
 
-            svg {
-                width: 27px;
-                height: 27px;
+            & i {
+                width: 20px;
+                height: 20px;
 
                 color: ${theme.color.greyDark};
             }
@@ -63,6 +74,23 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
 
         .select__menu-list {
             padding: 17px 0 0;
+
+            &::-webkit-scrollbar {
+                width: ${localVariables.selectScrollbarSize};
+                height: 0px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: #f0f0f0;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: ${localVariables.selectScrollbarColor};
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background: ${tinycolor(localVariables.selectScrollbarColor).darken(10).toString()};
+            }
         }
 
         .select__option {
@@ -81,7 +109,14 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
             background-color: ${theme.color.blueLight};
         }
 
+        .select__control {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
         .select__control--menu-is-open {
+            align-items: flex-end;
+
             .select__indicator {
                 transform: rotate(180deg);
 

@@ -98,6 +98,7 @@ const Address: FC = () => {
                     render={({ fieldState: { invalid, error }, field }) => (
                         <>
                             <Select
+                                label={formMeta.fields.country.label}
                                 options={countrySelectOptions}
                                 onChange={field.onChange}
                                 value={countrySelectOptions.find((option) => option.value === field.value.value)}

@@ -17,7 +17,7 @@ type LabelWrapperProps = NativeProps & {
      * A prop based on which the CSS stzling is applied, as there is a slightly different
      * styling for each of the elements below.
      */
-    inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio';
+    inputType: 'textarea' | 'text-input' | 'checkbox' | 'radio' | 'selectbox';
     /**
      * A prop based on which the "required symbol" (star) is displayed next to the label
      */
@@ -30,11 +30,15 @@ type LabelWrapperProps = NativeProps & {
      * check if checkbox is checked
      */
     checked?: boolean;
+    /**
+     * Set floating label if the selectbox has a value or if the menu is open.
+     */
+    selectBoxLabelIsFloated?: boolean;
 };
 
 const LabelWrapper: FC<LabelWrapperProps> = (props) => {
     return (
-        <LabelWrapperStyled inputType={props.inputType}>
+        <LabelWrapperStyled inputType={props.inputType} selectBoxLabelIsFloated={props.selectBoxLabelIsFloated}>
             {props.children}
             {props.placeholderType !== 'static' && (
                 <label htmlFor={props.htmlFor}>

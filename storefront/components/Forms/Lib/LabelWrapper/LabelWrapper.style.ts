@@ -1,7 +1,8 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 type LabelWrapperStyledProps = {
-    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio';
+    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio' | 'selectbox';
+    selectBoxLabelIsFloated?: boolean;
 };
 
 const localVariables = {
@@ -14,14 +15,15 @@ const localVariables = {
 } as const;
 
 export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
-    ${({ theme, inputType }) => css`
+    ${({ theme, inputType, selectBoxLabelIsFloated }) => css`
         position: relative;
         width: 100%;
 
-        ${inputType === 'text-input' || inputType === 'textarea'
+        ${inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea'
             ? css`
                   input,
-                  textarea {
+                  textarea,
+                  .selectbox {
                       &:disabled,
                       &[readonly] {
                           & ~ label {
@@ -34,7 +36,10 @@ export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
                       &:focus,
                       &:not(input:placeholder-shown) {
                           & ~ label {
-                              transform: none;
+                              ${(selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
+                              css`
+                                  transform: none;
+                              `}
                           }
                       }
 
@@ -68,6 +73,23 @@ export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
 
                         font-size: ${localVariables.labelFontSizeSmall};
                     }
+                }
+            }
+        `}
+
+        ${inputType === 'selectbox' &&
+        css`
+            .selectbox {
+                & ~ label {
+                    top: 50%;
+                    transform: translateY(-50%);
+
+                    ${selectBoxLabelIsFloated &&
+                    css`
+                        top: ${localVariables.labelActivePositionTop};
+
+                        font-size: ${localVariables.labelFontSizeSmall};
+                    `}
                 }
             }
         `}
