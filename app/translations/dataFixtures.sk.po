@@ -1579,6 +1579,15 @@ msgstr ""
 msgid "TV, audio"
 msgstr ""
 
+msgid "TV, audio from the cheapest"
+msgstr "Televízory, audio od najlacnejšieho"
+
+msgid "TV, audio in sale"
+msgstr "Televízory, audio výpredaj"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televízory, audio plasma s HDMI"
+
 msgid "Technology"
 msgstr ""
 
@@ -1721,6 +1730,9 @@ msgid "V"
 msgstr ""
 
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
+msgstr ""
+
+msgid "VIP"
 msgstr ""
 
 msgid "Vhodné pro nadměrné zboží"
@@ -1896,13 +1908,4 @@ msgstr ""
 
 msgid "| Commerce Cloud"
 msgstr ""
-
-msgid "TV, audio from the cheapest"
-msgstr "Televízory, audio od najlacnejšieho"
-
-msgid "TV, audio in sale"
-msgstr "Televízory, audio výpredaj"
-
-msgid "TV, audio plasma with HDMI"
-msgstr "Televízory, audio plasma s HDMI"
 

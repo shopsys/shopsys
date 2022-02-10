@@ -394,9 +394,6 @@ msgstr "tiskárna samolepících štítků, ruční, rychlost tisku 20 mm/s, kl�
 msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
 msgstr "<p>Je pro Vás bezpečí Vašich blízkých stejně důležité jako pro nás? V tom případě uvítáte u varné desky SDV-3460 funkci ukazatele zbytkového tepla - H, která Vás a Vaše blízké uchrání před nepříjemným popálením. Ukazatel zbytkového tepla signalizuje zbytkovou teplotu varné zóny i po jejím vypnutí.</p><br /><h2>Důvody proč se rozhodnout právě pro vestavnou sklokeramickou desku Concept SDV-3460:</h2><br /><ol><li>Tato vestavná sklokeramická deska SDV-3460 Vás jistě zaujme <strong>praktickým dotykovým ovládáním</strong>.</li><li>Speciální topná tělesa varných zón <strong>HI-LIGHT</strong> se dokáží rozehřát na maximum během několika málo sekund.</li><li><strong>Ukazatel zbytkového tepla –H</strong>- Vás ochrání před nepříjemným popálením. Signalizuje zbytkovou teplotu varné zóny i po jejím vypnutí.</li><li>Jestliže si chcete přímo navolit čas, po který chcete vařit, určitě využijete možnosti funkce <strong>zpožděného vypnutí</strong>.</li></ol><br /><h2>Technické parametry:</h2><br /><ul><li>Výška: 60 mm</li><li>Šířka: 590 mm</li><li>Hloubka: 520 mm</li><li>Sklokeramika</li><li>V příslušenství čistící škrabka</li><li>Dotykové ovládání</li><li>Ukazatel zbytkového tepla - H</li><li>Bez rámu, šikmé zabroušené hrany</li><li>4 varné zóny</li><li>Funkce automatického vypnutí - EXTRA BEZPEČNÁ</li><li>Funkce zpožděného vypnutí</li><li>Akustický signál</li><li>Ovládací panel vpředu uprostřed</li><li>Dětská pojistka</li><li>Ukazatel zapnutého stavu</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Rozměry pro vestavbu (vxšxh): 50 x 560 x 490 mm</li><li>Hlavní vypínač</li><li>Průměr přední levé plotny: 165x265 mm</li><li>Příkon přední levé plotny: 1100/2000 W</li><li><strong>Zadní levá plotna:</strong> kruhová HI-LIGHT</li><li>Průměr zadní levé plotny: 165 mm</li><li>Příkon zadní levé plotny: 1200 W</li><li><strong>Zadní pravá plotna:</strong> kruhová HI-LIGHT</li><li>Průměr zadní pravé plotny: 200mm</li><li>Příkon zadní pravé plotny: 1800 W</li><li><strong>Přední pravá plotna:</strong> kruhová HI-LIHGT</li><li>Průměr přední pravé plotny: 165 mm</li><li>Příkon přední pravé plotny: 1200 W</li><li>Max.příkon-el.: 5700 - 6800 W</li><li>Hmotnost: 10 kg</li><li>Napětí: 220-240/400 V 2N ~ 50/60 Hz</li></ul>"
 
-msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
-msgstr "<p> Objednávka číslo {number} byla odeslána, děkujeme za Váš nákup. Budeme Vás kontaktovat o dalším průběhu vyřizování. <br /><br /> Uschovejte si permanentní <a href=\"{order_detail_url}\">odkaz na detail objednávky</a>. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
-
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr "<p>Minimální prostorovou náročností vyniká podstavný odsavač par OPP-2060. Vhodný  i pro velmi malé kuchyně. Kovová tlačítka zajišťují jednoduchost ovládání a přesné nastavení odpovídajícího stupně výkonu.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro podstavný odsavač par Concept OPP-2060:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Podstavný odsavač par značky Concept  OPP-2060 Vás překvapí výkonem <strong>186 m3 za hodinu</strong>.</li><li>Velice praktická je možnost navolit <strong>4 způsoby odtahu</strong>.</li><li>Model OPP-2060 je vybaven praktickým <strong>kovovým filtrem proti mastnotám</strong>, jeho údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong>s užitím  uhlíkového filtru, který lze dokoupit. Jakmile bude filtr znečištěný, odsavač Vás sám upozorní.</li></ol><br /><h2>Technické parametry:</h2><br /><ul><li>Výška: 150 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 490 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezové provedení</li><li>Možnost horního, zadního, bočního levého a pravého odtahu nebo recirkulace</li><li>Kovová tlačítka</li><li>3 stupně výkonu</li><li>Max. výkon: 186 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66 dB (A)</li><li>Žárovka 40 W</li><li>1x kovový filtr proti mastnotám</li><li>Průměr odtahu: 100 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 1x uhlíkový filtr 61990022</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Netto hmotnost: 4,8 kg</li><li>Napětí: 230 V ~ 50Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 1,2 m</li></ul>"
 
@@ -456,9 +453,6 @@ msgstr "Herní počítačová myš A4Tech X-710BK s pěti tlačítky a scrolovac
 
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, černá"
-
-msgid "Action"
-msgstr "Akce"
 
 msgid "Active"
 msgstr "Aktivní"
@@ -678,9 +672,6 @@ msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
 
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného e-mailu {email}, Vám zasíláme odkaz na zobrazení osobních údajů. Klikem na odkaz níže se dostanete na stránku s <br/> přehledem všech osobních údajů, které k Vašemu e-mailu evidujeme na našem e-shopu {domain}.<br/><br/> Pro zobrazení osobních údajů klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"
-
-msgid "Dear customer, <br /><br />Processing your order has been finished."
-msgstr "Vážený zákazníku, <br /><br />zpracování objednávky bylo dokončeno."
 
 msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
 msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zpracována.<br /><br />{tracking_instructions}"
@@ -1132,9 +1123,6 @@ msgstr ""
 msgid "New [adjective]"
 msgstr "Nová"
 
-msgid "New [noun]"
-msgstr "Novinka"
-
 msgid "New driving rules and tips just for you!"
 msgstr "Prostudujte si nová pravidla silničního provozu platná od 1. července 2006!"
 
@@ -1219,9 +1207,6 @@ msgstr ""
 msgid "Odstoupení od smlouvy"
 msgstr ""
 
-msgid "On request"
-msgstr "Na dotaz"
-
 msgid "Open"
 msgstr "Otevřená"
 
@@ -1245,9 +1230,6 @@ msgstr "Pevné"
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenního (nebo alespoň častého) použití pro komunikaci, v kanceláři i doma."
-
-msgid "Out of stock"
-msgstr "Nedostupné"
 
 msgid "Over limit"
 msgstr "Přes limit"
@@ -1278,9 +1260,6 @@ msgstr "Počet stránek"
 
 msgid "Parallel port"
 msgstr "Paralelní port"
-
-msgid "Partner"
-msgstr "Partner"
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
 msgstr "<p>Dokonale čistí, ošetřuje a chrání nerezové plochy v jednom pracovním kroku.</p><ul><li><strong>odstraňuje</strong> bez šmouh prach, špínu, otisky prstů a mastnotu</li><li>dlouhotrvající ochranný film <strong>odpuzující</strong> vodu a zabraňující novému usazování špíny</li><li><strong>působí</strong> antistaticky</li><li><strong>neobsahuje</strong> silikon</li></ul>"
@@ -1332,9 +1311,6 @@ msgstr ""
 
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
-
-msgid "Preparing"
-msgstr "Připravuje se"
 
 msgid "Pressure"
 msgstr "Tlak"
@@ -1570,9 +1546,6 @@ msgstr "TFT"
 msgid "TK-9710 Turbo brush Prominent VP 971"
 msgstr "TK-9710 Turbo kartáč Prominent VP 971"
 
-msgid "TOP"
-msgstr "Nejprodávanější"
-
 msgid "TS-9080 replacement bag for textile VP-9080"
 msgstr "TS-9080 náhradní sáček textilní pro VP-9080"
 
@@ -1605,6 +1578,15 @@ msgstr "Televize SMART LED TV, úhlopříčka 147cm, 4K Ultra HD 3840x2160, 4K U
 
 msgid "TV, audio"
 msgstr "Televize, audio"
+
+msgid "TV, audio from the cheapest"
+msgstr "Televize, audio od nejlevnějšího"
+
+msgid "TV, audio in sale"
+msgstr "Televize, audio výprodej"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televize, audio plasma s HDMI"
 
 msgid "Technology"
 msgstr "Technologie"
@@ -1656,9 +1638,6 @@ msgstr "Televize (z řeckého tele – daleko a latinského vize – vidět) je 
 
 msgid "Televize"
 msgstr ""
-
-msgid "Terms and conditions"
-msgstr "Obchodní podmínky"
 
 msgid "Thank you for your order no. {number} placed at {date}"
 msgstr "Děkujeme za objednávku č. {number} ze dne {date}"
@@ -1753,8 +1732,8 @@ msgstr ""
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr "VERBATIM 1TB externí disk 2,5\" USB 3.0 GT SuperSpeed červený"
 
-msgid "VIP customer"
-msgstr "VIP zákazník"
+msgid "VIP"
+msgstr ""
 
 msgid "Vhodné pro nadměrné zboží"
 msgstr ""
@@ -1930,14 +1909,3 @@ msgstr "bílá"
 msgid "| Commerce Cloud"
 msgstr ""
 
-msgid "| Demo eshop"
-msgstr "| Demo obchod"
-
-msgid "TV, audio from the cheapest"
-msgstr "Televize, audio od nejlevnějšího"
-
-msgid "TV, audio in sale"
-msgstr "Televize, audio výprodej"
-
-msgid "TV, audio plasma with HDMI"
-msgstr "Televize, audio plasma s HDMI"

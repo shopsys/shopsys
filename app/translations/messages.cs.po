@@ -4,31 +4,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "%quantity%x - %productNamePrefix%"
-msgstr ""
-
-msgid "%unit%"
-msgstr ""
-
-msgid "(If I buy on the company behalf)"
-msgstr "(Pokud nakupuji na firmu)"
-
-msgid "(Products will be delivered to this address)"
-msgstr "(Na tuto adresu bude zboží doručeno)"
-
-msgid "(This address will be on the tax invoice)"
-msgstr "(Tato adresa bude na daňovém dokladu)"
-
-msgid "+ 420 225 510 000"
-msgstr ""
-
 msgid "-- Choose article position --"
 msgstr ""
 
 msgid "-- Vyber roli --"
-msgstr ""
-
-msgid "-- Vyberte kategorii výprodej --"
 msgstr ""
 
 msgid "-- Vyberte název přenosu --"
@@ -43,34 +22,10 @@ msgstr "302 (Dočasné přesměrování)"
 msgid "404"
 msgstr ""
 
-msgid "<h2 class=\"window-popup__heading\">Prosím zkontrolujte zadané údaje.</h2>"
-msgstr ""
-
-msgid "<p class=\"window-popup__in__desc\">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>"
-msgstr ""
-
-msgid "<strong class=\"box-accordion__grid-table__col__expose\">Není vystaveno</strong> na prodejně"
-msgstr ""
-
-msgid "<strong class=\"box-accordion__grid-table__col__expose\">Vystaveno</strong> na prodejně"
-msgstr ""
-
-msgid "Ihned k odběru"
-msgstr ""
-
 msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
-msgstr ""
-
-msgid "AUTHORIZED"
-msgstr "Platba předautorizována"
-
-msgid "Accessories"
-msgstr "Příslušenství"
-
-msgid "Account"
 msgstr ""
 
 msgid "Add another flag"
@@ -85,12 +40,6 @@ msgstr "Přidejte nějaký příznak"
 msgid "Add some parameters"
 msgstr ""
 
-msgid "Add to cart"
-msgstr "Vložit do košíku"
-
-msgid "Address"
-msgstr "Adresa"
-
 msgid "Administration"
 msgstr ""
 
@@ -103,14 +52,11 @@ msgstr "Administrátoři - vše"
 msgid "Administrators - view"
 msgstr "Administrátoři - zobrazení"
 
-msgid "Adresa obchodu"
-msgstr ""
+msgid "Advanced SEO categories"
+msgstr "Rozšířené SEO kategorií"
 
 msgid "Advanced search"
 msgstr ""
-
-msgid "Advanced SEO categories"
-msgstr "Rozšířené SEO kategorií"
 
 msgid "Adverts - full"
 msgstr "Reklamní systém - vše"
@@ -128,9 +74,6 @@ msgid "Aktivní"
 msgstr ""
 
 msgid "Aktvní"
-msgstr ""
-
-msgid "Akční cena"
 msgstr ""
 
 msgid "All"
@@ -160,9 +103,6 @@ msgstr ""
 msgid "Applies to the second product in the cart"
 msgstr "Platí na druhý produkt v košíku"
 
-msgid "Apply"
-msgstr "Uplatnit"
-
 msgid "Apply according to customer"
 msgstr "Aplikovat podle zákazníka"
 
@@ -190,9 +130,6 @@ msgstr "Aplikovat na vybrané produkty"
 msgid "Article"
 msgstr "Článek"
 
-msgid "Articles"
-msgstr "Články"
-
 msgid "Articles - full"
 msgstr "Články - vše"
 
@@ -211,41 +148,14 @@ msgstr ""
 msgid "Assign to category"
 msgstr ""
 
-msgid "Attention! You are administrator logged in as the customer."
-msgstr "Pozor! Jste jako administrátor přihlášen za zákazníka."
-
 msgid "Authentication code"
 msgstr ""
 
 msgid "Authenticator key"
 msgstr ""
 
-msgid "Availability"
-msgstr "Dostupnost"
-
-msgid "Back to buying"
-msgstr "Zpět k nákupu"
-
-msgid "Back to cart"
-msgstr "Zpět do košíku"
-
-msgid "Back to orders overview"
-msgstr "Zpět na přehled objednávek"
-
 msgid "Back to overview"
 msgstr "Zpět na přehled"
-
-msgid "Back to shipping and payment selection"
-msgstr "Zpět na výběr dopravy a platby"
-
-msgid "Back to shop"
-msgstr "Zpět do obchodu"
-
-msgid "Back to store"
-msgstr "Zpět do obchodu"
-
-msgid "Bankovní spojení"
-msgstr ""
 
 msgid "Banner"
 msgstr "Banner"
@@ -262,29 +172,14 @@ msgstr "Základní"
 msgid "Basic information"
 msgstr "Základní informace"
 
-msgid "Beru na vědomí zpracování osobních údajů"
-msgstr ""
-
-msgid "Beru na vědomí zpracování osobních údajů (<a href=\"%url%\" target=\"_blank\">jak pracujeme s vašimi daty</a>)."
-msgstr ""
-
-msgid "Bestsellers"
-msgstr "Nejprodávanější zboží"
-
 msgid "Bestselling products - full"
 msgstr "Nejprodávanější zboží - vše"
 
 msgid "Bestselling products - view"
 msgstr "Nejprodávanější zboží - zobrazení"
 
-msgid "Billing address"
-msgstr "Fakturační adresa"
-
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr ""
-
-msgid "Billing data"
-msgstr "Fakturační údaje"
 
 msgid "Blog"
 msgstr ""
@@ -307,14 +202,8 @@ msgstr "Kategorie blogu - vše"
 msgid "Blog category - view"
 msgstr "Kategorie blogu - zobrazení"
 
-msgid "Bohužel zadaný e-mail <strong>%email%</strong> neexistuje."
-msgstr ""
-
 msgid "Brand"
 msgstr "Značka"
-
-msgid "Brand overview"
-msgstr "Přehled značek"
 
 msgid "Brands"
 msgstr "Značky"
@@ -324,12 +213,6 @@ msgstr "Značky - vše"
 
 msgid "Brands - view"
 msgstr "Značky - zobrazení"
-
-msgid "Budete mít přehled ve svých objednávkách nebo reklamací"
-msgstr ""
-
-msgid "Budete u nás nakupovat jako:"
-msgstr ""
 
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
@@ -346,23 +229,11 @@ msgstr ""
 msgid "Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů"
 msgstr ""
 
-msgid "Během placení objednávky došlo k potížím"
-msgstr ""
-
-msgid "CANCELED"
-msgstr "Platba zrušena"
-
 msgid "CMS"
 msgstr "CMS"
 
-msgid "CREATED"
-msgstr "Platba založena"
-
 msgid "Cancel"
 msgstr ""
-
-msgid "Cart"
-msgstr "Košík"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
@@ -388,44 +259,11 @@ msgstr ""
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
 
-msgid "Celková cena bez DPH"
-msgstr ""
-
-msgid "Celková cena s DPH"
-msgstr ""
-
-msgid "Celý popis"
-msgstr ""
-
-msgid "Cena celkem"
-msgstr ""
-
-msgid "Cenový hit"
-msgstr ""
-
-msgid "Centrála společnosti"
-msgstr ""
-
-msgid "Changing password"
-msgstr "Změna hesla"
-
-msgid "Chci aktivovat uživatelský účet"
-msgstr ""
-
-msgid "Chci se přihlásit k odběru newsletteru"
-msgstr ""
-
-msgid "Chci se registrovat s objednávkou"
-msgstr ""
-
 msgid "Check the address correctness"
 msgstr "Zkontrolujte správnost adresy"
 
 msgid "Choose type of redirect"
 msgstr "Vyberte typ přesměrování"
-
-msgid "Choose variant"
-msgstr "Vybrat variantu"
 
 msgid "Chosen payment name"
 msgstr ""
@@ -435,18 +273,6 @@ msgstr ""
 
 msgid "City"
 msgstr "Město"
-
-msgid "Clear filter"
-msgstr "Vynulovat filtr"
-
-msgid "Clicking on the link below you can download in XML format your personal information, which we have in evidence in our online store %domain%."
-msgstr "Klikem na tlačítko níže si ve formátu XML můžete stáhnout údaje, které k Vašemu e-mailu evidujeme na našem internetovém obchodu %domain%."
-
-msgid "Close"
-msgstr "Zavřít"
-
-msgid "Close (Esc)"
-msgstr "Zavřít (Esc)"
 
 msgid "Code"
 msgstr ""
@@ -460,17 +286,8 @@ msgstr "Hodnota parametru typu barva - vše"
 msgid "Color parameter values - view"
 msgstr "Hodnota parametru typu barva - zobrazení"
 
-msgid "Common price"
-msgstr "Běžná cena"
-
 msgid "Company"
 msgstr "Firma"
-
-msgid "Company data"
-msgstr "Firemní údaje"
-
-msgid "Company name"
-msgstr "Název firmy"
 
 msgid "Company number"
 msgstr "IČO"
@@ -478,23 +295,11 @@ msgstr "IČO"
 msgid "Confirm authentication code"
 msgstr ""
 
-msgid "Connection to GoPay gateway failed."
-msgstr "Připojení k bráně GoPay selhalo."
-
-msgid "Contact"
-msgstr "Kontakt"
-
 msgid "Contact form - full"
 msgstr "Kontaktní formulář - vše"
 
 msgid "Contact form - view"
 msgstr "Kontaktní formulář - zobrazení"
-
-msgid "Contact informations"
-msgstr "Kontaktní informace"
-
-msgid "Contact us"
-msgstr "Napište nám"
 
 msgid "Content"
 msgstr ""
@@ -508,19 +313,13 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
-msgid "Continue in order"
-msgstr "Pokračovat v objednávce"
-
-msgid "Cookies"
-msgstr ""
-
 msgid "Cookies article setting - full"
 msgstr "Informace o cookies - vše"
 
 msgid "Cookies article setting - view"
 msgstr "Informace o cookies - zobrazení"
 
-msgid "Copyright"
+msgid "Cookies information"
 msgstr ""
 
 msgid "Countries - full"
@@ -535,11 +334,11 @@ msgstr "Stát"
 msgid "Create and download CSV"
 msgstr "Vytvořit a stáhnout CSV"
 
+msgid "Create flag"
+msgstr ""
+
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
-
-msgid "Create new customer"
-msgstr ""
 
 msgid "Create new order status"
 msgstr ""
@@ -550,23 +349,11 @@ msgstr "Vytvořit novou prodejnu"
 msgid "Create promo code"
 msgstr ""
 
-msgid "Created"
-msgstr ""
-
 msgid "Creation date"
 msgstr "Datum vytvoření"
 
 msgid "Cron overview"
 msgstr ""
-
-msgid "Current status"
-msgstr "Aktuální stav"
-
-msgid "Customer"
-msgstr ""
-
-msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
-msgstr "Zákazník s e-mailovou adresou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\">Zaregistrovat</a>"
 
 msgid "Customers - full"
 msgstr "Zákazníci - vše"
@@ -577,19 +364,10 @@ msgstr "Zákazníci - zobrazení"
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
 
-msgid "DPH {{domainName}}"
-msgstr ""
-
 msgid "Date and time of order creation"
 msgstr ""
 
-msgid "Date of subscription"
-msgstr "Datum přihlášení"
-
 msgid "Datum a čas"
-msgstr ""
-
-msgid "Datum objednávky"
 msgstr ""
 
 msgid "Datum publikace"
@@ -625,25 +403,7 @@ msgstr "Smazat kategorii i seo mix"
 msgid "Delivery address"
 msgstr "Dodací adresa"
 
-msgid "Delivery address could not be removed."
-msgstr "Dodací adresu se nepodařilo odstranit."
-
-msgid "Delivery address has been removed."
-msgstr "Dodací adresa byla odstraněna."
-
-msgid "Delivery addresses"
-msgstr "Dodací adresy"
-
-msgid "Delivery data"
-msgstr "Dodací údaje"
-
 msgid "Description"
-msgstr ""
-
-msgid "Detail"
-msgstr "Detail"
-
-msgid "Detail prodejny"
 msgstr ""
 
 msgid "Detail skladu"
@@ -664,9 +424,6 @@ msgstr ""
 msgid "Display on"
 msgstr ""
 
-msgid "Displaying"
-msgstr "Zobrazuji"
-
 msgid "Dle příznaků"
 msgstr ""
 
@@ -679,23 +436,14 @@ msgstr ""
 msgid "Dnů do doručení"
 msgstr ""
 
-msgid "Do košíku"
-msgstr ""
-
 msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
 msgstr ""
 
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
 
-msgid "Do you really want to remove the order?"
-msgstr ""
-
 msgid "Do you really want to remove this customer?"
 msgstr ""
-
-msgid "Do you really want to remove this delivery address?"
-msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
@@ -706,7 +454,13 @@ msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL mů
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
+msgid "Do you really want to remove this payment?"
+msgstr ""
+
 msgid "Do you really want to remove this promo code?"
+msgstr ""
+
+msgid "Do you really want to remove this shipping?"
 msgstr ""
 
 msgid "Do you really want to remove this stock? By deleting this stock you will remove all stock quantities from products and association to stores. This step is irreversible!"
@@ -715,25 +469,10 @@ msgstr "Opravdu si přejete odstranit tento sklad? Odstraněním skladu dojde i 
 msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr "Opravdu si přejete odstranit tuto prodejnu? Tento krok nelze vzít zpět!"
 
-msgid "Do you want to receive the newest information about our shop? Subscribe to our email newsletter."
-msgstr "Chcete dostávat nejnovější informace z našeho obchodu? Přihlašte se do našeho e-mailového zpravodaje."
-
-msgid "Dodací adresy"
-msgstr ""
-
 msgid "Dodací lhůta dodavatele"
 msgstr ""
 
-msgid "Dodací údaje"
-msgstr ""
-
 msgid "Dokončení registrace"
-msgstr ""
-
-msgid "Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla."
-msgstr ""
-
-msgid "Dokončete registraci <br>do <strong>věrnostního <br>programu</strong>."
 msgstr ""
 
 msgid "Domain"
@@ -745,43 +484,13 @@ msgstr ""
 msgid "Doprava"
 msgstr ""
 
-msgid "Doprava a platba"
-msgstr ""
-
 msgid "Doprava pro nadlimitní množství"
 msgstr ""
-
-msgid "Dopravu máte zdarma"
-msgstr ""
-
-msgid "Dostupnost"
-msgstr ""
-
-msgid "Dostupnost na prodejnách"
-msgstr ""
-
-msgid "Download"
-msgstr "Stáhnout"
-
-msgid "Download the personal information"
-msgstr "Stáhnout zákaznické údaje"
 
 msgid "Duplikovat"
 msgstr ""
 
 msgid "Dávka ID"
-msgstr ""
-
-msgid "Děkujeme vám za objednávku!"
-msgstr ""
-
-msgid "Děkujeme za vaši objednávku.<br>Budete přesměrování na platební bránu."
-msgstr ""
-
-msgid "E-mail"
-msgstr ""
-
-msgid "E-shop"
 msgstr ""
 
 msgid "E-shop URL address"
@@ -792,12 +501,6 @@ msgstr "Identifikace e-shopu - vše"
 
 msgid "E-shop identification - view"
 msgstr "Identifikace e-shopu - zobrazení"
-
-msgid "E-shop na míru od"
-msgstr ""
-
-msgid "EAN"
-msgstr "EAN"
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
@@ -853,6 +556,9 @@ msgstr "Editace příznaku"
 msgid "Editing flag - {{ name }}"
 msgstr "Editace příznaku - {{ name }}"
 
+msgid "Editing page"
+msgstr ""
+
 msgid "Editing product - %name%"
 msgstr ""
 
@@ -871,17 +577,8 @@ msgstr "E-mail"
 msgid "Email newsletter"
 msgstr "E-maily zpravodaje"
 
-msgid "Email with a link to the export of your personal data was sent to your email address."
-msgstr "E-mail s odkazem na stránku exportu osobních údajů byl odeslán na vaši e-mailovou adresu."
-
-msgid "Email with a link to the page with your personal data was sent to your email address."
-msgstr "E-mail s odkazem na stránku s údaji o osobních údajích byl odeslán na vaši e-mailovou adresu."
-
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
 msgstr ""
-
-msgid "Empty cart"
-msgstr "Prázdný nákupní košík"
 
 msgid "Enable two factor authentication by Google Authenticator"
 msgstr ""
@@ -895,23 +592,11 @@ msgstr ""
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
 msgstr ""
 
-msgid "Enter email"
-msgstr "Zadejte e-mail"
-
 msgid "Entity"
 msgstr "Entita"
 
 msgid "Entity ID"
 msgstr "ID entity"
-
-msgid "Error occurred"
-msgstr "Nastala chyba"
-
-msgid "Error occurred when sending email."
-msgstr "Nastala chyba při odesílání e-mailu."
-
-msgid "Exkluzivní produkty ve věrnostním programu"
-msgstr ""
 
 msgid "Exposed in Stores"
 msgstr "Vystavení na prodejnách"
@@ -925,26 +610,8 @@ msgstr "Měřící skripty"
 msgid "Externí ID můstku"
 msgstr ""
 
-msgid "Facebook"
-msgstr ""
-
-msgid "Fakturační adresa"
-msgstr ""
-
-msgid "Fakturační údaje"
-msgstr ""
-
 msgid "Feeds - view"
 msgstr "XML Feedy - zobrazení"
-
-msgid "Filtrovat"
-msgstr ""
-
-msgid "Finish the order"
-msgstr "Dokončit objednávku"
-
-msgid "Firma"
-msgstr ""
 
 msgid "First name"
 msgstr "Jméno"
@@ -961,9 +628,6 @@ msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upra
 msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr "Příznak <strong>{{ name }}</strong> byl smazán"
 
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Barva příznaku musí být plattný hexadecimální kód např. #3333ff"
-
 msgid "Flags"
 msgstr "Příznaky"
 
@@ -975,15 +639,6 @@ msgstr "Příznaky - zobrazení"
 
 msgid "For registered customers only"
 msgstr "Pouze pro registrované zákazníky"
-
-msgid "Forgot your password?"
-msgstr "Zapomněli jste své heslo?"
-
-msgid "Forgotten password"
-msgstr "Zapomenuté heslo"
-
-msgid "Frontend"
-msgstr ""
 
 msgid "Free transport and payment - full"
 msgstr "Doprava a platba zdarma - vše"
@@ -1000,31 +655,16 @@ msgstr ""
 msgid "GTM creative"
 msgstr ""
 
-msgid "Go to Frontend"
-msgstr ""
-
-msgid "Go to cart"
-msgstr "Přejít do košíku"
-
 msgid "GoPay"
 msgstr "GoPay"
 
-msgid "GoPay Fik code"
-msgstr "Fik platby GoPay"
-
 msgid "GoPay payment method"
 msgstr "Platební metoda GoPay"
-
-msgid "GoPay payment status"
-msgstr "Status platby GoPay"
 
 msgid "Google analytics"
 msgstr ""
 
 msgid "Heading (H1)"
-msgstr ""
-
-msgid "Heslo"
 msgstr ""
 
 msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
@@ -1051,9 +691,6 @@ msgstr ""
 msgid "Hledání v přenosech"
 msgstr ""
 
-msgid "Hodnota"
-msgstr ""
-
 msgid "Hodnota parameteru"
 msgstr ""
 
@@ -1078,39 +715,6 @@ msgstr ""
 msgid "Hromadné vytvoření slevových kupónů"
 msgstr ""
 
-msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
-msgstr "Souhlasím s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> a <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
-
-msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and privacy policy."
-msgstr "Souhlasím s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> a zpracováním osobních údajů."
-
-msgid "I agree with <a href=\"%url%\" target=\"_blank\">privacy policy</a>."
-msgstr "Souhlasím se <a href=\"%url%\" target=\"_blank\">zpracováním osobních údajů</a>."
-
-msgid "I agree with privacy policy."
-msgstr "Souhlasím se zpracováním osobních údajů."
-
-msgid "I agree with terms and conditions and <a href=\"%privacyPolicyUrl%\" target=\"_blank\">privacy policy</a>."
-msgstr "Souhlasím s obchodními podmínkami a <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
-
-msgid "I agree with terms and conditions and privacy policy."
-msgstr "Souhlasím s obchodními podmínkami a zpracováním osobních údajů."
-
-msgid "I buy on company behalf"
-msgstr "Nakupuji na firmu"
-
-msgid "I do not agree with sending a Customer Verified satisfaction questionnaire that helps improve your service"
-msgstr "Nesouhlasím se zasláním dotazníku spokojenosti v rámci programu Heureka Ověřeno zákazníky, který pomáhá zlepšovat naše služby pro Vás"
-
-msgid "I understand"
-msgstr "Rozumím"
-
-msgid "I want to deliver products to different address than the billing one"
-msgstr "Zboží chci doručit na jinou adresu než fakturační"
-
-msgid "I want to subscribe to the newsletter"
-msgstr "Chci se přihlásit k odběru newsletteru"
-
 msgid "ID"
 msgstr ""
 
@@ -1119,6 +723,9 @@ msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
 
 msgid "If the time TO is filled in, enter the date TO too."
 msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
+
+msgid "Ihned k odběru"
+msgstr ""
 
 msgid "Image"
 msgstr "Obrázek"
@@ -1130,12 +737,6 @@ msgid "Image will be deleted after saving."
 msgstr ""
 
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
-msgstr ""
-
-msgid "Informace o zákazníkovi"
-msgstr ""
-
-msgid "Instagram"
 msgstr ""
 
 msgid "Instalační manuál"
@@ -1153,46 +754,10 @@ msgstr ""
 msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
-msgid "Items"
-msgstr "Položky"
-
 msgid "Je vystaven"
 msgstr ""
 
-msgid "Ještě nebylo implementováno."
-msgstr ""
-
-msgid "K dispozici do <span>týdne</span>"
-msgstr ""
-
-msgid "K dispozici za %weeks% týdnů"
-msgstr "K dispozici za %weeks% týdnů"
-
-msgid "Kategorie"
-msgstr ""
-
-msgid "Ke stažení"
-msgstr ""
-
-msgid "Kliknutím na tlačítko Odeslat objednávku souhlasíte s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> e-shopu a se <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
-msgstr ""
-
-msgid "Klikněte zde pro zopakování úhrady objednávky"
-msgstr ""
-
 msgid "Kombinace parametrů a jejich hodnot parametrů"
-msgstr ""
-
-msgid "Koncový zákazník"
-msgstr ""
-
-msgid "Kontakt na obchodní dům"
-msgstr ""
-
-msgid "Kontaktní formulář"
-msgstr ""
-
-msgid "Kontakty na prodejny"
 msgstr ""
 
 msgid "Krátký popis"
@@ -1219,10 +784,7 @@ msgstr ""
 msgid "Krátký popis kategorie"
 msgstr ""
 
-msgid "Kupón"
-msgstr ""
-
-msgid "Kód"
+msgid "Last modification"
 msgstr ""
 
 msgid "Last name"
@@ -1249,14 +811,8 @@ msgstr ""
 msgid "Limits"
 msgstr "Limity"
 
-msgid "Link to password reset sent to email <strong>{{ email }}</strong>."
-msgstr "Odkaz pro vyresetování hesla byl zaslán na e-mail <strong>{{ email }}</strong>."
-
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr ""
-
-msgid "List of subcategories"
-msgstr "Seznam podkategorií"
 
 msgid "Location"
 msgstr ""
@@ -1264,14 +820,8 @@ msgstr ""
 msgid "Log in"
 msgstr "Přihlásit se"
 
-msgid "Log out"
-msgstr "Odhlásit se"
-
 msgid "Login"
 msgstr "Přihlášení"
-
-msgid "Magazín"
-msgstr ""
 
 msgid "Mail setting - full"
 msgstr "Nastavení e-mailů - vše"
@@ -1297,12 +847,6 @@ msgstr "Měrné jednotky"
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
 
-msgid "Menu"
-msgstr "Menu"
-
-msgid "Message"
-msgstr "Vzkaz"
-
 msgid "Meta description"
 msgstr ""
 
@@ -1315,49 +859,7 @@ msgstr ""
 msgid "Moewe - TypeOfDeliveryKey"
 msgstr ""
 
-msgid "More bestsellers"
-msgstr "Další nejprodávanější"
-
-msgid "More information"
-msgstr "Více informací"
-
 msgid "Move"
-msgstr ""
-
-msgid "Možnost nákupu za výhodné ceny"
-msgstr ""
-
-msgid "My account"
-msgstr ""
-
-msgid "My orders"
-msgstr "Mé objednávky"
-
-msgid "Mám slevový kupón"
-msgstr ""
-
-msgid "Máte další otázky?"
-msgstr ""
-
-msgid "Místo"
-msgstr ""
-
-msgid "Město"
-msgstr ""
-
-msgid "Můj účet"
-msgstr ""
-
-msgid "Můžete mít <strong>ihned</strong>"
-msgstr ""
-
-msgid "Můžete si dokoupit"
-msgstr ""
-
-msgid "Na Váš email, Vám byly zaslány infromace pro dokončení registrace."
-msgstr ""
-
-msgid "Na jejím naplnění intenzivně pracujeme. Do té doby si můžete prohlédnout jiné kategorie plné doplňků a nábytku."
 msgstr ""
 
 msgid "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
@@ -1372,19 +874,10 @@ msgstr ""
 msgid "Nahrát obrázek pro mobilní zařízení"
 msgstr ""
 
-msgid "Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>"
-msgstr ""
-
 msgid "Name"
 msgstr "Název"
 
 msgid "Name %locale%"
-msgstr ""
-
-msgid "Napište co hledáte"
-msgstr ""
-
-msgid "Napište nám"
 msgstr ""
 
 msgid "Nastavení %domainName% skladů uloženo."
@@ -1405,12 +898,6 @@ msgstr ""
 msgid "Nastavení skladů"
 msgstr ""
 
-msgid "Nastavení výprodejové kategorie bylo úspěšné"
-msgstr ""
-
-msgid "Nastavit heslo"
-msgstr ""
-
 msgid "Navigation"
 msgstr "Navigace"
 
@@ -1420,37 +907,13 @@ msgstr "Navigace - vše"
 msgid "Navigation - view"
 msgstr "Navigace - zobrazení"
 
-msgid "Načíst další"
-msgstr ""
-
 msgid "Ne"
-msgstr ""
-
-msgid "Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek."
 msgstr ""
 
 msgid "Nebyly nalezeny žádné kombinace pro SEO kategorií."
 msgstr ""
 
 msgid "Nebyly nalezeny žádné články blogu."
-msgstr ""
-
-msgid "Nejprodávanější produkty"
-msgstr ""
-
-msgid "Nejste tu poprvé?"
-msgstr ""
-
-msgid "Nemáte ješte účet?<br>Registrujte se."
-msgstr ""
-
-msgid "Nemáte ještě účet? Registrujte se."
-msgstr ""
-
-msgid "Není skladem"
-msgstr ""
-
-msgid "Není vystaveno"
 msgstr ""
 
 msgid "Neomezeně"
@@ -1465,13 +928,13 @@ msgstr ""
 msgid "New banner"
 msgstr "Nový banner"
 
-msgid "New delivery address"
-msgstr "Nová dodací adresa"
-
 msgid "New flag"
 msgstr "Nový příznak"
 
 msgid "New orders"
+msgstr ""
+
+msgid "New page"
 msgstr ""
 
 msgid "New registered customers"
@@ -1498,23 +961,11 @@ msgstr ""
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 
-msgid "No order so far."
-msgstr "Dosud nemáte žádnou objednávku."
-
 msgid "No orders status found."
 msgstr ""
 
 msgid "No page found."
 msgstr ""
-
-msgid "No personal data for this email address"
-msgstr "Pro zadaný e-mail neevidujeme žádné osobní údaje"
-
-msgid "No products found for this brand"
-msgstr "Pro tuto značku nebyly nalezeny žádné produkty"
-
-msgid "No results matching filter"
-msgstr "Filtru neodpovídají žádné výsledky"
 
 msgid "No store is created. You have to create one first."
 msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
@@ -1530,12 +981,6 @@ msgstr "Nominální"
 
 msgid "Note"
 msgstr "Poznámka"
-
-msgid "Nothing to choose from"
-msgstr "Není z čeho vybírat"
-
-msgid "Nothing to choose from."
-msgstr "Není z čeho vybírat."
 
 msgid "Notification bar - full"
 msgstr "Notifikační lišta - vše"
@@ -1579,13 +1024,7 @@ msgstr ""
 msgid "Number of generated promo codes"
 msgstr "Počet generovaných kupónů"
 
-msgid "Number of items"
-msgstr "Počet položek"
-
 msgid "Number of orders"
-msgstr ""
-
-msgid "Nákupní košík"
 msgstr ""
 
 msgid "Název"
@@ -1594,61 +1033,16 @@ msgstr ""
 msgid "Název kategorie"
 msgstr ""
 
-msgid "Název parametru"
-msgstr ""
-
 msgid "Název prefix"
-msgstr ""
-
-msgid "Název společnosti"
 msgstr ""
 
 msgid "Název suffix"
 msgstr ""
 
-msgid "O Commerce Cloudu"
-msgstr ""
-
-msgid "O nákupu"
-msgstr ""
-
 msgid "Obchodní domy"
 msgstr ""
 
-msgid "Objednávka je již zaplacená."
-msgstr ""
-
-msgid "Objednávka nebyla nalezena."
-msgstr ""
-
-msgid "Objednávka odeslána"
-msgstr ""
-
-msgid "Oblíbené"
-msgstr ""
-
-msgid "Oblíbené kategorie"
-msgstr ""
-
-msgid "Obnova hesla"
-msgstr ""
-
-msgid "Obnovte si ho"
-msgstr ""
-
-msgid "Obsah vašeho košíku se změnil"
-msgstr ""
-
 msgid "Od"
-msgstr ""
-
-msgid "Odeslat"
-msgstr ""
-
-msgid "Odeslat objednávku"
-msgstr ""
-
-msgid "Odhlásit"
 msgstr ""
 
 msgid "Odkaz"
@@ -1660,26 +1054,8 @@ msgstr ""
 msgid "Odkaz textu pod bannerem"
 msgstr ""
 
-msgid "Of course, you can unsubscribe at any time. By submitting the data, you agree to the processing of personal data."
-msgstr "Samozřejmě se můžete kdykoliv odhlásit. Odesláním údajů souhlasíte se zpracováním osobních údajů."
-
-msgid "Ok"
-msgstr ""
-
-msgid "Online shop"
-msgstr "Internetový obchod"
-
-msgid "Oops! Error occurred"
-msgstr "Jejda! Nastala chyba"
-
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."
-
-msgid "Opakovat platbu"
-msgstr ""
-
-msgid "Operation failed"
-msgstr "Operace se nezdařila"
 
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
@@ -1702,32 +1078,11 @@ msgstr ""
 msgid "Opravdu chcete tento problém označit jako vyřešený?"
 msgstr ""
 
-msgid "Order - personal data"
-msgstr "Objednávka - osobní údaje"
-
-msgid "Order Nr."
-msgstr "Objednávka č."
-
-msgid "Order [noun]"
-msgstr "Objednávka"
-
-msgid "Order [verb]"
-msgstr "Objednat"
-
-msgid "Order completed"
-msgstr "Objednávka dokončena"
-
 msgid "Order confirmation page"
 msgstr "Stránka s potvrzením objednávky"
 
-msgid "Order could not be paid"
-msgstr "Objednávku se nepodařio zaplatit"
-
 msgid "Order detail URL address"
 msgstr ""
-
-msgid "Order has been created but there were problems during payment"
-msgstr "Objednávka byla dokončena a odeslána, ale nastaly potíže během placení"
 
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebyla odeslána do GoPay"
@@ -1735,17 +1090,8 @@ msgstr "Objednávka nebyla odeslána do GoPay"
 msgid "Order items"
 msgstr "Položky objednávky"
 
-msgid "Order not found"
-msgstr "Objednávka nebyla nalezena"
-
-msgid "Order not found."
-msgstr "Objednávka nebyla nalezena."
-
 msgid "Order number"
 msgstr "Číslo objednávky"
-
-msgid "Order sent"
-msgstr "Objednávka byla odeslána"
 
 msgid "Order statuses - full"
 msgstr "Stavy objednávek - vše"
@@ -1759,9 +1105,6 @@ msgstr "Stránka s potvrzením objednávky - vše"
 msgid "Order submitted page setting - view"
 msgstr "Stránka s potvrzením objednávky - zobrazení"
 
-msgid "Orders"
-msgstr "Objednávky"
-
 msgid "Orders - full"
 msgstr "Objednávky - vše"
 
@@ -1774,41 +1117,11 @@ msgstr ""
 msgid "Osobní odběr Commerce Cloud"
 msgstr ""
 
-msgid "Otevírací doba"
-msgstr ""
-
 msgid "Otevírat v novém okně"
-msgstr ""
-
-msgid "Otevřeno"
-msgstr ""
-
-msgid "Our customers who bought this bought also"
-msgstr "Naši zákaznící k tomuto produktu nejčastěji nakupují"
-
-msgid "Oversized product in cart"
-msgstr "V košíku máte nadrozměrnou položku"
-
-msgid "Označení výprodeje"
-msgstr ""
-
-msgid "PAID"
-msgstr "Platba zaplacena"
-
-msgid "PARTIALLY_REFUNDED"
-msgstr "Platba částečně refundována"
-
-msgid "PAYMENT_METHOD_CHOSEN"
-msgstr "Platební metoda vybrána"
-
-msgid "PSČ"
 msgstr ""
 
 msgid "Package tracking"
 msgstr "Sledování zásilky"
-
-msgid "Page not found"
-msgstr "Stránka nenalezena"
 
 msgid "Page not found!"
 msgstr "Stránka nenalezena!"
@@ -1828,9 +1141,6 @@ msgstr "Parametry - vše"
 msgid "Parameters - view"
 msgstr "Parametry - zobrazení"
 
-msgid "Parametry"
-msgstr ""
-
 msgid "Parametry a pořadí v kategorii"
 msgstr ""
 
@@ -1846,23 +1156,8 @@ msgstr "Heslo"
 msgid "Password again"
 msgstr "Heslo znovu"
 
-msgid "Password must be at least six characters and can't be the same as entered email or its part before at sign."
-msgstr "Heslo musí mít alespoň šest znaků a nesmí být shodné se zadaným e-mailem ani s částí e-mailu před zavináčem."
-
-msgid "Password successfully changed"
-msgstr "Heslo bylo úspěšně změněno"
-
-msgid "Payment"
-msgstr "Platba"
-
 msgid "Payment instructions"
 msgstr ""
-
-msgid "Payment method"
-msgstr "Způsob platby"
-
-msgid "Payment selection"
-msgstr "Výběr platby"
 
 msgid "Percents"
 msgstr "Procenta"
@@ -1870,23 +1165,14 @@ msgstr "Procenta"
 msgid "Perex"
 msgstr ""
 
-msgid "Personal data"
-msgstr "Osobní údaje"
+msgid "Personal data access"
+msgstr ""
 
 msgid "Personal data access pages setting - full"
 msgstr "Nastavení zobrazení osobních údajů - vše"
 
 msgid "Personal data access pages setting - view"
 msgstr "Nastavení zobrazení osobních údajů - zobrazení"
-
-msgid "Personal data of registered customer"
-msgstr "Osobní údaje registrovaného zákazníka"
-
-msgid "Personal information export"
-msgstr "Export zákaznických údajů"
-
-msgid "Personal information overview"
-msgstr "Přehled osobních údajů"
 
 msgid "Platba"
 msgstr ""
@@ -1921,23 +1207,11 @@ msgstr ""
 msgid "Platnost od"
 msgstr ""
 
-msgid "Platnost odkazu již vypršela. Pomocí <a href=\"{{ resetLink }}\">resetu hesla</a> si můžete nechat zaslat nový."
-msgstr ""
-
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
 
-msgid "Please check the entered values.<br>"
-msgstr "Zkontrolujte prosím zadané hodnoty.<br>"
-
-msgid "Please enter promo code."
-msgstr "Zadejte, prosím, slevový kupón."
-
 msgid "Please enter the correct time format (hh:mm)"
 msgstr "Prosím vyplňte správný formát času (hh:mm)"
-
-msgid "Please enter valid quantity you want to add to cart."
-msgstr "Zadejte prosím platné množství, které chcete vložit do košíku."
 
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na %mail% nebo telefonicky %phone%."
@@ -1945,49 +1219,19 @@ msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdřív
 msgid "Please follow the instructions"
 msgstr "Prosím, pokračujte podle pokynů"
 
-msgid "Please make sure that you entered right quantity of all items in cart."
-msgstr "Prosím zkontrolujte, zda jste správně zadali množství veškerých položek v košíku."
-
-msgid "Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace"
-msgstr ""
-
-msgid "Podobné produkty"
-msgstr ""
-
 msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
-msgstr ""
-
-msgid "Popis a parametry"
 msgstr ""
 
 msgid "Popis kategorie"
 msgstr ""
 
-msgid "Popular categories"
-msgstr "Rozcestník kategorií"
-
 msgid "Postcode"
 msgstr "PSČ"
-
-msgid "Potvrdit"
-msgstr ""
-
-msgid "Potřebujete poradit?"
-msgstr ""
 
 msgid "Povolit nákup do mínusu"
 msgstr ""
 
 msgid "Požadovaná šablona neexistuje."
-msgstr ""
-
-msgid "Po–Pia 8–18h"
-msgstr ""
-
-msgid "Po–Pá 8–19h | So–Ne 8–16h"
-msgstr ""
-
-msgid "Pravidla akce"
 msgstr ""
 
 msgid "Prefix"
@@ -1999,14 +1243,8 @@ msgstr "Prefix (např. \"JARO_\")"
 msgid "Prefix kuponu"
 msgstr ""
 
-msgid "Preview"
-msgstr ""
-
 msgid "Price"
 msgstr "Cena"
-
-msgid "Price including VAT"
-msgstr "Cena s DPH"
 
 msgid "Pricing group"
 msgstr "Cenová skupina"
@@ -2020,9 +1258,6 @@ msgstr "Cenové skupiny - vše"
 msgid "Pricing groups - view"
 msgstr "Cenové skupiny - zobrazení"
 
-msgid "Print"
-msgstr "Vytisknout"
-
 msgid "Privacy Policy"
 msgstr "Zásady ochrany osobních údajů"
 
@@ -2035,25 +1270,10 @@ msgstr "Nastavení zásad ochrany osobních údajů - vše"
 msgid "Privacy policy article setting - view"
 msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
 
-msgid "Pro tento výraz jsme bohužel nenašli žádné výsledky."
-msgstr ""
-
 msgid "Pro tuto kombinaci již <a href=\"{{ url }}\">existuje emailová šablona</a>."
 msgstr ""
 
-msgid "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky.<br> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje."
-msgstr ""
-
-msgid "Pro úspěšné dokončení Vaší registrace si prosím nastavte bezpečné heslo k Vašemu účtu."
-msgstr ""
-
-msgid "Pro úspěšné dokončení objednávky č. <strong>%orderNumber%</strong> zkuste zopakovat platbu, nebo si zvolte jiný způsob platby. K platbě se můžete vrátit později i ve vašem uživatelském profilu."
-msgstr ""
-
 msgid "Problém v přenosu byl označen jako vyřešený"
-msgstr ""
-
-msgid "Prodejny"
 msgstr ""
 
 msgid "Product"
@@ -2062,41 +1282,11 @@ msgstr "Produkt"
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
-msgid "Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart"
-msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }})"
-
-msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
-msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> (celkem již {{ quantity|formatNumber }} {{ unitName }})"
-
 msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
 msgstr "Zboží <strong>{{ name }}</strong>, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
 
-msgid "Product In Action"
-msgstr "Produkt v akci"
-
-msgid "Product On Sale"
-msgstr "Produkt ve výprodeji"
-
-msgid "Product Price Hit"
-msgstr "Produkt cenový hit"
-
-msgid "Product filter"
-msgstr "Filtr produktů"
-
-msgid "Product information"
-msgstr "Informace o produktu"
-
-msgid "Product no longer on sale"
-msgstr "Zboží se již neprodává"
-
 msgid "Product you had in cart is no longer in available. Please check your order."
 msgstr "Zboží, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
-
-msgid "Product {{ name }} removed from cart"
-msgstr "Z košíku bylo odstraněno zboží {{ name }}"
-
-msgid "Products"
-msgstr ""
 
 msgid "Products - full"
 msgstr "Produkty - vše"
@@ -2107,26 +1297,11 @@ msgstr "Produkty - zobrazení"
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr ""
 
-msgid "Products in cart overview"
-msgstr "Přehled zboží v košíku"
-
-msgid "Products in stock only"
-msgstr "Jen zboží skladem"
-
 msgid "Products with this flag"
 msgstr "Produkty s tímto příznakem"
 
 msgid "Products without this flag"
 msgstr "Produkty bez tohoto příznaku"
-
-msgid "Produkt s tímto katalogovým číslem již existuje"
-msgstr ""
-
-msgid "Produkty"
-msgstr ""
-
-msgid "Profil"
-msgstr ""
 
 msgid "Promo code"
 msgstr "Slevový kupón"
@@ -2134,38 +1309,14 @@ msgstr "Slevový kupón"
 msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
 msgstr ""
 
-msgid "Promo code added to order"
-msgstr "Slevový kupón byl přidán do objednávky."
-
 msgid "Promo code identifier in IS"
 msgstr "Identifikátor kupónu pro IS"
-
-msgid "Promo code invalid. Check it, please."
-msgstr "Slevový kupón není platný. Prosím, zkontrolujte ho."
-
-msgid "Promo code is available for registered customers only."
-msgstr "Slevový kupón je dostupný pouze pro registrované zákazníky."
-
-msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
-msgstr "Slevový kupón není dostupný pro Vaši cenovou skupinu. Možná jste se zapomněl příhlásit."
-
-msgid "Promo code removed from order"
-msgstr "Slevový kupón byl odebrán z objednávky."
 
 msgid "Promo codes - full"
 msgstr "Slevové kupóny - vše"
 
 msgid "Promo codes - view"
 msgstr "Slevové kupóny - zobrazení"
-
-msgid "Promo kód ještě není platný. Zkontrolujte ho, prosím."
-msgstr ""
-
-msgid "Promo kód nelze uplatnit na žádný produkt v košíku. Zkontrolujte ho, prosím."
-msgstr ""
-
-msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
-msgstr ""
 
 msgid "Promoted categories"
 msgstr "Promované kategorie"
@@ -2192,9 +1343,6 @@ msgid "Přehled problémů v přenosech"
 msgstr ""
 
 msgid "Přehled skladů"
-msgstr ""
-
-msgid "Přejít do e-shopu"
 msgstr ""
 
 msgid "Přenesené soubory"
@@ -2224,46 +1372,13 @@ msgstr ""
 msgid "Přenosy"
 msgstr ""
 
-msgid "Při resetování hesla došlo k chybě, zkuste to prosím znovu."
-msgstr ""
-
-msgid "Přidali jste velké množství zboží. Limit je %quantity% ks, proto budete mít speciální typ objednávky"
-msgstr ""
-
 msgid "Přidat další limit"
-msgstr ""
-
-msgid "Přidat do košíku"
-msgstr ""
-
-msgid "Přidat dodací adresu"
-msgstr ""
-
-msgid "Přidat novou dodací adresu"
 msgstr ""
 
 msgid "Přidejte limit"
 msgstr ""
 
-msgid "Přihlašte se"
-msgstr ""
-
-msgid "Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”."
-msgstr ""
-
-msgid "Přihlásit"
-msgstr ""
-
-msgid "Přihlásit se"
-msgstr ""
-
-msgid "Přihlášení"
-msgstr ""
-
 msgid "Příznak"
-msgstr ""
-
-msgid "Příznaky"
 msgstr ""
 
 msgid "Quick product search"
@@ -2271,12 +1386,6 @@ msgstr ""
 
 msgid "Quick search"
 msgstr "Rychlé hledání"
-
-msgid "REFUNDED"
-msgstr "Platba refundována"
-
-msgid "RGB Barva"
-msgstr ""
 
 msgid "RGB Hex"
 msgstr ""
@@ -2290,35 +1399,11 @@ msgstr "Typ přesměrování"
 msgid "Referenced products"
 msgstr "Odkazované produkty"
 
-msgid "Register"
-msgstr "Registrovat"
-
-msgid "Registration"
-msgstr "Registrace"
-
-msgid "Registrujte se"
-msgstr ""
-
-msgid "Rekapitulaci jsme vám zaslali také na váš e&#8209;mail"
-msgstr ""
-
-msgid "Reklamace, vrácení a výměna zboží"
-msgstr ""
-
 msgid "Related products"
 msgstr "Související produkty"
 
 msgid "Remaining number of uses"
 msgstr "Zbývající počet použití"
-
-msgid "Remember my login"
-msgstr "Zapamatuj si mé přihlášení"
-
-msgid "Remove item"
-msgstr "Odebrat položku"
-
-msgid "Reset password"
-msgstr "Resetovat heslo"
 
 msgid "Return back"
 msgstr ""
@@ -2330,9 +1415,6 @@ msgid "Rounding"
 msgstr "Zaokrouhlení"
 
 msgid "Rozbalit"
-msgstr ""
-
-msgid "Rozměry"
 msgstr ""
 
 msgid "Rozšířené SEO kategorie %categoryName% - filtry"
@@ -2398,9 +1480,6 @@ msgstr ""
 msgid "Sbalit"
 msgstr ""
 
-msgid "Sbírání bodů s každou objednávkou"
-msgstr ""
-
 msgid "Scripts - full"
 msgstr "Měřící skripty - vše"
 
@@ -2416,26 +1495,11 @@ msgstr "Vyhledat"
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
 
-msgid "Search didn't find any products."
-msgstr "Hledání neodpovídají žádné produkty"
-
-msgid "Search results for \"%searchText%\""
-msgstr "Výsledky hledání \"%searchText%\""
-
-msgid "Searching"
-msgstr "Vyhledávání"
-
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."
-
-msgid "Selected product no longer available or doesn't exist."
-msgstr "Zvolené zboží již není v nabídce nebo neexistuje."
-
-msgid "Send"
-msgstr "Odeslat"
 
 msgid "Send me authentication code"
 msgstr ""
@@ -2443,14 +1507,8 @@ msgstr ""
 msgid "Seo"
 msgstr ""
 
-msgid "Serial number"
-msgstr "Výrobní číslo"
-
 msgid "Set as default"
 msgstr "Nastavit jako výchozí"
-
-msgid "Set new password"
-msgstr "Nastavit nové heslo"
 
 msgid "Set prices manually"
 msgstr "Nastavit ceny ručně"
@@ -2458,40 +1516,7 @@ msgstr "Nastavit ceny ručně"
 msgid "Settings"
 msgstr ""
 
-msgid "Shipping"
-msgstr "Doprava"
-
-msgid "Shipping<br> and payment"
-msgstr "Doprava<br> a platba"
-
-msgid "Shipping and payment <strong>for free!</strong>"
-msgstr "Dopravu i platbu máte <strong>zdarma!</strong>"
-
 msgid "Shipping instructions"
-msgstr ""
-
-msgid "Shipping is not filled in the order. Please check your order."
-msgstr ""
-
-msgid "Shipping method"
-msgstr "Způsob dopravy"
-
-msgid "Shipping selection"
-msgstr "Výběr dopravy"
-
-msgid "Shopsys Commerce Cloud"
-msgstr ""
-
-msgid "Shopsys magazín"
-msgstr ""
-
-msgid "Shopsys s.r.o. Všechna práva vyhrazena."
-msgstr ""
-
-msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava"
-msgstr ""
-
-msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava<br> IČ: 27790487<br> DIČ: CZ27790487"
 msgstr ""
 
 msgid "Sklad"
@@ -2506,28 +1531,13 @@ msgstr ""
 msgid "Sklady"
 msgstr ""
 
-msgid "Skrýt"
-msgstr ""
-
 msgid "Skrýt na doméně"
-msgstr ""
-
-msgid "Skupina"
 msgstr ""
 
 msgid "Skupiny"
 msgstr ""
 
-msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
-msgstr ""
-
-msgid "Sledujte nás"
-msgstr ""
-
 msgid "Sleva"
-msgstr ""
-
-msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href=\"%url%\">pravidel</a>."
 msgstr ""
 
 msgid "Slevové kupóny"
@@ -2536,17 +1546,11 @@ msgstr ""
 msgid "Slevové kupóny - vygenerované dávky"
 msgstr ""
 
-msgid "Slevový kupón není platný nebo byl už použit. Prosím, zkontrolujte ho."
-msgstr ""
-
 msgid "Slider items - full"
 msgstr "Bannery - vše"
 
 msgid "Slider items - view"
 msgstr "Bannery - zobrazení"
-
-msgid "Slovensko"
-msgstr ""
 
 msgid "Slug"
 msgstr "Slug"
@@ -2556,24 +1560,6 @@ msgstr ""
 
 msgid "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu."
 msgstr ""
-
-msgid "Souhlasím se zasíláním newsletteru"
-msgstr ""
-
-msgid "Soukromá osoba"
-msgstr ""
-
-msgid "Special message"
-msgstr "Mimořádné oznámení"
-
-msgid "Special offers"
-msgstr "Akční zboží"
-
-msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 123456"
-msgstr ""
-
-msgid "Status"
-msgstr "Stav"
 
 msgid "Stav bjednávky"
 msgstr ""
@@ -2623,9 +1609,6 @@ msgstr "Prodejna <strong>{{ name }}</strong> byla odstraněna"
 msgid "Store <strong>{{ name }}</strong> was set as default."
 msgstr "Prodejna <strong>{{ name }}</strong> byla nastavena jako výchozí."
 
-msgid "Store description"
-msgstr "Popis prodejny"
-
 msgid "Store does not exist"
 msgstr "Prodejna neexistuje"
 
@@ -2647,47 +1630,17 @@ msgstr "Ulice"
 msgid "Stránka"
 msgstr ""
 
-msgid "Stáhnout"
-msgstr ""
-
 msgid "Stáhnout soubor"
 msgstr ""
 
-msgid "Subscription to email newsletter"
-msgstr "Přihlášení k zpravodaji"
-
-msgid "Subscription was failed"
-msgstr "Přihlášení k novinkám selhalo"
-
-msgid "Sídlo společnosti"
-msgstr ""
-
-msgid "TIMEOUTED"
-msgstr "Vypršelá platnost platby"
-
 msgid "TOP"
-msgstr ""
-
-msgid "Tato rubrika neobsahuje žádné články."
 msgstr ""
 
 msgid "Tax number"
 msgstr "DIČ"
 
-msgid "Technical parameters"
-msgstr "Technické parametry"
-
-msgid "Telefon"
-msgstr ""
-
 msgid "Telephone"
 msgstr "Telefon"
-
-msgid "Televize"
-msgstr "Televize"
-
-msgid "Temporarily sold out"
-msgstr "Dočasně vyprodáno"
 
 msgid "Tento typ šablony nemůže být odstraněn."
 msgstr ""
@@ -2701,12 +1654,6 @@ msgstr "Obchodní podmínky"
 msgid "Terms and Conditions settings"
 msgstr "Nastavení obchodních podmínek"
 
-msgid "Terms and conditions"
-msgstr "Obchodní podmínky"
-
-msgid "Terms-and-conditions.html"
-msgstr "Obchodní-podmínky.html"
-
 msgid "Text"
 msgstr ""
 
@@ -2716,50 +1663,14 @@ msgstr ""
 msgid "Text zprávy"
 msgstr ""
 
-msgid "Thank you, your message has been sent."
-msgstr "Děkujeme, váš vzkaz byl odeslán."
-
-msgid "The link to change your password expired."
-msgstr "Platnost odkazu pro změnu hesla vypršela."
-
-msgid "The payment method is not filled in the order. Please check your order."
-msgstr ""
-
-msgid "The price of payment {{ paymentName }} changed during ordering process. Check your order, please."
-msgstr "V průběhu objednávkového procesu byla změněna cena platby {{ paymentName }}. Prosím, překontrolujte si objednávku."
-
-msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
-msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ transportName }}. Prosím, překontrolujte si objednávku."
-
 msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
 msgid "The selected flag cannot be deleted."
 msgstr "Vybraný příznak nelze smazat."
 
-msgid "There were problems during payment of created order with number %orderNumber%."
-msgstr "Během placení dokončené a odeslané objednávky č. %orderNumber% došlo k potížím."
-
-msgid "These goods have different transport requirements"
-msgstr "Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu.<br />Proto jsme váš nákup rozdělili na více zásilek."
-
-msgid "This account doesn't exist or password is incorrect"
-msgstr "Zadali jste špatné uživatelské jméno nebo heslo"
-
-msgid "This category contains no products."
-msgstr "Tato kategorie neobsahuje žádné produkty"
-
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
-
-msgid "This product is no longer available for purchase. Have a look at similar products <a href=\"%url%\">here</a>."
-msgstr "Toto zboží nadále není možné koupit. Prohlédněte si podobné produkty <a href=\"%url%\">zde</a>."
-
-msgid "This site uses cookies."
-msgstr "Tyto stránky používají cookies."
-
-msgid "This site uses cookies. By staying on the site you agree with that."
-msgstr "Tyto stránky používají cookies. Setrváním na stránkách s tímto souhlasíte."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were marked as oversized."
 msgstr ""
@@ -2779,9 +1690,6 @@ msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
 msgid "Titulek stránky"
 msgstr ""
 
-msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
-msgstr "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte."
-
 msgid "Top categories - full"
 msgstr "Promované kategorie - vše"
 
@@ -2794,20 +1702,8 @@ msgstr "Promované produkty - vše"
 msgid "Top products - view"
 msgstr "Promované produkty - zobrazení"
 
-msgid "Top produkty"
-msgstr ""
-
 msgid "Total"
 msgstr "Celkem"
-
-msgid "Total amount of VAT"
-msgstr "Celková výše DPH"
-
-msgid "Total common price excluding VAT"
-msgstr "Celková běžná cena bez DPH"
-
-msgid "Total common price including VAT"
-msgstr "Celková běžná cena s DPH"
 
 msgid "Total excluding VAT"
 msgstr "Celkem bez DPH"
@@ -2817,15 +1713,6 @@ msgstr "Celkem s DPH"
 
 msgid "Total order price (including VAT)"
 msgstr ""
-
-msgid "Total price"
-msgstr ""
-
-msgid "Total price excluding VAT"
-msgstr "Celková cena bez DPH"
-
-msgid "Total price including VAT"
-msgstr "Celková cena s DPH"
 
 msgid "Tracking URL"
 msgstr "URL pro sledování zásilky"
@@ -2911,35 +1798,17 @@ msgstr ""
 msgid "URL odkazu"
 msgstr ""
 
+msgid "URL settings"
+msgstr ""
+
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
-
-msgid "Ulice a č. popisné"
-msgstr ""
 
 msgid "Uložit"
 msgstr ""
 
 msgid "Uložit nastavení skladu"
 msgstr ""
-
-msgid "Uložit údaje"
-msgstr ""
-
-msgid "Unable to add product to cart"
-msgstr "Zboží se nepodařilo vložit do košíku."
-
-msgid "Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>"
-msgstr "Zboží se nepodařilo vložit do košíku:<br/><ul><li>{{ errors|raw }}</li></ul>"
-
-msgid "Unable to remove item from cart. The item is probably already removed."
-msgstr "Nepodařilo se odstranit položku z košíku. Nejspíš je již odstraněno"
-
-msgid "Unable to remove item from cart. The link for removing it probably expired, try it again."
-msgstr "Nepodařilo se odstranit položku z košíku. Zřejmě vypršela platnost odkazu pro jeho smazání, proto to vyzkoušejte ještě jednou."
-
-msgid "Unable to send some emails, please contact us for order verification."
-msgstr "Nepodařilo se odeslat některé e-maily, pro ověření objednávky nás prosím kontaktujte."
 
 msgid "Unavailable"
 msgstr "Nedostupné"
@@ -2983,23 +1852,8 @@ msgstr ""
 msgid "Upravit"
 msgstr ""
 
-msgid "Upravit údaje"
-msgstr ""
-
 msgid "Use stocks"
 msgstr ""
-
-msgid "User not found."
-msgstr "Uživatel nebyl nalezen."
-
-msgid "V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity|formatNumber }} {{ unitName }})"
-msgstr ""
-
-msgid "V košíku máte velké množství zboží {{name}}. Limit je {{ limit|formatNumber }} {{ unitName }}, proto budete mít speciální typ objednávky."
-msgstr ""
-
-msgid "VAT rate"
-msgstr "Sazba DPH"
 
 msgid "VAT rate (%)"
 msgstr "Výše DPH (%)"
@@ -3025,52 +1879,16 @@ msgstr "DPH - vše"
 msgid "Vats - view"
 msgstr "DPH - zobrazení"
 
-msgid "Vaše heslo"
-msgstr ""
-
-msgid "Vaše objednávka"
-msgstr ""
-
-msgid "Vaše první přihlášení"
-msgstr ""
-
-msgid "Vaše sleva s kódem byla uplatněna"
-msgstr ""
-
 msgid "Viditelný na homepage"
 msgstr ""
 
-msgid "View all results"
-msgstr "Zobrazit všechny výsledky"
-
-msgid "View more"
-msgstr "Zobrazit více"
-
-msgid "View results"
-msgstr "Zobrazit výsledky"
-
 msgid "Visibility"
-msgstr ""
-
-msgid "Vyberte prodejnu kde si vyzvednete zásilku"
-msgstr ""
-
-msgid "Vyberte prodejnu ze seznamu"
-msgstr ""
-
-msgid "Vyberte způsob dopravy"
-msgstr ""
-
-msgid "Vyberte způsob platby"
 msgstr ""
 
 msgid "Vybraná notifikační lišta neexistuje"
 msgstr ""
 
 msgid "Vybraná rubrika blogu neexistuje."
-msgstr ""
-
-msgid "Vybrané filtry"
 msgstr ""
 
 msgid "Vybraný problém v přenosu nebyl nalezen"
@@ -3098,9 +1916,6 @@ msgid "Vyprodáno"
 msgstr ""
 
 msgid "Vypršelá platnost platby"
-msgstr ""
-
-msgid "Vystaveno"
 msgstr ""
 
 msgid "Vytvoření email template - %name%"
@@ -3133,52 +1948,13 @@ msgstr ""
 msgid "Vytvořit nový článek blogu"
 msgstr ""
 
-msgid "Vytvořte si heslo"
-msgstr ""
-
-msgid "Vytíženost infolinky"
-msgstr ""
-
-msgid "Využijte náš"
-msgstr ""
-
 msgid "Vyřadit z prodeje v celém eshopu"
 msgstr ""
 
 msgid "Vyřazení z prodeje dle domén"
 msgstr ""
 
-msgid "Váš e-mail"
-msgstr ""
-
-msgid "Váš košík je zatím prázdný."
-msgstr ""
-
-msgid "Váš nákup"
-msgstr ""
-
-msgid "Váš nákupní košík je prázdný."
-msgstr ""
-
-msgid "Váš účet byl úspěšně aktivován"
-msgstr ""
-
-msgid "Váše heslo"
-msgstr ""
-
-msgid "Výběr výprodejové kategorie"
-msgstr ""
-
 msgid "Výchozí sklad"
-msgstr ""
-
-msgid "Výprodej"
-msgstr ""
-
-msgid "Všechny produkty"
-msgstr ""
-
-msgid "Všechny články"
 msgstr ""
 
 msgid "Warehouse"
@@ -3186,9 +1962,6 @@ msgstr "Sklad"
 
 msgid "We have nothing to show you at this url."
 msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
-
-msgid "We will remember your login on this computer for 30 days."
-msgstr "Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dní."
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
@@ -3211,118 +1984,25 @@ msgstr ""
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
-msgid "You have been successfully registered."
-msgstr "Byli jste úspěšně zaregistrováni"
-
-msgid "You have been successfully subscribed to our newsletter."
-msgstr "Byli jste úspěšně přihlášeni k odběru našeho newsletteru."
-
 msgid "You have successfully paid order via GoPay."
 msgstr "Objednávku jste úspěšně zaplatili přes GoPay."
-
-msgid "You have to be logged in to enter this page"
-msgstr "Pro přístup na tuto stránku musíte být přihlášeni"
 
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
-msgid "You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment."
-msgstr "Musíte ještě nakoupit zboží za <strong> %price% </strong> abyste měli dopravu i platbu <strong> zdarma. </strong>"
-
-msgid "Your cart"
-msgstr "Váš košík"
-
-msgid "Your cart is empty"
-msgstr "Váš nákupní košík je prázdný"
-
-msgid "Your cart is unfortunately empty. To create order, you have to <a href=\"%url%\">choose</a> some product first"
-msgstr "Váš nákupní košík je bohužel prázdný. Pro vytvoření objednávky si musíte nejdříve nějaké zboží <a href=\"%url%\">vybrat</a>."
-
-msgid "Your data had been successfully updated"
-msgstr "Vaše údaje byly úspěšně zaktualizovány"
-
-msgid "Your discount"
-msgstr "Vaše sleva"
-
-msgid "Youtube"
-msgstr ""
-
 msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."
-msgstr ""
-
-msgid "Zadali jste špatné uživatelské jméno nebo heslo."
 msgstr ""
 
 msgid "Zadany kod neni spravny"
 msgstr ""
 
-msgid "Zadejte heslo"
-msgstr ""
-
-msgid "Zaokrouhlení"
-msgstr ""
-
-msgid "Zaplatit"
-msgstr ""
-
-msgid "Zaplatíte"
-msgstr ""
-
-msgid "Zapomněli jste heslo?"
-msgstr ""
-
-msgid "Zapomněli jste vaše heslo?"
-msgstr ""
-
-msgid "Zaregistrujte se k odběru newsletteru<br> a získejte slevu 35&nbsp;% na běžecké vybavení"
-msgstr ""
-
-msgid "Zavřít"
-msgstr ""
-
-msgid "Zavřít okno"
-msgstr ""
-
-msgid "Začněte zadáním e-mailu"
-msgstr ""
-
-msgid "Zařazeno v kategoriích:"
-msgstr ""
-
 msgid "Změna stavu objednávky"
-msgstr ""
-
-msgid "Změna způsobu platby objednávky"
-msgstr ""
-
-msgid "Značky"
 msgstr ""
 
 msgid "Zobrazit kombinace"
 msgstr ""
 
-msgid "Zobrazit méně"
-msgstr ""
-
 msgid "Zobrazit v rozcestníku"
-msgstr ""
-
-msgid "Zobrazit víc"
-msgstr ""
-
-msgid "Zobrazit více"
-msgstr ""
-
-msgid "Zobrazit všechny"
-msgstr ""
-
-msgid "Zpět"
-msgstr ""
-
-msgid "Zpět do e-shopu"
-msgstr ""
-
-msgid "Zpět do obchodu"
 msgstr ""
 
 msgid "Zpět na nástěnku"
@@ -3343,47 +2023,14 @@ msgstr ""
 msgid "Zpět výpis"
 msgstr ""
 
-msgid "Způsob platby byl úspěšně změněn"
-msgstr ""
-
-msgid "Zrušit vše"
-msgstr ""
-
-msgid "Zrušit úpravy"
-msgstr ""
-
 msgid "Zvolená položka navigace neexistuje."
-msgstr ""
-
-msgid "Zákaznické centrum"
-msgstr ""
-
-msgid "Zákaznický servis"
-msgstr ""
-
-msgid "Zákaznický servis telefon"
-msgstr ""
-
-msgid "[1,4] Zobrazit %count% nejprodávanější | [5,Inf] Zobrazit %count% nejprodávanějších"
 msgstr ""
 
 msgid "blogArticles"
 msgstr ""
 
-msgid "do"
-msgstr ""
-
-msgid "excluding VAT"
-msgstr "bez DPH"
-
 msgid "flags"
 msgstr "příznaků"
-
-msgid "from"
-msgstr "z"
-
-msgid "from %price%"
-msgstr "od %price%"
 
 msgid "from most expensive"
 msgstr ""
@@ -3409,9 +2056,6 @@ msgstr ""
 msgid "new customers"
 msgstr ""
 
-msgid "od"
-msgstr ""
-
 msgid "order statuses"
 msgstr ""
 
@@ -3420,12 +2064,6 @@ msgstr ""
 
 msgid "parameterValue"
 msgstr ""
-
-msgid "plazmová"
-msgstr "plazmová"
-
-msgid "products"
-msgstr "zboží"
 
 msgid "přenos souborů \"Instalační manuál\""
 msgstr ""
@@ -3436,20 +2074,8 @@ msgstr ""
 msgid "readyCategorySeoMixs"
 msgstr "SEO kombinace kategorií"
 
-msgid "records"
-msgstr "záznamů"
-
 msgid "relevance"
 msgstr ""
-
-msgid "seřadit"
-msgstr ""
-
-msgid "strana %currentPage% z %pageCount%"
-msgstr ""
-
-msgid "to"
-msgstr "do"
 
 msgid "turnover in"
 msgstr ""
@@ -3463,49 +2089,13 @@ msgstr ""
 msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
 msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
 
-msgid "{0} <strong class=\"js-paging-total-count\">0</strong> produktů |{1} <strong class=\"js-paging-total-count\">1</strong> produkt |{2, 3, 4} <strong class=\"js-paging-total-count\">%itemsCount%</strong> produkty |]4,Inf[ <strong class=\"js-paging-total-count\">%itemsCount%</strong> produktů"
-msgstr ""
-
-msgid "{0} Můžete mít ihned | [1,Inf] Osobní odběr do %daysAvailability% dnů"
-msgstr ""
-
-msgid "{0} Můžete mít ihned | {1} K dispozici do 1 týdne | [2,Inf] K dispozici do %weeksAvailability% týdnů"
-msgstr ""
-
-msgid "{0} Můžete mít ještě dnes | [1,Inf] Doručení do %daysAvailability% dnů"
-msgstr ""
-
-msgid "{0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found"
-msgstr "{0} Nebyl nalezen žádný produkt | {1} Celkem nalezen 1 produkt | [2,4] Celkem nalezeny %totalProductCount% produkty | [5,Inf] Celkem nalezeno %totalProductCount% produktů"
-
 msgid "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 msgstr ""
 
 msgid "{0}|{1}Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 msgstr ""
 
-msgid "{1} <strong class=\"cart__state\">%itemsCount%</strong> item for <strong class=\"cart__state\">%priceWithVat%</strong>|[2,Inf] <strong class=\"cart__state\">%itemsCount%</strong> items for <strong class=\"cart__state\">%priceWithVat%</strong>"
-msgstr "{1} <strong class=\"cart__state\">%itemsCount%</strong> položka za <strong class=\"cart__state\">%priceWithVat%</strong> |[2,4] <strong class=\"cart__state\">%itemsCount%</strong> položky za <strong class=\"cart__state\">%priceWithVat%</strong> |[5,Inf] <strong class=\"cart__state\">%itemsCount%</strong> položek za <strong class=\"cart__state\">%priceWithVat%</strong>"
-
-msgid "{1} K dispozici do 1 týdne | [2,Inf] K dispozici do %weeksAvailability% týdnů"
-msgstr ""
-
-msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
-msgstr "{1}Načíst další položku|[2,4]Načíst další %loadNextCount% položky|[5,Inf]Načíst dalších %loadNextCount% položek"
-
-msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
-msgstr "{1}Načíst další %loadNextCount% produkt|[2,4]Načíst další %loadNextCount% produkty|[5,Inf]Načíst dalších %loadNextCount% produktů"
-
-msgid "{1}Načíst další %loadNextCount% článek|[2,4]Načíst další %loadNextCount% články|[5,Inf]Načíst dalších %loadNextCount% článků"
-msgstr ""
-
 msgid "Úprava hodnoty parametru typu barva - %name%"
-msgstr ""
-
-msgid "Úvodní strana"
-msgstr ""
-
-msgid "Česko"
 msgstr ""
 
 msgid "Článek blogu"
@@ -3523,15 +2113,6 @@ msgstr ""
 msgid "Články blogu"
 msgstr ""
 
-msgid "Číst dále"
-msgstr ""
-
-msgid "č. produktu:"
-msgstr ""
-
-msgid "My bank<br> Č.ú. 123456789 / 9876<br> IBAN: CZ12 0000 0000 0001 2345 6789 <br> BIC / SWIFT: MBNKCZPP"
-msgstr ""
-
 msgid "Řazení"
 msgstr ""
 
@@ -3541,13 +2122,7 @@ msgstr ""
 msgid "Škálovaný slevový kupón"
 msgstr ""
 
-msgid "Špatné přihlašovací údaje"
-msgstr ""
-
 msgid "Žádná hodnota parameteru typu barva není vytvořena."
-msgstr ""
-
-msgid "Žádné výsledky vyhledávání"
 msgstr ""
 
 msgid "Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit."
