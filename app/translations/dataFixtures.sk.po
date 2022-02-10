@@ -454,6 +454,9 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
+msgid "Action"
+msgstr "Akcia"
+
 msgid "Active"
 msgstr ""
 

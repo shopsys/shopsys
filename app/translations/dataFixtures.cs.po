@@ -454,6 +454,9 @@ msgstr "Herní počítačová myš A4Tech X-710BK s pěti tlačítky a scrolovac
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, černá"
 
+msgid "Action"
+msgstr "Akce"
+
 msgid "Active"
 msgstr "Aktivní"
 

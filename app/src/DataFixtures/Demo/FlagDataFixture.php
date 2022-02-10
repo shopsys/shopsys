@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
+use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
@@ -23,18 +25,34 @@ class FlagDataFixture extends AbstractReferenceFixture
     private $flagFacade;
 
     /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
+     * @var \App\Model\Product\Flag\FlagDataFactory
+     */
+    private FlagDataFactory $flagDataFactory;
+
+    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      */
     public function __construct(
-        FlagFacade $flagFacade
+        FlagFacade $flagFacade,
+        FlagDataFactory $flagDataFactory,
+        Domain $domain
     ) {
         $this->flagFacade = $flagFacade;
+        $this->flagDataFactory = $flagDataFactory;
+        $this->domain = $domain;
     }
 
     /**
      * Flags are created in database migration.
      *
-     * @see \Shopsys\FrameworkBundle\Migrations\Version20200221155940
+     * @see \App\Migrations\Version20200221155940
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
@@ -57,5 +75,14 @@ class FlagDataFixture extends AbstractReferenceFixture
         if ($referenceName !== null) {
             $this->addReference($referenceName, $flag);
         }
+        if ($referenceName !== self::FLAG_PRODUCT_ACTION) {
+            return;
+        }
+
+        $flagData = $this->flagDataFactory->createFromFlag($flag);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $flagData->name[$locale] = t('Action', [], 'dataFixtures', $locale);
+        }
+        $this->flagFacade->edit($flagId, $flagData);
     }
 }
