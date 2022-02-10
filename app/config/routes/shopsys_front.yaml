@@ -80,10 +80,6 @@ front_additional_image_without_type:
         imageId: \d+
         additionalIndex: \d+
 
-front_login_check:
-    # controller's action is unnecessary, because firewall processes whole request
-    path: /login/check
-
 front_export_personal_data:
     path: /personal-overview-export/xml/{hash}
 

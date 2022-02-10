@@ -147,32 +147,6 @@ security:
             guard:
                 authenticators:
                     - App\FrontendApi\Model\Token\TokenAuthenticator
-        frontend:
-            pattern: ^/
-            anonymous: ~
-            provider: user_identities
-            form_login:
-                check_path: front_login_check
-                login_path: front_login
-                username_parameter: "front_login_form[email]"
-                password_parameter: "front_login_form[password]"
-                csrf_parameter: "front_login_form[_token]"
-                success_handler: Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler
-                failure_handler: Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler
-                remember_me: true
-            remember_me:
-                secret: "%secret%"
-                lifetime: 2592000 # 30 days
-                path: /
-                domain: ~
-                remember_me_parameter: "front_login_form[rememberMe]"
-            logout:
-                path: front_logout
-                success_handler: Shopsys\FrameworkBundle\Model\Security\FrontLogoutHandler
-                csrf_parameter: _csrf_token
-                csrf_token_generator: security.csrf.token_manager
-                csrf_token_id: frontend_logout
-                invalidate_session: false
 
     access_control:
         # This makes the logout route accessible during two-factor authentication. Allows the user to

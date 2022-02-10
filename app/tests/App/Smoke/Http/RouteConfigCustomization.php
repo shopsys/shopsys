@@ -73,7 +73,7 @@ class RouteConfigCustomization
                     $config->skipRoute('Only routes for front-end and administration are tested.');
                 }
             })
-            ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config) {
+            ->customizeByRouteName('admin_login_check', function (RouteConfig $config) {
                 $config->skipRoute(
                     'Used by firewall to catch login requests. '
                     . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path'
