@@ -215,6 +215,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", mappedBy="mainVariant", cascade={"persist"})
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $variants;
 
