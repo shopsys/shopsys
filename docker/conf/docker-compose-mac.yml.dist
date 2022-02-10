@@ -35,6 +35,7 @@ services:
             - "8000:8080"
 
     storefront:
+        restart: always
         build:
             context: ./storefront
             dockerfile: ./docker/Dockerfile

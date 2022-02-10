@@ -17,6 +17,7 @@ services:
             - shopsys-network
 
     storefront:
+        restart: always
         build:
             context: ./storefront
             dockerfile: docker/Dockerfile
