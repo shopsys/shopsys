@@ -69,7 +69,11 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
             </ProductStyled>
 
             <ButtonsStyled>
-                <ButtonStyled onClick={props.onCloseCallback} type="button">
+                <ButtonStyled
+                    onClick={props.onCloseCallback}
+                    type="button"
+                    data-testid={testIdentifier + '-button-back'}
+                >
                     {t('Back to shop')}
                 </ButtonStyled>
                 <LinkStyled href={cartUrl} isButton={true}>

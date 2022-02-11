@@ -183,6 +183,7 @@ const Select: FC<SelectProps> = (props) => {
                     image={transportItem.image}
                     checked={isActive}
                     uncheckCallback={resetTransportAndPayment}
+                    data-testid={testIdentifier + 'transport-item-input'}
                     label={
                         <SelectItemLabel
                             name={transportItem.name}
@@ -217,6 +218,7 @@ const Select: FC<SelectProps> = (props) => {
                     image={paymentItem.image}
                     checked={isActive}
                     uncheckCallback={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                    data-testid={testIdentifier + 'payment-item-input'}
                     label={
                         <SelectItemLabel
                             name={paymentItem.name}

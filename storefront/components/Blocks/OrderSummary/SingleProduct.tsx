@@ -16,21 +16,23 @@ type SingleProductProps = {
 };
 
 const SingleProduct: FC<SingleProductProps> = (props) => {
+    const testIdentifier = 'blocks-ordersummary-singleproduct-';
+
     const t = useTypedTranslationFunction();
 
     return (
         <ListItemStyled>
-            <ListItemPictureWrapper>
+            <ListItemPictureWrapper data-testid={testIdentifier + 'image'}>
                 <Image image={props.item.product.image} alt={props.item.product.fullName} />
             </ListItemPictureWrapper>
             <ListItemInfoWrapper>
                 <ListItemInfo>
-                    <strong>
+                    <strong data-testid={testIdentifier + 'count'}>
                         {props.item.quantity} {props.item.product.unit.name} &nbsp;
                     </strong>
-                    {props.item.product.fullName}
+                    <span data-testid={testIdentifier + 'name'}>{props.item.product.fullName}</span>
                 </ListItemInfo>
-                <ListItemPrice>
+                <ListItemPrice data-testid={testIdentifier + 'price'}>
                     {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t)}
                 </ListItemPrice>
             </ListItemInfoWrapper>

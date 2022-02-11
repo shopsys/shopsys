@@ -26,20 +26,25 @@ type VariantProps = {
 };
 
 const Variant: FC<VariantProps> = (props) => {
+    const testIdentifier = 'pages-productdetail-variant-';
+
     const t = useTypedTranslationFunction();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
 
     return (
         <>
-            <VariantsTableRowStyled key={props.variant.uuid}>
+            <VariantsTableRowStyled key={props.variant.uuid} data-testid={testIdentifier + props.variant.catalogNumber}>
                 <VariantImageCellStyled>
                     <VariantImageWrapperStyled>
                         <Image alt={props.variant.name} image={props.variant.image} />
                     </VariantImageWrapperStyled>
                 </VariantImageCellStyled>
-                <VariantCellStyled>{props.variant.name}</VariantCellStyled>
-                <VariantAvailabilityCellStyled onClick={() => setAvailabilityPopupVisibility(true)}>
+                <VariantCellStyled data-testid={testIdentifier + 'name'}>{props.variant.name}</VariantCellStyled>
+                <VariantAvailabilityCellStyled
+                    onClick={() => setAvailabilityPopupVisibility(true)}
+                    data-testid={testIdentifier + 'availability'}
+                >
                     {props.variant.availability}
                     <ProductAvailableStoresCount
                         isMainVariant={false}
@@ -50,7 +55,7 @@ const Variant: FC<VariantProps> = (props) => {
                         exposedStoresCount={props.variant.exposedStoresCount}
                     />
                 </VariantAvailabilityCellStyled>
-                <VariantPriceCellStyled>
+                <VariantPriceCellStyled data-testid={testIdentifier + 'price'}>
                     {formatPrice(props.variant.price.priceWithVat, currencyCode, t)}
                 </VariantPriceCellStyled>
                 <VariantActionCellStyled>
