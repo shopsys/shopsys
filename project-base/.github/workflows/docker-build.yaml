@@ -11,6 +11,8 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build application
                 run: echo 1 | ./scripts/install.sh
+            -   name: Ensure Symfony 4 version
+                run: docker-compose exec -T php-fpm composer update
             -   name: Check standards
                 run: docker-compose exec -T php-fpm php phing standards
             -   name: Run tests
