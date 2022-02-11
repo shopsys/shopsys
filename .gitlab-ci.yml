@@ -246,7 +246,9 @@ deploy:production:
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
-        -   if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH =~ /^master-.*$/'
+        -   if: '$CI_COMMIT_BRANCH == "master"'
+            allow_failure: false
+        -   if: '$CI_COMMIT_BRANCH =~ /^master-.*$/'
             when: manual
             allow_failure: false
     environment:
