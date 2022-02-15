@@ -141,7 +141,7 @@ test:storefront-acceptance:
         - docker-compose up -d
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/http:\/\/webserver:8080/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create build-demo-dev-quick frontend-api-generate-new-keys error-pages-generate
-        - docker-compose up --force-recreate cypress
+        - docker-compose run cypress
     after_script:
         - docker-compose logs php-fpm > php-fpm-log.txt
         - docker-compose logs webserver > webserver-log.txt
