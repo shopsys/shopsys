@@ -17,3 +17,5 @@ There you can find links to upgrade notes for other versions too.
 - fix your standards
   - extract parts of `CustomerUserDataFixture::getCustomerUserUpdateData()` into private methods to lower the cyclomatic complexity of the method
   - see #project-base-diff
+- extract part of `install.sh` script into a new separate file (`configure.sh`) ([#2404](https://github.com/shopsys/shopsys/pull/2404))
+  - see #project-base-diff
