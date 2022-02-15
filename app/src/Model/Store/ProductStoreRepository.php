@@ -26,14 +26,6 @@ class ProductStoreRepository
     }
 
     /**
-     * @return \App\Model\Store\ProductStoreRepository|\Doctrine\Persistence\ObjectRepository
-     */
-    public function getProductStoreRepository()
-    {
-        return $this->em->getRepository(ProductStore::class);
-    }
-
-    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getQueryBuilder(): QueryBuilder

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\Model\Country\CountryFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
 class RegistrationDataFactory implements RegistrationDataFactoryInterface
 {
@@ -16,13 +16,13 @@ class RegistrationDataFactory implements RegistrationDataFactoryInterface
     protected Domain $domain;
 
     /**
-     * @var \App\Model\Country\CountryFacade
+     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
      */
     protected CountryFacade $countryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         Domain $domain,

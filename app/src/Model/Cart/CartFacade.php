@@ -296,47 +296,6 @@ class CartFacade extends BaseCartFacade
     }
 
     /**
-     * @return bool
-     */
-    public function isCartContainsProductWithOverLimitQuantity(): bool
-    {
-        $cart = $this->findCartOfCurrentCustomerUser();
-
-        if ($cart === null) {
-            return false;
-        }
-
-        foreach ($cart->getItems() as $item) {
-            $product = $item->getProduct();
-            $domainId = $this->domain->getId();
-            $itemQuantity = $item->getQuantity();
-            $overLimitQuantity = $this->categoryFacade->getOverLimitQuantity($product, $domainId);
-
-            if ($this->isQuantityOverLimitReached($itemQuantity, $overLimitQuantity)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $quantity
-     */
-    public function changeQuantity(Product $product, int $quantity): void
-    {
-        $cart = $this->findCartOfCurrentCustomerUser();
-
-        if ($cart === null) {
-            return;
-        }
-
-        $cart->changeQuantity($product, $quantity);
-        $this->em->flush();
-    }
-
-    /**
      * @param \App\Model\Cart\Cart $cart
      */
     public function deleteCart(Cart $cart)

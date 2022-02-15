@@ -151,14 +151,6 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
     public function getFinalPriceWithVat(): Money
@@ -197,25 +189,5 @@ class OrderItem extends BaseOrderItem
         }
 
         return $priceWithVat;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getFinalQuantifiedPriceWithoutVat(): Money
-    {
-        $priceWithoutVat = $this->getPriceWithoutVat()->multiply($this->quantity);
-
-        try {
-            $coupon = $this->getRelatedCoupon();
-
-            if ($coupon instanceof self) {
-                $priceWithoutVat = $priceWithoutVat->add($coupon->getPriceWithoutVat());
-            }
-        } catch (OrderItemRelatedException $e) {
-            //order item is not discounted
-        }
-
-        return $priceWithoutVat;
     }
 }

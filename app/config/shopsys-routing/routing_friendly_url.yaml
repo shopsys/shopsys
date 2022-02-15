@@ -3,35 +3,27 @@
 
 front_article_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ArticleController:detailAction }
 
 front_product_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:detailAction }
 
 front_product_list:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:listByCategoryAction }
 
 front_brand_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:listByBrandAction }
 
 front_blogarticle_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\BlogArticleController:detailAction }
 
 front_blogcategory_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\BlogCategoryController:detailAction }
 
 front_category_seo:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:listByCategoryAction }
 
 front_stores_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\StoreController:detailAction }
 
 front_flag_detail:
     path: friendly-url

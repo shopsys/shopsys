@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
-use App\Model\GoPay\Exception\GoPaySendPaymentException;
-use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class GoPayOnCurrentDomainFacade
 {
-    /**
-     * @var \App\Model\GoPay\GoPayOrderMapper
-     */
-    private $goPayOrderMapper;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -27,39 +20,14 @@ class GoPayOnCurrentDomainFacade
 
     /**
      * @param \App\Model\GoPay\GoPayClientFactory $goPayClientFactory
-     * @param \App\Model\GoPay\GoPayOrderMapper $goPayOrderMapper
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         GoPayClientFactory $goPayClientFactory,
-        GoPayOrderMapper $goPayOrderMapper,
         Domain $domain
     ) {
-        $this->goPayOrderMapper = $goPayOrderMapper;
         $this->domain = $domain;
         $this->goPayClientFactory = $goPayClientFactory;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string|null $goPayBankSwift
-     * @return array
-     */
-    public function sendPaymentToGoPay(Order $order, ?string $goPayBankSwift): array
-    {
-        $goPayPaymentData = $this->goPayOrderMapper->createGoPayPaymentData($order, $goPayBankSwift);
-        $goPayClient = $this->goPayClientFactory->createByLocale($this->domain->getLocale());
-        $response = $goPayClient->sendPaymentToGoPay($goPayPaymentData);
-
-        if ($response->hasSucceed()) {
-            return [
-                'gatewayUrl' => $response->json['gw_url'],
-                'embedJs' => $goPayClient->urlToEmbedJs(),
-                'goPayId' => $response->json['id'],
-            ];
-        }
-
-        throw new GoPaySendPaymentException();
     }
 
     /**
@@ -81,14 +49,5 @@ class GoPayOnCurrentDomainFacade
         }
 
         return $responses;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return bool
-     */
-    public function isOrderGoPayUnpaid(Order $order): bool
-    {
-        return $order->getPayment()->isGoPay() && $order->isGoPayPaid() === false;
     }
 }

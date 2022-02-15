@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
-use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
@@ -288,16 +287,6 @@ class ReadyCategorySeoMixFacade
         }
 
         return $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
-     */
-    public function getAllForShowInCategory(Category $category, int $domainId): array
-    {
-        return $this->readyCategorySeoMixRepository->getAllForShowInCategory($category, $domainId);
     }
 
     /**

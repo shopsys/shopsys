@@ -6,26 +6,3 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
-
-    App\Twig\PriceExtension: ~
-
-    Shopsys\FrameworkBundle\Twig\PriceExtension:
-        alias: App\Twig\PriceExtension
-
-    App\Twig\ImageExtension:
-        arguments:
-            $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
-            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
-
-    App\Twig\MailerSettingExtension:
-        arguments:
-            $showMailRestrictionInfoBar: '%env(bool:SHOW_MAIL_RESTRICTION_INFO_BAR)%'
-
-    Shopsys\ReadModelBundle\Twig\ImageExtension:
-        alias: App\Twig\ImageExtension
-
-    Shopsys\FrameworkBundle\Twig\ImageExtension:
-        alias: App\Twig\ImageExtension
-
-    Shopsys\FrameworkBundle\Twig\MailerSettingExtension:
-        alias: App\Twig\MailerSettingExtension

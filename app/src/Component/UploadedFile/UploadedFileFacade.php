@@ -16,24 +16,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
 class UploadedFileFacade extends BaseUploadedFileFacade
 {
     /**
-     * @param string $entityName
-     * @return string[]
-     */
-    public function getAllUploadedFilesFilePathByEntityName(string $entityName): array
-    {
-        $allUploadedFiles = $this->uploadedFileRepository->getAllUploadedFilesByEntityName(
-            $entityName
-        );
-
-        $allUploadedFilesFilePaths = [];
-        foreach ($allUploadedFiles as $uploadedFileId => $uploadedFile) {
-            $allUploadedFilesFilePaths[$uploadedFileId] = $this->getRelativeUploadedFileFilepath($uploadedFile);
-        }
-
-        return $allUploadedFilesFilePaths;
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
      * @return string
      */

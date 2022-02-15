@@ -223,14 +223,6 @@ class Order extends BaseOrder
     }
 
     /**
-     * @param bool $value
-     */
-    public function setIsOverLimit(bool $value): void
-    {
-        $this->isOverLimit = $value;
-    }
-
-    /**
      * @return string|null
      */
     public function getTrackingNumber(): ?string

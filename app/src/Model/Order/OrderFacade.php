@@ -9,7 +9,6 @@ use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use App\Model\Customer\User\RegistrationDataFactory;
 use App\Model\Customer\User\RegistrationFacade;
 use App\Model\GoPay\GoPayTransaction;
-use App\Model\Gtm\GtmHelper;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
@@ -110,11 +109,6 @@ class OrderFacade extends BaseOrderFacade
     private $registrationFacade;
 
     /**
-     * @var \App\Model\Gtm\GtmHelper
-     */
-    private $gtmHelper;
-
-    /**
      * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
      */
     private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
@@ -150,7 +144,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \App\Model\Gtm\GtmHelper $gtmHelper
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      */
     public function __construct(
@@ -184,7 +177,6 @@ class OrderFacade extends BaseOrderFacade
         OrderDataFactory $orderDataFactory,
         RegistrationDataFactory $registrationDataFactory,
         RegistrationFacade $registrationFacade,
-        GtmHelper $gtmHelper,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
     ) {
         parent::__construct(
@@ -220,7 +212,6 @@ class OrderFacade extends BaseOrderFacade
         $this->orderDataFactory = $orderDataFactory;
         $this->registrationDataFactory = $registrationDataFactory;
         $this->registrationFacade = $registrationFacade;
-        $this->gtmHelper = $gtmHelper;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
 
@@ -290,9 +281,6 @@ class OrderFacade extends BaseOrderFacade
             $customerUser = $this->registerWithOrder($orderData, $frontOrderData);
             $loginCustomer = $customerUser->isActivated();
         }
-
-        $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
-        $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment, $orderData->personalPickupStore);
         $order = $this->createOrder($orderData, $orderPreview, $customerUser);

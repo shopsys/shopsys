@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-
 class CombinedArticleElasticsearchFacade
 {
     /**
@@ -19,16 +17,6 @@ class CombinedArticleElasticsearchFacade
     public function __construct(CombinedArticleElasticsearchRepository $combinedArticleElasticsearchRepository)
     {
         $this->combinedArticleElasticsearchRepository = $combinedArticleElasticsearchRepository;
-    }
-
-    /**
-     * @param string $searchText
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getSearchAutocompleteArticles(string $searchText, int $limit): PaginationResult
-    {
-        return $this->combinedArticleElasticsearchRepository->getSearchAutocompleteArticles($searchText, $limit);
     }
 
     /**

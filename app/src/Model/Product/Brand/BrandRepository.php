@@ -8,8 +8,6 @@ use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository as BaseBrandRepository;
 
@@ -37,25 +35,6 @@ class BrandRepository extends BaseBrandRepository
         parent::__construct($entityManager);
 
         $this->domain = $domain;
-    }
-
-    /**
-     * @param string|null $searchText
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForSearch(
-        $searchText,
-        $page,
-        $limit
-    ): PaginationResult {
-        $queryBuilder = $this->getBySearchTextQueryBuilder($searchText);
-        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
     }
 
     /**

@@ -7,7 +7,6 @@ namespace App\Model\Order\Preview;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Store\Store;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
@@ -116,10 +115,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
 
-        $restToFreeTransportPrice = Money::zero();
-        $percentageOfFreeTransport = 0;
-        $transportForFree = false;
-
         if ($transport !== null) {
             $transportPrice = $this->transportPriceCalculation->calculatePrice(
                 $transport,
@@ -127,9 +122,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                 $productsPrice,
                 $domainId
             );
-            if ($transportPrice->getPriceWithoutVat() === Money::zero()) {
-                $transportForFree = true;
-            }
         } else {
             $transportPrice = null;
         }
@@ -160,8 +152,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice
         );
 
-        $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
-        $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
         return new OrderPreview(
@@ -170,9 +160,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $quantifiedItemsDiscounts,
             $productsPrice,
             $totalPrice,
-            $productsAvailability,
             $quantifiedItemsDiscountPrices,
-            $productsFullPrice,
             $totalPriceDiscount,
             $transport,
             $transportPrice,
@@ -181,9 +169,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice,
             $promoCodeDiscountPercent,
             $personalPickupStore,
-            $restToFreeTransportPrice,
-            $percentageOfFreeTransport,
-            $transportForFree,
             $promoCode
         );
     }

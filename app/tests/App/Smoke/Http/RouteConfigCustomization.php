@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Smoke\Http;
 
-use App\Controller\Front\ProductController;
-use App\DataFixtures\Demo\CustomerUserDataFixture;
-use App\DataFixtures\Demo\OrderDataFixture;
-use App\DataFixtures\Demo\PersonalDataAccessRequestDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use App\Form\Front\Order\OrderFlow;
 use App\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -78,7 +73,7 @@ class RouteConfigCustomization
                     $config->skipRoute('Only routes for front-end and administration are tested.');
                 }
             })
-            ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config) {
+            ->customizeByRouteName('admin_login_check', function (RouteConfig $config) {
                 $config->skipRoute(
                     'Used by firewall to catch login requests. '
                     . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path'
@@ -360,6 +355,9 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Login as "superadmin" to see CSP setting page')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_customer_loginasuser', function (RouteConfig $config) {
+                $config->skipRoute('Login as customer is currently not supported (it is not implemented on JS storefront)');
             });
     }
 
@@ -368,205 +366,11 @@ class RouteConfigCustomization
      */
     private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
     {
-        $routeConfigCustomizer
-            ->customizeByRouteName(['front_customer_edit', 'front_customer_orders'], function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Log as demo user "Jaromír Jágr" on pages in client section.')
-                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'));
-            })
-            ->customizeByRouteName(['front_customer_login_as_remembered_user', 'front_promo_code_remove'], function (RouteConfig $config, RouteInfo $info) {
-                $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName('front_login', function (RouteConfig $config) {
-                $config->addExtraRequestDataSet('Logged user on login page is redirected onto homepage')
-                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName(
-                [
-                    OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT,
-                    OrderFlow::ROUTE_NAME_STEP_PERSONAL_INFO,
-                    'front_order_sent',
-                ],
-                function (RouteConfig $config) {
-                    $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
-                    $config->changeDefaultRequestDataSet($debugNote)
-                        ->setExpectedStatusCode(302);
-                }
-            )
-            ->customizeByRouteName(['front_order_paid', 'front_order_not_paid'], function (RouteConfig $config) {
-                $debugNote = 'Order paid and not paid URLs needs urlHash as parameter.';
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setParameter('urlHash', 'notExistingUrlHash')
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName('front_logout', function (RouteConfig $config) {
-                $debugNote = 'Add CSRF token for logout action (configured in config/packages/security.yaml) during test execution.';
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {
-                        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
-                        $csrfTokenManager = $container->get('security.csrf.token_manager');
-
-                        $token = $csrfTokenManager->getToken('frontend_logout');
-
-                        $requestDataSet->setParameter('_csrf_token', $token->getValue());
-                    });
-                $config->changeDefaultRequestDataSet('Logout action should redirect by 302')
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName('front_article_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 1 as default article.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName('front_brand_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 1 as default brand.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName(['front_customer_order_detail_unregistered', 'front_order_repeat_gopay_payment'], function (RouteConfig $config) {
-                /** @var \App\Model\Order\Order $order */
-                $order = $this->getPersistentReference(OrderDataFixture::ORDER_PREFIX . '1');
-
-                $debugNote = sprintf('Use hash of order n. %s for unregistered access.', $order->getNumber());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setParameter('urlHash', $order->getUrlHash());
-            })
-            ->customizeByRouteName('front_customer_order_detail_registered', function (RouteConfig $config) {
-                /** @var \App\Model\Order\Order $order */
-                $order = $this->getPersistentReference(OrderDataFixture::ORDER_PREFIX . '1');
-
-                $debugNote = sprintf('Log as demo user "Jaromír Jágr" on front-end to access order n. %s.', $order->getNumber());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
-                    ->setParameter('orderNumber', $order->getNumber());
-            })
-            ->customizeByRouteName('front_product_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 1 as default product.')
-                    ->setParameter('id', 1);
-                $config->addExtraRequestDataSet('See detail of a product that is main variant')
-                    ->setParameter('id', 69);
-                $config->addExtraRequestDataSet('See detail of a product that is variant')
-                    ->setParameter('id', 150)
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName('front_product_list', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 2 as default category (ID 1 is the root).')
-                    ->setParameter('id', 2);
-                $config->addExtraRequestDataSet('See category that has 500 products in performance data')
-                    ->setParameter('id', 8);
-                $config->addExtraRequestDataSet('See and filter category that has 500 products in performance data')
-                    ->setParameter('id', 8)
-                    ->setParameter('product_filter_form', [
-                        'inStock' => '1',
-                        'parameters' => [
-                            41 => [58],
-                        ],
-                    ]);
-                $config->addExtraRequestDataSet('See category that has 7600 products in performance data')
-                    ->setParameter('id', 3);
-                $config->addExtraRequestDataSet('See and filter category that has 7600 products in performance data')
-                    ->setParameter('id', 3)
-                    ->setParameter('product_filter_form', [
-                        'minimalPrice' => '100',
-                        'inStock' => '1',
-                        'parameters' => [
-                            1 => ['1'],
-                        ],
-                    ]);
-                $config->addExtraRequestDataSet('See category that has 3600 products in performance data')
-                    ->setParameter('id', 11);
-                $config->addExtraRequestDataSet('See and filter category that has 3600 products in performance data')
-                    ->setParameter('id', 11)
-                    ->setParameter('product_filter_form', [
-                        'minimalPrice' => '100',
-                        'inStock' => '1',
-                    ]);
-            })
-            ->customizeByRouteName('front_product_search', function (RouteConfig $config) {
-                $config->addExtraRequestDataSet('Search for "a" and filter the results')
-                    ->setParameter(ProductController::SEARCH_TEXT_PARAMETER, 'a')
-                    ->setParameter('product_filter_form', [
-                        'inStock' => '1',
-                        'flags' => ['2'],
-                        'brands' => ['2', '19'],
-                    ]);
-            })
-            ->customizeByRouteName('front_registration_set_new_password', function (RouteConfig $config) {
-                /** @var \App\Model\Customer\User\CustomerUser $customer */
-                $customer = $this->getPersistentReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
-
-                $config->changeDefaultRequestDataSet('See new password page for customer with reset password hash.')
-                    ->setParameter('email', $customer->getEmail())
-                    ->setParameter('hash', $customer->getResetPasswordHash());
-                $config->addExtraRequestDataSet('Expect redirect when the hash is invalid.')
-                    ->setParameter('hash', 'invalidHash')
-                    ->setExpectedStatusCode(302);
-            })
-            ->customizeByRouteName('front_customer_activation', function (RouteConfig $config) {
-                $config->skipRoute('Customer activation is not tested.');
-            })
-            ->customizeByRouteName('front_personal_data_access', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
-                $personalDataAccessRequest = $this->getPersistentReference(PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_DISPLAY_REQUEST);
-
-                $config->changeDefaultRequestDataSet('Check personal data site with wrong hash')
-                    ->setParameter('hash', 'invalidHash')
-                    ->setExpectedStatusCode(404);
-                $config->addExtraRequestDataSet('Check personal data site with right hash')
-                    ->setParameter('hash', $personalDataAccessRequest->getHash())
-                    ->setExpectedStatusCode(200);
-            })
-            ->customizeByRouteName('front_personal_data_access_export', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
-                $personalDataAccessRequest = $this->getPersistentReference(PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST);
-
-                $config->changeDefaultRequestDataSet('Check personal data export site with wrong hash')
-                    ->setParameter('hash', 'invalidHash')
-                    ->setExpectedStatusCode(404);
-                $config->addExtraRequestDataSet('Check personal data export site with right hash')
-                    ->setParameter('hash', $personalDataAccessRequest->getHash())
-                    ->setExpectedStatusCode(200);
-            })
-            ->customizeByRouteName('front_export_personal_data', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
-                $personalDataAccessRequest = $this->getPersistentReference(PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST);
-
-                $config->changeDefaultRequestDataSet('Check personal data XML export with wrong hash')
-                    ->setParameter('hash', 'invalidHash')
-                    ->setExpectedStatusCode(404);
-                $config->addExtraRequestDataSet('Check personal data XML export with right hash')
-                    ->setParameter('hash', $personalDataAccessRequest->getHash())
-                    ->setExpectedStatusCode(200);
-            })
-            ->customizeByRouteName(['front_download_uploaded_file'], function (RouteConfig $config) {
-                $config->skipRoute('Downloading uploaded files is not tested.');
-            })
-            ->customizeByRouteName('front_blogarticle_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 1 as default blog article.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName('front_blogcategory_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 2 as default blog category.')
-                    ->setParameter('id', 2);
-            })
-            ->customizeByRouteName('front_category_seo', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Check not implemented route.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName('front_similar_products', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Similar product internal route.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName('front_stores_detail', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Use ID 1 as default stock.')
-                    ->setParameter('id', 1);
-            })
-            ->customizeByRouteName('front_frontend_switch', function (RouteConfig $config) {
-                $config->skipRoute('Frontend switcher is not tested.');
-            })
-            ->customizeByRouteName('front_flag_detail', function (RouteConfig $config) {
-                $config->skipRoute('Frontend flag detail will not be implemented in twig.');
-            });
+        $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) {
+            if (preg_match('~^front_~', $info->getRouteName())) {
+                $config->skipRoute('Frontend routes are not smoke tested anymore (JS Storefront is used)');
+            }
+        });
     }
 
     /**

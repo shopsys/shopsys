@@ -10,7 +10,6 @@ use Elasticsearch\Client;
 use InvalidArgumentException;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class CombinedArticleElasticsearchRepository
 {
@@ -46,16 +45,6 @@ class CombinedArticleElasticsearchRepository
 
     /**
      * @param string $searchText
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getSearchAutocompleteArticles(string $searchText, int $limit): PaginationResult
-    {
-        return $this->getSortedArticlesResultByQuery($this->getSearchQuery($searchText, $limit), $limit);
-    }
-
-    /**
-     * @param string $searchText
      * @param int|null $limit
      * @return array
      */
@@ -64,23 +53,6 @@ class CombinedArticleElasticsearchRepository
         $result = $this->client->search($this->getSearchQuery($searchText, $limit));
 
         return $this->extractHits($result);
-    }
-
-    /**
-     * @param array $query
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getSortedArticlesResultByQuery(array $query, int $limit): PaginationResult
-    {
-        $result = $this->client->search($query);
-
-        return new PaginationResult(
-            1,
-            $limit,
-            $this->extractTotalCount($result),
-            $this->extractHits($result)
-        );
     }
 
     /**
@@ -130,15 +102,6 @@ class CombinedArticleElasticsearchRepository
         $result['url'] = $article['url'] ?? '';
 
         return $result;
-    }
-
-    /**
-     * @param array $result
-     * @return int
-     */
-    private function extractTotalCount(array $result): int
-    {
-        return (int)$result['hits']['total']['value'];
     }
 
     /**

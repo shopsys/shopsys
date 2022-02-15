@@ -152,10 +152,20 @@ parameters:
         ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
             - '*/src/Model/Product/ProductData.php'
 
+        # the properties are actually used in query builders
         SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty:
             - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'
             - '*/src/Model/Order/Item/OrderItem.php'
             - '*/src/Model/Order/PromoCode/PromoCode.php'
+            - '*/src/Model/Blog/Article/BlogArticleBlogCategoryDomain.php'
+            - '*/src/Model/Blog/Article/BlogArticleDomain.php'
+            - '*/src/Model/Blog/Category/BlogCategoryDomain.php'
+            - '*/src/Model/CategorySeo/ReadyCategorySeoMix.php'
+            - '*/src/Model/CategorySeo/ReadyCategorySeoMixParameterParameterValue.php'
+            - '*/src/Model/Order/PromoCode/PromoCodeFlag/PromoCodeFlag.php'
+            - '*/src/Model/Order/PromoCode/PromoCodeLimit.php'
+            - '*/src/Model/Order/PromoCode/PromoCodePricingGroup.php'
+            - '*/src/Model/Store/ProductStore.php'
 
         SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty:
             - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'

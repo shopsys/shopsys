@@ -148,27 +148,11 @@ class SliderItem extends BaseSliderItem
     }
 
     /**
-     * @param string|null $gtmId
-     */
-    public function setGtmId($gtmId): void
-    {
-        $this->gtmId = $gtmId;
-    }
-
-    /**
      * @return  string|null
      */
     public function getGtmCreative(): ?string
     {
         return $this->gtmCreative;
-    }
-
-    /**
-     * @param string|null $gtmCreative
-     */
-    public function setGtmCreative($gtmCreative): void
-    {
-        $this->gtmCreative = $gtmCreative;
     }
 
     /**

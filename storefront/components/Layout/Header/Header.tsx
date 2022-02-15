@@ -10,7 +10,6 @@ import {
 import AutocompleteSearch from './AutocompleteSearch';
 import Cart from './Cart';
 import DropdownMenu from './DropdownMenu';
-import FrontendSwitcher from 'components/Blocks/FrontendSwitcher';
 import HamburgerMenu from './HamburgerMenu';
 import HeaderContact from './Contact/HeaderContact';
 import Logo from './Logo';
@@ -52,7 +51,6 @@ const Header: FC = () => {
                         <Cart />
                     </HeaderCartStyled>
                     <Overlay isActive={isMenuOpened} />
-                    <FrontendSwitcher />
                 </>
             )}
         </HeaderStyled>

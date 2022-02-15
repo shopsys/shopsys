@@ -59,14 +59,6 @@ class ReadyCategorySeoMixParameterParameterValue
     }
 
     /**
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
-     */
-    public function getReadyCategorySeoMix(): ReadyCategorySeoMix
-    {
-        return $this->readyCategorySeoMix;
-    }
-
-    /**
      * @return \App\Model\Product\Parameter\Parameter
      */
     public function getParameter(): Parameter

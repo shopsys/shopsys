@@ -52,6 +52,9 @@ parameters:
             # in fact, anything can be passed to the load function, it just has a bad annotation
             message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
             path: %currentWorkingDirectory%/src/FrontendApi/*
+        -
+            message: '#^Unreachable statement - code above always terminates\.#'
+            path: %currentWorkingDirectory%/tests/App/Functional/EntityExtension/EntityExtensionTest.php
 
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon

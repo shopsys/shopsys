@@ -2,7 +2,6 @@
 
 ## Configuration
 
-- [Twig cache](Configuration/twig-cache.md)
 - [Environment variables](Configuration/environment-variables.md)
 
 ### Frontend API

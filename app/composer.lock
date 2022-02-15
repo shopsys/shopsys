@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "545141220157b783b90ef10fd27764ca",
+    "content-hash": "0fef92dea95fdb3537f628cff568514d",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -10269,62 +10269,6 @@
             ],
             "support": {
                 "source": "https://github.com/shopsys/product-feed-zbozi/tree/v9.1.2"
-            },
-            "time": "2021-07-01T08:28:33+00:00"
-        },
-        {
-            "name": "shopsys/read-model",
-            "version": "v9.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shopsys/read-model.git",
-                "reference": "d1b77351fccdd76693a8c52f222ff9076c035189"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/read-model/zipball/d1b77351fccdd76693a8c52f222ff9076c035189",
-                "reference": "d1b77351fccdd76693a8c52f222ff9076c035189",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4.1",
-                "shopsys/form-types-bundle": "9.1.2",
-                "shopsys/framework": "9.1.2",
-                "shopsys/migrations": "9.1.2",
-                "shopsys/plugin-interface": "9.1.2",
-                "symfony/config": "^4.4",
-                "symfony/dependency-injection": "^4.4",
-                "symfony/http-kernel": "^4.4.13",
-                "webmozart/assert": "^1.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0",
-                "shopsys/coding-standards": "9.1.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Shopsys\\ReadModelBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Shopsys",
-                    "homepage": "https://www.shopsys.com/"
-                }
-            ],
-            "description": "[experimental] Read model layer for Shopsys Framework",
-            "keywords": [
-                "SSFW",
-                "Shopsys Framework",
-                "read model"
-            ],
-            "support": {
-                "source": "https://github.com/shopsys/read-model/tree/v9.1.2"
             },
             "time": "2021-07-01T08:28:33+00:00"
         },

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Component\Doctrine\OrderByCollationHelper;
-use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use function GuzzleHttp\json_encode;
 
@@ -23,25 +21,17 @@ class ReadyCategorySeoMixRepository
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @var string[][][]
      */
     private array $readySeoCategorySetup;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        EntityManagerInterface $em,
-        Domain $domain
+        EntityManagerInterface $em
     ) {
         $this->em = $em;
-        $this->domain = $domain;
         $this->readySeoCategorySetup = [];
     }
 
@@ -220,30 +210,6 @@ class ReadyCategorySeoMixRepository
                 'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
             );
         }
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
-     */
-    public function getAllForShowInCategory(Category $category, int $domainId): array
-    {
-        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-
-        return $this->em->createQueryBuilder()
-            ->select('rcsm')
-            ->from(ReadyCategorySeoMix::class, 'rcsm')
-            ->andWhere('rcsm.category = :category')
-            ->andWhere('rcsm.domainId = :domainId')
-            ->andWhere('rcsm.showInCategory = true')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('rcsm.h1', $locale), 'asc')
-            ->setParameters([
-                'category' => $category,
-                'domainId' => $domainId,
-            ])
-            ->getQuery()
-            ->execute();
     }
 
     /**

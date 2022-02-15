@@ -63,22 +63,6 @@ class ProductStock
     }
 
     /**
-     * @return \App\Model\Product\Product|null
-     */
-    public function getProduct(): ?Product
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     */
-    public function setProduct(Product $product): void
-    {
-        $this->product = $product;
-    }
-
-    /**
      * @return int
      */
     public function getProductQuantity(): int

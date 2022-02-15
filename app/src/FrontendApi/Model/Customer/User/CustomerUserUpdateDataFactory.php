@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Customer\User;
 
-use App\Model\Country\CountryFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
@@ -14,13 +14,13 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory 
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
     /**
-     * @var \App\Model\Country\CountryFacade
+     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
      */
     protected CountryFacade $countryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \App\Model\Country\CountryFacade $countryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,

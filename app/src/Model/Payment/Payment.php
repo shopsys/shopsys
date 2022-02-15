@@ -104,11 +104,6 @@ class Payment extends BasePayment
         return $this->goPayPaymentMethod;
     }
 
-    public function hide(): void
-    {
-        $this->hidden = true;
-    }
-
     /**
      * @return bool
      */

@@ -40,14 +40,6 @@ class PromoCodeBrand
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
-
-    /**
      * @return \App\Model\Product\Brand\Brand
      */
     public function getBrand(): Brand

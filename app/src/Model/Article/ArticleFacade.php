@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use App\Controller\Front\ArticleController;
 use App\Model\Article\Elasticsearch\ArticleExportScheduler;
-use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -17,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 /**
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @property \App\Model\Article\ArticleRepository $articleRepository
+ * @property \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method \App\Model\Article\Article|null findById(int $articleId)
  * @method \App\Model\Article\Article getById(int $articleId)
@@ -28,22 +26,16 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 class ArticleFacade extends BaseArticleFacade
 {
     /**
-     * @var \App\Twig\Cache\TwigCacheFacade
-     */
-    private $twigCacheFacade;
-
-    /**
      * @var \App\Model\Article\Elasticsearch\ArticleExportScheduler
      */
     private ArticleExportScheduler $articleExportScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Article\ArticleRepository $articleRepository
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
-     * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      */
     public function __construct(
@@ -52,7 +44,6 @@ class ArticleFacade extends BaseArticleFacade
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
         ArticleFactoryInterface $articleFactory,
-        TwigCacheFacade $twigCacheFacade,
         ArticleExportScheduler $articleExportScheduler
     ) {
         parent::__construct(
@@ -63,7 +54,6 @@ class ArticleFacade extends BaseArticleFacade
             $articleFactory
         );
 
-        $this->twigCacheFacade = $twigCacheFacade;
         $this->articleExportScheduler = $articleExportScheduler;
     }
 
@@ -75,10 +65,6 @@ class ArticleFacade extends BaseArticleFacade
     {
         /** @var \App\Model\Article\Article $article */
         $article = parent::create($articleData);
-
-        if (in_array($article->getPlacement(), $this->getFooterPlacements(), true)) {
-            $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
-        }
 
         $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
 
@@ -95,10 +81,6 @@ class ArticleFacade extends BaseArticleFacade
         /** @var \App\Model\Article\Article $article */
         $article = parent::edit($articleId, $articleData);
 
-        if (in_array($article->getPlacement(), $this->getFooterPlacements(), true)) {
-            $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
-        }
-
         $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
 
         return $article;
@@ -112,36 +94,5 @@ class ArticleFacade extends BaseArticleFacade
         parent::delete($articleId);
 
         $this->articleExportScheduler->scheduleRowIdForImmediateExport((int)$articleId);
-    }
-
-    /**
-     * @return array
-     */
-    private function getFooterPlacements(): array
-    {
-        return [
-            Article::PLACEMENT_FOOTER_1,
-            Article::PLACEMENT_FOOTER_2,
-            Article::PLACEMENT_FOOTER_3,
-            Article::PLACEMENT_FOOTER_4,
-        ];
-    }
-
-    /**
-     * @return \App\Model\Article\Article[][]
-     */
-    public function getVisibleFooterArticlesIndexedByPlacementOnCurrentDomain(): array
-    {
-        $articles = $this->articleRepository->getVisibleArticlesForPlacements($this->domain->getId(), $this->getFooterPlacements());
-
-        $articlesByPlacement = [];
-        foreach ($this->getFooterPlacements() as $placement) {
-            $articlesByPlacement[$placement] = [];
-        }
-        foreach ($articles as $article) {
-            $articlesByPlacement[$article->getPlacement()][] = $article;
-        }
-
-        return $articlesByPlacement;
     }
 }

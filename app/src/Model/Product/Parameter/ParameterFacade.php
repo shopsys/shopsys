@@ -8,7 +8,6 @@ use App\Model\Category\Category;
 use App\Model\Category\CategoryParameterRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
@@ -39,16 +38,6 @@ class ParameterFacade extends BaseParameterFacade
     private $readyCategorySeoMixFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private $parameterValueDataFactory;
-
-    /**
      * @var \App\Component\UploadedFile\UploadedFileFacade
      */
     protected $uploadedFileFacade;
@@ -64,8 +53,6 @@ class ParameterFacade extends BaseParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      */
@@ -75,8 +62,6 @@ class ParameterFacade extends BaseParameterFacade
         ParameterFactoryInterface $parameterFactory,
         EventDispatcherInterface $eventDispatcher,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        Domain $domain,
-        ParameterValueDataFactory $parameterValueDataFactory,
         UploadedFileFacade $uploadedFileFacade,
         CategoryParameterRepository $categoryParameterRepository
     ) {
@@ -88,8 +73,6 @@ class ParameterFacade extends BaseParameterFacade
         );
 
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->domain = $domain;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->categoryParameterRepository = $categoryParameterRepository;
     }
@@ -148,36 +131,6 @@ class ParameterFacade extends BaseParameterFacade
         $this->readyCategorySeoMixFacade->deleteAllWithParameter($parameter);
 
         parent::deleteById($parameterId);
-    }
-
-    /**
-     * @return \App\Model\Product\Parameter\ParameterValue[][]
-     */
-    public function getListBooleanParameterValuesIndexedByLocaleAndText(): array
-    {
-        $locales = $this->domain->getAllLocales();
-        $translationKeys = ['Yes', 'No'];
-
-        $parameterValuesIndexedByLocaleAndText = [];
-        foreach ($locales as $locale) {
-            foreach ($translationKeys as $translationKey) {
-                $parameterValueData = $this->parameterValueDataFactory->create();
-
-                if ($translationKey === 'Yes') {
-                    $parameterValueData->text = t('Yes', [], 'messages', $locale);
-                } else {
-                    $parameterValueData->text = t('No', [], 'messages', $locale);
-                }
-
-                $parameterValueData->locale = $locale;
-
-                $parameterValuesIndexedByLocaleAndText[$locale][$parameterValueData->text] = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-                    $parameterValueData
-                );
-            }
-        }
-
-        return $parameterValuesIndexedByLocaleAndText;
     }
 
     /**

@@ -17,11 +17,3 @@ services:
 
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         alias: App\Command\ExtendedClassesAnnotationsCommand
-
-    App\Component\Collector\TwigCacheDataCollector:
-        arguments:
-            - '%env(bool:TWIG_CACHE_ENABLED)%'
-        tags:
-            -   name: data_collector
-                template: 'DataCollector/twig_cache_collector.html.twig'
-                id: 'app.twig_cache_collector'

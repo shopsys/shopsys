@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay\PaymentMethod;
 
-use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr\Join;
 
 class GoPayPaymentMethodRepository
 {
@@ -67,21 +65,5 @@ class GoPayPaymentMethodRepository
         }
 
         return $availableTypeIdentifiers;
-    }
-
-    /**
-     * @param int $currencyId
-     * @return \App\Model\GoPay\BankSwift\GoPayBankSwift[]
-     */
-    public function getBankSwiftsByCurrencyId(int $currencyId): array
-    {
-        $queryBuilder = $this->getPaymentMethodRepository()
-            ->createQueryBuilder('pm')
-            ->select('pbs')
-            ->join(GoPayBankSwift::class, 'pbs', Join::WITH, 'pm = pbs.goPayPaymentMethod')
-            ->where('pm.currency = :currency')
-            ->setParameter('currency', $currencyId);
-
-        return $queryBuilder->getQuery()->execute();
     }
 }

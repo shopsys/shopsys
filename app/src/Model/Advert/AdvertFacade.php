@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Advert;
 
-use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertData;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade as BaseAdvertFacade;
 
@@ -55,17 +54,5 @@ class AdvertFacade extends BaseAdvertFacade
         $this->imageFacade->manageImages($advert, $advertData->mobileImage, self::IMAGE_TYPE_MOBILE);
 
         return $advert;
-    }
-
-    /**
-     * @param string $positionName
-     * @param \App\Model\Category\Category $category
-     * @return \App\Model\Advert\Advert|null
-     */
-    public function findRandomAdvertByPositionAndCategoryOnCurrentDomain(string $positionName, Category $category): ?Advert
-    {
-        $this->advertPositionRegistry->assertPositionNameIsKnown($positionName);
-
-        return $this->advertRepository->findRandomAdvertByPositionAndCategory($positionName, $category, $this->domain->getId());
     }
 }

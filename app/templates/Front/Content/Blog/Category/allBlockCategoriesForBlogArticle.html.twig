@@ -1,9 +1,0 @@
-{% if blogCategories is not null %}
-    <div class="in-flag in-flag--static in-flag--big">
-        {% for blogCategory in blogCategories %}
-            <a class="in-flag__item" href="{{ url('front_blogcategory_detail', { id: blogCategory.id }) }}">
-                {{ blogCategory.name }}
-            </a>
-        {% endfor %}
-    </div>
-{% endif %}

@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver as BasePromotedProductsResolver;
 
 /**
- * @property \App\Model\Product\TopProduct\TopProductFacade $topProductFacade
+ * @property \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
  */
 class PromotedProductsResolver extends BasePromotedProductsResolver
 {
@@ -22,7 +22,7 @@ class PromotedProductsResolver extends BasePromotedProductsResolver
     private ProductFacade $productFacade;
 
     /**
-     * @param \App\Model\Product\TopProduct\TopProductFacade $topProductFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade

@@ -395,26 +395,6 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    public function getAssemblyInstructionFilename(BaseProduct $product, int $domainId): string
-    {
-        return $product->getAssemblyInstructionCode($domainId) . self::ASSETS_FILE_TYPE;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    public function getProductTypePlanFilename(BaseProduct $product, int $domainId): string
-    {
-        return $product->getProductTypePlanCode($domainId) . self::ASSETS_FILE_TYPE;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
     protected function saveParameters(BaseProduct $product, array $productParameterValuesData)
@@ -450,15 +430,6 @@ class ProductFacade extends BaseProductFacade
         if (count($toFlush) > 0) {
             $this->em->flush($toFlush);
         }
-    }
-
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findMainVariantByCatnum(string $catnum): ?BaseProduct
-    {
-        return $this->productRepository->findMainVariantByCatnum($catnum);
     }
 
     /**

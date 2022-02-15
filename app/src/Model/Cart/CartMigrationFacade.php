@@ -16,11 +16,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 class CartMigrationFacade extends BaseCartMigrationFacade
 {
     /**
-     * @var bool
-     */
-    private bool $cartChanged = false;
-
-    /**
      * @param \App\Model\Cart\Cart $cart
      */
     public function mergeCurrentCartWithCart(BaseCart $cart): void
@@ -37,11 +32,6 @@ class CartMigrationFacade extends BaseCartMigrationFacade
      */
     public function mergeCarts(Cart $cart, Cart $currentCart): void
     {
-        $this->cartChanged = false;
-        if ($cart->isEmpty() === false && $currentCart->isEmpty() === false) {
-            $this->cartChanged = true;
-        }
-
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
             if ($similarItem instanceof CartItem) {
@@ -63,13 +53,5 @@ class CartMigrationFacade extends BaseCartMigrationFacade
         $this->em->flush();
 
         $this->cartFacade->deleteCart($cart);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCartChanged(): bool
-    {
-        return $this->cartChanged;
     }
 }

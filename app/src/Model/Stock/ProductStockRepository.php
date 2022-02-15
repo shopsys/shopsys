@@ -26,14 +26,6 @@ class ProductStockRepository
     }
 
     /**
-     * @return \App\Model\Stock\ProductStockRepository|\Doctrine\Persistence\ObjectRepository
-     */
-    public function getProductStockRepository()
-    {
-        return $this->em->getRepository(ProductStock::class);
-    }
-
-    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getQueryBuilder(): QueryBuilder

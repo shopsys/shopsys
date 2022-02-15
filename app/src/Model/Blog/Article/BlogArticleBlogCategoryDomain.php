@@ -66,12 +66,4 @@ class BlogArticleBlogCategoryDomain
     {
         return $this->domainId;
     }
-
-    /**
-     * @return \App\Model\Blog\Article\BlogArticle
-     */
-    public function getBlogArticle(): BlogArticle
-    {
-        return $this->blogArticle;
-    }
 }

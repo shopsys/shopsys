@@ -11,11 +11,9 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension as BasePriceExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 /**
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -65,53 +63,11 @@ class PriceExtension extends BasePriceExtension
         $filters = parent::getFilters();
 
         $filters[] = new TwigFilter(
-            'priceWithoutCurrency',
-            [$this, 'priceWithoutCurrencyFilter']
-        );
-        $filters[] = new TwigFilter(
             'priceFromDecimalStringWithCurrencyAdmin',
             [$this, 'priceFromDecimalStringWithCurrencyAdmin']
         );
 
         return $filters;
-    }
-
-    /**
-     * @return array
-     */
-    public function getFunctions(): array
-    {
-        $functions = parent::getFunctions();
-
-        $functions[] = new TwigFunction(
-            'decimalsByDomainId',
-            [$this, 'getDecimalsByDomainId'],
-            ['is_safe' => ['html']]
-        );
-
-        return $functions;
-    }
-
-    /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getDecimalsByDomainId(int $domainId): int
-    {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-
-        return $currency->getMinFractionDigits();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function priceWithoutCurrencyFilter(Money $price): string
-    {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
-
-        return $this->formatCurrencyWithoutSymbol($price, $currency);
     }
 
     /**
@@ -124,28 +80,5 @@ class PriceExtension extends BasePriceExtension
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         return $this->priceWithCurrencyByDomainIdFilter($money, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param string|null $locale
-     * @return string
-     */
-    protected function formatCurrencyWithoutSymbol(Money $price, Currency $currency, ?string $locale = null): string
-    {
-        if ($locale === null) {
-            $locale = $this->localization->getLocale();
-        }
-
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($locale, $currency);
-        $intlCurrency = $this->intlCurrencyRepository->get(
-            $currency->getCode(),
-            $locale
-        );
-
-        $options = ['currency_display' => 'none'];
-
-        return $currencyFormatter->format($price->getAmount(), $intlCurrency->getCurrencyCode(), $options);
     }
 }

@@ -40,14 +40,6 @@ class PromoCodeCategory
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
-     */
-    public function getPromoCode(): PromoCode
-    {
-        return $this->promoCode;
-    }
-
-    /**
      * @return \App\Model\Category\Category
      */
     public function getCategory(): Category

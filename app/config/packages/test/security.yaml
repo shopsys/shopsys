@@ -3,8 +3,6 @@ security:
     firewalls:
         administration:
             http_basic: ~
-        frontend:
-            http_basic: ~
     # quicker password encryption in test data fixtures
     encoders:
         Symfony\Component\Security\Core\User\UserInterface:
