@@ -19,6 +19,7 @@ type InitialState = {
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     isUserLoggedIn: boolean;
+    lastOrderUuid: string;
 };
 
 export const initialState = {
@@ -44,6 +45,9 @@ export const userSlice = createSlice({
         },
         setOrderConfirmationAccess(state, action: PayloadAction<boolean>) {
             state.canAccessOrderConfirmation = action.payload;
+        },
+        setLastOrderUuid(state, action: PayloadAction<string>) {
+            state.lastOrderUuid = action.payload;
         },
         setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
             state.isUserLoggedIn = action.payload;

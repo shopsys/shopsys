@@ -1,0 +1,9 @@
+mutation PayOrderMutation($orderUuid: Uuid!) {
+    PayOrder(orderUuid: $orderUuid) {
+        goPayCreatePaymentSetup {
+            gatewayUrl
+            goPayId
+            embedJs
+        }
+    }
+}

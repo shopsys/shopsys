@@ -10,6 +10,7 @@ export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
     currencyCode: string,
     isUserLoggedIn: boolean,
+    goPayBankSwift: string | null,
 ): CartResultValues => {
     const emptyPriceArray: PriceType = {
         priceWithVat: 0,
@@ -21,7 +22,7 @@ export const getValuesFromCartResult = (
     const transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
     const pickupPlace = getSelectedPickupPlace(transport, resultData.selectedPickupPlaceIdentifier);
     const payment =
-        resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode);
+        resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode, goPayBankSwift);
     const cart = mapCart(
         {
             ...resultData,
@@ -37,6 +38,7 @@ export const getValuesFromCartResult = (
         cart,
         transport,
         pickupPlace,
+        goPayBankSwift,
         payment,
         promoCode: updatedPromoCode,
     };

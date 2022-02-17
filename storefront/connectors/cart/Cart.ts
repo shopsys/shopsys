@@ -33,14 +33,26 @@ export const mapTransportToTransportInput = (
     };
 };
 
+export const mapPaymentToPaymentInput = (payment: PaymentType, goPayBankSwift: string | null): PaymentInputType => {
+    return {
+        uuid: payment.uuid,
+        price: {
+            priceWithVat: payment.price.priceWithVat.toString(),
+            priceWithoutVat: payment.price.priceWithoutVat.toString(),
+            vatAmount: payment.price.vatAmount.toString(),
+        },
+        goPayBankSwift,
+    };
+};
+
 export const useLoadCart = (
     cartUuid: CartInput['cartUuid'],
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
+    goPayBankSwift: string | null,
 ): UseQueryResponse<CartQueryApi> => {
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
-
     const [result, refresh] = useCartQueryApi({
         variables: { cartUuid, transport, payment, promoCode } as CartQueryVariablesApi,
         pause: cartUuid === null && !isUserLoggedIn,
@@ -49,27 +61,32 @@ export const useLoadCart = (
     const t = useTypedTranslationFunction();
 
     useHandleCartErrors(result.error, t('Could not load your cart'));
-    useHandleCartUpdate(result.data?.cart);
+    useHandleCartUpdate(result.data?.cart, goPayBankSwift);
 
     return [result, refresh];
 };
 
 export const useAddToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
+    const { cartInput } = useShopsysSelector((state) => state.cart);
     const [addToCartResult, addToCart] = useAddToCartMutationApi();
     const t = useTypedTranslationFunction();
 
     useHandleCartErrors(addToCartResult.error, t('Could not add the product to cart'));
-    useHandleCartUpdate(addToCartResult.data?.AddToCart);
+    useHandleCartUpdate(addToCartResult.data?.AddToCart, cartInput.payment ? cartInput.payment.goPayBankSwift : null);
 
     return [addToCartResult, addToCart];
 };
 
 export const useRemoveFromCart = (): UseMutationResponse<RemoveFromCartMutationApi, RemoveFromCartInputApi> => {
+    const { cartInput } = useShopsysSelector((state) => state.cart);
     const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
     const t = useTypedTranslationFunction();
 
     useHandleCartErrors(removeItemFromCartResult.error, t('Could not remove the product from cart'));
-    useHandleCartUpdate(removeItemFromCartResult.data?.RemoveFromCart);
+    useHandleCartUpdate(
+        removeItemFromCartResult.data?.RemoveFromCart,
+        cartInput.payment ? cartInput.payment.goPayBankSwift : null,
+    );
 
     return [removeItemFromCartResult, removeItemFromCart];
 };

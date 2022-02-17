@@ -19,6 +19,7 @@ type SelectItemLabelProps = {
     daysUntilDelivery?: number;
     description?: string;
     pickupPlaceDetail?: PickupPlaceType | null;
+    type?: string;
 };
 
 const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {

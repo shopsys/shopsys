@@ -16,6 +16,7 @@ import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
 import { TransportAndPaymentFormType } from 'types/form';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { useShopsysSelector } from 'redux/main';
 import { useTransportAndPaymentFormMeta } from 'components/Pages/Order/TransportAndPayment/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -31,8 +32,8 @@ const Select: FC<SelectProps> = (props) => {
     const formProviderMethods = useFormContext<TransportAndPaymentFormType>();
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
-    const [transportValue, paymentValue] = useWatch({
-        name: [formMeta.fields.transport.name, formMeta.fields.payment.name],
+    const [transportValue, paymentValue, goPaySwiftValue] = useWatch({
+        name: [formMeta.fields.transport.name, formMeta.fields.payment.name, formMeta.fields.goPaySwift.name],
         control: formProviderMethods.control,
     });
 
@@ -50,8 +51,7 @@ const Select: FC<SelectProps> = (props) => {
 
     const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
     const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
-
-    useLoadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode);
+    useLoadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode, goPaySwiftValue);
 
     useEffect(() => {
         formProviderMethods.setValue(
@@ -73,7 +73,6 @@ const Select: FC<SelectProps> = (props) => {
         if (newTransport?.isPersonalPickup === true) {
             onChangePersonalPickupTransportHandler(newTransport);
         }
-
         if (newTransport === undefined) {
             updateTransport(null);
             setMappedTransportInput(null);
@@ -90,12 +89,14 @@ const Select: FC<SelectProps> = (props) => {
             newPayment?.uuid === undefined ? null : newPayment.uuid,
         );
 
+        formProviderMethods.setValue(formMeta.fields.goPaySwift.name, goPaySwiftValue);
+
         if (newPayment === undefined) {
             setMappedPaymentInput(null);
         } else {
-            setMappedPaymentInput(mapPaymentToPaymentInput(newPayment));
+            setMappedPaymentInput(mapPaymentToPaymentInput(newPayment, goPaySwiftValue));
         }
-    }, [paymentValue]);
+    }, [paymentValue, goPaySwiftValue]);
 
     const isPickupPlaceSelected = () => transportInput !== null && transportInput.pickupPlaceIdentifier !== null;
 
@@ -123,6 +124,7 @@ const Select: FC<SelectProps> = (props) => {
     const resetTransportAndPayment = () => {
         formProviderMethods.setValue(formMeta.fields.transport.name, null);
         formProviderMethods.setValue(formMeta.fields.payment.name, null);
+        formProviderMethods.setValue(formMeta.fields.goPaySwift.name, null);
         resetPickupPlace();
     };
 
@@ -163,6 +165,20 @@ const Select: FC<SelectProps> = (props) => {
             formProviderMethods.setValue(formMeta.fields.transport.name, null);
         }
     };
+
+    // goPay Payments load
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const [getGoPaySwiftsResult, getGoPaySwifts] = useGoPaySwiftsQueryApi({
+        variables: { currencyCode: currencyCode },
+    });
+
+    const loadGoPaySwiftsFromApi = async () => {
+        await getGoPaySwifts();
+    };
+
+    useEffect(() => {
+        loadGoPaySwiftsFromApi();
+    }, []);
 
     const renderTransportListItem = (
         transportItem: TransportType,
@@ -224,6 +240,7 @@ const Select: FC<SelectProps> = (props) => {
                             name={paymentItem.name}
                             price={paymentItem.price}
                             description={paymentItem.description}
+                            type={paymentItem.type}
                         />
                     }
                 />
@@ -286,6 +303,30 @@ const Select: FC<SelectProps> = (props) => {
                                     </ul>
                                 )}
                             />
+
+                            {payment?.type === 'goPay' && payment.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' && (
+                                <>
+                                    <Heading type="h3">{formMeta.fields.goPaySwift.label}</Heading>
+                                    <Controller
+                                        name={formMeta.fields.goPaySwift.name}
+                                        render={({ field }) => (
+                                            <>
+                                                {getGoPaySwiftsResult.data?.GoPaySwifts.map((goPaySwift) => (
+                                                    <Radiobutton
+                                                        key={goPaySwift.swift}
+                                                        name="GoPaySwift"
+                                                        id={goPaySwift.swift}
+                                                        value={goPaySwift.swift}
+                                                        fieldRef={field}
+                                                        checked={goPaySwiftValue === goPaySwift.swift}
+                                                        label={goPaySwift.name}
+                                                    />
+                                                ))}
+                                            </>
+                                        )}
+                                    />
+                                </>
+                            )}
                             {paymentValue !== null && payment !== null && (
                                 <ResetButtonStyled
                                     type="button"

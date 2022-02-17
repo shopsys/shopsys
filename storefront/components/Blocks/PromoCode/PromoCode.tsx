@@ -21,10 +21,20 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
-
-    const { cartUuid, payment, transport, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
+    const {
+        isCartEmpty,
+        cartInput: { cartUuid, payment, transport, promoCode },
+    } = useShopsysSelector((state) => state.cart);
     const [updatedPromoCode, updatePromoCode] = useState(promoCode);
-    const [result] = useLoadCart(cartUuid, transport, payment, updatedPromoCode);
+
+    const [result] = useLoadCart(
+        cartUuid,
+        isCartEmpty,
+        transport,
+        payment,
+        updatedPromoCode,
+        payment ? payment.goPayBankSwift : null,
+    );
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);

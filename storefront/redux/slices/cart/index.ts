@@ -51,7 +51,7 @@ export const cartSlice = createSlice({
             state.transport = action.payload.transport;
             state.pickupPlace = action.payload.pickupPlace;
             state.payment = action.payload.payment;
-            state.cartInput = getCartInputFromCartResult(action.payload);
+            state.cartInput = getCartInputFromCartResult(action.payload, state.payment?.goPayBankSwift ?? null);
             state.isCartEmpty = action.payload.cart?.items.length === 0;
         },
         setCart(state, action: PayloadAction<CartType | null>) {

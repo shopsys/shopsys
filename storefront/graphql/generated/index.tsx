@@ -733,6 +733,29 @@ export type FlagFilterOptionApi = {
   isAbsolute: Scalars['Boolean'];
 };
 
+export type GoPayBankSwiftApi = {
+  __typename?: 'GoPayBankSwift';
+  /** large image url */
+  imageLargeUrl: Scalars['String'];
+  /** normal image url */
+  imageNormalUrl: Scalars['String'];
+  isOnline: Scalars['Boolean'];
+  /** Bank name */
+  name: Scalars['String'];
+  /** Swift code */
+  swift: Scalars['String'];
+};
+
+export type GoPayCreatePaymentSetupApi = {
+  __typename?: 'GoPayCreatePaymentSetup';
+  /** Identifiers of payment method */
+  embedJs: Scalars['String'];
+  /** Identifiers of payment method */
+  gatewayUrl: Scalars['String'];
+  /** Identifiers of payment method */
+  goPayId: Scalars['String'];
+};
+
 export type GoPayPaymentMethodApi = {
   __typename?: 'GoPayPaymentMethod';
   /** Identifier of payment method */
@@ -880,6 +903,8 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Send message to the site owner */
   Contact: Scalars['Boolean'];
+  /** check payment status of order after callback from payment service */
+  CheckPaymentStatus: Scalars['Boolean'];
   /** Creates complete order with products and addresses */
   CreateOrder: OrderApi;
   /** Delete delivery address by Uuid */
@@ -890,6 +915,8 @@ export type MutationApi = {
   Logout: Scalars['Boolean'];
   /** Subscribe for e-mail newsletter */
   NewsletterSubscribe: Scalars['Boolean'];
+  /** Payment setup data for redirect or creating JS payment gateway layer */
+  PayOrder: PaymentSetupCreationDataApi;
   /** Recover password using hash required from RequestPasswordRecovery */
   RecoverPassword: TokenApi;
   /** Refreshes access and refresh tokens */
@@ -925,6 +952,11 @@ export type MutationContactArgsApi = {
 };
 
 
+export type MutationCheckPaymentStatusArgsApi = {
+  orderUuid: Scalars['Uuid'];
+};
+
+
 export type MutationCreateOrderArgsApi = {
   input: OrderInputApi;
 };
@@ -942,6 +974,11 @@ export type MutationLoginArgsApi = {
 
 export type MutationNewsletterSubscribeArgsApi = {
   input: NewsletterSubscriptionDataInputApi;
+};
+
+
+export type MutationPayOrderArgsApi = {
+  orderUuid: Scalars['Uuid'];
 };
 
 
@@ -1320,10 +1357,18 @@ export type PaymentPriceArgsApi = {
 
 /** Represents a payment in order */
 export type PaymentInputApi = {
+  /** Selected bank swift code of goPay payment bank transfer */
+  goPayBankSwift?: Maybe<Scalars['String']>;
   /** Price for payment */
   price: PriceInputApi;
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+export type PaymentSetupCreationDataApi = {
+  __typename?: 'PaymentSetupCreationData';
+  /** Identifiers of GoPay payment method */
+  goPayCreatePaymentSetup?: Maybe<GoPayCreatePaymentSetupApi>;
 };
 
 export type PersonalDataApi = {
@@ -1579,6 +1624,8 @@ export type QueryApi = {
   AdvertCode: Maybe<AdvertCodeApi>;
   AdvertImage: Maybe<AdvertImageApi>;
   CompanyCustomerUser: Maybe<CompanyCustomerUserApi>;
+  /** List of available banks for GoPay bank transfer payment */
+  GoPaySwifts: Array<GoPayBankSwiftApi>;
   MainVariant: Maybe<MainVariantApi>;
   RegularCustomerUser: Maybe<RegularCustomerUserApi>;
   RegularProduct: Maybe<RegularProductApi>;
@@ -1668,6 +1715,11 @@ export type QueryApi = {
   transport: Maybe<TransportApi>;
   /** Returns available transport methods based on the current cart state */
   transports: Array<TransportApi>;
+};
+
+
+export type QueryGoPaySwiftsArgsApi = {
+  currencyCode: Scalars['String'];
 };
 
 
@@ -2458,6 +2510,13 @@ export type OrderDetailItemFragmentApi = { __typename?: 'OrderItem', name: strin
 
 export type OrderListFragmentApi = { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'OrderEdge', cursor: string, node: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null } | null> | null };
 
+export type CheckPaymentStatusMutationVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid'];
+}>;
+
+
+export type CheckPaymentStatusMutationApi = { __typename?: 'Mutation', CheckPaymentStatus: boolean };
+
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String'];
   lastName: Scalars['String'];
@@ -2488,7 +2547,14 @@ export type CreateOrderMutationVariablesApi = Exact<{
 }>;
 
 
-export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string } };
+export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string, uuid: string } };
+
+export type PayOrderMutationVariablesApi = Exact<{
+  orderUuid: Scalars['Uuid'];
+}>;
+
+
+export type PayOrderMutationApi = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', goPayCreatePaymentSetup?: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null | undefined } };
 
 export type OrderDetailQueryVariablesApi = Exact<{
   orderNumber: Maybe<Scalars['String']>;
@@ -2539,6 +2605,14 @@ export type PersonalDataPageTextQueryVariablesApi = Exact<{ [key: string]: never
 
 
 export type PersonalDataPageTextQueryApi = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null };
+export type SimplePaymentFragmentApi = { __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, type: string, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, goPayPaymentMethod?: { __typename?: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null | undefined };
+
+export type GoPaySwiftsQueryVariablesApi = Exact<{
+  currencyCode: Scalars['String'];
+}>;
+
+
+export type GoPaySwiftsQueryApi = { __typename?: 'Query', GoPaySwifts: Array<{ __typename?: 'GoPayBankSwift', name: string, imageNormalUrl: string, swift: string }> };
 
 export type PriceFragmentApi = { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string };
 
@@ -2716,7 +2790,9 @@ export type StoresQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type StoresQueryApi = { __typename?: 'Query', stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } };
 
-export type TransportWithAvailablePaymentsAndStoresFragmentApi = { __typename?: 'Transport', uuid: string, name: string, description: string | null, instruction: string | null, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }>, stores: { __typename?: 'StoreConnection', edges: Array<{ __typename?: 'StoreEdge', node: { __typename?: 'Store', slug: string, uuid: string, name: string, description: string | null, openingHoursHtml: string | null, locationLatitude: string | null, locationLongitude: string | null, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null } | null> | null } | null, transportType: { __typename?: 'TransportType', code: string } };
+export type ListedPickupPlaceFragmentApi = { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } };
+
+export type TransportWithAvailablePaymentsAndStoresFragmentApi = { __typename?: 'Transport', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, daysUntilDelivery: number, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, payments: Array<{ __typename?: 'Payment', uuid: string, name: string, description?: string | null | undefined, instruction?: string | null | undefined, type: string, price: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined>, goPayPaymentMethod?: { __typename?: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null | undefined }>, stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: string, name: string, description?: string | null | undefined, openingHoursHtml?: string | null | undefined, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, street: string, postcode: string, city: string, country: { __typename?: 'Country', name: string, code: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined, transportType: { __typename?: 'TransportType', code: string } };
 
 export type TransportsQueryVariablesApi = Exact<{
   cartUuid: Maybe<Scalars['Uuid']>;
@@ -2790,7 +2866,7 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
   }
 };
       export default result;
-    
+
 export const BreadcrumbFragmentApi = gql`
     fragment BreadcrumbFragment on Breadcrumb {
   breadcrumb {
@@ -3177,6 +3253,12 @@ export const SimplePaymentFragmentApi = gql`
   }
   images {
     ...ImageSizesFragment
+  }
+  type
+  goPayPaymentMethod {
+    identifier
+    name
+    paymentGroup
   }
 }
     ${PriceFragmentApi}
@@ -3889,12 +3971,22 @@ export const NewsletterSubscribeMutationDocumentApi = gql`
 export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
 };
+export const CheckPaymentStatusMutationDocumentApi = gql`
+    mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
+  CheckPaymentStatus(orderUuid: $orderUuid)
+}
+    `;
+
+export function useCheckPaymentStatusMutationApi() {
+  return Urql.useMutation<CheckPaymentStatusMutationApi, CheckPaymentStatusMutationVariablesApi>(CheckPaymentStatusMutationDocumentApi);
+};
 export const CreateOrderMutationDocumentApi = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $note: String, $payment: PaymentInput!, $transport: TransportInput!, $cartUuid: Uuid, $promoCode: String) {
   CreateOrder(
     input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, note: $note, payment: $payment, transport: $transport, cartUuid: $cartUuid, promoCode: $promoCode}
   ) {
     number
+    uuid
   }
 }
     `;
@@ -3912,6 +4004,21 @@ export const OrderDetailQueryDocumentApi = gql`
 
 export function useOrderDetailQueryApi(options: Omit<Urql.UseQueryArgs<OrderDetailQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<OrderDetailQueryApi>({ query: OrderDetailQueryDocumentApi, ...options });
+};
+export const PayOrderMutationDocumentApi = gql`
+    mutation PayOrderMutation($orderUuid: Uuid!) {
+  PayOrder(orderUuid: $orderUuid) {
+    goPayCreatePaymentSetup {
+      gatewayUrl
+      goPayId
+      embedJs
+    }
+  }
+}
+    `;
+
+export function usePayOrderMutationApi() {
+  return Urql.useMutation<PayOrderMutationApi, PayOrderMutationVariablesApi>(PayOrderMutationDocumentApi);
 };
 export const OrdersQueryDocumentApi = gql`
     query OrdersQuery($after: String, $first: Int) {
@@ -3968,6 +4075,19 @@ export const PersonalDataPageTextQueryDocumentApi = gql`
 
 export function usePersonalDataPageTextQueryApi(options: Omit<Urql.UseQueryArgs<PersonalDataPageTextQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PersonalDataPageTextQueryApi>({ query: PersonalDataPageTextQueryDocumentApi, ...options });
+};
+export const GoPaySwiftsQueryDocumentApi = gql`
+    query GoPaySwiftsQuery($currencyCode: String!) {
+  GoPaySwifts(currencyCode: $currencyCode) {
+    name
+    imageNormalUrl
+    swift
+  }
+}
+    `;
+
+export function useGoPaySwiftsQueryApi(options: Omit<Urql.UseQueryArgs<GoPaySwiftsQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<GoPaySwiftsQueryApi>({ query: GoPaySwiftsQueryDocumentApi, ...options });
 };
 export const PromotedProductsQueryDocumentApi = gql`
     query PromotedProductsQuery {

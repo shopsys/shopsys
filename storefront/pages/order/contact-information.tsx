@@ -54,6 +54,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const onSuccessfullyCreatedOrderHandler = () => {
         updateCartState(dispatch);
         dispatch(userActions.setOrderConfirmationAccess(true));
+        dispatch(userActions.setLastOrderUuid(createOrderResult.data?.CreateOrder.uuid ?? ''));
         router.push(orderConfirmationUrl);
     };
 
