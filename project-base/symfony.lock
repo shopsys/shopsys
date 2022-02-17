@@ -342,9 +342,6 @@
     "jms/translation-bundle": {
         "version": "1.4.4"
     },
-    "joschi127/doctrine-entity-override-bundle": {
-        "version": "v0.7.2"
-    },
     "justinrainbow/json-schema": {
         "version": "5.2.9"
     },

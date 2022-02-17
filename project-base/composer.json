@@ -53,7 +53,6 @@
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "1.4.4",
-        "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "league/flysystem": "^1.1.4",
         "phing/phing": "^2.16.1",
         "presta/sitemap-bundle": "^1.5.3",
