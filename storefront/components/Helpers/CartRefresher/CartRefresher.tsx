@@ -12,7 +12,6 @@ const CartRefresher: FC = () => {
 
     const [, refreshCart] = useLoadCart(
         cartUuid,
-
         transport,
         payment,
         promoCode,

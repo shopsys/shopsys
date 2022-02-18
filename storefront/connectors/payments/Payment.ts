@@ -14,17 +14,15 @@ export const mapPayment = (
         instruction: apiData.instruction !== null ? apiData.instruction : '',
         image: getFirstImageSize(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
-        goPayPaymentMethod:
-            apiData.goPayPaymentMethod !== undefined && apiData.goPayPaymentMethod !== null
-                ? apiData.goPayPaymentMethod
-                : undefined,
+        goPayPaymentMethod: apiData.goPayPaymentMethod !== null ? apiData.goPayPaymentMethod : undefined,
         goPayBankSwift,
     };
 };
 
-export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType => {
+export const mapPaymentToPaymentInput = (payment: PaymentType, goPayBankSwift: string | null): PaymentInputType => {
     return {
         uuid: payment.uuid,
         price: mapPriceInputData(payment.price),
+        goPayBankSwift,
     };
 };

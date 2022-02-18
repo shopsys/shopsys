@@ -17,7 +17,7 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
     const goPayInit = (goPayCreatePaymentSetup: PayOrderMutationApi['PayOrder']['goPayCreatePaymentSetup']): void => {
         const existingScript = document.getElementById('goPayEmbedJs');
 
-        if (existingScript !== null && goPayCreatePaymentSetup !== null) {
+        if (existingScript === null && goPayCreatePaymentSetup !== null) {
             const goPayEmbedJsScriptTag = document.createElement('script');
             goPayEmbedJsScriptTag.src = goPayCreatePaymentSetup.embedJs;
             goPayEmbedJsScriptTag.id = 'goPayEmbedJs';

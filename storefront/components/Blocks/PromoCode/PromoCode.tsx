@@ -22,14 +22,12 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
     const {
-        isCartEmpty,
         cartInput: { cartUuid, payment, transport, promoCode },
     } = useShopsysSelector((state) => state.cart);
     const [updatedPromoCode, updatePromoCode] = useState(promoCode);
 
     const [result] = useLoadCart(
         cartUuid,
-        isCartEmpty,
         transport,
         payment,
         updatedPromoCode,

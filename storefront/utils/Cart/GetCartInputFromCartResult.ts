@@ -2,10 +2,7 @@ import { CartInput, CartResultValues } from 'types/cart';
 import { mapPaymentToPaymentInput } from 'connectors/payments/Payment';
 import { mapTransportToTransportInput } from 'connectors/cart/Cart';
 
-export const getCartInputFromCartResult = (
-    resultData: CartResultValues,
-    goPayBankSwift: string | null,
-): CartInput => {
+export const getCartInputFromCartResult = (resultData: CartResultValues, goPayBankSwift: string | null): CartInput => {
     return {
         cartUuid: resultData.cartUuid,
         promoCode: resultData.promoCode,

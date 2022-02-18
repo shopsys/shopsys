@@ -12,6 +12,7 @@ import {
 } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
 import { mapPriceData, mapPriceInputData, mapProductPriceData } from 'connectors/price/Prices';
+import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
 import { getFirstImageSize } from 'connectors/image/Image';

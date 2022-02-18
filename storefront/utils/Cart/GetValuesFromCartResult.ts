@@ -22,7 +22,9 @@ export const getValuesFromCartResult = (
     const transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
     const pickupPlace = getSelectedPickupPlace(transport, resultData.selectedPickupPlaceIdentifier);
     const payment =
-        resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode, goPayBankSwift);
+        resultData.payment === null || transport === null
+            ? null
+            : mapPayment(resultData.payment, currencyCode, goPayBankSwift);
     const cart = mapCart(
         {
             ...resultData,

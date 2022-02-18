@@ -27,7 +27,6 @@ export const useTransportAndPaymentForm = (): [
                         transport?.isPersonalPickup === true ? transportInput?.pickupPlaceIdentifier !== null : true,
                 ),
             payment: Yup.string().required(t('Please select payment')),
-            goPaySwift: Yup.string().required(t('Please hoose GoPay payment type')),
         }),
     );
     const defaultValues = {

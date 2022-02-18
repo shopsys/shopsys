@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Form\Admin\PaymentTransaction\PaymentTransactionsType;
 use App\Form\Admin\PaymentTransaction\PaymentTransactionType;
+use App\Form\DisplayVariablesType;
 use App\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
