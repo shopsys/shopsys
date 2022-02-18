@@ -4,6 +4,7 @@ import { appWithTranslation } from 'next-i18next';
 import CartRefresher from 'components/Helpers/CartRefresher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getUrqlExchanges } from 'urql/exchanges';
+import Head from 'next/head';
 import nextI18NextConfig from 'next-i18next.config';
 import { nextReduxWrapper } from 'redux/main';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
@@ -14,12 +15,22 @@ import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
-        <ShopsysGlobalProvider>
-            <PortalContainer id="portal" />
-            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-            <CartRefresher />
-            <Component {...pageProps} />
-        </ShopsysGlobalProvider>
+        <>
+            <Head>
+                <link rel="preload" href="/fonts/dmSans400ext.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/dmSans400.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/dmSans500ext.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/dmSans500.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/dmSans700ext.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link rel="preload" href="/fonts/dmSans700.woff2" as="font" type="font/woff2" crossOrigin="" />
+            </Head>
+            <ShopsysGlobalProvider>
+                <PortalContainer id="portal" />
+                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+                <CartRefresher />
+                <Component {...pageProps} />
+            </ShopsysGlobalProvider>
+        </>
     );
 }
 

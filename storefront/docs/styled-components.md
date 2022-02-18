@@ -56,3 +56,15 @@ The best way to styling and achieve the best performance (critical CSS):
 - we have for every element specific styled-component element but for example, if you have in your styled-component child-element like input and he is rendered every time, then you can use simple html element input
 - for every modification of styled-component we create its extension (best performance of critical css)
 - We can also use props but only if is needed, because when you use props in your styled-component then in your rendered CSS will be a specific class with duplicated CSS. For example, you have styled-component with 20 CSS attributes and when you change only 1 CSS attribute with props then in your rendered CSS will be 2 specific classes with the same code but with 1 different attribute which you defined with props.
+
+**Global styles and flickering fonts**<br>
+There is a bug in the current version of styled-components that redraws the font-face several times. Therefore, the font-face needs to be added outside of styled-components.<br>
+https://github.com/styled-components/styled-components/issues/2227<br>
+
+It is also advisable to preload fonts in the _app.tsx file:<br>
+```plain
+<Head>
+  <link rel="preload" href="/fonts/yourFont.woff2" as="font" type="font/woff2" crossOrigin="" />
+  ...
+</Head>
+```
