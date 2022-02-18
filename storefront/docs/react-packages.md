@@ -160,3 +160,10 @@ npm install --save react-tabs
 ```plain
 https://github.com/reactjs/react-tabs
 ```
+
+### babel-plugin-styled-components
+```plain
+npm install --save-dev babel-plugin-styled-components@"<1.10.2"
+```
+
+The displayName and FileName parameters do not work correctly for newer versions of the package. Therefore, you need to install an older version. Once this bug is fixed, we will keep the version up to date.
