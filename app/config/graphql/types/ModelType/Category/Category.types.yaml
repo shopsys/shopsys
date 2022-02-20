@@ -17,7 +17,7 @@ Category:
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategoryOrReadyCategorySeoMix(value)'
+                resolve: '@=service("App\\FrontendApi\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategoryOrReadyCategorySeoMix(value)'
             slug:
                 type: "String!"
                 description: "Category URL slug"
@@ -43,7 +43,7 @@ Category:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategoryOrReadyCategorySeoMix(args, value)'
+                resolve: '@=service("App\\FrontendApi\\Resolver\\Products\\ProductsResolver").resolveByCategoryOrReadyCategorySeoMix(args, value)'
             originalCategorySlug:
                 type: "String"
                 description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"

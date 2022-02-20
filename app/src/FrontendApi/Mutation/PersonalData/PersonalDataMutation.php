@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\PersonalData;
 
-use App\FrontendApi\Model\Resolver\PersonalData\PersonalDataResolver;
+use App\FrontendApi\Resolver\PersonalData\PersonalDataResolver;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -39,7 +39,7 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
     private Domain $domain;
 
     /**
-     * @var \App\FrontendApi\Model\Resolver\PersonalData\PersonalDataResolver
+     * @var \App\FrontendApi\Resolver\PersonalData\PersonalDataResolver
      */
     private PersonalDataResolver $personalDataPageResolver;
 
@@ -48,7 +48,7 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Model\Resolver\PersonalData\PersonalDataResolver $personalDataPageResolver
+     * @param \App\FrontendApi\Resolver\PersonalData\PersonalDataResolver $personalDataPageResolver
      */
     public function __construct(
         PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,

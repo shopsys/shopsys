@@ -26,7 +26,7 @@ services:
         resource: '../src/FrontendApi/**/*{Mutation,Resolver,Mapper}.php'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
-        alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
+        alias: App\FrontendApi\Resolver\Products\PromotedProductsResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
@@ -39,13 +39,13 @@ services:
         alias: App\FrontendApi\Model\Order\OrderDataFactory
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
-        alias: App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper
+        alias: App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
-        alias: App\FrontendApi\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper
+        alias: App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
-        alias: App\FrontendApi\Model\Resolver\Products\ProductResolverMap
+        alias: App\FrontendApi\Resolver\Products\ProductResolverMap
 
     Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
         alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
@@ -60,25 +60,25 @@ services:
         alias: App\FrontendApi\Model\Order\OrderResolverMap
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
-        alias: App\FrontendApi\Model\Resolver\Category\CategoryResolverMap
+        alias: App\FrontendApi\Resolver\Category\CategoryResolverMap
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver:
-        alias: App\FrontendApi\Model\Resolver\Products\ProductsResolver
+        alias: App\FrontendApi\Resolver\Products\ProductsResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver:
-        alias: App\FrontendApi\Model\Resolver\Category\CategoryResolver
+        alias: App\FrontendApi\Resolver\Category\CategoryResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver:
-        alias: App\FrontendApi\Model\Resolver\Article\ArticleResolver
+        alias: App\FrontendApi\Resolver\Article\ArticleResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesResolver:
-        alias: App\FrontendApi\Model\Resolver\Article\ArticlesResolver
+        alias: App\FrontendApi\Resolver\Article\ArticlesResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation:
@@ -94,23 +94,23 @@ services:
         alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
 
     Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver:
-        alias: App\FrontendApi\Model\Resolver\Price\PriceResolver
+        alias: App\FrontendApi\Resolver\Price\PriceResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsResolver:
-        alias: App\FrontendApi\Model\Resolver\Transport\TransportsResolver
+        alias: App\FrontendApi\Resolver\Transport\TransportsResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchResolver:
-        alias: App\FrontendApi\Model\Resolver\Category\CategoriesSearchResolver
+        alias: App\FrontendApi\Resolver\Category\CategoriesSearchResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersResolver:
-        alias: App\FrontendApi\Model\Resolver\Order\OrdersResolver
+        alias: App\FrontendApi\Resolver\Order\OrdersResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver:
-        alias: App\FrontendApi\Model\Resolver\Order\OrderResolver
+        alias: App\FrontendApi\Resolver\Order\OrderResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Order\OrderFacade:
@@ -124,11 +124,11 @@ services:
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver:
-        alias: App\FrontendApi\Model\Resolver\Brand\BrandsResolver
+        alias: App\FrontendApi\Resolver\Brand\BrandsResolver
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver:
-        alias: App\FrontendApi\Model\Resolver\Category\CategoriesResolver
+        alias: App\FrontendApi\Resolver\Category\CategoriesResolver
         public: true
 
     Shopsys\FrontendApiBundle\Component\Image\ImageFacade:

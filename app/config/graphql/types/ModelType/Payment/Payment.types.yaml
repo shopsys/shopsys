@@ -13,7 +13,7 @@ Payment:
             price:
                 type: "Price!"
                 description: "Payment price"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Price\\PriceResolver").resolveByPayment(value, args["cartUuid"])'
+                resolve: '@=service("App\\FrontendApi\\Resolver\\Price\\PriceResolver").resolveByPayment(value, args["cartUuid"])'
                 args:
                     cartUuid:
                         type: "Uuid"

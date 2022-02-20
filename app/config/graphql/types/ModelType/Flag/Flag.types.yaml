@@ -29,7 +29,7 @@ Flag:
             categories:
                 type: "[Category!]!"
                 description: "Categories containing at least one product with flag"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Category\\CategoryResolver").categoriesFilteredByProductFilterForFlag(args, value)'
+                resolve: '@=service("App\\FrontendApi\\Resolver\\Category\\CategoryResolver").categoriesFilteredByProductFilterForFlag(args, value)'
                 args:
                     productFilter:
                         type: "ProductFilter"

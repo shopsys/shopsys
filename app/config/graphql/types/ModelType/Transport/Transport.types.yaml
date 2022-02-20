@@ -17,7 +17,7 @@ Transport:
             price:
                 type: "Price!"
                 description: "Transport price"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Price\\PriceResolver").resolveByTransport(value, args["cartUuid"])'
+                resolve: '@=service("App\\FrontendApi\\Resolver\\Price\\PriceResolver").resolveByTransport(value, args["cartUuid"])'
                 args:
                     cartUuid:
                         type: "Uuid"
