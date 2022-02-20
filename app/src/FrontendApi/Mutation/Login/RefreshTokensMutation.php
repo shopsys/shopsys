@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Login;
+namespace App\FrontendApi\Mutation\Login;
 
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;

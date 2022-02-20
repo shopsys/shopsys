@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Order;
+namespace App\FrontendApi\Mutation\Order;
 
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\PromoCodeFacade;

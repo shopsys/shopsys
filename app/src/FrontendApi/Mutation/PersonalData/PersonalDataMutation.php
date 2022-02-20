@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation;
+namespace App\FrontendApi\Mutation\PersonalData;
 
 use App\FrontendApi\Model\Resolver\PersonalData\PersonalDataResolver;
 use Overblog\GraphQLBundle\Definition\Argument;

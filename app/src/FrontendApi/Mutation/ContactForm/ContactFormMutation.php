@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation;
+namespace App\FrontendApi\Mutation\ContactForm;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 
-class ContactMutation implements MutationInterface, AliasedInterface
+class ContactFormMutation implements MutationInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade

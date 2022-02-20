@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Cart;
+namespace App\FrontendApi\Mutation\Cart;
 
 use App\FrontendApi\Model\Cart\AddToCartResult;
 use App\FrontendApi\Model\Cart\CartFacade;

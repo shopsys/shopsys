@@ -51,7 +51,7 @@ services:
         alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
 
     Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation:
-        alias: App\FrontendApi\Model\Mutation\Customer\User\CustomerUserMutation
+        alias: App\FrontendApi\Mutation\Customer\User\CustomerUserMutation
 
     Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         alias: App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory
@@ -82,7 +82,7 @@ services:
         public: true
 
     Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation:
-        alias: App\FrontendApi\Model\Mutation\Order\CreateOrderMutation
+        alias: App\FrontendApi\Mutation\Order\CreateOrderMutation
 
     Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade:
         alias: App\FrontendApi\Model\Order\PlaceOrderFacade
@@ -120,7 +120,7 @@ services:
         alias: App\FrontendApi\Model\Order\OrderRepository
 
     Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
-        alias: App\FrontendApi\Model\Mutation\Login\LoginMutation
+        alias: App\FrontendApi\Mutation\Login\LoginMutation
         public: true
 
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver:
@@ -136,3 +136,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
         alias: App\FrontendApi\Model\Category\CategoryFacade
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation:
+        alias: App\FrontendApi\Mutation\Login\RefreshTokensMutation

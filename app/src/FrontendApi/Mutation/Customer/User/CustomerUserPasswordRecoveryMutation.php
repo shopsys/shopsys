@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Customer\User;
+namespace App\FrontendApi\Mutation\Customer\User;
 
 use App\FrontendApi\Exception\ValidationError;
+use App\FrontendApi\Mutation\Login\LoginMutation;
 use App\Model\Customer\User\CustomerUserPasswordFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\ArgumentFactory;
@@ -14,7 +15,6 @@ use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
-use Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation;
 
 class CustomerUserPasswordRecoveryMutation implements MutationInterface, AliasedInterface
 {
@@ -29,7 +29,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
     private Domain $domain;
 
     /**
-     * @var \App\FrontendApi\Model\Mutation\Login\LoginMutation
+     * @var \App\FrontendApi\Mutation\Login\LoginMutation
      */
     private LoginMutation $loginMutation;
 
@@ -41,7 +41,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
     /**
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Model\Mutation\Login\LoginMutation $loginMutation
+     * @param \App\FrontendApi\Mutation\Login\LoginMutation $loginMutation
      * @param \Overblog\GraphQLBundle\Definition\ArgumentFactory $argumentFactory
      */
     public function __construct(

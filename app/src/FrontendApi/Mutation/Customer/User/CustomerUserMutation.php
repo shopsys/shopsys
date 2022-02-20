@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Customer\User;
+namespace App\FrontendApi\Mutation\Customer\User;
 
 use App\FrontendApi\Model\Cart\MergeCartFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Mutation\Customer;
+namespace App\FrontendApi\Mutation\Customer;
 
 use App\Model\Customer\DeliveryAddressFacade;
 use GraphQL\Error\UserError;
