@@ -1856,17 +1856,8 @@ type Query {
   """Returns a complete list of the slider items"""
   sliderItems: [SliderItem!]!
 
-  """Returns entity by slug"""
-  slug(slug: String!): Slug
-
-  """Returns a list of notifications supposed to be displayed on all pages"""
-  notificationBars: [NotificationBar!]
-
   """Returns list of searched articles and blog articles"""
   articlesSearch(search: String!): [ArticleInterface!]!
-
-  """Return cart of logged customer or cart by UUID for anonymous user"""
-  cart(cartInput: CartInput = {cartUuid: null}): Cart
 
   """Returns a complete list of the flags"""
   flags: [Flag!]
@@ -1885,11 +1876,20 @@ type Query {
     hash: String!
   ): PersonalData!
 
-  """Returns available countries"""
-  countries: [Country!]!
-
   """Returns list of searched brands"""
   brandSearch(search: String!): [Brand!]!
+
+  """Returns entity by slug"""
+  slug(slug: String!): Slug
+
+  """Returns a list of notifications supposed to be displayed on all pages"""
+  notificationBars: [NotificationBar!]
+
+  """Return cart of logged customer or cart by UUID for anonymous user"""
+  cart(cartInput: CartInput = {cartUuid: null}): Cart
+
+  """Returns available countries"""
+  countries: [Country!]!
 }
 
 input RecoverPasswordInput {
