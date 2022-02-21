@@ -41,7 +41,7 @@ parameters:
         -
             # our fork of doctrine-orm (https://github.com/shopsys/doctrine-orm) needs to be updated to resolve the reported issues
             message: '#^Method Shopsys\\FrameworkBundle\\Component\\EntityExtension\\EntityManagerDecorator::.*\(\) should return T of object\|null but returns object\|null.#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityManagerDecorator.php
+            path: %currentWorkingDirectory%/src/Component/EntityExtension/EntityManagerDecorator.php
     excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
