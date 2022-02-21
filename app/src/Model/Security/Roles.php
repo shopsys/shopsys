@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Security\Roles as BaseRoles;
 class Roles extends BaseRoles
 {
     public const ROLE_ALL = 'ROLE_ALL';
+    public const ROLE_ALL_VIEW = 'ROLE_ALL_VIEW';
 
     public const ROLE_ORDER_FULL = 'ROLE_ORDER_FULL';
     public const ROLE_ORDER_VIEW = 'ROLE_ORDER_VIEW';
@@ -168,6 +169,10 @@ class Roles extends BaseRoles
     public static function getAvailableAdministratorRolesGrid(): array
     {
         return [
+            [
+                self::ROLE_ALL => t('All - full'),
+                self::ROLE_ALL_VIEW => t('All - view'),
+            ],
             [
                 self::ROLE_ORDER_FULL => t('Orders - full'),
                 self::ROLE_ORDER_VIEW => t('Orders - view'),
