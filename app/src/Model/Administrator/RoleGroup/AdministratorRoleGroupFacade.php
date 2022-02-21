@@ -52,4 +52,23 @@ class AdministratorRoleGroupFacade
 
         return $administratorRoleGroup;
     }
+
+    /**
+     * @param int $id
+     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     */
+    public function getById(int $id): AdministratorRoleGroup
+    {
+        return $this->administratorRoleGroupRepository->getById($id);
+    }
+
+    /**
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
+     */
+    public function edit(AdministratorRoleGroup $administratorRoleGroup, AdministratorRoleGroupData $administratorRoleGroupData): void
+    {
+        $administratorRoleGroup->edit($administratorRoleGroupData);
+        $this->entityManager->flush();
+    }
 }
