@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Administrator\RoleGroup;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
 class AdministratorRoleGroupFacade
@@ -14,11 +15,20 @@ class AdministratorRoleGroupFacade
     private AdministratorRoleGroupRepository $administratorRoleGroupRepository;
 
     /**
-     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
+     * @var \Doctrine\ORM\EntityManager
      */
-    public function __construct(AdministratorRoleGroupRepository $administratorRoleGroupRepository)
-    {
+    private EntityManagerInterface $entityManager;
+
+    /**
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
+     * @param \Doctrine\ORM\EntityManager $entityManager
+     */
+    public function __construct(
+        AdministratorRoleGroupRepository $administratorRoleGroupRepository,
+        EntityManagerInterface $entityManager
+    ) {
         $this->administratorRoleGroupRepository = $administratorRoleGroupRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -27,5 +37,19 @@ class AdministratorRoleGroupFacade
     public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->administratorRoleGroupRepository->getAllQueryBuilder();
+    }
+
+    /**
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $roleGroupData
+     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup
+     */
+    public function create(AdministratorRoleGroupData $roleGroupData): AdministratorRoleGroup
+    {
+        $administratorRoleGroup = new AdministratorRoleGroup($roleGroupData);
+
+        $this->entityManager->persist($administratorRoleGroup);
+        $this->entityManager->flush();
+
+        return $administratorRoleGroup;
     }
 }

@@ -163,107 +163,212 @@ class Roles extends BaseRoles
     }
 
     /**
+     * @return array<array<string, string>>
+     */
+    public static function getAvailableAdministratorRolesGrid(): array
+    {
+        return [
+            [
+                self::ROLE_ORDER_FULL => t('Orders - full'),
+                self::ROLE_ORDER_VIEW => t('Orders - view'),
+            ],
+            [
+                self::ROLE_CUSTOMER_FULL => t('Customers - full'),
+                self::ROLE_CUSTOMER_VIEW => t('Customers - view'),
+            ],
+            [
+                self::ROLE_NEWSLETTER_FULL => t('Newsletter - full'),
+                self::ROLE_NEWSLETTER_VIEW => t('Newsletter - view'),
+            ],
+            [
+                self::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
+                self::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
+            ],
+            [
+                self::ROLE_PRODUCT_FULL => t('Products - full'),
+                self::ROLE_PRODUCT_VIEW => t('Products - view'),
+            ],
+            [
+                self::ROLE_TOP_PRODUCT_FULL => t('Top products - full'),
+                self::ROLE_TOP_PRODUCT_VIEW => t('Top products - view'),
+            ],
+            [
+                self::ROLE_BESTSELLING_PRODUCT_FULL => t('Bestselling products - full'),
+                self::ROLE_BESTSELLING_PRODUCT_VIEW => t('Bestselling products - view'),
+            ],
+            [
+                self::ROLE_FLAG_FULL => t('Flags - full'),
+                self::ROLE_FLAG_VIEW => t('Flags - view'),
+            ],
+            [
+                self::ROLE_PARAMETER_FULL => t('Parameters - full'),
+                self::ROLE_PARAMETER_VIEW => t('Parameters - view'),
+            ],
+            [
+                self::ROLE_UNIT_FULL => t('Units - full'),
+                self::ROLE_UNIT_VIEW => t('Units - view'),
+            ],
+            [
+                self::ROLE_CATEGORY_FULL => t('Categories - full'),
+                self::ROLE_CATEGORY_VIEW => t('Categories - view'),
+            ],
+            [
+                self::ROLE_TOP_CATEGORY_FULL => t('Top categories - full'),
+                self::ROLE_TOP_CATEGORY_VIEW => t('Top categories - view'),
+            ],
+            [
+                self::ROLE_PRICING_GROUP_FULL => t('Pricing groups - full'),
+                self::ROLE_PRICING_GROUP_VIEW => t('Pricing groups - view'),
+            ],
+            [
+                self::ROLE_VAT_FULL => t('Vats - full'),
+                self::ROLE_VAT_VIEW => t('Vats - view'),
+            ],
+            [
+                self::ROLE_ARTICLE_FULL => t('Articles - full'),
+                self::ROLE_ARTICLE_VIEW => t('Articles - view'),
+            ],
+            [
+                self::ROLE_ADVERT_FULL => t('Adverts - full'),
+                self::ROLE_ADVERT_VIEW => t('Adverts - view'),
+            ],
+            [
+                self::ROLE_SLIDER_ITEM_FULL => t('Slider items - full'),
+                self::ROLE_SLIDER_ITEM_VIEW => t('Slider items - view'),
+            ],
+            [
+                self::ROLE_NAVIGATION_FULL => t('Navigation - full'),
+                self::ROLE_NAVIGATION_VIEW => t('Navigation - view'),
+            ],
+            [
+                self::ROLE_BLOG_CATEGORY_FULL => t('Blog category - full'),
+                self::ROLE_BLOG_CATEGORY_VIEW => t('Blog category - view'),
+            ],
+            [
+                self::ROLE_BLOG_ARTICLE_FULL => t('Blog article - full'),
+                self::ROLE_BLOG_ARTICLE_VIEW => t('Blog article - view'),
+            ],
+            [
+                self::ROLE_NOTIFICATION_BAR_FULL => t('Notification bar - full'),
+                self::ROLE_NOTIFICATION_BAR_VIEW => t('Notification bar - view'),
+            ],
+            [
+                self::ROLE_ORDER_SUBMITTED_FULL => t('Order submitted page setting - full'),
+                self::ROLE_ORDER_SUBMITTED_VIEW => t('Order submitted page setting - view'),
+            ],
+            [
+                self::ROLE_LEGAL_CONDITIONS_FULL => t('Legal conditions article setting - full'),
+                self::ROLE_LEGAL_CONDITIONS_VIEW => t('Legal conditions article setting - view'),
+            ],
+            [
+                self::ROLE_PRIVACY_POLICY_FULL => t('Privacy policy article setting - full'),
+                self::ROLE_PRIVACY_POLICY_VIEW => t('Privacy policy article setting - view'),
+            ],
+            [
+                self::ROLE_PERSONAL_DATA_FULL => t('Personal data access pages setting - full'),
+                self::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
+            ],
+            [
+                self::ROLE_COOKIES_FULL => t('Cookies article setting - full'),
+                self::ROLE_COOKIES_VIEW => t('Cookies article setting - view'),
+            ],
+            [
+                self::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),
+                self::ROLE_ADMINISTRATOR_VIEW => t('Administrators - view'),
+            ],
+            [
+                self::ROLE_DOMAIN_FULL => t('E-shop identification - full'),
+                self::ROLE_DOMAIN_VIEW => t('E-shop identification - view'),
+            ],
+            [
+                self::ROLE_SHOP_INFO_FULL => t('Operator information - full'),
+                self::ROLE_SHOP_INFO_VIEW => t('Operator information - view'),
+            ],
+            [
+                self::ROLE_MAIL_SETTING_FULL => t('Mail setting - full'),
+                self::ROLE_MAIL_SETTING_VIEW => t('Mail setting - view'),
+            ],
+            [
+                self::ROLE_MAIL_TEMPLATE_FULL => t('Mail templates - full'),
+                self::ROLE_MAIL_TEMPLATE_VIEW => t('Mail templates - view'),
+            ],
+            [
+                self::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL => t('Free transport and payment - full'),
+                self::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW => t('Free transport and payment - view'),
+            ],
+            [
+                self::ROLE_TRANSPORT_AND_PAYMENT_FULL => t('Transports and payments - full'),
+                self::ROLE_TRANSPORT_AND_PAYMENT_VIEW => t('Transports and payments - view'),
+            ],
+            [
+                self::ROLE_ORDER_STATUS_FULL => t('Order statuses - full'),
+                self::ROLE_ORDER_STATUS_VIEW => t('Order statuses - view'),
+            ],
+            [
+                self::ROLE_BRAND_FULL => t('Brands - full'),
+                self::ROLE_BRAND_VIEW => t('Brands - view'),
+            ],
+            [
+                self::ROLE_COUNTRY_FULL => t('Countries - full'),
+                self::ROLE_COUNTRY_VIEW => t('Countries - view'),
+            ],
+            [
+                self::ROLE_STORE_FULL => t('Stores - full'),
+                self::ROLE_STORE_VIEW => t('Stores - view'),
+            ],
+            [
+                self::ROLE_PARAMETER_VALUE_FULL => t('Color parameter values - full'),
+                self::ROLE_PARAMETER_VALUE_VIEW => t('Color parameter values - view'),
+            ],
+            [
+                self::ROLE_TRANSPORT_TYPE_FULL => t('Transport types - full'),
+                self::ROLE_TRANSPORT_TYPE_VIEW => t('Transport types - view'),
+            ],
+            [
+                self::ROLE_SEO_FULL => t('SEO - full'),
+                self::ROLE_SEO_VIEW => t('SEO - view'),
+            ],
+            [
+                self::ROLE_CATEGORY_SEO_FULL => t('Categories extended SEO - full'),
+                self::ROLE_CATEGORY_SEO_VIEW => t('Categories extended SEO - view'),
+            ],
+            [
+                self::ROLE_FRIENDLY_URL_FULL => t('Unused friendly URLs - full'),
+                self::ROLE_FRIENDLY_URL_VIEW => t('Unused friendly URLs - view'),
+            ],
+            [
+                self::ROLE_CONTACT_FORM_FULL => t('Contact form - full'),
+                self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
+            ],
+            [
+                self::ROLE_STOCK_FULL => t('Stocks - full'),
+                self::ROLE_STOCK_VIEW => t('Stocks - view'),
+            ],
+            [
+                self::ROLE_HEUREKA_FULL => t('Heureka setting - full'),
+                self::ROLE_HEUREKA_VIEW => t('Heureka setting - view'),
+            ],
+            [
+                self::ROLE_SCRIPT_FULL => t('Scripts - full'),
+                self::ROLE_SCRIPT_VIEW => t('Scripts - view'),
+            ],
+            [
+                self::ROLE_IMAGE_SIZE_VIEW => t('Image sizes - view'),
+            ],
+            [
+                self::ROLE_FEED_VIEW => t('Feeds - view'),
+            ],
+            [
+                self::ROLE_TRANSFER_VIEW => t('Transfers - view'),
+            ],
+        ];
+    }
+
+    /**
      * @return array<string, string>
      */
     public static function getAvailableAdministratorRoles(): array
     {
-        return [
-            self::ROLE_ALL => t('All'),
-            self::ROLE_ORDER_FULL => t('Orders - full'),
-            self::ROLE_ORDER_VIEW => t('Orders - view'),
-            self::ROLE_CUSTOMER_FULL => t('Customers - full'),
-            self::ROLE_CUSTOMER_VIEW => t('Customers - view'),
-            self::ROLE_NEWSLETTER_FULL => t('Newsletter - full'),
-            self::ROLE_NEWSLETTER_VIEW => t('Newsletter - view'),
-            self::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
-            self::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
-            self::ROLE_PRODUCT_FULL => t('Products - full'),
-            self::ROLE_PRODUCT_VIEW => t('Products - view'),
-            self::ROLE_TOP_PRODUCT_FULL => t('Top products - full'),
-            self::ROLE_TOP_PRODUCT_VIEW => t('Top products - view'),
-            self::ROLE_BESTSELLING_PRODUCT_FULL => t('Bestselling products - full'),
-            self::ROLE_BESTSELLING_PRODUCT_VIEW => t('Bestselling products - view'),
-            self::ROLE_FLAG_FULL => t('Flags - full'),
-            self::ROLE_FLAG_VIEW => t('Flags - view'),
-            self::ROLE_PARAMETER_FULL => t('Parameters - full'),
-            self::ROLE_PARAMETER_VIEW => t('Parameters - view'),
-            self::ROLE_UNIT_FULL => t('Units - full'),
-            self::ROLE_UNIT_VIEW => t('Units - view'),
-            self::ROLE_CATEGORY_FULL => t('Categories - full'),
-            self::ROLE_CATEGORY_VIEW => t('Categories - view'),
-            self::ROLE_TOP_CATEGORY_FULL => t('Top categories - full'),
-            self::ROLE_TOP_CATEGORY_VIEW => t('Top categories - view'),
-            self::ROLE_PRICING_GROUP_FULL => t('Pricing groups - full'),
-            self::ROLE_PRICING_GROUP_VIEW => t('Pricing groups - view'),
-            self::ROLE_VAT_FULL => t('Vats - full'),
-            self::ROLE_VAT_VIEW => t('Vats - view'),
-            self::ROLE_ARTICLE_FULL => t('Articles - full'),
-            self::ROLE_ARTICLE_VIEW => t('Articles - view'),
-            self::ROLE_ADVERT_FULL => t('Adverts - full'),
-            self::ROLE_ADVERT_VIEW => t('Adverts - view'),
-            self::ROLE_SLIDER_ITEM_FULL => t('Slider items - full'),
-            self::ROLE_SLIDER_ITEM_VIEW => t('Slider items - view'),
-            self::ROLE_NAVIGATION_FULL => t('Navigation - full'),
-            self::ROLE_NAVIGATION_VIEW => t('Navigation - view'),
-            self::ROLE_BLOG_CATEGORY_FULL => t('Blog category - full'),
-            self::ROLE_BLOG_CATEGORY_VIEW => t('Blog category - view'),
-            self::ROLE_BLOG_ARTICLE_FULL => t('Blog article - full'),
-            self::ROLE_BLOG_ARTICLE_VIEW => t('Blog article - view'),
-            self::ROLE_NOTIFICATION_BAR_FULL => t('Notification bar - full'),
-            self::ROLE_NOTIFICATION_BAR_VIEW => t('Notification bar - view'),
-            self::ROLE_ORDER_SUBMITTED_FULL => t('Order submitted page setting - full'),
-            self::ROLE_ORDER_SUBMITTED_VIEW => t('Order submitted page setting - view'),
-            self::ROLE_LEGAL_CONDITIONS_FULL => t('Legal conditions article setting - full'),
-            self::ROLE_LEGAL_CONDITIONS_VIEW => t('Legal conditions article setting - view'),
-            self::ROLE_PRIVACY_POLICY_FULL => t('Privacy policy article setting - full'),
-            self::ROLE_PRIVACY_POLICY_VIEW => t('Privacy policy article setting - view'),
-            self::ROLE_PERSONAL_DATA_FULL => t('Personal data access pages setting - full'),
-            self::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
-            self::ROLE_COOKIES_FULL => t('Cookies article setting - full'),
-            self::ROLE_COOKIES_VIEW => t('Cookies article setting - view'),
-            self::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),
-            self::ROLE_ADMINISTRATOR_VIEW => t('Administrators - view'),
-            self::ROLE_DOMAIN_FULL => t('E-shop identification - full'),
-            self::ROLE_DOMAIN_VIEW => t('E-shop identification - view'),
-            self::ROLE_SHOP_INFO_FULL => t('Operator information - full'),
-            self::ROLE_SHOP_INFO_VIEW => t('Operator information - view'),
-            self::ROLE_MAIL_SETTING_FULL => t('Mail setting - full'),
-            self::ROLE_MAIL_SETTING_VIEW => t('Mail setting - view'),
-            self::ROLE_MAIL_TEMPLATE_FULL => t('Mail templates - full'),
-            self::ROLE_MAIL_TEMPLATE_VIEW => t('Mail templates - view'),
-            self::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL => t('Free transport and payment - full'),
-            self::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW => t('Free transport and payment - view'),
-            self::ROLE_TRANSPORT_AND_PAYMENT_FULL => t('Transports and payments - full'),
-            self::ROLE_TRANSPORT_AND_PAYMENT_VIEW => t('Transports and payments - view'),
-            self::ROLE_ORDER_STATUS_FULL => t('Order statuses - full'),
-            self::ROLE_ORDER_STATUS_VIEW => t('Order statuses - view'),
-            self::ROLE_BRAND_FULL => t('Brands - full'),
-            self::ROLE_BRAND_VIEW => t('Brands - view'),
-            self::ROLE_COUNTRY_FULL => t('Countries - full'),
-            self::ROLE_COUNTRY_VIEW => t('Countries - view'),
-            self::ROLE_STORE_FULL => t('Stores - full'),
-            self::ROLE_STORE_VIEW => t('Stores - view'),
-            self::ROLE_PARAMETER_VALUE_FULL => t('Color parameter values - full'),
-            self::ROLE_PARAMETER_VALUE_VIEW => t('Color parameter values - view'),
-            self::ROLE_TRANSPORT_TYPE_FULL => t('Transport types - full'),
-            self::ROLE_TRANSPORT_TYPE_VIEW => t('Transport types - view'),
-            self::ROLE_IMAGE_SIZE_VIEW => t('Image sizes - view'),
-            self::ROLE_SEO_FULL => t('SEO - full'),
-            self::ROLE_SEO_VIEW => t('SEO - view'),
-            self::ROLE_CATEGORY_SEO_FULL => t('Categories extended SEO - full'),
-            self::ROLE_CATEGORY_SEO_VIEW => t('Categories extended SEO - view'),
-            self::ROLE_FRIENDLY_URL_FULL => t('Unused friendly URLs - full'),
-            self::ROLE_FRIENDLY_URL_VIEW => t('Unused friendly URLs - view'),
-            self::ROLE_CONTACT_FORM_FULL => t('Contact form - full'),
-            self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
-            self::ROLE_STOCK_FULL => t('Stocks - full'),
-            self::ROLE_STOCK_VIEW => t('Stocks - view'),
-            self::ROLE_FEED_VIEW => t('Feeds - view'),
-            self::ROLE_HEUREKA_FULL => t('Heureka setting - full'),
-            self::ROLE_HEUREKA_VIEW => t('Heureka setting - view'),
-            self::ROLE_SCRIPT_FULL => t('Scripts - full'),
-            self::ROLE_SCRIPT_VIEW => t('Scripts - view'),
-            self::ROLE_TRANSFER_VIEW => t('Transfers - view'),
-        ];
+        return array_merge(...self::getAvailableAdministratorRolesGrid());
     }
 }
