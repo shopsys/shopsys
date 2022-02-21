@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ModuleFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -22,7 +22,7 @@ class ModuleFacade
     protected $enabledModuleFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository $enabledModuleRepository
      * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface $enabledModuleFactory
      */

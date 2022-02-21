@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class ImageFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -61,7 +61,7 @@ class ImageFacade
 
     /**
      * @param mixed $imageUrlPrefix
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemInterface $filesystem

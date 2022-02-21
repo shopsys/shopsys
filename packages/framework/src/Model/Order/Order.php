@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User;
+use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
@@ -508,6 +509,8 @@ class Order
                 return $item;
             }
         }
+
+        throw new OrderItemNotFoundException('Order item `payment` not found.');
     }
 
     /**
@@ -536,6 +539,8 @@ class Order
                 return $item;
             }
         }
+
+        throw new OrderItemNotFoundException('Order item `transport` not found.');
     }
 
     /**

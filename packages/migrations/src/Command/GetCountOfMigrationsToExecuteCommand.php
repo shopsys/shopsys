@@ -21,8 +21,7 @@ class GetCountOfMigrationsToExecuteCommand extends AbstractCommand
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -36,5 +35,7 @@ class GetCountOfMigrationsToExecuteCommand extends AbstractCommand
         $migrationsToExecute = $migrationsConfiguration->getMigrationsToExecute(Version::DIRECTION_UP, $latestVersion);
 
         $output->writeln('Count of migrations to execute: ' . count($migrationsToExecute));
+
+        return 0;
     }
 }

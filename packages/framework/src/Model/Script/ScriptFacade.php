@@ -13,7 +13,7 @@ class ScriptFacade
     public const VARIABLE_TOTAL_PRICE = '{total_price}';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -38,7 +38,7 @@ class ScriptFacade
     protected $moneyExtension;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptRepository $scriptRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface $scriptFactory

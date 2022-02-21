@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class ProductAccessoryRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -26,7 +26,7 @@ class ProductAccessoryRepository
     protected $queryBuilderExtender;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */

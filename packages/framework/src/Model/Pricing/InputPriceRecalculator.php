@@ -16,7 +16,7 @@ class InputPriceRecalculator
     const BATCH_SIZE = 500;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -36,7 +36,7 @@ class InputPriceRecalculator
     protected $transportPriceCalculation;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation $inputPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation

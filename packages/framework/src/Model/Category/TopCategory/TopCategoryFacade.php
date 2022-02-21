@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class TopCategoryFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -22,7 +22,7 @@ class TopCategoryFacade
     protected $topCategoryFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryRepository $topCategoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface $topCategoryFactory
      */

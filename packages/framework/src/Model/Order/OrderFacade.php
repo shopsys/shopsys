@@ -34,7 +34,7 @@ class OrderFacade
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -164,7 +164,7 @@ class OrderFacade
     protected $orderItemFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator

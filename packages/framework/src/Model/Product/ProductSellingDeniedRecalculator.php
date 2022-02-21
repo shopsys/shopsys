@@ -7,12 +7,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProductSellingDeniedRecalculator
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      */
     public function __construct(
         EntityManagerInterface $entityManager

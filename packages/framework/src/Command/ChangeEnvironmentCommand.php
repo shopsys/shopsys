@@ -67,5 +67,7 @@ class ChangeEnvironmentCommand extends Command
         $this->environmentFileSetting->createFileForEnvironment($targetEnvironment);
 
         $output->writeln(sprintf('Application environment successfully changed to "%s".', $targetEnvironment));
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

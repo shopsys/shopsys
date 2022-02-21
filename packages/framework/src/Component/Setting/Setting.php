@@ -23,7 +23,7 @@ class Setting
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -38,7 +38,7 @@ class Setting
     protected $values;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
      */
     public function __construct(EntityManagerInterface $em, SettingValueRepository $settingValueRepository)

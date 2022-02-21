@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -79,7 +79,7 @@ class MultidomainProductDataFixture extends AbstractReferenceFixture implements 
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      */
     public function load(ObjectManager $manager)
     {

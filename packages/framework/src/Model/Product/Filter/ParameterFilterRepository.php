@@ -42,7 +42,7 @@ class ParameterFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param int $parameterIndex
      * @param int $valueIndex
      * @return \Doctrine\ORM\QueryBuilder

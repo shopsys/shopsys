@@ -26,6 +26,8 @@ class FragmentHandler extends LazyLoadingFragmentHandler
         }
 
         $response->sendContent();
+
+        return null;
     }
 
     /**

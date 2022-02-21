@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 class HeurekaCategoryFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -23,7 +23,7 @@ class HeurekaCategoryFacade
     protected $categoryRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      */

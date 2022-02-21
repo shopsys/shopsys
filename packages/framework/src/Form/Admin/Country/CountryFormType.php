@@ -44,7 +44,6 @@ class CountryFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Country\Country|null $country */
         $this->country = $options['country'];
 
         if ($this->country instanceof Country) {

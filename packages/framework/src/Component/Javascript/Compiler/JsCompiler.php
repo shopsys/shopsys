@@ -26,8 +26,8 @@ class JsCompiler
      */
     public function compile($content)
     {
+        /** @var \PLUG\JavaScript\JNodes\nonterminal\JProgramNode $node */
         $node = JParser::parse_string($content, true, JParser::class, JTokenizer::class);
-        /* @var $node \PLUG\JavaScript\JNodes\nonterminal\JProgramNode */
 
         foreach ($this->compilerPasses as $compilerPass) {
             $compilerPass->process($node);

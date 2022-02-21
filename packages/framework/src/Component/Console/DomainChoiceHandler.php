@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Console;
 
+use Shopsys\FrameworkBundle\Component\Console\Exception\NoDomainSetException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -55,6 +56,8 @@ class DomainChoiceHandler
                 return $domainConfig;
             }
         }
+
+        throw new NoDomainSetException();
     }
 
     /**

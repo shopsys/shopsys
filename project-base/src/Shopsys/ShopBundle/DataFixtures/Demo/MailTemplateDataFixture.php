@@ -2,7 +2,7 @@
 
 namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
@@ -35,7 +35,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -125,7 +125,7 @@ team of {domain}
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      * @param mixed $name
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      */

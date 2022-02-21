@@ -12,13 +12,13 @@ class DatabaseSchemaFacade
     protected $defaultSchemaFilepath;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
     /**
      * @param mixed $defaultSchemaFilepath
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      */
     public function __construct(
         $defaultSchemaFilepath,

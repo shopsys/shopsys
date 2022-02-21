@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 class TopCategoryRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -19,7 +19,7 @@ class TopCategoryRepository
     protected $categoryRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      */
     public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository)

@@ -3,8 +3,8 @@
 namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -25,7 +25,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /** @var \Faker\Generator */
     protected $faker;
 
-    /** @var \Doctrine\ORM\EntityManagerInterface */
+    /** @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator */
     protected $em;
 
     /** @var \Shopsys\FrameworkBundle\Component\String\HashGenerator */
@@ -35,7 +35,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader $loaderService
      * @param \Faker\Generator $faker
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
@@ -53,7 +53,7 @@ class UserDataFixture extends AbstractReferenceFixture implements DependentFixtu
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      */
     public function load(ObjectManager $manager)
     {

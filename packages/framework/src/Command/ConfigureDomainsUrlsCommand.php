@@ -44,8 +44,7 @@ class ConfigureDomainsUrlsCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -56,5 +55,7 @@ class ConfigureDomainsUrlsCommand extends Command
             $this->localFilesystem->copy($this->configFilepath . '.dist', $this->configFilepath);
             $output->writeln(sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath));
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

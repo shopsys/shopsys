@@ -47,7 +47,7 @@ class FeedExport
     protected $mountManager;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -83,7 +83,7 @@ class FeedExport
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param string $feedFilepath
      * @param string $feedLocalFilepath
      * @param int|null $lastSeekId

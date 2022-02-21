@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class LoginListener
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -28,7 +28,7 @@ class LoginListener
     protected $administratorActivityFacade;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade $orderFlowFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
      */

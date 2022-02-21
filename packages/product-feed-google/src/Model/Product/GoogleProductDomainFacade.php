@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class GoogleProductDomainFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -23,7 +23,7 @@ class GoogleProductDomainFacade
     protected $productRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainRepository $googleProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */

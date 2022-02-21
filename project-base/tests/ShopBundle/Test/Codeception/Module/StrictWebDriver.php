@@ -128,7 +128,7 @@ class StrictWebDriver extends WebDriver
      */
     public function clickByElement(WebDriverElement $element)
     {
-        $element->click();
+        return $element->click();
     }
 
     /**

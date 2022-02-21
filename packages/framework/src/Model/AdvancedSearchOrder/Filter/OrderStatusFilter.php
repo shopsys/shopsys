@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -91,5 +92,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
             case self::OPERATOR_IS_NOT:
                 return '!=';
         }
+
+        throw new AdvancedSearchFilterOperatorNotFoundException($operator);
     }
 }

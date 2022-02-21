@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 class PersonalDataAccessRequestFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -29,7 +29,7 @@ class PersonalDataAccessRequestFacade
     protected $personalDataAccessRequestFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory

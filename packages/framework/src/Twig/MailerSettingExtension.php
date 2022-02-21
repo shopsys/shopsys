@@ -63,7 +63,7 @@ class MailerSettingExtension extends Twig_Extension
      */
     public function isMailerSettingUnusual()
     {
-        return $this->isDeliveryDisabled || (!$this->isDeliveryDisabled && $this->mailerMasterEmailAddress !== null);
+        return $this->isDeliveryDisabled || $this->mailerMasterEmailAddress !== null;
     }
 
     /**

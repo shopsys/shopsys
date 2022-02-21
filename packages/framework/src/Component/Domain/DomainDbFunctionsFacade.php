@@ -8,7 +8,7 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class DomainDbFunctionsFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -18,7 +18,7 @@ class DomainDbFunctionsFacade
     protected $domain;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(EntityManagerInterface $em, Domain $domain)

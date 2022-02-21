@@ -2,6 +2,7 @@
 
 namespace Shopsys\ShopBundle\Command;
 
+use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Shopsys\ShopBundle\DataFixtures\Performance\CategoryDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Performance\OrderDataFixture;
 use Shopsys\ShopBundle\DataFixtures\Performance\ProductDataFixture;
@@ -77,5 +78,7 @@ class PerformanceDataCommand extends Command
         $this->userDataFixture->load($output);
         $output->writeln('<fg=green>loading ' . OrderDataFixture::class . '</fg=green>');
         $this->orderDataFixture->load($output);
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

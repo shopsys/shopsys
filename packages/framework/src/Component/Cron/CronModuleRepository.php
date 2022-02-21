@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class CronModuleRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -17,7 +17,7 @@ class CronModuleRepository
     protected $cronModuleFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface $cronModuleFactory
      */
     public function __construct(EntityManagerInterface $em, CronModuleFactoryInterface $cronModuleFactory)

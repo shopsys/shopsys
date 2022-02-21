@@ -19,7 +19,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     protected $repositoryFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Doctrine\ORM\Configuration $config
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */

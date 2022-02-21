@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 class OrderRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -25,7 +25,7 @@ class OrderRepository
     protected $orderListAdminRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository
      */
     public function __construct(

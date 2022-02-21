@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 class UploadedFileFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -40,7 +40,7 @@ class UploadedFileFacade
     protected $uploadedFileFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      * @param \League\Flysystem\FilesystemInterface $filesystem

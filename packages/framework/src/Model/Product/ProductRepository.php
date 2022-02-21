@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 class ProductRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -47,7 +47,7 @@ class ProductRepository
     protected $productElasticsearchRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 class TranslatableEntityDataCreator
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -26,7 +26,7 @@ class TranslatableEntityDataCreator
     protected $sqlQuoter;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder $notNullableColumnsFinder
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
      */

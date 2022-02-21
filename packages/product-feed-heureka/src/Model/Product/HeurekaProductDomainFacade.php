@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class HeurekaProductDomainFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -24,7 +24,7 @@ class HeurekaProductDomainFacade
     protected $productRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainRepository $heurekaProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */

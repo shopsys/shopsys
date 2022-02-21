@@ -79,8 +79,7 @@ class GenerateGruntfileCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -97,5 +96,7 @@ class GenerateGruntfileCommand extends Command
         $path = $this->rootDirectory;
         file_put_contents($path . '/Gruntfile.js', $gruntfileContents);
         $output->writeln('<fg=green>Gruntfile.js was successfully generated.</fg=green>');
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

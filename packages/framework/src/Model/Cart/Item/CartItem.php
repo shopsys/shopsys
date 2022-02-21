@@ -86,7 +86,7 @@ class CartItem
      */
     public function changeQuantity(int $newQuantity): void
     {
-        if (filter_var($newQuantity, FILTER_VALIDATE_INT) === false || $newQuantity <= 0) {
+        if ($newQuantity <= 0) {
             throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($newQuantity);
         }
 

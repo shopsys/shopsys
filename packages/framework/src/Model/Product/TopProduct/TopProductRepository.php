@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class TopProductRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -19,7 +19,7 @@ class TopProductRepository
     protected $productRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository)

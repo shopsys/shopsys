@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 class AdministratorFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -34,7 +34,7 @@ class AdministratorFacade
     protected $tokenStorage;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory

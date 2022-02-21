@@ -9,7 +9,7 @@ use Doctrine\ORM\Tools\SchemaTool;
 class DatabaseSchemaFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -29,7 +29,7 @@ class DatabaseSchemaFacade
     protected $schemaTool;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter $schemaDiffFilter
      * @param \Doctrine\DBAL\Schema\Comparator $comparator
      * @param \Doctrine\ORM\Tools\SchemaTool $schemaTool

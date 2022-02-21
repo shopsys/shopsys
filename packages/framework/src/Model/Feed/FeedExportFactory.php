@@ -26,7 +26,7 @@ class FeedExportFactory
     protected $filesystem;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -48,7 +48,7 @@ class FeedExportFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory $feedRendererFactory
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager

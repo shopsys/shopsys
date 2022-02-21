@@ -42,7 +42,7 @@ class AdministratorLoginFacade
     protected $hashGenerator;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -51,7 +51,7 @@ class AdministratorLoginFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,

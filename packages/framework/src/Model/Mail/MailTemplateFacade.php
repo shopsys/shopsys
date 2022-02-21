@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 class MailTemplateFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -52,7 +52,7 @@ class MailTemplateFacade
     protected $mailTemplateAttachmentFilepathProvider;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

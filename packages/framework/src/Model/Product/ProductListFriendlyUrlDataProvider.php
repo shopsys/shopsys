@@ -17,7 +17,7 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
     const ROUTE_NAME = 'front_product_list';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -27,7 +27,7 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
     protected $friendlyUrlDataFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
     public function __construct(

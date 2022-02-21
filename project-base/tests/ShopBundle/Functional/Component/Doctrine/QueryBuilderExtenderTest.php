@@ -26,7 +26,7 @@ class QueryBuilderExtenderTest extends FunctionalTestCase
     ): void {
         /** @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender */
         $queryBuilderExtender = $this->getContainer()->get(QueryBuilderExtender::class);
-        /** @var \Doctrine\ORM\EntityManagerInterface $em */
+        /** @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $queryBuilder = $em->createQueryBuilder();

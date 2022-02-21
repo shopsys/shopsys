@@ -55,8 +55,7 @@ class ReplaceDomainsUrlsCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -75,5 +74,7 @@ class ReplaceDomainsUrlsCommand extends Command
                 $output->writeln('Domain ' . $domainConfig->getId() . ' URL is matching URL stored in database.');
             }
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

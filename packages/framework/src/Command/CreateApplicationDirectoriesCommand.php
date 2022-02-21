@@ -96,14 +96,15 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->createMiscellaneousDirectories($output);
         $this->createImageDirectories($output);
         $this->createUploadedFileDirectories($output);
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

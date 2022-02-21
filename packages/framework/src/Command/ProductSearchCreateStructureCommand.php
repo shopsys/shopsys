@@ -36,8 +36,7 @@ class ProductSearchCreateStructureCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -45,5 +44,7 @@ class ProductSearchCreateStructureCommand extends Command
         $output->writeln('Creating structure');
         $this->productSearchExportStructureFacade->createIndexes($output);
         $symfonyStyleIo->success('Structure created successfully!');
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

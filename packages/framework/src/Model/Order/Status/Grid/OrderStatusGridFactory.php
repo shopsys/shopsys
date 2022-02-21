@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 class OrderStatusGridFactory implements GridFactoryInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -28,7 +28,7 @@ class OrderStatusGridFactory implements GridFactoryInterface
     protected $localization;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */

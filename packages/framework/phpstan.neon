@@ -9,9 +9,6 @@ parameters:
             message: '#Call to method .+\(\) on an unknown class AppKernel\.#'
             path: %currentWorkingDirectory%/src/Component/Error/ErrorPagesFacade.php
         -
-            message: '#Method Doctrine\\Common\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
-            path: *
-        -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/src/Component/Domain/Config/DomainsConfigDefinition.php
         -
@@ -36,11 +33,16 @@ parameters:
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
             path: %currentWorkingDirectory%/src/Model/Order/Order.php
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$var\.#'
-            path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
+            message: '#^Unsafe usage of new static\(\).#'
+            path: %currentWorkingDirectory%/src/Model/Product/Product.php
         -
-            message: '#Access to an undefined property PhpParser\\Node::\$name\.#'
-            path: %currentWorkingDirectory%/src/Component/Translation/ConstraintViolationExtractor.php
+            # our fork of doctrine-orm (https://github.com/shopsys/doctrine-orm) needs to be updated to resolve the reported issues
+            message: '#^Method Shopsys\\FrameworkBundle\\Component\\EntityExtension\\EntityManagerDecorator::.*\(\) should return T of object\|null but returns object\|null.#'
+            path: %currentWorkingDirectory%/src/Component/EntityExtension/EntityManagerDecorator.php
+        -
+            # our fork of doctrine-orm (https://github.com/shopsys/doctrine-orm) needs to be updated to resolve the reported issues
+            message: '#^Method Shopsys\\FrameworkBundle\\Component\\EntityExtension\\EntityManagerDecorator::getRepository\(\) should return Doctrine\\Persistence\\ObjectRepository<T of object> but returns Doctrine\\Persistence\\ObjectRepository<object>.#'
+            path: %currentWorkingDirectory%/src/Component/EntityExtension/EntityManagerDecorator.php
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

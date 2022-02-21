@@ -31,7 +31,9 @@ class JsStringParser
                 } else {
                     throw new \Shopsys\FrameworkBundle\Component\Javascript\Parser\Exception\UnsupportedNodeException();
                 }
-            } while ($addExprNode = $node->next());
+                /** @var \PLUG\parsing\ParseNode|bool $addExprNode */
+                $addExprNode = $node->next();
+            } while ($addExprNode !== false);
 
             return $concatenatedString;
         }

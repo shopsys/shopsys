@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class ProductListAdminRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -24,7 +24,7 @@ class ProductListAdminRepository
     protected $localization;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(EntityManagerInterface $em, Localization $localization)

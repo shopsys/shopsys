@@ -81,6 +81,8 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         if ($node instanceof Property && $node->isPublic() && $this->isInsideConstraintClass) {
             $this->extractMessagesFromProperty($node);
         }
+
+        return null;
     }
 
     /**
@@ -91,6 +93,8 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = false;
         }
+
+        return null;
     }
 
     /**

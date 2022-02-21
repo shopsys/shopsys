@@ -15,7 +15,7 @@ class DomainUrlReplacer
     protected $stringColumnsFinder;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -26,7 +26,7 @@ class DomainUrlReplacer
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder $stringColumnsFinder
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
      */
     public function __construct(

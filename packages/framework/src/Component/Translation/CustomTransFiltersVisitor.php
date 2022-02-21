@@ -2,10 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Twig\Environment;
+use Twig\Node\Expression\FilterExpression;
+use Twig\Node\Node;
 use Twig_BaseNodeVisitor;
-use Twig_Environment;
-use Twig_Node;
-use Twig_Node_Expression_Filter;
 
 /**
  * Normalizes Twig translation filters by replacing custom filter names "transHtml" and "transChoiceHtml" by the default filter
@@ -27,9 +27,9 @@ class CustomTransFiltersVisitor extends Twig_BaseNodeVisitor
     /**
      * {@inheritdoc}
      */
-    protected function doEnterNode(Twig_Node $node, Twig_Environment $env)
+    protected function doEnterNode(Node $node, Environment $env)
     {
-        if ($node instanceof Twig_Node_Expression_Filter) {
+        if ($node instanceof FilterExpression) {
             $filterNameConstantNode = $node->getNode('filter');
             $filterName = $filterNameConstantNode->getAttribute('value');
             if (array_key_exists($filterName, static::CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP)) {
@@ -42,10 +42,10 @@ class CustomTransFiltersVisitor extends Twig_BaseNodeVisitor
     }
 
     /**
-     * @param \Twig_Node_Expression_Filter $filterExpressionNode
+     * @param \Twig\Node\Expression\FilterExpression $filterExpressionNode
      * @param string $newFilterName
      */
-    protected function replaceCustomFilterName(Twig_Node_Expression_Filter $filterExpressionNode, $newFilterName)
+    protected function replaceCustomFilterName(FilterExpression $filterExpressionNode, $newFilterName)
     {
         $filterNameConstantNode = $filterExpressionNode->getNode('filter');
         $filterNameConstantNode->setAttribute('value', $newFilterName);
@@ -59,7 +59,7 @@ class CustomTransFiltersVisitor extends Twig_BaseNodeVisitor
     /**
      * {@inheritdoc}
      */
-    protected function doLeaveNode(Twig_Node $node, Twig_Environment $env)
+    protected function doLeaveNode(Node $node, Environment $env)
     {
         return $node;
     }

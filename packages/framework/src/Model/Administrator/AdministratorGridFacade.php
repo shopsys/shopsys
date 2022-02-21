@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 class AdministratorGridFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface;
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
      */
     protected $em;
 
@@ -18,7 +18,7 @@ class AdministratorGridFacade
     protected $administratorGridLimitFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface $administratorGridLimitFactory
      */
     public function __construct(

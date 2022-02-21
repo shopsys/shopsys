@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 class PricingGroupGridFactory implements GridFactoryInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -27,7 +27,7 @@ class PricingGroupGridFactory implements GridFactoryInterface
     protected $adminDomainTabsFacade;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */

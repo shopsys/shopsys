@@ -23,7 +23,7 @@ class ProductSearchExportWithFilterRepository extends ProductSearchExportReposit
     protected $productFacade;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */

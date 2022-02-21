@@ -158,7 +158,7 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flags
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em)
@@ -177,7 +177,7 @@ class ProductFilterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brands
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @return \Doctrine\ORM\QueryBuilder
      */
     protected function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em)

@@ -43,7 +43,7 @@ class ProductSearchExporter
     protected $sqlLoggerFacade;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $entityManager;
 
@@ -53,7 +53,7 @@ class ProductSearchExporter
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory|null $progressBarFactory
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade|null $sqlLoggerFacade
-     * @param \Doctrine\ORM\EntityManagerInterface|null $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator|null $entityManager
      */
     public function __construct(
         ProductSearchExportRepository $productSearchExportRepository,
@@ -109,7 +109,7 @@ class ProductSearchExporter
 
     /**
      * @required
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @deprecated Will be replaced with constructor injection in the next major release
      */
     public function setEntityManager(EntityManagerInterface $entityManager): void

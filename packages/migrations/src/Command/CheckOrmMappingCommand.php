@@ -20,12 +20,12 @@ class CheckOrmMappingCommand extends AbstractCommand
     protected static $defaultName = 'shopsys:migrations:check-mapping';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     private $em;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      */
     public function __construct(EntityManagerInterface $em)
     {

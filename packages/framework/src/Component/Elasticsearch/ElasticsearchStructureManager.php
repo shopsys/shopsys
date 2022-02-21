@@ -266,7 +266,7 @@ class ElasticsearchStructureManager
      */
     protected function getDefinition(int $domainId, string $index): array
     {
-        $this->getStructureDefinition($domainId, $index);
+        return $this->getStructureDefinition($domainId, $index);
     }
 
     /**

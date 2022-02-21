@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 class CustomerFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -55,7 +55,7 @@ class CustomerFacade
     protected $userFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\UserRepository $userRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory

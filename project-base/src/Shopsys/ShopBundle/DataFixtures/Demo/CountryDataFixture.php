@@ -2,7 +2,7 @@
 
 namespace Shopsys\ShopBundle\DataFixtures\Demo;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface;
@@ -34,7 +34,7 @@ class CountryDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $manager
      */
     public function load(ObjectManager $manager): void
     {

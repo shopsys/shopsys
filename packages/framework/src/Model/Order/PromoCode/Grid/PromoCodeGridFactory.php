@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 class PromoCodeGridFactory implements GridFactoryInterface
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -21,7 +21,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
     protected $gridFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(

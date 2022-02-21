@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class EnabledModuleRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -17,7 +17,7 @@ class EnabledModuleRepository
     protected $moduleList;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
      */
     public function __construct(

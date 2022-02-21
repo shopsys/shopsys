@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 class SliderItemFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -34,7 +34,7 @@ class SliderItemFacade
     protected $sliderItemFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -16,3 +16,5 @@ There you can find links to upgrade notes for other versions too.
   - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
 - upgrade codeception/codeception to `^4.1.22`
   - see #project-base-diff
+- upgrade phpstan to `^0.12`
+  - see #project-base-diff

@@ -43,7 +43,7 @@ class HeurekaFeedItemTest extends TestCase
     private $categoryFacadeMock;
 
     /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory::__construct
+     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory
      */
     private $heurekaFeedItemFactory;
 

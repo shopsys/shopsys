@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 class CronModuleFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -23,7 +23,7 @@ class CronModuleFacade
     protected $cronFilter;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
      */

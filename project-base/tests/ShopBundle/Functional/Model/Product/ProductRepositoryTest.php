@@ -203,10 +203,13 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
 
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->getContainer()->get(Domain::class);
-        /** @var \Shopsys\ShopBundle\Model\Product\Product $product */
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product2 */
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 2);
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product3 */
         $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 3);
+        /** @var \Shopsys\ShopBundle\Model\Product\Product $product4 */
         $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
 
         $sortedProducts = [

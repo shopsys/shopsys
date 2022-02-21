@@ -60,8 +60,7 @@ class CronCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -75,6 +74,8 @@ class CronCommand extends Command
 
             $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 
     /**

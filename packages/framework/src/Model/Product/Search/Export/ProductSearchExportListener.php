@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 class ProductSearchExportListener
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $entityManager;
 
@@ -27,7 +27,7 @@ class ProductSearchExportListener
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportScheduler $productSearchExportScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportFacade $productSearchExportFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      */
     public function __construct(
         ProductSearchExportScheduler $productSearchExportScheduler,

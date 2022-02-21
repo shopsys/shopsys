@@ -89,7 +89,10 @@ class AdministratorFrontSecurityFacade
     public function getCurrentAdministrator()
     {
         if ($this->isAdministratorLogged()) {
-            return $this->getAdministratorToken()->getUser();
+            /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
+            $administrator = $this->getAdministratorToken()->getUser();
+
+            return $administrator;
         } else {
             $message = 'Administrator is not logged.';
             throw new \Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException($message);

@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class FlagFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -22,7 +22,7 @@ class FlagFacade
     protected $flagFactory;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
      */

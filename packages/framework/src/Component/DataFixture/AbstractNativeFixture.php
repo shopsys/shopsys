@@ -9,13 +9,13 @@ use Doctrine\ORM\Query\ResultSetMapping;
 abstract class AbstractNativeFixture extends AbstractFixture
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $entityManager;
 
     /**
      * @required
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      */
     public function autowireEntityManager(EntityManagerInterface $entityManager)
     {

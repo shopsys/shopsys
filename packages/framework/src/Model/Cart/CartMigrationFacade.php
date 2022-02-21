@@ -13,7 +13,7 @@ class CartMigrationFacade
     const SESSION_PREVIOUS_CART_IDENTIFIER = 'previous_id';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -33,7 +33,7 @@ class CartMigrationFacade
     protected $cartFacade;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifierFactory $customerIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractCommand extends Command
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     private $em;
 
@@ -36,7 +36,7 @@ abstract class AbstractCommand extends Command
 
     /**
      * @required
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder $migrationsFinder
      */

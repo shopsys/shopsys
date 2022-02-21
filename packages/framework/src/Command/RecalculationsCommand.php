@@ -82,8 +82,7 @@ class RecalculationsCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -109,5 +108,7 @@ class RecalculationsCommand extends Command
 
         $output->writeln('<fg=green>Products selling denial.</fg=green>');
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForAll();
+
+        return CommandResultCodes::RESULT_OK;
     }
 }

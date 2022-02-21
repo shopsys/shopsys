@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class ManualBestsellingProductRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -21,7 +21,7 @@ class ManualBestsellingProductRepository
     protected $productRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository)

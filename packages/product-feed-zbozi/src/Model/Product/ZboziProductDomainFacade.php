@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class ZboziProductDomainFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -24,7 +24,7 @@ class ZboziProductDomainFacade
     protected $productRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository $zboziProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */

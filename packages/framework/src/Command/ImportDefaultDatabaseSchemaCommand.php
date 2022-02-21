@@ -36,13 +36,14 @@ class ImportDefaultDatabaseSchemaCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * {@inheritDoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Importing default database schema...');
         $this->databaseSchemaFacade->importDefaultSchema();
         $output->writeln('Default database schema imported successfully!');
+
+        return CommandResultCodes::RESULT_OK;
     }
 }
