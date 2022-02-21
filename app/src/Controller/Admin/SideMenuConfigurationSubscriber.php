@@ -37,6 +37,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
+            ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'configureAdministratorMenu',
         ];
     }
 
@@ -212,6 +213,15 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
 
         return $integrationsMenu;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureAdministratorMenu(ConfigureMenuEvent $event): void
+    {
+        $administratorMenu = $event->getMenu();
+        $administratorMenu->addChild('role_groups', ['route' => 'admin_admininstratorrolegroup_list', 'label' => t('Role Groups')]);
     }
 
     /**
