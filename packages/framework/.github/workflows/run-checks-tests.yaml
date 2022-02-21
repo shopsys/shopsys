@@ -17,6 +17,8 @@ jobs:
                     tools: composer
             -   name: Install Composer dependencies
                 run: composer install --optimize-autoloader --no-interaction
+            -   name: Ensure Symfony 4 version
+                run: composer update
             -   name: Run parallel-lint
                 run: php vendor/bin/parallel-lint ./src
             -   name: Run Easy Coding Standards

@@ -9,8 +9,14 @@ jobs:
                 uses: actions/checkout@v2
                 with:
                     ref: ${{ github.ref }}
+            -   name: Configure application
+                run: echo 1 | ./scripts/configure.sh
+            -   name: Install composer dependencies
+                run: docker-compose exec -T php-fpm composer install
+            -   name: Ensure Symfony 4 version
+                run: docker-compose exec -T php-fpm composer update
             -   name: Build application
-                run: echo 1 | ./scripts/install.sh
+                run: docker-compose exec -T php-fpm php phing db-create test-db-create build-demo-dev-quick error-pages-generate
             -   name: Check standards
                 run: docker-compose exec -T php-fpm php phing standards
             -   name: Run tests
