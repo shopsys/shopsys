@@ -221,7 +221,16 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureAdministratorMenu(ConfigureMenuEvent $event): void
     {
         $administratorMenu = $event->getMenu();
-        $administratorMenu->addChild('role_groups', ['route' => 'admin_admininstratorrolegroup_list', 'label' => t('Role Groups')]);
+        $administratorRoleGroupMenu = $administratorMenu->addChild('role_groups', ['route' => 'admin_admininstratorrolegroup_list', 'label' => t('Role Groups')]);
+
+        $administratorRoleGroupMenu->addChild(
+            'new',
+            ['route' => 'admin_admininstratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false]
+        );
+        $administratorRoleGroupMenu->addChild(
+            'edit',
+            ['route' => 'admin_admininstratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false]
+        );
     }
 
     /**

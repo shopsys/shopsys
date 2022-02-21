@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,13 +30,23 @@ class AdmininstratorRoleGroupController extends AdminBaseController
     private GridFactory $gridFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
+     */
+    private BreadcrumbOverrider $breadcrumbOverrider;
+
+    /**
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
-    public function __construct(AdministratorRoleGroupFacade $administratorRoleGroupFacade, GridFactory $gridFactory)
-    {
+    public function __construct(
+        AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+        GridFactory $gridFactory,
+        BreadcrumbOverrider $breadcrumbOverrider
+    ) {
         $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
         $this->gridFactory = $gridFactory;
+        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**
@@ -126,6 +137,10 @@ class AdmininstratorRoleGroupController extends AdminBaseController
         if ($form->isSubmitted() && !$form->isValid()) {
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing administrator role group - %name%', ['%name%' => $administratorRoleGroup->getName()])
+        );
 
         return $this->render('/Admin/Content/Administrator/RoleGroup/edit.html.twig', [
             'form' => $form->createView(),
