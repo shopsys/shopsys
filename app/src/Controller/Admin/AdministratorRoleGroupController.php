@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdmininstratorRoleGroupController extends AdminBaseController
+class AdministratorRoleGroupController extends AdminBaseController
 {
     /**
      * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade
@@ -64,8 +64,8 @@ class AdmininstratorRoleGroupController extends AdminBaseController
         $grid->addColumn('name', 'arg.name', t('Role name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
-        $grid->addEditActionColumn('admin_admininstratorrolegroup_edit', ['id' => 'arg.id']);
-        $grid->addDeleteActionColumn('admin_admininstratorrolegroup_delete', ['id' => 'arg.id'])
+        $grid->addEditActionColumn('admin_administratorrolegroup_edit', ['id' => 'arg.id']);
+        $grid->addDeleteActionColumn('admin_administratorrolegroup_delete', ['id' => 'arg.id'])
             ->setConfirmMessage(t('Do you really want to remove this administrator role group?'));
 
         return $this->render('Admin/Content/Administrator/RoleGroup/list.html.twig', [
@@ -91,10 +91,10 @@ class AdmininstratorRoleGroupController extends AdminBaseController
                 t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was created'),
                 [
                     'name' => $administratorRoleGroup->getName(),
-                    'url' => $this->generateUrl('admin_admininstratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]),
+                    'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]),
                 ]
             );
-            return $this->redirectToRoute('admin_admininstratorrolegroup_list');
+            return $this->redirectToRoute('admin_administratorrolegroup_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -128,10 +128,10 @@ class AdmininstratorRoleGroupController extends AdminBaseController
                 t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was edited'),
                 [
                     'name' => $administratorRoleGroupData->name,
-                    'url' => $this->generateUrl('admin_admininstratorrolegroup_edit', ['id' => $id]),
+                    'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $id]),
                 ]
             );
-            return $this->redirectToRoute('admin_admininstratorrolegroup_list');
+            return $this->redirectToRoute('admin_administratorrolegroup_list');
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -170,6 +170,6 @@ class AdmininstratorRoleGroupController extends AdminBaseController
             $this->addErrorFlash(t('Selected administrator role group doesn\'t exist.'));
         }
 
-        return $this->redirectToRoute('admin_admininstratorrolegroup_list');
+        return $this->redirectToRoute('admin_administratorrolegroup_list');
     }
 }
