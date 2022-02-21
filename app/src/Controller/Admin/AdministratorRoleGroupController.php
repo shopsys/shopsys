@@ -65,6 +65,7 @@ class AdministratorRoleGroupController extends AdminBaseController
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_administratorrolegroup_edit', ['id' => 'arg.id']);
+        $grid->addActionColumn('document-copy', 'Copy', 'admin_administratorrolegroup_copy', ['id' => 'arg.id']);
         $grid->addDeleteActionColumn('admin_administratorrolegroup_delete', ['id' => 'arg.id'])
             ->setConfirmMessage(t('Do you really want to remove this administrator role group?'));
 
@@ -145,6 +146,30 @@ class AdministratorRoleGroupController extends AdminBaseController
         return $this->render('/Admin/Content/Administrator/RoleGroup/edit.html.twig', [
             'form' => $form->createView(),
             'administratorRoleGroup' => $administratorRoleGroup,
+        ]);
+    }
+
+    /**
+     * @Route("/administrator/groups/copy/{id}", requirements={"id" = "\d+"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function copyAction(Request $request, int $id): Response
+    {
+        $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
+        $administratorRoleGroupData = new AdministratorRoleGroupData();
+        $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
+
+        $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
+            'action' => $this->generateUrl('admin_administratorrolegroup_new'),
+        ]);
+        $form->handleRequest($request);
+
+        $this->breadcrumbOverrider->overrideLastItem(t('New administrator role group'));
+
+        return $this->render('/Admin/Content/Administrator/RoleGroup/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
