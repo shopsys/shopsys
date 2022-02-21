@@ -7,8 +7,10 @@ namespace App\Controller\Admin;
 use App\Form\Admin\AdministratorRoleGroupFormType;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
+use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,10 +54,8 @@ class AdmininstratorRoleGroupController extends AdminBaseController
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_admininstratorrolegroup_edit', ['id' => 'arg.id']);
-        //$grid->addDeleteActionColumn('admin_administrator_delete', ['id' => 'a.id'])
-        //    ->setConfirmMessage(t('Do you really want to remove this administrator?'));
-
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Administrator/listGrid.html.twig');
+        $grid->addDeleteActionColumn('admin_admininstratorrolegroup_delete', ['id' => 'arg.id'])
+            ->setConfirmMessage(t('Do you really want to remove this administrator role group?'));
 
         return $this->render('Admin/Content/Administrator/RoleGroup/list.html.twig', [
             'gridView' => $grid->createView(),
@@ -131,5 +131,30 @@ class AdmininstratorRoleGroupController extends AdminBaseController
             'form' => $form->createView(),
             'administratorRoleGroup' => $administratorRoleGroup,
         ]);
+    }
+
+    /**
+     * @Route("/administrator/groups/delete/{id}", requirements={"id" = "\d+"})
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteAction(int $id): Response
+    {
+        try {
+            $name = $this->administratorRoleGroupFacade->getById($id)->getName();
+
+            $this->administratorRoleGroupFacade->delete($id);
+            $this->addSuccessFlashTwig(
+                t('Administrator role group <strong>{{ name }}</strong> deleted.'),
+                [
+                    'name' => $name,
+                ]
+            );
+        } catch (AdministratorRoleGroupNotFoundException $ex) {
+            $this->addErrorFlash(t('Selected administrator role group doesn\'t exist.'));
+        }
+
+        return $this->redirectToRoute('admin_admininstratorrolegroup_list');
     }
 }

@@ -71,4 +71,15 @@ class AdministratorRoleGroupFacade
         $administratorRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();
     }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        $administratorRoleGroup = $this->administratorRoleGroupRepository->getById($id);
+
+        $this->entityManager->remove($administratorRoleGroup);
+        $this->entityManager->flush();
+    }
 }
