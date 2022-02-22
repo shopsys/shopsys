@@ -82,4 +82,12 @@ class AdministratorRoleGroupFacade
         $this->entityManager->remove($administratorRoleGroup);
         $this->entityManager->flush();
     }
+
+    /**
+     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
+     */
+    public function getAll(): array
+    {
+        return $this->administratorRoleGroupRepository->getAll();
+    }
 }

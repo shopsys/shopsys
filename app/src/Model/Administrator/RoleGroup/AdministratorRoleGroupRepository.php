@@ -53,4 +53,12 @@ class AdministratorRoleGroupRepository
 
         return $administratorRoleGroup;
     }
+
+    /**
+     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup[]
+     */
+    public function getAll(): array
+    {
+        return $this->getAllQueryBuilder()->getQuery()->getResult();
+    }
 }
