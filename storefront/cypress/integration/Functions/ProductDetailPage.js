@@ -3,6 +3,6 @@ export function addProductToCartFromProductDetail(){
 }
 
 export function addProductVariantToCartFromProductDetail(product_catnum){
-	const sliderProductVariantItemSelector = '[data-testid="pages-productdetail-variant-' + product_catnum + '"] ' + '[data-testid="blocks-product-addtocart"]'
-	cy.get(sliderProductVariantItemSelector).click()
+	const productVariantItemSelector = '[data-testid="pages-productdetail-variant-' + product_catnum + '"] ' + '[data-testid="blocks-product-addtocart"]'
+	cy.get(productVariantItemSelector).contains('Do košíku').click()
 }
