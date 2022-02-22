@@ -1,4 +1,5 @@
-export const url_kosik = '/kosik'
+export const url_cart = '/kosik'
+export const url_search = '/hledani?q='
 export const product1_name = '22" Sencor SLE 22F46DM4 HELLO KITTY'
 export const product1_name_prefix_suffix = 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová'
 export const product1_catnum = '9177759'
