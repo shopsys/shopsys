@@ -109,13 +109,13 @@ review:
             - schema.graphql
     script:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
+        - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
         - docker-compose down --rmi all -v --remove-orphans
         - docker-compose up -d
         - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
-        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${HOST}/g" config/domains_urls.yaml
-        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/en.${HOST}/g" config/domains_urls.yaml
+        - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
-        - echo -e "Available hosts \n - https://${HOST}\n - https://en.${HOST}\n"
+        - ./gitlab/scripts/set-urls-for-review.sh printDomains
     tags:
         - review
     interruptible: true

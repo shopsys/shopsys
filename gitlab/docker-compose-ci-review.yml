@@ -23,11 +23,6 @@ services:
         image: ${STOREFRONT_TAG}
         labels:
             - traefik.enable=false
-        environment:
-            DOMAIN_HOSTNAME_1: https://${HOST}/
-            DOMAIN_HOSTNAME_2: https://en.${HOST}/
-            PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1: https://${HOST}/graphql/
-            PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2: https://en.${HOST}/graphql/
         networks:
             - default
 
