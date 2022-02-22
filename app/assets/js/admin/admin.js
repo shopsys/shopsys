@@ -16,4 +16,6 @@ import './promocode/promoCodeFlags';
 
 import './category/categoryDeleteConfirm';
 
+import './roleGroup/roleGroups';
+
 registerAdmin();
