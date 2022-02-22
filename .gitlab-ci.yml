@@ -68,7 +68,7 @@ test:storefront-standards-with-jest-and-codegen:
         - docker run -i ${STOREFRONT_TAG} /bin/sh -c "./check-code-gen.sh; npm run lint; npm run tests-jest"
     interruptible: true
 
-tests:functional:
+tests:functional-and-acceptance:
     image: tmaier/docker-compose:latest
     stage: test
     <<: *only-default
@@ -77,10 +77,18 @@ tests:functional:
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker-compose up -d
-        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests"
+        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
+    after_script:
+        - mkdir -p codeception/
+        - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
+    artifacts:
+        paths:
+            - codeception/
+        when: on_failure
+        expire_in: 1 day
     interruptible: true
 
-test:acceptance:
+test:storefront-acceptance:
     image: tmaier/docker-compose:latest
     stage: test
     <<: *only-default
@@ -88,7 +96,6 @@ test:acceptance:
         - tests
     artifacts:
         paths:
-            - codeception/
             - storefront/cypress/videos/
             - storefront/cypress/screenshots/
             - php-fpm-log.txt
@@ -97,13 +104,15 @@ test:acceptance:
         when: on_failure
         expire_in: 1 day
     script:
-        - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
+        - cp -f ./gitlab/docker-compose-ci-storefront-acceptance.yml ./docker-compose.yml
         - docker-compose up -d
-        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys test-db-demo test-error-pages-generate tests-acceptance-build tests-acceptance"
+        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/http:\/\/webserver:8080/g" config/domains_urls.yaml
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create build-demo-dev-quick frontend-api-generate-new-keys error-pages-generate
         - docker-compose run cypress
     after_script:
-        - mkdir -p codeception/
-        - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
+        - docker-compose logs php-fpm > php-fpm-log.txt
+        - docker-compose logs webserver > webserver-log.txt
+        - docker-compose logs storefront > storefront-log.txt
     interruptible: true
 
 review:

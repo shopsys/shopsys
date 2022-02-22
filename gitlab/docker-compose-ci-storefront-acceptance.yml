@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 services:
     postgres:
         image: postgres:12.1-alpine
@@ -33,9 +33,6 @@ services:
         container_name: shopsys-framework-storefront
         ports:
             - "3000:3000"
-        environment:
-            DOMAIN_HOSTNAME_1: http://webserver:8080/
-            DOMAIN_HOSTNAME_2: http://webserver:8080/
 
     php-fpm:
         image: ${TAG}
@@ -48,15 +45,6 @@ services:
     redis:
         image: redis:5.0-alpine
         container_name: shopsys-framework-redis
-
-    selenium-server:
-        image: selenium/standalone-chrome:3.141.5
-        container_name: shopsys-framework-acceptance-tests
-        ports:
-            - "4400:4444"
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
 
     elasticsearch:
         build:
@@ -73,6 +61,16 @@ services:
         environment:
             - discovery.type=single-node
             - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
+
+    cypress:
+        build:
+            context: ./storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        profiles:
+            - storefront-acceptance-tests
+        volumes:
+            - ./storefront/cypress:/app
 
 volumes:
     web-volume:
