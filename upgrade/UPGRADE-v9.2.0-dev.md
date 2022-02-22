@@ -32,3 +32,6 @@ There you can find links to upgrade notes for other versions too.
     - package joschi127/doctrine-entity-override-bundle is no longer used
     - previously used subscriber `\Joschi127\DoctrineEntityOverrideBundle\EventListener\LoadORMMetadataSubscriber` was replaced with `\Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber`
         - if you have extended `LoadORMMetadataSubscriber`, you will need to extend `EntityExtensionSubscriber` instead and reimplement your changes on top of the new class
+
+- replace deprecated namespace `Doctrine\Common\Persistence\ObjectManager` with new `Doctrine\Persistence\ObjectManager`([#2407](https://github.com/shopsys/shopsys/pull/2407))
+    - see #project-base-diff to update your project

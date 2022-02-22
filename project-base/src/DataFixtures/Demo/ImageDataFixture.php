@@ -6,9 +6,9 @@ namespace App\DataFixtures\Demo;
 
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -84,7 +84,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
