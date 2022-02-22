@@ -5,3 +5,7 @@ export function checkProductInCart(catnum, product_name){
 	cy.get(cartProductItemSelector).contains(productCatnum) 
 	cy.url().should('contain', '/kosik')
 }
+
+export function checkTotalPriceInCart(total_price){
+	cy.get('[data-testid="pages-cart-cartpreview-total"]').contains(total_price)
+}
