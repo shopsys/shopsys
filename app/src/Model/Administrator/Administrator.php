@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Administrator;
 
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroup;
+use App\Model\Security\Roles;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
@@ -220,5 +221,18 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     public function getRoleGroup(): ?AdministratorRoleGroup
     {
         return $this->roleGroup;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        if ($this->roleGroup !== null) {
+            $roles = $this->roleGroup->getRoles();
+            return array_merge($roles, [Roles::ROLE_ADMIN]);
+        }
+
+        return parent::getRoles();
     }
 }
