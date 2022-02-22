@@ -12,10 +12,10 @@ front_logout:
     path: /odhlasit/{_csrf_token}
 
 front_order_paid:
-    path: /potvrzeni-platby-objednavky/{urlHash}
+    path: /potvrzeni-platby-objednavky
 
 front_order_not_paid:
-    path: /nezaplacena-objednavka/{urlHash}
+    path: /nezaplacena-objednavka/{orderNumber}
 
 front_order_payment_status_notify:
     path: /order/payment-status-notify

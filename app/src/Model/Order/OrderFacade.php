@@ -114,7 +114,6 @@ class OrderFacade extends BaseOrderFacade
      */
     private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
 
-
     /**
      * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
      */
