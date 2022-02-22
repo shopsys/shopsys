@@ -9,6 +9,9 @@ stages:
     tags:
         - docker
     rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
 
 variables:
@@ -135,6 +138,11 @@ review:stop:
         - docker-compose down --rmi all -v --remove-orphans
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+            when: manual
+            allow_failure: true
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
             when: manual
             allow_failure: true
