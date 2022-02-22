@@ -165,6 +165,19 @@ security:check:
     script:
         - docker run -i ${TAG} composer security-check
 
+jira:connect-review-url:
+    stage: service
+    image: dwdraju/alpine-curl-jq
+    tags:
+        - docker
+    needs: []
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    before_script:
+        - chmod +x ./gitlab/scripts/set-review-url-to-jira.sh
+    script:
+        - ./gitlab/scripts/set-review-url-to-jira.sh
+
 .deploy: &deploy
     image:
         name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
