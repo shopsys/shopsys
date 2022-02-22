@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Form\Admin\AdministratorRoleGroupFormType;
+use App\Model\Administrator\AdministratorFacade;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
@@ -35,18 +36,26 @@ class AdministratorRoleGroupController extends AdminBaseController
     private BreadcrumbOverrider $breadcrumbOverrider;
 
     /**
+     * @var \App\Model\Administrator\AdministratorFacade
+     */
+    private AdministratorFacade $administratorFacade;
+
+    /**
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
         AdministratorRoleGroupFacade $administratorRoleGroupFacade,
         GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider
+        BreadcrumbOverrider $breadcrumbOverrider,
+        AdministratorFacade $administratorFacade
     ) {
         $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
         $this->gridFactory = $gridFactory;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
+        $this->administratorFacade = $administratorFacade;
     }
 
     /**
@@ -181,6 +190,19 @@ class AdministratorRoleGroupController extends AdminBaseController
      */
     public function deleteAction(int $id): Response
     {
+        $namesUsesThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);
+
+        if (count($namesUsesThisRoleGroup) !== 0) {
+            $this->addErrorFlashTwig(
+                t('Role group cannot be deleted, because some administrators are using it: {{ names }}'),
+                [
+                    'names' => implode(', ', $namesUsesThisRoleGroup),
+                ]
+            );
+
+            return $this->redirectToRoute('admin_administratorrolegroup_list');
+        }
+
         try {
             $name = $this->administratorRoleGroupFacade->getById($id)->getName();
 

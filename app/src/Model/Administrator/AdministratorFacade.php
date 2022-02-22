@@ -29,4 +29,13 @@ class AdministratorFacade extends BaseAdministratorFacade
         $administrator->setTransferIssuesLastSeenDateTime(new DateTime());
         $this->em->flush();
     }
+
+    /**
+     * @param int $roleGroupId
+     * @return string[]
+     */
+    public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
+    {
+        return $this->administratorRepository->findAdministratorNamesWithRoleGroup($roleGroupId);
+    }
 }

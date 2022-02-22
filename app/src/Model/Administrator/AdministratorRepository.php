@@ -28,4 +28,23 @@ class AdministratorRepository extends BaseAdministratorRepository
             ->orWhere('a.roleGroup is not NULL')
             ->setParameter('role', Roles::ROLE_ADMIN);
     }
+
+    /**
+     * @param int $roleGroupId
+     * @return string[]
+     */
+    public function findAdministratorNamesWithRoleGroup(int $roleGroupId): array
+    {
+        $administrators = $this->getAdministratorRepository()
+            ->createQueryBuilder('a')
+            ->select('a.realName')
+            ->where('a.roleGroup = :roleGroupId')
+            ->setParameter('roleGroupId', $roleGroupId)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_map(function ($item) {
+            return $item['realName'];
+        }, $administrators);
+    }
 }

@@ -1456,6 +1456,9 @@ msgstr ""
 msgid "Role Groups"
 msgstr ""
 
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr ""
+
 msgid "Role name"
 msgstr ""
 

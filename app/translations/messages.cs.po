@@ -55,8 +55,8 @@ msgstr "Skupiny práv pro administrátora"
 msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
 msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
 
-msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla editována"
-msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla editována"
 
 msgid "Administrator role group <strong>{{ name }}</strong> deleted."
 msgstr "Skupina práv <strong>{{ name }}</strong> byla smazána."
@@ -1458,6 +1458,9 @@ msgstr "Skupina práv"
 
 msgid "Role Groups"
 msgstr "Skupiny práv"
+
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr "Skupina práv nelze smazat, prodože jí někteří administrátoři používají: {{ names }}"
 
 msgid "Role name"
 msgstr "Název role"
