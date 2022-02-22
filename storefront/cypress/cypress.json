@@ -4,7 +4,7 @@
     "viewportHeight": 1250,
     "baseUrl": "http://127.0.0.1:8000/",
     "defaultCommandTimeout": 20000,
-    "integrationFolder": "integration",
+    "integrationFolder": "integration/TestScenarios",
     "fixturesFolder": "fixtures",
     "pluginsFile": "plugins/index.js",
     "screenshotsFolder": "screenshots",

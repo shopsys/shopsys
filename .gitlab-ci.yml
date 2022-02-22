@@ -129,6 +129,7 @@ test:storefront-acceptance:
     stage: test
     <<: *only-default
     artifacts:
+        when: on_failure
         paths:
             - storefront/cypress/videos/
             - storefront/cypress/screenshots/
