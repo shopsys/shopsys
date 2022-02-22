@@ -74,6 +74,16 @@ services:
             - discovery.type=single-node
             - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
 
+    cypress:
+        build:
+            context: ./storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        profiles:
+            - storefront-acceptance-tests
+        volumes:
+            - ./storefront/cypress:/app
+
 volumes:
     web-volume:
     postgres-data:
