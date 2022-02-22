@@ -173,7 +173,7 @@ security:check:
     script:
         - docker run -i ${TAG} composer security-check
 
-jira:connect-review-url:
+service:merge_request:
     stage: service
     image: dwdraju/alpine-curl-jq
     tags:
@@ -182,8 +182,10 @@ jira:connect-review-url:
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     before_script:
+        - chmod +x ./gitlab/scripts/cancel-previous-pipelines.sh
         - chmod +x ./gitlab/scripts/set-review-url-to-jira.sh
     script:
+        - ./gitlab/scripts/cancel-previous-pipelines.sh
         - ./gitlab/scripts/set-review-url-to-jira.sh
 
 .deploy: &deploy
