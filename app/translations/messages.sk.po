@@ -13,6 +13,9 @@ msgstr ""
 msgid "-- Vyberte název přenosu --"
 msgstr ""
 
+msgid "0"
+msgstr ""
+
 msgid "301 (Permanent redirect)"
 msgstr ""
 
@@ -46,6 +49,21 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
+msgid "Administrator role group"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr ""
+
+msgid "Administrator role group <strong>{{ name }}</strong> deleted."
+msgstr ""
+
+msgid "Administrator role groups"
+msgstr ""
+
 msgid "Administrators - full"
 msgstr ""
 
@@ -76,7 +94,10 @@ msgstr ""
 msgid "Aktvní"
 msgstr ""
 
-msgid "All"
+msgid "All - full"
+msgstr ""
+
+msgid "All - view"
 msgstr ""
 
 msgid "All domains"
@@ -337,6 +358,9 @@ msgstr ""
 msgid "Create flag"
 msgstr ""
 
+msgid "Create new administrator role group"
+msgstr ""
+
 msgid "Create new banner"
 msgstr ""
 
@@ -353,6 +377,9 @@ msgid "Creation date"
 msgstr "Dátum vytvorenia"
 
 msgid "Cron overview"
+msgstr ""
+
+msgid "Custom"
 msgstr ""
 
 msgid "Customers - full"
@@ -440,6 +467,9 @@ msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Náz
 msgstr ""
 
 msgid "Do you really want to delete this category even with their SEO mixes?"
+msgstr ""
+
+msgid "Do you really want to remove this administrator role group?"
 msgstr ""
 
 msgid "Do you really want to remove this customer?"
@@ -545,6 +575,12 @@ msgid "Editace článku blogu"
 msgstr ""
 
 msgid "Editace článku blogu - %name%"
+msgstr ""
+
+msgid "Editing administrator role group"
+msgstr ""
+
+msgid "Editing administrator role group - %name%"
 msgstr ""
 
 msgid "Editing banner"
@@ -924,6 +960,9 @@ msgstr "Neplatné zoradenie"
 
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr "Nepodporovaný dátový typ pre validáciu súboru. Kontaktujte, prosím, správcu obchodu."
+
+msgid "New administrator role group"
+msgstr ""
 
 msgid "New banner"
 msgstr ""
@@ -1411,6 +1450,18 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
+msgid "Role Group"
+msgstr ""
+
+msgid "Role Groups"
+msgstr ""
+
+msgid "Role name"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
 msgid "Rounding"
 msgstr "Zaokrúhľovanie"
 
@@ -1496,6 +1547,9 @@ msgid "Search by slug..."
 msgstr ""
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Selected administrator role group doesn't exist."
 msgstr ""
 
 msgid "Selected flag doesn't exist."
