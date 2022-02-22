@@ -1,9 +1,9 @@
-import { cart_total_price1, category1_name, category1_url, product1_catnum, product1_name, product1_name_prefix_suffix, product1_url_prefix_suffix, url_cart } from "../../fixtures/demodata"
+import { cart_total_price1, cart_total_price3, category1_name, category1_url, product1_catnum, product1_name, product1_name_prefix_suffix, product1_url_prefix_suffix, product2_catnum, product2_name, product2_url, product3_catnum, product3_name, url_cart } from "../../fixtures/demodata"
 import { checkProductInCart, checkTotalPriceInCart } from "../Functions/CartPage"
 import { checkProductAndGoToCartFromFloatingWindow } from "../Functions/CartPopupWindow"
 import { clickOnCategoryFromMenu, searchProductByNameTypeEnterAndCheckResult } from "../Functions/HeaderPage"
 import { addProductToCartFromPromotedProductsOnHomepage, productClickFromPromotedProductsOnHomepage } from "../Functions/HomepagePage"
-import { addProductToCartFromProductDetail } from "../Functions/ProductDetailPage"
+import { addProductToCartFromProductDetail, addProductVariantToCartFromProductDetail } from "../Functions/ProductDetailPage"
 import { addProductToCartFromProductList } from "../Functions/ProductListPage"
 
 describe('Tests for adding products to cart', () => {
@@ -54,6 +54,16 @@ describe('Tests for adding products to cart', () => {
       checkProductAndGoToCartFromFloatingWindow(product1_name_prefix_suffix)
       checkProductInCart(product1_catnum,product1_name_prefix_suffix)
       checkTotalPriceInCart(cart_total_price1)
+      cy.url().should('contain', url_cart)
+    });
+
+    it('Product variant - Adding variant product to cart from product detail and check product in cart', () => {
+      productClickFromPromotedProductsOnHomepage(product2_catnum,product2_name)
+      cy.url().should('contain', product2_url)
+      addProductVariantToCartFromProductDetail(product3_catnum)
+      checkProductAndGoToCartFromFloatingWindow(product3_name)
+      checkProductInCart(product3_catnum,product3_name)
+      checkTotalPriceInCart(cart_total_price3)
       cy.url().should('contain', url_cart)
     });
 })
