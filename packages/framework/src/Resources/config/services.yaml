@@ -585,6 +585,12 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: 10 }
 
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
+        arguments:
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
+        tags:
+            - { name: doctrine.event_subscriber, priority: -10 }
+
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator:
         decorates: 'doctrine.orm.default_entity_manager'
         arguments:
@@ -594,14 +600,6 @@ services:
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
         arguments:
             - '%shopsys.entity_extension.map%'
-
-    joschi127_doctrine_entity_override.event_subscriber.load_orm_metadata:
-        class: Joschi127\DoctrineEntityOverrideBundle\EventListener\LoadORMMetadataSubscriber
-        arguments:
-            - "@service_container"
-            - "%shopsys.entity_extension.map%"
-        tags:
-            - { name: doctrine.event_subscriber, priority: -10 }
 
     Metadata\MetadataFactory:
         alias: prezent_doctrine_translatable.metadata_factory

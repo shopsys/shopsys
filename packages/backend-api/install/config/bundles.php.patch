@@ -1,4 +1,4 @@
-@@ -41,4 +41,7 @@
+@@ -40,4 +40,7 @@
      Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
      Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
      Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],

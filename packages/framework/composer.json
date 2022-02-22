@@ -63,7 +63,6 @@
         "intervention/image": "^2.3.14",
         "jms/metadata": "^1.6",
         "jms/translation-bundle": "1.4.4",
-        "joschi127/doctrine-entity-override-bundle": "^0.7.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
         "league/flysystem": "^1.1.4",
         "litipk/php-bignumbers": "^0.8.6",
@@ -92,6 +91,7 @@
         "symfony/swiftmailer-bundle": "^3.2.2",
         "symfony-cmf/routing": "^2.0.3",
         "symfony-cmf/routing-bundle": "^2.0.3",
+        "symfony/polyfill-php80": "^1.24.0",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.12",
         "webmozart/assert": "^1.4"

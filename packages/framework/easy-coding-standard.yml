@@ -88,6 +88,8 @@ parameters:
             - '*/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php'
             # class that is used by OrderPreviewFactory to create OrderPreview
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            # class ClassMetadata is created directly as it's later filled with data from parent entity
+            - '*/src/Component/EntityExtension/EntityExtensionSubscriber.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php'

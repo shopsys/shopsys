@@ -53,10 +53,10 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     private $entityNameResolver;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
+     * @var \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber
      * @inject
      */
-    private $loadORMMetadataSubscriber;
+    private $entityExtensionSubscriber;
 
     protected function setUp(): void
     {
@@ -118,7 +118,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     public function overwriteEntityExtensionMapInServicesInContainer(array $entityExtensionMap): void
     {
-        $this->loadORMMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
+        $this->entityExtensionSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
         $this->entityNameResolver->overwriteEntityExtensionMap($entityExtensionMap);
     }
 

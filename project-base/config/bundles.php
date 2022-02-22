@@ -34,7 +34,6 @@ return [
     Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
     VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-    Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle::class => ['all' => true],
     Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
     Shopsys\ReadModelBundle\ShopsysReadModelBundle::class => ['all' => true],
