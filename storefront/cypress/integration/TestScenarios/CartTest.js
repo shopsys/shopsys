@@ -1,8 +1,10 @@
-import { cart_total_price1, product1_catnum, product1_name, product1_name_prefix_suffix, product1_url_prefix_suffix, url_kosik } from "../../fixtures/demodata"
+import { cart_total_price1, category1_name, category1_url, product1_catnum, product1_name, product1_name_prefix_suffix, product1_url_prefix_suffix, url_kosik } from "../../fixtures/demodata"
 import { checkProductInCart, checkTotalPriceInCart } from "../Functions/CartPage"
 import { checkProductAndGoToCartFromFloatingWindow } from "../Functions/CartPopupWindow"
+import { clickOnCategoryFromMenu } from "../Functions/HeaderPage"
 import { addProductToCartFromPromotedProductsOnHomepage, productClickFromPromotedProductsOnHomepage } from "../Functions/HomepagePage"
 import { addProductToCartFromProductDetail } from "../Functions/ProductDetailPage"
+import { addProductToCartFromProductList } from "../Functions/ProductListPage"
 
 describe('Tests for adding products to cart', () => {
     beforeEach(() => {
@@ -26,4 +28,13 @@ describe('Tests for adding products to cart', () => {
        cy.url().should('contain', url_kosik)
     });
 
+    it('Adding product to cart from product list', () => {
+      clickOnCategoryFromMenu(category1_name)
+      cy.url().should('contain', category1_url)
+      addProductToCartFromProductList(product1_catnum)
+      checkProductAndGoToCartFromFloatingWindow(product1_name_prefix_suffix)
+      checkProductInCart(product1_catnum,product1_name_prefix_suffix)
+      checkTotalPriceInCart(cart_total_price1)
+      cy.url().should('contain', url_kosik)
+    });
 })

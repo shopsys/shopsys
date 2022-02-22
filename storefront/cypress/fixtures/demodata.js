@@ -4,3 +4,5 @@ export const product1_name_prefix_suffix = 'Televize 22" Sencor SLE 22F46DM4 HEL
 export const product1_catnum = '9177759'
 export const product1_url_prefix_suffix = '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova'
 export const cart_total_price1 = '3 499,00 Kč'
+export const category1_name = 'Elektro'
+export const category1_url = '/elektro'
