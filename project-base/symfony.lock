@@ -1164,9 +1164,6 @@
     "twig/twig": {
         "version": "v2.12.1"
     },
-    "vasek-purchart/console-errors-bundle": {
-        "version": "1.0.1"
-    },
     "webimpress/safe-writer": {
         "version": "2.2.0"
     },
