@@ -28,7 +28,7 @@ describe('Tests for adding products to cart', () => {
        cy.url().should('contain', url_cart)
     });
 
-    it('Adding product to cart from product list', () => {
+    it('Product list - Adding product to cart from product list and check product in cart', () => {
       clickOnCategoryFromMenu(category1_name)
       cy.url().should('contain', category1_url)
       addProductToCartFromProductList(product1_catnum)
@@ -38,8 +38,18 @@ describe('Tests for adding products to cart', () => {
       cy.url().should('contain', url_cart)
     });
 
-    it('Adding product to cart from serach results list', () => {
+    it('Search results - Adding product to cart from search results list and check product in cart', () => {
       searchProductByNameTypeEnterAndCheckResult(product1_name,product1_catnum)
+      addProductToCartFromProductList(product1_catnum)
+      checkProductAndGoToCartFromFloatingWindow(product1_name_prefix_suffix)
+      checkProductInCart(product1_catnum,product1_name_prefix_suffix)
+      checkTotalPriceInCart(cart_total_price1)
+      cy.url().should('contain', url_cart)
+    });
+
+    it('Brand list - Adding product to cart from brand list and check product in cart', () => {
+      cy.visit('/prehled-znacek')
+      cy.get('[data-testid="blocks-simplenavigation-22"]').contains('Sencor').click()
       addProductToCartFromProductList(product1_catnum)
       checkProductAndGoToCartFromFloatingWindow(product1_name_prefix_suffix)
       checkProductInCart(product1_catnum,product1_name_prefix_suffix)
