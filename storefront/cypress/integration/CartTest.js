@@ -5,8 +5,10 @@ import { productClickFromPromoProductsOnHomepage } from "./HomepageFunctions"
 import { addProductToCartFromProductDetail } from "./ProductDetailPageFunctions"
 
 describe('Tests for adding prodcts to cart', () => {
+    beforeEach(() => {
+		cy.visit('/')
+	})
     it.only('Promo products - Adding product to cart from promo products on homepage and check product in cart', () => {
-        cy.visit('/')
         productClickFromPromoProductsOnHomepage(product1_catnum,product1_name)
         cy.url().should('contain', product1_url_prefix_suffix)
         addProductToCartFromProductDetail()
