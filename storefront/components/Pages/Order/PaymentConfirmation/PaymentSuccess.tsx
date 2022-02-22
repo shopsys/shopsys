@@ -19,7 +19,7 @@ const PaymentSuccess: FC = () => {
         <Webline>
             <MessageWrapperStyled>
                 <ImageWrapperStyled>
-                    <img alt="Objednávka odeslána" src="/public/frontend/images/sent-cart.svg" />
+                    <img alt={t('Order sent')} src="/public/frontend/images/sent-cart.svg" />
                 </ImageWrapperStyled>
                 <PaymentWrapperStyled>
                     <MessageStyled>
