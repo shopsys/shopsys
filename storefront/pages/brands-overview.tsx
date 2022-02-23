@@ -1,4 +1,4 @@
-import { BrandsQueryDocumentApi, NavigationQueryDocumentApi } from 'graphql/generated';
+import { BrandsQueryDocumentApi, NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import Brands from 'components/Pages/Brands';
@@ -22,6 +22,7 @@ const Index: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
+        { query: NotificationBarsDocumentApi },
         { query: NavigationQueryDocumentApi },
         { query: BrandsQueryDocumentApi },
     ]);

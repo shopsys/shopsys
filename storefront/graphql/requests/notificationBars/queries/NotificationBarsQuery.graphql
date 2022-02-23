@@ -1,0 +1,5 @@
+query NotificationBars {
+    notificationBars {
+        ...NotificationBarsFragment
+    }
+}

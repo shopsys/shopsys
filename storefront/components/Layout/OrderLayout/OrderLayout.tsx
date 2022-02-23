@@ -1,6 +1,7 @@
 import { OrderLayoutContentStyled, OrderLayoutStyled, OrderLayoutSummaryStyled } from './OrderLayout.style';
 import { FC } from 'react';
 import Header from 'components/Layout/Header';
+import NotificationBars from 'components/Layout/NotificationBars';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import OrderSummary from 'components/Blocks/OrderSummary';
 import { useShopsysSelector } from 'redux/main';
@@ -19,6 +20,7 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
 
     return (
         <>
+            <NotificationBars />
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
                 <Header />
             </Webline>

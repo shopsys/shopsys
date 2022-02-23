@@ -3,6 +3,7 @@ import Footer from './Footer';
 import Header from './Header';
 import Navigation from './Header/Navigation';
 import NewsletterForm from './Footer/NewsletterForm';
+import NotificationBars from './NotificationBars';
 import Webline from './Webline';
 
 /**
@@ -11,6 +12,7 @@ import Webline from './Webline';
 const CommonLayout: FC = (props) => {
     return (
         <>
+            <NotificationBars />
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
                 <Header />
                 <Navigation />

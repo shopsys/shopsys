@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
+import { NavigationQueryDocumentApi, NotificationBarsDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import {
     useContactInformationForm,
@@ -154,7 +154,12 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     initDomainConfig(context, store);
     const cartState = store.getState().cart;
     const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
-    return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
+    return redirect === false
+        ? initServerSideProps(context, store, [
+              { query: NotificationBarsDocumentApi },
+              { query: NavigationQueryDocumentApi },
+          ])
+        : redirect;
 });
 
 export default ContactInformation;

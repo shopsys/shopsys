@@ -1,0 +1,12 @@
+fragment NotificationBarsFragment on NotificationBar {
+    text
+    rgbColor
+    images {
+        sizes {
+            size
+            url
+            width
+            height
+        }
+    }
+}

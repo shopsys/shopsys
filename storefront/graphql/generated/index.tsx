@@ -2516,6 +2516,13 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
+export type NotificationBarsFragmentApi = { __typename?: 'NotificationBar', text: string, rgbColor: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
+
+export type NotificationBarsVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type NotificationBarsApi = { __typename?: 'Query', notificationBars: Array<{ __typename?: 'NotificationBar', text: string, rgbColor: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }> | null };
+
 export type ListedOrderFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
 export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry: { __typename?: 'Country', name: string } | null };
@@ -3491,6 +3498,20 @@ export const CategoriesByColumnFragmentApi = gql`
   }
 }
     ${ColumnCategoriesFragmentApi}`;
+export const NotificationBarsFragmentApi = gql`
+    fragment NotificationBarsFragment on NotificationBar {
+  text
+  rgbColor
+  images {
+    sizes {
+      size
+      url
+      width
+      height
+    }
+  }
+}
+    `;
 export const OrderDetailItemFragmentApi = gql`
     fragment OrderDetailItemFragment on OrderItem {
   name
@@ -3981,6 +4002,17 @@ export const NewsletterSubscribeMutationDocumentApi = gql`
 
 export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
+};
+export const NotificationBarsDocumentApi = gql`
+    query NotificationBars {
+  notificationBars {
+    ...NotificationBarsFragment
+  }
+}
+    ${NotificationBarsFragmentApi}`;
+
+export function useNotificationBarsApi(options: Omit<Urql.UseQueryArgs<NotificationBarsVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<NotificationBarsApi>({ query: NotificationBarsDocumentApi, ...options });
 };
 export const CheckPaymentStatusMutationDocumentApi = gql`
     mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
