@@ -7,10 +7,10 @@ import {
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
-import { debounce } from 'lodash';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 import NavigationLeaf from 'components/Layout/Header/Navigation/NavigationLeaf';
 import NextLink from 'next/link';
+import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
 
@@ -20,19 +20,20 @@ type NavigationItemProps = {
 
 const NavigationItem: FC<NavigationItemProps> = (props) => {
     const testIdentifier = 'layout-header-navigation-navigationitem';
-
-    const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
+    const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
+    const isHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);
 
     const openSubmenu = () => {
         if (hasChildren) {
-            setIsHovered(true);
+            setOnMouseEnterTrigger(!onMouseEnterTrigger);
         }
     };
-    const hideSubmenu = debounce(() => {
+    const hideSubmenu = () => {
         if (hasChildren) {
-            setIsHovered(false);
+            setOnMouseLeaveTrigger(!onMouseLeaveTrigger);
         }
-    }, 300);
+    };
     const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
     const dispatch = useShopsysDispatch();
     const router = useRouter();
