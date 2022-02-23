@@ -16,8 +16,8 @@ set -e
 echo "Start with specifying your operating system: \
 
     1) Linux or Windows with WSL 2
-    2) Mac
-    3) Mac - mutagen
+    2) Mac - docker-sync
+    3) Mac - Mutagen v0.13.1+
     "
 
 while [[ 1 -eq 1 ]]
@@ -84,8 +84,8 @@ case "$operatingSystem" in
         docker-compose up -d --build
         ;;
     "3")
-        echo "Starting mutagen compose.."
-        mutagen compose up -d --build
+        echo "Starting mutagen-compose.."
+        mutagen-compose up -d --build
         docker-compose exec -u root php-fpm chown -R www-data:www-data /var/www/html
         ;;
 esac
