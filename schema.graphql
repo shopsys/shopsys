@@ -1006,7 +1006,10 @@ type Mutation {
   """Subscribe for e-mail newsletter"""
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
 
-  """Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"""
+  """
+  Pay order(create payment transaction in payment gateway) and get payment setup
+  data for redirect or creating JS payment gateway layer
+  """
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
 
   """check payment status of order after callback from payment service"""
