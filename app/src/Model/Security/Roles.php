@@ -372,7 +372,7 @@ class Roles extends BaseRoles
     /**
      * @return array<string, string>
      */
-    public static function getAvailableAdministratorRoles(): array
+    private static function getAvailableAdministratorRoles(): array
     {
         return array_merge(...self::getAvailableAdministratorRolesGrid());
     }

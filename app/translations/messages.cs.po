@@ -70,6 +70,9 @@ msgstr "Administrátoři - vše"
 msgid "Administrators - view"
 msgstr "Administrátoři - zobrazení"
 
+msgid "Administrators overview"
+msgstr "Přehled administrátorů"
+
 msgid "Advanced SEO categories"
 msgstr "Rozšířené SEO kategorií"
 
@@ -346,6 +349,9 @@ msgstr "Informace o cookies - zobrazení"
 msgid "Cookies information"
 msgstr ""
 
+msgid "Copy administrator role group"
+msgstr ""
+
 msgid "Countries - full"
 msgstr "Státy - vše"
 
@@ -579,6 +585,9 @@ msgstr ""
 
 msgid "Editace článku blogu - %name%"
 msgstr ""
+
+msgid "Editing administrator"
+msgstr "Editace administrátora"
 
 msgid "Editing administrator role group"
 msgstr "Editace skupiny práv pro administrátora"
@@ -963,6 +972,9 @@ msgstr ""
 
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr ""
+
+msgid "New administrator"
+msgstr "Nový administrátor"
 
 msgid "New administrator role group"
 msgstr "Nová skupina práv pro administrátora"

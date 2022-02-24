@@ -166,20 +166,26 @@ class AdministratorRoleGroupController extends AdminBaseController
      */
     public function copyAction(Request $request, int $id): Response
     {
-        $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
-        $administratorRoleGroupData = new AdministratorRoleGroupData();
-        $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
+        try {
+            $administratorRoleGroup = $this->administratorRoleGroupFacade->getById($id);
+            $administratorRoleGroupData = new AdministratorRoleGroupData();
+            $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
 
-        $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
-            'action' => $this->generateUrl('admin_administratorrolegroup_new'),
-        ]);
-        $form->handleRequest($request);
+            $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
+                'action' => $this->generateUrl('admin_administratorrolegroup_new'),
+            ]);
+            $form->handleRequest($request);
 
-        $this->breadcrumbOverrider->overrideLastItem(t('New administrator role group'));
+            $this->breadcrumbOverrider->overrideLastItem(t('New administrator role group'));
 
-        return $this->render('/Admin/Content/Administrator/RoleGroup/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+            return $this->render('/Admin/Content/Administrator/RoleGroup/new.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        } catch (AdministratorRoleGroupNotFoundException $ex) {
+            $this->addErrorFlash(t('Selected administrator role group doesn\'t exist.'));
+
+            return $this->redirectToRoute('admin_administratorrolegroup_list');
+        }
     }
 
     /**
@@ -190,13 +196,13 @@ class AdministratorRoleGroupController extends AdminBaseController
      */
     public function deleteAction(int $id): Response
     {
-        $namesUsesThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);
+        $namesUsingThisRoleGroup = $this->administratorFacade->findAdministratorNamesWithRoleGroup($id);
 
-        if (count($namesUsesThisRoleGroup) !== 0) {
+        if (count($namesUsingThisRoleGroup) !== 0) {
             $this->addErrorFlashTwig(
                 t('Role group cannot be deleted, because some administrators are using it: {{ names }}'),
                 [
-                    'names' => implode(', ', $namesUsesThisRoleGroup),
+                    'names' => implode(', ', $namesUsingThisRoleGroup),
                 ]
             );
 

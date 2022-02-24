@@ -6,6 +6,7 @@ namespace App\Model\Administrator\RoleGroup;
 
 use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class AdministratorRoleGroupRepository
@@ -26,7 +27,7 @@ class AdministratorRoleGroupRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getAdministratorRoleGroupRepository()
+    private function getAdministratorRoleGroupRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(AdministratorRoleGroup::class);
     }

@@ -1,6 +1,7 @@
 # Admin rights
 
 - see https://shopsys.atlassian.net/browse/FWCC-148
+- see https://shopsys.atlassian.net/browse/TES-368
 - Administrator rights are implemented using Symfony roles in [`security.yaml`](config/packages/security.yaml) (for detailed information, see the [Symfony security documentation](https://symfony.com/doc/4.4/security.html)). The most important settings are:
     - `role_hierarchy`
         - defines the roles' inheritance

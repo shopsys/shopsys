@@ -14,7 +14,7 @@ class RolesType extends AbstractType
     /**
      * @var array<array<string, string>>
      */
-    private array $roles = [];
+    private array $rolesChoices = [];
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class RolesType extends AbstractType
             $roles = array_flip($roles);
         }
 
-        $this->roles = $rolesGrid;
+        $this->rolesChoices = $rolesGrid;
     }
 
     /**
@@ -37,7 +37,7 @@ class RolesType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'label' => false,
-            'choices' => $this->roles,
+            'choices' => $this->rolesChoices,
         ]);
     }
 
