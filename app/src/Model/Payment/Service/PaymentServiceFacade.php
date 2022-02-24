@@ -92,7 +92,7 @@ class PaymentServiceFacade
 
         try {
             $paymentServiceFacade = $this->getPaymentServiceFacadeByPaymentType($order->getPayment()->getType());
-            $paymentSetupCreationData->setGoPayCreatePaymentSetup($paymentServiceFacade->createTransaction($paymentTransactionData));
+            $paymentServiceFacade->createTransaction($paymentTransactionData, $paymentSetupCreationData);
             $this->paymentTransactionFacade->create($paymentTransactionData);
         } catch (PaymentServiceFacadeNotRegisteredException $exception) {
         }

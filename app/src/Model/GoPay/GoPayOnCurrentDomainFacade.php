@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
+use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
 use App\Model\GoPay\Exception\GoPaySendPaymentException;
 use App\Model\Order\Order;
 use App\Model\Payment\Service\PaymentServiceInterface;
@@ -87,16 +88,16 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
 
     /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @return array
+     * @param \App\FrontendApi\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
      */
-    public function createTransaction(PaymentTransactionData $paymentTransactionData): array
+    public function createTransaction(PaymentTransactionData $paymentTransactionData, PaymentSetupCreationData $paymentSetupCreationData): void
     {
         $goPayCreatePaymentSetup = $this->sendPaymentToGoPay($paymentTransactionData->order, $paymentTransactionData->order->getGoPayBankSwift());
 
         $paymentTransactionData->externalPaymentIdentifier = (string)$goPayCreatePaymentSetup['goPayId'];
         $paymentTransactionData->externalPaymentStatus = (string)$goPayCreatePaymentSetup['state'];
 
-        return $goPayCreatePaymentSetup;
+        $paymentSetupCreationData->setGoPayCreatePaymentSetup($goPayCreatePaymentSetup);
     }
 
     /**

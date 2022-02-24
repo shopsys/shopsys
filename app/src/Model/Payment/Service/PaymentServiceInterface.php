@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Payment\Service;
 
+use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
 use App\Model\Payment\Transaction\PaymentTransactionData;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
@@ -11,9 +12,9 @@ interface PaymentServiceInterface
 {
     /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
-     * @return array
+     * @param \App\FrontendApi\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
      */
-    public function createTransaction(PaymentTransactionData $paymentTransactionData): array;
+    public function createTransaction(PaymentTransactionData $paymentTransactionData, PaymentSetupCreationData $paymentSetupCreationData): void;
 
     /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
