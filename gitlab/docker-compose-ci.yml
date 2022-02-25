@@ -31,11 +31,11 @@ services:
     storefront:
         image: ${STOREFRONT_TAG}
         container_name: shopsys-framework-storefront
+        ports:
+            - "3000:3000"
         environment:
             DOMAIN_HOSTNAME_1: http://webserver:8080/
             DOMAIN_HOSTNAME_2: http://webserver:8080/
-        ports:
-            - "3000:3000"
 
     php-fpm:
         image: ${TAG}
