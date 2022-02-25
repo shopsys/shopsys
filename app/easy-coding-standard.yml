@@ -33,6 +33,10 @@ services:
     # @deprecated This will be moved from project-base to coding-standards package in next major version
     SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff: ~
 
+    Sniffer\FrontendApiNamespaceSniffer: ~
+
+    Sniffer\ExtendedApiClassNamespaceSniffer: ~
+
 parameters:
     sets:
         - 'php70'

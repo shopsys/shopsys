@@ -1,0 +1,13 @@
+CartQuery:
+    type: object
+    config:
+        fields:
+            cart:
+                type: 'Cart'
+                args:
+                    cartInput:
+                        type: CartInput
+                        validation: cascade
+                        defaultValue: { "cartUuid": null }
+                resolve: "@=resolver('getCart', [args['cartInput']])"
+                description: "Return cart of logged customer or cart by UUID for anonymous user"

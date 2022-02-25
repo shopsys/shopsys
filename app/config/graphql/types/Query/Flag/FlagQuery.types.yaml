@@ -1,0 +1,17 @@
+FlagQuery:
+    type: object
+    config:
+        fields:
+            flags:
+                type: '[Flag!]'
+                resolve: "@=resolver('flags')"
+                description: "Returns a complete list of the flags"
+            flag:
+                type: 'Flag'
+                resolve: "@=resolver('flag', [args['uuid'], args['urlSlug']])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns a flag by uuid or url slug"

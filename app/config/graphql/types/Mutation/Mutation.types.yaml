@@ -1,0 +1,9 @@
+Mutation:
+    type: object
+    inherits:
+        - 'MutationDecorator'
+        - 'CartMutation'
+        - 'CustomerUserMutation'
+        - 'PersonalDataMutation'
+        - 'CustomerMutation'
+        - 'ContactFormMutation'

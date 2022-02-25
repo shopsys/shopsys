@@ -1,0 +1,21 @@
+Query:
+    type: object
+    inherits:
+        - 'QueryDecorator'
+        - 'NavigationQuery'
+        - 'CustomerUserQuery'
+        - 'CategoryQuery'
+        - 'StoreQuery'
+        - 'BlogQuery'
+        - 'SliderQuery'
+        - 'ArticleQuery'
+        - 'FlagQuery'
+        - 'OrderQuery'
+        - 'PersonalDataQuery'
+        - 'ProductQuery'
+        - 'BrandQuery'
+        - 'SlugQuery'
+        - 'NotificationBarQuery'
+        - 'CartQuery'
+        - 'TransportQuery'
+        - 'CountryQuery'

@@ -1,0 +1,20 @@
+ArticleQuery:
+    type: object
+    config:
+        fields:
+            articles:
+                type: "ArticleConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('articles', [args, args['placement']])"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    placement:
+                        type: "String"
+                description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
+            articlesSearch:
+                type: "[ArticleInterface!]!"
+                resolve: "@=resolver('articlesSearch', [args])"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched articles and blog articles"

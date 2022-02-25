@@ -1,0 +1,35 @@
+CustomerUserMutation:
+    type: object
+    config:
+        fields:
+            RequestPasswordRecovery:
+                type: String!
+                description: "Request password recovery - email with hash will be sent"
+                args:
+                    email:
+                        type: String!
+                        validation:
+                            -   NotBlank:
+                                    message: "Please enter valid email"
+                            -   Email:
+                                    message: "Please enter valid email"
+                            -   Length:
+                                    max: 255
+                                    maxMessage: "Email cannot be longer than {{ limit }} characters"
+                resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
+            RecoverPassword:
+                type: Token!
+                description: "Recover password using hash required from RequestPasswordRecovery"
+                args:
+                    input:
+                        type: RecoverPasswordInput!
+                        validation: cascade
+                resolve: "@=mutation('recoverPassword', [args, validator])"
+            ChangePassword:
+                type: 'CustomerUser!'
+                description: "Changes customer user password"
+                args:
+                    input:
+                        type: ChangePasswordInput!
+                        validation: cascade
+                resolve: "@=mutation('customer_user_change_password', [args, validator])"

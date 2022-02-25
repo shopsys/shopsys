@@ -1,0 +1,14 @@
+CustomerMutation:
+    type: object
+    config:
+        fields:
+            DeleteDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Delete delivery address by Uuid"
+                args:
+                    deliveryAddressUuid:
+                        type: Uuid!
+                        validation:
+                            -   NotBlank:
+                                    message: "Please enter valid delivery address UUID"
+                resolve: "@=mutation('deleteDeliveryAddress', [args, validator])"
