@@ -67,7 +67,7 @@ To do that we can just create a new record in `src/DataFixtures/Demo/MailTemplat
 // class App\DataFixtures\Demo\MailTemplateDataFixture
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
