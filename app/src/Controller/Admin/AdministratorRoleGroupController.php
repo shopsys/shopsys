@@ -9,6 +9,7 @@ use App\Model\Administrator\AdministratorFacade;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
 use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use App\Model\Administrator\RoleGroup\Exception\AdministratorRoleGroupNotFoundException;
+use App\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -95,16 +96,26 @@ class AdministratorRoleGroupController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $administratorRoleGroup = $this->administratorRoleGroupFacade->create($roleGroupData);
+            try {
+                $administratorRoleGroup = $this->administratorRoleGroupFacade->create($roleGroupData);
 
-            $this->addSuccessFlashTwig(
-                t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was created'),
-                [
-                    'name' => $administratorRoleGroup->getName(),
-                    'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]),
-                ]
-            );
-            return $this->redirectToRoute('admin_administratorrolegroup_list');
+                $this->addSuccessFlashTwig(
+                    t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was created'),
+                    [
+                        'name' => $administratorRoleGroup->getName(),
+                        'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]),
+                    ]
+                );
+
+                return $this->redirectToRoute('admin_administratorrolegroup_list');
+            } catch (DuplicateNameException $ex) {
+                $this->addErrorFlashTwig(
+                    t('Role group name <strong>{{ name }}</strong> is already used'),
+                    [
+                        'name' => $roleGroupData->name,
+                    ]
+                );
+            }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {
@@ -132,16 +143,26 @@ class AdministratorRoleGroupController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->administratorRoleGroupFacade->edit($administratorRoleGroup, $administratorRoleGroupData);
+            try {
+                $this->administratorRoleGroupFacade->edit($administratorRoleGroup, $administratorRoleGroupData);
 
-            $this->addSuccessFlashTwig(
-                t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was edited'),
-                [
-                    'name' => $administratorRoleGroupData->name,
-                    'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $id]),
-                ]
-            );
-            return $this->redirectToRoute('admin_administratorrolegroup_list');
+                $this->addSuccessFlashTwig(
+                    t('Administrator role group <strong><a href="{{ url }}">{{ name }}</a></strong> was edited'),
+                    [
+                        'name' => $administratorRoleGroupData->name,
+                        'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $id]),
+                    ]
+                );
+
+                return $this->redirectToRoute('admin_administratorrolegroup_list');
+            } catch (DuplicateNameException $ex) {
+                $this->addErrorFlashTwig(
+                    t('Role group name <strong>{{ name }}</strong> is already used'),
+                    [
+                        'name' => $administratorRoleGroupData->name,
+                    ]
+                );
+            }
         }
 
         if ($form->isSubmitted() && !$form->isValid()) {

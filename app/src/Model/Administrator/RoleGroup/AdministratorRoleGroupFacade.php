@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Administrator\RoleGroup;
 
+use App\Model\Administrator\RoleGroup\Exception\DuplicateNameException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -45,6 +46,10 @@ class AdministratorRoleGroupFacade
      */
     public function create(AdministratorRoleGroupData $roleGroupData): AdministratorRoleGroup
     {
+        $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($roleGroupData->name);
+        if ($administratorRoleGroupByName !== null) {
+            throw new DuplicateNameException($administratorRoleGroupByName->getName());
+        }
         $administratorRoleGroup = new AdministratorRoleGroup($roleGroupData);
 
         $this->entityManager->persist($administratorRoleGroup);
@@ -68,8 +73,24 @@ class AdministratorRoleGroupFacade
      */
     public function edit(AdministratorRoleGroup $administratorRoleGroup, AdministratorRoleGroupData $administratorRoleGroupData): void
     {
+        $this->checkUniqueName($administratorRoleGroup, $administratorRoleGroupData->name);
         $administratorRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
+     * @param string $name
+     */
+    private function checkUniqueName(AdministratorRoleGroup $administratorRoleGroup, string $name): void
+    {
+        $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($name);
+        if ($administratorRoleGroupByName !== null
+            && $administratorRoleGroupByName !== $administratorRoleGroup
+            && $administratorRoleGroupByName->getName() === $name
+        ) {
+            throw new DuplicateNameException($administratorRoleGroup->getName());
+        }
     }
 
     /**

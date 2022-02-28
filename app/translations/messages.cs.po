@@ -1474,6 +1474,9 @@ msgstr "Skupiny práv"
 msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
 msgstr "Skupina práv nelze smazat, prodože jí někteří administrátoři používají: {{ names }}"
 
+msgid "Role group name <strong>{{ name }}</strong> is already used"
+msgstr "Skupina práv s názvem <strong>{{ name }}</strong> je již použita"
+
 msgid "Role name"
 msgstr "Název role"
 

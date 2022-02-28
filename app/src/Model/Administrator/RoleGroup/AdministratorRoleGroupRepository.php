@@ -62,4 +62,13 @@ class AdministratorRoleGroupRepository
     {
         return $this->getAllQueryBuilder()->getQuery()->getResult();
     }
+
+    /**
+     * @param string $name
+     * @return \App\Model\Administrator\RoleGroup\AdministratorRoleGroup|null
+     */
+    public function findByName(string $name): ?AdministratorRoleGroup
+    {
+        return $this->getAdministratorRoleGroupRepository()->findOneBy(['name' => $name]);
+    }
 }
