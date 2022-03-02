@@ -1,0 +1,22 @@
+{% block roles_widget -%}
+<div {{ block('widget_container_attributes') }} class="form-line__side">
+    {% for name, choices in form.vars.choices %}
+        {% if choices is iterable  %}
+            <div class="form-choice-list roles-row js-roles-row {% if loop.first %}js-roles-first-row{% endif %}">
+                {% if choices|length is same as(1) %}
+                    <div class="form-choice-list__item roles-column js-roles-column-full"></div>
+                {% endif %}
+
+                {% for key,choice in choices %}
+                    <div class="form-choice-list__item roles-column js-roles-column {% if loop.first and choices|length is not same as(1) %}js-roles-column-full{% else %}js-roles-column-view{% endif %}">
+                        {{ form_widget(form[key]) }}
+                        {{ form_label(form[key]) }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            {{- form_widget(form[name]) -}}
+            {{- form_label(form[name], null, {translation_domain: choice_translation_domain}) -}}
+        {% endif %}
+    {% endfor %}
+{%- endblock roles_widget %}

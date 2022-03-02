@@ -37,6 +37,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
+            ConfigureMenuEvent::SIDE_MENU_ADMINISTRATORS => 'configureAdministratorMenu',
         ];
     }
 
@@ -212,6 +213,44 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
 
         return $integrationsMenu;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureAdministratorMenu(ConfigureMenuEvent $event): void
+    {
+        $administratorMenu = $event->getMenu();
+
+        $administratorMenu->setUri('');
+        $administratorExtras = $administratorMenu->getExtras();
+        unset($administratorExtras['routes']);
+        $administratorMenu->setExtras($administratorExtras);
+
+        $administratorViewMenu = $administratorMenu->addChild('administrator_view', ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
+        $administratorViewMenu->addChild(
+            'new',
+            ['route' => 'admin_administrator_new', 'label' => t('New administrator'), 'display' => false]
+        );
+        $administratorViewMenu->addChild(
+            'edit',
+            ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false]
+        );
+
+        $administratorRoleGroupMenu = $administratorMenu->addChild('role_groups', ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
+
+        $administratorRoleGroupMenu->addChild(
+            'new',
+            ['route' => 'admin_administratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false]
+        );
+        $administratorRoleGroupMenu->addChild(
+            'edit',
+            ['route' => 'admin_administratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false]
+        );
+        $administratorRoleGroupMenu->addChild(
+            'copy',
+            ['route' => 'admin_administratorrolegroup_copy', 'label' => t('Copy administrator role group'), 'display' => false]
+        );
     }
 
     /**

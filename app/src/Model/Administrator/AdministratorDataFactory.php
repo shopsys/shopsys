@@ -30,6 +30,11 @@ class AdministratorDataFactory extends BaseAdministratorDataFactory
         $administratorData = new AdministratorData();
         $this->fillFromAdministrator($administratorData, $administrator);
         $administratorData->transferIssuesLastSeenDateTime = $administrator->getTransferIssuesLastSeenDateTime();
+        $administratorData->roleGroup = $administrator->getRoleGroup();
+
+        if ($administrator->getRoleGroup() !== null) {
+            $administratorData->roles = [];
+        }
 
         return $administratorData;
     }

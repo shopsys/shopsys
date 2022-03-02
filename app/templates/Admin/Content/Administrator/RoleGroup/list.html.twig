@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Administrator role groups'|trans }}{% endblock %}
+{% block h1 %}{{ 'Administrator role groups'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_administratorrolegroup_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new administrator role group'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    <div class="administrator_role_group">
+        {{ gridView.render() }}
+    </div>
+{% endblock %}

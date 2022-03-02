@@ -1,0 +1,21 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Administrator role group'|trans }}{% endblock %}
+{% block h1 %}{{ 'Administrator role group'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="wrap-divider">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ url('admin_administratorrolegroup_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {{ form_save(administratorRoleGroup|default(null), form) }}
+            {% endblock %}
+        {% endembed %}
+        {{ form_end(form) }}
+    </div>
+
+    {% block admin_log %}{% endblock %}
+{% endblock %}

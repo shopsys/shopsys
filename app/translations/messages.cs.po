@@ -13,6 +13,9 @@ msgstr ""
 msgid "-- Vyberte název přenosu --"
 msgstr ""
 
+msgid "0"
+msgstr ""
+
 msgid "301 (Permanent redirect)"
 msgstr "301 (Trvalé přesměrování)"
 
@@ -46,11 +49,29 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
+msgid "Administrator role group"
+msgstr "Skupiny práv pro administrátora"
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr "Skupina práv <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla editována"
+
+msgid "Administrator role group <strong>{{ name }}</strong> deleted."
+msgstr "Skupina práv <strong>{{ name }}</strong> byla smazána."
+
+msgid "Administrator role groups"
+msgstr "Skupiny práv pro administrátora"
+
 msgid "Administrators - full"
 msgstr "Administrátoři - vše"
 
 msgid "Administrators - view"
 msgstr "Administrátoři - zobrazení"
+
+msgid "Administrators overview"
+msgstr "Přehled administrátorů"
 
 msgid "Advanced SEO categories"
 msgstr "Rozšířené SEO kategorií"
@@ -78,6 +99,12 @@ msgstr ""
 
 msgid "All"
 msgstr "Vše"
+
+msgid "All - full"
+msgstr "Vše"
+
+msgid "All - view"
+msgstr "Vše - zobrazení"
 
 msgid "All domains"
 msgstr ""
@@ -322,6 +349,9 @@ msgstr "Informace o cookies - zobrazení"
 msgid "Cookies information"
 msgstr ""
 
+msgid "Copy administrator role group"
+msgstr ""
+
 msgid "Countries - full"
 msgstr "Státy - vše"
 
@@ -336,6 +366,9 @@ msgstr "Vytvořit a stáhnout CSV"
 
 msgid "Create flag"
 msgstr ""
+
+msgid "Create new administrator role group"
+msgstr "Vytvořit novou skupinu práv pro administrátora"
 
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
@@ -354,6 +387,9 @@ msgstr "Datum vytvoření"
 
 msgid "Cron overview"
 msgstr ""
+
+msgid "Custom"
+msgstr "Vlastní"
 
 msgid "Customers - full"
 msgstr "Zákazníci - vše"
@@ -441,6 +477,9 @@ msgstr ""
 
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
+
+msgid "Do you really want to remove this administrator role group?"
+msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
 
 msgid "Do you really want to remove this customer?"
 msgstr ""
@@ -546,6 +585,15 @@ msgstr ""
 
 msgid "Editace článku blogu - %name%"
 msgstr ""
+
+msgid "Editing administrator"
+msgstr "Editace administrátora"
+
+msgid "Editing administrator role group"
+msgstr "Editace skupiny práv pro administrátora"
+
+msgid "Editing administrator role group - %name%"
+msgstr "Editace skupiny práv pro administrátora - %name%"
 
 msgid "Editing banner"
 msgstr "Upravit banner"
@@ -924,6 +972,12 @@ msgstr ""
 
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr ""
+
+msgid "New administrator"
+msgstr "Nový administrátor"
+
+msgid "New administrator role group"
+msgstr "Nová skupina práv pro administrátora"
 
 msgid "New banner"
 msgstr "Nový banner"
@@ -1411,6 +1465,24 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
+msgid "Role Group"
+msgstr "Skupina práv"
+
+msgid "Role Groups"
+msgstr "Skupiny práv"
+
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr "Skupina práv nelze smazat, prodože jí někteří administrátoři používají: {{ names }}"
+
+msgid "Role group name <strong>{{ name }}</strong> is already used"
+msgstr "Skupina práv s názvem <strong>{{ name }}</strong> je již použita"
+
+msgid "Role name"
+msgstr "Název role"
+
+msgid "Roles"
+msgstr "Role"
+
 msgid "Rounding"
 msgstr "Zaokrouhlení"
 
@@ -1497,6 +1569,9 @@ msgstr "Vyhledat podle slugu..."
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
+
+msgid "Selected administrator role group doesn't exist."
+msgstr "Vybraná skupina práv pro administrátora neexistuje."
 
 msgid "Selected flag doesn't exist."
 msgstr "Vybraný příznak neexistuje."

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Administrator\Administrator;
+use App\Model\Administrator\RoleGroup\AdministratorRoleGroup;
+use App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -24,11 +26,18 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
     private Security $security;
 
     /**
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade
      */
-    public function __construct(Security $security)
+    private AdministratorRoleGroupFacade $administratorRoleGroupFacade;
+
+    /**
+     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
+     */
+    public function __construct(Security $security, AdministratorRoleGroupFacade $administratorRoleGroupFacade)
     {
         $this->security = $security;
+        $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
     }
 
     /**
@@ -59,6 +68,18 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             'label' => t('Password'),
         ]);
 
+        $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
+            'required' => false,
+            'choices' => $this->administratorRoleGroupFacade->getAll(),
+            'placeholder' => t('Custom'),
+            'multiple' => false,
+            'label' => t('Role Group'),
+            'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
+                return $administratorRoleGroup->getName();
+            },
+            'attr' => ['class' => 'js-role-group-select'],
+        ]);
+
         if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
             $builderSettingsGroup->add('roles', ChoiceType::class, [
                 'required' => false,
@@ -66,11 +87,13 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
                 'placeholder' => t('-- Vyber roli --'),
                 'multiple' => true,
                 'label' => t('Role'),
+                'attr' => ['class' => 'js-role-group-custom'],
             ]);
         } elseif ($options['administrator'] !== null) {
             $builder->add('roles', DisplayOnlyType::class, [
                 'label' => t('Role'),
                 'data' => $this->getAdministratorRolesList($options['administrator']),
+                'attr' => ['class' => 'js-role-group-custom'],
             ]);
         }
     }
