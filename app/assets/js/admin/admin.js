@@ -19,4 +19,6 @@ import './category/categoryDeleteConfirm';
 import './roleGroup/roleGroups';
 import './roleGroup/administratorForm';
 
+import './order/executeRefund';
+
 registerAdmin();

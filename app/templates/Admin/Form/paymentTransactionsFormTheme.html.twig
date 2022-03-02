@@ -14,7 +14,7 @@
                             <th class="text-right">{{ 'Refunded amount'|trans }}</th>
                             <th class="text-right">{{ 'Refundable amount'|trans }}</th>
                             <th>{{ 'Refund amount'|trans }}</th>
-                            <th>{{ 'Execute refund'|trans }}</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -55,7 +55,7 @@
             {% if paymentTransaction.refundable %}
                 <div style="width: 150px">
                 {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCurrencyId(order.currency.id), attr: { class: 'input--small text-right'}}) }}
-                {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: false }}) }}
+                {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: true }}) }}
                 </div>
             {% else %}
                 {{ 'Not refundable'|trans }}
@@ -64,11 +64,11 @@
         </td>
         <td>
             {% if paymentTransaction.refundable %}
-                {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'input--small text-right'}}) }}
-                {{ form_errors(paymentTransactionForm.executeRefund) }}
+                {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'js-execute-refund-' ~ paymentTransaction.id }}) }}
+                {{ form_widget(paymentTransactionForm.sendRefund, {attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
             {% else %}
-                {{ 'Not refundable'|trans }}
                 {% do paymentTransactionForm.executeRefund.setRendered %}
+                {% do paymentTransactionForm.sendRefund.setRendered %}
             {% endif %}
         </td>
     </tr>
