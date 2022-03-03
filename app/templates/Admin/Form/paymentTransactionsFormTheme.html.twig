@@ -53,9 +53,10 @@
         </td>
         <td>
             {% if paymentTransaction.refundable %}
-                {{ form_widget(paymentTransactionForm.refundAmount, {attr: { class: 'input--small text-right'}}) }}
+                <div style="width: 150px">
+                {{ form_widget(paymentTransactionForm.refundAmount, {symbolAfterInput: currencySymbolByCurrencyId(order.currency.id), attr: { class: 'input--small text-right'}}) }}
                 {{ form_errors(paymentTransactionForm.refundAmount, {errors_attr: { inline: false }}) }}
-                {{ currencySymbolByCurrencyId(order.currency.id) }}
+                </div>
             {% else %}
                 {{ 'Not refundable'|trans }}
                 {% do paymentTransactionForm.refundAmount.setRendered %}
