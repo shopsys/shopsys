@@ -36,7 +36,7 @@ class LoginTest extends GraphQlTestCase
             $this->fail('Token is not valid');
         }
 
-        $clientOptions = ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])];
+        $clientOptions = ['HTTP_X-Auth-Token' => sprintf('Bearer %s', $responseData['accessToken'])];
         $this->configureCurrentClient(null, null, $clientOptions);
         $authorizationResponse = $this->getResponseContentForQuery(self::getLoginQuery());
 
@@ -69,7 +69,7 @@ class LoginTest extends GraphQlTestCase
             ],
         ];
 
-        $this->configureCurrentClient(null, null, ['HTTP_Authorization' => 'Bearer 123']);
+        $this->configureCurrentClient(null, null, ['HTTP_X-Auth-Token' => 'Bearer 123']);
 
         $response = $this->getResponseContentForQuery(self::getLoginQuery());
 

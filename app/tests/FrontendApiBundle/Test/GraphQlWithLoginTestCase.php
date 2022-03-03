@@ -26,7 +26,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
             null,
             [
                 'CONTENT_TYPE' => 'application/graphql',
-                'HTTP_Authorization' => sprintf('Bearer %s', $accessToken),
+                'HTTP_X-Auth-Token' => sprintf('Bearer %s', $accessToken),
             ]
         );
     }

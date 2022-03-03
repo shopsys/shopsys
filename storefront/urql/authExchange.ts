@@ -44,7 +44,7 @@ const addAuthToOperation = (params: { authState: TokenType | null; operation: Op
             ...fetchOptions,
             headers: {
                 ...fetchOptions.headers,
-                Authorization: 'Bearer ' + params.authState.accessToken,
+                'X-Auth-Token': 'Bearer ' + params.authState.accessToken,
             },
         },
     });
