@@ -4,13 +4,32 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData;
+use App\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory;
 
 class OrderDataFactory extends BaseOrderDataFactory
 {
+    /**
+     * @var \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory
+     */
+    private PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory;
+
+    /**
+     * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
+     */
+    public function __construct(
+        OrderItemDataFactoryInterface $orderItemDataFactory,
+        PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
+    ) {
+        parent::__construct($orderItemDataFactory);
+
+        $this->paymentTransactionRefundDataFactory = $paymentTransactionRefundDataFactory;
+    }
+
     /**
      * @return \App\Model\Order\OrderData
      */
@@ -52,7 +71,7 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->trackingNumber = $order->getTrackingNumber();
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
-            $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = new PaymentTransactionRefundData();
+            $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = $this->paymentTransactionRefundDataFactory->createFromPaymentTransaction($paymentTransaction);
         }
     }
 }

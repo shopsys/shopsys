@@ -103,6 +103,7 @@ class GoPayOrderMapper
             $orderItems[] = [
                 'name' => $orderItem->getName(),
                 'amount' => $this->formatPriceForGoPay($orderItem->getTotalPriceWithVat()),
+                'count' => $orderItem->getQuantity(),
             ];
         }
 

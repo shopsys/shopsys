@@ -49,7 +49,10 @@ class PaymentTransactionType extends AbstractType
         $builder
             ->add('refundAmount', MoneyType::class, [
                 'scale' => 6,
-                'error_bubbling' => false,
+                'required' => false,
+            ])
+            ->add('refundedAmount', MoneyType::class, [
+                'scale' => 6,
                 'required' => false,
             ])
             ->add('executeRefund', HiddenType::class)

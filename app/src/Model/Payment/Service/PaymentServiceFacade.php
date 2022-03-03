@@ -137,6 +137,12 @@ class PaymentServiceFacade
                 $update = false;
             }
 
+            try {
+                $update = $update || $paymentServiceFacade->updateTransaction($paymentTransactionData);
+            } catch (GoPayPaymentDownloadException $exception) {
+                $update = $update || false; // @phpstan-ignore-line
+            }
+
             if ($update) {
                 $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
             }

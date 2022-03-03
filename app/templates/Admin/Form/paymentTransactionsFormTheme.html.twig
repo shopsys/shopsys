@@ -46,7 +46,16 @@
             {{ paymentTransaction.paidAmount|priceWithCurrency(order.currency) }}
         </td>
         <td class="text-right">
+            <span class="js-refunded-amount">
             {{ paymentTransaction.refundedAmount|priceWithCurrency(order.currency) }}
+            {% if paymentTransaction.refundable %}
+                <span class="in-icon in-icon--edit svg svg-pencil js-refunded-amount-edit" title="edit"></span>
+            {% endif %}
+            </span>
+            <span class="js-refunded-amount hide">
+                {{ form_widget(paymentTransactionForm.refundedAmount, {attr: { class: 'input--small text-right'}}) }}
+                {{ form_errors(paymentTransactionForm.refundedAmount) }}
+            </span>
         </td>
         <td class="text-right">
             {{ paymentTransaction.refundableAmount|priceWithCurrency(order.currency) }}
@@ -65,7 +74,7 @@
         <td>
             {% if paymentTransaction.refundable %}
                 {{ form_widget(paymentTransactionForm.executeRefund, {attr: { class: 'js-execute-refund-' ~ paymentTransaction.id }}) }}
-                {{ form_widget(paymentTransactionForm.sendRefund, {attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
+                {{ form_widget(paymentTransactionForm.sendRefund, {label: "Odeslat refund a uložit celou změny objednávky"|trans,attr: { 'data-execute-class': 'js-execute-refund-' ~ paymentTransaction.id, class: 'js-send-refund' }}) }}
             {% else %}
                 {% do paymentTransactionForm.executeRefund.setRendered %}
                 {% do paymentTransactionForm.sendRefund.setRendered %}

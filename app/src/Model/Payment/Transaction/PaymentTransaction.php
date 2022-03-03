@@ -166,6 +166,14 @@ class PaymentTransaction
     /**
      * @return bool
      */
+    public function isPartiallyRefunded(): bool
+    {
+        return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PARTIALLY_REFUNDED;
+    }
+
+    /**
+     * @return bool
+     */
     public function isPaid(): bool
     {
         if ($this->payment === null) {

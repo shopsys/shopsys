@@ -9,6 +9,7 @@ use App\Model\GoPay\Exception\GoPaySendPaymentException;
 use App\Model\Order\Order;
 use App\Model\Payment\Service\PaymentServiceInterface;
 use App\Model\Payment\Transaction\PaymentTransactionData;
+use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
@@ -109,6 +110,9 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
         $goPayStatusResponse = $this->getGoPayClient()->getStatus($paymentTransactionData->externalPaymentIdentifier);
         if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
             $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
+            if ($paymentTransactionData->externalPaymentStatus === PaymentStatus::REFUNDED) {
+                $paymentTransactionData->refundedAmount = $paymentTransactionData->paidAmount;
+            }
             return true;
         }
 

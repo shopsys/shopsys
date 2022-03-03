@@ -12,6 +12,11 @@ class PaymentTransactionRefundData
     public $refundAmount;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public $refundedAmount;
+
+    /**
      * @var bool
      */
     public $executeRefund;

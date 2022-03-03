@@ -13,6 +13,7 @@ use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Payment\Service\PaymentServiceFacade;
 use App\Model\Payment\Transaction\PaymentTransaction;
+use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use App\Model\Payment\Transaction\PaymentTransactionFacade;
 use App\Model\Transport\Type\TransportType;
 use BadMethodCallException;
@@ -125,6 +126,11 @@ class OrderFacade extends BaseOrderFacade
     private PaymentServiceFacade $paymentServiceFacade;
 
     /**
+     * @var \App\Model\Payment\Transaction\PaymentTransactionDataFactory
+     */
+    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
@@ -158,6 +164,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -192,7 +199,8 @@ class OrderFacade extends BaseOrderFacade
         RegistrationFacade $registrationFacade,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         PaymentTransactionFacade $paymentTransactionFacade,
-        PaymentServiceFacade $paymentServiceFacade
+        PaymentServiceFacade $paymentServiceFacade,
+        PaymentTransactionDataFactory $paymentTransactionDataFactory
     ) {
         parent::__construct(
             $em,
@@ -230,6 +238,7 @@ class OrderFacade extends BaseOrderFacade
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->paymentTransactionFacade = $paymentTransactionFacade;
         $this->paymentServiceFacade = $paymentServiceFacade;
+        $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
     }
 
     /**
@@ -323,6 +332,13 @@ class OrderFacade extends BaseOrderFacade
         $oldOrderStatus = $order->getStatus();
 
         parent::edit($orderId, $orderData);
+
+        foreach ($orderData->paymentTransactionRefunds as $paymentTransactionId => $paymentTransactionRefundData) {
+            $paymentTransaction = $this->paymentTransactionFacade->getById($paymentTransactionId);
+            $paymentTransactionData = $this->paymentTransactionDataFactory->createFromPaymentTransaction($paymentTransaction);
+            $paymentTransactionData->refundedAmount = $paymentTransactionRefundData->refundedAmount;
+            $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
+        }
 
         $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
 
