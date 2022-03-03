@@ -126,7 +126,7 @@
         </exec>
     </target>
 
-    <target name="db-migrations" depends="clean-cache,db-check-mapping" description="Executes database migrations and checks schema.">
+    <target name="db-migrations" depends="clean,clean-redis" description="Executes database migrations and checks schema.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:migrate"/>
