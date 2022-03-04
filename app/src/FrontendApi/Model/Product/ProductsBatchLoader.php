@@ -22,9 +22,9 @@ class ProductsBatchLoader
     private ProductElasticsearchProvider $productElasticsearchProvider;
 
     /**
-     * @var int[]
+     * @var array<string, int>
      */
-    private static array $totalsIndexedByEntityId;
+    private static array $totalsIndexedByBatchLoadDataId;
 
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
@@ -61,22 +61,22 @@ class ProductsBatchLoader
     public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
     {
         $batchedByEntities = $this->productElasticsearchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
-        self::$totalsIndexedByEntityId = $batchedByEntities[ProductElasticsearchRepository::TOTALS_KEY];
+        self::$totalsIndexedByBatchLoadDataId = $batchedByEntities[ProductElasticsearchRepository::TOTALS_KEY];
 
         $result = [];
         foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
-            $result[] = $batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getEntityId()];
+            $result[] = $batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getId()];
         }
 
         return $this->promiseAdapter->all($result);
     }
 
     /**
-     * @param int $entityId
+     * @param string $batchLoadDataId
      * @return int
      */
-    public static function getTotalByEntityId(int $entityId): int
+    public static function getTotalByBatchLoadDataId(string $batchLoadDataId): int
     {
-        return self::$totalsIndexedByEntityId[$entityId] ?? 0;
+        return self::$totalsIndexedByBatchLoadDataId[$batchLoadDataId] ?? 0;
     }
 }

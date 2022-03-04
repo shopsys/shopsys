@@ -9,6 +9,11 @@ use App\Model\Product\Filter\ProductFilterData;
 class ProductBatchLoadByEntityData
 {
     /**
+     * @var string
+     */
+    private string $id;
+
+    /**
      * @var int
      */
     private int $entityId;
@@ -44,6 +49,7 @@ class ProductBatchLoadByEntityData
     private string $search;
 
     /**
+     * @param string $id
      * @param int $entityId
      * @param string $entityClass
      * @param int $limit
@@ -53,6 +59,7 @@ class ProductBatchLoadByEntityData
      * @param string $search
      */
     public function __construct(
+        string $id,
         int $entityId,
         string $entityClass,
         int $limit,
@@ -61,6 +68,7 @@ class ProductBatchLoadByEntityData
         ProductFilterData $productFilterData,
         string $search
     ) {
+        $this->id = $id;
         $this->entityId = $entityId;
         $this->entityClass = $entityClass;
         $this->limit = $limit;
@@ -68,6 +76,14 @@ class ProductBatchLoadByEntityData
         $this->orderingModeId = $orderingModeId;
         $this->productFilterData = $productFilterData;
         $this->search = $search;
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**

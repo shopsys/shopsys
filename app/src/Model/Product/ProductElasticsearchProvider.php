@@ -54,7 +54,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     {
         $filterQueries = [];
         foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
-            $filterQueries[$productBatchLoadByEntityData->getEntityId()] = $this->getFilterQuery($productBatchLoadByEntityData);
+            $filterQueries[$productBatchLoadByEntityData->getId()] = $this->getFilterQuery($productBatchLoadByEntityData);
         }
 
         return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
