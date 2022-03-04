@@ -20,8 +20,8 @@ const PaymentFail: FC = () => {
                 </ImageWrapperStyled>
                 <PaymentWrapperStyled>
                     <MessageStyled>
-                        <Heading type="h1">{t('Your payment was not processed')}</Heading>
-                        <p>{t('Try it again')}</p>
+                        <Heading type="h1">{t('Vaše platba byla neúspěšná')}</Heading>
+                        <p>{t('Zkuste to znovu')}</p>
                     </MessageStyled>
                 </PaymentWrapperStyled>
             </MessageWrapperStyled>
