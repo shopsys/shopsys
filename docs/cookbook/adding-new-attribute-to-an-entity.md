@@ -282,7 +282,7 @@ You can modify data fixtures in `src/DataFixtures/` of your project
 ### Random `extId`
 
 If you want to add unique random `extId` for products from data fixtures you can add it in `createProduct` method of [`ProductDataFixture.php`](https://github.com/shopsys/shopsys/blob/master/project-base/src/DataFixtures/Demo/ProductDataFixture.php).
-You can use [`Faker`](https://github.com/fzaninotto/Faker) to generate random numbers like this:
+You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random numbers like this:
 
 ```diff
 +   use Faker\Generator as Faker;

@@ -177,9 +177,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "egeloen/ordered-form": {
-        "version": "3.0.0"
-    },
     "egulias/email-validator": {
         "version": "2.1.11"
     },
@@ -194,6 +191,9 @@
     },
     "ezimuel/ringphp": {
         "version": "1.1.2"
+    },
+    "fakerphp/faker": {
+        "version": "v1.19.0"
     },
     "firebase/php-jwt": {
         "version": "v5.0.0"
@@ -240,9 +240,6 @@
             "project-base/config/packages/fos_rest.yaml"
         ]
     },
-    "fzaninotto/faker": {
-        "version": "v1.8.0"
-    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
     },
@@ -266,12 +263,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.6.1"
-    },
-    "guzzlehttp/ringphp": {
-        "version": "1.1.1"
-    },
-    "guzzlehttp/streams": {
-        "version": "3.0.0"
     },
     "helios-ag/fm-elfinder-bundle": {
         "version": "7.0",
@@ -339,12 +330,6 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
-    "laminas/laminas-eventmanager": {
-        "version": "3.3.0"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.1.1"
-    },
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
@@ -372,23 +357,11 @@
     "myclabs/deep-copy": {
         "version": "1.9.3"
     },
-    "nette/application": {
-        "version": "v3.0.4"
-    },
-    "nette/component-model": {
-        "version": "v3.0.0"
-    },
     "nette/finder": {
         "version": "v2.5.1"
     },
-    "nette/http": {
-        "version": "v3.0.3"
-    },
     "nette/robot-loader": {
         "version": "v3.1.1"
-    },
-    "nette/routing": {
-        "version": "v3.0.0"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -398,9 +371,6 @@
     },
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
     },
     "overblog/graphiql-bundle": {
         "version": "0.1",
@@ -439,9 +409,6 @@
     },
     "phing/phing": {
         "version": "2.16.1"
-    },
-    "php": {
-        "version": "7.4.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -722,6 +689,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v3.4.32"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.5.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v3.4.32"
@@ -1082,9 +1052,6 @@
     },
     "twig/twig": {
         "version": "v2.12.1"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.5.0"
