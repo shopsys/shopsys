@@ -60,7 +60,13 @@ const ContactInformationRegister: FC = () => {
                                                 dispatch(contactInformationActions.setPasswordFirst(passwordFirstValue))
                                             }
                                         />
-                                        <FormLineError error={error} inputType="text-input-password" />
+                                        <FormLineError
+                                            error={error}
+                                            inputType="text-input-password"
+                                            data-testid={
+                                                formMeta.formName + '-' + formMeta.fields.passwordFirst.name + '-error'
+                                            }
+                                        />
                                     </>
                                 )}
                             />
@@ -85,7 +91,13 @@ const ContactInformationRegister: FC = () => {
                                                 )
                                             }
                                         />
-                                        <FormLineError error={error} inputType="text-input-password" />
+                                        <FormLineError
+                                            error={error}
+                                            inputType="text-input-password"
+                                            data-testid={
+                                                formMeta.formName + '-' + formMeta.fields.passwordSecond.name + '-error'
+                                            }
+                                        />
                                     </>
                                 )}
                             />

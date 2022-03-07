@@ -64,7 +64,14 @@ const ResetPassword: FC = () => {
                                             hasError={invalid}
                                             fieldRef={field}
                                         />
-                                        <FormLineError textInputSize="small" error={error} inputType="text-input" />
+                                        <FormLineError
+                                            textInputSize="small"
+                                            error={error}
+                                            inputType="text-input"
+                                            data-testid={
+                                                formMeta.formName + '-' + formMeta.fields.email.name + '-error'
+                                            }
+                                        />
                                     </FormLine>
                                     <ButtonWrapperStyled>
                                         <Button type="submit" hasDisabledLook={invalid || field.value.length === 0}>

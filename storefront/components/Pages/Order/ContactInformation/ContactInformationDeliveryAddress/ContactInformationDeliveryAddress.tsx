@@ -168,7 +168,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         )
                                                     }
                                                 />
-                                                <FormLineError error={error} inputType="text-input" />
+                                                <FormLineError
+                                                    error={error}
+                                                    inputType="text-input"
+                                                    data-testid={
+                                                        formMeta.formName +
+                                                        '-' +
+                                                        formMeta.fields.deliveryFirstName.name +
+                                                        '-error'
+                                                    }
+                                                />
                                             </>
                                         )}
                                     />
@@ -195,7 +204,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         )
                                                     }
                                                 />
-                                                <FormLineError error={error} inputType="text-input" />
+                                                <FormLineError
+                                                    error={error}
+                                                    inputType="text-input"
+                                                    data-testid={
+                                                        formMeta.formName +
+                                                        '-' +
+                                                        formMeta.fields.deliveryLastName.name +
+                                                        '-error'
+                                                    }
+                                                />
                                             </>
                                         )}
                                     />
@@ -222,7 +240,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     )
                                                 }
                                             />
-                                            <FormLineError error={error} inputType="text-input" />
+                                            <FormLineError
+                                                error={error}
+                                                inputType="text-input"
+                                                data-testid={
+                                                    formMeta.formName +
+                                                    '-' +
+                                                    formMeta.fields.deliveryCompanyName.name +
+                                                    '-error'
+                                                }
+                                            />
                                         </>
                                     )}
                                 />
@@ -248,7 +275,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     )
                                                 }
                                             />
-                                            <FormLineError error={error} inputType="text-input" />
+                                            <FormLineError
+                                                error={error}
+                                                inputType="text-input"
+                                                data-testid={
+                                                    formMeta.formName +
+                                                    '-' +
+                                                    formMeta.fields.deliveryTelephone.name +
+                                                    '-error'
+                                                }
+                                            />
                                         </>
                                     )}
                                 />
@@ -277,7 +313,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     )
                                                 }
                                             />
-                                            <FormLineError error={error} inputType="text-input" />
+                                            <FormLineError
+                                                error={error}
+                                                inputType="text-input"
+                                                data-testid={
+                                                    formMeta.formName +
+                                                    '-' +
+                                                    formMeta.fields.deliveryStreet.name +
+                                                    '-error'
+                                                }
+                                            />
                                         </>
                                     )}
                                 />
@@ -307,7 +352,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         )
                                                     }
                                                 />
-                                                <FormLineError error={error} inputType="text-input" />
+                                                <FormLineError
+                                                    error={error}
+                                                    inputType="text-input"
+                                                    data-testid={
+                                                        formMeta.formName +
+                                                        '-' +
+                                                        formMeta.fields.deliveryCity.name +
+                                                        '-error'
+                                                    }
+                                                />
                                             </>
                                         )}
                                     />
@@ -336,7 +390,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         )
                                                     }
                                                 />
-                                                <FormLineError error={error} inputType="text-input" />
+                                                <FormLineError
+                                                    error={error}
+                                                    inputType="text-input"
+                                                    data-testid={
+                                                        formMeta.formName +
+                                                        '-' +
+                                                        formMeta.fields.deliveryPostcode.name +
+                                                        '-error'
+                                                    }
+                                                />
                                             </>
                                         )}
                                     />
@@ -359,7 +422,16 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 fieldRef={field}
                                             />
 
-                                            <FormLineError error={error} inputType="select" />
+                                            <FormLineError
+                                                error={error}
+                                                inputType="select"
+                                                data-testid={
+                                                    formMeta.formName +
+                                                    '-' +
+                                                    formMeta.fields.deliveryCountry.name +
+                                                    '-error'
+                                                }
+                                            />
                                         </>
                                     )}
                                 />

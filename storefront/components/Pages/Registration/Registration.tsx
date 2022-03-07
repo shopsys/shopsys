@@ -133,7 +133,13 @@ const Registration: FC = () => {
                                         fieldRef={field}
                                         required={true}
                                     />
-                                    <FormLineError error={error} inputType="checkbox" />
+                                    <FormLineError
+                                        error={error}
+                                        inputType="checkbox"
+                                        data-testid={
+                                            formMeta.formName + '-' + formMeta.fields.gdprAgreement.name + '-error'
+                                        }
+                                    />
                                 </ChoiceFormLine>
                             )}
                         />

@@ -53,7 +53,11 @@ const ContactInformationAddress: FC = () => {
                                 fieldRef={field}
                                 onBlurCapture={() => dispatch(contactInformationActions.setStreet(streetValue))}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -76,7 +80,11 @@ const ContactInformationAddress: FC = () => {
                                     fieldRef={field}
                                     onBlurCapture={() => dispatch(contactInformationActions.setCity(cityValue))}
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
+                                />
                             </>
                         )}
                     />
@@ -97,7 +105,11 @@ const ContactInformationAddress: FC = () => {
                                     fieldRef={field}
                                     onBlurCapture={() => dispatch(contactInformationActions.setPostcode(postcodeValue))}
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
+                                />
                             </>
                         )}
                     />
@@ -116,7 +128,11 @@ const ContactInformationAddress: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="select" />
+                            <FormLineError
+                                error={error}
+                                inputType="select"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
+                            />
                         </>
                     )}
                 />

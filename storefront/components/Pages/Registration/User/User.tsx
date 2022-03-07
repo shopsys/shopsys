@@ -35,7 +35,11 @@ const User: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -56,7 +60,11 @@ const User: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -76,7 +84,11 @@ const User: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -96,7 +108,11 @@ const User: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
+                            />
                         </>
                     )}
                 />

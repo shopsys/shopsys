@@ -32,7 +32,13 @@ const Password: FC = () => {
                                     hasError={invalid}
                                     fieldRef={field}
                                 />
-                                <FormLineError error={error} inputType="text-input-password" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input-password"
+                                    data-testid={
+                                        formMeta.formName + '-' + formMeta.fields.passwordFirst.name + '-error'
+                                    }
+                                />
                             </>
                         )}
                     />
@@ -52,7 +58,13 @@ const Password: FC = () => {
                                     hasError={invalid}
                                     fieldRef={field}
                                 />
-                                <FormLineError error={error} inputType="text-input-password" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input-password"
+                                    data-testid={
+                                        formMeta.formName + '-' + formMeta.fields.passwordSecond.name + '-error'
+                                    }
+                                />
                             </>
                         )}
                     />

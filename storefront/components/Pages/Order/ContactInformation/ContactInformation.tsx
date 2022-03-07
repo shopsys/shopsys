@@ -57,7 +57,11 @@ const ContactInformation: FC = () => {
                                 fieldRef={field}
                                 onBlurCapture={() => dispatch(contactInformationActions.setEmail(emailValue))}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
+                            />
                         </>
                     )}
                 />
