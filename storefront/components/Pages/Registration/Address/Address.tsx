@@ -44,7 +44,11 @@ const Address: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -66,7 +70,11 @@ const Address: FC = () => {
                                     hasError={invalid}
                                     fieldRef={field}
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
+                                />
                             </>
                         )}
                     />
@@ -86,7 +94,11 @@ const Address: FC = () => {
                                     hasError={invalid}
                                     fieldRef={field}
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
+                                />
                             </>
                         )}
                     />
@@ -105,7 +117,11 @@ const Address: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="select" />
+                            <FormLineError
+                                error={error}
+                                inputType="select"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
+                            />
                         </>
                     )}
                 />

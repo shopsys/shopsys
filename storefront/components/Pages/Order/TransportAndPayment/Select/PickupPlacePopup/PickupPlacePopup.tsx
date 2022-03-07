@@ -18,6 +18,8 @@ type PickupPlacePopupProps = {
 };
 
 const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
+    const testIdentifier = 'pages-order-pickupplace-popup-';
+
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = usePickupPlaceForm();
     const formMeta = usePickupPlaceFormMeta(formProviderMethods);
@@ -49,10 +51,15 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 pickupPlaceValue={pickupPlaceValue}
             />
             <PopupButtonWrapperStyled>
-                <Button type="button" onClick={onClosePickupPlacePopupHandler}>
+                <Button type="button" onClick={onClosePickupPlacePopupHandler} data-testid={testIdentifier + 'close'}>
                     {t('Close')}
                 </Button>
-                <Button type="button" isDisabled={pickupPlaceValue === ''} onClick={onConfirmPickupPlaceHandler}>
+                <Button
+                    type="button"
+                    isDisabled={pickupPlaceValue === ''}
+                    onClick={onConfirmPickupPlaceHandler}
+                    data-testid={testIdentifier + 'confirm'}
+                >
                     {t('Confirm')}
                 </Button>
             </PopupButtonWrapperStyled>

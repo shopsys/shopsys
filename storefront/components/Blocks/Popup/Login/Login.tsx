@@ -84,7 +84,12 @@ const Login: FC = () => {
                                             hasError={invalid}
                                             fieldRef={field}
                                         />
-                                        <FormLineError textInputSize="small" error={error} inputType="text-input" />
+                                        <FormLineError
+                                            textInputSize="small"
+                                            error={error}
+                                            inputType="text-input"
+                                            data-testid="login_form-email-error"
+                                        />
                                     </FormLine>
                                 </>
                             )}
@@ -108,6 +113,7 @@ const Login: FC = () => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input-password"
+                                            data-testid="login_form-password-error"
                                         />
                                     </FormLine>
                                 </>

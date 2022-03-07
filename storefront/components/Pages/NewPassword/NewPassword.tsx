@@ -121,6 +121,9 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                                         textInputSize="small"
                                         error={error}
                                         inputType="text-input-password"
+                                        data-testid={
+                                            formMeta.formName + '-' + formMeta.fields.newPasswordFirst.name + '-error'
+                                        }
                                     />
                                 </FormLine>
                             )}
@@ -144,6 +147,12 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input-password"
+                                            data-testid={
+                                                formMeta.formName +
+                                                '-' +
+                                                formMeta.fields.newPasswordSecond.name +
+                                                '-error'
+                                            }
                                         />
                                     </FormLine>
                                     <ButtonWrapperStyled>

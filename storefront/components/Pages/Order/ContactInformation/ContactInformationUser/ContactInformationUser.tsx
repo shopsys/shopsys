@@ -40,7 +40,11 @@ const ContactInformationUser: FC = () => {
                                 fieldRef={field}
                                 onBlurCapture={() => dispatch(contactInformationActions.setTelephone(telephoneValue))}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -65,7 +69,11 @@ const ContactInformationUser: FC = () => {
                                         dispatch(contactInformationActions.setFirstName(firstNameValue))
                                     }
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
+                                />
                             </>
                         )}
                     />
@@ -86,7 +94,11 @@ const ContactInformationUser: FC = () => {
                                     fieldRef={field}
                                     onBlurCapture={() => dispatch(contactInformationActions.setLastName(lastNameValue))}
                                 />
-                                <FormLineError error={error} inputType="text-input" />
+                                <FormLineError
+                                    error={error}
+                                    inputType="text-input"
+                                    data-testid={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
+                                />
                             </>
                         )}
                     />

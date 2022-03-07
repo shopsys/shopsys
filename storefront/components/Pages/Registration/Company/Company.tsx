@@ -30,7 +30,11 @@ const Company: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -51,7 +55,11 @@ const Company: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
+                            />
                         </>
                     )}
                 />
@@ -71,7 +79,11 @@ const Company: FC = () => {
                                 hasError={invalid}
                                 fieldRef={field}
                             />
-                            <FormLineError error={error} inputType="text-input" />
+                            <FormLineError
+                                error={error}
+                                inputType="text-input"
+                                data-testid={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'}
+                            />
                         </>
                     )}
                 />

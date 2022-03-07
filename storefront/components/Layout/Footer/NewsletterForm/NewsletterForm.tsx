@@ -78,6 +78,9 @@ const NewsletterForm: FC = () => {
                                                     textInputSize="small"
                                                     error={error}
                                                     inputType="text-input"
+                                                    data-testid={
+                                                        formMeta.formName + '-' + formMeta.fields.email.name + '-error'
+                                                    }
                                                 />
                                             </>
                                         )}
@@ -107,7 +110,16 @@ const NewsletterForm: FC = () => {
                                                 hasError={invalid}
                                                 fieldRef={field}
                                             />
-                                            <FormLineError error={error} inputType="checkbox" />
+                                            <FormLineError
+                                                error={error}
+                                                inputType="checkbox"
+                                                data-testid={
+                                                    formMeta.formName +
+                                                    '-' +
+                                                    formMeta.fields.privacyPolicy.name +
+                                                    '-error'
+                                                }
+                                            />
                                         </>
                                     )}
                                 />

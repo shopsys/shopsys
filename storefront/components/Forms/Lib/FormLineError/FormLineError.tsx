@@ -17,12 +17,18 @@ type FormLineErrorProps = {
      * errors object with separate errors for the given field
      */
     error?: FieldError;
+    /**
+     * Identifier used for automated testing
+     */
+    'data-testid'?: string;
 };
 
 const FormLineError: FC<FormLineErrorProps> = (props) => {
+    const testIdentifier = props['data-testid'] ?? 'forms-error';
+
     if (props.error) {
         return (
-            <FormFieldErrorStyled>
+            <FormFieldErrorStyled data-testid={testIdentifier}>
                 <ErrorIconStyled
                     inputType={props.inputType}
                     textInputSize={props.textInputSize}

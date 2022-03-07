@@ -115,7 +115,16 @@ const Registration: FC = () => {
                                                         isTouched={isTouched}
                                                         hasError={invalid}
                                                     />
-                                                    <FormLineError inputType="text-input-password" error={error} />
+                                                    <FormLineError
+                                                        inputType="text-input-password"
+                                                        error={error}
+                                                        data-testid={
+                                                            formMeta.formName +
+                                                            '-' +
+                                                            formMeta.fields.password.name +
+                                                            '-error'
+                                                        }
+                                                    />
                                                 </FormLine>
                                             </RegistrationFormItemStyled>
                                         )}
@@ -131,7 +140,16 @@ const Registration: FC = () => {
                                                         fieldRef={field}
                                                         required={true}
                                                     />
-                                                    <FormLineError inputType="checkbox" error={error} />
+                                                    <FormLineError
+                                                        inputType="checkbox"
+                                                        error={error}
+                                                        data-testid={
+                                                            formMeta.formName +
+                                                            '-' +
+                                                            formMeta.fields.privacyPolicy.name +
+                                                            '-error'
+                                                        }
+                                                    />
                                                 </ChoiceFormLine>
                                             </RegistrationFormItemStyled>
                                         )}
