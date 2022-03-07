@@ -1,3 +1,4 @@
+import Adverts from 'components/Blocks/Adverts';
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
@@ -24,6 +25,10 @@ export const CategoryDetailStyled = styled.div`
             margin-bottom: 40px;
         }
     `}
+`;
+
+export const CategoryDetailAdvertsStyled = styled(Adverts)`
+    margin-bottom: 15px;
 `;
 
 export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>`

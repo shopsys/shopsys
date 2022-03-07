@@ -1,4 +1,5 @@
 import { OrderLayoutContentStyled, OrderLayoutStyled, OrderLayoutSummaryStyled } from './OrderLayout.style';
+import Adverts from 'components/Blocks/Adverts';
 import { FC } from 'react';
 import Header from 'components/Layout/Header';
 import NotificationBars from 'components/Layout/NotificationBars';
@@ -25,6 +26,9 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
                 <Header />
             </Webline>
             <Webline>
+                <Adverts positionName="header" withGap />
+            </Webline>
+            <Webline>
                 <OrderSteps activeStep={props.activeStep} domainUrl={url} />
             </Webline>
             <Webline>
@@ -34,6 +38,9 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
                         <OrderSummary />
                     </OrderLayoutSummaryStyled>
                 </OrderLayoutStyled>
+            </Webline>
+            <Webline>
+                <Adverts positionName="footer" withGap />
             </Webline>
         </>
     );

@@ -1,3 +1,4 @@
+import Adverts from 'components/Blocks/Adverts';
 import { FC } from 'react';
 import Footer from './Footer';
 import Header from './Header';
@@ -17,7 +18,13 @@ const CommonLayout: FC = (props) => {
                 <Header />
                 <Navigation />
             </Webline>
+            <Webline>
+                <Adverts positionName="header" withGap />
+            </Webline>
             {props.children}
+            <Webline>
+                <Adverts positionName="footer" withGap />
+            </Webline>
             <Webline type="light">
                 <NewsletterForm />
             </Webline>

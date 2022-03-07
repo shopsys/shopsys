@@ -180,64 +180,64 @@
             sizes:
                 -   name: header
                     width: 1160
-                    height: ~
+                    height: 300
                     crop: false
                     occurrence: 'Front-end: Advertising under heading'
                 -   name: footer
                     width: 1160
-                    height: ~
+                    height: 300
                     crop: false
                     occurrence: 'Front-end: Advertising above footer'
                 -   name: productList
-                    width: 900
-                    height: ~
+                    width: 846
+                    height: 200
                     crop: false
                     occurrence: 'Front-end: Advertising in category (above the category name)'
                 -   name: cartPreview
                     width: 500
-                    height: ~
+                    height: 150
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
                 -   name: productListMiddle
                     width: 1390
-                    height: ~
+                    height: 350
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list)'
                 -   name: productListMiddleRetina
                     width: 2780
-                    height: ~
+                    height: 700
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list) on Retina displays'
         -   name: mobile
             sizes:
                 -   name: header
                     width: 425
-                    height: ~
+                    height: 140
                     crop: false
                     occurrence: 'Front-end: Advertising under heading'
                 -   name: footer
                     width: 425
-                    height: ~
+                    height: 140
                     crop: false
                     occurrence: 'Front-end: Advertising above footer'
                 -   name: productList
                     width: 425
-                    height: ~
+                    height: 140
                     crop: false
                     occurrence: 'Front-end: Advertising in category (above the category name)'
                 -   name: cartPreview
                     width: 425
-                    height: ~
+                    height: 140
                     crop: false
                     occurrence: 'Front-end: Advertising in cart (above the cart preview)'
                 -   name: productListMiddle
                     width: 328
-                    height: ~
+                    height: 120
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list)'
                 -   name: productListMiddleRetina
                     width: 656
-                    height: ~
+                    height: 175
                     crop: false
                     occurrence: 'Front-end: Advertising in middle category (above the product list) - retina display'
 

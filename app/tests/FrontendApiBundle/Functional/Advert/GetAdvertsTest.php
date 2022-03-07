@@ -253,7 +253,7 @@ class GetAdvertsTest extends GraphQlTestCase
                                 ),
                                 'size' => 'header',
                                 'width' => 1160,
-                                'height' => null,
+                                'height' => 300,
 
                             ],
                             [
