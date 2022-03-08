@@ -58,7 +58,7 @@ There you can find links to upgrade notes for other versions too.
                     PricingGroupRepository $pricingGroupRepository
                 ) {
             ```
-        - constant `LIFETIME` was removed and lifetime of cache was moved to cache pool configuration (see `shopsys.shop.product.bestselling_product.cache_provider` in `config/packages/cache.yaml`)
+        - constant `LIFETIME` was removed and lifetime of cache was moved to cache pool configuration (see `bestselling_product_cache` in `config/packages/cache.yaml`)
         - protected property `$cacheProvider` was removed, use `$cache` instead
         - protected method `saveToCache` was removed, storing to cache is handled automatically in `getAllOfferedBestsellingProducts` method
     - following service definitions were removed in favor of cache pool configurations in `config/packages/cache.yaml`
@@ -66,4 +66,4 @@ There you can find links to upgrade notes for other versions too.
         - `shopsys.doctrine.cache_driver.query_cache`
         - `shopsys.doctrine.cache_driver.metadata_cache`
         - `shopsys.framework.cache_driver.annotations_cache`
-        - `shopsys.shop.product.bestselling_product.cache_provider`
+        - `bestselling_product_cache`

@@ -422,7 +422,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
-            - '@shopsys.shop.product.bestselling_product.cache_provider'
+            - '@bestselling_product_cache'
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 
