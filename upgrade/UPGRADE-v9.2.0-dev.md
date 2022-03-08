@@ -36,7 +36,7 @@ There you can find links to upgrade notes for other versions too.
 - replace deprecated namespace `Doctrine\Common\Persistence\ObjectManager` with new `Doctrine\Persistence\ObjectManager`([#2407](https://github.com/shopsys/shopsys/pull/2407))
     - see #project-base-diff to update your project
 
-- **\[BC break\]** change used caches from doctrine/cache to Symfony cache ([#2413](https://github.com/shopsys/shopsys/pull/2413))
+- **\[BC break\]** change used caches from doctrine/cache to Symfony cache ([#2412](https://github.com/shopsys/shopsys/pull/2412))
     - see #project-base-diff to update your project 
     - class `Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass` was removed and the compiler pass is no longer registered
     - class `Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory` was removed along with its service definition
