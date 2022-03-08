@@ -118,12 +118,14 @@ class ProductsResolver extends BaseProductsResolver
         );
 
         $productFilterData->flags[] = $flag;
+        $batchLoadDataId = uniqid();
 
         return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
-            function ($offset, $limit) use ($argument, $productFilterData, $flag) {
+            function ($offset, $limit) use ($argument, $productFilterData, $flag, $batchLoadDataId) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
+                        $batchLoadDataId,
                         $flag->getId(),
                         Flag::class,
                         $limit,
@@ -136,7 +138,8 @@ class ProductsResolver extends BaseProductsResolver
             },
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument)
+            $this->getOrderingModeFromArgument($argument),
+            $batchLoadDataId
         );
     }
 
@@ -198,12 +201,14 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $brand
         );
+        $batchLoadDataId = uniqid();
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
             $brand,
-            function ($offset, $limit) use ($argument, $productFilterData, $brand) {
+            function ($offset, $limit) use ($argument, $productFilterData, $brand, $batchLoadDataId) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
+                        $batchLoadDataId,
                         $brand->getId(),
                         Brand::class,
                         $limit,
@@ -216,7 +221,8 @@ class ProductsResolver extends BaseProductsResolver
             },
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument)
+            $this->getOrderingModeFromArgument($argument),
+            $batchLoadDataId
         );
     }
 
@@ -246,12 +252,14 @@ class ProductsResolver extends BaseProductsResolver
         ?string $orderingMode = null
     ): Promise {
         $this->setDefaultFirstOffsetIfNecessary($argument);
+        $batchLoadDataId = uniqid();
 
         return $this->productConnectionFactory->createConnectionPromiseForCategory(
             $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode) {
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode, $batchLoadDataId) {
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
+                        $batchLoadDataId,
                         $category->getId(),
                         Category::class,
                         $limit,
@@ -264,7 +272,8 @@ class ProductsResolver extends BaseProductsResolver
             },
             $argument,
             $productFilterData,
-            $orderingMode
+            $orderingMode,
+            $batchLoadDataId
         );
     }
 }
