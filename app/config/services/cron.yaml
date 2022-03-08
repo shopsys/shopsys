@@ -113,8 +113,8 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: ssfwccBridgeImport, readableName: 'Dummy SSFWCC bridge import' }
 
-    # Default
+    # Packetery
 
     App\Component\Packetery\PacketeryCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', readableName: 'Odeslání balíků do zásilkovny' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: packetery, readableName: 'Odeslání balíků do zásilkovny' }
