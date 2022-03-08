@@ -85,6 +85,9 @@ function deploy() {
 
     declare -A CRON_INSTANCES=(
         ["cron"]='*/5 * * * *'
+        ["cron-service"]='*/5 * * * *'
+        ["cron-export"]='*/5 * * * *'
+        ["cron-products"]='*/5 * * * *'
     )
 
     VARS=(
