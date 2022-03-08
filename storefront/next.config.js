@@ -53,6 +53,10 @@ staticUrls['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/'] = staticUrls[pr
 const moduleExports = {
     i18n,
     reactStrictMode: true,
+    sentry: {
+        disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
+        disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
+    },
     serverRuntimeConfig: {
         internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
     },
