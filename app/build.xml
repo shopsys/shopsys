@@ -78,27 +78,19 @@
         </exec>
     </target>
 
+    <target name="cron-products" description="Runs PRODUCTS background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=products" />
+        </exec>
+    </target>
+
     <target name="cron-import-akeneo-product" description="Runs Import Akeneo Product background jobs. Should be executed periodically by system Cron every 5 minutes.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="shopsys:cron" />
             <arg value="--instance-name=importAkeneoProduct" />
-        </exec>
-    </target>
-
-    <target name="cron-import-im" description="Runs Import Akeneo IM jobs. Should be executed periodically by system Cron every 5 minutes.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:cron" />
-            <arg value="--instance-name=importIM" />
-        </exec>
-    </target>
-
-    <target name="cron-import-akeneo-other" description="Runs Import Akeneo Other background jobs. Should be executed periodically by system Cron every 5 minutes.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:cron" />
-            <arg value="--instance-name=importAkeneoOther" />
         </exec>
     </target>
 
@@ -118,11 +110,19 @@
         </exec>
     </target>
 
-    <target name="cron-orders" description="Run crons regarding order sync (to bridge, from bridge...). Runs every minute.">
+    <target name="cron-ssfwcc-bridge-import" description="Runs SSFWCC bridge import background jobs. Should be executed periodically by system Cron every 5 minutes.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />
             <arg value="shopsys:cron" />
-            <arg value="--instance-name=orders" />
+            <arg value="--instance-name=ssfwccBridgeImport" />
+        </exec>
+    </target>
+
+    <target name="cron-packetery" description="Runs PACKETERY background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=packetery" />
         </exec>
     </target>
 
