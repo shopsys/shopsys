@@ -32,8 +32,8 @@ export const useTransportAndPaymentForm = (): [
     const defaultValues = {
         transport: transportInput === null ? null : transportInput.uuid,
         payment: paymentInput === null ? null : paymentInput.uuid,
+        goPaySwift: paymentInput?.goPayBankSwift ?? null,
     };
-
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };
 
@@ -64,6 +64,11 @@ export const useTransportAndPaymentFormMeta = (
             payment: {
                 name: 'payment' as const,
                 label: t('Choose payment type'),
+                errorMessage: formProviderMethods.formState.errors.payment?.message,
+            },
+            goPaySwift: {
+                name: 'goPaySwift' as const,
+                label: t('Choose GoPay payment type'),
                 errorMessage: formProviderMethods.formState.errors.payment?.message,
             },
         },

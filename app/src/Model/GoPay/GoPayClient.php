@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class GoPayClient
 {
-    public const RESPONSE_STATUS_CODE_OK = '200';
+    public const RESPONSE_STATUS_CODE_OK = 200;
 
     /**
      * @var array
@@ -112,6 +112,39 @@ class GoPayClient
                 $this->goPay->buildUrl('api/' . $urlPath),
                 RequestMethods::GET,
                 null,
+                $response,
+                self::RESPONSE_STATUS_CODE_OK,
+                $response->statusCode
+            );
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param string $id
+     * @param int $amount
+     * @return \GoPay\Http\Response
+     */
+    public function refundTransaction(string $id, int $amount): Response
+    {
+        $urlPath = 'payments/payment/' . $id . '/refund';
+        $body = [
+            'amount' => $amount,
+        ];
+
+        $response = $this->sendApiRequest(
+            $urlPath,
+            GoPay::FORM,
+            RequestMethods::POST,
+            $body
+        );
+
+        if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
+            throw new GoPayPaymentDownloadException(
+                $this->goPay->buildUrl('api/' . $urlPath),
+                RequestMethods::POST,
+                $body,
                 $response,
                 self::RESPONSE_STATUS_CODE_OK,
                 $response->statusCode

@@ -255,5 +255,9 @@
     "Your purchase": "Your purchase",
     "We have nothing to show you at this url.": "We have nothing to show you at this url.",
     "But at other addresses we have a lot for you...": "But at other addresses we have a lot for you...",
-    "404": "404"
+    "404": "404",
+    "Your delivery is now free of charge!": "Your delivery is now free of charge!",
+    "This field contains invalid character": "This field contains invalid character",
+    "Resellers": "Resellers",
+    "Order sent": "Order sent"
 }

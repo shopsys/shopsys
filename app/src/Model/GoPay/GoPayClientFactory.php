@@ -34,7 +34,7 @@ class GoPayClientFactory
      * @param string $locale
      * @return array
      */
-    private function getConfigByLocale(string $locale): array
+    protected function getConfigByLocale(string $locale): array
     {
         $configByLocale = $this->config[$locale];
         $this->config = array_merge($this->config, $configByLocale);

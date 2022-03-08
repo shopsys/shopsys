@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay\BankSwift;
 
+use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GoPayBankSwiftFacade
@@ -19,15 +20,23 @@ class GoPayBankSwiftFacade
     private $goPayBankSwiftDataFactory;
 
     /**
+     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository
+     */
+    private GoPayPaymentMethodRepository $goPayPaymentMethodRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
+     * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository $goPayPaymentMethodRepository
      */
     public function __construct(
         EntityManagerInterface $em,
-        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
+        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
+        GoPayPaymentMethodRepository $goPayPaymentMethodRepository
     ) {
         $this->em = $em;
         $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
+        $this->goPayPaymentMethodRepository = $goPayPaymentMethodRepository;
     }
 
     /**
@@ -67,5 +76,14 @@ class GoPayBankSwiftFacade
         $goPayBankSwiftData->imageNormalUrl = $swiftRawData['image']['normal'];
         $goPayBankSwiftData->imageLargeUrl = $swiftRawData['image']['large'];
         $goPayBankSwiftData->isOnline = (bool)$swiftRawData['isOnline'];
+    }
+
+    /**
+     * @param int $currencyId
+     * @return \App\Model\GoPay\BankSwift\GoPayBankSwift[]
+     */
+    public function getAllByCurrencyId(int $currencyId): array
+    {
+        return $this->goPayPaymentMethodRepository->getBankSwiftsByCurrencyId($currencyId);
     }
 }

@@ -786,6 +786,32 @@ type FlagFilterOption {
   isAbsolute: Boolean!
 }
 
+type GoPayBankSwift {
+  """Swift code"""
+  swift: String!
+
+  """Bank name"""
+  name: String!
+
+  """normal image url"""
+  imageNormalUrl: String!
+
+  """large image url"""
+  imageLargeUrl: String!
+  isOnline: Boolean!
+}
+
+type GoPayCreatePaymentSetup {
+  """redirect URL to payment gateway"""
+  gatewayUrl: String!
+
+  """payment transaction identifier"""
+  goPayId: String!
+
+  """url of gopay embedJs file"""
+  embedJs: String!
+}
+
 type GoPayPaymentMethod {
   """Identifier of payment method"""
   identifier: String!
@@ -979,6 +1005,15 @@ type Mutation {
 
   """Subscribe for e-mail newsletter"""
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
+
+  """
+  Pay order(create payment transaction in payment gateway) and get payment setup
+  data for redirect or creating JS payment gateway layer
+  """
+  PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
+
+  """check payment status of order after callback from payment service"""
+  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
 
   """Add product to cart for future checkout"""
   AddToCart(input: AddToCartInput!): AddToCartResult!
@@ -1449,6 +1484,14 @@ input PaymentInput {
 
   """Price for payment"""
   price: PriceInput!
+
+  """Selected bank swift code of goPay payment bank transfer"""
+  goPayBankSwift: String = null
+}
+
+type PaymentSetupCreationData {
+  """Identifiers of GoPay payment method"""
+  goPayCreatePaymentSetup: GoPayCreatePaymentSetup
 }
 
 type PersonalData {
@@ -1822,6 +1865,9 @@ type Query {
 
   """Returns list of advert positions."""
   advertPositions: [AdvertPosition!]!
+
+  """List of available banks for GoPay bank transfer payment"""
+  GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
 
   """Returns complete navigation menu"""
   navigation: [NavigationItem!]!

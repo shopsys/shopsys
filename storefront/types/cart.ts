@@ -48,6 +48,7 @@ export type CartResultValues = {
     cart: CartType | null;
     transport: TransportType | null;
     pickupPlace: PickupPlaceType | null;
+    goPayBankSwift: string | null;
     payment: PaymentType | null;
     promoCode: string | null;
 };

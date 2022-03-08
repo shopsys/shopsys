@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Admin\PaymentTransaction\PaymentTransactionsType;
+use App\Form\Admin\PaymentTransaction\PaymentTransactionType;
 use App\Model\GoPay\GoPayOrderStatus;
+use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,10 +39,10 @@ class OrderFormTypeExtension extends AbstractTypeExtension
             ]);
 
         if ($order->getPayment()->isGoPay() === true) {
-            $transactions = $order->getGoPayTransactions();
+            $goPayPaymentTransactions = $order->getGoPayTransactions();
 
-            if (count($transactions) > 0) {
-                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus(end($transactions)->getGoPayStatus());
+            if (count($goPayPaymentTransactions) > 0) {
+                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus(end($goPayPaymentTransactions)->getExternalPaymentStatus());
             } else {
                 $translatedGoPayStatus = t('Order has not been sent to GoPay');
             }
@@ -64,6 +68,30 @@ class OrderFormTypeExtension extends AbstractTypeExtension
                     ]),
                 ],
             ]);
+
+        $this->createPaymentGroup($builder, $order);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Order\Order $order
+     */
+    public function createPaymentGroup(FormBuilderInterface $builder, Order $order): void
+    {
+        $builderPaymentGroup = $builder->create('paymentGroup', GroupType::class, [
+            'label' => t('Payment transactions'),
+        ]);
+
+        $builderPaymentGroup->add('paymentTransactionRefunds', PaymentTransactionsType::class, [
+            'entry_type' => PaymentTransactionType::class,
+            'error_bubbling' => false,
+            'allow_add' => false,
+            'allow_delete' => false,
+            'required' => false,
+            'order' => $order,
+        ]);
+
+        $builder->add($builderPaymentGroup);
     }
 
     /**

@@ -751,3 +751,15 @@
 20220222103841:
     class: App\Migrations\Version20220222103841
     skip: false
+20220131130007:
+    class: App\Migrations\Version20220131130007
+    skip: false
+20220201083417:
+    class: App\Migrations\Version20220201083417
+    skip: false
+20220201120501:
+    class: App\Migrations\Version20220201120501
+    skip: false
+20220202124636:
+    class: App\Migrations\Version20220202124636
+    skip: false

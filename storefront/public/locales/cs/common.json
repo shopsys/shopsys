@@ -255,5 +255,9 @@
     "Your purchase": "Váš nákup",
     "We have nothing to show you at this url.": "Na této url adrese nemáme nic, co bychom Vám ukázali.",
     "But at other addresses we have a lot for you...": "Ale na jiných adresách toho pro Vás máme spousty...",
-    "404": "404"
+    "404": "404",
+    "Your delivery is now free of charge!": "Dopravu máte zdarma!",
+    "This field contains invalid character": "Toto pole obsahuje neplatný znak",
+    "Resellers": "Prodejci",
+    "Order sent": "Objednávka odeslána"
 }

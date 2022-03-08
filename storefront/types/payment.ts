@@ -5,6 +5,13 @@ import { PriceType } from 'types/price';
 export type PaymentInputType = {
     uuid: string;
     price: PriceFragmentApi;
+    goPayBankSwift: string | null;
+};
+
+export type GoPayPaymentMethodType = {
+    identifier: string;
+    name: string;
+    paymentGroup: string;
 };
 
 export type PaymentType = {
@@ -12,6 +19,9 @@ export type PaymentType = {
     name: string;
     description: string;
     instruction: string;
+    goPayPaymentMethod: GoPayPaymentMethodType | undefined;
+    goPayBankSwift: string | null;
     price: PriceType;
     image: ImageSizeType | null;
+    type: string;
 };

@@ -21,6 +21,8 @@ const staticUrls = {
         '/new-password': '/nove-heslo',
         '/personal-data-overview': '/prehled-osobnich-udaju',
         '/personal-data-export': '/export-osobnich-udaju',
+        '/order-payment-confirmation': '/potvrzeni-platby-objednavky',
+        '/order/payment-status-notify': '/order/payment-status-notify',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hladanie',
@@ -40,6 +42,8 @@ const staticUrls = {
         '/new-password': '/nove-heslo',
         '/personal-data-overview': '/prehlad-osobnych-udajov',
         '/personal-data-export': '/export-osobnych-udajov',
+        '/order-payment-confirmation': '/potvrdenie-platby-objednavky',
+        '/order/payment-status-notify': '/order/payment-status-notify',
     },
 };
 

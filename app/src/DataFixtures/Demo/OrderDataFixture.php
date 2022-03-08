@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Order\Order;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -21,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class OrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const ORDER_PREFIX = 'order_';
+    public const ORDER_WITH_GOPAY_PAYMENT = 'order_with_gopay_payment';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
@@ -118,7 +120,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -3 day'))->setTime(12, 40, 22);
         $orderData->isOverLimit = false;
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 2,
@@ -126,6 +128,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             $customerUser
         );
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -769,13 +772,14 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param array $products
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @return \App\Model\Order\Order
      */
     private function createOrder(
         OrderData $orderData,
         array $products,
         ?CustomerUser $customerUser = null
-    ) {
+    ): Order {
         $quantifiedProducts = [];
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName);
@@ -795,6 +799,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         /** @var \App\Model\Order\Order $order */
         $referenceName = self::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);
+
+        return $order;
     }
 
     /**

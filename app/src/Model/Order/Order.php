@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Order;
 
 use App\Model\Order\Mail\OrderMail;
+use App\Model\Payment\Transaction\PaymentTransaction;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
-use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
 
 /**
  * @ORM\Table(name="orders")
@@ -41,20 +40,10 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method \App\Model\Order\Status\OrderStatus getStatus()
  * @method \App\Model\Transport\Transport getTransport()
  * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
+ * @method \Shopsys\FrameworkBundle\Model\Order\OrderEditResult edit(\App\Model\Order\OrderData $orderData)
  */
 class Order extends BaseOrder
 {
-    /**
-     * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
-     * @ORM\OneToMany(
-     *     targetEntity="App\Model\GoPay\GoPayTransaction",
-     *     mappedBy="order",
-     *     cascade={"remove"},
-     * )
-     * @ORM\OrderBy({"goPayId" = "ASC"})
-     */
-    private $goPayTransactions;
-
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -104,6 +93,18 @@ class Order extends BaseOrder
     private ?string $pickupPlaceIdentifier;
 
     /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Payment\Transaction\PaymentTransaction[]
+     * @ORM\OneToMany(targetEntity="App\Model\Payment\Transaction\PaymentTransaction", mappedBy="order", cascade={"persist"})
+     */
+    private $paymentTransactions;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private ?string $goPayBankSwift;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -130,22 +131,12 @@ class Order extends BaseOrder
             $this->firstName = $orderData->firstName;
             $this->lastName = $orderData->lastName;
         }
-        $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->isOverLimit = $orderData->isOverLimit;
         $this->trackingNumber = $orderData->trackingNumber;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
-    }
-
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderEditResult
-     */
-    public function edit(BaseOrderData $orderData): OrderEditResult
-    {
-        $this->editGoPayTransactions($orderData->goPayTransactions);
-
-        return parent::edit($orderData);
+        $this->paymentTransactions = new ArrayCollection();
+        $this->goPayBankSwift = $orderData->goPayBankSwift;
     }
 
     /**
@@ -161,32 +152,30 @@ class Order extends BaseOrder
     }
 
     /**
-     * @param \App\Model\GoPay\GoPayTransaction[] $goPayTransactions
-     */
-    private function editGoPayTransactions(array $goPayTransactions): void
-    {
-        $this->goPayTransactions->clear();
-        foreach ($goPayTransactions as $goPayTransaction) {
-            $this->goPayTransactions->add($goPayTransaction);
-        }
-    }
-
-    /**
-     * @return \App\Model\GoPay\GoPayTransaction[]
+     * @return \App\Model\Payment\Transaction\PaymentTransaction[]
      */
     public function getGoPayTransactions(): array
     {
-        return $this->goPayTransactions->toArray();
+        $paymentTransactions = [];
+        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+            if ($paymentTransaction->getPayment()->isGoPay()) {
+                $paymentTransactions[] = $paymentTransaction;
+            }
+        }
+
+        return $paymentTransactions;
     }
 
     /**
      * @return string[]
      */
-    public function getGoPayTransactionsIndexedByGoPayId(): array
+    public function getGoPayTransactionStatusesIndexedByGoPayId(): array
     {
         $returnArray = [];
-        foreach ($this->goPayTransactions as $transaction) {
-            $returnArray[$transaction->getGoPayId()] = $transaction->getGoPayStatus();
+        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+            if ($paymentTransaction->getPayment()->isGoPay()) {
+                $returnArray[$paymentTransaction->getExternalPaymentIdentifier()] = $paymentTransaction->getExternalPaymentStatus();
+            }
         }
 
         return $returnArray;
@@ -195,15 +184,31 @@ class Order extends BaseOrder
     /**
      * @return bool
      */
-    public function isGoPayPaid(): bool
+    public function isPaid(): bool
     {
-        foreach ($this->goPayTransactions->toArray() as $item) {
-            if ($item->getGoPayStatus() === PaymentStatus::PAID) {
+        foreach ($this->getPaymentTransactions() as $paymentTransaction) {
+            if ($paymentTransaction->isPaid()) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @return \App\Model\Payment\Transaction\PaymentTransaction[]
+     */
+    public function getPaymentTransactions(): array
+    {
+        return $this->paymentTransactions->toArray();
+    }
+
+    /**
+     * @param \App\Model\Payment\Transaction\PaymentTransaction $paymentTransaction
+     */
+    public function addPaymentTransaction(PaymentTransaction $paymentTransaction): void
+    {
+        $this->paymentTransactions->add($paymentTransaction);
     }
 
     /**
@@ -261,5 +266,13 @@ class Order extends BaseOrder
     public function getPickupPlaceIdentifier(): ?string
     {
         return $this->pickupPlaceIdentifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGoPayBankSwift(): ?string
+    {
+        return $this->goPayBankSwift;
     }
 }

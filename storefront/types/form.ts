@@ -49,6 +49,7 @@ export type PickupPlaceFormType = {
 export type TransportAndPaymentFormType = {
     transport: string | null;
     payment: string | null;
+    goPaySwift: string | null;
 };
 
 export type RegistrationAfterOrderFormType = {

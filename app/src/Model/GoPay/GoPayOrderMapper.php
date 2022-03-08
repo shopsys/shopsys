@@ -61,12 +61,12 @@ class GoPayOrderMapper
             'callback' => [
                 'return_url' => $router->generate(
                     'front_order_paid',
-                    ['urlHash' => $order->getUrlHash()],
+                    ['orderIdentifier' => $order->getUuid()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),
                 'notification_url' => $router->generate(
-                    'front_order_gopay_status_notify',
-                    ['orderId' => $order->getId()],
+                    'front_order_payment_status_notify',
+                    ['orderIdentifier' => $order->getUuid()],
                     UrlGeneratorInterface::ABSOLUTE_URL
                 ),
             ],
@@ -87,7 +87,7 @@ class GoPayOrderMapper
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @return int
      */
-    private function formatPriceForGoPay(Money $price): int
+    public function formatPriceForGoPay(Money $price): int
     {
         return (int)round((float)$price->multiply(100)->getAmount());
     }
@@ -103,6 +103,7 @@ class GoPayOrderMapper
             $orderItems[] = [
                 'name' => $orderItem->getName(),
                 'amount' => $this->formatPriceForGoPay($orderItem->getTotalPriceWithVat()),
+                'count' => $orderItem->getQuantity(),
             ];
         }
 

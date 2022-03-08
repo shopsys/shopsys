@@ -9,4 +9,10 @@ fragment SimplePaymentFragment on Payment {
     images {
         ...ImageSizesFragment
     }
+    type
+    goPayPaymentMethod {
+        identifier
+        name
+        paymentGroup
+    }
 }

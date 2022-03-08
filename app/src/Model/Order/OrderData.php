@@ -24,11 +24,6 @@ class OrderData extends BaseOrderData
     public $personalPickupStore;
 
     /**
-     * @var \App\Model\GoPay\GoPayTransaction[]
-     */
-    public $goPayTransactions;
-
-    /**
      * @var string|null
      */
     public $password;
@@ -58,6 +53,16 @@ class OrderData extends BaseOrderData
      */
     public ?string $pickupPlaceIdentifier;
 
+    /**
+     * @var string|null
+     */
+    public ?string $goPayBankSwift = null;
+
+    /**
+     * @var \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData[]
+     */
+    public array $paymentTransactionRefunds;
+
     public function __construct()
     {
         parent::__construct();
@@ -65,5 +70,6 @@ class OrderData extends BaseOrderData
         $this->isCompanyCustomer = false;
         $this->trackingNumber = null;
         $this->pickupPlaceIdentifier = null;
+        $this->paymentTransactionRefunds = [];
     }
 }

@@ -19,3 +19,4 @@ Query:
         - 'CartQuery'
         - 'TransportQuery'
         - 'CountryQuery'
+        - 'GoPayQuery'

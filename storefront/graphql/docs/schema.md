@@ -37,6 +37,8 @@
     * [File](#file)
     * [Flag](#flag)
     * [FlagFilterOption](#flagfilteroption)
+    * [GoPayBankSwift](#gopaybankswift)
+    * [GoPayCreatePaymentSetup](#gopaycreatepaymentsetup)
     * [GoPayPaymentMethod](#gopaypaymentmethod)
     * [Image](#image)
     * [ImageSize](#imagesize)
@@ -56,6 +58,7 @@
     * [ParameterValue](#parametervalue)
     * [ParameterValueFilterOption](#parametervaluefilteroption)
     * [Payment](#payment)
+    * [PaymentSetupCreationData](#paymentsetupcreationdata)
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
     * [Price](#price)
@@ -535,6 +538,20 @@ Returns list of advert positions.
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
+<td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
+<td>
+
+List of available banks for GoPay bank transfer payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">currencyCode</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>navigation</strong></td>
 <td valign="top">[<a href="#navigationitem">NavigationItem</a>!]!</td>
 <td>
@@ -948,6 +965,34 @@ Subscribe for e-mail newsletter
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#newslettersubscriptiondatainput">NewsletterSubscriptionDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>PayOrder</strong></td>
+<td valign="top"><a href="#paymentsetupcreationdata">PaymentSetupCreationData</a>!</td>
+<td>
+
+Payment setup data for redirect or creating JS payment gateway layer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -3267,6 +3312,104 @@ that will be added to current products result.
 </tbody>
 </table>
 
+### GoPayBankSwift
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>swift</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Swift code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Bank name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>imageNormalUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+normal image url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+large image url
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isOnline</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### GoPayCreatePaymentSetup
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>gatewayUrl</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Identifiers of payment method
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>goPayId</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Identifiers of payment method
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>embedJs</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Identifiers of payment method
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### GoPayPaymentMethod
 
 <table>
@@ -4829,6 +4972,30 @@ Type of payment
 <td>
 
 Additional data for GoPay payment
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### PaymentSetupCreationData
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>goPayCreatePaymentSetup</strong></td>
+<td valign="top"><a href="#gopaycreatepaymentsetup">GoPayCreatePaymentSetup</a></td>
+<td>
+
+Identifiers of GoPay payment method
 
 </td>
 </tr>
@@ -7335,6 +7502,15 @@ UUID
 <td>
 
 Price for payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>goPayBankSwift</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected bank swift code of goPay payment bank transfer
 
 </td>
 </tr>

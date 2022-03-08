@@ -6,6 +6,7 @@ namespace App\Model\GoPay;
 
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\Order\OrderFacade;
+use App\Model\Payment\Service\PaymentServiceFacade;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,26 +37,26 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
     private $orderMailFacade;
 
     /**
-     * @var \App\Model\GoPay\GoPayTransactionFacade
+     * @var \App\Model\Payment\Service\PaymentServiceFacade
      */
-    private $goPayTransactionFacade;
+    private PaymentServiceFacade $paymentServiceFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
+     * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         OrderFacade $orderFacade,
         OrderMailFacade $orderMailFacade,
-        GoPayTransactionFacade $goPayTransactionFacade
+        PaymentServiceFacade $paymentServiceFacade
     ) {
         $this->em = $em;
         $this->orderFacade = $orderFacade;
         $this->orderMailFacade = $orderMailFacade;
-        $this->goPayTransactionFacade = $goPayTransactionFacade;
+        $this->paymentServiceFacade = $paymentServiceFacade;
     }
 
     public function run(): void
@@ -78,11 +79,11 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 continue;
             }
 
-            $oldOrderGoPayStatusIndexedByGoPaiId = $order->getGoPayTransactionsIndexedByGoPayId();
-            $oldIsOrderPaid = $order->isGoPayPaid();
+            $oldOrderGoPayStatusesIndexedByGoPaiId = $order->getGoPayTransactionStatusesIndexedByGoPayId();
+            $oldIsOrderPaid = $order->isPaid();
 
             try {
-                $this->goPayTransactionFacade->updateOrderTransactions($order);
+                $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
             } catch (GoPayPaymentDownloadException $e) {
                 $this->logger->addError($e->getMessage());
 
@@ -90,8 +91,8 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             }
 
             foreach ($order->getGoPayTransactions() as $goPayTransaction) {
-                $oldStatus = $oldOrderGoPayStatusIndexedByGoPaiId[$goPayTransaction->getGoPayId()];
-                $newStatus = $goPayTransaction->getGoPayStatus();
+                $oldStatus = $oldOrderGoPayStatusesIndexedByGoPaiId[$goPayTransaction->getExternalPaymentIdentifier()];
+                $newStatus = $goPayTransaction->getExternalPaymentStatus();
 
                 if ($oldStatus !== $newStatus) {
                     $this->logger->info(
@@ -105,7 +106,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 }
             }
 
-            if ($oldIsOrderPaid === $order->isGoPayPaid()) {
+            if ($oldIsOrderPaid === $order->isPaid()) {
                 continue;
             }
 

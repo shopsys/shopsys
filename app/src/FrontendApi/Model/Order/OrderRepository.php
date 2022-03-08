@@ -49,4 +49,24 @@ class OrderRepository extends BaseOrderRepository
             ->andWhere('o.customerUser = :customerUser')->setParameter(':customerUser', $customerUser)
             ->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Order\Order
+     */
+    public function getByUuid(string $uuid): Order
+    {
+        $order = $this->createOrderQueryBuilder()
+            ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
+            ->getQuery()->getOneOrNullResult();
+
+        if ($order === null) {
+            throw new OrderNotFoundException(sprintf(
+                'Order with UUID \'%s\' not found.',
+                $uuid
+            ));
+        }
+
+        return $order;
+    }
 }
