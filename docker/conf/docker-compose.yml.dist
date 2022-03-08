@@ -48,11 +48,6 @@ services:
             - ./schema.graphql:/app/schema.graphql
         ports:
             - "3000:3000"
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://127.0.0.1:3000"]
-            interval: 10s
-            timeout: 30s
-            retries: 20
 
     storefront-styleguide:
         build:
@@ -61,8 +56,7 @@ services:
             target: development
         container_name: shopsys-framework-storefront-styleguide
         depends_on:
-            storefront:
-                condition: service_healthy
+            - storefront
         volumes:
             - ./storefront:/app
         ports:
