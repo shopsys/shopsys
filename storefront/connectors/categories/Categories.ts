@@ -69,3 +69,7 @@ export const mapListedCategoryConnectionApiData = (
 
     return { totalCount: apiData.totalCount, categories: mappedCategories };
 };
+
+export const mapSimpleCategories = (apiData: SimpleCategoryFragmentApi[]): SimpleCategoryType[] => {
+    return apiData.map((simpleCategoryApiData) => mapSimpleCategoryApiData(simpleCategoryApiData));
+};

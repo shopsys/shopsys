@@ -88,6 +88,7 @@ interface Advert {
 
   """Position of advert"""
   positionName: String!
+  categories: [Category!]!
 }
 
 type AdvertCode implements Advert {
@@ -102,6 +103,7 @@ type AdvertCode implements Advert {
 
   """Position of advert"""
   positionName: String!
+  categories: [Category!]!
 
   """Advert code"""
   code: String!
@@ -119,6 +121,7 @@ type AdvertImage implements Advert {
 
   """Position of advert"""
   positionName: String!
+  categories: [Category!]!
 
   """Advert link"""
   link: String

@@ -86,6 +86,7 @@ export type AdditionalSizeApi = {
 };
 
 export type AdvertApi = {
+  categories: Array<CategoryApi>;
   /** Name of advert */
   name: Scalars['String'];
   /** Position of advert */
@@ -98,6 +99,7 @@ export type AdvertApi = {
 
 export type AdvertCodeApi = AdvertApi & {
   __typename?: 'AdvertCode';
+  categories: Array<CategoryApi>;
   /** Advert code */
   code: Scalars['String'];
   /** Name of advert */
@@ -112,6 +114,7 @@ export type AdvertCodeApi = AdvertApi & {
 
 export type AdvertImageApi = AdvertApi & {
   __typename?: 'AdvertImage';
+  categories: Array<CategoryApi>;
   /** Advert image */
   image: Array<ImageApi>;
   /** Advert link */
@@ -2312,16 +2315,16 @@ export type VariantImagesArgsApi = {
   type?: Maybe<Scalars['String']>;
 };
 
-type AdvertsFragment_AdvertCode_Api = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string };
+type AdvertsFragment_AdvertCode_Api = { __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename?: 'Category', name: string, slug: string }> };
 
-type AdvertsFragment_AdvertImage_Api = { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, image: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, imageMobile: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> };
+type AdvertsFragment_AdvertImage_Api = { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, image: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, imageMobile: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, categories: Array<{ __typename?: 'Category', name: string, slug: string }> };
 
 export type AdvertsFragmentApi = AdvertsFragment_AdvertCode_Api | AdvertsFragment_AdvertImage_Api;
 
 export type AdvertsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type AdvertsQueryApi = { __typename?: 'Query', adverts: Array<{ __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string } | { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, image: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, imageMobile: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }> }> };
+export type AdvertsQueryApi = { __typename?: 'Query', adverts: Array<{ __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename?: 'Category', name: string, slug: string }> } | { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, image: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, imageMobile: Array<{ __typename?: 'Image', position: number | null, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, categories: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 export type ArticleDetailFragmentApi = { __typename?: 'Article', uuid: string, slug: string, placement: string, text: string | null, articleName: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
@@ -2903,6 +2906,12 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
 };
       export default result;
     
+export const SimpleCategoryFragmentApi = gql`
+    fragment SimpleCategoryFragment on Category {
+  name
+  slug
+}
+    `;
 export const ImageSizeFragmentApi = gql`
     fragment ImageSizeFragment on ImageSize {
   size
@@ -2925,6 +2934,9 @@ export const AdvertsFragmentApi = gql`
   name
   positionName
   type
+  categories {
+    ...SimpleCategoryFragment
+  }
   ... on AdvertCode {
     code
   }
@@ -2940,7 +2952,8 @@ export const AdvertsFragmentApi = gql`
     }
   }
 }
-    ${ImageSizesFragmentApi}`;
+    ${SimpleCategoryFragmentApi}
+${ImageSizesFragmentApi}`;
 export const BreadcrumbFragmentApi = gql`
     fragment BreadcrumbFragment on Breadcrumb {
   breadcrumb {
@@ -3471,12 +3484,6 @@ export const ListedCategoryConnectionFragmentApi = gql`
   }
 }
     ${ListedCategoryFragmentApi}`;
-export const SimpleCategoryFragmentApi = gql`
-    fragment SimpleCategoryFragment on Category {
-  name
-  slug
-}
-    `;
 export const SimpleCategoryConnectionFragmentApi = gql`
     fragment SimpleCategoryConnectionFragment on CategoryConnection {
   totalCount

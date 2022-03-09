@@ -1,22 +1,24 @@
-export type AdvertType = AdvertImageType | AdvertCodeType;
 import { ImageSizeType } from 'types/image';
+import { SimpleCategoryType } from 'types/category';
 
-type AdvertImageType = {
+export type AdvertType = AdvertImageType | AdvertCodeType;
+
+type AdvertCommonType = {
+    uuid: string;
+    type: string;
+    positionName: string;
+    name: string;
+    categories: SimpleCategoryType[];
+};
+
+type AdvertImageType = AdvertCommonType & {
     __typename: 'AdvertImage';
     image: ImageSizeType | null;
     imageMobile: ImageSizeType | null;
     link?: string;
-    name: string;
-    positionName: string;
-    type: string;
-    uuid: string;
 };
 
-type AdvertCodeType = {
+type AdvertCodeType = AdvertCommonType & {
     __typename: 'AdvertCode';
     code: string;
-    uuid: string;
-    name: string;
-    positionName: string;
-    type: string;
 };

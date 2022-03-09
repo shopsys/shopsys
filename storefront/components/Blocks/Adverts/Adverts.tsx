@@ -1,5 +1,7 @@
 import { AdvertsLinkStyled, AdvertsStyled } from './Adverts.style';
 import { FC, Fragment, HTMLAttributes, useState } from 'react';
+import { AdvertType } from 'types/advert';
+import { CategoryDetailType } from 'types/category';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getAdverts } from 'connectors/adverts/Adverts';
@@ -14,6 +16,7 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 type AdvertsProps = {
     positionName: 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
     withGap?: boolean;
+    currentCategory?: CategoryDetailType;
 };
 
 const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
@@ -33,7 +36,7 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
         <AdvertsStyled className={props.className} withGap={props.withGap}>
             {adverts?.map(
                 (item, index) =>
-                    item.positionName === props.positionName &&
+                    shouldBeShown(item, props) &&
                     (item.__typename === 'AdvertImage' ? (
                         <Fragment key={index}>
                             {item.link !== undefined ? (
@@ -62,6 +65,25 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
             )}
         </AdvertsStyled>
     );
+};
+
+const shouldBeShown = (advert: AdvertType, advertsProps: AdvertsProps): boolean => {
+    if (advert.positionName !== advertsProps.positionName) {
+        return false;
+    }
+    if (advert.positionName === 'productListMiddle' && advert.categories.length === 0) {
+        return false;
+    }
+    for (const category of advert.categories) {
+        if (
+            category.slug === advertsProps.currentCategory?.slug ||
+            category.slug === advertsProps.currentCategory?.originalCategorySlug
+        ) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 export default Adverts;

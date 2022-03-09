@@ -4,6 +4,9 @@ fragment AdvertsFragment on Advert {
     name
     positionName
     type
+    categories {
+        ...SimpleCategoryFragment
+    }
     ... on AdvertCode {
         code
     }
