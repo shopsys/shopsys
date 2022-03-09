@@ -576,6 +576,9 @@ services:
     Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory:
         alias: App\Model\Advert\AdvertDataFactory
 
+    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
+        alias: App\Model\Advert\AdvertDataFactory
+
     Shopsys\FrameworkBundle\Model\Advert\AdvertRepository:
         alias: App\Model\Advert\AdvertRepository
 
@@ -865,3 +868,6 @@ services:
         class: App\Model\LanguageConstant\LanguageConstantFacade
         arguments:
             $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'
+
+    Shopsys\FrameworkBundle\Controller\Admin\AdvertController:
+        class: 'App\Controller\Admin\AdvertController'
