@@ -40,8 +40,6 @@ services:
             - '@doctrine.dbal.default_connection'
             - '@doctrine.orm.default_configuration'
 
-    Doctrine\Common\Cache\ChainCache: ~
-
     doctrine.orm.entity_manager.abstract:
         synthetic: true
         public: true
@@ -112,22 +110,6 @@ services:
         arguments:
             - '@annotation_reader'
 
-    shopsys.doctrine.cache_driver.query_cache:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.doctrine_query'] }
-
-    shopsys.doctrine.cache_driver.metadata_cache:
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments:
-            - '%kernel.cache_dir%/metadata'
-
-    shopsys.framework.cache_driver.annotations_cache:
-        deprecated: The "%service_id%" service is deprecated since shopsys/framework 9.1.2 and will be removed in 10.0.0.
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments:
-            - '%kernel.cache_dir%/annotations'
-
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
@@ -136,9 +118,6 @@ services:
             $menuFactory: '@knp_menu.factory'
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
-
-    # @deprecated Class will be removed in next major version as it is not necessary anymore
-    Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory: ~
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig: ~
 
@@ -441,14 +420,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    shopsys.shop.product.bestselling_product.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.bestselling_products'] }
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
-            - '@shopsys.shop.product.bestselling_product.cache_provider'
+            - '@bestselling_product_cache'
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 

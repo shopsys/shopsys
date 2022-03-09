@@ -31,7 +31,7 @@ There you can find links to upgrade notes for other versions too.
         ```
     - for more information read our article [Icon function](https://docs.shopsys.com/en/9.1/frontend/icon-function/)
 
-**\[BC break\]** change entity extension subscriber class ([#2405](https://github.com/shopsys/shopsys/pull/2405))
+- **\[BC break\]** change entity extension subscriber class ([#2405](https://github.com/shopsys/shopsys/pull/2405))
     - see #project-base-diff to update your project 
     - package joschi127/doctrine-entity-override-bundle is no longer used
     - previously used subscriber `\Joschi127\DoctrineEntityOverrideBundle\EventListener\LoadORMMetadataSubscriber` was replaced with `\Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber`
@@ -42,3 +42,35 @@ There you can find links to upgrade notes for other versions too.
 
 - replace dependency `fzaninotto/Faker` with `FakerPHP/Faker` ([#2413](https://github.com/shopsys/shopsys/pull/2413))
     - see #project-base-diff to update your project
+
+- **\[BC break\]** change used caches from doctrine/cache to Symfony cache ([#2412](https://github.com/shopsys/shopsys/pull/2412))
+    - see #project-base-diff to update your project 
+    - class `Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass` was removed and the compiler pass is no longer registered
+    - class `Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory` was removed along with its service definition
+    - class `Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade` was changed
+        - constructor changed interface
+            ```diff
+                /**
+            -    * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
+            +    * @param \Symfony\Contracts\Cache\CacheInterface $cache
+                 * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade $bestsellingProductFacade
+                 * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+                 * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
+                 */
+                public function __construct(
+            -       CacheProvider $cacheProvider,
+            +       CacheInterface $cache,
+                    BestsellingProductFacade $bestsellingProductFacade,
+                    ProductRepository $productRepository,
+                    PricingGroupRepository $pricingGroupRepository
+                ) {
+            ```
+        - constant `LIFETIME` was removed and lifetime of cache was moved to cache pool configuration (see `bestselling_product_cache` in `config/packages/cache.yaml`)
+        - protected property `$cacheProvider` was removed, use `$cache` instead
+        - protected method `saveToCache` was removed, storing to cache is handled automatically in `getAllOfferedBestsellingProducts` method
+    - following service definitions were removed in favor of cache pool configurations in `config/packages/cache.yaml`
+        - `Doctrine\Common\Cache\ChainCache`
+        - `shopsys.doctrine.cache_driver.query_cache`
+        - `shopsys.doctrine.cache_driver.metadata_cache`
+        - `shopsys.framework.cache_driver.annotations_cache`
+        - `bestselling_product_cache`

@@ -2,25 +2,24 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\BestsellingProduct;
 
-use Doctrine\Common\Cache\CacheProvider;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class CachedBestsellingProductFacade
 {
-    protected const LIFETIME = 43200; // 12h
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade
      */
     protected $bestsellingProductFacade;
 
     /**
-     * @var \Doctrine\Common\Cache\CacheProvider
+     * @var \Symfony\Contracts\Cache\CacheInterface
      */
-    protected $cacheProvider;
+    protected CacheInterface $cache;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
@@ -33,18 +32,18 @@ class CachedBestsellingProductFacade
     protected $pricingGroupRepository;
 
     /**
-     * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
+     * @param \Symfony\Contracts\Cache\CacheInterface $cache
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade $bestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      */
     public function __construct(
-        CacheProvider $cacheProvider,
+        CacheInterface $cache,
         BestsellingProductFacade $bestsellingProductFacade,
         ProductRepository $productRepository,
         PricingGroupRepository $pricingGroupRepository
     ) {
-        $this->cacheProvider = $cacheProvider;
+        $this->cache = $cache;
         $this->bestsellingProductFacade = $bestsellingProductFacade;
         $this->productRepository = $productRepository;
         $this->pricingGroupRepository = $pricingGroupRepository;
@@ -59,19 +58,26 @@ class CachedBestsellingProductFacade
     public function getAllOfferedBestsellingProducts($domainId, Category $category, PricingGroup $pricingGroup)
     {
         $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
-        $sortedProductsIds = $this->cacheProvider->fetch($cacheId);
 
-        if ($sortedProductsIds === false) {
-            $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
-                $domainId,
-                $category,
-                $pricingGroup
-            );
-            $this->saveToCache($bestsellingProducts, $cacheId);
+        $bestsellingProductIds = $this->cache->get(
+            $cacheId,
+            function () use ($domainId, $category, $pricingGroup) {
+                $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
+                    $domainId,
+                    $category,
+                    $pricingGroup
+                );
 
-            return $bestsellingProducts;
-        }
-        return $this->getSortedProducts($domainId, $pricingGroup, $sortedProductsIds);
+                return array_map(
+                    static function (Product $product) {
+                        return $product->getId();
+                    },
+                    $bestsellingProducts
+                );
+            }
+        );
+
+        return $this->getSortedProducts($domainId, $pricingGroup, $bestsellingProductIds);
     }
 
     /**
@@ -83,22 +89,8 @@ class CachedBestsellingProductFacade
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
         foreach ($pricingGroups as $pricingGroup) {
             $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
-            $this->cacheProvider->delete($cacheId);
+            $this->cache->delete($cacheId);
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $bestsellingProducts
-     * @param string $cacheId
-     */
-    protected function saveToCache(array $bestsellingProducts, $cacheId)
-    {
-        $sortedProductIds = [];
-        foreach ($bestsellingProducts as $product) {
-            $sortedProductIds[] = $product->getId();
-        }
-
-        $this->cacheProvider->save($cacheId, $sortedProductIds, static::LIFETIME);
     }
 
     /**
