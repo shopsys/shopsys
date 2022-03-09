@@ -463,6 +463,9 @@ msgstr "Aktivní"
 msgid "Active/Passive"
 msgstr "Aktivní/Pasivní"
 
+msgid "Add to cart"
+msgstr "Přidat do košíku"
+
 msgid "All kind of electronic devices."
 msgstr "Všechny druhy elektroniky."
 

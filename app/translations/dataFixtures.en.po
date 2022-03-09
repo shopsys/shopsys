@@ -460,6 +460,9 @@ msgstr ""
 msgid "Active/Passive"
 msgstr ""
 
+msgid "Add to cart"
+msgstr ""
+
 msgid "All kind of electronic devices."
 msgstr ""
 

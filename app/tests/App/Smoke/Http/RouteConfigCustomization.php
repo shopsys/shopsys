@@ -358,6 +358,14 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_customer_loginasuser', function (RouteConfig $config) {
                 $config->skipRoute('Login as customer is currently not supported (it is not implemented on JS storefront)');
+            })
+            ->customizeByRouteName('admin_languageconstant_edit', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')
+                    ->setParameter('key', 'Cart');
+            })
+            ->customizeByRouteName('admin_languageconstant_delete', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')
+                    ->setParameter('key', 'Cart');
             });
     }
 

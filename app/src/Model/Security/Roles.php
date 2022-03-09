@@ -153,6 +153,9 @@ class Roles extends BaseRoles
     public const ROLE_SCRIPT_FULL = 'ROLE_SCRIPT_FULL';
     public const ROLE_SCRIPT_VIEW = 'ROLE_SCRIPT_VIEW';
 
+    public const ROLE_LANGUAGE_CONSTANTS_FULL = 'ROLE_LANGUAGE_CONSTANTS_FULL';
+    public const ROLE_LANGUAGE_CONSTANTS_VIEW = 'ROLE_LANGUAGE_CONSTANTS_VIEW';
+
     public const ROLE_TRANSFER_VIEW = 'ROLE_TRANSFER_VIEW';
 
     /**
@@ -356,6 +359,10 @@ class Roles extends BaseRoles
             [
                 self::ROLE_SCRIPT_FULL => t('Scripts - full'),
                 self::ROLE_SCRIPT_VIEW => t('Scripts - view'),
+            ],
+            [
+                self::ROLE_LANGUAGE_CONSTANTS_FULL => t('Language constants - full'),
+                self::ROLE_LANGUAGE_CONSTANTS_VIEW => t('Language constants - view'),
             ],
             [
                 self::ROLE_IMAGE_SIZE_VIEW => t('Image sizes - view'),

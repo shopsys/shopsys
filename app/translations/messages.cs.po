@@ -490,6 +490,9 @@ msgstr "Opravdu chcete odstranit tento příznak?"
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
 
+msgid "Do you really want to remove this language constant translation?"
+msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
@@ -805,6 +808,9 @@ msgstr ""
 msgid "Je vystaven"
 msgstr ""
 
+msgid "Key"
+msgstr "Klíč"
+
 msgid "Kombinace parametrů a jejich hodnot parametrů"
 msgstr ""
 
@@ -832,6 +838,27 @@ msgstr ""
 msgid "Krátký popis kategorie"
 msgstr ""
 
+msgid "Language constant translation"
+msgstr "Překlad jazykové konstanty"
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Překlad jazykové konstanty <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> byl smazán"
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> nenalezen"
+
+msgid "Language constants"
+msgstr "Jazykové konstanty"
+
+msgid "Language constants - full"
+msgstr "Jazykové konstanty - vše"
+
+msgid "Language constants - view"
+msgstr "Jazykové konstanty - zobrazení"
+
 msgid "Last modification"
 msgstr ""
 
@@ -858,6 +885,9 @@ msgstr ""
 
 msgid "Limits"
 msgstr "Limity"
+
+msgid "List of language constants"
+msgstr "Přehled jazykových konstant"
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr ""
@@ -1167,6 +1197,9 @@ msgstr "Objednávky - zobrazení"
 
 msgid "Orders value"
 msgstr ""
+
+msgid "Original translation"
+msgstr "Původní překlad"
 
 msgid "Osobní odběr Commerce Cloud"
 msgstr ""
@@ -1885,6 +1918,9 @@ msgstr ""
 msgid "Uložit nastavení skladu"
 msgstr ""
 
+msgid "Unable to load list of language constants"
+msgstr "Nepodařilo se načíst přehled jazykových konstant"
+
 msgid "Unavailable"
 msgstr "Nedostupné"
 
@@ -1929,6 +1965,9 @@ msgstr ""
 
 msgid "Use stocks"
 msgstr ""
+
+msgid "User translation"
+msgstr "Uživatelský překlad"
 
 msgid "VAT rate (%)"
 msgstr "Výše DPH (%)"

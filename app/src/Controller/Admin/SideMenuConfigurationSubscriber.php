@@ -190,6 +190,13 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         if ($superadminSettingMenu !== null) {
             $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
         }
+
+        $constantsMenu = $settingsMenu->addChild('constants', ['label' => t('Language constants')]);
+        $constantsListMenu = $constantsMenu->addChild('constants_list', ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
+        $constantsListMenu->addChild('constants_edit', ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
+
+        $settingsMenu->removeChild('superadmin');
+        $settingsMenu->addChild($superadminSettingMenu);
     }
 
     /**

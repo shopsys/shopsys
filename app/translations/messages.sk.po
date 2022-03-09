@@ -487,6 +487,9 @@ msgstr ""
 msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
 msgstr ""
 
+msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
@@ -802,6 +805,9 @@ msgstr ""
 msgid "Je vystaven"
 msgstr ""
 
+msgid "Key"
+msgstr ""
+
 msgid "Kombinace parametrů a jejich hodnot parametrů"
 msgstr ""
 
@@ -829,6 +835,30 @@ msgstr ""
 msgid "Krátký popis kategorie"
 msgstr ""
 
+msgid "Language"
+msgstr ""
+
+msgid "Language constant translation"
+msgstr ""
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr ""
+
+msgid "Language constants"
+msgstr ""
+
+msgid "Language constants - full"
+msgstr ""
+
+msgid "Language constants - view"
+msgstr ""
+
 msgid "Last modification"
 msgstr ""
 
@@ -854,6 +884,9 @@ msgid "Legenda:"
 msgstr ""
 
 msgid "Limits"
+msgstr ""
+
+msgid "List of language constants"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -1163,6 +1196,9 @@ msgid "Orders - view"
 msgstr ""
 
 msgid "Orders value"
+msgstr ""
+
+msgid "Original translation"
 msgstr ""
 
 msgid "Osobní odběr Commerce Cloud"
@@ -1882,6 +1918,9 @@ msgstr ""
 msgid "Uložit nastavení skladu"
 msgstr ""
 
+msgid "Unable to load list of language constants"
+msgstr ""
+
 msgid "Unavailable"
 msgstr ""
 
@@ -1925,6 +1964,9 @@ msgid "Upravit"
 msgstr ""
 
 msgid "Use stocks"
+msgstr ""
+
+msgid "User translation"
 msgstr ""
 
 msgid "VAT rate (%)"

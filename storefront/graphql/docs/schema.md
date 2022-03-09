@@ -42,6 +42,7 @@
     * [GoPayPaymentMethod](#gopaypaymentmethod)
     * [Image](#image)
     * [ImageSize](#imagesize)
+    * [LanguageConstant](#languageconstant)
     * [Link](#link)
     * [MainVariant](#mainvariant)
     * [NavigationItem](#navigationitem)
@@ -538,20 +539,6 @@ Returns list of advert positions.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
-<td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
-<td>
-
-List of available banks for GoPay bank transfer payment
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">currencyCode</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>navigation</strong></td>
 <td valign="top">[<a href="#navigationitem">NavigationItem</a>!]!</td>
 <td>
@@ -718,29 +705,6 @@ Returns a complete list of the slider items
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#slug">Slug</a></td>
-<td>
-
-Returns entity by slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">slug</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>notificationBars</strong></td>
-<td valign="top">[<a href="#notificationbar">NotificationBar</a>!]</td>
-<td>
-
-Returns a list of notifications supposed to be displayed on all pages
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>articlesSearch</strong></td>
 <td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
 <td>
@@ -752,20 +716,6 @@ Returns list of searched articles and blog articles
 <tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cart</strong></td>
-<td valign="top"><a href="#cart">Cart</a></td>
-<td>
-
-Return cart of logged customer or cart by UUID for anonymous user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">cartInput</td>
-<td valign="top"><a href="#cartinput">CartInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -824,15 +774,6 @@ Hash to securely recognize access
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>countries</strong></td>
-<td valign="top">[<a href="#country">Country</a>!]!</td>
-<td>
-
-Returns available countries
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>brandSearch</strong></td>
 <td valign="top">[<a href="#brand">Brand</a>!]!</td>
 <td>
@@ -845,6 +786,75 @@ Returns list of searched brands
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#slug">Slug</a></td>
+<td>
+
+Returns entity by slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">slug</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>notificationBars</strong></td>
+<td valign="top">[<a href="#notificationbar">NotificationBar</a>!]</td>
+<td>
+
+Returns a list of notifications supposed to be displayed on all pages
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cart</strong></td>
+<td valign="top"><a href="#cart">Cart</a></td>
+<td>
+
+Return cart of logged customer or cart by UUID for anonymous user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartInput</td>
+<td valign="top"><a href="#cartinput">CartInput</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>countries</strong></td>
+<td valign="top">[<a href="#country">Country</a>!]!</td>
+<td>
+
+Returns available countries
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
+<td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
+<td>
+
+List of available banks for GoPay bank transfer payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">currencyCode</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>languageConstants</strong></td>
+<td valign="top">[<a href="#languageconstant">LanguageConstant</a>!]!</td>
+<td>
+
+Return user translated language constants for current domain locale
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -968,34 +978,6 @@ Subscribe for e-mail newsletter
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>PayOrder</strong></td>
-<td valign="top"><a href="#paymentsetupcreationdata">PaymentSetupCreationData</a>!</td>
-<td>
-
-Payment setup data for redirect or creating JS payment gateway layer
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-check payment status of order after callback from payment service
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>AddToCart</strong></td>
 <td valign="top"><a href="#addtocartresult">AddToCartResult</a>!</td>
 <td>
@@ -1091,6 +1073,35 @@ Send message to the site owner
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#contactinput">ContactInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>PayOrder</strong></td>
+<td valign="top"><a href="#paymentsetupcreationdata">PaymentSetupCreationData</a>!</td>
+<td>
+
+Pay order(create payment transaction in payment gateway) and get payment setup
+data for redirect or creating JS payment gateway layer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -3385,7 +3396,7 @@ large image url
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Identifiers of payment method
+redirect URL to payment gateway
 
 </td>
 </tr>
@@ -3394,7 +3405,7 @@ Identifiers of payment method
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Identifiers of payment method
+payment transaction identifier
 
 </td>
 </tr>
@@ -3403,7 +3414,7 @@ Identifiers of payment method
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Identifiers of payment method
+url of gopay embedJs file
 
 </td>
 </tr>
@@ -3566,6 +3577,41 @@ Height in pixels defined in images.yaml
 <td>
 
 Additional sizes for different screen types
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### LanguageConstant
+
+Represents a single user translation of language constant
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>key</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Translation key
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>translation</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+User translation
 
 </td>
 </tr>

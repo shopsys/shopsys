@@ -857,6 +857,15 @@ type ImageSize {
   additionalSizes: [AdditionalSize!]!
 }
 
+"""Represents a single user translation of language constant"""
+type LanguageConstant {
+  """Translation key"""
+  key: String!
+
+  """User translation"""
+  translation: String!
+}
+
 """Represents an internal link"""
 type Link {
   """Clickable text for a hyperlink"""
@@ -1006,15 +1015,6 @@ type Mutation {
   """Subscribe for e-mail newsletter"""
   NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
 
-  """
-  Pay order(create payment transaction in payment gateway) and get payment setup
-  data for redirect or creating JS payment gateway layer
-  """
-  PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
-
-  """check payment status of order after callback from payment service"""
-  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
-
   """Add product to cart for future checkout"""
   AddToCart(input: AddToCartInput!): AddToCartResult!
 
@@ -1035,6 +1035,15 @@ type Mutation {
 
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
+
+  """
+  Pay order(create payment transaction in payment gateway) and get payment setup
+  data for redirect or creating JS payment gateway layer
+  """
+  PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
+
+  """check payment status of order after callback from payment service"""
+  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
 }
 
 """Represents a navigation structure item"""
@@ -1866,9 +1875,6 @@ type Query {
   """Returns list of advert positions."""
   advertPositions: [AdvertPosition!]!
 
-  """List of available banks for GoPay bank transfer payment"""
-  GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
-
   """Returns complete navigation menu"""
   navigation: [NavigationItem!]!
   CompanyCustomerUser: CompanyCustomerUser
@@ -1936,6 +1942,12 @@ type Query {
 
   """Returns available countries"""
   countries: [Country!]!
+
+  """List of available banks for GoPay bank transfer payment"""
+  GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
+
+  """Return user translated language constants for current domain locale"""
+  languageConstants: [LanguageConstant!]!
 }
 
 input RecoverPasswordInput {

@@ -55,6 +55,7 @@ security:
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_FULL
             - ROLE_SCRIPT_FULL
+            - ROLE_LANGUAGE_CONSTANTS_FULL
             - ROLE_TRANSFER_VIEW
         ROLE_ALL_VIEW:
             - ROLE_ORDER_VIEW
@@ -105,6 +106,7 @@ security:
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_VIEW
             - ROLE_SCRIPT_VIEW
+            - ROLE_LANGUAGE_CONSTANTS_VIEW
             - ROLE_TRANSFER_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
@@ -152,6 +154,7 @@ security:
         ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
         ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
         ROLE_SCRIPT_FULL: [ROLE_SCRIPT_VIEW]
+        ROLE_LANGUAGE_CONSTANTS_FULL: [ROLE_LANGUAGE_CONSTANTS_VIEW]
 
     providers:
         administrators:
@@ -374,6 +377,10 @@ security:
         - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
         - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
         - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW }
+        # language constants
+        - { path: ^/%admin_url%/constant/edit, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
+        - { path: ^/%admin_url%/constant/delete, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
+        - { path: ^/%admin_url%/constant/list/, roles: ROLE_LANGUAGE_CONSTANTS_VIEW }
         # transfers
         - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
         # special paths for file manager in wysiwyg, product picker, grid, domain selector, login as user.

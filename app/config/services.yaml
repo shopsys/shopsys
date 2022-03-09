@@ -853,3 +853,15 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
+
+    App\Twig\LocalizationExtension:
+        arguments:
+            $webDir: '%shopsys.web_dir%'
+
+    Shopsys\Cdn\Twig\LocalizationExtension:
+        alias: App\Twig\LocalizationExtension
+
+    App\Model\LanguageConstant\LanguageConstantFacade:
+        class: App\Model\LanguageConstant\LanguageConstantFacade
+        arguments:
+            $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'

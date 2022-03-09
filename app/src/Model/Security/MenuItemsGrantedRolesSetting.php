@@ -160,6 +160,9 @@ class MenuItemsGrantedRolesSetting
             'settings' . self::MENU_ITEM_PATH_SEPARATOR . 'stocks' => [
                 Roles::ROLE_STOCK_VIEW,
             ],
+            'settings' . self::MENU_ITEM_PATH_SEPARATOR . 'constants' => [
+                Roles::ROLE_LANGUAGE_CONSTANTS_VIEW,
+            ],
             'integrations' . self::MENU_ITEM_PATH_SEPARATOR . 'feeds' => [
                 Roles::ROLE_FEED_VIEW,
             ],
