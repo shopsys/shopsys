@@ -305,12 +305,12 @@
     class: App\Model\NotificationBar\NotificationBar
     sizes:
         -   name: ~
-            width: ~
+            width: 42
             height: 42
             crop: false
             occurrence: 'Front-end: Notification bar'
             additionalSizes:
-                - {width: ~, height: 84, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 84, height: 84, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: store
     class: App\Model\Store\Store

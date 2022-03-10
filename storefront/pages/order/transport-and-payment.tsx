@@ -1,5 +1,6 @@
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import {
     useTransportAndPaymentForm,
@@ -11,7 +12,6 @@ import Footer from 'components/Layout/Footer';
 import { getTransports } from 'connectors/transports/Transports';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
@@ -77,7 +77,12 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     initDomainConfig(context, store);
     const cartState = store.getState().cart;
     const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
-    return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
+    return redirect === false
+        ? initServerSideProps(context, store, [
+              { query: NotificationBarsDocumentApi },
+              { query: NavigationQueryDocumentApi },
+          ])
+        : redirect;
 });
 
 export default TransportAndPayment;

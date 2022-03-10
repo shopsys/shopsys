@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
+import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 import CommonLayout from 'components/Layout/CommonLayout';
 import { getOrders } from 'connectors/customer/Orders';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import Orders from 'components/Pages/Customer/Orders';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useRouter } from 'next/router';
@@ -38,7 +38,10 @@ const Index: FC = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
+    return initServerSideProps(context, store, [
+        { query: NotificationBarsDocumentApi },
+        { query: NavigationQueryDocumentApi },
+    ]);
 });
 
 export default Index;

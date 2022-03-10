@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
+import { NavigationQueryDocumentApi, NotificationBarsDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'types/article';
@@ -116,6 +116,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     );
 
     return initServerSideProps(context, store, [
+        { query: NotificationBarsDocumentApi },
         { query: NavigationQueryDocumentApi },
         {
             query: SlugQueryDocumentApi,

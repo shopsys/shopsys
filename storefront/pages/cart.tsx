@@ -1,11 +1,11 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CartSummary from 'components/Pages/Cart/CartSummary';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import List from 'components/Pages/Cart/List';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -44,7 +44,10 @@ const Cart: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
+    return initServerSideProps(context, store, [
+        { query: NotificationBarsDocumentApi },
+        { query: NavigationQueryDocumentApi },
+    ]);
 });
 
 export default Cart;
