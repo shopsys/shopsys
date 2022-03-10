@@ -14,7 +14,6 @@ import Footer from 'components/Layout/Footer';
 import Form from 'components/Forms/Form';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import nookies from 'nookies';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -66,9 +65,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         }
 
         dispatch(contactInformationActions.setContactInformation(formValues));
-        if (!isUserLoggedIn) {
-            nookies.destroy(null, 'contactInformation');
-        }
 
         let deliveryInfo;
 

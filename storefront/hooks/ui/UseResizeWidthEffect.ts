@@ -10,17 +10,27 @@ export const useResizeWidthEffect = (
     const [previousWindowWidth, setPreviousWindowWidth] = useState(-1);
 
     useEffect(() => {
-        if (callbackWhenInitialized !== undefined && previousWindowWidth === -1) {
+        if (callbackWhenInitialized !== undefined && previousWindowWidth === -1 && width !== -1) {
             setPreviousWindowWidth(width);
             callbackWhenInitialized();
         }
     }, [width, callbackWhenInitialized, previousWindowWidth]);
 
     useEffect(() => {
-        if (callbackWhenNarrower !== undefined && previousWindowWidth > breakpoint && width <= breakpoint) {
+        if (
+            callbackWhenNarrower !== undefined &&
+            previousWindowWidth > breakpoint &&
+            width <= breakpoint &&
+            width !== -1
+        ) {
             callbackWhenNarrower();
         }
-        if (callbackWhenWider !== undefined && previousWindowWidth <= breakpoint && width > breakpoint) {
+        if (
+            callbackWhenWider !== undefined &&
+            previousWindowWidth <= breakpoint &&
+            width > breakpoint &&
+            width !== -1
+        ) {
             callbackWhenWider();
         }
         setPreviousWindowWidth(width);
