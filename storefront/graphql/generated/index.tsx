@@ -2568,7 +2568,7 @@ export type CreateOrderMutationVariablesApi = Exact<{
 }>;
 
 
-export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string, uuid: string } };
+export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string, uuid: string, urlHash: string } };
 
 export type PayOrderMutationVariablesApi = Exact<{
   orderUuid: Scalars['Uuid'];
@@ -2576,6 +2576,13 @@ export type PayOrderMutationVariablesApi = Exact<{
 
 
 export type PayOrderMutationApi = { __typename?: 'Mutation', PayOrder: { __typename?: 'PaymentSetupCreationData', goPayCreatePaymentSetup: { __typename?: 'GoPayCreatePaymentSetup', gatewayUrl: string, goPayId: string, embedJs: string } | null } };
+
+export type OrderDetailByHashQueryVariablesApi = Exact<{
+  urlHash: Maybe<Scalars['String']>;
+}>;
+
+
+export type OrderDetailByHashQueryApi = { __typename?: 'Query', order: { __typename?: 'Order', uuid: string, number: string, creationDate: any, status: string, firstName: string | null, lastName: string | null, email: string, telephone: string, companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, street: string, city: string, postcode: string, differentDeliveryAddress: boolean, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, note: string | null, urlHash: string, promoCode: string | null, trackingNumber: string | null, trackingUrl: string | null, items: Array<{ __typename?: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, transport: { __typename?: 'Transport', name: string }, payment: { __typename?: 'Payment', name: string }, country: { __typename?: 'Country', name: string }, deliveryCountry: { __typename?: 'Country', name: string } | null } | null };
 
 export type OrderDetailQueryVariablesApi = Exact<{
   orderNumber: Maybe<Scalars['String']>;
@@ -4030,6 +4037,7 @@ export const CreateOrderMutationDocumentApi = gql`
   ) {
     number
     uuid
+    urlHash
   }
 }
     `;
@@ -4051,6 +4059,17 @@ export const PayOrderMutationDocumentApi = gql`
 
 export function usePayOrderMutationApi() {
   return Urql.useMutation<PayOrderMutationApi, PayOrderMutationVariablesApi>(PayOrderMutationDocumentApi);
+};
+export const OrderDetailByHashQueryDocumentApi = gql`
+    query OrderDetailByHashQuery($urlHash: String) {
+  order(urlHash: $urlHash) {
+    ...OrderDetailFragment
+  }
+}
+    ${OrderDetailFragmentApi}`;
+
+export function useOrderDetailByHashQueryApi(options: Omit<Urql.UseQueryArgs<OrderDetailByHashQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<OrderDetailByHashQueryApi>({ query: OrderDetailByHashQueryDocumentApi, ...options });
 };
 export const OrderDetailQueryDocumentApi = gql`
     query OrderDetailQuery($orderNumber: String) {
