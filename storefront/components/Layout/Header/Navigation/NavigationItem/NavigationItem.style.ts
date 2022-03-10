@@ -1,6 +1,6 @@
-import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
+import { styled } from 'components/Theme/main';
 
 type NavigationStyledProps = {
     isOpen?: boolean;
@@ -10,30 +10,6 @@ const localVariables = {
     navigationHeight: '64px',
     navigationSubListItemGap: '45px',
 } as const;
-
-const hoveredItem = (theme: Theme) => {
-    return css`
-        ${NavigationItemLinkStyled} {
-            color: ${theme.color.orangeLight};
-            text-decoration: none;
-
-            &:after {
-                display: block;
-            }
-        }
-
-        ${NavigationItemLinkIconStyled} {
-            img {
-                transform: rotate(180deg);
-            }
-        }
-
-        ${NavigationItemSubStyled} {
-            opacity: 1;
-            pointer-events: auto;
-        }
-    `;
-};
 
 export const NavigationItemStyled = styled.li<NavigationStyledProps>`
     ${({ theme }) => css`
@@ -48,10 +24,6 @@ export const NavigationItemStyled = styled.li<NavigationStyledProps>`
 
         @media ${theme.mediaQueries.queryXl} {
             margin-right: 50px;
-        }
-
-        &:hover {
-            ${hoveredItem(theme)};
         }
 
         &:last-child {
@@ -87,6 +59,10 @@ export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>`
         &:hover {
             color: ${theme.color.orangeLight};
             text-decoration: none;
+
+            &:after {
+                display: block;
+            }
         }
 
         &:after {

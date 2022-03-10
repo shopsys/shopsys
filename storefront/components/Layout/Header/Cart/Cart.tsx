@@ -21,6 +21,7 @@ import { formatPrice } from 'utils/formatting';
 import ListItem from './ListItem';
 import NextLink from 'next/link';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -33,10 +34,15 @@ const Cart: FC = () => {
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
-    const [isCartHovered, setIsCartHovered] = useState(false);
+    const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
+    const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
+    const isCartHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);
 
     return (
-        <CartStyled onMouseEnter={() => setIsCartHovered(true)} onMouseLeave={() => setIsCartHovered(false)}>
+        <CartStyled
+            onMouseEnter={() => setOnMouseEnterTrigger(!onMouseEnterTrigger)}
+            onMouseLeave={() => setOnMouseLeaveTrigger(!onMouseLeaveTrigger)}
+        >
             <NextLink href={cartUrl} passHref>
                 <CartBlockStyled isHovered={isCartHovered} data-testid={testIdentifier + 'block'}>
                     <CartPiecesStyled>

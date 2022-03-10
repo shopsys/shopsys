@@ -20,3 +20,12 @@
 
 UsePagination hook builds upon useResizeWidthEffect by storing a boolean value to either hide or show mobile/desktop pagination. Another three arguments of usePagination are totalCount that you can get from your query, currentPage that you get from user state and pageSize that is set by default on 10.
 Hook returns array of PaginationButtons that you map using your custom pagination button.
+
+### useMouseHoverDebounce
+
+-    This hook allows you to create a hover effect with delay on mouseLeave. Is really useful when you have some dropdown on hover and the body of the dropdown is absolutely positioned.
+-    This function takes in 3 arguments
+    -    onMouseEnter (type boolean) = this argument is just for trigger onMouseEnter function
+    -    onMouseLeave (type boolean) = this argument is just for trigger onMouseLeave function
+    -    delay (number by default set to 300) = if you want custom delay you can define this argument
+-    This hook returns a boolean. True if your hover is active and false for hiding your hover.
