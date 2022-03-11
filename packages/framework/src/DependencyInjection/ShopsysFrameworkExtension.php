@@ -10,10 +10,11 @@ use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class ShopsysFrameworkExtension extends Extension
+class ShopsysFrameworkExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -57,5 +58,17 @@ class ShopsysFrameworkExtension extends Extension
 
         $container->getDefinition($varDumperExtensionService)
             ->addTag('twig.extension');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        $container->prependExtensionConfig('doctrine_migrations', [
+            'migrations_paths' => [
+                'Shopsys\FrameworkBundle\Migrations' => __DIR__ . '/../Migrations',
+            ],
+        ]);
     }
 }

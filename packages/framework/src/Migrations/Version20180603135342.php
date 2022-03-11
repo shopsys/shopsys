@@ -10,7 +10,7 @@ class Version20180603135342 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $currenciesCount = $this->sql('SELECT count(*) FROM currencies')->fetchColumn(0);
         if ($currenciesCount > 0) {
@@ -52,7 +52,7 @@ class Version20180603135342 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -10,7 +10,7 @@ class Version20190122130312 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE carts (
@@ -72,7 +72,7 @@ class Version20190122130312 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -2,19 +2,43 @@
 
 namespace Shopsys\MigrationBundle\Command;
 
-use Doctrine\Bundle\MigrationsBundle\Command\DoctrineCommand;
-use Doctrine\DBAL\Migrations\Version;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Version\AliasResolver;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GetCountOfMigrationsToExecuteCommand extends AbstractCommand
+class GetCountOfMigrationsToExecuteCommand extends Command
 {
     /**
      * @var string
      */
     protected static $defaultName = 'shopsys:migrations:count';
 
-    protected function configure()
+    /**
+     * @var \Doctrine\Migrations\Version\AliasResolver
+     */
+    private AliasResolver $aliasResolver;
+
+    /**
+     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
+     */
+    private MigrationLockPlanCalculator $migrationLockPlanCalculator;
+
+    /**
+     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
+     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator $migrationLockPlanCalculator
+     */
+    public function __construct(DependencyFactory $dependencyFactory, MigrationLockPlanCalculator $migrationLockPlanCalculator)
+    {
+        parent::__construct();
+
+        $this->aliasResolver = $dependencyFactory->getVersionAliasResolver();
+        $this->migrationLockPlanCalculator = $migrationLockPlanCalculator;
+    }
+
+    protected function configure(): void
     {
         $this
             ->setDescription('Get count of migrations to execute.');
@@ -23,19 +47,14 @@ class GetCountOfMigrationsToExecuteCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $migrationsConfiguration = $this->getMigrationsConfiguration();
+        $latestVersion = $this->aliasResolver->resolveVersionAlias('latest');
+        $migrationPlanList = $this->migrationLockPlanCalculator->getPlanUntilVersion($latestVersion);
 
-        /** @var \Symfony\Bundle\FrameworkBundle\Console\Application $application */
-        $application = $this->getApplication();
-        DoctrineCommand::configureMigrations($application->getKernel()->getContainer(), $migrationsConfiguration);
-
-        $latestVersion = $migrationsConfiguration->getLatestVersion();
-        $migrationsToExecute = $migrationsConfiguration->getMigrationsToExecute(Version::DIRECTION_UP, $latestVersion);
-
-        $output->writeln('Count of migrations to execute: ' . count($migrationsToExecute));
+        $output->writeln('Count of migrations to execute: ' . $migrationPlanList->count());
 
         return 0;
     }

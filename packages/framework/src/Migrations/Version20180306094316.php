@@ -10,7 +10,7 @@ class Version20180306094316 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE TABLE personal_data_access_request (
@@ -27,7 +27,7 @@ class Version20180306094316 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

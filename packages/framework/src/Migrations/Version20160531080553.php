@@ -10,7 +10,7 @@ class Version20160531080553 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
             (\'feedDomainIdToContinue\', 0, NULL, \'string\'),
@@ -22,7 +22,7 @@ class Version20160531080553 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

@@ -12,7 +12,7 @@ class Version20191121171000 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('DELETE FROM friendly_urls WHERE slug=\'contact\'');
         $this->sql('DELETE FROM articles WHERE name=\'Contact\' AND placement=\'footer\'');
@@ -21,7 +21,7 @@ class Version20191121171000 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

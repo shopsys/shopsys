@@ -62,9 +62,6 @@
     "composer/composer": {
         "version": "1.9.0"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.5"
-    },
     "composer/semver": {
         "version": "1.5.0"
     },
@@ -371,6 +368,9 @@
     },
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
+    },
+    "ocramius/package-versions": {
+        "version": "1.9.0"
     },
     "overblog/graphiql-bundle": {
         "version": "0.1",

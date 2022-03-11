@@ -11,7 +11,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     /**
      * {@inheritDoc}
      */
-    protected function addSql($sql, array $params = [], array $types = [])
+    protected function addSql(string $sql, array $params = [], array $types = []): void
     {
         $message = 'Calling method "addSql" is not allowed. Use "sql" method instead';
         throw new MethodIsNotAllowedException($message);
@@ -34,7 +34,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      *
      * @see \Shopsys\MigrationBundle\Command\MigrateCommand::execute()
      */
-    public function isTransactional()
+    public function isTransactional(): bool
     {
         // We do not want every migration to be executed in a separate transaction
         // because MigrateCommand wraps all migrations in a single transaction.

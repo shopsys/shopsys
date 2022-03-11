@@ -10,7 +10,7 @@ class Version20180702111015 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $administratorsCount = $this->sql('SELECT count(*) FROM administrators')->fetchColumn(0);
         if ($administratorsCount > 0) {
@@ -32,7 +32,7 @@ class Version20180702111015 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

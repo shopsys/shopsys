@@ -10,7 +10,7 @@ class Version20181008000001 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql(
             'UPDATE setting_values SET value = 0 WHERE value IS NULL AND type = \'integer\' AND  name = \'defaultAvailabilityInStockId\''
@@ -24,7 +24,7 @@ class Version20181008000001 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

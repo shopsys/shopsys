@@ -12,7 +12,7 @@ class Version20180216091409 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql(
@@ -26,7 +26,7 @@ class Version20180216091409 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

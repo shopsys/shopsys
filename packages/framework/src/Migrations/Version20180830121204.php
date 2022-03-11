@@ -10,7 +10,7 @@ class Version20180830121204 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE users ADD telephone VARCHAR(30) DEFAULT NULL');
 
@@ -32,7 +32,7 @@ class Version20180830121204 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

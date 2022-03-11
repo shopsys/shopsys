@@ -10,7 +10,7 @@ class Version20160420165146 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE category_domains ADD COLUMN description TEXT DEFAULT NULL');
     }
@@ -18,7 +18,7 @@ class Version20160420165146 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

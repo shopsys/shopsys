@@ -10,7 +10,7 @@ class Version20180603135341 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $orderStatusesCount = $this->sql('SELECT count(*) FROM order_statuses')->fetchColumn(0);
         if ($orderStatusesCount > 0) {
@@ -60,7 +60,7 @@ class Version20180603135341 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

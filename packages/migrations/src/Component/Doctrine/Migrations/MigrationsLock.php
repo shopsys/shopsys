@@ -2,6 +2,9 @@
 
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
+use Doctrine\Migrations\Metadata\AvailableMigrationsList;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Symfony\Component\Yaml\Yaml;
 
 class MigrationsLock
@@ -9,19 +12,26 @@ class MigrationsLock
     /**
      * @var string
      */
-    private $migrationsLockFilePath;
+    private string $migrationsLockFilePath;
 
     /**
      * @var array|null
      */
-    private $parsedMigrationsLock;
+    private ?array $parsedMigrationsLock = null;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private LoggerInterface $logger;
 
     /**
      * @param string $migrationsLockFilePath
+     * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(string $migrationsLockFilePath)
+    public function __construct(string $migrationsLockFilePath, LoggerInterface $logger)
     {
         $this->migrationsLockFilePath = $migrationsLockFilePath;
+        $this->logger = $logger;
     }
 
     /**
@@ -40,6 +50,17 @@ class MigrationsLock
     }
 
     /**
+     * @param \Doctrine\Migrations\Metadata\AvailableMigration[] $availableMigrations
+     * @return \Doctrine\Migrations\Metadata\AvailableMigration[]
+     */
+    public function filterOutSkippedMigrations(array $availableMigrations): array
+    {
+        $this->checkMigrationsMarkedAsInstalledInLock($availableMigrations);
+
+        return $this->getNonSkippedAvailableMigrations($availableMigrations);
+    }
+
+    /**
      * @return string[]
      */
     public function getSkippedMigrationClasses(): array
@@ -55,16 +76,17 @@ class MigrationsLock
     }
 
     /**
-     * @param \Doctrine\DBAL\Migrations\Version[] $migrationVersions
+     * @param \Doctrine\Migrations\Metadata\AvailableMigrationsList $availableMigrationsList
      */
-    public function saveNewMigrations(array $migrationVersions)
+    public function saveNewMigrations(AvailableMigrationsList $availableMigrationsList): void
     {
         $this->load();
 
-        foreach ($migrationVersions as $migrationVersion) {
-            if (!array_key_exists($migrationVersion->getVersion(), $this->parsedMigrationsLock)) {
-                $this->parsedMigrationsLock[$migrationVersion->getVersion()] = [
-                    'class' => get_class($migrationVersion->getMigration()),
+        foreach ($availableMigrationsList->getItems() as $availableMigration) {
+            $version = (string)$availableMigration->getVersion();
+            if (!array_key_exists($version, $this->parsedMigrationsLock)) {
+                $this->parsedMigrationsLock[$version] = [
+                    'class' => $version,
                     'skip' => false,
                 ];
             }
@@ -94,5 +116,42 @@ class MigrationsLock
         $content = Yaml::dump($this->parsedMigrationsLock);
 
         file_put_contents($this->migrationsLockFilePath, $content);
+    }
+
+    /**
+     * @param \Doctrine\Migrations\Metadata\AvailableMigration[] $availableMigrations
+     */
+    private function checkMigrationsMarkedAsInstalledInLock(array $availableMigrations): void
+    {
+        foreach ($this->getOrderedInstalledMigrationClasses() as $migrationClass) {
+            if (!array_key_exists($migrationClass, $availableMigrations)) {
+                $message = sprintf(
+                    'Migration version "%s" marked as installed in migration lock file was not found!',
+                    $migrationClass
+                );
+                $this->logger->log(LogLevel::WARNING, $message);
+            }
+        }
+    }
+
+    /**
+     * @param \Doctrine\Migrations\Metadata\AvailableMigration[] $availableMigrations
+     * @return \Doctrine\Migrations\Metadata\AvailableMigration[]
+     */
+    private function getNonSkippedAvailableMigrations(array $availableMigrations): array
+    {
+        foreach ($this->getSkippedMigrationClasses() as $skippedMigrationClass) {
+            if (array_key_exists($skippedMigrationClass, $availableMigrations)) {
+                unset($availableMigrations[$skippedMigrationClass]);
+            } else {
+                $message = sprintf(
+                    'Migration version "%s" marked as skipped in migration lock file was not found!',
+                    $skippedMigrationClass
+                );
+                $this->logger->log(LogLevel::WARNING, $message);
+            }
+        }
+
+        return $availableMigrations;
     }
 }

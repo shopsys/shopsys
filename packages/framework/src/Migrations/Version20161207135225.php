@@ -12,7 +12,7 @@ class Version20161207135225 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql('DELETE FROM migrations WHERE version = \'201601207135225\';');
@@ -44,7 +44,7 @@ class Version20161207135225 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

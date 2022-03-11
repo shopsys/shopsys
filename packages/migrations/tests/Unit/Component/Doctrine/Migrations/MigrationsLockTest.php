@@ -2,7 +2,10 @@
 
 namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
-use Doctrine\DBAL\Migrations\Version;
+use Doctrine\Migrations\Metadata\AvailableMigration;
+use Doctrine\Migrations\Metadata\AvailableMigrationsList;
+use Doctrine\Migrations\Version\Version;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000001;
@@ -36,7 +39,9 @@ class MigrationsLockTest extends TestCase
      */
     private function createNewMigrationsLock(): MigrationsLock
     {
-        return new MigrationsLock(self::MIGRATION_LOCK);
+        $loggerMock = $this->createMock(Logger::class);
+
+        return new MigrationsLock(self::MIGRATION_LOCK, $loggerMock);
     }
 
     public function testGetSkippedMigrationClasses()
@@ -71,9 +76,9 @@ class MigrationsLockTest extends TestCase
 
     public function testSaveNewMigration()
     {
-        $newMigrationVersion = $this->createMigrationVersionMock(Version20180101000004::class);
-
-        $this->migrationsLock->saveNewMigrations([$newMigrationVersion]);
+        $mockedAvailableMigration = $this->createMockedAvailableMigration(Version20180101000004::class);
+        $availableMigrationList = new AvailableMigrationsList([$mockedAvailableMigration]);
+        $this->migrationsLock->saveNewMigrations($availableMigrationList);
 
         $installedMigrationClasses = $this->createNewMigrationsLock()->getOrderedInstalledMigrationClasses();
 
@@ -83,9 +88,10 @@ class MigrationsLockTest extends TestCase
 
     public function testSaveAlreadyInstalledMigration()
     {
-        $alreadyInstalledMigrationVersion = $this->createMigrationVersionMock(Version20180101000001::class);
+        $alreadyInstalledMockedAvailableMigration = $this->createMockedAvailableMigration(Version20180101000001::class);
+        $availableMigrationList = new AvailableMigrationsList([$alreadyInstalledMockedAvailableMigration]);
 
-        $this->migrationsLock->saveNewMigrations([$alreadyInstalledMigrationVersion]);
+        $this->migrationsLock->saveNewMigrations($availableMigrationList);
 
         $installedMigrationClasses = $this->createNewMigrationsLock()->getOrderedInstalledMigrationClasses();
 
@@ -94,18 +100,13 @@ class MigrationsLockTest extends TestCase
 
     /**
      * @param string $className
-     * @return \Doctrine\DBAL\Migrations\Version|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Doctrine\Migrations\Metadata\AvailableMigration
      */
-    private function createMigrationVersionMock(string $className)
+    private function createMockedAvailableMigration(string $className): AvailableMigration
     {
-        // Remove everything but the numbers at the end of the class name
-        $version = preg_replace('~^.*?(\d+)$~', '$1', $className);
+        /** @var \Doctrine\Migrations\AbstractMigration|\PHPUnit\Framework\MockObject\MockObject $migrationMock */
+        $migrationMock = $this->createMock($className);
 
-        $mock = $this->createMock(Version::class);
-
-        $mock->method('getVersion')->willReturn($version);
-        $mock->method('getMigration')->willReturn(new $className());
-
-        return $mock;
+        return new AvailableMigration(new Version($className), $migrationMock);
     }
 }

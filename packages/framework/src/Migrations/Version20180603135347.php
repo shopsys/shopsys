@@ -10,7 +10,7 @@ class Version20180603135347 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->createMailTemplateIfNotExist('order_status_1', 'true');
         $this->createMailTemplateIfNotExist('order_status_2', 'false');
@@ -23,7 +23,7 @@ class Version20180603135347 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 

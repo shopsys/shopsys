@@ -12,7 +12,7 @@ class Version20160902145842 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
@@ -24,7 +24,7 @@ class Version20160902145842 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

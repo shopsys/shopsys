@@ -10,7 +10,7 @@ class Version20170801093853 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE parameter_titles RENAME TO parameters');
         $this->sql('ALTER SEQUENCE parameter_titles_id_seq RENAME TO parameters_id_seq');
@@ -23,7 +23,7 @@ class Version20170801093853 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }
