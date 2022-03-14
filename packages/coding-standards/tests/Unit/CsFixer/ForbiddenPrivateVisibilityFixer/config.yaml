@@ -1,7 +1,0 @@
-imports:
-    - { resource: '../../../config.yaml' }
-
-services:
-    Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer:
-        analyzed_namespaces:
-            - TestNamespace

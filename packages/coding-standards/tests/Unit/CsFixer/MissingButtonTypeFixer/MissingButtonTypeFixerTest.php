@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
+namespace Tests\CodingStandards\Unit\CsFixer\MissingButtonTypeFixer;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-final class MissingButtonTypeFixerTest extends AbstractCheckerTestCase
+final class MissingButtonTypeFixerTest extends AbstractFixerTestCase
 {
-    public function testFix(): void
+    /**
+     * @return \Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer
+     */
+    protected function createFixerService(): MissingButtonTypeFixer
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/wrong.html.twig', __DIR__ . '/fixed/fixed.html.twig');
-    }
-
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/correct.html.twig');
+        return new MissingButtonTypeFixer();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getTestingFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];
+        yield [__DIR__ . '/correct/correct.html.twig'];
     }
 }

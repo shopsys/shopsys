@@ -4,57 +4,34 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
 
-use Iterator;
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 /**
  * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer
  */
-final class OrderedParamAnnotationsFixerTest extends AbstractCheckerTestCase
+final class OrderedParamAnnotationsFixerTest extends AbstractFixerTestCase
 {
     /**
-     * @dataProvider provideWrongToFixedFiles()
-     * @param string $wrongFile
-     * @param string $fixedFile
+     * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer
      */
-    public function testFix(string $wrongFile, string $fixedFile): void
+    protected function createFixerService(): OrderedParamAnnotationsFixer
     {
-        $this->doTestWrongToFixedFile($wrongFile, $fixedFile);
+        $functionsAnalyzer = new FunctionsAnalyzer();
+
+        return new OrderedParamAnnotationsFixer($functionsAnalyzer);
     }
 
     /**
-     * @return \Iterator
+     * {@inheritDoc}
      */
-    public function provideWrongToFixedFiles(): Iterator
+    public function getTestingFiles(): iterable
     {
-        yield [__DIR__ . '/wrong/wrong.php', __DIR__ . '/fixed/fixed.php'];
-    }
-
-    /**
-     * @dataProvider provideCorrectFiles()
-     * @param string $correctFile
-     */
-    public function testCorrect(string $correctFile): void
-    {
-        $this->doTestCorrectFile($correctFile);
-    }
-
-    /**
-     * @return \Iterator
-     */
-    public function provideCorrectFiles(): Iterator
-    {
+        yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
         yield [__DIR__ . '/correct/correct.php'];
         yield [__DIR__ . '/correct/correct2.php'];
         yield [__DIR__ . '/correct/correct3.php'];
         yield [__DIR__ . '/correct/correct4.php'];
-    }
-
-    /**
-     * @return string
-     */
-    protected function provideConfig(): string
-    {
-        return __DIR__ . '/config.yaml';
     }
 }
