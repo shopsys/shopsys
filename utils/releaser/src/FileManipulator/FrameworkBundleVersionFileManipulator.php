@@ -31,17 +31,8 @@ final class FrameworkBundleVersionFileManipulator
             $splFileInfo->getContents(),
             self::FRAMEWORK_BUNDLE_VERSION_PATTERN,
             function ($match) use ($version) {
-                return str_replace($match[1], $this->getVersionWithoutPrefix($version), $match[0]);
+                return str_replace($match[1], $version->getVersionString(), $match[0]);
             }
         );
-    }
-
-    /**
-     * @param \PharIo\Version\Version $version
-     * @return string
-     */
-    private function getVersionWithoutPrefix(Version $version): string
-    {
-        return ltrim($version->getVersionString(), 'v');
     }
 }
