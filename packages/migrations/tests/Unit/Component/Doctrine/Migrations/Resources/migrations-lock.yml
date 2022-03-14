@@ -1,9 +1,6 @@
 Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000003:
-    class: Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000003
     skip: false
 Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000002:
-    class: Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000002
     skip: true
 Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000001:
-    class: Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000001
     skip: false
