@@ -18,16 +18,6 @@ final class MergeBranchToTheHigherBranchesReleaseWorker extends AbstractShopsysR
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 13;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

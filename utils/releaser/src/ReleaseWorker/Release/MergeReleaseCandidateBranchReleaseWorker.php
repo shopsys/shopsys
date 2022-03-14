@@ -24,16 +24,6 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 650;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

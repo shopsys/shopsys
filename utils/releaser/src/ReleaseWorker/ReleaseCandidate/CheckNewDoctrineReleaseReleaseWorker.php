@@ -50,16 +50,6 @@ final class CheckNewDoctrineReleaseReleaseWorker extends AbstractShopsysReleaseW
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 880;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

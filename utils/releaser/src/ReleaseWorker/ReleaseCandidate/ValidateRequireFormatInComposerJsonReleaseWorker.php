@@ -61,16 +61,6 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 920;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

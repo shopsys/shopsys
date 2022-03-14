@@ -10,14 +10,6 @@ use Shopsys\Releaser\Stage;
 final class VerifyInitialBranchReleaseWorker extends AbstractVerifyInitialBranchReleaseWorker
 {
     /**
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 3000;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

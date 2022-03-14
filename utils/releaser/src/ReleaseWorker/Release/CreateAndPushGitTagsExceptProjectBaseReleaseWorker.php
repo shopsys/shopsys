@@ -61,16 +61,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 640;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

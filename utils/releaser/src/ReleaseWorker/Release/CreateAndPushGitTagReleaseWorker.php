@@ -20,16 +20,6 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 620;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

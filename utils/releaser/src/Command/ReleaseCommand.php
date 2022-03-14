@@ -161,8 +161,7 @@ final class ReleaseCommand extends Command
             return;
         }
 
-        // show priority and class on -v/--verbose/--debug
-        $this->symfonyStyle->writeln('priority: ' . $releaseWorker->getPriority());
+        // show class on -v/--verbose/--debug
         $this->symfonyStyle->writeln('class: ' . get_class($releaseWorker));
         $this->symfonyStyle->newLine();
     }

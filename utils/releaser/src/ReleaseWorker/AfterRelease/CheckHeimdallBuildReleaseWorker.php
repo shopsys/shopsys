@@ -11,16 +11,6 @@ use Shopsys\Releaser\Stage;
 final class CheckHeimdallBuildReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 260;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      * @return string
      */

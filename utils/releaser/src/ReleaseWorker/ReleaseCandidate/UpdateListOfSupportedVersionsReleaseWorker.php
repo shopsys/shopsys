@@ -20,16 +20,6 @@ final class UpdateListOfSupportedVersionsReleaseWorker extends AbstractShopsysRe
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 843;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

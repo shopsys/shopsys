@@ -36,16 +36,6 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 170;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void
