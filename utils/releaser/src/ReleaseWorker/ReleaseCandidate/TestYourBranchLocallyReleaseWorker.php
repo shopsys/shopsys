@@ -27,7 +27,9 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
     public function work(Version $version): void
     {
         try {
-            $this->processRunner->run('php phing composer-dev standards tests', true);
+            $output = $this->processRunner->run('php phing composer-dev standards tests');
+
+            $this->symfonyStyle->writeln(trim($output));
         } catch (ProcessFailedException $ex) {
             $this->symfonyStyle->caution($ex->getProcess()->getOutput());
             $this->symfonyStyle->note('A problem occurred, check the output and fix it please.');
