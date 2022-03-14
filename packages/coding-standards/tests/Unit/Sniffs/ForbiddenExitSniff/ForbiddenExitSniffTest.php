@@ -2,22 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForbiddenExitSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenExitSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ForbiddenExitSniffTest extends AbstractCheckerTestCase
+final class ForbiddenExitSniffTest extends AbstractSniffTestCase
 {
-    public function testWrong(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/wrong/wrong.php.inc');
+        return ForbiddenExitSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/wrong.php.inc'];
     }
 }

@@ -8,3 +8,4 @@ $vendorDir = file_exists(
 
 require_once $vendorDir . 'autoload.php';
 require_once $vendorDir . 'squizlabs/php_codesniffer/autoload.php';
+require_once $vendorDir . 'squizlabs/php_codesniffer/src/Util/Tokens.php';

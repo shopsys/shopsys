@@ -2,26 +2,43 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ForceLateStaticBindingForProtectedConstantsSniffTest extends AbstractCheckerTestCase
+final class ForceLateStaticBindingForProtectedConstantsSniffTest extends AbstractSniffTestCase
 {
-    public function testFix(): void
+    /**
+     * @param string $fixedFileName
+     * @param string $inputFileName
+     * @dataProvider getFixableFiles
+     */
+    public function testFixableFiles(string $fixedFileName, string $inputFileName): void
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/SingleValue.php', __DIR__ . '/fixed/SingleValue.php');
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/SelfWithMethodsAndVariables.php',
-            __DIR__ . '/fixed/SelfWithMethodsAndVariables.php'
-        );
+        $file = $this->doRunSniff($inputFileName);
+
+        self::assertGreaterThan(0, $file->getErrorCount(), $inputFileName . ' should raise error');
+
+        $file->fixer->fixFile();
+
+        self::assertStringEqualsFile($fixedFileName, $file->fixer->getContents());
     }
 
     /**
-     * @return string
+     * @return iterable
      */
-    protected function provideConfig(): string
+    public function getFixableFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/SingleValue.php', __DIR__ . '/wrong/SingleValue.php'];
+        yield [__DIR__ . '/fixed/SelfWithMethodsAndVariables.php', __DIR__ . '/wrong/SelfWithMethodsAndVariables.php'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
+    {
+        return ForceLateStaticBindingForProtectedConstantsSniff::class;
     }
 }

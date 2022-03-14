@@ -2,32 +2,39 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-class ForbiddenDoctrineDefaultValueSniffTest extends AbstractCheckerTestCase
+class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
 {
-    public function testWrongFile(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/wrong/default_value_annotation.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/different_order_annotation.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/multiline_annotation.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/spaces_around_annotation.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/split_annotation.php');
-    }
-
-    public function testCorrectFile(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/missing_default_value_annotation.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/invalid_docblock_annotation.php');
+        return ForbiddenDoctrineDefaultValueSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/default_value_annotation.php'];
+        yield [__DIR__ . '/wrong/different_order_annotation.php'];
+        yield [__DIR__ . '/wrong/multiline_annotation.php'];
+        yield [__DIR__ . '/wrong/spaces_around_annotation.php'];
+        yield [__DIR__ . '/wrong/split_annotation.php'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCorrectFiles(): iterable
+    {
+        yield [__DIR__ . '/correct/missing_default_value_annotation.php'];
+        yield [__DIR__ . '/correct/invalid_docblock_annotation.php'];
     }
 }

@@ -2,29 +2,36 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForbiddenExitSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDoctrineInheritanceSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ForbiddenDoctrineInheritanceSniffTest extends AbstractCheckerTestCase
+final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
 {
-    public function testWrong(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/Wrong/ClassWithFullNamespaceInheritanceMapping.php');
-        $this->doTestWrongFile(__DIR__ . '/Wrong/EntityWithOrmInheritanceMapping.php');
-    }
-
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/Correct/fileWithoutClass.php');
-        $this->doTestCorrectFile(__DIR__ . '/Correct/EntityWithoutInheritanceMapping.php');
+        return ForbiddenDoctrineInheritanceSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/Wrong/ClassWithFullNamespaceInheritanceMapping.php'];
+        yield [__DIR__ . '/Wrong/EntityWithOrmInheritanceMapping.php'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCorrectFiles(): iterable
+    {
+        yield [__DIR__ . '/Correct/fileWithoutClass.php'];
+        yield [__DIR__ . '/Correct/EntityWithoutInheritanceMapping.php'];
     }
 }

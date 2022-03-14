@@ -2,30 +2,36 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ObjectIsCreatedByFactorySniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ObjectIsCreatedByFactorySniffTest extends AbstractCheckerTestCase
+final class ObjectIsCreatedByFactorySniffTest extends AbstractSniffTestCase
 {
-    public function testCorrect(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestCorrectFile(__DIR__ . '/Correct/PostFactory.php');
-    }
-
-    public function testWrong(): void
-    {
-        require_once __DIR__ . '/Wrong/SomeController.php';
-        require_once __DIR__ . '/Wrong/PostFactory.php';
-
-        $this->doTestWrongFile(__DIR__ . '/Wrong/SomeController.php');
+        return ObjectIsCreatedByFactorySniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getCorrectFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/Correct/PostFactory.php'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getWrongFiles(): iterable
+    {
+        require_once __DIR__ . '/Wrong/PostFactory.php';
+
+        yield [__DIR__ . '/Wrong/SomeController.php'];
     }
 }
