@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 const OrderDetailByHash: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const router = useRouter();
-    const order = getOrderDetailByHash(getParsedUrlHashQuery(router.query.h), domainConfig);
+    const order = getOrderDetailByHash(getParsedUrlHashQuery(router.query.urlHash), domainConfig);
 
     if (order === null) {
         router.push('/');
@@ -33,7 +33,7 @@ const OrderDetailByHash: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    if (typeof context.query.h !== 'string') {
+    if (typeof context.params?.urlHash !== 'string') {
         return {
             redirect: {
                 destination: '/',
@@ -46,7 +46,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store, [
         { query: NotificationBarsDocumentApi },
         { query: NavigationQueryDocumentApi },
-        { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.query.h } },
+        { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
     ]);
 });
 
