@@ -19,7 +19,10 @@ const OrderConfirmation: FC = () => {
     const { email } = useShopsysSelector((state) => state.contactInformation);
     const { lastOrderUuid } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [orderDetailUrl] = useGetInternationalizedStaticUrls(['/order/detail'], domainUrl);
+    const [orderDetailUrl] = useGetInternationalizedStaticUrls(
+        [{ url: '/order-detail/:urlHash', param: urlHash }],
+        domainUrl,
+    );
 
     useEffect(() => {
         return () => {
