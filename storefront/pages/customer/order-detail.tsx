@@ -7,31 +7,27 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { getOrderDetail } from 'connectors/customer/Orders';
+import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import TableGrid from 'components/Basic/TableGrid';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from 'components/Layout/Webline';
 
 const Index: FC = () => {
-    const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
-    const parsedOrderNumber = getParsedOrderNumberQuery(router.query.orderNumber);
-    const order = getOrderDetail(parsedOrderNumber, domainConfig);
+    const order = getOrderDetail(getStringFromUrlQuery(router.query.orderNumber), domainConfig);
 
     if (!isUserLoggedIn) {
         router.push('/');
         return null;
     }
 
-    if (parsedOrderNumber === null) {
+    if (order === null) {
         router.push(customerOrdersUrl);
         return null;
     }
@@ -39,17 +35,7 @@ const Index: FC = () => {
     return (
         <StaticUrlGuard domainUrl={domainConfig.url}>
             <CommonLayout>
-                {order !== null ? (
-                    <OrderDetail order={order} />
-                ) : (
-                    <Webline>
-                        <TableGrid>
-                            <tr>
-                                <th>{t('Error occured when loading order detail')}</th>
-                            </tr>
-                        </TableGrid>
-                    </Webline>
-                )}
+                <OrderDetail order={order} />
             </CommonLayout>
         </StaticUrlGuard>
     );
@@ -72,13 +58,5 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
     ]);
 });
-
-const getParsedOrderNumberQuery = (orderNumberQuery: string | string[] | undefined): string | null => {
-    if (orderNumberQuery === undefined || Array.isArray(orderNumberQuery)) {
-        return null;
-    }
-
-    return orderNumberQuery;
-};
 
 export default Index;

@@ -8,6 +8,7 @@ import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { getSearch } from 'connectors/search/Search';
+import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
@@ -26,7 +27,7 @@ const Search: FC<ServerSidePropsType> = () => {
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
     const searchResults = getSearch(
-        getParsedSearchQuery(router.query.q),
+        getStringFromUrlQuery(router.query.q),
         searchProductsSort,
         paginationCursor,
         optionsFilter,
@@ -71,7 +72,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         {
             query: SearchQueryDocumentApi,
             variables: {
-                search: getParsedSearchQuery(context.query.q),
+                search: getStringFromUrlQuery(context.query.q),
                 orderingMode: store.getState().user.sort,
                 after: store.getState().user.pagination.paginationCursor,
                 filter: mapParametersFilter(store.getState().optionsFilter),
@@ -80,11 +81,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-const getParsedSearchQuery = (searchQuery: string | string[] | undefined): string => {
-    if (searchQuery === undefined || Array.isArray(searchQuery)) {
-        return '';
-    }
-
-    return searchQuery;
-};
 export default Search;
