@@ -14,7 +14,7 @@ import {
 import { getFirstImageSize } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getNavigationItems(): NavigationItem[] {
+export function useNavigationItems(): NavigationItem[] {
     const [{ data, error }] = useNavigationQueryApi();
     useQueryError(error);
 

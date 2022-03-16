@@ -3,7 +3,7 @@ import { ListedCategoryType } from 'types/category';
 import { mapListedCategoryApiData } from './Categories';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getPromotedCategories(): ListedCategoryType[] | undefined {
+export function usePromotedCategories(): ListedCategoryType[] | undefined {
     const [{ data, error }] = usePromotedCategoriesQueryApi();
     useQueryError(error);
 

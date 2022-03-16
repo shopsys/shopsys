@@ -1,6 +1,6 @@
 import BannersSlider from './BannersSlider';
 import { FC } from 'react';
-import { getSliderItems } from 'connectors/sliderItems/SliderItems';
+import { useSliderItems } from 'connectors/sliderItems/SliderItems';
 
 /**
  * A component used for displaying propagation banners on home page
@@ -8,7 +8,7 @@ import { getSliderItems } from 'connectors/sliderItems/SliderItems';
 const Banners: FC = () => {
     const testIdentifier = 'blocks-banners';
 
-    const sliderItems = getSliderItems();
+    const sliderItems = useSliderItems();
 
     if (sliderItems === undefined || (Array.isArray(sliderItems) && sliderItems.length === 0)) {
         return null;

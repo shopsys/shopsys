@@ -11,7 +11,7 @@ import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const getSearch = (
+export const useSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi,
     searchProductsPagination: PaginationType['paginationCursor'],

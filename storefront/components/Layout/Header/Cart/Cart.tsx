@@ -18,9 +18,9 @@ import {
 import { FC, useState } from 'react';
 import Button from 'components/Forms/Button';
 import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import ListItem from './ListItem';
 import NextLink from 'next/link';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
@@ -33,7 +33,7 @@ const Cart: FC = () => {
     const t = useTypedTranslationFunction();
     const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
+    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
     const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
     const isCartHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);

@@ -5,11 +5,11 @@ import { ContactInformationFormType } from 'types/form';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -18,7 +18,7 @@ const ContactInformationAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const countrySelectOptions = getCountriesAsSelectOptions();
+    const countrySelectOptions = useCountriesAsSelectOptions();
     const [streetValue, cityValue, postcodeValue] = useWatch({
         name: [formMeta.fields.street.name, formMeta.fields.city.name, formMeta.fields.postcode.name],
         control: formProviderMethods.control,

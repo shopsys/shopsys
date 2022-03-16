@@ -3,11 +3,11 @@ import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { CSSTransition } from 'react-transition-group';
 import DropdownSlideLeft from './SlideLeft';
-import { getNavigationItems } from 'connectors/navigation/Navigation';
 import PrimaryList from './PrimaryList';
 import SecondaryList from './SecondaryList';
 import SubMenu from './SubMenu';
 import TertiaryList from './TertiaryList';
+import { useNavigationItems } from 'connectors/navigation/Navigation';
 
 export const DropdownMenuContext = createContext<{
     slideRight: (props: DropdownItemType) => void;
@@ -25,7 +25,7 @@ type DropdownMenuProps = {
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     const testIdentifier = 'layout-header-dropdownmenu';
 
-    const navigationItems = getNavigationItems();
+    const navigationItems = useNavigationItems();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');

@@ -3,13 +3,13 @@ import { initialState, userActions } from 'redux/slices/user';
 import nookies, { destroyCookie } from 'nookies';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
-import { getCurrentCustomerUser } from 'connectors/customer/CurrentCustomerUser';
+import { useCurrentCustomerUser } from 'connectors/customer/CurrentCustomerUser';
 
 const UserContactRefresher: FC = () => {
     const dispatch = useShopsysDispatch();
     const userState = useShopsysSelector((state) => state.user);
     const contactInformationState = useShopsysSelector((state) => state.contactInformation);
-    const currentCustomerUser = getCurrentCustomerUser();
+    const currentCustomerUser = useCurrentCustomerUser();
     const cookies = nookies.get();
     const isContactInformationCacheSet =
         'contactInformation' in cookies && JSON.parse(cookies.contactInformation).email !== '';

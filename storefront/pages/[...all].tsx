@@ -19,7 +19,6 @@ import Error404 from 'components/Pages/ErrorPage/404';
 import FlagDetailPage from 'components/Pages/FlagDetail';
 import { FlagDetailType } from 'types/flag';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
-import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -34,6 +33,7 @@ import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'types/product';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { StoreDetailType } from 'types/store';
+import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
@@ -53,7 +53,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
         );
     }, [router.query.page]);
 
-    const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
+    const data = useFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
     if (data === null || data === undefined) {
         return <Error404 />;
     }

@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { Trans } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -49,7 +49,7 @@ export const useRegistrationAfterOrderFormMeta = (
 ): RegistrationAfterOrderFormMetaType => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
-    const [TermsAndConditionUrl] = useGetInternationalizedStaticUrls(['/terms-and-conditions'], url);
+    const [TermsAndConditionUrl] = getInternationalizedStaticUrls(['/terms-and-conditions'], url);
 
     const formMeta = {
         formName: 'registration-after-order-form',

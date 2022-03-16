@@ -13,10 +13,10 @@ import { CSSTransition } from 'react-transition-group';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -50,7 +50,7 @@ const ContactInformationDeliveryAddress: FC = () => {
         control: formProviderMethods.control,
     });
 
-    const countrySelectOptions = getCountriesAsSelectOptions();
+    const countrySelectOptions = useCountriesAsSelectOptions();
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
             const selectedCountryOption = countrySelectOptions.find((option) => {

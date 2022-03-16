@@ -6,18 +6,18 @@ import {
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
-import { getOrderDetailByHash } from 'connectors/customer/Orders';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { useRouter } from 'next/router';
 
 const OrderDetailByHash: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const router = useRouter();
-    const order = getOrderDetailByHash(getStringFromUrlQuery(router.query.urlHash), domainConfig);
+    const order = useOrderDetailByHash(getStringFromUrlQuery(router.query.urlHash), domainConfig);
 
     if (order === null) {
         router.push('/');

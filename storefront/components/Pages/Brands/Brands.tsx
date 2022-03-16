@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { getBrands } from 'connectors/brands/Brands';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
+import { useBrands } from 'connectors/brands/Brands';
 import Webline from 'components/Layout/Webline';
 
 const Brands: FC = () => {
-    const brands = getBrands();
+    const brands = useBrands();
 
     if (brands === undefined) {
         return null;

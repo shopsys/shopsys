@@ -3,7 +3,7 @@ import { BlogCategoryDetailType, ListedBlogCategoryType } from 'types/blogCatego
 import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getBlogCategoryItems = (): ListedBlogCategoryType[] | undefined => {
+export const useBlogCategoryItems = (): ListedBlogCategoryType[] | undefined => {
     const [{ data, error }] = useBlogCategoriesApi();
 
     useQueryError(error);
@@ -11,7 +11,7 @@ export const getBlogCategoryItems = (): ListedBlogCategoryType[] | undefined => 
     return data?.blogCategories;
 };
 
-export const getBlogUrl = (): string | undefined => {
+export const useBlogUrl = (): string | undefined => {
     const [{ data, error }] = useBlogCategoriesApi();
     useQueryError(error);
 

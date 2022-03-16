@@ -36,7 +36,7 @@ export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currency
     };
 };
 
-export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
+export const usePromotedProducts = (): SliderProductItemType[] | undefined => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [{ data, error }] = usePromotedProductsQueryApi();
     useQueryError(error);

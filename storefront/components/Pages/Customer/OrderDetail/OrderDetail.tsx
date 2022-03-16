@@ -2,13 +2,13 @@ import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import NextLink from 'next/link';
 import { OrderDetailType } from 'types/orders';
 import TableGrid from 'components/Basic/TableGrid';
 import { TextCenteredStyled } from './OrderDetail.style';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -22,7 +22,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
 
     const t = useTypedTranslationFunction();
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
-    const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
+    const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
 
     return (
         <>

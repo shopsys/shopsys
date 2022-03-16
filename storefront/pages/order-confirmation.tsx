@@ -3,16 +3,16 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import Registration from 'components/Pages/OrderConfirmation/Registration';
 import router from 'next/router';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
 const Index: FC<ServerSidePropsType> = () => {
     const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainUrl);
+    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainUrl);
     useEffect(() => {
         if (!canAccessOrderConfirmation) {
             router.replace(cartUrl);

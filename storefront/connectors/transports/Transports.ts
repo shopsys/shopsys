@@ -6,7 +6,7 @@ import { mapPriceData } from 'connectors/price/Prices';
 import { TransportType } from 'types/transport';
 import { useShopsysSelector } from 'redux/main';
 
-export const getTransports = (cartUuid: string | null): TransportType[] => {
+export const useTransports = (cartUuid: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [result] = useTransportsQueryApi({ variables: { cartUuid } });
     const transportsApiData = result.data?.transports;

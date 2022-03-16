@@ -2,7 +2,7 @@ import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'gra
 import { ContactInformationFormType } from 'types/form';
 import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
 
-export function getCurrentCustomerUser(): ContactInformationFormType | undefined {
+export function useCurrentCustomerUser(): ContactInformationFormType | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();
 
     if (data?.currentCustomerUser === undefined) {

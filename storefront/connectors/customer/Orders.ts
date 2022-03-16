@@ -17,7 +17,7 @@ import { mapPriceData } from 'connectors/price/Prices';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const getOrders = (currentDomainConfig: DomainConfigType): ListedOrderConnectionType | undefined => {
+export const useOrders = (currentDomainConfig: DomainConfigType): ListedOrderConnectionType | undefined => {
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const [{ data, error }] = useOrdersQueryApi({
         variables: { after: paginationCursor, first: initialState.pagination.pageSize },
@@ -75,11 +75,8 @@ const mapListedOrder = (apiOrder: ListedOrderFragmentApi, currentDomainConfig: D
     };
 };
 
-export const getOrderDetail = (
-    orderNumber: string | null,
-    currentDomainConfig: DomainConfigType,
-): OrderDetailType | null => {
-    const [{ data, error }] = useOrderDetailQueryApi({ pause: orderNumber === null, variables: { orderNumber } });
+export const useOrderDetail = (orderNumber: string, currentDomainConfig: DomainConfigType): OrderDetailType | null => {
+    const [{ data, error }] = useOrderDetailQueryApi({ variables: { orderNumber } });
     useQueryError(error);
 
     if (data?.order === undefined || data.order === null) {
@@ -89,7 +86,7 @@ export const getOrderDetail = (
     return mapOrderDetailApiData(data.order, currentDomainConfig);
 };
 
-export const getOrderDetailByHash = (
+export const useOrderDetailByHash = (
     urlHash: string,
     currentDomainConfig: DomainConfigType,
 ): OrderDetailType | null => {

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { getPromotedProducts } from 'connectors/products/Products';
 import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
+import { usePromotedProducts } from 'connectors/products/Products';
 
 const PromotedProducts: FC = () => {
-    const promotedProducts = getPromotedProducts();
+    const promotedProducts = usePromotedProducts();
 
     if (promotedProducts !== undefined) {
         return <ProductsSlider products={promotedProducts} />;

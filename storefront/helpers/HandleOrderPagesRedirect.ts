@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, Redirect } from 'next';
 import { CartInput } from 'types/cart';
 import { getDomainConfig } from 'utils/Domain/Domain';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const handleOrderPagesRedirect = (
     context: GetServerSidePropsContext,
@@ -11,7 +11,7 @@ export const handleOrderPagesRedirect = (
     const domainConfig = getDomainConfig(context.req.headers.host);
 
     if (isCartEmpty && context.resolvedUrl !== '/cart') {
-        const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
+        const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
         return {
             redirect: {
@@ -25,7 +25,7 @@ export const handleOrderPagesRedirect = (
         context.resolvedUrl !== '/order/transport-and-payment' &&
         (cartInput.transport === null || cartInput.payment === null)
     ) {
-        const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
+        const [transportAndPaymentUrl] = getInternationalizedStaticUrls(
             ['/order/transport-and-payment'],
             domainConfig.url,
         );

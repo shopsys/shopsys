@@ -9,11 +9,11 @@ import ContactInformationContent from './ContactInformationContent';
 import { ContactInformationFormType } from 'types/form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useContactInformationFormMeta } from './formMeta';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -22,7 +22,7 @@ const ContactInformation: FC = () => {
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
     const { url } = useShopsysSelector((state) => state.domain);
-    const [TermsAndConditionUrl, GdprUrl] = useGetInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
+    const [TermsAndConditionUrl, GdprUrl] = getInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     useEffect(() => {

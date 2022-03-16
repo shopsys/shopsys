@@ -11,7 +11,7 @@ import { mapSimpleProductConnectionApiData } from 'connectors/products/SimplePro
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const getAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
+export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
         variables: {
             search: autocompleteSearch,

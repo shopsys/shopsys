@@ -14,10 +14,10 @@ import Autocomplete from './Autocomplete';
 import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Icon from 'components/Basic/Icon';
+import { useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import useDebounce from 'hooks/helpers/UseDebounce';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
@@ -36,13 +36,13 @@ const AutocompleteSearch: FC = () => {
     });
     const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
     const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
-    const autocompleteSearchApiResults = getAutocompleteSearch(debouncedAutocompleteSearchQuery);
+    const autocompleteSearchApiResults = useAutocompleteSearch(debouncedAutocompleteSearchQuery);
     const [autocompleteSearchResults, setAutocompleteSearchResults] = useState<AutocompleteSearchType | undefined>(
         undefined,
     );
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainUrl);
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
     const t = useTypedTranslationFunction();
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();

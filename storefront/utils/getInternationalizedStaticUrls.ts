@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 
-export const useGetInternationalizedStaticUrls = (
+export const getInternationalizedStaticUrls = (
     urls: (string | { url: string; param: string | undefined })[],
     domainUrl: string,
 ): string[] => {

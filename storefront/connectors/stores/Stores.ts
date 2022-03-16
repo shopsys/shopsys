@@ -2,7 +2,7 @@ import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi, useStoresQuer
 import { ListedStoreType } from 'types/store';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getStores(): ListedStoreType[] {
+export function useStores(): ListedStoreType[] {
     const [{ data, error }] = useStoresQueryApi();
     useQueryError(error);
 
