@@ -520,6 +520,9 @@ msgstr "Kniha Bodový systém a pravidla silničního provozu"
 msgid "Books"
 msgstr "Knihy"
 
+msgid "Bookworm"
+msgstr "Knihomolové"
+
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
 msgstr "Zadáním e-mailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek) z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude zaslán e-mail s odkazem. Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací ve strojově čitelném formátu - půjde o údaje evidované k dané e-mailové adrese na této doméně internetového obchodu."
 
@@ -862,6 +865,9 @@ msgstr "GIGABYTE KM7580 CZ"
 msgid "GPS module"
 msgstr "GPS modul"
 
+msgid "Gadgets"
+msgstr "Vychytávky"
+
 msgid "Gaming mouse"
 msgstr "Herní myš"
 
@@ -885,6 +891,9 @@ msgstr "Čistič skla a sklokeramických desek ( 4019786908123 )"
 
 msgid "GoPay - Platba kartou"
 msgstr "GoPay - Platba kartou"
+
+msgid "Growing"
+msgstr "Pěstování"
 
 msgid "HDMI"
 msgstr "HDMI"
@@ -1500,6 +1509,9 @@ msgstr "Slovensko"
 
 msgid "Služby obchodních domů"
 msgstr ""
+
+msgid "Snack"
+msgstr "Něco na zub"
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr "Náhradní papírové sáčky pro vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32"

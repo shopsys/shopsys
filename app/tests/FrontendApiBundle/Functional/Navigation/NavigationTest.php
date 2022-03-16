@@ -67,22 +67,22 @@ class NavigationTest extends GraphQlTestCase
                         ]
                     },
                     {
-                        "name": "' . t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Gadgets', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Books', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Bookworm', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_BOOKS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Garden tools', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Growing', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_GARDEN_TOOLS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Food', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Snack', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_FOOD) . '",
                         "categoriesByColumns": []
                     }

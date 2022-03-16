@@ -658,6 +658,12 @@ msgstr "Externí ID"
 msgid "External scripts"
 msgstr "Měřící skripty"
 
+msgid "External transaction ID"
+msgstr ""
+
+msgid "External transaction status"
+msgstr ""
+
 msgid "Externí ID můstku"
 msgstr ""
 
@@ -708,6 +714,9 @@ msgstr ""
 
 msgid "GoPay"
 msgstr "GoPay"
+
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr ""
 
 msgid "GoPay payment method"
 msgstr "Platební metoda GoPay"
@@ -836,6 +845,9 @@ msgid "Krátký popis USP"
 msgstr ""
 
 msgid "Krátký popis kategorie"
+msgstr ""
+
+msgid "Language"
 msgstr ""
 
 msgid "Language constant translation"
@@ -1063,6 +1075,9 @@ msgstr "Žádný sklad není přiřazen"
 msgid "Nominal"
 msgstr "Nominální"
 
+msgid "Not refundable"
+msgstr ""
+
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1127,6 +1142,9 @@ msgid "Obchodní domy"
 msgstr ""
 
 msgid "Od"
+msgstr ""
+
+msgid "Odeslat refund a uložit celou změny objednávky"
 msgstr ""
 
 msgid "Odkaz"
@@ -1219,6 +1237,9 @@ msgstr ""
 msgid "Page you are looking for either no longer exists or you entered wrong address."
 msgstr "Stránka, kterou hledáte buďto již neexistuje, nebo jste zadali špatnou adresu."
 
+msgid "Paid amount"
+msgstr ""
+
 msgid "Parameter"
 msgstr ""
 
@@ -1244,6 +1265,12 @@ msgid "Password again"
 msgstr "Heslo znovu"
 
 msgid "Payment instructions"
+msgstr ""
+
+msgid "Payment method name"
+msgstr ""
+
+msgid "Payment transactions"
 msgstr ""
 
 msgid "Percents"
@@ -1485,6 +1512,15 @@ msgstr "Typ přesměrování"
 
 msgid "Referenced products"
 msgstr "Odkazované produkty"
+
+msgid "Refund amount"
+msgstr ""
+
+msgid "Refundable amount"
+msgstr ""
+
+msgid "Refunded amount"
+msgstr ""
 
 msgid "Related products"
 msgstr "Související produkty"
@@ -2092,6 +2128,9 @@ msgstr ""
 msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr ""
 
+msgid "You can refund only %refundableAmount%."
+msgstr ""
+
 msgid "You can upload following formats: PNG, JPG"
 msgstr ""
 
@@ -2100,6 +2139,9 @@ msgstr ""
 
 msgid "You have successfully paid order via GoPay."
 msgstr "Objednávku jste úspěšně zaplatili přes GoPay."
+
+msgid "You have successfully paid order."
+msgstr ""
 
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."

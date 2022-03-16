@@ -75,7 +75,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Electronics', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Gadgets', [], 'dataFixtures', $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_ELECTRONICS,
                 $domainId
@@ -84,7 +84,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Books', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Bookworm', [], 'dataFixtures', $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_BOOKS,
                 $domainId
@@ -93,7 +93,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Garden tools', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Growing', [], 'dataFixtures', $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_GARDEN_TOOLS,
                 $domainId
@@ -102,7 +102,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Food', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Snack', [], 'dataFixtures', $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_FOOD,
                 $domainId

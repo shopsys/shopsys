@@ -463,9 +463,6 @@ msgstr ""
 msgid "Active/Passive"
 msgstr ""
 
-msgid "Add to cart"
-msgstr ""
-
 msgid "All kind of electronic devices."
 msgstr ""
 
@@ -518,6 +515,9 @@ msgid "Book scoring system and traffic regulations"
 msgstr ""
 
 msgid "Books"
+msgstr ""
+
+msgid "Bookworm"
 msgstr ""
 
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
@@ -862,6 +862,9 @@ msgstr ""
 msgid "GPS module"
 msgstr ""
 
+msgid "Gadgets"
+msgstr ""
+
 msgid "Gaming mouse"
 msgstr ""
 
@@ -885,6 +888,9 @@ msgstr ""
 
 msgid "GoPay - Platba kartou"
 msgstr "GoPay - Platba kartou"
+
+msgid "Growing"
+msgstr ""
 
 msgid "HDMI"
 msgstr ""
@@ -1499,6 +1505,9 @@ msgid "Slovakia"
 msgstr ""
 
 msgid "Služby obchodních domů"
+msgstr ""
+
+msgid "Snack"
 msgstr ""
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
