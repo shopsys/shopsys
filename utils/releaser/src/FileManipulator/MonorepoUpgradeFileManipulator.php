@@ -79,7 +79,7 @@ final class MonorepoUpgradeFileManipulator
             $content,
             self::FROM_TO_NEXT_DEV_PATTERN,
             function ($match) use ($version, $newHeadline) {
-                return $newHeadline . $match['start'] . $version->getVersionString() . $match['end'];
+                return $newHeadline . $match['start'] . $version->getOriginalString() . $match['end'];
             }
         );
     }
@@ -111,7 +111,7 @@ final class MonorepoUpgradeFileManipulator
             $content,
             self::FROM_TO_NEXT_DEV_LINK_PATTERN,
             function (array $match) use ($newFooterLink, $version) {
-                return $newFooterLink . $match['start'] . $version->getVersionString() . $match['middle'] . $version->getVersionString() . PHP_EOL;
+                return $newFooterLink . $match['start'] . $version->getOriginalString() . $match['middle'] . $version->getOriginalString() . PHP_EOL;
             }
         );
     }
@@ -125,7 +125,7 @@ final class MonorepoUpgradeFileManipulator
     {
         return sprintf(
             '## [From %s to %s]' . PHP_EOL . PHP_EOL,
-            $version->getVersionString(),
+            $version->getOriginalString(),
             $nextDevelopmentVersionString
         );
     }
@@ -140,10 +140,10 @@ final class MonorepoUpgradeFileManipulator
     {
         return sprintf(
             '[From %s to %s]: https://github.com/%s/compare/%s...%s' . PHP_EOL,
-            $version->getVersionString(),
+            $version->getOriginalString(),
             $nextDevelopmentVersionString,
             $this->monorepoPackageName,
-            $version->getVersionString(),
+            $version->getOriginalString(),
             $initialBranchName
         );
     }

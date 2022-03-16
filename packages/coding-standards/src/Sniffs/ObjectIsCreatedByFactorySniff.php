@@ -6,24 +6,11 @@ namespace Shopsys\CodingStandards\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use Shopsys\CodingStandards\Helper\Naming;
 use SlevomatCodingStandard\Helpers\ClassHelper;
-use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
 
 final class ObjectIsCreatedByFactorySniff implements Sniff
 {
-    /**
-     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming
-     */
-    private $naming;
-
-    /**
-     * @param \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming $naming
-     */
-    public function __construct(Naming $naming)
-    {
-        $this->naming = $naming;
-    }
-
     /**
      * @return int[]
      */
@@ -46,7 +33,9 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
             return;
         }
 
-        $instantiatedClassName = $this->naming->getClassName($file, $instantiatedClassNamePosition);
+        $naming = new Naming();
+
+        $instantiatedClassName = $naming->getClassName($file, $instantiatedClassNamePosition);
         $factoryClassName = $instantiatedClassName . 'Factory';
         $currentClassName = $this->getFirstClassNameInFile($file);
 

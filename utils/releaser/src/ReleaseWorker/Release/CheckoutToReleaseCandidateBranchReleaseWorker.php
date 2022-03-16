@@ -11,14 +11,6 @@ use Shopsys\Releaser\Stage;
 final class CheckoutToReleaseCandidateBranchReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 680;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

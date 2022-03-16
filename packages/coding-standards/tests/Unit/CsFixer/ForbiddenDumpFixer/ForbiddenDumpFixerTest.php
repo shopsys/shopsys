@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\CsFixer\ForbiddenDumpFixer;
+namespace Tests\CodingStandards\Unit\CsFixer\ForbiddenDumpFixer;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-final class ForbiddenDumpFixerTest extends AbstractCheckerTestCase
+final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
 {
-    public function testFix(): void
+    /**
+     * @return \Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer
+     */
+    protected function createFixerService(): ForbiddenDumpFixer
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/wrong.html.twig', __DIR__ . '/fixed/fixed.html.twig');
-    }
-
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/correct.html.twig');
+        return new ForbiddenDumpFixer();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getTestingFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];
+        yield [__DIR__ . '/correct/correct.html.twig'];
     }
 }

@@ -10,16 +10,6 @@ use Shopsys\Releaser\Stage;
 final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackagesTravisBuildsReleaseWorker
 {
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 1000;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

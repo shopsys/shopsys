@@ -20,16 +20,6 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 180;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

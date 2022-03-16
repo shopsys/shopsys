@@ -16,16 +16,6 @@ final class CheckPackagesTravisBuildsReleaseWorker extends AbstractCheckPackages
     private $releasingBranchName;
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 240;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

@@ -4,59 +4,51 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 
-use Iterator;
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
+use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
+use PhpCsFixer\WhitespacesFixerConfig;
+use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
+use Shopsys\CodingStandards\Helper\FqnNameResolver;
+use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
+use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
 /**
  * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
  */
-final class MissingParamAnnotationsFixerTest extends AbstractCheckerTestCase
+final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
 {
     /**
-     * @dataProvider provideWrongToFixedFiles()
-     * @param string $wrongFile
-     * @param string $fixedFile
+     * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
      */
-    public function testFix(string $wrongFile, string $fixedFile): void
+    protected function createFixerService(): MissingParamAnnotationsFixer
     {
-        $this->doTestWrongToFixedFile($wrongFile, $fixedFile);
+        $namespaceUsesAnalyzer = new NamespaceUsesAnalyzer();
+        $whitespacesFixerConfig = new WhitespacesFixerConfig();
+        $functionsAnalyzer = new FunctionsAnalyzer();
+        $fqnNameResolver = new FqnNameResolver($namespaceUsesAnalyzer);
+        $phpToDocTypeTransformer = new PhpToDocTypeTransformer($fqnNameResolver);
+        $indentDetector = new IndentDetector($whitespacesFixerConfig);
+
+        return new MissingParamAnnotationsFixer(
+            $whitespacesFixerConfig,
+            $functionsAnalyzer,
+            $phpToDocTypeTransformer,
+            $indentDetector
+        );
     }
 
     /**
-     * @return \Iterator
+     * {@inheritDoc}
      */
-    public function provideWrongToFixedFiles(): Iterator
+    public function getTestingFiles(): iterable
     {
-        yield [__DIR__ . '/wrong/wrong.php', __DIR__ . '/fixed/fixed.php'];
-        yield [__DIR__ . '/wrong/wrong2.php', __DIR__ . '/fixed/fixed2.php'];
-        yield [__DIR__ . '/wrong/wrong3.php', __DIR__ . '/fixed/fixed3.php'];
-        yield [__DIR__ . '/wrong/wrong4.php', __DIR__ . '/fixed/fixed4.php'];
-        yield [__DIR__ . '/wrong/wrong5.php', __DIR__ . '/fixed/fixed5.php'];
-        yield [__DIR__ . '/wrong/wrong6.php', __DIR__ . '/fixed/fixed6.php'];
-    }
-
-    /**
-     * @dataProvider provideCorrectFiles()
-     * @param string $correctFile
-     */
-    public function testCorrect(string $correctFile): void
-    {
-        $this->doTestCorrectFile($correctFile);
-    }
-
-    /**
-     * @return \Iterator
-     */
-    public function provideCorrectFiles(): Iterator
-    {
+        yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
+        yield [__DIR__ . '/fixed/fixed2.php', __DIR__ . '/wrong/wrong2.php'];
+        yield [__DIR__ . '/fixed/fixed3.php', __DIR__ . '/wrong/wrong3.php'];
+        yield [__DIR__ . '/fixed/fixed4.php', __DIR__ . '/wrong/wrong4.php'];
+        yield [__DIR__ . '/fixed/fixed5.php', __DIR__ . '/wrong/wrong5.php'];
+        yield [__DIR__ . '/fixed/fixed6.php', __DIR__ . '/wrong/wrong6.php'];
         yield [__DIR__ . '/correct/correct.php'];
-    }
-
-    /**
-     * @return string
-     */
-    protected function provideConfig(): string
-    {
-        return __DIR__ . '/config.yaml';
     }
 }

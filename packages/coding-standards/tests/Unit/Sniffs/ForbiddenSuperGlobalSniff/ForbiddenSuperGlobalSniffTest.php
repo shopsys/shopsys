@@ -2,23 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenSuperGlobalSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ForbiddenSuperGlobalSniffTest extends AbstractCheckerTestCase
+final class ForbiddenSuperGlobalSniffTest extends AbstractSniffTestCase
 {
-    public function testWrong(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/wrong/env.php.inc');
-        $this->doTestWrongFile(__DIR__ . '/wrong/post.php.inc');
+        return ForbiddenSuperGlobalSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/env.php.inc'];
+        yield [__DIR__ . '/wrong/post.php.inc'];
     }
 }

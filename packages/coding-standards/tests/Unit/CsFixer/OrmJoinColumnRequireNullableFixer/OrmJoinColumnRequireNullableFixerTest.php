@@ -2,49 +2,34 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
+namespace Tests\CodingStandards\Unit\CsFixer\OrmJoinColumnRequireNullableFixer;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-final class OrmJoinColumnRequireNullableFixerTest extends AbstractCheckerTestCase
+final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
 {
-    public function testFix(): void
+    /**
+     * @return \Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer
+     */
+    protected function createFixerService(): OrmJoinColumnRequireNullableFixer
     {
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/many_to_one_missing_join_column.php',
-            __DIR__ . '/fixed/many_to_one_missing_join_column.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/many_to_one_missing_nullable_param.php',
-            __DIR__ . '/fixed/many_to_one_missing_nullable_param.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_missing_join_column.php',
-            __DIR__ . '/fixed/one_to_one_missing_join_column.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_missing_nullable_param.php',
-            __DIR__ . '/fixed/one_to_one_missing_nullable_param.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_multiline_missing_nullable_param.php',
-            __DIR__ . '/fixed/one_to_one_multiline_missing_nullable_param.php'
-        );
-    }
-
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/one_to_many.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/many_to_one_missing_join_column.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/many_to_one_missing_nullable_param.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/one_to_one_missing_nullable_param.php');
+        return new OrmJoinColumnRequireNullableFixer();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getTestingFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/many_to_one_missing_join_column.php', __DIR__ . '/wrong/many_to_one_missing_join_column.php'];
+        yield [__DIR__ . '/fixed/many_to_one_missing_nullable_param.php', __DIR__ . '/wrong/many_to_one_missing_nullable_param.php'];
+        yield [__DIR__ . '/fixed/one_to_one_missing_join_column.php', __DIR__ . '/wrong/one_to_one_missing_join_column.php'];
+        yield [__DIR__ . '/fixed/one_to_one_missing_nullable_param.php', __DIR__ . '/wrong/one_to_one_missing_nullable_param.php'];
+        yield [__DIR__ . '/fixed/one_to_one_multiline_missing_nullable_param.php', __DIR__ . '/wrong/one_to_one_multiline_missing_nullable_param.php'];
+        yield [__DIR__ . '/correct/one_to_many.php'];
+        yield [__DIR__ . '/correct/many_to_one_missing_join_column.php'];
+        yield [__DIR__ . '/correct/many_to_one_missing_nullable_param.php'];
+        yield [__DIR__ . '/correct/one_to_one_missing_nullable_param.php'];
     }
 }

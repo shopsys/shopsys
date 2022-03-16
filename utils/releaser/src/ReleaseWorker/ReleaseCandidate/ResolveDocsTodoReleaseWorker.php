@@ -28,16 +28,6 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 840;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

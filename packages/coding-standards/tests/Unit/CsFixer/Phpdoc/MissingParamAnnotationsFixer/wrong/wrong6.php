@@ -2,12 +2,12 @@
 
 namespace Shopsys\CodingStandards\Tests;
 
-use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
+use Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer\Source\Naming;
 
-final class ObjectIsCreatedByFactorySniff
+final class SomeClassWithoutAnnotation
 {
     /**
-     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming
+     * @var \Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer\Source\Naming
      */
     private $naming;
 

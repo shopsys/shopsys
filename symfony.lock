@@ -990,9 +990,6 @@
     "symfony/yaml": {
         "version": "v3.4.32"
     },
-    "symplify/auto-bind-parameter": {
-        "version": "v7.2.3"
-    },
     "symplify/autowire-array-parameter": {
         "version": "v7.2.3"
     },
@@ -1008,26 +1005,20 @@
     "symplify/easy-coding-standard": {
         "version": "v5.4.13"
     },
-    "symplify/easy-coding-standard-tester": {
-        "version": "v5.4.13"
-    },
     "symplify/monorepo-builder": {
         "version": "v5.4.16"
     },
     "symplify/package-builder": {
         "version": "v5.4.16"
     },
-    "symplify/parameter-name-guard": {
-        "version": "v7.3.18"
-    },
-    "symplify/phpstan-extensions": {
-        "version": "v7.3.18"
-    },
     "symplify/set-config-resolver": {
         "version": "v7.2.3"
     },
     "symplify/smart-file-system": {
         "version": "v7.2.3"
+    },
+    "symplify/symplify-kernel": {
+        "version": "8.3.48"
     },
     "theseer/tokenizer": {
         "version": "1.1.3"

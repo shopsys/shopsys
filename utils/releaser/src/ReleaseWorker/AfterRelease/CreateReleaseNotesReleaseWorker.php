@@ -20,16 +20,6 @@ final class CreateReleaseNotesReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 140;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

@@ -26,16 +26,6 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 280;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

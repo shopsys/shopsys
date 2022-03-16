@@ -10,16 +10,6 @@ use Shopsys\Releaser\Stage;
 final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstallReleaseWorker
 {
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 130;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

@@ -2,26 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ForbiddenDumpSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDumpSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ForbiddenDumpSniffTest extends AbstractCheckerTestCase
+final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
 {
-    public function testWrong(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/wrong/d.php.inc');
-        $this->doTestWrongFile(__DIR__ . '/wrong/dump.php.inc');
-        $this->doTestWrongFile(__DIR__ . '/wrong/print_r.php.inc');
-        $this->doTestWrongFile(__DIR__ . '/wrong/var_dump.php.inc');
-        $this->doTestWrongFile(__DIR__ . '/wrong/var_export.php.inc');
+        return ForbiddenDumpSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/d.php.inc'];
+        yield [__DIR__ . '/wrong/dump.php.inc'];
+        yield [__DIR__ . '/wrong/print_r.php.inc'];
+        yield [__DIR__ . '/wrong/var_dump.php.inc'];
+        yield [__DIR__ . '/wrong/var_export.php.inc'];
     }
 }

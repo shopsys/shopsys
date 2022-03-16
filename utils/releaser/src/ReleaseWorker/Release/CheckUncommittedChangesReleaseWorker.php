@@ -10,14 +10,6 @@ use Shopsys\Releaser\Stage;
 final class CheckUncommittedChangesReleaseWorker extends AbstractCheckUncommittedChangesReleaseWorker
 {
     /**
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 700;
-    }
-
-    /**
      * @return string
      */
     public function getStage(): string

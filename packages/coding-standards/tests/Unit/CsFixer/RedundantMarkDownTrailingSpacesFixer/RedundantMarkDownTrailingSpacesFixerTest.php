@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer;
+namespace Tests\CodingStandards\Unit\CsFixer\RedundantMarkDownTrailingSpacesFixer;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-final class RedundantMarkDownTrailingSpacesFixerTest extends AbstractCheckerTestCase
+final class RedundantMarkDownTrailingSpacesFixerTest extends AbstractFixerTestCase
 {
-    public function testFix(): void
+    /**
+     * @return \Shopsys\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer
+     */
+    protected function createFixerService(): RedundantMarkDownTrailingSpacesFixer
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/wrong.md', __DIR__ . '/fixed/fixed.md');
-    }
-
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/correct.md');
+        return new RedundantMarkDownTrailingSpacesFixer();
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getTestingFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/fixed.md', __DIR__ . '/wrong/wrong.md'];
+        yield [__DIR__ . '/correct/correct.md'];
     }
 }

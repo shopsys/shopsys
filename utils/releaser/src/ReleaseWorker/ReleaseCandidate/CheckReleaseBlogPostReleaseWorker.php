@@ -20,16 +20,6 @@ final class CheckReleaseBlogPostReleaseWorker extends AbstractShopsysReleaseWork
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 960;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

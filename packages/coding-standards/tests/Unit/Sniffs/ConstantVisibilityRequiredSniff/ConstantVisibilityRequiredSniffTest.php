@@ -2,39 +2,46 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ConstantVisibilityRequiredSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ConstantVisibilityRequiredSniffTest extends AbstractCheckerTestCase
+final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
 {
-    public function testCorrect(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestCorrectFile(__DIR__ . '/correct/Annotation.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/SingleValueWithoutNamespace.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/SingleValueAfterMethodWithoutNamespace.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/MultipleValues.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/Mixed.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/MixedVisibilities.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/noClass.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/OutsideClass.php');
-    }
-
-    public function testWrong(): void
-    {
-        $this->doTestWrongFile(__DIR__ . '/wrong/SingleValue.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/MissingAnnotation.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/Mixed.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/MixedAtTheEnd.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/MixedInTheMiddle.php');
-        $this->doTestWrongFile(__DIR__ . '/wrong/SingleValueAfterMethodWithoutNamespace.php');
+        return ConstantVisibilityRequiredSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/SingleValue.php'];
+        yield [__DIR__ . '/wrong/MissingAnnotation.php'];
+        yield [__DIR__ . '/wrong/Mixed.php'];
+        yield [__DIR__ . '/wrong/MixedAtTheEnd.php'];
+        yield [__DIR__ . '/wrong/MixedInTheMiddle.php'];
+        yield [__DIR__ . '/wrong/SingleValueAfterMethodWithoutNamespace.php'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCorrectFiles(): iterable
+    {
+        yield [__DIR__ . '/correct/Annotation.php'];
+        yield [__DIR__ . '/correct/Mixed.php'];
+        yield [__DIR__ . '/correct/MixedVisibilities.php'];
+        yield [__DIR__ . '/correct/MultipleValues.php'];
+        yield [__DIR__ . '/correct/noClass.php'];
+        yield [__DIR__ . '/correct/OutsideClass.php'];
+        yield [__DIR__ . '/correct/SingleValueAfterMethodWithoutNamespace.php'];
+        yield [__DIR__ . '/correct/SingleValueWithoutNamespace.php'];
     }
 }

@@ -29,16 +29,6 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 870;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

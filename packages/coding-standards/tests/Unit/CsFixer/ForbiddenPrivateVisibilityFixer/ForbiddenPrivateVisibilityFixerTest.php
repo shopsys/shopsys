@@ -2,28 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\CsFixer\ForbiddenDumpFixer;
+namespace Tests\CodingStandards\Unit\CsFixer\ForbiddenPrivateVisibilityFixer;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
+use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
-final class ForbiddenPrivateVisibilityFixerTest extends AbstractCheckerTestCase
+final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
 {
-    public function testFix(): void
+    /**
+     * @return \Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
+     */
+    protected function createFixerService(): ForbiddenPrivateVisibilityFixer
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/wrong.php', __DIR__ . '/fixed/fixed.php');
-    }
+        $fixer = new ForbiddenPrivateVisibilityFixer();
+        $fixer->configure(['analyzed_namespaces' => ['TestNamespace']]);
 
-    public function testCorrect(): void
-    {
-        $this->doTestCorrectFile(__DIR__ . '/correct/correct.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/ignored-namespace.php');
+        return $fixer;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getTestingFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
+        yield [__DIR__ . '/correct/correct.php'];
+        yield [__DIR__ . '/correct/ignored-namespace.php'];
     }
 }

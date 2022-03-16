@@ -23,14 +23,6 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 770;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

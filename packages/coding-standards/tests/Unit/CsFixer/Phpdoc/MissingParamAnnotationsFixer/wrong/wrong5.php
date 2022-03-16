@@ -3,7 +3,7 @@
 namespace Shopsys\CodingStandards\Tests;
 
 use stdClass;
-use Tests\CodingStandards\Unit\CsFixer\Phpdoc\MissingParamAnnotationsFixer\Source\NamespacedType;
+use Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer\Source\NamespacedType;
 
 final class SomeClass
 {

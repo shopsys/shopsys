@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
-final class MissingReturnAnnotationFixer
+final class FunctionAnnotationFixerTestClass2
 {
     private function shouldSkip(string $type, ?Token $docToken): bool
     {

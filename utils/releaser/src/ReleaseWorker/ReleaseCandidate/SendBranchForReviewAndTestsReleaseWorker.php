@@ -20,16 +20,6 @@ final class SendBranchForReviewAndTestsReleaseWorker extends AbstractShopsysRele
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 730;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void

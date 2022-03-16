@@ -22,10 +22,10 @@ class GeneralUpgradeFileManipulator
     {
         $newLink = sprintf(
             '* ### [From %s to %2$s](./upgrade/UPGRADE-%2$s.md)' . PHP_EOL,
-            $version->getVersionString(),
+            $version->getOriginalString(),
             $nextDevelopmentVersionString
         );
-        $versionString = $version->getVersionString();
+        $versionString = $version->getOriginalString();
         return Strings::replace(
             $splFileInfo->getContents(),
             self::FROM_PREVIOUS_TO_NEXT_DEV_LINK_PATTERN,

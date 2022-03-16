@@ -2,22 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Tests\CodingStandards\Sniffs\ValidVariableNameSniff;
+namespace Tests\CodingStandards\Unit\Sniffs\ValidVariableNameSniff;
 
-use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 
-final class ValidVariableNameSniffTest extends AbstractCheckerTestCase
+final class ValidVariableNameSniffTest extends AbstractSniffTestCase
 {
-    public function testWrong(): void
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSniffClassName(): string
     {
-        $this->doTestWrongFile(__DIR__ . '/wrong/wrong.inc');
+        return ValidVariableNameSniff::class;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
-    protected function provideConfig(): string
+    public function getWrongFiles(): iterable
     {
-        return __DIR__ . '/config.yaml';
+        yield [__DIR__ . '/wrong/wrong.inc'];
     }
 }

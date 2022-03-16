@@ -61,16 +61,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
     }
 
     /**
-     * Higher first
-     *
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return 640;
-    }
-
-    /**
      * @param \PharIo\Version\Version $version
      */
     public function work(Version $version): void
@@ -101,14 +91,16 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         }
 
         foreach ($packageNames as $packageName) {
-            $this->processRunner->run(
+            $output = $this->processRunner->run(
                 sprintf(
                     'cd %s/%s && git log --graph --oneline --decorate=short --color | head',
                     $tempDirectory,
                     $packageName
-                ),
-                true
+                )
             );
+
+            $this->symfonyStyle->writeln(trim($output));
+
             $pushTag = $this->symfonyStyle->ask(
                 sprintf('Package shopsys/%s: Is the tag on right commit and should be pushed?', $packageName),
                 'yes'

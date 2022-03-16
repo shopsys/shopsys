@@ -44,7 +44,7 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 
 - **\[BC break\]** change used caches from doctrine/cache to Symfony cache ([#2412](https://github.com/shopsys/shopsys/pull/2412))
-    - see #project-base-diff to update your project 
+    - see #project-base-diff to update your project
     - class `Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass` was removed and the compiler pass is no longer registered
     - class `Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory` was removed along with its service definition
     - class `Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade` was changed
@@ -74,3 +74,11 @@ There you can find links to upgrade notes for other versions too.
         - `shopsys.doctrine.cache_driver.metadata_cache`
         - `shopsys.framework.cache_driver.annotations_cache`
         - `bestselling_product_cache`
+- update coding standards configuration ([#2415](https://github.com/shopsys/shopsys/pull/2415))
+    - version 8.3.48 of `symplify/easy-coding-standard` is now required
+    - removed dependency on `symplify/easy-coding-standard-tester`, you should change your custom coding standards tests
+        - you can find inspiration in https://github.com/shopsys/shopsys/pull/2415/files
+    - switch configuration of easy-coding-standard from yaml file to php file
+        - if you use default Shopsys Framework configuration, you can just use `ecs.php` (see #project-base-diff)
+        - for your custom configuration, you can leverage https://github.com/symplify/config-transformer
+    - see #project-base-diff to update your project 
