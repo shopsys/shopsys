@@ -4,6 +4,7 @@ import {
     OrderDetailFragmentApi,
     OrderDetailItemFragmentApi,
     OrderListFragmentApi,
+    useOrderDetailByHashQueryApi,
     useOrderDetailQueryApi,
     useOrdersQueryApi,
 } from 'graphql/generated';
@@ -74,8 +75,25 @@ const mapListedOrder = (apiOrder: ListedOrderFragmentApi, currentDomainConfig: D
     };
 };
 
-export const getOrderDetail = (orderNumber: string, currentDomainConfig: DomainConfigType): OrderDetailType | null => {
-    const [{ data, error }] = useOrderDetailQueryApi({ variables: { orderNumber } });
+export const getOrderDetail = (
+    orderNumber: string | null,
+    currentDomainConfig: DomainConfigType,
+): OrderDetailType | null => {
+    const [{ data, error }] = useOrderDetailQueryApi({ pause: orderNumber === null, variables: { orderNumber } });
+    useQueryError(error);
+
+    if (data?.order === undefined || data.order === null) {
+        return null;
+    }
+
+    return mapOrderDetailApiData(data.order, currentDomainConfig);
+};
+
+export const getOrderDetailByHash = (
+    urlHash: string,
+    currentDomainConfig: DomainConfigType,
+): OrderDetailType | null => {
+    const [{ data, error }] = useOrderDetailByHashQueryApi({ variables: { urlHash } });
     useQueryError(error);
 
     if (data?.order === undefined || data.order === null) {

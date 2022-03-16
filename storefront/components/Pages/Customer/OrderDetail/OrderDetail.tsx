@@ -2,10 +2,10 @@ import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
-import { getOrderDetail } from 'connectors/customer/Orders';
 import Heading from 'components/Basic/Heading';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import NextLink from 'next/link';
+import { OrderDetailType } from 'types/orders';
 import TableGrid from 'components/Basic/TableGrid';
 import { TextCenteredStyled } from './OrderDetail.style';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
@@ -14,7 +14,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Webline from 'components/Layout/Webline';
 
 type OrderDetailPageProps = {
-    orderNumber: string;
+    order: OrderDetailType;
 };
 
 const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
@@ -23,26 +23,13 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
     const t = useTypedTranslationFunction();
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
-    const order = getOrderDetail(props.orderNumber, currentDomainConfig);
-
-    if (order === null) {
-        return (
-            <Webline>
-                <TableGrid>
-                    <tr>
-                        <th>{t('Error occured when loading order detail')}</th>
-                    </tr>
-                </TableGrid>
-            </Webline>
-        );
-    }
 
     return (
         <>
             <Webline>
                 <HeadingWrapperStyled>
                     <Heading type="h1">
-                        {t('Order number')} {order.number}
+                        {t('Order number')} {props.order.number}
                     </Heading>
                 </HeadingWrapperStyled>
                 <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('My orders'), slug: customerOrdersUrl }]} />
@@ -57,11 +44,11 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                             <tr>
                                 <td>{t('Creation date')}:</td>
                                 <td className="text-right" data-testid={testIdentifier + 'creationDate'}>
-                                    {order.creationDate}
+                                    {props.order.creationDate}
                                 </td>
                             </tr>
                         </TableGridColumnStyled>
-                        {order.trackingNumber !== null && (
+                        {props.order.trackingNumber !== null && (
                             <TableGridColumnStyled>
                                 <tr>
                                     <th colSpan={2}>{t('Tracking package')}</th>
@@ -69,12 +56,12 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 <tr>
                                     <td>{t('Package number')}:</td>
                                     <td className="text-right" data-testid={testIdentifier + 'trackingUrl'}>
-                                        {order.trackingUrl !== null && (
-                                            <NextLink href={order.trackingUrl} passHref>
-                                                <a target="_blank">{order.trackingNumber}</a>
+                                        {props.order.trackingUrl !== null && (
+                                            <NextLink href={props.order.trackingUrl} passHref>
+                                                <a target="_blank">{props.order.trackingNumber}</a>
                                             </NextLink>
                                         )}
-                                        {order.trackingUrl === null && order.trackingNumber}
+                                        {props.order.trackingUrl === null && props.order.trackingNumber}
                                     </td>
                                 </tr>
                             </TableGridColumnStyled>
@@ -87,59 +74,61 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                             <tr>
                                 <th colSpan={2}>{t('Billing address')}</th>
                             </tr>
-                            {order.companyName !== '' && (
+                            {props.order.companyName !== '' && (
                                 <>
                                     <tr>
                                         <td>{t('Company name')}:</td>
-                                        <td data-testid={testIdentifier + 'companyName'}>{order.companyName}</td>
+                                        <td data-testid={testIdentifier + 'companyName'}>{props.order.companyName}</td>
                                     </tr>
                                     <tr>
                                         <td>{t('Company number')}:</td>
-                                        <td data-testid={testIdentifier + 'companyNumber'}>{order.companyNumber}</td>
+                                        <td data-testid={testIdentifier + 'companyNumber'}>
+                                            {props.order.companyNumber}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>{t('Tax number')}:</td>
                                         <td data-testid={testIdentifier + 'companyTaxNumber'}>
-                                            {order.companyTaxNumber}
+                                            {props.order.companyTaxNumber}
                                         </td>
                                     </tr>
                                 </>
                             )}
-                            {order.firstName !== '' && (
+                            {props.order.firstName !== '' && (
                                 <>
                                     <tr>
                                         <td>{t('First name')}:</td>
-                                        <td data-testid={testIdentifier + 'firstName'}>{order.firstName}</td>
+                                        <td data-testid={testIdentifier + 'firstName'}>{props.order.firstName}</td>
                                     </tr>
                                     <tr>
                                         <td>{t('Last name')}:</td>
-                                        <td data-testid={testIdentifier + 'lastName'}>{order.lastName}</td>
+                                        <td data-testid={testIdentifier + 'lastName'}>{props.order.lastName}</td>
                                     </tr>
                                 </>
                             )}
                             <tr>
                                 <td>{t('Email')}:</td>
-                                <td data-testid={testIdentifier + 'email'}>{order.email}</td>
+                                <td data-testid={testIdentifier + 'email'}>{props.order.email}</td>
                             </tr>
                             <tr>
                                 <td>{t('Phone')}:</td>
-                                <td data-testid={testIdentifier + 'telephone'}>{order.telephone}</td>
+                                <td data-testid={testIdentifier + 'telephone'}>{props.order.telephone}</td>
                             </tr>
                             <tr>
                                 <td>{t('Street and house no.')}:</td>
-                                <td data-testid={testIdentifier + 'street'}>{order.street}</td>
+                                <td data-testid={testIdentifier + 'street'}>{props.order.street}</td>
                             </tr>
                             <tr>
                                 <td>{t('City')}:</td>
-                                <td data-testid={testIdentifier + 'city'}>{order.city}</td>
+                                <td data-testid={testIdentifier + 'city'}>{props.order.city}</td>
                             </tr>
                             <tr>
                                 <td>{t('Postcode')}:</td>
-                                <td data-testid={testIdentifier + 'postcode'}>{order.postcode}</td>
+                                <td data-testid={testIdentifier + 'postcode'}>{props.order.postcode}</td>
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={testIdentifier + 'country'}>{order.country}</td>
+                                <td data-testid={testIdentifier + 'country'}>{props.order.country}</td>
                             </tr>
                         </TableGridColumnStyled>
                         <TableGridColumnStyled>
@@ -148,36 +137,44 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                             </tr>
                             <tr>
                                 <td>{t('First name')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryFirstName'}>{order.deliveryFirstName}</td>
+                                <td data-testid={testIdentifier + 'deliveryFirstName'}>
+                                    {props.order.deliveryFirstName}
+                                </td>
                             </tr>
                             <tr>
                                 <td>{t('Last name')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryLastName'}>{order.deliveryLastName}</td>
+                                <td data-testid={testIdentifier + 'deliveryLastName'}>
+                                    {props.order.deliveryLastName}
+                                </td>
                             </tr>
                             <tr>
                                 <td>{t('Phone')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryTelephone'}>{order.deliveryTelephone}</td>
+                                <td data-testid={testIdentifier + 'deliveryTelephone'}>
+                                    {props.order.deliveryTelephone}
+                                </td>
                             </tr>
                             <tr>
                                 <td>{t('Street and house no.')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryStreet'}>{order.deliveryStreet}</td>
+                                <td data-testid={testIdentifier + 'deliveryStreet'}>{props.order.deliveryStreet}</td>
                             </tr>
                             <tr>
                                 <td>{t('City')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryCity'}>{order.deliveryCity}</td>
+                                <td data-testid={testIdentifier + 'deliveryCity'}>{props.order.deliveryCity}</td>
                             </tr>
                             <tr>
                                 <td>{t('Postcode')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryPostcode'}>{order.deliveryPostcode}</td>
+                                <td data-testid={testIdentifier + 'deliveryPostcode'}>
+                                    {props.order.deliveryPostcode}
+                                </td>
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={testIdentifier + 'deliveryCountry'}>{order.deliveryCountry}</td>
+                                <td data-testid={testIdentifier + 'deliveryCountry'}>{props.order.deliveryCountry}</td>
                             </tr>
                         </TableGridColumnStyled>
                     </TableGridColumnsStyled>
                 </TableGrid>
-                {order.items.length > 0 && (
+                {props.order.items.length > 0 && (
                     <>
                         <TextCenteredStyled>
                             <Heading type="h2">{t('Your purchase')}</Heading>
@@ -192,7 +189,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 <th className="text-right">{t('Total price incl. VAT')}</th>
                             </tr>
 
-                            {order.items.map((item, index) => {
+                            {props.order.items.map((item, index) => {
                                 return (
                                     <tr key={index} data-testid={testIdentifier + 'item-' + index}>
                                         <td data-testid={testIdentifier + 'item-name'}>{item.name}</td>

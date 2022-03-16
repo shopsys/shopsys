@@ -1,34 +1,26 @@
 import {
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
-    OrderDetailQueryDocumentApi,
+    OrderDetailByHashQueryDocumentApi,
 } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
-import { getOrderDetail } from 'connectors/customer/Orders';
+import { getOrderDetailByHash } from 'connectors/customer/Orders';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 
-const Index: FC = () => {
+const OrderDetailByHash: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [customerOrdersUrl] = useGetInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
-    const order = getOrderDetail(getStringFromUrlQuery(router.query.orderNumber), domainConfig);
-
-    if (!isUserLoggedIn) {
-        router.push('/');
-        return null;
-    }
+    const order = getOrderDetailByHash(getStringFromUrlQuery(router.query.urlHash), domainConfig);
 
     if (order === null) {
-        router.push(customerOrdersUrl);
+        router.push('/');
         return null;
     }
 
@@ -42,7 +34,7 @@ const Index: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    if (typeof context.query.orderNumber !== 'string') {
+    if (typeof context.params?.urlHash !== 'string') {
         return {
             redirect: {
                 destination: '/',
@@ -55,8 +47,8 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store, [
         { query: NotificationBarsDocumentApi },
         { query: NavigationQueryDocumentApi },
-        { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
+        { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
     ]);
 });
 
-export default Index;
+export default OrderDetailByHash;

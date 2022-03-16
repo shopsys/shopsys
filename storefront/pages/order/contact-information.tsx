@@ -1,6 +1,11 @@
+import {
+    CreateOrderMutationApi,
+    NavigationQueryDocumentApi,
+    NotificationBarsDocumentApi,
+    useCreateOrderMutationApi,
+} from 'graphql/generated';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, NotificationBarsDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import {
     useContactInformationForm,
@@ -44,18 +49,23 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
-    useHandleFormSuccessfulSubmit(createOrderResult, formProviderMethods, contactInformationValues, () =>
-        onSuccessfullyCreatedOrderHandler(),
+
+    const onSuccessfullyCreatedOrderHandler = (createOrderResultData: CreateOrderMutationApi | undefined) => {
+        updateCartState(dispatch);
+        dispatch(userActions.setOrderConfirmationAccess(true));
+        dispatch(userActions.setOrderUrlHash(createOrderResultData?.CreateOrder.urlHash));
+        dispatch(userActions.setLastOrderUuid(createOrderResultData?.CreateOrder.uuid ?? ''));
+        router.push(orderConfirmationUrl);
+    };
+
+    useHandleFormSuccessfulSubmit(
+        createOrderResult,
+        formProviderMethods,
+        contactInformationValues,
+        onSuccessfullyCreatedOrderHandler,
     );
     useHandleFormErrors(createOrderResult.error, formProviderMethods, formMeta.messages.error);
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
-
-    const onSuccessfullyCreatedOrderHandler = () => {
-        updateCartState(dispatch);
-        dispatch(userActions.setOrderConfirmationAccess(true));
-        dispatch(userActions.setLastOrderUuid(createOrderResult.data?.CreateOrder.uuid ?? ''));
-        router.push(orderConfirmationUrl);
-    };
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues, event) => {
         event?.preventDefault();
