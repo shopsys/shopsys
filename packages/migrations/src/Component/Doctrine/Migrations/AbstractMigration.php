@@ -4,10 +4,16 @@ namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
+use Doctrine\Migrations\Query\Query;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
 {
+    /**
+     * @var \Doctrine\Migrations\Query\Query[]
+     */
+    private array $sqlQueries = [];
+
     /**
      * {@inheritDoc}
      */
@@ -26,6 +32,8 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      */
     public function sql($query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null)
     {
+        $this->sqlQueries[] = new Query($query, $params, $types);
+
         return $this->connection->executeQuery($query, $params, $types, $qcp);
     }
 
@@ -39,5 +47,13 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         // We do not want every migration to be executed in a separate transaction
         // because MigrateCommand wraps all migrations in a single transaction.
         return false;
+    }
+
+    /**
+     * @return \Doctrine\Migrations\Query\Query[]
+     */
+    public function getSql(): array
+    {
+        return $this->sqlQueries;
     }
 }

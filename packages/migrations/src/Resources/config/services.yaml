@@ -39,3 +39,5 @@ services:
     Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator: ~
 
     Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository: ~
+
+    Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor: ~

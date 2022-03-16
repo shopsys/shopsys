@@ -8,3 +8,4 @@ doctrine_migrations:
         'Doctrine\Migrations\Version\Comparator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator'
         'Doctrine\Migrations\Version\MigrationPlanCalculator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator'
         'Doctrine\Migrations\MigrationsRepository': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository'
+        'Doctrine\Migrations\Version\Executor': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor'
