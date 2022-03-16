@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff\Correct;
 
-class Mixed
+class Various
 {
     /** @access private */
     const A = 'value';
