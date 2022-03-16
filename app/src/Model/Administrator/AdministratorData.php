@@ -25,5 +25,6 @@ class AdministratorData extends BaseAdministratorData
         parent::__construct();
 
         $this->transferIssuesLastSeenDateTime = new DateTime('1970-01-01 00:00:00');
+        $this->roleGroup = null;
     }
 }
