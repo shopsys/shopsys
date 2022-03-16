@@ -94,10 +94,6 @@ const Search: FC<SearchProps> = (props) => {
         }
     };
 
-    if (props.searchResults === undefined) {
-        return null;
-    }
-
     useComponentUpdate(() => {
         if (oldRouterQuery !== router.query.q) {
             setQueryPathWasChanged(true);
@@ -110,7 +106,11 @@ const Search: FC<SearchProps> = (props) => {
             setRouterQueryChanged(!routerQueryChanged);
             setQueryPathWasChanged(false);
         }
-    }, [props.searchResults.productsSearch.productFilterOptions]);
+    }, [props.searchResults?.productsSearch.productFilterOptions]);
+
+    if (props.searchResults === undefined) {
+        return null;
+    }
 
     return (
         <>
