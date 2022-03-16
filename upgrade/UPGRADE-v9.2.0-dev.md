@@ -82,3 +82,6 @@ There you can find links to upgrade notes for other versions too.
         - if you use default Shopsys Framework configuration, you can just use `ecs.php` (see #project-base-diff)
         - for your custom configuration, you can leverage https://github.com/symplify/config-transformer
     - see #project-base-diff to update your project 
+- **\[BC break\]** dropped support for unsupported PHP in packages ([#2416](https://github.com/shopsys/shopsys/pull/2416))
+    - packages `shopsys/migrations`, `shopsys/coding-standards`, and `shopsys/http-smoke-testing` no longer support PHP 7.2 and 7.3
+    - support for PHP 8.0 and 8.1 added to `shopsys/coding-standards` and `shopsys/http-smoke-testing`
