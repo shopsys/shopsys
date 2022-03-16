@@ -784,6 +784,9 @@ msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
 msgid "If the time TO is filled in, enter the date TO too."
 msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
 
+msgid "If you want execute refund, you have to setup refund amount."
+msgstr "Pokud chcete provést refundaci, musíte nastavit její výši."
+
 msgid "Ihned k odběru"
 msgstr ""
 
