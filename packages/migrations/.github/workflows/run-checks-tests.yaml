@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-20.04
         strategy:
             matrix:
-                php-versions: ['7.2', '7.3', '7.4']
+                php-versions: ['7.4']
                 composer-prefered-dependencies: ['--prefer-lowest', '']
             fail-fast: false
         steps:

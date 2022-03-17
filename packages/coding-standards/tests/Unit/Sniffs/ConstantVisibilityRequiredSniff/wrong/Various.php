@@ -2,7 +2,7 @@
 
 namespace Tests\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff\Wrong;
 
-class Mixed
+class Various
 {
     const A = 'value';
     public const B = 'value';

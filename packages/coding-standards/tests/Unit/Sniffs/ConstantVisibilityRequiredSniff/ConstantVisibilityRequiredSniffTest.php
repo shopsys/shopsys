@@ -24,7 +24,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     {
         yield [__DIR__ . '/wrong/SingleValue.php'];
         yield [__DIR__ . '/wrong/MissingAnnotation.php'];
-        yield [__DIR__ . '/wrong/Mixed.php'];
+        yield [__DIR__ . '/wrong/Various.php'];
         yield [__DIR__ . '/wrong/MixedAtTheEnd.php'];
         yield [__DIR__ . '/wrong/MixedInTheMiddle.php'];
         yield [__DIR__ . '/wrong/SingleValueAfterMethodWithoutNamespace.php'];
@@ -36,7 +36,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     public function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/Annotation.php'];
-        yield [__DIR__ . '/correct/Mixed.php'];
+        yield [__DIR__ . '/correct/Various.php'];
         yield [__DIR__ . '/correct/MixedVisibilities.php'];
         yield [__DIR__ . '/correct/MultipleValues.php'];
         yield [__DIR__ . '/correct/noClass.php'];
