@@ -38,6 +38,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
             FunctionLengthSniff::class => [
                 __DIR__ . '/tests/Unit/Component/Doctrine/SchemaDiffFilterTest.php',
+                __DIR__ . '/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
             ],
         ]
     );
