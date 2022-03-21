@@ -102,7 +102,7 @@ class GenerateMigrationCommand extends Command
 
         if ($generatorResult->hasError()) {
             $output->writeln(
-                '<error>Migration file "' . $generatorResult->getMigrationFilePath() . '" could not be saved.</error>'
+                '<error>Migration file "' . realpath($generatorResult->getMigrationFilePath()) . '" could not be saved.</error>'
             );
 
             return self::RETURN_CODE_ERROR;
@@ -111,7 +111,7 @@ class GenerateMigrationCommand extends Command
         $output->writeln('<info>Database schema is not satisfying ORM, a new migration was generated!</info>');
         $output->writeln(sprintf(
             '<info>Migration file "%s" was saved (%d B).</info>',
-            $generatorResult->getMigrationFilePath(),
+            realpath($generatorResult->getMigrationFilePath()),
             $generatorResult->getWrittenBytes()
         ));
 
