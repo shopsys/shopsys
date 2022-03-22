@@ -12,17 +12,17 @@ class MigrationsLock
     /**
      * @var string
      */
-    private string $migrationsLockFilePath;
+    protected string $migrationsLockFilePath;
 
     /**
      * @var array|null
      */
-    private ?array $parsedMigrationsLock = null;
+    protected ?array $parsedMigrationsLock = null;
 
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private LoggerInterface $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param string $migrationsLockFilePath
@@ -97,7 +97,7 @@ class MigrationsLock
     /**
      * @return array
      */
-    private function load(): array
+    protected function load(): array
     {
         if ($this->parsedMigrationsLock === null) {
             $this->parsedMigrationsLock = [];
@@ -110,7 +110,7 @@ class MigrationsLock
         return $this->parsedMigrationsLock;
     }
 
-    private function save(): void
+    protected function save(): void
     {
         $content = Yaml::dump($this->parsedMigrationsLock);
 
@@ -120,7 +120,7 @@ class MigrationsLock
     /**
      * @param \Doctrine\Migrations\Metadata\AvailableMigration[] $availableMigrations
      */
-    private function checkMigrationsMarkedAsInstalledInLock(array $availableMigrations): void
+    protected function checkMigrationsMarkedAsInstalledInLock(array $availableMigrations): void
     {
         foreach ($this->getOrderedInstalledMigrationClasses() as $migrationClass) {
             if (!array_key_exists($migrationClass, $availableMigrations)) {
@@ -137,7 +137,7 @@ class MigrationsLock
      * @param \Doctrine\Migrations\Metadata\AvailableMigration[] $availableMigrations
      * @return \Doctrine\Migrations\Metadata\AvailableMigration[]
      */
-    private function getNonSkippedAvailableMigrations(array $availableMigrations): array
+    protected function getNonSkippedAvailableMigrations(array $availableMigrations): array
     {
         foreach ($this->getSkippedMigrationClasses() as $skippedMigrationClass) {
             if (array_key_exists($skippedMigrationClass, $availableMigrations)) {

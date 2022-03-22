@@ -10,8 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckOrmMappingCommand extends Command
 {
-    private const RETURN_CODE_OK = 0;
-    private const RETURN_CODE_ERROR = 1;
+    protected const RETURN_CODE_OK = 0;
+    protected const RETURN_CODE_ERROR = 1;
 
     /**
      * @var string
@@ -21,7 +21,7 @@ class CheckOrmMappingCommand extends Command
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -62,11 +62,11 @@ class CheckOrmMappingCommand extends Command
                 $output->writeln('');
             }
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $output->writeln('<info>ORM mapping is valid.</info>');
 
-        return self::RETURN_CODE_OK;
+        return static::RETURN_CODE_OK;
     }
 }

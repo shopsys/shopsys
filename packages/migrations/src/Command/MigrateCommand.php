@@ -23,17 +23,17 @@ class MigrateCommand extends Command
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private EntityManagerInterface $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private MigrationsLock $migrationsLock;
+    protected MigrationsLock $migrationsLock;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
      */
-    private MigrationLockPlanCalculator $migrationLockPlanCalculator;
+    protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -89,7 +89,7 @@ class MigrateCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeDoctrineMigrateCommand(OutputInterface $output): void
+    protected function executeDoctrineMigrateCommand(OutputInterface $output): void
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');
         $arguments = [
@@ -111,7 +111,7 @@ class MigrateCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeCheckSchemaCommand(OutputInterface $output): void
+    protected function executeCheckSchemaCommand(OutputInterface $output): void
     {
         $checkSchemaCommand = $this->getApplication()->find('shopsys:migrations:check-schema');
         $arguments = [

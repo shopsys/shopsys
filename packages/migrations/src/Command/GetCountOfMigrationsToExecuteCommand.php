@@ -19,12 +19,12 @@ class GetCountOfMigrationsToExecuteCommand extends Command
     /**
      * @var \Doctrine\Migrations\Version\AliasResolver
      */
-    private AliasResolver $aliasResolver;
+    protected AliasResolver $aliasResolver;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
      */
-    private MigrationLockPlanCalculator $migrationLockPlanCalculator;
+    protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
 
     /**
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory

@@ -21,17 +21,17 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository
      */
-    private MigrationsLockRepository $migrationsLockRepository;
+    protected MigrationsLockRepository $migrationsLockRepository;
 
     /**
      * @var \Doctrine\Migrations\Metadata\Storage\MetadataStorage
      */
-    private MetadataStorage $metadataStorage;
+    protected MetadataStorage $metadataStorage;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator
      */
-    private MigrationsLockComparator $migrationsLockComparator;
+    protected MigrationsLockComparator $migrationsLockComparator;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository $migrationsLockRepository
@@ -99,7 +99,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
      * @param \Doctrine\Migrations\Metadata\ExecutedMigration[] $executedMigrations
      * @return bool
      */
-    private function shouldExecuteMigration(AvailableMigration $availableMigration, array $executedMigrations): bool
+    protected function shouldExecuteMigration(AvailableMigration $availableMigration, array $executedMigrations): bool
     {
         foreach ($executedMigrations as $executedMigration) {
             if ($availableMigration->getVersion()->equals($executedMigration->getVersion())) {

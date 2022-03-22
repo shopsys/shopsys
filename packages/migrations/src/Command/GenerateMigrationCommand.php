@@ -15,8 +15,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenerateMigrationCommand extends Command
 {
-    private const RETURN_CODE_OK = 0;
-    private const RETURN_CODE_ERROR = 1;
+    protected const RETURN_CODE_OK = 0;
+    protected const RETURN_CODE_ERROR = 1;
 
     /**
      * @var string
@@ -26,22 +26,22 @@ class GenerateMigrationCommand extends Command
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private DatabaseSchemaFacade $databaseSchemaFacade;
+    protected DatabaseSchemaFacade $databaseSchemaFacade;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator
      */
-    private MigrationsGenerator $migrationsGenerator;
+    protected MigrationsGenerator $migrationsGenerator;
 
     /**
      * @var string
      */
-    private string $vendorDirectoryPath;
+    protected string $vendorDirectoryPath;
 
     /**
      * @var \Doctrine\Migrations\Configuration\Configuration
      */
-    private Configuration $configuration;
+    protected Configuration $configuration;
 
     /**
      * @param string $vendorDirectoryPath
@@ -82,7 +82,7 @@ class GenerateMigrationCommand extends Command
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM, no migrations were generated.</info>');
 
-            return self::RETURN_CODE_OK;
+            return static::RETURN_CODE_OK;
         }
 
         $io = new SymfonyStyle($input, $output);
@@ -92,7 +92,7 @@ class GenerateMigrationCommand extends Command
         } catch (NoMigrationLocationException $exception) {
             $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $generatorResult = $this->migrationsGenerator->generate(
@@ -105,7 +105,7 @@ class GenerateMigrationCommand extends Command
                 '<error>Migration file "' . realpath($generatorResult->getMigrationFilePath()) . '" could not be saved.</error>'
             );
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $output->writeln('<info>Database schema is not satisfying ORM, a new migration was generated!</info>');
@@ -115,14 +115,14 @@ class GenerateMigrationCommand extends Command
             $generatorResult->getWrittenBytes()
         ));
 
-        return self::RETURN_CODE_OK;
+        return static::RETURN_CODE_OK;
     }
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    private function chooseMigrationLocation(SymfonyStyle $io): MigrationsLocation
+    protected function chooseMigrationLocation(SymfonyStyle $io): MigrationsLocation
     {
         $migrationDirectoriesIndexedByNamespace = $this->configuration->getMigrationDirectories();
         $availableNamespaces = [];

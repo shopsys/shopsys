@@ -28,32 +28,32 @@ class MigrationsExecutor implements Executor
     /**
      * @var \Doctrine\Migrations\Query\Query[]
      */
-    private array $sqlQueries = [];
+    protected array $sqlQueries = [];
 
     /**
      * @var \Doctrine\Migrations\Provider\SchemaDiffProvider
      */
-    private SchemaDiffProvider $schemaDiffProvider;
+    protected SchemaDiffProvider $schemaDiffProvider;
 
     /**
      * @var \Symfony\Component\Stopwatch\Stopwatch
      */
-    private Stopwatch $stopwatch;
+    protected Stopwatch $stopwatch;
 
     /**
      * @var \Doctrine\Migrations\Metadata\Storage\MetadataStorage
      */
-    private MetadataStorage $metadataStorage;
+    protected MetadataStorage $metadataStorage;
 
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private LoggerInterface $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @var \Doctrine\Migrations\EventDispatcher
      */
-    private EventDispatcher $dispatcher;
+    protected EventDispatcher $dispatcher;
 
     /**
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
@@ -105,7 +105,7 @@ class MigrationsExecutor implements Executor
      * @param \Doctrine\Migrations\Version\ExecutionResult $result
      * @param \Doctrine\Migrations\MigratorConfiguration $configuration
      */
-    private function executeMigration(
+    protected function executeMigration(
         MigrationPlan $plan,
         ExecutionResult $result,
         MigratorConfiguration $configuration

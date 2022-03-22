@@ -12,7 +12,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     /**
      * @var \Doctrine\Migrations\Query\Query[]
      */
-    private array $sqlQueries = [];
+    protected array $sqlQueries = [];
 
     /**
      * {@inheritDoc}

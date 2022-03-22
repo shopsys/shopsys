@@ -9,8 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckDatabaseSchemaCommand extends Command
 {
-    private const RETURN_CODE_OK = 0;
-    private const RETURN_CODE_ERROR = 1;
+    protected const RETURN_CODE_OK = 0;
+    protected const RETURN_CODE_ERROR = 1;
 
     /**
      * @var string
@@ -20,7 +20,7 @@ class CheckDatabaseSchemaCommand extends Command
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private $databaseSchemaFacade;
+    protected $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
@@ -49,7 +49,7 @@ class CheckDatabaseSchemaCommand extends Command
         $filteredSchemaDiffSqlCommands = $this->databaseSchemaFacade->getFilteredSchemaDiffSqlCommands();
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM.</info>');
-            return self::RETURN_CODE_OK;
+            return static::RETURN_CODE_OK;
         }
 
         $output->writeln('<error>Database schema is not satisfying ORM!</error>');
@@ -61,6 +61,6 @@ class CheckDatabaseSchemaCommand extends Command
         $output->writeln('<info>TIP: you can use shopsys:migrations:generate</info>');
         $output->writeln('');
 
-        return self::RETURN_CODE_ERROR;
+        return static::RETURN_CODE_ERROR;
     }
 }

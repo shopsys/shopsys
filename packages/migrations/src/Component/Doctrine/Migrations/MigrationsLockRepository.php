@@ -24,32 +24,32 @@ class MigrationsLockRepository implements MigrationsRepository
     /**
      * @var \Doctrine\Migrations\Metadata\AvailableMigration[]
      */
-    private array $availableMigrations = [];
+    protected array $availableMigrations = [];
 
     /**
      * @var \Doctrine\Migrations\Metadata\AvailableMigration[]
      */
-    private ?array $filteredAvailableMigrations = null;
+    protected ?array $filteredAvailableMigrations = null;
 
     /**
      * @var array<string,string>
      */
-    private array $migrationDirectories;
+    protected array $migrationDirectories;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private MigrationsLock $migrationsLock;
+    protected MigrationsLock $migrationsLock;
 
     /**
      * @var \Doctrine\Migrations\Finder\MigrationFinder
      */
-    private MigrationFinder $migrationFinder;
+    protected MigrationFinder $migrationFinder;
 
     /**
      * @var \Doctrine\Migrations\Version\MigrationFactory
      */
-    private MigrationFactory $migrationFactory;
+    protected MigrationFactory $migrationFactory;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
@@ -71,7 +71,7 @@ class MigrationsLockRepository implements MigrationsRepository
     /**
      * @param string[] $migrationClasses
      */
-    private function registerMigrations(array $migrationClasses): void
+    protected function registerMigrations(array $migrationClasses): void
     {
         foreach ($migrationClasses as $class) {
             $this->registerMigration($class);
@@ -81,7 +81,7 @@ class MigrationsLockRepository implements MigrationsRepository
     /**
      * @param string $migrationClassName
      */
-    private function registerMigration(string $migrationClassName): void
+    protected function registerMigration(string $migrationClassName): void
     {
         $this->ensureMigrationClassExists($migrationClassName);
 
@@ -94,7 +94,7 @@ class MigrationsLockRepository implements MigrationsRepository
     /**
      * @param string $class
      */
-    private function ensureMigrationClassExists(string $class): void
+    protected function ensureMigrationClassExists(string $class): void
     {
         if (!class_exists($class)) {
             throw MigrationClassNotFound::new($class);
@@ -105,7 +105,7 @@ class MigrationsLockRepository implements MigrationsRepository
      * @param \Doctrine\Migrations\Version\Version $version
      * @param \Doctrine\Migrations\AbstractMigration $migration
      */
-    private function registerMigrationInstance(Version $version, AbstractMigration $migration): void
+    protected function registerMigrationInstance(Version $version, AbstractMigration $migration): void
     {
         if (array_key_exists((string)$version, $this->availableMigrations)) {
             throw DuplicateMigrationVersion::new(
@@ -153,7 +153,7 @@ class MigrationsLockRepository implements MigrationsRepository
         return new AvailableMigrationsSet($this->filteredAvailableMigrations);
     }
 
-    private function loadMigrationsFromDirectories(): void
+    protected function loadMigrationsFromDirectories(): void
     {
         if ($this->filteredAvailableMigrations !== null) {
             return;

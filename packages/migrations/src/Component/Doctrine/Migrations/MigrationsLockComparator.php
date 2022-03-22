@@ -12,7 +12,7 @@ class MigrationsLockComparator implements Comparator
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private MigrationsLock $migrationsLock;
+    protected MigrationsLock $migrationsLock;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
@@ -50,7 +50,7 @@ class MigrationsLockComparator implements Comparator
      * @param \Doctrine\Migrations\Version\Version $b
      * @return int
      */
-    private function compareVersionsAlphabetically(Version $a, Version $b): int
+    protected function compareVersionsAlphabetically(Version $a, Version $b): int
     {
         return strcmp($this->getVersionWithoutNamespace($a), $this->getVersionWithoutNamespace($b));
     }
@@ -59,7 +59,7 @@ class MigrationsLockComparator implements Comparator
      * @param \Doctrine\Migrations\Version\Version $version
      * @return string
      */
-    private function getVersionWithoutNamespace(Version $version): string
+    protected function getVersionWithoutNamespace(Version $version): string
     {
         $versionString = (string)$version;
 

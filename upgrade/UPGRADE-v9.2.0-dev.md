@@ -103,3 +103,4 @@ There you can find links to upgrade notes for other versions too.
         - `saveNewMigrations` method now accepts `AvailableMigrationsList $availableMigrationsList` instead of `array $migrationVersions` as an argument
     - the `Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder` and `MigrationsLocator` classes were removed
         - to register migrations of a bundle, you should leverage `PrependExtensionInterface`
+    - methods and properties visibility of all classes in `shopsys/migrations` package changed from `private` to `protected` to ease possible extension
