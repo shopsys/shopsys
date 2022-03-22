@@ -3,9 +3,9 @@ import { FC, useRef } from 'react';
 import BlogArticlesList from './BlogArticlesList';
 import { BlogCategoryDetailType } from 'types/blogCategory';
 import BlogSignpost from 'components/Blocks/BlogSignpost';
-import { getBlogCategoryItems } from 'connectors/blogCategory/BlogCategory';
 import Heading from 'components/Basic/Heading';
 import Pagination from 'components/Blocks/Pagination/Pagination';
+import { useBlogCategoryItems } from 'connectors/blogCategory/BlogCategory';
 import Webline from 'components/Layout/Webline';
 
 type BlogCategoryProps = {
@@ -13,7 +13,7 @@ type BlogCategoryProps = {
 };
 
 const BlogCategory: FC<BlogCategoryProps> = (props) => {
-    const blogCategoriesItems = getBlogCategoryItems();
+    const blogCategoriesItems = useBlogCategoryItems();
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (

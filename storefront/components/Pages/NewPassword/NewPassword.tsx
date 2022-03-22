@@ -8,13 +8,13 @@ import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import { NewPasswordFormType } from 'types/form';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useAuth } from 'hooks/auth/UseAuth';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -32,7 +32,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
     const t = useTypedTranslationFunction();
     const [newPasswordResult, newPassword] = useRecoverPasswordMutationApi();
     const { url } = useShopsysSelector((state) => state.domain);
-    const [newPasswordUrl, resetPasswordUrl] = useGetInternationalizedStaticUrls(
+    const [newPasswordUrl, resetPasswordUrl] = getInternationalizedStaticUrls(
         ['/new-password', '/reset-password'],
         url,
     );

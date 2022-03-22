@@ -3,7 +3,7 @@ import { getFirstImageSize } from 'connectors/image/Image';
 import { SliderItemType } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getSliderItems = (): SliderItemType[] | undefined => {
+export const useSliderItems = (): SliderItemType[] | undefined => {
     const [{ data, error }] = useSliderItemsQueryApi();
     useQueryError(error);
 

@@ -9,7 +9,7 @@ import {
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
 import Footer from 'components/Layout/Footer';
-import { getTransports } from 'connectors/transports/Transports';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderAction from 'components/Blocks/OrderAction';
@@ -17,9 +17,9 @@ import OrderLayout from 'components/Layout/OrderLayout';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TransportAndPaymentFormType } from 'types/form';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useRouter } from 'next/router';
+import { useTransports } from 'connectors/transports/Transports';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -27,11 +27,11 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [cartUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
+    const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
         domainUrl,
     );
-    const transports = getTransports(cartUuid);
+    const transports = useTransports(cartUuid);
 
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useTransportAndPaymentForm();

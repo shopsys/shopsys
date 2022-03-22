@@ -20,7 +20,7 @@ import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const blogPreviewVariables = { first: 6, onlyHomepageArticles: true };
 
-export const getBlogPreviewArticles = (): ListedBlogArticleType[] => {
+export const useBlogPreviewArticles = (): ListedBlogArticleType[] => {
     const [{ data, error }] = useBlogArticlesQueryApi({ variables: blogPreviewVariables });
 
     useQueryError(error);

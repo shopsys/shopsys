@@ -1,7 +1,7 @@
 import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListStyled } from './OrderSteps.style';
 import { FC } from 'react';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import NextLink from 'next/link';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -14,7 +14,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
     const testIdentifier = 'blocks-ordersteps-';
 
     const t = useTypedTranslationFunction();
-    const [cartUrl, transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
+    const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment'],
         props.domainUrl,
     );

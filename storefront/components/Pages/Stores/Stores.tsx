@@ -12,17 +12,17 @@ import {
     StoresStyled,
 } from './Stores.style';
 import { FC, useState } from 'react';
-import { getStores } from 'connectors/stores/Stores';
 import GoogleMap from 'components/Basic/GoogleMap';
 import Image from 'next/image';
 import InfoBox from './InfoBox';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import { useShopsysSelector } from 'redux/main';
+import { useStores } from 'connectors/stores/Stores';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Stores: FC = () => {
     const t = useTypedTranslationFunction();
-    const stores = getStores();
+    const stores = useStores();
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
     const [activeInfoBox, setActiveInfoBox] = useState(-1);
     const [closeInfoBox, setCloseInfoBox] = useState(true);

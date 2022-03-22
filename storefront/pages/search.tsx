@@ -7,7 +7,6 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
-import { getSearch } from 'connectors/search/Search';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -18,6 +17,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListS
 import SearchPage from 'components/Pages/Search';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useRouter } from 'next/router';
+import { useSearch } from 'connectors/search/Search';
 
 const Search: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -26,7 +26,7 @@ const Search: FC<ServerSidePropsType> = () => {
     const searchProductsSort = useShopsysSelector((state) => state.user.sort);
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
-    const searchResults = getSearch(
+    const searchResults = useSearch(
         getStringFromUrlQuery(router.query.q),
         searchProductsSort,
         paginationCursor,

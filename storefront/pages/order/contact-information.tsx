@@ -17,13 +17,13 @@ import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
 import Footer from 'components/Layout/Footer';
 import Form from 'components/Forms/Form';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
@@ -38,7 +38,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const dispatch = useShopsysDispatch();
     const contactInformationValues = useShopsysSelector((state) => state.contactInformation);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [transportAndPaymentUrl, orderConfirmationUrl] = useGetInternationalizedStaticUrls(
+    const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );

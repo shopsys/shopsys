@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { getPromotedCategories } from 'connectors/categories/PromotedCategories';
 import { PromotedCategoriesSimpleNavigationStyled } from './PromotedCategories.style';
+import { usePromotedCategories } from 'connectors/categories/PromotedCategories';
 
 const PromotedCategories: FC = () => {
-    const promotedCategories = getPromotedCategories();
+    const promotedCategories = usePromotedCategories();
 
     if (promotedCategories !== undefined) {
         return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;

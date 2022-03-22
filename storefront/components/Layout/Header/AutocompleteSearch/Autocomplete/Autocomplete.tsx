@@ -18,10 +18,10 @@ import { AutocompleteSearchType } from 'types/search';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -43,7 +43,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainConfig.url);
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainConfig.url);
 
     return (
         <AutocompleteStyled isActive={props.isAutocompleteActive} data-testid={testIdentifier}>

@@ -1,4 +1,4 @@
-import { FC, Fragment, RefObject, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, RefObject, useEffect, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -31,14 +31,13 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
     );
     const paginationState = useShopsysSelector((state) => state.user.pagination);
 
-    const paginationButtons = useMemo(() => {
-        return usePagination(
-            props.totalCount,
-            paginationState.currentPage,
-            isMobilePaginationVisible,
-            initialState.pagination.pageSize,
-        );
-    }, [props.totalCount, paginationState.currentPage, isMobilePaginationVisible, initialState.pagination.pageSize]);
+    const paginationButtons = usePagination(
+        props.totalCount,
+        paginationState.currentPage,
+        isMobilePaginationVisible,
+        initialState.pagination.pageSize,
+    );
+
     useEffect(() => {
         dispatch(userActions.setPagination({ ...initialState.pagination }));
     }, [router.asPath]);

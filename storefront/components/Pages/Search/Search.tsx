@@ -10,6 +10,7 @@ import {
 } from './Search.style';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import Button from 'components/Forms/Button';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
@@ -19,7 +20,6 @@ import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
@@ -45,7 +45,7 @@ const Search: FC<SearchProps> = (props) => {
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainUrl);
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
     const { width } = useGetWindowSize();
     const { currentPage } = useShopsysSelector((state) => state.user.pagination);
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
@@ -94,10 +94,6 @@ const Search: FC<SearchProps> = (props) => {
         }
     };
 
-    if (props.searchResults === undefined) {
-        return null;
-    }
-
     useComponentUpdate(() => {
         if (oldRouterQuery !== router.query.q) {
             setQueryPathWasChanged(true);
@@ -110,7 +106,11 @@ const Search: FC<SearchProps> = (props) => {
             setRouterQueryChanged(!routerQueryChanged);
             setQueryPathWasChanged(false);
         }
-    }, [props.searchResults.productsSearch.productFilterOptions]);
+    }, [props.searchResults?.productsSearch.productFilterOptions]);
+
+    if (props.searchResults === undefined) {
+        return null;
+    }
 
     return (
         <>

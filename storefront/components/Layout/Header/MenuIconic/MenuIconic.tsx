@@ -10,13 +10,13 @@ import {
     MenuIconicSubItemStyled,
     MenuIconicSubStyled,
 } from './MenuIconic.style';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import Login from 'components/Blocks/Popup/Login';
 import NextLink from 'next/link';
 import nookies from 'nookies';
 import Popup from 'components/Layout/Popup';
 import { useAuth } from 'hooks/auth/UseAuth';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -27,10 +27,7 @@ const MenuIconic: FC = () => {
     const [, [, logout]] = useAuth();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [storesUrl, myOrdersUrl] = useGetInternationalizedStaticUrls(
-        ['/stores', '/customer/orders'],
-        domainConfig.url,
-    );
+    const [storesUrl, myOrdersUrl] = getInternationalizedStaticUrls(['/stores', '/customer/orders'], domainConfig.url);
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
 
     const loginHandler = () => {

@@ -1,13 +1,12 @@
 import { FC, useEffect } from 'react';
 import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-
 import CommonLayout from 'components/Layout/CommonLayout';
-import { getOrders } from 'connectors/customer/Orders';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import Orders from 'components/Pages/Customer/Orders';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useOrders } from 'connectors/customer/Orders';
 import { useRouter } from 'next/router';
 
 const Index: FC = () => {
@@ -15,7 +14,7 @@ const Index: FC = () => {
     const router = useRouter();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
-    const ordersData = getOrders(currentDomainConfig);
+    const ordersData = useOrders(currentDomainConfig);
 
     useEffect(() => {
         if (isUserLoggedIn === false) {

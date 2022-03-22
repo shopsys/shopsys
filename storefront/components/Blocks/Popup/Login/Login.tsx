@@ -20,13 +20,13 @@ import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Image from 'next/image';
 import Link from 'components/Basic/Link';
 import NextLink from 'next/link';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'react-i18next';
 import { useAuth } from 'hooks/auth/UseAuth';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
@@ -48,7 +48,7 @@ const Login: FC = () => {
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const { url } = useShopsysSelector((state) => state.domain);
-    const [resetPasswordUrl, registrationUrl] = useGetInternationalizedStaticUrls(
+    const [resetPasswordUrl, registrationUrl] = getInternationalizedStaticUrls(
         ['/reset-password', '/registration'],
         url,
     );

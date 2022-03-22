@@ -4,7 +4,7 @@ import { getFirstImageSize } from 'connectors/image/Image';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getBrands(): ListedBrandType[] | undefined {
+export function useBrands(): ListedBrandType[] | undefined {
     const [{ data, error }] = useBrandsQueryApi();
     useQueryError(error);
 

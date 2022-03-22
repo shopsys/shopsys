@@ -1,6 +1,7 @@
 import { FC, useRef } from 'react';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import Image from 'components/Basic/Image';
@@ -9,7 +10,6 @@ import NextLink from 'next/link';
 import Pagination from 'components/Blocks/Pagination';
 import TableGrid from 'components/Basic/TableGrid';
 import { TransportImageWrapperStyled } from './Orders.style';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -23,7 +23,7 @@ const Orders: FC<ListedOrdersProps> = (props) => {
     const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
-    const [customerOrdersUrl, customerOrderDetailUrl] = useGetInternationalizedStaticUrls(
+    const [customerOrdersUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
         ['/customer/orders', '/customer/order-detail'],
         url,
     );

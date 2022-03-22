@@ -32,7 +32,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ['tsconfig.json'], // Specify it only for TypeScript files
     },
-    plugins: ['react', 'unused-imports', 'prettier', '@typescript-eslint'],
+    plugins: ['react', 'unused-imports', 'prettier', '@typescript-eslint', 'react-hooks'],
     rules: {
         'array-callback-return': 'error',
         'block-scoped-var': 'error',
@@ -85,6 +85,7 @@ module.exports = {
                 patterns: ['..*'],
             },
         ],
+        'react-hooks/rules-of-hooks': 'error',
     },
     settings: {
         react: {

@@ -20,7 +20,7 @@ import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 import { useSlugQueryApi } from 'graphql/generated';
 
-export function getFriendlyUrlResolvedData(
+export function useFriendlyUrlResolvedData(
     slug: string,
 ):
     | ProductDetailType

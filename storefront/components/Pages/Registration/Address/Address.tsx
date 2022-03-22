@@ -4,17 +4,17 @@ import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Address: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const countrySelectOptions = getCountriesAsSelectOptions();
+    const countrySelectOptions = useCountriesAsSelectOptions();
 
     useEffect(() => {
         if (countrySelectOptions.length > 0) {

@@ -4,12 +4,12 @@ import {
     NotificationBarsStyled,
 } from './NotificationBars.style';
 import { FC } from 'react';
-import { getNotificationBars } from 'connectors/notificationBars/NotificationBars';
 import Image from 'components/Basic/Image/Image';
+import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
 import Webline from 'components/Layout/Webline';
 
 const NotificationBars: FC = () => {
-    const items = getNotificationBars();
+    const items = useNotificationBars();
 
     return (
         <>

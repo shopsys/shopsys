@@ -10,12 +10,12 @@ import {
 } from './BlogPreview.style';
 import { FC, useState } from 'react';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { getBlogUrl } from 'connectors/blogCategory/BlogCategory';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import Main from './Main';
 import Side from './Side';
 import SideSlider from './SideSlider';
+import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
+import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -24,8 +24,8 @@ const BlogPreview: FC = () => {
     const testIdentifier = 'blocks-blogpreview';
 
     const t = useTypedTranslationFunction();
-    const blogPreviewItems = getBlogPreviewArticles();
-    const blogUrl = getBlogUrl();
+    const blogPreviewItems = useBlogPreviewArticles();
+    const blogUrl = useBlogUrl();
     const { width } = useGetWindowSize();
     const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);
     const blogMainItems = blogPreviewItems.slice(0, 2);

@@ -3,7 +3,7 @@ import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getCountries = (): CountryType[] => {
+export const useCountries = (): CountryType[] => {
     const [{ data, error }] = useCountriesQueryApi();
     useQueryError(error);
 
@@ -14,8 +14,8 @@ export const getCountries = (): CountryType[] => {
     return data.countries;
 };
 
-export const getCountriesAsSelectOptions = (): SelectOptionType[] => {
-    const countries = getCountries();
+export const useCountriesAsSelectOptions = (): SelectOptionType[] => {
+    const countries = useCountries();
 
     return countries.map((country) => {
         return {

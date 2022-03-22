@@ -15,10 +15,10 @@ import {
 import { AddToCartPopupDataType } from 'types/cart';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
 import Popup from 'components/Layout/Popup';
-import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -33,7 +33,7 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
 
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
+    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
     return (
         <Popup
