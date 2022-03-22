@@ -37,6 +37,9 @@ services:
 
     Sniffer\ExtendedApiClassNamespaceSniffer: ~
 
+    PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
+        absoluteComplexity: 19
+
 parameters:
     sets:
         - 'php70'
@@ -122,6 +125,7 @@ parameters:
             - '*/src/DataFixtures/Demo/CategoryDataFixture.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Model/Order/OrderFacade.php'
+            - '*/src/FrontendApi/Resolver/Category/CategoryResolverMap.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff:
             - '*/tests/App/Test/Codeception/ActorInterface.php'

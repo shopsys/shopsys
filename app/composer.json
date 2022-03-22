@@ -131,7 +131,7 @@
         "tracy/tracy": "^2.4.13",
         "tuscanicz/enum": "^2.1",
         "twig/extensions": "^1.5.1",
-        "twig/twig": "^2.9",
+        "twig/twig": "^2.14.11",
         "vasek-purchart/console-errors-bundle": "^3.0.0",
         "webmozart/assert": "^1.4"
     },
@@ -159,7 +159,8 @@
     "conflict": {
         "symfony/symfony": "*",
         "symfony/dependency-injection": ">=4.4.19",
-        "friendsofphp/php-cs-fixer": "2.19.0"
+        "friendsofphp/php-cs-fixer": "2.19.0",
+        "guzzlehttp/psr7": "<=1.8.3, >=2.0.0, <=2.1.0"
     },
     "scripts": {
         "post-install-cmd": [
