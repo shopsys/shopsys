@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper } from 'redux/main';
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { useRouter } from 'next/router';
@@ -33,7 +32,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
+    return initServerSideProps(context, store);
 });
 
 export default Index;

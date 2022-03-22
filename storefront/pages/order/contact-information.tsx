@@ -1,9 +1,4 @@
-import {
-    CreateOrderMutationApi,
-    NavigationQueryDocumentApi,
-    NotificationBarsDocumentApi,
-    useCreateOrderMutationApi,
-} from 'graphql/generated';
+import { CreateOrderMutationApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -160,12 +155,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     initDomainConfig(context, store);
     const cartState = store.getState().cart;
     const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
-    return redirect === false
-        ? initServerSideProps(context, store, [
-              { query: NotificationBarsDocumentApi },
-              { query: NavigationQueryDocumentApi },
-          ])
-        : redirect;
+    return redirect === false ? initServerSideProps(context, store) : redirect;
 });
 
 export default ContactInformation;

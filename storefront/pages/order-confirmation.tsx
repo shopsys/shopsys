@@ -1,6 +1,5 @@
 import { FC, useEffect } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
@@ -33,10 +32,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
-    ]);
+    return initServerSideProps(context, store);
 });
 
 export default Index;

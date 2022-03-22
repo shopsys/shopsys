@@ -1,8 +1,3 @@
-import {
-    NavigationQueryDocumentApi,
-    NotificationBarsDocumentApi,
-    OrderDetailByHashQueryDocumentApi,
-} from 'graphql/generated';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
@@ -10,6 +5,7 @@ import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import OrderDetail from 'components/Pages/Customer/OrderDetail';
+import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { useRouter } from 'next/router';
@@ -45,8 +41,6 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
         { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
     ]);
 });

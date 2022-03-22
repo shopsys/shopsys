@@ -3,7 +3,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import PaymentFail from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import PaymentSuccess from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -46,7 +45,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
+    return initServerSideProps(context, store);
 });
 
 export default Index;

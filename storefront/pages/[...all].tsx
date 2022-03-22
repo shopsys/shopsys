@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, NotificationBarsDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
+import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'types/article';
@@ -22,7 +22,6 @@ import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { MainVariantDetailType } from 'types/product';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
@@ -30,7 +29,7 @@ import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQu
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
 import ProductDetailPage from 'components/Pages/ProductDetail';
-import { ProductDetailType } from 'types/product';
+import { SlugQueryDocumentApi } from 'graphql/generated';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { StoreDetailType } from 'types/store';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
@@ -116,8 +115,6 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     );
 
     return initServerSideProps(context, store, [
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
         {
             query: SlugQueryDocumentApi,
             variables: {

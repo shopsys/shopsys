@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { NavigationQueryDocumentApi, NotificationBarsDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
@@ -15,6 +14,7 @@ import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOp
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import SearchPage from 'components/Pages/Search';
+import { SearchQueryDocumentApi } from 'graphql/generated';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useRouter } from 'next/router';
 import { useSearch } from 'connectors/search/Search';
@@ -67,8 +67,6 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     );
 
     return initServerSideProps(context, store, [
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
         {
             query: SearchQueryDocumentApi,
             variables: {

@@ -1,7 +1,5 @@
 import {
     BlogArticlesQueryDocumentApi,
-    NavigationQueryDocumentApi,
-    NotificationBarsDocumentApi,
     PromotedCategoriesQueryDocumentApi,
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
@@ -50,8 +48,6 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         { query: PromotedCategoriesQueryDocumentApi },
         { query: SliderItemsQueryDocumentApi },
         { query: PromotedProductsQueryDocumentApi },
-        { query: NotificationBarsDocumentApi },
-        { query: NavigationQueryDocumentApi },
         { query: BlogArticlesQueryDocumentApi, variables: blogPreviewVariables },
     ]);
 });
