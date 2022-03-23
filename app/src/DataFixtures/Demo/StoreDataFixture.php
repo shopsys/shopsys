@@ -38,6 +38,15 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const STORE_PREFIX = 'store_';
 
     /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '6ffdbcc0-fd5d-4f60-bf8d-1349366b3d93',
+        '60a0cd42-5c7b-47a8-ac79-aec5808931ff',
+        '9be1392b-c39a-4130-a107-aedc56e7175e',
+    ];
+
+    /**
      * @var \App\Model\Store\StoreFacade
      */
     private StoreFacade $storeFacade;
@@ -146,6 +155,8 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function initStoreData(array $demoRow): StoreData
     {
         $storeData = $this->storeDataFactory->create();
+
+        $storeData->uuid = array_pop($this->uuidPool);
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
