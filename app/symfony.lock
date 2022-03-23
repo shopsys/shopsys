@@ -14,6 +14,9 @@
     "asm89/twig-cache-extension": {
         "version": "1.4.0"
     },
+    "aws/aws-crt-php": {
+        "version": "v1.0.2"
+    },
     "aws/aws-sdk-php": {
         "version": "3.133.16"
     },
@@ -85,6 +88,9 @@
     },
     "composer/composer": {
         "version": "1.9.1"
+    },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.5"
     },
     "composer/semver": {
         "version": "1.5.0"
@@ -216,9 +222,6 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "egeloen/ordered-form": {
-        "version": "3.0.0"
-    },
     "egulias/email-validator": {
         "version": "2.1.11"
     },
@@ -236,9 +239,6 @@
     },
     "ezimuel/ringphp": {
         "version": "1.1.2"
-    },
-    "facebook/webdriver": {
-        "version": "1.7.1"
     },
     "firebase/php-jwt": {
         "version": "v5.0.0"
@@ -384,12 +384,6 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
-    "laminas/laminas-eventmanager": {
-        "version": "3.3.0"
-    },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.0.4"
-    },
     "lcobucci/jwt": {
         "version": "3.4.5"
     },
@@ -441,9 +435,6 @@
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
     },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
-    },
     "overblog/dataloader-bundle": {
         "version": "v0.5.2"
     },
@@ -490,9 +481,6 @@
     },
     "phing/phing": {
         "version": "2.16.1"
-    },
-    "php": {
-        "version": "7.4.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -883,6 +871,9 @@
     "symfony/dependency-injection": {
         "version": "v3.4.33"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.5.0"
+    },
     "symfony/doctrine-bridge": {
         "version": "v3.4.33"
     },
@@ -1017,9 +1008,6 @@
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
-    },
-    "symfony/polyfill-util": {
-        "version": "v1.12.0"
     },
     "symfony/polyfill-uuid": {
         "version": "v1.23.0"
@@ -1251,11 +1239,5 @@
     },
     "zalas/phpunit-injector": {
         "version": "v1.2.7"
-    },
-    "zendframework/zend-code": {
-        "version": "3.4.0"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
     }
 }

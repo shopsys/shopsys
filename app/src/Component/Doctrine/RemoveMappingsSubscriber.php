@@ -68,8 +68,8 @@ class RemoveMappingsSubscriber implements EventSubscriber
 
     /**
      * @param string $attributeName
-     * @param string[] $mapping
-     * @return string[]
+     * @param array<string, array<string, string>> $mapping
+     * @return array<string, array<string, string>>
      */
     private function removeMappingByKey(string $attributeName, array $mapping): array
     {
