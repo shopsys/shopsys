@@ -13,9 +13,9 @@ export const useStaticUrlGuard = (path: string, domainUrl: string): boolean => {
 
         const staticUrlSegments = rewriteKey.split('/');
         if (
-            pathSegments.every(
-                (pathSegment, index) => staticUrlSegments[index] === pathSegment || staticUrlSegments[index][0] === ':',
-            )
+            pathSegments.every((pathSegment, index) => {
+                return staticUrlSegments[index] === pathSegment || staticUrlSegments[index]?.charAt(0) === ':';
+            })
         ) {
             return true;
         }
