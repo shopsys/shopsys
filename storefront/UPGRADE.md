@@ -37,3 +37,5 @@
     - was created because in come cases router redirect in the component was throwing a runtime error, as it can only be used on the client-side
     - if you want this change, check for all the router.push redirects in your components, delete them, and use the page guard wrapper instead
     - the component can be easily nested to introduce multiple redirect rules
+  - CustomerTypeEnum was unified to respect DRY
+    - this meant changes in many places but will be more scalable and robust in the future
