@@ -1,4 +1,4 @@
-import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
+import { CustomerTypeEnum } from './customer';
 import { SelectOptionType } from './selectOptions';
 
 export type PromoCodeFormType = {
