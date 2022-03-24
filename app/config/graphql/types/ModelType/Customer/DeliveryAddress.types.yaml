@@ -3,7 +3,7 @@ DeliveryAddress:
     config:
         fields:
             uuid:
-                type: "Uuid"
+                type: "Uuid!"
                 description: "UUID"
             companyName:
                 type: "String!"

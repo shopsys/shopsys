@@ -711,7 +711,7 @@ scalar DateTime
 
 type DeliveryAddress {
   """UUID"""
-  uuid: Uuid
+  uuid: Uuid!
 
   """Delivery address company name"""
   companyName: String!
