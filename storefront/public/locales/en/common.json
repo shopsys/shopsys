@@ -260,5 +260,10 @@
     "This field contains invalid character": "This field contains invalid character",
     "Resellers": "Resellers",
     "Order sent": "Order sent",
-    "Go to order detail": "Go to order detail"
+    "Go to order detail": "Go to order detail",
+    "To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.": "To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.",
+    "Customer": "Customer",
+    "Do you really want to delete this delivery address?": "Do you really want to delete this delivery address?",
+    "Yes": "Yes",
+    "No": "No"
 }

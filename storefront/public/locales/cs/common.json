@@ -260,5 +260,10 @@
     "This field contains invalid character": "Toto pole obsahuje neplatný znak",
     "Resellers": "Prodejci",
     "Order sent": "Objednávka odeslána",
-    "Go to order detail": "Jít na detail objednávky"
+    "Go to order detail": "Jít na detail objednávky",
+    "To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.": "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte.",
+    "Customer": "Zákazník",
+    "Do you really want to delete this delivery address?": "Opravdu chcete smazat tuto doručovací adresu?",
+    "Yes": "Ano",
+    "No": "Ne"
 }
