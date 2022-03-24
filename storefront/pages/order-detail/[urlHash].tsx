@@ -6,6 +6,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
+import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { useRouter } from 'next/router';
@@ -15,16 +16,13 @@ const OrderDetailByHash: FC = () => {
     const router = useRouter();
     const order = useOrderDetailByHash(getStringFromUrlQuery(router.query.urlHash), domainConfig);
 
-    if (order === null) {
-        router.push('/');
-        return null;
-    }
-
     return (
         <StaticUrlGuard domainUrl={domainConfig.url}>
-            <CommonLayout>
-                <OrderDetail order={order} />
-            </CommonLayout>
+            <PageGuard accessCondition={order !== null} errorRedirectUrl="/">
+                <CommonLayout>
+                    <OrderDetail order={order!} />
+                </CommonLayout>
+            </PageGuard>
         </StaticUrlGuard>
     );
 };
