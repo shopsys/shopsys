@@ -110,6 +110,7 @@
         "league/flysystem": "^1.1.4",
         "litipk/php-bignumbers": "^0.8.6",
         "nikic/php-parser": "^4.0",
+        "nyholm/psr7": "^1.5",
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
         "overblog/graphiql-bundle": "^0.2",
         "overblog/graphql-bundle": "^0.13",
