@@ -246,6 +246,7 @@
     "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle pravidel.",
     "The street must contain a letter": "Ulice musí obsahovat písmeno",
     "The street must contain a number": "Ulice musí obsahovat číslo",
+    "There was an error while adding a promo code to the order.": "Během přidávání slevového kupónu do objednávky se vyskytla chyba.",
     "There was an error while changing your password": "Při změně Vašeho hesla došlo k chybě",
     "There was an error while deleting your delivery address": "Při mazání dodací adresy došlo k chybě",
     "This field is required": "Toto pole je povinné",

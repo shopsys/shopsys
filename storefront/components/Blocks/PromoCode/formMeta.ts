@@ -41,6 +41,7 @@ export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCod
         formName: 'promo-code-form',
         messages: {
             success: t('Promo code was added to the order.'),
+            error: t('There was an error while adding a promo code to the order.'),
         },
         fields: {
             promoCode: {

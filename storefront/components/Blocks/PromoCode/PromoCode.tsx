@@ -1,4 +1,4 @@
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
     PromoCodeButtonIconStyled,
@@ -9,30 +9,18 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import { CSSTransition } from 'react-transition-group';
 import Form from 'components/Forms/Form';
 import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
-import { useLoadCart } from 'connectors/cart/Cart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
-    const {
-        cartInput: { cartUuid, payment, transport, promoCode },
-    } = useShopsysSelector((state) => state.cart);
-    const [updatedPromoCode, updatePromoCode] = useState(promoCode);
-
-    const [result] = useLoadCart(
-        cartUuid,
-        transport,
-        payment,
-        updatedPromoCode,
-        payment ? payment.goPayBankSwift : null,
-    );
+    const { cartUuid, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);
@@ -40,21 +28,7 @@ const PromoCode: FC = () => {
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [formProviderMethods, defaultValues] = usePromoCodeForm();
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
-    const promoCodeValue = useWatch({ name: formMeta.fields.promoCode.name, control: formProviderMethods.control });
-
-    useEffect(() => {
-        if (
-            result.data === undefined ||
-            result.error !== undefined ||
-            updatedPromoCode === promoCode ||
-            updatedPromoCode === null
-        ) {
-            return;
-        }
-        if (result.data.cart !== null) {
-            showSuccessMessage(formMeta.messages.success);
-        }
-    }, [result.data]);
+    const [changePromoCodeResult, changePromoCode] = useChangePromoCodeApi();
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -64,13 +38,21 @@ const PromoCode: FC = () => {
 
     const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = (data, event) => {
         event?.preventDefault();
-        updatePromoCode(data.promoCode);
+        changePromoCode(cartUuid, data.promoCode);
     };
 
     const onRemovePromoCodeHandler = () => {
         formProviderMethods.setValue(formMeta.fields.promoCode.name, defaultValues.promoCode);
-        updatePromoCode(null);
+        changePromoCode(cartUuid, null);
     };
+
+    useEffect(() => {
+        if (changePromoCodeResult.error !== undefined) {
+            showErrorMessage(formMeta.messages.success);
+        } else if (changePromoCodeResult.data !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
+        }
+    }, [changePromoCodeResult]);
 
     return (
         <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
@@ -118,8 +100,7 @@ const PromoCode: FC = () => {
                                                         type="submit"
                                                         isDisabled={
                                                             !formProviderMethods.formState.isValid ||
-                                                            result.fetching ||
-                                                            promoCodeValue === updatedPromoCode
+                                                            changePromoCodeResult.fetching
                                                         }
                                                         data-testid={testIdentifier + '-apply-button'}
                                                     >
