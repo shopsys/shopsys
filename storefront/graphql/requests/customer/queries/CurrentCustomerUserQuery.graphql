@@ -12,6 +12,9 @@ query CurrentCustomerUserQuery {
             ...CountryFragment
         }
         newsletterSubscription
+        defaultDeliveryAddress {
+            ...DeliveryAddressFragment
+        }
         deliveryAddresses {
             ...DeliveryAddressFragment
         }

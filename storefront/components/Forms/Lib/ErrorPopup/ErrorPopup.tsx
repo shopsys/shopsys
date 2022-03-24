@@ -11,7 +11,7 @@ type ErrorPopupProps = {
         [fieldName: string]: {
             name: string;
             label: string | ReactElement;
-            errorMessage: string | undefined;
+            errorMessage?: string | undefined;
         };
     };
 };

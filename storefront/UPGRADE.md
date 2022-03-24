@@ -31,6 +31,10 @@
 - [FWCC-439 - customer profile ](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/435)
 - most significant changes
   - customer page was added with links to other parts of the customer section
+  - edit profile page was added together with sections for
+    - password change
+    - delivery address modifiactions
+    - personal data change
 - other changes
   - PageGuard component was introduced
     - it helps with unauthorized access redirect on client
