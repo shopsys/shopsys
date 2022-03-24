@@ -2,7 +2,7 @@
          "symfony/webpack-encore-bundle": "^1.7",
          "symfony/workflow": "^4.4.0",
          "tracy/tracy": "^2.4.13",
-+        "trikoder/oauth2-bundle": "^1.1",
++        "trikoder/oauth2-bundle": "^3.2",
          "twig/extensions": "^1.5.1",
          "twig/twig": "^2.9",
          "webmozart/assert": "^1.4"
