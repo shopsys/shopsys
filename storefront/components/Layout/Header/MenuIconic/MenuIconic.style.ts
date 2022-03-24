@@ -102,7 +102,7 @@ export const MenuIconicSubStyled = styled.ul`
         min-width: 150px;
 
         background: ${theme.color.white};
-        z-index: ${theme.zIndex.menu};
+        z-index: ${theme.zIndex.cart};
         border-radius: ${theme.radius.big} 0 ${theme.radius.big} ${theme.radius.big};
         box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.15);
         transition: all 0.2s ease-in-out;
@@ -157,7 +157,7 @@ export const MenuIconicButtonMobileStyled = styled.div`
     `}
 `;
 
-export const MenuIconicButtonMobileLinkStyled = styled.a`
+export const MenuIconicButtonMobileLinkStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         align-items: center;

@@ -27,7 +27,10 @@ const MenuIconic: FC = () => {
     const [, [, logout]] = useAuth();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [storesUrl, myOrdersUrl] = getInternationalizedStaticUrls(['/stores', '/customer/orders'], domainConfig.url);
+    const [storesUrl, customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
+        ['/stores', '/customer', '/customer/orders', '/customer/edit-profile'],
+        domainConfig.url,
+    );
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
 
     const loginHandler = () => {
@@ -69,21 +72,30 @@ const MenuIconic: FC = () => {
                     </NextLink>
                 </MenuIconicItemStyled>
                 <MenuIconicItemStyled data-testid={testIdentifier + '-2'}>
-                    {isUserLoggedIn === true ? (
+                    {isUserLoggedIn ? (
                         <MenuIconicItemLinkStyled hasSubmenu={true}>
                             <MenuIconicItemIconStyled iconType="icon" icon="User" />
                             {t('My account')}
                             <MenuIconicSubStyled>
                                 <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-0'}>
-                                    <NextLink href={myOrdersUrl} passHref>
+                                    <NextLink href={customerOrdersUrl} passHref>
                                         <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
                                     </NextLink>
                                 </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-1'}>
-                                    <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
+                                <MenuIconicSubItemStyled>
+                                    <NextLink
+                                        href={customerEditProfileUrl}
+                                        passHref
+                                        data-testid={testIdentifier + '-sub-1'}
+                                    >
+                                        <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
+                                    </NextLink>
                                 </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-2'}>
-                                    <MenuIconicSubItemLinkStyled onClick={logoutHandler}>
+                                <MenuIconicSubItemStyled>
+                                    <MenuIconicSubItemLinkStyled
+                                        onClick={logoutHandler}
+                                        data-testid={testIdentifier + '-sub-2'}
+                                    >
                                         {t('Logout')}
                                     </MenuIconicSubItemLinkStyled>
                                 </MenuIconicSubItemStyled>
@@ -98,10 +110,12 @@ const MenuIconic: FC = () => {
                 </MenuIconicItemStyled>
             </MenuIconicListStyled>
             <MenuIconicButtonMobileStyled>
-                {isUserLoggedIn === true ? (
-                    <MenuIconicButtonMobileLinkStyled>
-                        <MenuIconicItemIconStyled iconType="icon" icon="RemoveBold" onClick={logoutHandler} />
-                    </MenuIconicButtonMobileLinkStyled>
+                {isUserLoggedIn ? (
+                    <NextLink href={customerUrl} passHref>
+                        <MenuIconicButtonMobileLinkStyled>
+                            <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                        </MenuIconicButtonMobileLinkStyled>
+                    </NextLink>
                 ) : (
                     <MenuIconicButtonMobileLinkStyled onClick={loginHandler}>
                         <MenuIconicItemIconStyled iconType="icon" icon="User" />
