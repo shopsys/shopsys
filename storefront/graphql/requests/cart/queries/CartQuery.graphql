@@ -2,13 +2,11 @@ query CartQuery (
     $cartUuid: Uuid
     $transport: TransportInput
     $payment: PaymentInput
-    $promoCode: String
 ){
     cart(cartInput: {
         cartUuid: $cartUuid
         transport: $transport
         payment: $payment
-        promoCode: $promoCode
     }) {
         ...CartFragment
     }

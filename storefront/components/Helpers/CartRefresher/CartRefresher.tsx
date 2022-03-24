@@ -7,14 +7,13 @@ const CartRefresher: FC = () => {
     const router = useRouter();
     const {
         isCartEmpty,
-        cartInput: { cartUuid, transport, payment, promoCode },
+        cartInput: { cartUuid, transport, payment },
     } = useShopsysSelector((state) => state.cart);
 
     const [, refreshCart] = useLoadCart(
         cartUuid,
         transport,
         payment,
-        promoCode,
         payment ? payment.goPayBankSwift : null,
     );
 

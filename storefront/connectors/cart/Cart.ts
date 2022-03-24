@@ -50,12 +50,11 @@ export const useLoadCart = (
     cartUuid: CartInput['cartUuid'],
     transport: CartInput['transport'],
     payment: CartInput['payment'],
-    promoCode: CartInput['promoCode'],
     goPayBankSwift: string | null,
 ): UseQueryResponse<CartQueryApi> => {
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
     const [result, refresh] = useCartQueryApi({
-        variables: { cartUuid, transport, payment, promoCode } as CartQueryVariablesApi,
+        variables: { cartUuid, transport, payment } as CartQueryVariablesApi,
         pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: 'network-only',
     });

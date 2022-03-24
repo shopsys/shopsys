@@ -28,9 +28,6 @@ export const useHandleCartErrors = (resultErrors: CombinedError | undefined, err
 
         if (userError?.validation !== undefined) {
             for (const invalidFieldName in userError.validation) {
-                if (invalidFieldName === 'promoCode') {
-                    dispatch(cartActions.setPromoCode(null));
-                }
                 showErrorMessage(userError.validation[invalidFieldName].message);
             }
         }

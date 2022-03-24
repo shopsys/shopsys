@@ -5,7 +5,6 @@ import { mapTransportToTransportInput } from 'connectors/cart/Cart';
 export const getCartInputFromCartResult = (resultData: CartResultValues, goPayBankSwift: string | null): CartInput => {
     return {
         cartUuid: resultData.cartUuid,
-        promoCode: resultData.promoCode,
         transport:
             resultData.transport === null
                 ? null

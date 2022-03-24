@@ -10,7 +10,6 @@ export type CartInput = {
     cartUuid: string | null;
     transport: TransportInputType | null;
     payment: PaymentInputType | null;
-    promoCode: string | null;
 };
 
 export type ProductCartItemType = {
@@ -50,7 +49,6 @@ export type CartResultValues = {
     pickupPlace: PickupPlaceType | null;
     goPayBankSwift: string | null;
     payment: PaymentType | null;
-    promoCode: string | null;
 };
 
 export type AddToCartPopupDataType = SimpleProductType & {

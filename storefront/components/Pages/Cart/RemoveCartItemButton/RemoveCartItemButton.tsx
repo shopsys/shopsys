@@ -13,7 +13,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
 
     const {
         isCartEmpty,
-        cartInput: { cartUuid, transport, payment, promoCode },
+        cartInput: { cartUuid, transport, payment },
     } = useShopsysSelector((state) => state.cart);
     const [, removeItemFromCart] = useRemoveFromCart();
 
@@ -22,7 +22,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
             return;
         }
 
-        removeItemFromCart({ cartItemUuid: props.cartItemUuid, cartUuid, transport, payment, promoCode });
+        removeItemFromCart({ cartItemUuid: props.cartItemUuid, cartUuid, transport, payment });
     };
 
     return (

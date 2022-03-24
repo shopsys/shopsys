@@ -24,7 +24,6 @@ mutation CreateOrderMutation(
     $payment: PaymentInput!
     $transport: TransportInput!
     $cartUuid: Uuid
-    $promoCode: String
 ) {
     CreateOrder(
         input: {
@@ -53,7 +52,6 @@ mutation CreateOrderMutation(
             payment: $payment
             transport: $transport
             cartUuid: $cartUuid
-            promoCode: $promoCode
         }
     ) {
         number
