@@ -25,7 +25,7 @@ class SchemaDiffFilterTest extends TestCase
         $tableDiff->addedColumns = [new Column('testColumnName1', $testType)];
         $tableDiff->addedForeignKeys = [new ForeignKeyConstraint(['testColumnName2'], 'foreignTableName1', [])];
         $tableDiff->addedIndexes = [new Index('testIndexName1', ['testColumnName3'])];
-        $tableDiff->changedColumns = [new ColumnDiff('testColumnName1', new Column('testColumnName4', $testType))];
+        $tableDiff->changedColumns = [new ColumnDiff('testColumnName1', new Column('testColumnName4', $testType), [], new Column('testFromColumn', $testType))];
         $tableDiff->changedForeignKeys = [new ForeignKeyConstraint(['testColumnName5'], 'foreignTableName2', [])];
         $tableDiff->changedIndexes = [new Index('testIndexName2', ['testColumnName6'])];
         $tableDiff->newName = 'newTableName';
