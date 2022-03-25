@@ -970,3 +970,11 @@ services:
         arguments:
             - '@fos_ck_editor.configuration'
             - '@fos_ck_editor.twig_extension'
+
+    Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider:
+        arguments:
+            - '%env(DATABASE_HOST)%'
+            - '%env(DATABASE_PORT)%'
+            - '%env(DATABASE_NAME)%'
+            - '%env(DATABASE_USER)%'
+            - '%env(DATABASE_PASSWORD)%'
