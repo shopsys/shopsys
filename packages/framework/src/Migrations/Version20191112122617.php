@@ -63,13 +63,13 @@ class Version20191112122617 extends AbstractMigration
 
     private function migratePaymentsDomains(): void
     {
-        $payments = $this->sql('SELECT id, vat_id FROM payments')->fetchAll();
+        $payments = $this->sql('SELECT id, vat_id FROM payments')->fetchAllAssociative();
 
         foreach ($payments as $payment) {
             $paymentDomains = $this->sql(
                 'SELECT id, domain_id FROM payment_domains where payment_id = :paymentId',
                 ['paymentId' => $payment['id']]
-            )->fetchAll();
+            )->fetchAllAssociative();
 
             foreach ($paymentDomains as $paymentDomain) {
                 $vatId = $payment['vat_id'];
@@ -82,7 +82,7 @@ class Version20191112122617 extends AbstractMigration
                                 'domainId' => $paymentDomain['domain_id'],
                             ]
                         )
-                        ->fetchColumn(0);
+                        ->fetchOne();
                 }
 
                 $this->sql('UPDATE payment_domains SET vat_id = :vatId WHERE id = :id', [
@@ -101,14 +101,14 @@ class Version20191112122617 extends AbstractMigration
             $defaultCurrencyForDomain = $this->sql(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
 
             $paymentPricesByCurrency = $this->sql(
                 'SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,
                 ]
-            )->fetchAll();
+            )->fetchAllAssociative();
 
             foreach ($paymentPricesByCurrency as $paymentPrice) {
                 if ($paymentPrice['domain_id'] === 0) {
@@ -142,13 +142,13 @@ class Version20191112122617 extends AbstractMigration
 
     private function migrateTransportDomains(): void
     {
-        $transports = $this->sql('SELECT id, vat_id FROM transports')->fetchAll();
+        $transports = $this->sql('SELECT id, vat_id FROM transports')->fetchAllAssociative();
 
         foreach ($transports as $transport) {
             $transportDomains = $this->sql(
                 'SELECT id, domain_id FROM transport_domains where transport_id = :transportId',
                 ['transportId' => $transport['id']]
-            )->fetchAll();
+            )->fetchAllAssociative();
 
             foreach ($transportDomains as $transportDomain) {
                 $vatId = $transport['vat_id'];
@@ -161,7 +161,7 @@ class Version20191112122617 extends AbstractMigration
                                 'domainId' => $transportDomain['domain_id'],
                             ]
                         )
-                        ->fetchColumn(0);
+                        ->fetchOne();
                 }
 
                 $this->sql('UPDATE transport_domains SET vat_id = :vatId WHERE id = :id', [
@@ -180,14 +180,14 @@ class Version20191112122617 extends AbstractMigration
             $defaultCurrencyForDomain = $this->sql(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
 
             $transportPricesByCurrency = $this->sql(
                 'SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,
                 ]
-            )->fetchAll();
+            )->fetchAllAssociative();
 
             foreach ($transportPricesByCurrency as $transportPrice) {
                 if ($transportPrice['domain_id'] === 0) {

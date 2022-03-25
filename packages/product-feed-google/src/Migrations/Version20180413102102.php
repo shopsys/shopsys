@@ -3,7 +3,6 @@
 namespace Shopsys\ProductFeed\GoogleBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use PDO;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180413102102 extends AbstractMigration
@@ -15,7 +14,7 @@ class Version20180413102102 extends AbstractMigration
     {
         $oldTableExists = $this->sql(
             'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
-        )->fetchColumn();
+        )->fetchOne();
 
         if ($oldTableExists) {
             $this->migrateProducts();
@@ -39,7 +38,7 @@ class Version20180413102102 extends AbstractMigration
                 'plugin_name' => 'Shopsys\\ProductFeed\\GoogleBundle\\ShopsysProductFeedGoogleBundle',
                 'context' => 'product',
             ]
-        )->fetchAll(PDO::FETCH_ASSOC);
+        )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
             foreach ($jsonData['show'] ?? [] as $domainId => $show) {

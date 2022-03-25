@@ -9,8 +9,6 @@ class Version20160512152113 extends AbstractMigration
 {
     use MultidomainMigrationTrait;
 
-    private const COUNTRIES_SEQUENCE_NAME = 'countries_id_seq';
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -47,7 +45,7 @@ class Version20160512152113 extends AbstractMigration
             $countOfOrdersOnDomain = $this->sql(
                 'SELECT COUNT(*) FROM orders WHERE domain_id = :domainId;',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
 
             if ($countOfOrdersOnDomain === 0) {
                 continue;
@@ -60,7 +58,7 @@ class Version20160512152113 extends AbstractMigration
                     'domainId' => $domainId,
                 ]
             );
-            $countryId = $this->connection->lastInsertId(self::COUNTRIES_SEQUENCE_NAME);
+            $countryId = $this->connection->lastInsertId();
             $this->sql(
                 'UPDATE orders SET country_id = :countryId WHERE domain_id = :domainId',
                 [

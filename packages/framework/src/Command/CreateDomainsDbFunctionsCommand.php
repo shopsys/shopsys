@@ -49,7 +49,7 @@ class CreateDomainsDbFunctionsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->em->transactional(function () use ($output) {
+        $this->em->wrapInTransaction(function () use ($output) {
             $this->doExecute($output);
         });
 

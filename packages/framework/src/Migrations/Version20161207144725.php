@@ -21,7 +21,7 @@ class Version20161207144725 extends AbstractMigration
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoPhoneHours\' AND domain_id = :domainId;
             ',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
 
             if ($phoneHours <= 0) {
                 $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES

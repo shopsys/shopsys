@@ -14,7 +14,7 @@ class Version20180702111019 extends AbstractMigration
     {
         $defaultAvailabilityInStockId = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultAvailabilityInStockId\' AND domain_id = 0;'
-        )->fetchColumn(0);
+        )->fetchOne();
         if ($defaultAvailabilityInStockId > 0) {
             return;
         }

@@ -48,7 +48,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
 
-        $results = $this->em->getConnection()->fetchAll('
+        $results = $this->em->getConnection()->fetchAllAssociative('
             SELECT domain_id, title, description
             FROM _test_table
             ORDER BY domain_id

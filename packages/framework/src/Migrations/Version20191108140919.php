@@ -38,7 +38,7 @@ class Version20191108140919 extends AbstractMigration
 
     private function migrateCurrentData(): void
     {
-        $currentProductsIdWithVat = $this->sql('SELECT id, vat_id FROM products')->fetchAll();
+        $currentProductsIdWithVat = $this->sql('SELECT id, vat_id FROM products')->fetchAllAssociative();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             foreach ($currentProductsIdWithVat as $currentProductIdWithVat) {
@@ -52,7 +52,7 @@ class Version20191108140919 extends AbstractMigration
                                 'domainId' => $domainId,
                             ]
                         )
-                        ->fetchColumn(0);
+                        ->fetchOne();
                 }
 
                 $this->sql(

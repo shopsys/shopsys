@@ -34,7 +34,7 @@ class DatabaseSchemaFacade
      */
     public function createSchema($schemaName)
     {
-        $this->em->getConnection()->query('CREATE SCHEMA ' . $schemaName);
+        $this->em->getConnection()->executeQuery('CREATE SCHEMA ' . $schemaName);
     }
 
     /**
@@ -42,7 +42,7 @@ class DatabaseSchemaFacade
      */
     public function dropSchemaIfExists($schemaName)
     {
-        $this->em->getConnection()->query('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
+        $this->em->getConnection()->executeQuery('DROP SCHEMA IF EXISTS ' . $schemaName . ' CASCADE');
     }
 
     public function importDefaultSchema()
@@ -56,7 +56,7 @@ class DatabaseSchemaFacade
 
         $line = fgets($handle);
         while ($line !== false) {
-            $connection->query($line);
+            $connection->executeQuery($line);
             $line = fgets($handle);
         }
         fclose($handle);

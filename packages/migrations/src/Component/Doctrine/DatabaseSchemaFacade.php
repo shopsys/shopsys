@@ -53,10 +53,10 @@ class DatabaseSchemaFacade
     {
         $allMetadata = $this->em->getMetadataFactory()->getAllMetadata();
 
-        $databaseSchema = $this->em->getConnection()->getSchemaManager()->createSchema();
+        $databaseSchema = $this->em->getConnection()->createSchemaManager()->createSchema();
         $metadataSchema = $this->schemaTool->getSchemaFromMetadata($allMetadata);
 
-        $schemaDiff = $this->comparator->compare($databaseSchema, $metadataSchema);
+        $schemaDiff = $this->comparator->compareSchemas($databaseSchema, $metadataSchema);
         $filteredSchemaDiff = $this->schemaDiffFilter->getFilteredSchemaDiff($schemaDiff);
 
         return $filteredSchemaDiff->toSaveSql($this->em->getConnection()->getDatabasePlatform());

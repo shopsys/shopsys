@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use PDO;
 use RuntimeException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
@@ -53,7 +52,7 @@ class Version20190611114955 extends AbstractMigration
      */
     protected function validateOrderItemTotalPrices(): void
     {
-        $statement = $this->connection->query(
+        $result = $this->connection->executeQuery(
             'SELECT o.id, o.total_price_with_vat, order_item_total_prices.with_vat, o.total_price_without_vat, order_item_total_prices.without_vat
             FROM orders o
             LEFT JOIN (
@@ -64,7 +63,7 @@ class Version20190611114955 extends AbstractMigration
             WHERE o.total_price_with_vat != order_item_total_prices.with_vat OR o.total_price_without_vat != order_item_total_prices.without_vat
             ORDER BY o.id'
         );
-        $incorrectOrderCount = $statement->rowCount();
+        $incorrectOrderCount = $result->rowCount();
 
         if ($incorrectOrderCount === 0) {
             return;
@@ -76,7 +75,7 @@ class Version20190611114955 extends AbstractMigration
         );
 
         for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
-            $incorrectOrder = $statement->fetch(PDO::FETCH_NUM);
+            $incorrectOrder = $result->fetchNumeric();
 
             $message .= sprintf(
                 "\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)",
