@@ -10,7 +10,7 @@ class Version20160113151330 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $sql = 'ALTER TABLE scripts
             ADD COLUMN placement TEXT NOT NULL';
@@ -20,7 +20,7 @@ class Version20160113151330 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

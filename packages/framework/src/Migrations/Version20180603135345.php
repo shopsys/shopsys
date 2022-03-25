@@ -10,7 +10,7 @@ class Version20180603135345 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $categoriesCount = $this->sql('SELECT count(*) FROM categories')->fetchColumn(0);
         if ($categoriesCount > 0) {
@@ -28,7 +28,7 @@ class Version20180603135345 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

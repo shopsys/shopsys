@@ -1,5 +1,11 @@
 doctrine_migrations:
-    table_name: migrations
-    name: Migrations
-    namespace: 'App\Migrations'
-    dir_name: '%kernel.root_dir%/Migrations'
+    migrations_paths:
+        'App\Migrations': '%kernel.root_dir%/Migrations'
+    storage:
+        table_storage:
+            table_name: migrations
+    services:
+        'Doctrine\Migrations\Version\Comparator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockComparator'
+        'Doctrine\Migrations\Version\MigrationPlanCalculator': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator'
+        'Doctrine\Migrations\MigrationsRepository': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository'
+        'Doctrine\Migrations\Version\Executor': 'Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsExecutor'

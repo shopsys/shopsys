@@ -10,7 +10,7 @@ class Version20180531141640 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE category_domains DROP CONSTRAINT "category_domains_pkey"');
         $this->sql('ALTER TABLE category_domains ADD id SERIAL NOT NULL');
@@ -24,7 +24,7 @@ class Version20180531141640 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

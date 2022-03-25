@@ -85,3 +85,22 @@ There you can find links to upgrade notes for other versions too.
 - **\[BC break\]** dropped support for unsupported PHP in packages ([#2416](https://github.com/shopsys/shopsys/pull/2416))
     - packages `shopsys/migrations`, `shopsys/coding-standards`, and `shopsys/http-smoke-testing` no longer support PHP 7.2 and 7.3
     - support for PHP 8.0 and 8.1 added to `shopsys/coding-standards` and `shopsys/http-smoke-testing`
+- **\[BC break\]** upgrade `"doctrine/migrations` and `doctrine/doctrine-migrations-bundle` ([#2414](https://github.com/shopsys/shopsys/pull/2414))
+    - see #project-base-diff to update your project
+    - update your `migrations-lock.yml` to fit the new format
+        - remove the "class" section
+        - use the FQCN as a key
+    - you need to update your `migrations` table structure
+        - this will happen automatically during database migrations execution, or you can trigger it manually using `migrations:sync-metadata-storage` command
+    - the `Shopsys\MigrationBundle\Component\Doctrine\Migrations\Configuration` class was removed
+        - instead of `getMigrations()`, you can use new `MigrationLockPlanCalculator::getMigrations()`
+        - instead of `getMigrationsToExecute()`, you can use new `MigrationLockPlanCalculator::getPlanUntilVersion()`
+    - the `Shopsys\MigrationBundle\Command\AbstractCommand` class was removed
+    - methods in `Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration` are now strictly typed
+    - the `MigrationsLock` class changed:
+        - the properties and methods are now strictly typed
+        - `LoggerInterface` is now required as a second argument in the constructor
+        - `saveNewMigrations` method now accepts `AvailableMigrationsList $availableMigrationsList` instead of `array $migrationVersions` as an argument
+    - the `Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder` and `MigrationsLocator` classes were removed
+        - to register migrations of a bundle, you should leverage `PrependExtensionInterface`
+    - methods and properties visibility of all classes in `shopsys/migrations` package changed from `private` to `protected` to ease possible extension

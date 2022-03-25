@@ -10,7 +10,7 @@ class Version20200310130000 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE transports ADD uuid UUID DEFAULT NULL');
         $this->sql('UPDATE transports SET uuid = uuid_generate_v4()');
@@ -21,7 +21,7 @@ class Version20200310130000 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

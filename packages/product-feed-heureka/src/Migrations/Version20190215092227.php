@@ -10,7 +10,7 @@ class Version20190215092227 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('COMMENT ON COLUMN heureka_product_domains.cpc IS \'(DC2Type:money)\'');
     }
@@ -18,7 +18,7 @@ class Version20190215092227 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

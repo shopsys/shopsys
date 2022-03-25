@@ -2,44 +2,15 @@
 
 namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
-use Doctrine\DBAL\Migrations\Version;
-use PHPUnit\Framework\TestCase;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
+use Doctrine\Migrations\Metadata\AvailableMigrationsList;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000001;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000002;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000003;
 use Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources\Version20180101000004;
 
-class MigrationsLockTest extends TestCase
+class MigrationsLockTest extends AbstractMigrationLockTestCase
 {
-    private const MIGRATION_LOCK_TEMPLATE = __DIR__ . '/Resources/migrations-lock.yml';
-    private const MIGRATION_LOCK = __DIR__ . '/Resources/migrations-lock.yml.tmp';
-
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
-    private $migrationsLock;
-
-    protected function setUp(): void
-    {
-        copy(self::MIGRATION_LOCK_TEMPLATE, self::MIGRATION_LOCK);
-        $this->migrationsLock = $this->createNewMigrationsLock();
-    }
-
-    protected function tearDown(): void
-    {
-        unlink(self::MIGRATION_LOCK);
-    }
-
-    /**
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
-    private function createNewMigrationsLock(): MigrationsLock
-    {
-        return new MigrationsLock(self::MIGRATION_LOCK);
-    }
-
-    public function testGetSkippedMigrationClasses()
+    public function testGetSkippedMigrationClasses(): void
     {
         $skippedMigrationClasses = $this->migrationsLock->getSkippedMigrationClasses();
 
@@ -47,7 +18,7 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000002::class, $skippedMigrationClasses);
     }
 
-    public function testGetInstalledMigrationClasses()
+    public function testGetInstalledMigrationClasses(): void
     {
         $installedMigrationClasses = $this->migrationsLock->getOrderedInstalledMigrationClasses();
 
@@ -56,7 +27,7 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000003::class, $installedMigrationClasses);
     }
 
-    public function testGetOrderedInstalledMigrationClasses()
+    public function testGetOrderedInstalledMigrationClasses(): void
     {
         $orderedMigrationClasses = $this->migrationsLock->getOrderedInstalledMigrationClasses();
 
@@ -69,11 +40,11 @@ class MigrationsLockTest extends TestCase
         );
     }
 
-    public function testSaveNewMigration()
+    public function testSaveNewMigration(): void
     {
-        $newMigrationVersion = $this->createMigrationVersionMock(Version20180101000004::class);
-
-        $this->migrationsLock->saveNewMigrations([$newMigrationVersion]);
+        $mockedAvailableMigration = $this->createMockedAvailableMigration(Version20180101000004::class);
+        $availableMigrationList = new AvailableMigrationsList([$mockedAvailableMigration]);
+        $this->migrationsLock->saveNewMigrations($availableMigrationList);
 
         $installedMigrationClasses = $this->createNewMigrationsLock()->getOrderedInstalledMigrationClasses();
 
@@ -81,31 +52,15 @@ class MigrationsLockTest extends TestCase
         $this->assertContains(Version20180101000004::class, $installedMigrationClasses);
     }
 
-    public function testSaveAlreadyInstalledMigration()
+    public function testSaveAlreadyInstalledMigration(): void
     {
-        $alreadyInstalledMigrationVersion = $this->createMigrationVersionMock(Version20180101000001::class);
+        $alreadyInstalledMockedAvailableMigration = $this->createMockedAvailableMigration(Version20180101000001::class);
+        $availableMigrationList = new AvailableMigrationsList([$alreadyInstalledMockedAvailableMigration]);
 
-        $this->migrationsLock->saveNewMigrations([$alreadyInstalledMigrationVersion]);
+        $this->migrationsLock->saveNewMigrations($availableMigrationList);
 
         $installedMigrationClasses = $this->createNewMigrationsLock()->getOrderedInstalledMigrationClasses();
 
         $this->assertCount(2, $installedMigrationClasses);
-    }
-
-    /**
-     * @param string $className
-     * @return \Doctrine\DBAL\Migrations\Version|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private function createMigrationVersionMock(string $className)
-    {
-        // Remove everything but the numbers at the end of the class name
-        $version = preg_replace('~^.*?(\d+)$~', '$1', $className);
-
-        $mock = $this->createMock(Version::class);
-
-        $mock->method('getVersion')->willReturn($version);
-        $mock->method('getMigration')->willReturn(new $className());
-
-        return $mock;
     }
 }

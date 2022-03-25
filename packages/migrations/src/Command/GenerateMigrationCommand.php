@@ -2,19 +2,21 @@
 
 namespace Shopsys\MigrationBundle\Command;
 
+use Doctrine\Migrations\Configuration\Configuration;
+use Doctrine\Migrations\DependencyFactory;
+use Shopsys\MigrationBundle\Command\Exception\NoMigrationLocationException;
 use Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation;
 use Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 
-class GenerateMigrationCommand extends AbstractCommand
+class GenerateMigrationCommand extends Command
 {
-    private const RETURN_CODE_OK = 0;
-    private const RETURN_CODE_ERROR = 1;
+    protected const RETURN_CODE_OK = 0;
+    protected const RETURN_CODE_ERROR = 1;
 
     /**
      * @var string
@@ -24,47 +26,39 @@ class GenerateMigrationCommand extends AbstractCommand
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
      */
-    private $databaseSchemaFacade;
+    protected DatabaseSchemaFacade $databaseSchemaFacade;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator
      */
-    private $migrationsGenerator;
-
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator
-     */
-    private $migrationsLocator;
-
-    /**
-     * @var \Symfony\Component\HttpKernel\KernelInterface
-     */
-    private $kernel;
+    protected MigrationsGenerator $migrationsGenerator;
 
     /**
      * @var string
      */
-    private $vendorDirectoryPath;
+    protected string $vendorDirectoryPath;
+
+    /**
+     * @var \Doctrine\Migrations\Configuration\Configuration
+     */
+    protected Configuration $configuration;
 
     /**
      * @param string $vendorDirectoryPath
      * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
      * @param \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator $migrationsGenerator
-     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocator $migrationsLocator
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      */
     public function __construct(
-        $vendorDirectoryPath,
+        string $vendorDirectoryPath,
         DatabaseSchemaFacade $databaseSchemaFacade,
         MigrationsGenerator $migrationsGenerator,
-        MigrationsLocator $migrationsLocator,
-        KernelInterface $kernel
+        DependencyFactory $dependencyFactory
     ) {
         $this->databaseSchemaFacade = $databaseSchemaFacade;
         $this->migrationsGenerator = $migrationsGenerator;
-        $this->migrationsLocator = $migrationsLocator;
-        $this->kernel = $kernel;
         $this->vendorDirectoryPath = $vendorDirectoryPath;
+        $this->configuration = $dependencyFactory->getConfiguration();
 
         parent::__construct();
     }
@@ -88,12 +82,18 @@ class GenerateMigrationCommand extends AbstractCommand
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM, no migrations were generated.</info>');
 
-            return self::RETURN_CODE_OK;
+            return static::RETURN_CODE_OK;
         }
 
         $io = new SymfonyStyle($input, $output);
 
-        $migrationsLocation = $this->chooseMigrationLocation($io);
+        try {
+            $migrationsLocation = $this->chooseMigrationLocation($io);
+        } catch (NoMigrationLocationException $exception) {
+            $output->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+
+            return static::RETURN_CODE_ERROR;
+        }
 
         $generatorResult = $this->migrationsGenerator->generate(
             $filteredSchemaDiffSqlCommands,
@@ -102,68 +102,51 @@ class GenerateMigrationCommand extends AbstractCommand
 
         if ($generatorResult->hasError()) {
             $output->writeln(
-                '<error>Migration file "' . $generatorResult->getMigrationFilePath() . '" could not be saved.</error>'
+                '<error>Migration file "' . realpath($generatorResult->getMigrationFilePath()) . '" could not be saved.</error>'
             );
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $output->writeln('<info>Database schema is not satisfying ORM, a new migration was generated!</info>');
         $output->writeln(sprintf(
             '<info>Migration file "%s" was saved (%d B).</info>',
-            $generatorResult->getMigrationFilePath(),
+            realpath($generatorResult->getMigrationFilePath()),
             $generatorResult->getWrittenBytes()
         ));
 
-        return self::RETURN_CODE_OK;
+        return static::RETURN_CODE_OK;
     }
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
      */
-    private function chooseMigrationLocation(SymfonyStyle $io)
+    protected function chooseMigrationLocation(SymfonyStyle $io): MigrationsLocation
     {
-        $applicationMigrationLocation = $this->migrationsLocator->getApplicationMigrationLocation();
-        $bundles = $this->getAllBundleNamesExceptVendor();
-        array_unshift($bundles, $applicationMigrationLocation->getNamespace());
-
-        if (count($bundles) > 1) {
-            $chosenBundle = $io->choice(
-                'There is more than one bundle available as the destination of generated migrations. Which bundle would you like to choose?',
-                $bundles
-            );
-        } else {
-            $chosenBundle = reset($bundles);
-        }
-
-        if ($chosenBundle === $applicationMigrationLocation->getNamespace()) {
-            return $applicationMigrationLocation;
-        }
-
-        return $this->getMigrationLocation($this->kernel->getBundle($chosenBundle));
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getAllBundleNamesExceptVendor()
-    {
-        $bundles = [];
-        foreach ($this->kernel->getBundles() as $bundle) {
-            if (strpos(realpath($bundle->getPath()), realpath($this->vendorDirectoryPath)) !== 0) {
-                $bundles[] = $bundle->getName();
+        $migrationDirectoriesIndexedByNamespace = $this->configuration->getMigrationDirectories();
+        $availableNamespaces = [];
+        foreach ($migrationDirectoriesIndexedByNamespace as $namespace => $migrationDirectory) {
+            if (str_contains(realpath($migrationDirectory), realpath($this->vendorDirectoryPath)) === false) {
+                $availableNamespaces[] = $namespace;
             }
         }
-        return $bundles;
-    }
 
-    /**
-     * @param \Symfony\Component\HttpKernel\Bundle\BundleInterface $bundle
-     * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation
-     */
-    private function getMigrationLocation(BundleInterface $bundle)
-    {
-        return $this->migrationsLocator->createMigrationsLocation($bundle);
+        if (count($availableNamespaces) === 0) {
+            throw new NoMigrationLocationException();
+        }
+
+        if (count($availableNamespaces) > 1) {
+            $chosenNamespace = $io->choice(
+                'There is more than one namespace available as the destination of generated migrations. Which namespace would you like to choose?',
+                $availableNamespaces
+            );
+
+            return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$chosenNamespace], $chosenNamespace);
+        }
+
+        $firstNamespace = array_key_first($migrationDirectoriesIndexedByNamespace);
+
+        return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$firstNamespace], $firstNamespace);
     }
 }

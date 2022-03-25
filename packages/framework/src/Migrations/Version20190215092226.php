@@ -10,7 +10,7 @@ class Version20190215092226 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('COMMENT ON COLUMN cart_items.watched_price IS \'(DC2Type:money)\'');
         $this->sql('COMMENT ON COLUMN order_items.price_without_vat IS \'(DC2Type:money)\'');
@@ -27,7 +27,7 @@ class Version20190215092226 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

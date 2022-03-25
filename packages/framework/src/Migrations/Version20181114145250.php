@@ -10,7 +10,7 @@ class Version20181114145250 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE pricing_groups DROP COLUMN coefficient');
         $this->sql('ALTER TABLE products DROP COLUMN price');
@@ -20,7 +20,7 @@ class Version20181114145250 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

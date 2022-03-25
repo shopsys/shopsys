@@ -10,7 +10,7 @@ class Version20200206111017 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('
             CREATE OR REPLACE FUNCTION set_export_product_by_product_visibility() RETURNS trigger AS $$
@@ -38,7 +38,7 @@ class Version20200206111017 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

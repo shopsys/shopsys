@@ -280,6 +280,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:migrate"/>
+            <arg value="-vv"/>
         </exec>
     </target>
 

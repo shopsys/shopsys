@@ -4,13 +4,14 @@ namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaValidator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckOrmMappingCommand extends AbstractCommand
+class CheckOrmMappingCommand extends Command
 {
-    private const RETURN_CODE_OK = 0;
-    private const RETURN_CODE_ERROR = 1;
+    protected const RETURN_CODE_OK = 0;
+    protected const RETURN_CODE_ERROR = 1;
 
     /**
      * @var string
@@ -20,7 +21,7 @@ class CheckOrmMappingCommand extends AbstractCommand
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -61,11 +62,11 @@ class CheckOrmMappingCommand extends AbstractCommand
                 $output->writeln('');
             }
 
-            return self::RETURN_CODE_ERROR;
+            return static::RETURN_CODE_ERROR;
         }
 
         $output->writeln('<info>ORM mapping is valid.</info>');
 
-        return self::RETURN_CODE_OK;
+        return static::RETURN_CODE_OK;
     }
 }

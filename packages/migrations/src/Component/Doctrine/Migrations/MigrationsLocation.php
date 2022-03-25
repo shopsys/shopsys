@@ -7,12 +7,12 @@ class MigrationsLocation
     /**
      * @var string
      */
-    private $directory;
+    protected $directory;
 
     /**
      * @var string
      */
-    private $namespace;
+    protected $namespace;
 
     /**
      * @param string $directory

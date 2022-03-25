@@ -10,7 +10,7 @@ class Version20190521071335 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE products ADD uuid UUID DEFAULT NULL');
         $this->sql('UPDATE products SET uuid = uuid_generate_v4()');
@@ -21,7 +21,7 @@ class Version20190521071335 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

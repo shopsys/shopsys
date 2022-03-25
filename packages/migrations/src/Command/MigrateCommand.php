@@ -6,12 +6,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Shopsys\MigrationBundle\Command\Exception\CheckSchemaCommandException;
 use Shopsys\MigrationBundle\Command\Exception\MigrateCommandException;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MigrateCommand extends AbstractCommand
+class MigrateCommand extends Command
 {
     /**
      * @var string
@@ -21,23 +23,31 @@ class MigrateCommand extends AbstractCommand
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    private $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
      */
-    private $migrationsLock;
+    protected MigrationsLock $migrationsLock;
+
+    /**
+     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
+     */
+    protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
+     * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator $migrationLockPlanCalculator
      */
     public function __construct(
         EntityManagerInterface $em,
-        MigrationsLock $migrationsLock
+        MigrationsLock $migrationsLock,
+        MigrationLockPlanCalculator $migrationLockPlanCalculator
     ) {
         $this->em = $em;
         $this->migrationsLock = $migrationsLock;
+        $this->migrationLockPlanCalculator = $migrationLockPlanCalculator;
 
         parent::__construct();
     }
@@ -53,8 +63,9 @@ class MigrateCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             $this->em->transactional(function () use ($output) {
@@ -69,8 +80,8 @@ class MigrateCommand extends AbstractCommand
             throw new MigrateCommandException($message, $ex);
         }
 
-        $migrationVersions = $this->getMigrationsConfiguration()->getMigrations();
-        $this->migrationsLock->saveNewMigrations($migrationVersions);
+        $availableMigrationsList = $this->migrationLockPlanCalculator->getMigrations();
+        $this->migrationsLock->saveNewMigrations($availableMigrationsList);
 
         return 0;
     }
@@ -78,7 +89,7 @@ class MigrateCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeDoctrineMigrateCommand(OutputInterface $output)
+    protected function executeDoctrineMigrateCommand(OutputInterface $output): void
     {
         $doctrineMigrateCommand = $this->getApplication()->find('doctrine:migrations:migrate');
         $arguments = [
@@ -100,7 +111,7 @@ class MigrateCommand extends AbstractCommand
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function executeCheckSchemaCommand(OutputInterface $output)
+    protected function executeCheckSchemaCommand(OutputInterface $output): void
     {
         $checkSchemaCommand = $this->getApplication()->find('shopsys:migrations:check-schema');
         $arguments = [

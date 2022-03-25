@@ -10,7 +10,7 @@ class Version20190824181350 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE cron_modules ADD enabled BOOLEAN DEFAULT \'true\' NOT NULL');
         $this->sql('ALTER TABLE cron_modules ADD status VARCHAR(255) DEFAULT \'ok\' NOT NULL');
@@ -23,7 +23,7 @@ class Version20190824181350 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 }

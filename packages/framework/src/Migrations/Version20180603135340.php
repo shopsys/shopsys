@@ -10,7 +10,7 @@ class Version20180603135340 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->createGetDomainIdsByLocaleFunction();
         $this->createGetDomainLocaleFunction();
@@ -29,7 +29,7 @@ class Version20180603135340 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
     }
 
