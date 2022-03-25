@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Component\Paginator;
 
-use Doctrine\DBAL\SQLParserUtils;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
+use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator implements PaginatorInterface
 {
@@ -99,10 +99,9 @@ class QueryPaginator implements PaginatorInterface
             $parametersAssoc[$parameter->getName()] = $parameter->getValue();
         }
 
-        list(, $flatenedParameters) = SQLParserUtils::expandListParameters(
+        $flattenedParameters = SqlParametersFlattener::flattenArrayParameters(
             $query->getDQL(),
-            $parametersAssoc,
-            []
+            $parametersAssoc
         );
 
         // COUNT() returns BIGINT which is hydrated into string on 32-bit architecture
@@ -111,6 +110,6 @@ class QueryPaginator implements PaginatorInterface
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('total_count', 'totalCount');
         return $em->createNativeQuery($sql, $rsm)
-            ->setParameters($flatenedParameters);
+            ->setParameters($flattenedParameters);
     }
 }
