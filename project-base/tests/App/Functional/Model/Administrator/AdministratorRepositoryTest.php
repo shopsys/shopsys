@@ -32,7 +32,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
             $validMultidomainLoginToken,
             $multidomainLoginTokenExpiration
         );
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken(
             $validMultidomainLoginToken
@@ -54,7 +54,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
             $validMultidomainLoginToken,
             $multidomainLoginTokenExpiration
         );
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 
@@ -73,7 +73,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
             $validMultidomainLoginToken,
             $multidomainLoginTokenExpiration
         );
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 

@@ -457,6 +457,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
             CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH
         );
         $customer->setResetPasswordHash($resetPasswordHash);
-        $this->em->flush($customer);
+        $this->em->flush();
     }
 }

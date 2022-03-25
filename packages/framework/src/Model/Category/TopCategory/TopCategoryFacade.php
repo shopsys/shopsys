@@ -83,7 +83,7 @@ class TopCategoryFacade
         foreach ($oldTopCategories as $oldTopCategory) {
             $this->em->remove($oldTopCategory);
         }
-        $this->em->flush($oldTopCategories);
+        $this->em->flush();
 
         $topCategories = [];
         $position = 1;
@@ -92,6 +92,6 @@ class TopCategoryFacade
             $this->em->persist($topCategory);
             $topCategories[] = $topCategory;
         }
-        $this->em->flush($topCategories);
+        $this->em->flush();
     }
 }

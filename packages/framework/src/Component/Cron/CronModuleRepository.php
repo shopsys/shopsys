@@ -44,7 +44,7 @@ class CronModuleRepository
         if ($cronModule === null) {
             $cronModule = $this->cronModuleFactory->create($serviceId);
             $this->em->persist($cronModule);
-            $this->em->flush($cronModule);
+            $this->em->flush();
         }
 
         return $cronModule;

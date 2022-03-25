@@ -89,7 +89,7 @@ class PersistentReferenceFacade
             $persistentReference = $this->persistentReferenceFactory->create($name, $entityName, $objectId);
             $this->em->persist($persistentReference);
         }
-        $this->em->flush($persistentReference);
+        $this->em->flush();
     }
 
     /**

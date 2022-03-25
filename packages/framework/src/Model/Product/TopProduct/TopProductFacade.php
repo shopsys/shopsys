@@ -65,7 +65,7 @@ class TopProductFacade
         foreach ($oldTopProducts as $oldTopProduct) {
             $this->em->remove($oldTopProduct);
         }
-        $this->em->flush($oldTopProducts);
+        $this->em->flush();
 
         $topProducts = [];
         $position = 1;
@@ -74,6 +74,6 @@ class TopProductFacade
             $this->em->persist($topProduct);
             $topProducts[] = $topProduct;
         }
-        $this->em->flush($topProducts);
+        $this->em->flush();
     }
 }

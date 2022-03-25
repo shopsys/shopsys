@@ -37,9 +37,6 @@ parameters:
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
         -
-            message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
-            path: *
-        -
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*

@@ -156,7 +156,7 @@ class CategoryFacade
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryFactory->create($categoryData, $rootCategory);
         $this->em->persist($category);
-        $this->em->flush($category);
+        $this->em->flush();
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
         $this->imageFacade->manageImages($category, $categoryData->image);
 
@@ -247,7 +247,7 @@ class CategoryFacade
             $category = $this->categoryRepository->getById($categoryId);
             $category->setParent($parent);
             // Category must be flushed after parent change before calling moveDown for correct calculation of lft and rgt
-            $this->em->flush($category);
+            $this->em->flush();
 
             $this->categoryRepository->moveDown($category, CategoryRepository::MOVE_DOWN_TO_BOTTOM);
         }

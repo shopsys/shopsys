@@ -95,7 +95,7 @@ class ProductAvailabilityRecalculator
         if ($product->isVariant()) {
             $this->recalculateProductAvailability($product->getMainVariant());
         }
-        $this->em->flush($product);
+        $this->em->flush();
     }
 
     /**

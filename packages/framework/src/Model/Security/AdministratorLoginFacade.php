@@ -112,6 +112,6 @@ class AdministratorLoginFacade
         $currentAdministrator = $token->getUser();
         $currentAdministrator->setLoginToken('');
 
-        $this->em->flush($currentAdministrator);
+        $this->em->flush();
     }
 }

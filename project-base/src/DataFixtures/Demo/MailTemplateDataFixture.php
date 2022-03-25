@@ -169,6 +169,6 @@ team of {domain}
         }
 
         $manager->persist($mailTemplate);
-        $manager->flush($mailTemplate);
+        $manager->flush();
     }
 }

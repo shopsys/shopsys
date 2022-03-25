@@ -90,7 +90,7 @@ class ParameterFacade
     {
         $parameter = $this->parameterFactory->create($parameterData);
         $this->em->persist($parameter);
-        $this->em->flush($parameter);
+        $this->em->flush();
 
         $this->dispatchParameterEvent($parameter, ParameterEvent::CREATE);
 

@@ -145,7 +145,7 @@ class CurrencyFacade
     {
         $currency = $this->currencyFactory->create($currencyData);
         $this->em->persist($currency);
-        $this->em->flush($currency);
+        $this->em->flush();
 
         return $currency;
     }

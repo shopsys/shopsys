@@ -12,9 +12,6 @@ parameters:
             message: '#Call to method .+\(\) on an unknown class App\\Kernel\.#'
             path: %currentWorkingDirectory%/src/Component/Error/ErrorPagesFacade.php
         -
-            message: '#Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
-            path: *
-        -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
         -

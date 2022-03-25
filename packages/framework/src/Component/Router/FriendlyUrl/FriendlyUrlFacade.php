@@ -162,7 +162,7 @@ class FriendlyUrlFacade
         }
 
         $this->em->persist($friendlyUrl);
-        $this->em->flush($friendlyUrl);
+        $this->em->flush();
         $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
@@ -248,7 +248,7 @@ class FriendlyUrlFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 
@@ -268,7 +268,7 @@ class FriendlyUrlFacade
         $mainFriendlyUrl->setMain(true);
         $this->renewMainFriendlyUrlSlugCache($mainFriendlyUrl);
 
-        $this->em->flush($friendlyUrls);
+        $this->em->flush();
     }
 
     /**

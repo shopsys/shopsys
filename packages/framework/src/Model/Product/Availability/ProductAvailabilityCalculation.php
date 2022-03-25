@@ -133,7 +133,7 @@ class ProductAvailabilityCalculation
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant);
             $variant->markForVisibilityRecalculation();
         }
-        $this->em->flush($allVariants);
+        $this->em->flush();
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
 
         return $this->productRepository->getAtLeastSomewhereSellableVariantsByMainVariant($mainVariant);

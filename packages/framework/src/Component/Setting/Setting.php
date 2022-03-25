@@ -103,7 +103,7 @@ class Setting
         $settingValue = $this->values[SettingValue::DOMAIN_ID_COMMON][$key];
         $settingValue->edit($value);
 
-        $this->em->flush($settingValue);
+        $this->em->flush();
     }
 
     /**
@@ -123,7 +123,7 @@ class Setting
         $settingValue = $this->values[$domainId][$key];
         $settingValue->edit($value);
 
-        $this->em->flush($settingValue);
+        $this->em->flush();
     }
 
     /**

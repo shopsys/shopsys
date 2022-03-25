@@ -252,7 +252,7 @@ class ProductFacade
         $product = $this->productFactory->create($productData);
 
         $this->em->persist($product);
-        $this->em->flush($product);
+        $this->em->flush();
         $this->setAdditionalDataAfterCreate($product, $productData);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
@@ -275,7 +275,7 @@ class ProductFacade
             $productData->categoriesByDomainId
         );
         $product->setProductCategoryDomains($productCategoryDomains);
-        $this->em->flush($product);
+        $this->em->flush();
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
@@ -376,7 +376,7 @@ class ProductFacade
         foreach ($oldProductParameterValues as $oldProductParameterValue) {
             $this->em->remove($oldProductParameterValue);
         }
-        $this->em->flush($oldProductParameterValues);
+        $this->em->flush();
 
         $toFlush = [];
         foreach ($productParameterValuesData as $productParameterValueData) {
@@ -393,7 +393,7 @@ class ProductFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 
@@ -464,7 +464,7 @@ class ProductFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 
@@ -478,7 +478,7 @@ class ProductFacade
         foreach ($oldProductAccessories as $oldProductAccessory) {
             $this->em->remove($oldProductAccessory);
         }
-        $this->em->flush($oldProductAccessories);
+        $this->em->flush();
 
         $toFlush = [];
         foreach ($accessories as $position => $accessory) {
@@ -488,7 +488,7 @@ class ProductFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 
