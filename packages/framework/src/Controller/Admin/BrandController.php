@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -49,12 +50,18 @@ class BrandController extends AdminBaseController
     protected $brandDataFactory;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface $brandDataFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         BrandFacade $brandFacade,
@@ -62,7 +69,8 @@ class BrandController extends AdminBaseController
         GridFactory $gridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
         Domain $domain,
-        BrandDataFactoryInterface $brandDataFactory
+        BrandDataFactoryInterface $brandDataFactory,
+        EntityManagerInterface $entityManager
     ) {
         $this->brandFacade = $brandFacade;
         $this->administratorGridFacade = $administratorGridFacade;
@@ -70,6 +78,7 @@ class BrandController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->domain = $domain;
         $this->brandDataFactory = $brandDataFactory;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -120,12 +129,7 @@ class BrandController extends AdminBaseController
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
-        /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */
-        $doctrine = $this->getDoctrine();
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $doctrine->getManager();
-
-        $queryBuilder = $em->createQueryBuilder()->select('b')->from(Brand::class, 'b');
+        $queryBuilder = $this->entityManager->createQueryBuilder()->select('b')->from(Brand::class, 'b');
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'b.id');
 
         $grid = $this->gridFactory->create('brandList', $dataSource);

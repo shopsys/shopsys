@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
@@ -61,6 +62,11 @@ class AdvertController extends AdminBaseController
     protected $advertPositionRegistry;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -69,6 +75,7 @@ class AdvertController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Twig\ImageExtension $imageExtension
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface $advertDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         AdvertFacade $advertFacade,
@@ -78,7 +85,8 @@ class AdvertController extends AdminBaseController
         BreadcrumbOverrider $breadcrumbOverrider,
         ImageExtension $imageExtension,
         AdvertDataFactoryInterface $advertDataFactory,
-        AdvertPositionRegistry $advertPositionRegistry
+        AdvertPositionRegistry $advertPositionRegistry,
+        EntityManagerInterface $entityManager
     ) {
         $this->advertFacade = $advertFacade;
         $this->administratorGridFacade = $administratorGridFacade;
@@ -88,6 +96,7 @@ class AdvertController extends AdminBaseController
         $this->imageExtension = $imageExtension;
         $this->advertDataFactory = $advertDataFactory;
         $this->advertPositionRegistry = $advertPositionRegistry;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -143,12 +152,7 @@ class AdvertController extends AdminBaseController
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
-        /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */
-        $doctrine = $this->getDoctrine();
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $doctrine->getManager();
-
-        $queryBuilder = $em->createQueryBuilder()
+        $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('a')
             ->from(Advert::class, 'a')
             ->where('a.domainId = :selectedDomainId')

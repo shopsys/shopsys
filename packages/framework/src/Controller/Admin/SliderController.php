@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -43,24 +44,32 @@ class SliderController extends AdminBaseController
     protected $sliderItemDataFactory;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    protected EntityManagerInterface $entityManager;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface $sliderItemDataFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         SliderItemFacade $sliderItemFacade,
         GridFactory $gridFactory,
         AdminDomainTabsFacade $adminDomainTabsFacade,
         BreadcrumbOverrider $breadcrumbOverrider,
-        SliderItemDataFactoryInterface $sliderItemDataFactory
+        SliderItemDataFactoryInterface $sliderItemDataFactory,
+        EntityManagerInterface $entityManager
     ) {
         $this->sliderItemFacade = $sliderItemFacade;
         $this->gridFactory = $gridFactory;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->breadcrumbOverrider = $breadcrumbOverrider;
         $this->sliderItemDataFactory = $sliderItemDataFactory;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -68,12 +77,7 @@ class SliderController extends AdminBaseController
      */
     public function listAction()
     {
-        /** @var \Doctrine\Common\Persistence\ManagerRegistry $doctrine */
-        $doctrine = $this->getDoctrine();
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $doctrine->getManager();
-
-        $queryBuilder = $em->createQueryBuilder()
+        $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('s')
             ->from(SliderItem::class, 's')
             ->where('s.domainId = :selectedDomainId')
