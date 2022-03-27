@@ -10,12 +10,7 @@ const CartRefresher: FC = () => {
         cartInput: { cartUuid, transport, payment },
     } = useShopsysSelector((state) => state.cart);
 
-    const [, refreshCart] = useLoadCart(
-        cartUuid,
-        transport,
-        payment,
-        payment ? payment.goPayBankSwift : null,
-    );
+    const [, refreshCart] = useLoadCart(cartUuid, transport, payment, payment ? payment.goPayBankSwift : null);
 
     useEffect(() => {
         if (!isCartEmpty) {

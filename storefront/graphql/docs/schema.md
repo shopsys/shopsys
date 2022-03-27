@@ -27,6 +27,7 @@
     * [CartItemModificationsResult](#cartitemmodificationsresult)
     * [CartModificationsResult](#cartmodificationsresult)
     * [CartPaymentModificationsResult](#cartpaymentmodificationsresult)
+    * [CartPromoCodeModificationsResult](#cartpromocodemodificationsresult)
     * [CartTransportModificationsResult](#carttransportmodificationsresult)
     * [Category](#category)
     * [CategoryConnection](#categoryconnection)
@@ -81,6 +82,7 @@
     * [Variant](#variant)
   * [Inputs](#inputs)
     * [AddToCartInput](#addtocartinput)
+    * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
     * [CartInput](#cartinput)
     * [ChangePasswordInput](#changepasswordinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
@@ -98,6 +100,7 @@
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationDataInput](#registrationdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
+    * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
     * [TransportInput](#transportinput)
   * [Enums](#enums)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
@@ -1003,6 +1006,34 @@ Remove product from cart
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#removefromcartinput">RemoveFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ApplyPromoCodeToCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Apply new promo code for the future checkout
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#applypromocodetocartinput">ApplyPromoCodeToCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemovePromoCodeFromCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Remove already used promo code from cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removepromocodefromcartinput">RemovePromoCodeFromCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -2512,6 +2543,11 @@ Quantity of items in the cart
 <td valign="top"><a href="#cartpaymentmodificationsresult">CartPaymentModificationsResult</a>!</td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>promoCodeModifications</strong></td>
+<td valign="top"><a href="#cartpromocodemodificationsresult">CartPromoCodeModificationsResult</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -2535,6 +2571,26 @@ Quantity of items in the cart
 <tr>
 <td colspan="2" valign="top"><strong>paymentUnavailable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### CartPromoCodeModificationsResult
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>noLongerApplicablePromoCode</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td></td>
 </tr>
 </tbody>
@@ -6855,11 +6911,6 @@ Represents a payment in order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -6884,6 +6935,38 @@ Item quantity
 
 True if quantity should be set no matter the current state of the cart. False
 if quantity should be added to the already existing same item in the cart
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ApplyPromoCodeToCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier or null if customer is logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Promo code to be used after checkout
 
 </td>
 </tr>
@@ -6927,11 +7010,6 @@ Represents a transport in order
 Represents a payment in order
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -7446,15 +7524,6 @@ Deprecated, this field is not used, the products are taken from the server cart 
 <td>
 
 Cart identifier used for getting carts of not logged customers
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The promo code used in the order
 
 </td>
 </tr>
@@ -7980,16 +8049,43 @@ Represents a payment in order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cartItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
 Cart item UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### RemovePromoCodeFromCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier or null if customer is logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Promo code to be removed
 
 </td>
 </tr>

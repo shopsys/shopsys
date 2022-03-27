@@ -12,6 +12,7 @@ type InitialState = {
     payment: PaymentType | null;
     pickupPlace: PickupPlaceType | null;
     isCartEmpty: boolean;
+    promoCode: string | null;
     cartInput: CartInput;
 };
 
@@ -21,11 +22,11 @@ export const initialState = {
     payment: null,
     pickupPlace: null,
     isCartEmpty: false,
+    promoCode: null,
     cartInput: {
         cartUuid: null,
         transport: null,
         payment: null,
-        promoCode: null,
     },
 } as InitialState;
 
@@ -42,9 +43,9 @@ export const cartSlice = createSlice({
                 cartUuid: null,
                 transport: null,
                 payment: null,
-                promoCode: null,
             };
             state.isCartEmpty = true;
+            state.promoCode = null;
         },
         updateCart(state, action: PayloadAction<CartResultValues>) {
             state.cart = action.payload.cart;
@@ -53,6 +54,7 @@ export const cartSlice = createSlice({
             state.payment = action.payload.payment;
             state.cartInput = getCartInputFromCartResult(action.payload, state.payment?.goPayBankSwift ?? null);
             state.isCartEmpty = action.payload.cart?.items.length === 0;
+            state.promoCode = action.payload.promoCode;
         },
         setCart(state, action: PayloadAction<CartType | null>) {
             state.cart = action.payload;
@@ -76,7 +78,7 @@ export const cartSlice = createSlice({
             state.cartInput.cartUuid = action.payload;
         },
         setPromoCode(state, action: PayloadAction<string | null>) {
-            state.cartInput.promoCode = action.payload;
+            state.promoCode = action.payload;
         },
     },
     extraReducers: {

@@ -49,6 +49,7 @@ export type CartResultValues = {
     pickupPlace: PickupPlaceType | null;
     goPayBankSwift: string | null;
     payment: PaymentType | null;
+    promoCode: string | null;
 };
 
 export type AddToCartPopupDataType = SimpleProductType & {

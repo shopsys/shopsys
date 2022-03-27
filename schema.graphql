@@ -17,7 +17,6 @@ input AddToCartInput {
 
   """Represents a payment in order"""
   payment: PaymentInput = null
-  promoCode: String = null
 
   """Product UUID"""
   productUuid: Uuid!
@@ -148,6 +147,14 @@ type AdvertPosition {
 
   """Position of advert"""
   positionName: String!
+}
+
+input ApplyPromoCodeToCartInput {
+  """Cart identifier or null if customer is logged in"""
+  cartUuid: Uuid = null
+
+  """Promo code to be used after checkout"""
+  promoCode: String!
 }
 
 type Article implements Breadcrumb & Slug & ArticleInterface {
@@ -429,7 +436,6 @@ input CartInput {
 
   """Represents a payment in order"""
   payment: PaymentInput = null
-  promoCode: String = null
 }
 
 interface CartInterface {
@@ -468,11 +474,16 @@ type CartModificationsResult {
   itemModifications: CartItemModificationsResult!
   transportModifications: CartTransportModificationsResult!
   paymentModifications: CartPaymentModificationsResult!
+  promoCodeModifications: CartPromoCodeModificationsResult!
 }
 
 type CartPaymentModificationsResult {
   paymentPriceChanged: Boolean!
   paymentUnavailable: Boolean!
+}
+
+type CartPromoCodeModificationsResult {
+  noLongerApplicablePromoCode: [String!]!
 }
 
 type CartTransportModificationsResult {
@@ -1036,6 +1047,12 @@ type Mutation {
   """Remove product from cart"""
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
 
+  """Apply new promo code for the future checkout"""
+  ApplyPromoCodeToCart(input: ApplyPromoCodeToCartInput!): Cart!
+
+  """Remove already used promo code from cart"""
+  RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
+
   """Request password recovery - email with hash will be sent"""
   RequestPasswordRecovery(email: String!): String!
 
@@ -1336,9 +1353,6 @@ input OrderInput {
 
   """Cart identifier used for getting carts of not logged customers"""
   cartUuid: Uuid = null
-
-  """The promo code used in the order"""
-  promoCode: String
 }
 
 """Represent one item in the order"""
@@ -1953,7 +1967,7 @@ type Query {
   notificationBars: [NotificationBar!]
 
   """Return cart of logged customer or cart by UUID for anonymous user"""
-  cart(cartInput: CartInput = {cartUuid: null}): Cart
+  cart(cartInput: CartInput): Cart
 
   """Returns available countries"""
   countries: [Country!]!
@@ -2187,10 +2201,17 @@ input RemoveFromCartInput {
 
   """Represents a payment in order"""
   payment: PaymentInput = null
-  promoCode: String = null
 
   """Cart item UUID"""
   cartItemUuid: Uuid!
+}
+
+input RemovePromoCodeFromCartInput {
+  """Cart identifier or null if customer is logged in"""
+  cartUuid: Uuid = null
+
+  """Promo code to be removed"""
+  promoCode: String!
 }
 
 type SliderItem {

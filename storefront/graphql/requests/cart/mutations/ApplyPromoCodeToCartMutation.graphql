@@ -1,0 +1,5 @@
+mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) {
+    ApplyPromoCodeToCart(input: $input) {
+        ...CartFragment
+    }
+}

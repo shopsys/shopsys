@@ -1,5 +1,4 @@
 import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { cartActions } from 'redux/slices/cart';
 import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { updateCartState } from 'utils/Cart/UpdateCartState';

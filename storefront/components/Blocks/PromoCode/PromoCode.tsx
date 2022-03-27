@@ -9,26 +9,29 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
+
 import { CSSTransition } from 'react-transition-group';
 import Form from 'components/Forms/Form';
 import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
+import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
+import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
-    const { cartUuid, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
+    const { promoCode } = useShopsysSelector((state) => state.cart);
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const [formProviderMethods, defaultValues] = usePromoCodeForm();
+    const [formProviderMethods] = usePromoCodeForm();
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
-    const [changePromoCodeResult, changePromoCode] = useChangePromoCodeApi();
+    const applyPromoCode = useApplyPromoCodeToCart();
+    const removePromoCode = useRemovePromoCodeFromCart();
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -36,23 +39,20 @@ const PromoCode: FC = () => {
         }
     };
 
-    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = (data, event) => {
+    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = async (data, event) => {
         event?.preventDefault();
-        changePromoCode(cartUuid, data.promoCode);
+        applyPromoCode(data.promoCode, formMeta.messages.addPromoCode);
     };
 
-    const onRemovePromoCodeHandler = () => {
-        formProviderMethods.setValue(formMeta.fields.promoCode.name, defaultValues.promoCode);
-        changePromoCode(cartUuid, null);
+    const onRemovePromoCodeHandler = async (promoCode: string) => {
+        removePromoCode(promoCode, formMeta.messages.removePromoCode);
     };
 
     useEffect(() => {
-        if (changePromoCodeResult.error !== undefined) {
-            showErrorMessage(formMeta.messages.success);
-        } else if (changePromoCodeResult.data !== undefined) {
-            showSuccessMessage(formMeta.messages.success);
+        if (promoCode === null) {
+            formProviderMethods.setValue('promoCode', '');
         }
-    }, [changePromoCodeResult]);
+    }, [promoCode]);
 
     return (
         <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
@@ -98,10 +98,7 @@ const PromoCode: FC = () => {
                                                     />
                                                     <PromoCodeContentButtonStyled
                                                         type="submit"
-                                                        isDisabled={
-                                                            !formProviderMethods.formState.isValid ||
-                                                            changePromoCodeResult.fetching
-                                                        }
+                                                        isDisabled={!formProviderMethods.formState.isValid}
                                                         data-testid={testIdentifier + '-apply-button'}
                                                     >
                                                         {t('Apply')}

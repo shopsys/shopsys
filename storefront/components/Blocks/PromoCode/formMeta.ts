@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCodeFormType] => {
     const t = useTypedTranslationFunction();
-    const { promoCode } = useShopsysSelector((state) => state.cart.cartInput);
+    const { promoCode } = useShopsysSelector((state) => state.cart);
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -23,7 +23,14 @@ export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCode
 type PromoCodeFormMeta = {
     formName: string;
     messages: {
-        success: string;
+        addPromoCode: {
+            success: string;
+            error: string;
+        };
+        removePromoCode: {
+            success: string;
+            error: string;
+        };
     };
     fields: {
         [key in keyof PromoCodeFormType]: {
@@ -40,8 +47,14 @@ export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCod
     const formMeta = {
         formName: 'promo-code-form',
         messages: {
-            success: t('Promo code was added to the order.'),
-            error: t('There was an error while adding a promo code to the order.'),
+            addPromoCode: {
+                success: t('Promo code was added to the order.'),
+                error: t('There was an error while adding a promo code to the order.'),
+            },
+            removePromoCode: {
+                success: t('Promo code was removed from the order.'),
+                error: t('There was an error while removing the promo code from the order.'),
+            },
         },
         fields: {
             promoCode: {

@@ -33,6 +33,7 @@ export const getValuesFromCartResult = (
         payment !== null ? payment.price : { ...emptyPriceArray },
         currencyCode,
     );
+    const updatedPromoCode = resultData.promoCode;
 
     return {
         cartUuid,
@@ -41,5 +42,6 @@ export const getValuesFromCartResult = (
         pickupPlace,
         goPayBankSwift,
         payment,
+        promoCode: updatedPromoCode,
     };
 };

@@ -1,0 +1,5 @@
+mutation RemovePromoCodeFromCartMutation($input: RemovePromoCodeFromCartInput!) {
+    RemovePromoCodeFromCart(input: $input) {
+        ...CartFragment
+    }
+}
