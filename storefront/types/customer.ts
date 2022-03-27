@@ -1,4 +1,4 @@
-import { SelectOptionType } from './selectOptions';
+import { CountryType } from './country';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
@@ -26,7 +26,7 @@ export type CurrentCustomerType = {
     street: string;
     city: string;
     postcode: string;
-    country: SelectOptionType;
+    country: CountryType;
     newsletterSubscription: boolean;
     companyName: string;
     companyNumber: string;

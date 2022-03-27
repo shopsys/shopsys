@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 import { FieldError, UseFormReturn } from 'react-hook-form';
-import { CurrentCustomerType } from 'types/customer';
+import { CustomerChangeProfileFormType } from 'types/form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 export const useCustomerChangeProfileForm = (
-    defaultValues: CurrentCustomerType,
-): [UseFormReturn<CurrentCustomerType>, CurrentCustomerType] => {
+    defaultValues: CustomerChangeProfileFormType,
+): [UseFormReturn<CustomerChangeProfileFormType>, CustomerChangeProfileFormType] => {
     const t = useTypedTranslationFunction();
 
     const resolver = yupResolver(
@@ -102,7 +102,7 @@ type CustomerChangeProfileFormMetaType = {
         success: string;
     };
     fields: {
-        [key in keyof CurrentCustomerType]: {
+        [key in keyof CustomerChangeProfileFormType]: {
             name: key;
             label: string;
             errorMessage?: string;
@@ -111,7 +111,7 @@ type CustomerChangeProfileFormMetaType = {
 };
 
 export const useCustomerChangeProfileFormMeta = (
-    formProviderMethods: UseFormReturn<CurrentCustomerType>,
+    formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
 ): CustomerChangeProfileFormMetaType => {
     const t = useTypedTranslationFunction();
     const isCompanyUser = formProviderMethods.formState.dirtyFields.isCompanyUser;
@@ -202,14 +202,6 @@ export const useCustomerChangeProfileFormMeta = (
                 name: 'newsletterSubscription' as const,
                 label: t('I agree to receive the newsletter'),
                 errorMessage: errors.newsletterSubscription?.message,
-            },
-            defaultDeliveryAddress: {
-                name: 'defaultDeliveryAddress' as const,
-                label: '',
-            },
-            deliveryAddresses: {
-                name: 'deliveryAddresses' as const,
-                label: '',
             },
         },
     };

@@ -73,3 +73,22 @@ export type PersonalDataOverviewFormType = {
 export type PersonalDataExportFormType = {
     email: string;
 };
+
+export type CustomerChangeProfileFormType = {
+    isCompanyUser: boolean;
+    email: string;
+    passwordOld: string;
+    passwordFirst: string;
+    passwordSecond: string;
+    telephone: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    companyNumber: string;
+    companyTaxNumber: string;
+    street: string;
+    city: string;
+    postcode: string;
+    country: SelectOptionType;
+    newsletterSubscription: boolean;
+};

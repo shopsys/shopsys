@@ -24,10 +24,6 @@ const mapCurrentCustomerApiData = (
         ...apiCurrentCustomerData,
         isCompanyUser: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
         telephone: apiCurrentCustomerData.telephone === null ? '' : apiCurrentCustomerData.telephone,
-        country: {
-            value: apiCurrentCustomerData.country.code,
-            label: apiCurrentCustomerData.country.name,
-        },
         companyName:
             apiCurrentCustomerData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerData.companyName !== null
                 ? apiCurrentCustomerData.companyName

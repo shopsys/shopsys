@@ -34,7 +34,7 @@ const EditProfilePage: FC = () => {
                         ]}
                     >
                         {currentCustomerUserData !== undefined && (
-                            <EditProfile defaultFormValues={currentCustomerUserData} />
+                            <EditProfile currentCustomerUser={currentCustomerUserData} />
                         )}
                     </SimpleLayout>
                 </CommonLayout>

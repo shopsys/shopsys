@@ -10,6 +10,7 @@ import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { CurrentCustomerType } from 'types/customer';
+import { CustomerChangeProfileFormType } from 'types/form';
 import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfile.style';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
@@ -28,16 +29,21 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type EditProfilePageProps = {
-    defaultFormValues: CurrentCustomerType;
+    currentCustomerUser: CurrentCustomerType;
 };
 
 const EditProfile: FC<EditProfilePageProps> = (props) => {
     const testIdentifier = 'form-edit-profile';
     const t = useTypedTranslationFunction();
-    const currentCustomerUser = props.defaultFormValues;
     const [customerEditProfileResult, customerEditProfile] = useChangePersonalDataMutationApi();
 
-    const [formProviderMethods, defaultFormValues] = useCustomerChangeProfileForm(currentCustomerUser);
+    const [formProviderMethods, defaultFormValues] = useCustomerChangeProfileForm({
+        ...props.currentCustomerUser,
+        country: {
+            label: props.currentCustomerUser.country.name,
+            value: props.currentCustomerUser.country.code,
+        },
+    });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
@@ -53,7 +59,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
         { blur: true, reset: false },
     );
 
-    const onChangeProfileHandler: SubmitHandler<CurrentCustomerType> = async (data, event) => {
+    const onChangeProfileHandler: SubmitHandler<CustomerChangeProfileFormType> = async (data, event) => {
         event?.preventDefault();
 
         await customerEditProfile({ ...data, country: data.country.value });
@@ -64,7 +70,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
         }
     };
 
-    const onChangePasswordHandler = async (data: CurrentCustomerType) => {
+    const onChangePasswordHandler = async (data: CustomerChangeProfileFormType) => {
         const changePasswordResult = await changePassword({
             email: data.email,
             oldPassword: data.passwordOld,
@@ -263,7 +269,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
                             />
                         </FormLine>
                     </FormColumn>
-                    {currentCustomerUser.isCompanyUser && (
+                    {props.currentCustomerUser.isCompanyUser && (
                         <>
                             <Heading type="h2">{t('Company information')}</Heading>
                             <FormLine bottomGap={true}>
@@ -418,13 +424,13 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
                             )}
                         />
                     </FormLine>
-                    {currentCustomerUser.deliveryAddresses.length > 0 && (
+                    {props.currentCustomerUser.deliveryAddresses.length > 0 && (
                         <>
                             <Heading type="h2">{t('Delivery addresses')}</Heading>
                             <FormLine bottomGap={true}>
                                 <AddressList
-                                    deliveryAddresses={currentCustomerUser.deliveryAddresses}
-                                    defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
+                                    deliveryAddresses={props.currentCustomerUser.deliveryAddresses}
+                                    defaultDeliveryAddress={props.currentCustomerUser.defaultDeliveryAddress}
                                 />
                             </FormLine>
                         </>
