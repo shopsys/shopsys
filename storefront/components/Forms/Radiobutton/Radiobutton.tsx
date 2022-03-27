@@ -25,7 +25,7 @@ type RadiobuttonProps = NativeProps & {
     /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
-    fieldRef?: ControllerRenderProps;
+    fieldRef?: ControllerRenderProps<any, any>;
     /**
      * Callback which can be used to uncheck the radiobutton after second click
      */
