@@ -15,9 +15,6 @@ parameters:
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
             path: %currentWorkingDirectory%/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
         -
-            message: '#Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
-        -
             message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
             path: %currentWorkingDirectory%/src/Form/JsFormValidatorFactory.php
         -
