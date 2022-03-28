@@ -8,6 +8,36 @@ There you can find links to upgrade notes for other versions too.
 ## Composer dependencies
 - remove `vasek-purchart/console-errors-bundle` dependency ([#2408](https://github.com/shopsys/shopsys/pull/2408))
     - see #project-base-diff to update your project
+- upgrade all Doctrine related packages to the versions that support both PHP 7.4 and 8.1 ([#2417](https://github.com/shopsys/shopsys/pull/2417))
+    - see #project-base-diff to update your project
+    - make sure you check all the upgrading notes of the upgraded packages and adjust your codebase appropriately
+        - see https://github.com/doctrine/dbal/blob/3.3.x/UPGRADE.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-1.11.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-1.12.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.0.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.1.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.2.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.3.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.4.md
+        - see https://github.com/doctrine/DoctrineBundle/blob/2.5.x/UPGRADE-2.5.md
+        - see https://github.com/doctrine/persistence/blob/2.4.x/UPGRADE.md
+        - see https://github.com/doctrine/orm/blob/2.11.x/UPGRADE.md
+        - see https://github.com/trikoder/oauth2-bundle/blob/v3.x/UPGRADE.md
+    - `DatabaseDumpCommand::__construct` changed its interface:
+        ```
+        - public function __construct(Connection $connection)
+        + public function __construct(DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider)
+        ```
+    - `EntityExtensionSubscriber::getClassMetadataForEntity` changed its interface:
+        ```diff
+        - protected function getClassMetadataForEntity(string $entityClass): ClassMetadataInfo
+        + protected function getClassMetadataForEntity(string $entityClass): ClassMetadata
+        ```
+    - `Admin/AdvertController` has a new dependency on `EntityManagerInterface` in the constructor
+    - `Admin/BrandController` has a new dependency on `EntityManagerInterface` in the constructor
+    - `Admin/SliderController` has a new dependency on `EntityManagerInterface` in the constructor
+    - `uuid-ossp` Postgres extension is no longer created in `CreateDatabaseCommand` as DB-side UUID generation is deprecated now
+        - see https://github.com/doctrine/orm/blob/2.11.x/UPGRADE.md#deprecated-database-side-uuid-generation
 
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))
