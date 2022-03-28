@@ -27,12 +27,19 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Twig\Environment;
 
 class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 {
     protected const EMAIL = 'no-reply@shopsys.com';
     protected const EXPECTED_XML_FILE_NAME = 'test.xml';
     protected const DOMAIN_ID_FIRST = Domain::FIRST_DOMAIN_ID;
+
+    /**
+     * @var \Twig\Environment
+     * @inject
+     */
+    private Environment $twigEnvironment;
 
     public function testExportXml()
     {
@@ -63,9 +70,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $order->addItem($orderItem);
         $order->setStatus($status);
 
-        $twig = $this->getContainer()->get('twig');
-
-        $generatedXml = $twig->render('Front/Content/PersonalData/export.xml.twig', [
+        $generatedXml = $this->twigEnvironment->render('Front/Content/PersonalData/export.xml.twig', [
             'customerUser' => $customerUser,
             'orders' => [0 => $order],
             'newsletterSubscriber' => null,
