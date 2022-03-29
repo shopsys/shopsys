@@ -24,6 +24,15 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_OVER_LIMIT = 'payment_over_limit';
 
     /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '60b0df97-047f-48e4-8864-1d90ba1aaf84', '5a8d0623-fecc-432e-a4a7-330e96da2dab',
+        '7adc774b-aa39-4727-b373-544345814929', '1dd4fd71-3d82-48cb-b2b0-eecff0f297d3',
+        'a22b0dde-77ab-448f-be5e-831c0b2b5a32',
+    ];
+
+    /**
      * @var \App\Model\Payment\PaymentFacade
      */
     private $paymentFacade;
@@ -142,6 +151,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         PaymentData $paymentData,
         array $transportsReferenceNames
     ) {
+        $paymentData->uuid = array_pop($this->uuidPool);
         $paymentData->transports = [];
         foreach ($transportsReferenceNames as $transportReferenceName) {
             /** @var \App\Model\Transport\Transport $transport */

@@ -22,6 +22,16 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
     /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '5e4cf5fd-16f1-4f1e-8a1b-fe81286ce8ed',
+        '45e4fe5a-db4a-49e8-80ec-5242a9858dce',
+        'ca676696-7fcf-43d8-a77e-9e9892cd464a',
+        'c5bf95f7-0093-4345-96d9-562e9371a273',
+    ];
+
+    /**
      * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
@@ -130,6 +140,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     private function createTransport($referenceName, TransportData $transportData)
     {
+        $transportData->uuid = array_pop($this->uuidPool);
         $transport = $this->transportFacade->create($transportData);
         $this->addReference($referenceName, $transport);
     }

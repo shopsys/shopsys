@@ -26,6 +26,24 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public const CATEGORY_FOOD = 'category_food';
 
     /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '7ba89a28-77ab-419a-b154-ef747d7a98ce',
+        '57157d5a-b15b-495c-b689-65d395f1c50f',
+        '8075297b-30b7-49e0-bd89-b4e5dec2f5b8',
+        'c5d5a03e-1d11-43e6-9b24-9058d13346b3',
+        'b4700dea-4b83-43d3-9df1-f162a114cacd',
+        '8d18e212-ca21-43d0-9a61-4677bc2ed0a7',
+        '6eaaa31b-0b11-45c8-bee0-0423423a799a',
+        'f79ade94-3f89-4244-b424-3911a1d82a64',
+        'a1c81439-e169-48f3-8432-98934b0ee2d7',
+        '4b31f43c-ed0a-4db6-979b-10c27d7791f3',
+        'c8154b52-af56-45cf-b8b7-36b00bf490c3',
+        'dea6764b-a03b-4171-8243-46e730c8b90b',
+    ];
+
+    /**
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
@@ -194,6 +212,8 @@ class CategoryDataFixture extends AbstractReferenceFixture
      */
     private function createCategory(CategoryData $categoryData, $referenceName = null)
     {
+        $categoryData->uuid = array_pop($this->uuidPool);
+
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
         if ($referenceName !== null) {

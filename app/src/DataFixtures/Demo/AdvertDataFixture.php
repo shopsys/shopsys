@@ -16,6 +16,13 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 class AdvertDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '17cf51a8-a14b-4caa-b4ba-a8523ed15bb4', 'a54cd097-9e2c-4f0e-9ee9-6dfcbf1825c1',
+    ];
+
+    /**
      * @var \App\Model\Advert\AdvertFacade
      */
     private $advertFacade;
@@ -42,6 +49,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
     {
         /** @var \App\Model\Advert\AdvertData $advertData */
         $advertData = $this->advertDataFactory->create();
+        $advertData->uuid = array_pop($this->uuidPool);
         $advertData->domainId = Domain::FIRST_DOMAIN_ID;
         $advertData->name = t('Demo advert', [], 'dataFixtures');
         $advertData->type = Advert::TYPE_CODE;
@@ -52,6 +60,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
 
         /** @var \App\Model\Advert\AdvertData $advertData */
         $advertData = $this->advertDataFactory->create();
+        $advertData->uuid = array_pop($this->uuidPool);
         $advertData->domainId = Domain::FIRST_DOMAIN_ID;
         $advertData->name = t('Demo advert in category', [], 'dataFixtures');
         $advertData->type = Advert::TYPE_CODE;
