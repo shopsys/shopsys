@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Customer\User;
 
-use App\FrontendApi\Exception\ValidationError;
 use App\FrontendApi\Mutation\Login\LoginMutation;
 use App\Model\Customer\User\CustomerUserPasswordFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -14,7 +13,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
 
 class CustomerUserPasswordRecoveryMutation implements MutationInterface, AliasedInterface
 {
@@ -65,17 +63,9 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
     {
         $validator->validate();
 
-        try {
-            $this->customerUserPasswordFacade->resetPassword($argument['email'], $this->domain->getId());
+        $this->customerUserPasswordFacade->resetPassword($argument['email'], $this->domain->getId());
 
-            return 'success';
-        } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
-            throw new ValidationError(
-                t('User with provided email address does not exists.', [], 'validators'),
-                'd1bf5f27-fe92-424c-bb58-df90cc7637b1',
-                'email'
-            );
-        }
+        return 'success';
     }
 
     /**

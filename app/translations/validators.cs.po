@@ -169,7 +169,7 @@ msgstr ""
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr ""
 
-msgid "User with provided email address does not exists."
+msgid "User with provided email address does not exist."
 msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
 
 msgid "Vyplňte prosím URL"

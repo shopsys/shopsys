@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\FrontendApi\Model\Component\Constraints\ExistingEmail;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RecoverPasswordTest extends GraphQlTestCase
@@ -34,5 +35,53 @@ class RecoverPasswordTest extends GraphQlTestCase
 
         $this->assertArrayHasKey('refreshToken', $recoverPasswordData);
         $this->assertIsString($recoverPasswordData['refreshToken']);
+    }
+
+    public function testRequestPasswordRecoveryWithInvalidHash(): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $query = '
+            mutation {
+                RecoverPassword(input: {
+                    email: "' . $customerUser->getEmail() . '"
+                    hash: "Lorem ipsum dolor sit amet, consectetur tincidunt."
+                    newPassword: "password123"
+                }) {
+                    accessToken
+                    refreshToken
+                }
+            }';
+
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        $this->assertCount(1, $errors);
+        $this->assertSame('Provided hash is not valid.', $errors[0]['message']);
+    }
+
+    public function testRequestPasswordRecoveryWithInvalidEmail(): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->getReference(CustomerUserDataFixture::USER_WITH_RESET_PASSWORD_HASH);
+        $query = '
+            mutation {
+                RecoverPassword(input: {
+                    email: "no-reply-not-existing@shopsys.com"
+                    hash: "' . $customerUser->getResetPasswordHash() . '"
+                    newPassword: "password123"
+                }) {
+                    accessToken
+                    refreshToken
+                }
+            }';
+
+        $response = $this->getResponseContentForQuery($query);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertCount(1, $validationErrors);
+        $this->assertSame(ExistingEmail::USER_WITH_EMAIL_DOES_NOT_EXIST_ERROR, $validationErrors['input.email'][0]['code']);
     }
 }
