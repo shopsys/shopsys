@@ -25,9 +25,7 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
                 <Header />
             </Webline>
-            <Webline>
-                <Adverts positionName="header" withGap />
-            </Webline>
+            <Adverts positionName="header" withGapBottom withWebline />
             <Webline>
                 <OrderSteps activeStep={props.activeStep} domainUrl={url} />
             </Webline>
@@ -39,9 +37,7 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
                     </OrderLayoutSummaryStyled>
                 </OrderLayoutStyled>
             </Webline>
-            <Webline>
-                <Adverts positionName="footer" withGap />
-            </Webline>
+            <Adverts positionName="footer" withGapBottom withWebline />
         </>
     );
 };

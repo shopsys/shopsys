@@ -2,14 +2,20 @@ import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
 type AdvertsStyledProps = {
-    withGap?: boolean;
+    withGapBottom?: boolean;
+    withGapTop?: boolean;
 };
 
 export const AdvertsStyled = styled.div<AdvertsStyledProps>`
-    ${({ withGap }) => css`
-        ${withGap &&
+    ${({ withGapBottom, withGapTop }) => css`
+        ${withGapBottom &&
         css`
             margin-bottom: 32px;
+        `}
+
+        ${withGapTop &&
+        css`
+            margin-top: 32px;
         `}
     `}
 `;

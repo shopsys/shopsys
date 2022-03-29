@@ -18,13 +18,9 @@ const CommonLayout: FC = (props) => {
                 <Header />
                 <Navigation />
             </Webline>
-            <Webline>
-                <Adverts positionName="header" withGap />
-            </Webline>
+            <Adverts positionName="header" withGapBottom withWebline />
             {props.children}
-            <Webline>
-                <Adverts positionName="footer" withGap />
-            </Webline>
+            <Adverts positionName="footer" withGapBottom withGapTop withWebline />
             <Webline type="light">
                 <NewsletterForm />
             </Webline>

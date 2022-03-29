@@ -24,7 +24,7 @@ const OrderSummary: FC = () => {
 
     return (
         <>
-            <Adverts positionName="cartPreview" withGap />
+            <Adverts positionName="cartPreview" withGapBottom />
             <OrderSummaryWrapperStyled data-testid={testIdentifier}>
                 <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
                 <OrderSummaryContentWrapperStyled>
