@@ -43,6 +43,10 @@
     - the component can be easily nested to introduce multiple redirect rules
   - CustomerTypeEnum was unified to respect DRY
     - this meant changes in many places but will be more scalable and robust in the future
+  - login/logout mechanism now uses simple handlers instead of hooks
+    - because of a bug that did not allow the user to log out, the login/logout mechanism was refactored to simple handler methods
+    - all changes happened only in useAuth hook and on the outside everything is the same
+    - this approach should be easier to understand and to extend
   - isCompanyUser property was renamed to companyUser
     - this was done as the datapoint is called companyUser on the API
     - this should ease mapping and working with the property inside API calls/methods
