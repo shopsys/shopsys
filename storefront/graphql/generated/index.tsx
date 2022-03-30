@@ -2528,7 +2528,7 @@ export type DeleteDeliveryAddressMutationVariablesApi = Exact<{
 }>;
 
 
-export type DeleteDeliveryAddressMutationApi = { __typename?: 'Mutation', DeleteDeliveryAddress: Array<{ __typename?: 'DeliveryAddress', uuid: string }> };
+export type DeleteDeliveryAddressMutationApi = { __typename?: 'Mutation', DeleteDeliveryAddress: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
 
 export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -4093,10 +4093,10 @@ export function useChangePersonalDataMutationApi() {
 export const DeleteDeliveryAddressMutationDocumentApi = gql`
     mutation DeleteDeliveryAddressMutation($deliveryAddressUuid: Uuid!) {
   DeleteDeliveryAddress(deliveryAddressUuid: $deliveryAddressUuid) {
-    uuid
+    ...DeliveryAddressFragment
   }
 }
-    `;
+    ${DeliveryAddressFragmentApi}`;
 
 export function useDeleteDeliveryAddressMutationApi() {
   return Urql.useMutation<DeleteDeliveryAddressMutationApi, DeleteDeliveryAddressMutationVariablesApi>(DeleteDeliveryAddressMutationDocumentApi);

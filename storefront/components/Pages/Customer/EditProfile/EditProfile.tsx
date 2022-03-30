@@ -1,4 +1,4 @@
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { Controller, FormProvider, Path, SubmitHandler } from 'react-hook-form';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
 import {
@@ -18,14 +18,13 @@ import Form from 'components/Forms/Form';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type EditProfilePageProps = {
@@ -35,9 +34,9 @@ type EditProfilePageProps = {
 const EditProfile: FC<EditProfilePageProps> = (props) => {
     const testIdentifier = 'form-edit-profile';
     const t = useTypedTranslationFunction();
-    const [customerEditProfileResult, customerEditProfile] = useChangePersonalDataMutationApi();
+    const [, customerEditProfile] = useChangePersonalDataMutationApi();
 
-    const [formProviderMethods, defaultFormValues] = useCustomerChangeProfileForm({
+    const [formProviderMethods] = useCustomerChangeProfileForm({
         ...props.currentCustomerUser,
         country: {
             label: props.currentCustomerUser.country.name,
@@ -50,46 +49,98 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
     const [, changePassword] = useChangePasswordMutationApi();
     const [, [, logout]] = useAuth();
 
-    useHandleFormErrors(customerEditProfileResult.error, formProviderMethods, formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        customerEditProfileResult,
-        formProviderMethods,
-        defaultFormValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { blur: true, reset: false },
-    );
-
-    const onChangeProfileHandler: SubmitHandler<CustomerChangeProfileFormType> = async (data, event) => {
+    const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
+        data,
+        event,
+    ) => {
         event?.preventDefault();
 
-        await customerEditProfile({ input: { ...data, country: data.country.value } });
+        onChangeProfileHandler(data);
+        onChangePasswordHandler(data);
+    };
 
-        // matching both passwords is checked on Yup
-        if (data.passwordFirst !== '' && data.passwordSecond !== '') {
-            onChangePasswordHandler(data);
+    const onChangeProfileHandler = async (data: CustomerChangeProfileFormType) => {
+        const changeProfileResult = await customerEditProfile({
+            input: {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                telephone: data.telephone,
+                street: data.street,
+                city: data.city,
+                country: data.country.value,
+                postcode: data.postcode,
+                companyCustomer: data.companyCustomer,
+                companyName: data.companyName,
+                companyNumber: data.companyNumber,
+                companyTaxNumber: data.companyTaxNumber,
+                newsletterSubscription: data.newsletterSubscription,
+            },
+        });
+
+        if (changeProfileResult.data?.ChangePersonalData.email !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
+        }
+
+        if (changeProfileResult.error === undefined) {
+            return;
+        }
+
+        const { userError, applicationError } = getUserFriendlyErrors(changeProfileResult.error, t);
+
+        if (applicationError !== undefined) {
+            showErrorMessage(formMeta.messages.error);
+        }
+
+        if (userError?.validation !== undefined) {
+            for (const fieldName in userError.validation) {
+                formProviderMethods.setError(
+                    fieldName as Path<CustomerChangeProfileFormType>,
+                    userError.validation[fieldName],
+                );
+            }
         }
     };
 
     const onChangePasswordHandler = async (data: CustomerChangeProfileFormType) => {
+        if (data.passwordFirst === '' || data.passwordSecond === '') {
+            return;
+        }
+
         const changePasswordResult = await changePassword({
             email: data.email,
             oldPassword: data.passwordOld,
             newPassword: data.passwordFirst,
         });
 
-        if (changePasswordResult.error !== undefined) {
-            showErrorMessage(t('There was an error while changing your password'));
-        }
         if (changePasswordResult.data?.ChangePassword.email !== undefined) {
             showSuccessMessage(t('Your password has been changed. You will be signed out.'));
             setTimeout(() => logout(), 2000);
+        }
+
+        if (changePasswordResult.error === undefined) {
+            return;
+        }
+
+        const { userError, applicationError } = getUserFriendlyErrors(changePasswordResult.error, t);
+
+        if (applicationError !== undefined) {
+            showErrorMessage(t('There was an error while changing your password'));
+        }
+
+        if (userError?.validation !== undefined) {
+            for (const fieldName in userError.validation) {
+                formProviderMethods.setError(
+                    fieldName as Path<CustomerChangeProfileFormType>,
+                    userError.validation[fieldName],
+                );
+            }
         }
     };
 
     return (
         <>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onChangeProfileHandler)} noValidate>
+                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)} noValidate>
                     <Heading type="h2">{t('Personal data')}</Heading>
                     <FormLine bottomGap={true}>
                         <Controller
