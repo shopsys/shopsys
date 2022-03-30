@@ -269,7 +269,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
                             />
                         </FormLine>
                     </FormColumn>
-                    {props.currentCustomerUser.isCompanyUser && (
+                    {props.currentCustomerUser.companyCustomer && (
                         <>
                             <Heading type="h2">{t('Company information')}</Heading>
                             <FormLine bottomGap={true}>

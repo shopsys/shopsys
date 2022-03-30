@@ -18,7 +18,7 @@ export type DeliveryAddressType = {
 };
 
 export type CurrentCustomerType = {
-    isCompanyUser: boolean;
+    companyCustomer: boolean;
     firstName: string;
     lastName: string;
     email: string;

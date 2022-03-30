@@ -114,7 +114,7 @@ export const useCustomerChangeProfileFormMeta = (
     formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
 ): CustomerChangeProfileFormMetaType => {
     const t = useTypedTranslationFunction();
-    const isCompanyUser = formProviderMethods.formState.dirtyFields.isCompanyUser;
+    const companyCustomer = formProviderMethods.formState.dirtyFields.companyCustomer;
     const errors = formProviderMethods.formState.errors;
 
     const formMeta = {
@@ -124,8 +124,8 @@ export const useCustomerChangeProfileFormMeta = (
             success: t('Your profile has been changed successfully'),
         },
         fields: {
-            isCompanyUser: {
-                name: 'isCompanyUser' as const,
+            companyCustomer: {
+                name: 'companyCustomer' as const,
                 label: '',
             },
             email: {
@@ -166,17 +166,17 @@ export const useCustomerChangeProfileFormMeta = (
             companyName: {
                 name: 'companyName' as const,
                 label: t('Company name'),
-                errorMessage: isCompanyUser ? errors.companyName?.message : undefined,
+                errorMessage: companyCustomer ? errors.companyName?.message : undefined,
             },
             companyNumber: {
                 name: 'companyNumber' as const,
                 label: t('Company number'),
-                errorMessage: isCompanyUser ? errors.companyNumber?.message : undefined,
+                errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
             },
             companyTaxNumber: {
                 name: 'companyTaxNumber' as const,
                 label: t('Tax number'),
-                errorMessage: isCompanyUser ? errors.companyTaxNumber?.message : undefined,
+                errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
             },
             street: {
                 name: 'street' as const,

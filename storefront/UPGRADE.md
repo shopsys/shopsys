@@ -43,3 +43,9 @@
     - the component can be easily nested to introduce multiple redirect rules
   - CustomerTypeEnum was unified to respect DRY
     - this meant changes in many places but will be more scalable and robust in the future
+  - isCompanyUser property was renamed to companyUser
+    - this was done as the datapoint is called companyUser on the API
+    - this should ease mapping and working with the property inside API calls/methods
+  - ControllerRenderProps and TFunction typings were fixed
+    - incorrect typings for ControllerRenderProps and TFunction were displaying annoying errors in some IDEs
+    - even though this was not a compilation error, it was refactored so now the errors are not displayed, which should ease debugging

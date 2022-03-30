@@ -75,7 +75,7 @@ export type PersonalDataExportFormType = {
 };
 
 export type CustomerChangeProfileFormType = {
-    isCompanyUser: boolean;
+    companyCustomer: boolean;
     email: string;
     passwordOld: string;
     passwordFirst: string;

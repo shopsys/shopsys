@@ -22,7 +22,7 @@ const mapCurrentCustomerApiData = (
 ): CurrentCustomerType => {
     const mappedCurrentCustomerData = {
         ...apiCurrentCustomerData,
-        isCompanyUser: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
+        companyCustomer: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
         telephone: apiCurrentCustomerData.telephone === null ? '' : apiCurrentCustomerData.telephone,
         companyName:
             apiCurrentCustomerData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerData.companyName !== null
