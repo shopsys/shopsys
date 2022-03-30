@@ -62,7 +62,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
     const onChangeProfileHandler: SubmitHandler<CustomerChangeProfileFormType> = async (data, event) => {
         event?.preventDefault();
 
-        await customerEditProfile({ ...data, country: data.country.value });
+        await customerEditProfile({ input: { ...data, country: data.country.value } });
 
         // matching both passwords is checked on Yup
         if (data.passwordFirst !== '' && data.passwordSecond !== '') {

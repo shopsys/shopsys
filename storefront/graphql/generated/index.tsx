@@ -2499,6 +2499,12 @@ export type CountriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type CountriesQueryApi = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', name: string, code: string }> };
 
+type CustomerUserFragment_CompanyCustomerUser_Api = { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
+
+type CustomerUserFragment_RegularCustomerUser_Api = { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
+
+export type CustomerUserFragmentApi = CustomerUserFragment_CompanyCustomerUser_Api | CustomerUserFragment_RegularCustomerUser_Api;
+
 export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
 
 export type ChangePasswordMutationVariablesApi = Exact<{
@@ -2511,18 +2517,11 @@ export type ChangePasswordMutationVariablesApi = Exact<{
 export type ChangePasswordMutationApi = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
 
 export type ChangePersonalDataMutationVariablesApi = Exact<{
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  telephone: Scalars['String'];
-  street: Scalars['String'];
-  city: Scalars['String'];
-  postcode: Scalars['String'];
-  country: Scalars['String'];
-  newsletterSubscription: Scalars['Boolean'];
+  input: ChangePersonalDataInputApi;
 }>;
 
 
-export type ChangePersonalDataMutationApi = { __typename?: 'Mutation', ChangePersonalData: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
+export type ChangePersonalDataMutationApi = { __typename?: 'Mutation', ChangePersonalData: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
 
 export type DeleteDeliveryAddressMutationVariablesApi = Exact<{
   deliveryAddressUuid: Scalars['Uuid'];
@@ -3539,6 +3538,34 @@ export const DeliveryAddressFragmentApi = gql`
   lastName
 }
     ${CountryFragmentApi}`;
+export const CustomerUserFragmentApi = gql`
+    fragment CustomerUserFragment on CustomerUser {
+  __typename
+  firstName
+  lastName
+  email
+  telephone
+  street
+  city
+  postcode
+  country {
+    ...CountryFragment
+  }
+  newsletterSubscription
+  defaultDeliveryAddress {
+    ...DeliveryAddressFragment
+  }
+  deliveryAddresses {
+    ...DeliveryAddressFragment
+  }
+  ... on CompanyCustomerUser {
+    companyName
+    companyNumber
+    companyTaxNumber
+  }
+}
+    ${CountryFragmentApi}
+${DeliveryAddressFragmentApi}`;
 export const FlagDetailFragmentApi = gql`
     fragment FlagDetailFragment on Flag {
   uuid
@@ -4053,14 +4080,12 @@ export function useChangePasswordMutationApi() {
   return Urql.useMutation<ChangePasswordMutationApi, ChangePasswordMutationVariablesApi>(ChangePasswordMutationDocumentApi);
 };
 export const ChangePersonalDataMutationDocumentApi = gql`
-    mutation ChangePersonalDataMutation($firstName: String!, $lastName: String!, $telephone: String!, $street: String!, $city: String!, $postcode: String!, $country: String!, $newsletterSubscription: Boolean!) {
-  ChangePersonalData(
-    input: {firstName: $firstName, lastName: $lastName, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, newsletterSubscription: $newsletterSubscription}
-  ) {
-    email
+    mutation ChangePersonalDataMutation($input: ChangePersonalDataInput!) {
+  ChangePersonalData(input: $input) {
+    ...CustomerUserFragment
   }
 }
-    `;
+    ${CustomerUserFragmentApi}`;
 
 export function useChangePersonalDataMutationApi() {
   return Urql.useMutation<ChangePersonalDataMutationApi, ChangePersonalDataMutationVariablesApi>(ChangePersonalDataMutationDocumentApi);
@@ -4079,33 +4104,10 @@ export function useDeleteDeliveryAddressMutationApi() {
 export const CurrentCustomerUserQueryDocumentApi = gql`
     query CurrentCustomerUserQuery {
   currentCustomerUser {
-    __typename
-    firstName
-    lastName
-    email
-    telephone
-    street
-    city
-    postcode
-    country {
-      ...CountryFragment
-    }
-    newsletterSubscription
-    defaultDeliveryAddress {
-      ...DeliveryAddressFragment
-    }
-    deliveryAddresses {
-      ...DeliveryAddressFragment
-    }
-    ... on CompanyCustomerUser {
-      companyName
-      companyNumber
-      companyTaxNumber
-    }
+    ...CustomerUserFragment
   }
 }
-    ${CountryFragmentApi}
-${DeliveryAddressFragmentApi}`;
+    ${CustomerUserFragmentApi}`;
 
 export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<CurrentCustomerUserQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<CurrentCustomerUserQueryApi>({ query: CurrentCustomerUserQueryDocumentApi, ...options });

@@ -1,23 +1,5 @@
-mutation ChangePersonalDataMutation(
-    $firstName: String!
-    $lastName: String!
-    $telephone: String!
-    $street: String!
-    $city: String!
-    $postcode: String!
-    $country: String!
-    $newsletterSubscription: Boolean!
-) {
-    ChangePersonalData(input:{
-        firstName: $firstName
-        lastName: $lastName
-        telephone: $telephone
-        street: $street
-        city: $city
-        postcode: $postcode
-        country: $country
-        newsletterSubscription: $newsletterSubscription
-    }){
-        email
+mutation ChangePersonalDataMutation($input: ChangePersonalDataInput!) {
+    ChangePersonalData(input: $input) {
+        ...CustomerUserFragment
     }
 }
