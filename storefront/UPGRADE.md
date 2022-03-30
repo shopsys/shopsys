@@ -43,6 +43,10 @@
     - the component can be easily nested to introduce multiple redirect rules
   - CustomerTypeEnum was unified to respect DRY
     - this meant changes in many places but will be more scalable and robust in the future
+  - UserDataRefresher was refactored
+    - because the refresher was failing to refresh the user data in the most important situation (when the user data were modified) it had to be refactored
+    - now the user contact information are updated more often (as many update conditions were removed) but it works in all the known cases
+    - to save some performance, the two flows that were previously put in one useEffect hook were now split into two, so changes to dependencies does not trigger code that does not rely on those dependencies
   - login/logout mechanism now uses simple handlers instead of hooks
     - because of a bug that did not allow the user to log out, the login/logout mechanism was refactored to simple handler methods
     - all changes happened only in useAuth hook and on the outside everything is the same
