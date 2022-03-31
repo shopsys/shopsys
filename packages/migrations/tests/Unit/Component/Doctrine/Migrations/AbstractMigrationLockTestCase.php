@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock;
 
 abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
@@ -33,7 +33,7 @@ abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
      */
     protected function createNewMigrationsLock(): MigrationsLock
     {
-        $loggerMock = $this->createMock(Logger::class);
+        $loggerMock = $this->createMock(LoggerInterface::class);
 
         return new MigrationsLock(static::MIGRATION_LOCK, $loggerMock);
     }
