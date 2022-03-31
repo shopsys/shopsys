@@ -191,7 +191,7 @@ class ImageFacade
             $this->em->persist($newImage);
             $entitiesForFlush[] = $newImage;
 
-            $this->em->flush($entitiesForFlush);
+            $this->em->flush();
         }
     }
 
@@ -201,7 +201,7 @@ class ImageFacade
     protected function saveImageOrdering($orderedImages): void
     {
         $this->setImagePositionsByOrder($orderedImages);
-        $this->em->flush($orderedImages);
+        $this->em->flush();
     }
 
     /**
@@ -522,7 +522,7 @@ class ImageFacade
             $this->em->persist($targetImage);
             $targetImages[] = $targetImage;
         }
-        $this->em->flush($targetImages);
+        $this->em->flush();
     }
 
     /**

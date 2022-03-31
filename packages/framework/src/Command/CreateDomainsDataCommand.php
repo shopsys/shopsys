@@ -72,7 +72,7 @@ class CreateDomainsDataCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $domainsCreatedCount = 0;
-        $this->em->transactional(function () use ($output, &$domainsCreatedCount) {
+        $this->em->wrapInTransaction(function () use ($output, &$domainsCreatedCount) {
             $domainsCreatedCount = $this->doExecute($output);
         });
 

@@ -91,7 +91,7 @@ class CartWatcherFacade
         }
 
         if (count($modifiedItems) > 0) {
-            $this->em->flush($modifiedItems);
+            $this->em->flush();
         }
     }
 
@@ -125,7 +125,7 @@ class CartWatcherFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 

@@ -22,7 +22,7 @@ class Version20180216091004 extends AbstractMigration
             ADD PRIMARY KEY (id)
         ');
 
-        $newsletterSubscribers = $this->sql('SELECT email, created_at FROM newsletter_subscribers')->fetchAll();
+        $newsletterSubscribers = $this->sql('SELECT email, created_at FROM newsletter_subscribers')->fetchAllAssociative();
         foreach ($newsletterSubscribers as $newsletterSubscriber) {
             foreach ($this->getAllDomainIds() as $domainId) {
                 $this->sql(

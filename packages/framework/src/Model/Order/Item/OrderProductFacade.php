@@ -117,7 +117,7 @@ class OrderProductFacade
             );
             $relevantProduct->markForVisibilityRecalculation();
         }
-        $this->em->flush($relevantProducts);
+        $this->em->flush();
 
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }

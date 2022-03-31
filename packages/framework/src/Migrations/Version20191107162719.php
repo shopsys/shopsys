@@ -38,7 +38,7 @@ class Version20191107162719 extends AbstractMigration
     {
         $currentVats = $this->sql(
             'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1'
-        )->fetchAll();
+        )->fetchAllAssociative();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             foreach ($currentVats as $currentVat) {
@@ -71,7 +71,7 @@ class Version20191107162719 extends AbstractMigration
     {
         $vatsForMigrateReplaceWithColumn = $this->sql(
             'SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1'
-        )->fetchAll();
+        )->fetchAllAssociative();
 
         foreach ($vatsForMigrateReplaceWithColumn as $vatForMigrateReplaceWithColumn) {
             $newVatId = $this
@@ -79,7 +79,7 @@ class Version20191107162719 extends AbstractMigration
                     'tmpOriginalId' => $vatForMigrateReplaceWithColumn['replace_with_id'],
                     'domainId' => $vatForMigrateReplaceWithColumn['domain_id'],
                 ])
-                ->fetchColumn(0);
+                ->fetchOne();
 
             $this->sql('UPDATE vats SET replace_with_id = :newVatId WHERE id = :id', [
                 'newVatId' => $newVatId,
@@ -92,9 +92,7 @@ class Version20191107162719 extends AbstractMigration
     {
         $currentDefaultVat = $this->sql(
             'SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;'
-        )->fetchColumn(
-            0
-        );
+        )->fetchOne();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $newVatId = $this
@@ -102,7 +100,7 @@ class Version20191107162719 extends AbstractMigration
                     'tmpOriginalId' => $currentDefaultVat,
                     'domainId' => $domainId,
                 ])
-                ->fetchColumn(0);
+                ->fetchOne();
 
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultVatId\', :domainId, :vatId, \'string\');',

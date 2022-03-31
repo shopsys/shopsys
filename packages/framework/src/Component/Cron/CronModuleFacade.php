@@ -47,7 +47,7 @@ class CronModuleFacade
         foreach ($cronModuleConfigs as $cronModuleConfig) {
             $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
             $cronModule->schedule();
-            $this->em->flush($cronModule);
+            $this->em->flush();
         }
     }
 
@@ -69,7 +69,7 @@ class CronModuleFacade
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
         $cronModule->unschedule();
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -79,7 +79,7 @@ class CronModuleFacade
     {
         $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
         $cronModule->suspend();
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -113,7 +113,7 @@ class CronModuleFacade
         $cronModule->setStatusRunning();
         $cronModule->updateLastStartedAt();
 
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -130,7 +130,7 @@ class CronModuleFacade
             $cronModule->setLastDuration($lastCronDuration);
         }
 
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -138,10 +138,19 @@ class CronModuleFacade
      */
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
-        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
-        $cronModule->setStatusFailed();
-
-        $this->em->flush($cronModule);
+        /**
+         * We want to avoid flushing the whole identity map (using EntityManager::flush())
+         * because CRON is marked as failed when an unexpected exception occurs
+         * and in such a case we do not want to propagate all the current changes to the database
+         * therefore the native query for setting CRON error status is used here.
+         */
+        $connection = $this->em->getConnection();
+        if ($connection->isConnected()) {
+            $connection->executeStatement('UPDATE cron_modules SET status = :errorStatus WHERE service_id = :serviceId', [
+                'errorStatus' => CronModule::CRON_STATUS_ERROR,
+                'serviceId' => $cronModuleConfig->getServiceId(),
+            ]);
+        }
     }
 
     /**
@@ -152,7 +161,7 @@ class CronModuleFacade
         $cronModule = $this->getCronModuleByServiceId($serviceId);
         $cronModule->disable();
 
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -163,7 +172,7 @@ class CronModuleFacade
         $cronModule = $this->getCronModuleByServiceId($serviceId);
         $cronModule->enable();
 
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 
     /**
@@ -191,6 +200,6 @@ class CronModuleFacade
         $cronModule = $this->getCronModuleByServiceId($serviceId);
         $cronModule->schedule();
 
-        $this->em->flush($cronModule);
+        $this->em->flush();
     }
 }

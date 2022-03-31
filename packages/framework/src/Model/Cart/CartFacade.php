@@ -289,7 +289,7 @@ class CartFacade
             $cart = $this->cartFactory->create($customerUserIdentifier);
 
             $this->em->persist($cart);
-            $this->em->flush($cart);
+            $this->em->flush();
         }
 
         return $cart;

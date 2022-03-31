@@ -16,7 +16,6 @@ doctrine:
                 class: \Shopsys\FrameworkBundle\Component\Doctrine\MoneyType
             tsvector:
                 class: \Intaro\PostgresSearchBundle\DBAL\TsvectorType
-                commented: false
     orm:
         auto_generate_proxy_classes: false
         dql:

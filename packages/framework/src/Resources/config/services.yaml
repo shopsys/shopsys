@@ -33,8 +33,8 @@ services:
         tags: ['controller.service_arguments']
 
     doctrine.orm.default_entity_manager:
-        class: '%doctrine.orm.entity_manager.class%'
-        factory: ['%doctrine.orm.entity_manager.class%', create]
+        class: Doctrine\ORM\EntityManager
+        factory: [Doctrine\ORM\EntityManager, create]
         public: true
         arguments:
             - '@doctrine.dbal.default_connection'
@@ -970,3 +970,11 @@ services:
         arguments:
             - '@fos_ck_editor.configuration'
             - '@fos_ck_editor.twig_extension'
+
+    Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider:
+        arguments:
+            - '%env(DATABASE_HOST)%'
+            - '%env(DATABASE_PORT)%'
+            - '%env(DATABASE_NAME)%'
+            - '%env(DATABASE_USER)%'
+            - '%env(DATABASE_PASSWORD)%'

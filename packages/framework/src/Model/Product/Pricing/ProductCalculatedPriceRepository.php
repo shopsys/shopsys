@@ -62,7 +62,7 @@ class ProductCalculatedPriceRepository
             $productCalculatedPrice->setPriceWithVat($priceWithVat);
         }
 
-        $this->em->flush($productCalculatedPrice);
+        $this->em->flush();
     }
 
     /**

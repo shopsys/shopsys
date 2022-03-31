@@ -22,7 +22,7 @@ class Version20191121145700 extends AbstractMigration
                 [
                     'domainId' => $domainId,
                 ]
-            )->fetchColumn(0);
+            )->fetchOne();
             if ($contactFormMainTextCount > 0) {
                 continue;
             }

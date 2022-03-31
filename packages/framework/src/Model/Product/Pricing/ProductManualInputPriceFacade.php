@@ -56,6 +56,6 @@ class ProductManualInputPriceFacade
             $manualInputPrice->setInputPrice($inputPrice);
         }
         $this->em->persist($manualInputPrice);
-        $this->em->flush($manualInputPrice);
+        $this->em->flush();
     }
 }

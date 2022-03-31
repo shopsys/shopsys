@@ -6,7 +6,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use LogicException;
 use ReflectionClass;
 use Webmozart\Assert\Assert;
@@ -133,9 +133,9 @@ class EntityExtensionSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
      */
-    protected function setAssociationMappings(ClassMetadataInfo $classMetadata): void
+    protected function setAssociationMappings(ClassMetadata $classMetadata): void
     {
         $currentEntityClass = $classMetadata->getName();
 
@@ -157,9 +157,9 @@ class EntityExtensionSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $metadata
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $metadata
      */
-    protected function setFieldMappings(ClassMetadataInfo $metadata): void
+    protected function setFieldMappings(ClassMetadata $metadata): void
     {
         $currentEntityClass = $metadata->getName();
 
@@ -213,11 +213,11 @@ class EntityExtensionSubscriber implements EventSubscriber
 
     /**
      * @param class-string $entityClass
-     * @return \Doctrine\ORM\Mapping\ClassMetadataInfo
+     * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
-    protected function getClassMetadataForEntity(string $entityClass): ClassMetadataInfo
+    protected function getClassMetadataForEntity(string $entityClass): ClassMetadata
     {
-        $classMetadata = new ClassMetadataInfo(
+        $classMetadata = new ClassMetadata(
             $entityClass,
             $this->configuration->getNamingStrategy()
         );
@@ -234,9 +234,9 @@ class EntityExtensionSubscriber implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadataInfo $classMetadata
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
      */
-    protected function updateAssociationMappingsToMappedSuperclasses(ClassMetadataInfo $classMetadata): void
+    protected function updateAssociationMappingsToMappedSuperclasses(ClassMetadata $classMetadata): void
     {
         foreach ($classMetadata->getAssociationMappings() as $name => $mapping) {
             if (!isset($mapping['targetEntity']) || !$this->isParentEntity($mapping['targetEntity'])) {

@@ -59,6 +59,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     protected function setUp(): void
     {
         $this->client = $this->findClient(true);
+        $this->client->disableReboot();
 
         /*
          * Newly created client has its own container

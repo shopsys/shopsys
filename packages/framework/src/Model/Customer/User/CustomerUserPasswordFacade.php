@@ -94,7 +94,7 @@ class CustomerUserPasswordFacade
         $resetPasswordHash = $this->hashGenerator->generateHash(static::RESET_PASSWORD_HASH_LENGTH);
         $customerUser->setResetPasswordHash($resetPasswordHash);
 
-        $this->em->flush($customerUser);
+        $this->em->flush();
         $this->resetPasswordMailFacade->sendMail($customerUser);
     }
 

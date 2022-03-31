@@ -58,7 +58,7 @@ class CheckTimezonesCommand extends Command
 
         $stmt = $this->connection->executeQuery('SHOW timezone');
 
-        $postgreSqlTimezone = $stmt->fetchColumn();
+        $postgreSqlTimezone = $stmt->fetchOne();
 
         if ($postgreSqlTimezone !== $phpTimezone) {
             $message = sprintf(

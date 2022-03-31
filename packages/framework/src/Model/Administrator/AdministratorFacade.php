@@ -171,7 +171,7 @@ class AdministratorFacade
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
         $this->setPassword($administrator, $newPassword);
-        $this->em->flush($administrator);
+        $this->em->flush();
     }
 
     /**
@@ -197,6 +197,6 @@ class AdministratorFacade
     public function setRolesChangedNow(Administrator $administrator)
     {
         $administrator->setRolesChangedNow();
-        $this->em->flush($administrator);
+        $this->em->flush();
     }
 }

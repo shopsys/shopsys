@@ -14,7 +14,7 @@ class Version20180830121204 extends AbstractMigration
     {
         $this->sql('ALTER TABLE users ADD telephone VARCHAR(30) DEFAULT NULL');
 
-        $phonesAndBillingAddressesIds = $this->sql('SELECT telephone, id FROM billing_addresses')->fetchAll();
+        $phonesAndBillingAddressesIds = $this->sql('SELECT telephone, id FROM billing_addresses')->fetchAllAssociative();
         foreach ($phonesAndBillingAddressesIds as $phoneAndBillingAddressId) {
             $this->sql(
                 'UPDATE users

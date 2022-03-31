@@ -133,7 +133,7 @@ class UploadedFileFacade
         );
 
         $this->em->persist($newUploadedFile);
-        $this->em->flush($newUploadedFile);
+        $this->em->flush();
     }
 
     /**
@@ -161,7 +161,7 @@ class UploadedFileFacade
                 $this->em->persist($file);
             }
 
-            $this->em->flush($files);
+            $this->em->flush();
         }
     }
 
@@ -194,7 +194,7 @@ class UploadedFileFacade
             $this->em->remove($uploadedFile);
         }
 
-        $this->em->flush($uploadedFiles);
+        $this->em->flush();
     }
 
     /**
@@ -278,7 +278,7 @@ class UploadedFileFacade
             $uploadedFile->setPosition($i++);
         }
 
-        $this->em->flush($uploadedFiles);
+        $this->em->flush();
     }
 
     /**
@@ -291,7 +291,7 @@ class UploadedFileFacade
 
             $file->setNameAndSlug($fileName);
 
-            $this->em->flush($file);
+            $this->em->flush();
         }
     }
 

@@ -21,12 +21,12 @@ class Version20161207135225 extends AbstractMigration
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoPhoneNumber\' AND domain_id = :domainId;
             ',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
             $infoMail = $this->sql(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoEmail\' AND domain_id = :domainId;
             ',
                 ['domainId' => $domainId]
-            )->fetchColumn(0);
+            )->fetchOne();
 
             if ($phoneNumber <= 0) {
                 $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES

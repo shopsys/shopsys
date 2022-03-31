@@ -19,9 +19,7 @@ class Version20191029210140 extends AbstractMigration
 
         $roundingTypeSetting = $this->sql(
             'SELECT value FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;'
-        )->fetchColumn(
-            0
-        );
+        )->fetchOne();
         if ($roundingTypeSetting === false) {
             return;
         }

@@ -12,7 +12,7 @@ class Version20180702111016 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $enabledModulesCount = $this->sql('SELECT count(*) FROM enabled_modules')->fetchColumn(0);
+        $enabledModulesCount = $this->sql('SELECT count(*) FROM enabled_modules')->fetchOne();
         if ($enabledModulesCount > 0) {
             return;
         }

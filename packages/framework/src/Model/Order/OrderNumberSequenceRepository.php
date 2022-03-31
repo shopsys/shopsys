@@ -61,7 +61,7 @@ class OrderNumberSequenceRepository
 
             $orderNumberSequence->setNumber((string)$requestedNumber);
 
-            $this->em->flush($orderNumberSequence);
+            $this->em->flush();
             $this->em->commit();
         } catch (Exception $e) {
             $this->em->rollback();

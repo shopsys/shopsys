@@ -14,9 +14,7 @@ class Version20180603135344 extends AbstractMigration
     {
         $defaultUnitId = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultUnitId\' AND domain_id = 0;'
-        )->fetchColumn(
-            0
-        );
+        )->fetchOne();
         if ($defaultUnitId > 0) {
             return;
         }

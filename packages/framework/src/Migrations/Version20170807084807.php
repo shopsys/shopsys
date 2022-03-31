@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use PDO;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170807084807 extends AbstractMigration
@@ -28,7 +27,7 @@ class Version20170807084807 extends AbstractMigration
         $productDomainRows = $this->sql(
             'SELECT product_id, domain_id, heureka_cpc, zbozi_cpc, zbozi_cpc_search, show_in_zbozi_feed
             FROM product_domains'
-        )->fetchAll(PDO::FETCH_ASSOC);
+        )->fetchAllAssociative();
         foreach ($productDomainRows as $row) {
             $heurekaDataValues[$row['product_id']]['cpc'][$row['domain_id']] = $row['heureka_cpc'];
 

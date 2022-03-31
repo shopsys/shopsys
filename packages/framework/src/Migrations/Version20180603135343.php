@@ -12,7 +12,7 @@ class Version20180603135343 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $vatsCount = $this->sql('SELECT count(*) FROM vats')->fetchColumn(0);
+        $vatsCount = $this->sql('SELECT count(*) FROM vats')->fetchOne();
         if ($vatsCount > 0) {
             return;
         }
@@ -22,9 +22,7 @@ class Version20180603135343 extends AbstractMigration
 
         $defaultVatId = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;'
-        )->fetchColumn(
-            0
-        );
+        )->fetchOne();
         if ($defaultVatId > 0) {
             return;
         }

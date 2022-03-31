@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use Doctrine\DBAL\Connection;
+use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,16 +20,16 @@ class DatabaseDumpCommand extends Command
     protected static $defaultName = 'shopsys:database:dump';
 
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider
      */
-    private $connection;
+    protected DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider;
 
     /**
-     * @param \Doctrine\DBAL\Connection $connection
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider
      */
-    public function __construct(Connection $connection)
+    public function __construct(DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider)
     {
-        $this->connection = $connection;
+        $this->databaseConnectionCredentialsProvider = $databaseConnectionCredentialsProvider;
 
         parent::__construct();
     }
@@ -57,12 +57,12 @@ class DatabaseDumpCommand extends Command
         $command = sprintf(
             '%s --host=%s --dbname=%s --no-owner --schema=public --username=%s --no-password',
             escapeshellcmd($input->getOption(self::OPT_PGDUMP_BIN)),
-            escapeshellarg($this->connection->getHost()),
-            escapeshellarg($this->connection->getDatabase()),
-            escapeshellarg($this->connection->getUsername())
+            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseHost()),
+            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseName()),
+            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseUsername())
         );
 
-        putenv('PGPASSWORD=' . $this->connection->getPassword());
+        putenv('PGPASSWORD=' . $this->databaseConnectionCredentialsProvider->getDatabasePassword());
 
         $pipes = [];
         $process = proc_open(
@@ -87,7 +87,7 @@ class DatabaseDumpCommand extends Command
         } else {
             $output->writeln(sprintf(
                 'Database "%s" dumped into file: %s',
-                $this->connection->getDatabase(),
+                $this->databaseConnectionCredentialsProvider->getDatabaseName(),
                 $outputFile
             ));
         }

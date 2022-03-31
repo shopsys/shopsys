@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use PDO;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20171005091354 extends AbstractMigration
@@ -25,7 +24,7 @@ class Version20171005091354 extends AbstractMigration
         $heurekaCategoryDataValues = [];
         $heurekaCategoryRows = $this->sql(
             'SELECT ext_id, name, full_name FROM feed_categories'
-        )->fetchAll(PDO::FETCH_ASSOC);
+        )->fetchAllAssociative();
         foreach ($heurekaCategoryRows as $row) {
             $heurekaCategoryDataValues[$row['ext_id']] = [
                 'id' => $row['ext_id'],
@@ -44,7 +43,7 @@ class Version20171005091354 extends AbstractMigration
             'SELECT categories.id, feed_categories.ext_id FROM categories
               JOIN feed_categories ON feed_categories.id = categories.heureka_cz_feed_category_id
               WHERE categories.heureka_cz_feed_category_id IS NOT NULL'
-        )->fetchAll(PDO::FETCH_ASSOC);
+        )->fetchAllAssociative();
         foreach ($categoryRows as $row) {
             $categoryDataValues[$row['id']] = [
                 'heureka_category' => $row['ext_id'],

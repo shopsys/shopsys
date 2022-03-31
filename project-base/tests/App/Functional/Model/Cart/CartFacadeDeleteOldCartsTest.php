@@ -85,7 +85,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 61 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -100,7 +100,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 59 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -115,7 +115,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 121 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -130,7 +130,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 119 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 

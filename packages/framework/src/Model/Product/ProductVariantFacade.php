@@ -97,7 +97,7 @@ class ProductVariantFacade
         try {
             $toFlush = $mainVariant->getVariants();
             $toFlush[] = $mainVariant;
-            $this->em->flush($toFlush);
+            $this->em->flush();
             $this->productFacade->setAdditionalDataAfterCreate($mainVariant, $mainVariantData);
             $this->imageFacade->copyImages($mainProduct, $mainVariant);
         } catch (Exception $exception) {

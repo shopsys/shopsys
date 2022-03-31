@@ -62,7 +62,7 @@ class CountryFacade
     {
         $country = $this->countryFactory->create($countryData);
         $this->em->persist($country);
-        $this->em->flush($country);
+        $this->em->flush();
 
         return $country;
     }

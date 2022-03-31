@@ -149,7 +149,7 @@ class ProductPriceRecalculator
         }
         $product->markPriceAsRecalculated();
         $product->markForVisibilityRecalculation();
-        $this->em->flush($product);
+        $this->em->flush();
     }
 
     /**

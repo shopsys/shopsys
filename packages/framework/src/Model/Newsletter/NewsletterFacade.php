@@ -54,7 +54,7 @@ class NewsletterFacade
             $domainId
         );
         $this->em->persist($newsletterSubscriber);
-        $this->em->flush($newsletterSubscriber);
+        $this->em->flush();
     }
 
     /**

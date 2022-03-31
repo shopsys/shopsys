@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,12 +23,12 @@ class CreateDatabaseCommand extends Command
     private $connection;
 
     /**
-     * @var \Doctrine\Common\Persistence\ManagerRegistry
+     * @var \Doctrine\Persistence\ManagerRegistry
      */
     private $doctrineRegistry;
 
     /**
-     * @param \Doctrine\Common\Persistence\ManagerRegistry $managerRegistry
+     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
      */
     public function __construct(
         ManagerRegistry $managerRegistry
@@ -74,16 +74,16 @@ class CreateDatabaseCommand extends Command
 
         $databaselessConnection = $this->createDatabaselessConnection();
 
-        if (in_array($databaseName, $databaselessConnection->getSchemaManager()->listDatabases(), true)) {
+        if (in_array($databaseName, $databaselessConnection->createSchemaManager()->listDatabases(), true)) {
             $symfonyStyleIo->note(sprintf('Database "%s" already exists', $databaseName));
         } else {
-            $databaselessConnection->exec(sprintf(
+            $databaselessConnection->executeStatement(sprintf(
                 'CREATE DATABASE %s WITH OWNER = %s',
                 $databaselessConnection->quoteIdentifier($databaseName),
                 $databaselessConnection->quoteIdentifier($databaseUser)
             ));
 
-            $this->getConnection()->exec(sprintf(
+            $this->getConnection()->executeStatement(sprintf(
                 'ALTER SCHEMA public OWNER TO %s',
                 $databaselessConnection->quoteIdentifier($databaseUser)
             ));
@@ -101,10 +101,8 @@ class CreateDatabaseCommand extends Command
         // schema "public" without dropping the extension.
         // We do not want to DROP the extension because it can only be created with
         // "superuser" role that normal DB user does not have.
-        $this->getConnection()->exec('CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA pg_catalog');
+        $this->getConnection()->executeStatement('CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA pg_catalog');
         $symfonyStyleIo->success('Extension unaccent is created');
-        $this->getConnection()->exec('CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA pg_catalog');
-        $symfonyStyleIo->success('Extension "uuid-ossp" is created');
     }
 
     /**
@@ -142,7 +140,7 @@ class CreateDatabaseCommand extends Command
         $stmt = $this->createDatabaselessConnection()
             ->executeQuery('SELECT rolsuper FROM pg_roles WHERE rolname = current_user');
 
-        return $stmt->fetchColumn();
+        return $stmt->fetchOne();
     }
 
     /**

@@ -67,7 +67,7 @@ class CategoryVisibilityRepository
      */
     protected function setRootCategoryVisibleOnDomain(DomainConfig $domainConfig)
     {
-        $this->em->getConnection()->executeUpdate(
+        $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd
                 SET visible = TRUE
 
@@ -88,7 +88,7 @@ class CategoryVisibilityRepository
      */
     protected function getMaxLevelOnDomain(DomainConfig $domainConfig)
     {
-        return $this->em->getConnection()->fetchColumn(
+        return $this->em->getConnection()->fetchOne(
             'SELECT MAX(c.level)
             FROM categories c
             JOIN category_domains cd ON cd.category_id = c.id AND cd.domain_id = :domainId
@@ -105,7 +105,7 @@ class CategoryVisibilityRepository
      */
     protected function refreshCategoriesVisibilityOnDomainAndLevel(DomainConfig $domainConfig, $level)
     {
-        $this->em->getConnection()->executeUpdate(
+        $this->em->getConnection()->executeStatement(
             'UPDATE category_domains AS cd
                 SET visible = (
                     cd.enabled = TRUE

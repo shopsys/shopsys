@@ -24,7 +24,7 @@
         "php": "^7.4.1",
         "ext-json": "*",
         "ext-pdo": "*",
-        "doctrine/dbal": "^2.11",
+        "doctrine/dbal": "^3.3.3",
         "friendsofsymfony/rest-bundle": "^2.5",
         "jms/serializer-bundle": "^2.4",
         "ramsey/uuid": "^3.8",

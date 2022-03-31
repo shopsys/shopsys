@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 use DateTime;
 use DateTimeImmutable;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
@@ -35,7 +35,7 @@ class StatisticsRepository
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
-        $resultSetMapping->addScalarResult('date', 'date', Type::DATE);
+        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_MUTABLE);
 
         $query = $this->em->createNativeQuery(
             'SELECT DATE(u.created_at) AS date, COUNT(u.created_at) AS count
@@ -66,7 +66,7 @@ class StatisticsRepository
     {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
-        $resultSetMapping->addScalarResult('date', 'date', Type::DATE);
+        $resultSetMapping->addScalarResult('date', 'date', Types::DATE_MUTABLE);
 
         $query = $this->em->createNativeQuery(
             'SELECT DATE(o.created_at) AS date, COUNT(o.created_at) AS count

@@ -166,7 +166,7 @@ class VatFacade
         foreach ($vatsForDelete as $vatForDelete) {
             $this->em->remove($vatForDelete);
         }
-        $this->em->flush($vatsForDelete);
+        $this->em->flush();
 
         return count($vatsForDelete);
     }

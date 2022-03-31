@@ -108,7 +108,7 @@ class OrderItemFacade
             $this->orderPriceCalculation->getOrderTotalPrice($order)
         );
 
-        $this->em->flush($order);
+        $this->em->flush();
 
         return $orderProduct;
     }
