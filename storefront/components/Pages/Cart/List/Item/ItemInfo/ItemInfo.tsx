@@ -36,8 +36,7 @@ const ItemInfo: FC<ItemInfoProps> = (props) => {
                 {props.item.product.availability}
                 {props.item.product.availableStoresCount > 0 && (
                     <AvailabilityMessageStyled>
-                        {t('(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];', {
-                            postProcess: 'interval',
+                        {t('or immediately in {{ count }} stores', {
                             count: props.item.product.availableStoresCount,
                         })}
                     </AvailabilityMessageStyled>

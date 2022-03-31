@@ -1,11 +1,11 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
-import { appWithTranslation } from 'next-i18next';
+import appWithI18n from 'next-translate/appWithI18n';
 import CartRefresher from 'components/Helpers/CartRefresher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getUrqlExchanges } from 'urql/exchanges';
 import Head from 'next/head';
-import nextI18NextConfig from 'next-i18next.config';
+import i18nConfig from 'i18n';
 import { nextReduxWrapper } from 'redux/main';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { ReactElement } from 'react';
@@ -58,6 +58,6 @@ export default nextReduxWrapper.withRedux(
     )(
         // eslint-disable-next-line
         // @ts-ignore
-        appWithTranslation(MyApp, nextI18NextConfig),
+        appWithI18n(MyApp, { ...i18nConfig }),
     ),
 );

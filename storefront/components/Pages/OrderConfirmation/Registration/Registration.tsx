@@ -22,7 +22,7 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { userActions } from 'redux/slices/user';
 import { useRegistrationMutationApi } from 'graphql/generated';
@@ -75,12 +75,10 @@ const Registration: FC = () => {
                 <RegistrationStyled>
                     <RegistrationMessageColumnStyled>
                         <RegistrationHeadingStyled type="h2">
-                            <Trans i18nKey="Finish registration to loyalty program.">
-                                Finish registration <br /> to
-                                <strong>
-                                    loyalty <br /> program
-                                </strong>
-                            </Trans>
+                            <Trans
+                                i18nKey="Finish registration to loyalty program."
+                                components={{ 0: <br />, 1: <strong /> }}
+                            />
                         </RegistrationHeadingStyled>
                         <ul>
                             <RegistrationBenefitsListItem>

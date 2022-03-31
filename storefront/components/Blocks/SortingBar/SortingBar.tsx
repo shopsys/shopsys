@@ -137,10 +137,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                     </SortingBarOptionsStyled>
                     <SortingBarItemStyled>
                         <strong>{totalCount} </strong>
-                        {t('(0)[Products];(1)[Product];(2-inf)[Products];', {
-                            postProcess: 'interval',
-                            count: totalCount,
-                        })}
+                        {t('Products count', { count: totalCount })}
                     </SortingBarItemStyled>
                 </SortingBarOptionsWrapStyled>
             )}

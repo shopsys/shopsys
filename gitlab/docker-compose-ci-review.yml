@@ -25,6 +25,7 @@ services:
             - traefik.enable=false
         networks:
             - default
+            - services-network
 
     php-fpm:
         restart: always

@@ -12,7 +12,7 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import TextInput from 'components/Forms/TextInput';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { useContactInformationFormMeta } from './formMeta';
 
 const ContactInformation: FC = () => {
@@ -71,7 +71,7 @@ const ContactInformation: FC = () => {
                 <ContactInformationTextStyled>
                     <Trans
                         i18nKey="ContactInformationInfo"
-                        defaults="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
+                        defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                         components={{
                             lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
                             lnk2: <Link href={GdprUrl} linkType="external" target="_blank" />,

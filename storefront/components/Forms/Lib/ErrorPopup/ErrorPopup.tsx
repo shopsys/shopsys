@@ -21,7 +21,7 @@ const ErrorPopup: FC<ErrorPopupProps> = (props) => {
 
     return (
         <Popup wrapperComponent={ErrorPopupStyled} isVisible={props.isVisible} onCloseCallback={props.onCloseCallback}>
-            <Heading type="h2">{t('Please, check inserted details.')}</Heading>
+            <Heading type="h2">{t('Please check inserted details')}</Heading>
             <ErrorListStyled>
                 {(() => {
                     const mappedErrors = [];

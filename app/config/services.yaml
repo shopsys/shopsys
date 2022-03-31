@@ -868,6 +868,7 @@ services:
         class: App\Model\LanguageConstant\LanguageConstantFacade
         arguments:
             $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'
+            $domainLocalesDirectory: '%shopsys.locale_file_dir%'
 
     Shopsys\FrameworkBundle\Controller\Admin\AdvertController:
-        class: 'App\Controller\Admin\AdvertController'
+        class: App\Controller\Admin\AdvertController

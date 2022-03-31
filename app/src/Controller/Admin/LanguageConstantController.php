@@ -130,6 +130,8 @@ class LanguageConstantController extends AdminBaseController
                 );
             }
 
+            $this->languageConstantFacade->generateLanguageConstantFile($locale);
+
             return $this->redirectToRoute('admin_languageconstant_list');
         }
 
@@ -156,6 +158,7 @@ class LanguageConstantController extends AdminBaseController
         if ($constant !== null) {
             try {
                 $this->languageConstantFacade->delete($key, $this->getSelectedLocale());
+                $this->languageConstantFacade->generateLanguageConstantFile($this->getSelectedLocale());
 
                 $this->addSuccessFlashTwig(
                     t('Language constant translation <strong>{{ name }}</strong> deleted'),

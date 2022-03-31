@@ -1,6 +1,7 @@
-import { TFunction, useTranslation } from 'react-i18next';
+import { Translate } from 'next-translate';
+import useTranslation from 'next-translate/useTranslation';
 
-export const useTypedTranslationFunction = (): TFunction<string> => {
-    const { t } = useTranslation();
-    return t as TFunction<string>;
+export const useTypedTranslationFunction = (): Translate => {
+    const { t } = useTranslation('common');
+    return t as Translate;
 };
