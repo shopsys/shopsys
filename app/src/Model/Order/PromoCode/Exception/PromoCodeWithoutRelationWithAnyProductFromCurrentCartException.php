@@ -16,6 +16,6 @@ class PromoCodeWithoutRelationWithAnyProductFromCurrentCartException extends Exc
      */
     public function __construct(PromoCode $invalidPromoCode, ?Exception $previous = null)
     {
-        parent::__construct('Promo code "' . $invalidPromoCode->getCode() . '" is not valid from any product in cart.', 0, $previous);
+        parent::__construct('Promo code "' . $invalidPromoCode->getCode() . '" is not valid for any product in cart.', 0, $previous);
     }
 }
