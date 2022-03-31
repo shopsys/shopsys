@@ -176,6 +176,14 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $this->fail('Invalid GraphQL response: ' . Json::encode($response));
         }
 
+        if (array_key_exists('errors', $response)) {
+            $this->fail('GraphQL response contains errors: ' . Json::encode($response));
+        }
+
+        if ($response['data'][$graphQlType] === null) {
+            $this->fail('Query returned null. If it\' an expected state, don\' use `getResponseDataForGraphQlType` method for parsing response');
+        }
+
         return $response['data'][$graphQlType];
     }
 
