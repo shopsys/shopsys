@@ -8,6 +8,5 @@ CartQuery:
                     cartInput:
                         type: CartInput
                         validation: cascade
-                        defaultValue: { "cartUuid": null }
-                resolve: "@=resolver('getCart', [args['cartInput']])"
+                resolve: "@=resolver('getCart', [args])"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"

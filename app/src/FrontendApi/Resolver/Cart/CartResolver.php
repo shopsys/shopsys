@@ -10,6 +10,7 @@ use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -55,11 +56,15 @@ class CartResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
-     * @param array $input
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
      */
-    public function resolve(array $input): ?CartWithModificationsResult
+    public function resolve(Argument $argument): ?CartWithModificationsResult
     {
+        // default values are not properly propagated from configuration
+        // should be fixed after update to overblog/graphql-bundle 0.14
+        $input = $this->initializeDefaultValues($argument);
+
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
@@ -87,5 +92,14 @@ class CartResolver implements ResolverInterface, AliasedInterface
         return [
             'resolve' => 'getCart',
         ];
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return array<string, array|string|null>
+     */
+    private function initializeDefaultValues(Argument $argument): array
+    {
+        return $argument['cartInput'] ?? ['cartUuid' => null, 'transport' => null, 'payment' => null];
     }
 }
