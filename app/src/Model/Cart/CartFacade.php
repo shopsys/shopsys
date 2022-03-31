@@ -10,7 +10,6 @@ use App\Model\Product\Product;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade as BaseCartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
@@ -24,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Twig\Environment;
 
 /**
@@ -51,11 +49,6 @@ class CartFacade extends BaseCartFacade
     private $categoryFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    private $flashBag;
-
-    /**
      * @var \Twig\Environment
      */
     protected $twigEnvironment;
@@ -73,7 +66,6 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
      * @param \Twig\Environment $twigEnvironment
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
@@ -90,7 +82,6 @@ class CartFacade extends BaseCartFacade
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        FlashBagInterface $flashBag,
         Environment $twigEnvironment,
         CategoryFacade $categoryFacade
     ) {
@@ -109,7 +100,6 @@ class CartFacade extends BaseCartFacade
         );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->flashBag = $flashBag;
         $this->twigEnvironment = $twigEnvironment;
         $this->categoryFacade = $categoryFacade;
     }
@@ -229,30 +219,10 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \App\Model\Cart\Cart|null
      */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
+    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Cart
     {
         /** @var \App\Model\Cart\Cart $cart */
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-
-        if ($cart !== null) {
-            $this->cartWatcherFacade->checkCartModifications($cart);
-            $cartItemsToDelete = $this->cartWatcherFacade->checkUnavailableStockQuantityItems($cart);
-
-            foreach ($cartItemsToDelete as $carItemToDelete) {
-                $this->deleteCartItem($carItemToDelete->getId(), $cart);
-
-                $messageTemplate = $this->twigEnvironment->createTemplate(
-                    t('Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku.')
-                );
-                $this->flashBag->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $carItemToDelete->getName()]));
-            }
-
-            if ($cart->isEmpty()) {
-                $this->deleteCart($cart);
-
-                return null;
-            }
-        }
 
         return $cart;
     }

@@ -81,12 +81,6 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
     private $productAvailabilityFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     * @inject
-     */
-    private $flashBag;
-
-    /**
      * @var \Twig\Environment
      * @inject
      */
@@ -205,7 +199,6 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
             $this->cartRepository,
             $this->cartWatcherFacade,
             $this->productAvailabilityFacade,
-            $this->flashBag,
             $this->twigEnvironment,
             $this->categoryFacade
         );

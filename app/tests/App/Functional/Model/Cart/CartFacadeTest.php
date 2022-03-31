@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
@@ -69,12 +68,6 @@ class CartFacadeTest extends FunctionalTestCase
      * @inject
      */
     private $cartFacadeFromContainer;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
-     * @inject
-     */
-    private $cartItemFactory;
 
     public function testAddProductToCartAddsItemsOnlyToCurrentCart()
     {
@@ -187,43 +180,6 @@ class CartFacadeTest extends FunctionalTestCase
         $cartItems = $cart->getItems();
 
         $this->assertArrayHasSameElements([$cartItem2], $cartItems);
-    }
-
-    /**
-     * @dataProvider productCartDataProvider
-     * @param int $productId
-     * @param bool $cartShouldBeNull
-     */
-    public function testCartNotExistIfNoListableProductIsInCart(int $productId, bool $cartShouldBeNull): void
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
-
-        $cart = $this->cartFacadeFromContainer->getCartOfCurrentCustomerUserCreateIfNotExists();
-        $cartItem = $this->cartItemFactory->create($cart, $product, 1, Money::create(10));
-        $cart->addItem($cartItem);
-
-        $this->em->persist($cartItem);
-        $this->em->flush();
-
-        $this->assertFalse($cart->isEmpty(), 'Cart should not be empty');
-
-        $cart = $this->cartFacadeFromContainer->findCartOfCurrentCustomerUser();
-
-        if ($cartShouldBeNull) {
-            $this->assertNull($cart);
-        } else {
-            $this->assertEquals(1, $cart->getItemsCount());
-        }
-    }
-
-    public function productCartDataProvider()
-    {
-        return [
-            ['productId' => 1, 'cartShouldBeNull' => false],
-            ['productId' => 34, 'cartShouldBeNull' => true], // not listable product
-
-        ];
     }
 
     /**
