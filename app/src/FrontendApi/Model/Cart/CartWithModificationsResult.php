@@ -26,6 +26,7 @@ class CartWithModificationsResult
         'itemModifications' => [],
         'transportModifications' => [],
         'paymentModifications' => [],
+        'promoCodeModifications' => [],
     ];
 
     /**
@@ -57,6 +58,13 @@ class CartWithModificationsResult
     ];
 
     /**
+     * @var array<string, array<int, string>>
+     */
+    private array $promoCodeModifications = [
+        'noLongerApplicablePromoCode' => [],
+    ];
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private ?Price $totalPrice = null;
@@ -80,11 +88,6 @@ class CartWithModificationsResult
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     private ?Money $remainingAmountWithVatForFreeTransport = null;
-
-    /**
-     * @var string|null
-     */
-    private ?string $promoCode;
 
     /**
      * @var string|null
@@ -123,6 +126,8 @@ class CartWithModificationsResult
         $this->cartModifications['itemModifications'] = $this->itemModifications;
         $this->cartModifications['transportModifications'] = $this->transportModifications;
         $this->cartModifications['paymentModifications'] = $this->paymentModifications;
+        $this->cartModifications['promoCodeModifications'] = $this->promoCodeModifications;
+
         return $this->cartModifications;
     }
 
@@ -276,7 +281,11 @@ class CartWithModificationsResult
      */
     public function getPromoCode(): ?string
     {
-        return $this->promoCode;
+        if ($this->cart->getFirstAppliedPromoCode() === null) {
+            return null;
+        }
+
+        return $this->cart->getFirstAppliedPromoCode()->getCode();
     }
 
     /**
@@ -304,11 +313,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param string|null $promoCode
+     * @param string $promoCode
      */
-    public function setPromoCode(?string $promoCode): void
+    public function addChangedPromoCode(string $promoCode): void
     {
-        $this->promoCode = $promoCode;
+        $this->promoCodeModifications['noLongerApplicablePromoCode'][] = $promoCode;
     }
 
     /**

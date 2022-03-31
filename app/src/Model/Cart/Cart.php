@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
+use App\Model\Order\PromoCode\PromoCode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
@@ -87,6 +88,29 @@ class Cart extends BaseCart
         $message = 'Cart item with UUID "' . $itemUuid . '" not found in cart.';
         throw new InvalidCartItemException($message);
     }
+
+    /**
+     * @return \App\Model\Order\PromoCode\PromoCode[]
+     */
+    public function getAllAppliedPromoCodes(): array
+    {
+        return $this->promoCodes->getValues();
+    }
+
+    /**
+     * @return \App\Model\Order\PromoCode\PromoCode|null
+     */
+    public function getFirstAppliedPromoCode(): ?PromoCode
+    {
+        $firstAppliedPromoCode = $this->promoCodes->first();
+
+        if ($firstAppliedPromoCode === false) {
+            return null;
+        }
+
+        return $firstAppliedPromoCode;
+    }
+
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      */
@@ -97,6 +121,26 @@ class Cart extends BaseCart
             $this->setModifiedNow();
         }
     }
+
+    /**
+     * @param int $promoCodeId
+     */
+    public function removePromoCodeById(int $promoCodeId): void
+    {
+        $this->promoCodes->remove($promoCodeId);
+
+        foreach ($this->promoCodes as $promoCode) {
+            if ($promoCode->getId() === $promoCodeId) {
+                $this->promoCodes->removeElement($promoCode);
+                $this->setModifiedNow();
+
+                return;
+            }
+        }
+        $message = 'Promo code with ID = ' . $promoCodeId . ' is not applied.';
+        throw new InvalidCartItemException($message);
+    }
+
     /**
      * @param string $promoCodeCode
      * @return bool

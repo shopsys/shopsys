@@ -8,3 +8,5 @@ CartModificationsResult:
                 type: "CartTransportModificationsResult!"
             paymentModifications:
                 type: "CartPaymentModificationsResult!"
+            promoCodeModifications:
+                type: "CartPromoCodeModificationsResult!"

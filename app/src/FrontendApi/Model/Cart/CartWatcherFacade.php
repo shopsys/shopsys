@@ -8,12 +8,15 @@ use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Cart\CartPromoCodeFacade;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 
 class CartWatcherFacade
 {
@@ -53,12 +56,24 @@ class CartWatcherFacade
     private TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade;
 
     /**
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
+     */
+    private CurrentPromoCodeFacade $currentPromoCodeFacade;
+
+    /**
+     * @var \App\Model\Cart\CartPromoCodeFacade
+     */
+    private CartPromoCodeFacade $cartPromoCodeFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
+     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \App\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
      */
     public function __construct(
         CartWatcher $cartWatcher,
@@ -66,7 +81,9 @@ class CartWatcherFacade
         CurrentCustomerUser $currentCustomerUser,
         ProductAvailabilityFacade $productAvailabilityFacade,
         Domain $domain,
-        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
+        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        CartPromoCodeFacade $cartPromoCodeFacade
     ) {
         $this->cartWatcher = $cartWatcher;
         $this->em = $em;
@@ -74,6 +91,8 @@ class CartWatcherFacade
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->domain = $domain;
         $this->transportAndPaymentWatcherFacade = $transportAndPaymentWatcherFacade;
+        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
+        $this->cartPromoCodeFacade = $cartPromoCodeFacade;
     }
 
     /**
@@ -94,6 +113,7 @@ class CartWatcherFacade
         $this->checkUnavailableStockQuantityItems($cart);
         $this->checkModifiedPrices($cart);
         $this->checkNotListableItems($cart);
+        $this->checkPromoCodeValidity($cart);
 
         $this->em->flush();
 
@@ -160,6 +180,21 @@ class CartWatcherFacade
             $this->em->persist($cartItem);
 
             $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
+        }
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function checkPromoCodeValidity(Cart $cart): void
+    {
+        foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
+            try {
+                $this->currentPromoCodeFacade->getValidatedPromoCode($promoCode->getCode(), $cart);
+            } catch (PromoCodeException $exception) {
+                $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
+                $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
+            }
         }
     }
 }
