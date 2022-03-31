@@ -9,7 +9,6 @@ use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -33,26 +32,18 @@ class CartResolver implements ResolverInterface, AliasedInterface
     private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private PromoCodeFacade $promoCodeFacade;
-
-    /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      */
     public function __construct(
         CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
-        CartWatcherFacade $cartWatcherFacade,
-        PromoCodeFacade $promoCodeFacade
+        CartWatcherFacade $cartWatcherFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->cartWatcherFacade = $cartWatcherFacade;
-        $this->promoCodeFacade = $promoCodeFacade;
     }
 
     /**
@@ -75,13 +66,7 @@ class CartResolver implements ResolverInterface, AliasedInterface
         $transportInputData = $input['transport'] !== null ? new TransportInputData($input['transport']) : null;
         $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        if ($input['promoCode']) {
-            $promoCode = $this->promoCodeFacade->findPromoCodeByCode($input['promoCode']);
-        } else {
-            $promoCode = null;
-        }
-
-        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData, $promoCode);
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData);
     }
 
     /**

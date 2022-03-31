@@ -43,10 +43,21 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, Domain::FIRST_DOMAIN_ID);
 
+        $applyPromoCodeMutation = 'mutation {
+            ApplyPromoCodeToCart(input: {
+                cartUuid: "' . $cartUuid . '"
+                promoCode: "' . $validPromoCode->getCode() . '"
+            }) {
+                uuid
+                promoCode
+            }
+        }';
+
+        $this->getResponseContentForQuery($applyPromoCodeMutation);
+
         $query = 'query{
             cart(cartInput: {
                 cartUuid: "' . $cartUuid . '"
-                promoCode: "' . $validPromoCode->getCode() . '"
             }){
                 uuid
                 items{
@@ -81,7 +92,6 @@ class CartWithPromoCodeTest extends GraphQlTestCase
                 cartUuid: "' . $cartUuid . '"
                 productUuid: "' . $product72->getUuid() . '"
                 quantity: 1
-                promoCode: "' . $validPromoCode->getCode() . '"
             }) {
                 uuid
                 items{
