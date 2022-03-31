@@ -10,6 +10,8 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\Model\Order\PromoCode\PromoCodeDataFactory;
+use App\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class OrderWithPromoCodeTest extends AbstractOrderTestCase
@@ -19,6 +21,18 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
      * @inject
      */
     private NumberFormatterExtension $numberFormatterExtension;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFacade
+     * @inject
+     */
+    private PromoCodeFacade $promoCodeFacade;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
+     * @inject
+     */
+    private PromoCodeDataFactory $promoCodeDataFactory;
 
     public function testCreateOrderWithPromoCode()
     {
@@ -37,26 +51,27 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
 
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
-        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid, $validPromoCode->getCode()), $expected);
+
+        $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
+
+        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
-    /**
-     * @dataProvider getInvalidPromoCodesDataProvider
-     * @param string|null $promoCodeReferenceName
-     * @param string $expectedError
-     */
-    public function testCreateOrderWithInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError)
+    public function testCreateOrderWithInvalidPromoCode(): void
     {
         $cartUuid = $this->addProductToCart();
 
-        $promoCodeCode = 'non-existing-promo-code';
-        if ($promoCodeReferenceName !== null) {
-            /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
-            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1);
-            $promoCodeCode = $promoCode->getCode();
-        }
+        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
 
-        $mutation = $this->getMutation($cartUuid, $promoCodeCode);
+        $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
+
+        $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($validPromoCode);
+        $promoCodeData->remainingUses = 0;
+
+        $this->promoCodeFacade->edit($validPromoCode->getId(), $promoCodeData);
+
+        $mutation = $this->getMutation($cartUuid);
         $response = $this->getResponseContentForQuery($mutation);
 
         self::assertArrayHasKey('errors', $response);
@@ -64,22 +79,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
         self::assertArrayHasKey('input.promoCode', $violations);
-        self::assertEquals($expectedError, $violations['input.promoCode'][0]['code']);
-    }
-
-    /**
-     * @return array
-     */
-    public function getInvalidPromoCodesDataProvider(): array
-    {
-        return [
-            [null, PromoCode::INVALID_ERROR],
-            [PromoCodeDataFixture::PROMO_CODE_FOR_PRODUCT_ID_2, PromoCode::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR],
-            [PromoCodeDataFixture::NOT_YET_VALID_PROMO_CODE, PromoCode::NOT_YET_VALID_ERROR],
-            [PromoCodeDataFixture::NO_LONGER_VALID_PROMO_CODE, PromoCode::NO_LONGER_VALID_ERROR],
-            [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY, PromoCode::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR],
-            [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR],
-        ];
+        self::assertEquals(PromoCode::INVALID_ERROR, $violations['input.promoCode'][0]['code']);
     }
 
     /**
@@ -132,10 +132,9 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
 
     /**
      * @param string $cartUuid
-     * @param string $promoCodeCode
      * @return string
      */
-    private function getMutation(string $cartUuid, string $promoCodeCode): string
+    private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
@@ -173,9 +172,8 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                                 price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
-                            promoCode: "' . $promoCodeCode . '"
                         }
-                    ) {                        
+                    ) {
                         totalPrice {
                             priceWithVat
                             priceWithoutVat
@@ -199,6 +197,26 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                         }                        
                     }
                 }';
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param string $promoCode
+     */
+    public function applyPromoCode(string $cartUuid, string $promoCode): void
+    {
+        $mutation = 'mutation {
+                        ApplyPromoCodeToCart(
+                            input: {
+                                cartUuid: "' . $cartUuid . '"
+                                promoCode: "' . $promoCode . '"
+                            }
+                        ) {
+                            uuid
+                        }
+                    }';
+
+        $this->getResponseContentForQuery($mutation);
     }
 
     /**

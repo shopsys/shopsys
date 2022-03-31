@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Order;
 
+use App\FrontendApi\Exception\ValidationError;
 use App\FrontendApi\Model\Cart\CartFacade;
-use App\Model\Order\PromoCode\PromoCodeFacade;
+use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
@@ -13,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation as BaseCreateOrderMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
@@ -36,9 +39,9 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
      */
-    private PromoCodeFacade $promoCodeFacade;
+    private CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
@@ -46,7 +49,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
         OrderDataFactory $orderDataFactory,
@@ -54,13 +57,13 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         OrderMailFacade $orderMailFacade,
         CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
-        PromoCodeFacade $promoCodeFacade
+        CurrentPromoCodeFacade $currentPromoCodeFacade
     ) {
         parent::__construct($orderDataFactory, $placeOrderFacade, $orderMailFacade);
 
         $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->promoCodeFacade = $promoCodeFacade;
+        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
     /**
@@ -88,9 +91,13 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             throw new UserError('There are no products in the cart.');
         }
 
-        $promoCode = null;
-        if (isset($input['promoCode'])) {
-            $promoCode = $this->promoCodeFacade->findPromoCodeByCode($input['promoCode']);
+        $promoCode = $cart->getFirstAppliedPromoCode();
+        if ($promoCode !== null) {
+            try {
+                $this->currentPromoCodeFacade->getValidatedPromoCode($promoCode->getCode(), $cart);
+            } catch (PromoCodeException $exception) {
+                throw new ValidationError($exception->getMessage(), PromoCode::INVALID_ERROR, 'input.promoCode');
+            }
         }
 
         $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode);
