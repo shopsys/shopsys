@@ -1,0 +1,13 @@
+ApplyPromoCodeToCartInput:
+    type: input-object
+    config:
+        validation:
+            -   App\FrontendApi\Model\Component\Constraints\PromoCode: ~
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier or null if customer is logged in"
+            promoCode:
+                type: "String!"
+                description: "Promo code to be used after checkout"

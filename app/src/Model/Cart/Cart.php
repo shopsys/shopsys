@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 /**
@@ -15,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
  * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \App\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection $items
- * @method __construct(string $cartIdentifier, \App\Model\Customer\User\CustomerUser|null $customerUser = null)
  * @method addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)
@@ -23,6 +24,27 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
  */
 class Cart extends BaseCart
 {
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCode[]|\Doctrine\Common\Collections\ArrayCollection
+     * @ORM\ManyToMany(
+     *     targetEntity="\App\Model\Order\PromoCode\PromoCode"
+     * )
+     * @ORM\JoinTable(name="cart_promo_codes")
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    private $promoCodes;
+
+    /**
+     * @param string $cartIdentifier
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function __construct(string $cartIdentifier, ?CustomerUser $customerUser = null)
+    {
+        parent::__construct($cartIdentifier, $customerUser);
+
+        $this->promoCodes = new ArrayCollection();
+    }
+
     /**
      * @inheritDoc
      */
@@ -64,5 +86,27 @@ class Cart extends BaseCart
 
         $message = 'Cart item with UUID "' . $itemUuid . '" not found in cart.';
         throw new InvalidCartItemException($message);
+    }
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    public function applyPromoCode(PromoCode $promoCode): void
+    {
+        if (!$this->promoCodes->contains($promoCode)) {
+            $this->promoCodes->add($promoCode);
+            $this->setModifiedNow();
+        }
+    }
+    /**
+     * @param string $promoCodeCode
+     * @return bool
+     */
+    public function isPromoCodeApplied(string $promoCodeCode): bool
+    {
+        return $this->promoCodes->exists(
+            static function ($key, PromoCode $promoCode) use ($promoCodeCode) {
+                return $promoCode->getCode() === $promoCodeCode;
+            }
+        );
     }
 }

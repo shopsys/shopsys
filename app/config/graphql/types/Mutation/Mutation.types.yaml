@@ -3,6 +3,7 @@ Mutation:
     inherits:
         - 'MutationDecorator'
         - 'CartMutation'
+        - 'PromoCodeMutation'
         - 'CustomerUserMutation'
         - 'PersonalDataMutation'
         - 'CustomerMutation'

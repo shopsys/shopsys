@@ -81,6 +81,10 @@ class PromoCodeValidator extends ConstraintValidator
         } catch (NotAvailableForCustomerUserPricingGroup $exception) {
             $this->addViolationWithCodeToContext($constraint->notAvailableForCustomerUserPricingGroupMessage, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR);
         }
+
+        if ($cart->isPromoCodeApplied($promoCodeCode)) {
+            $this->addViolationWithCodeToContext($constraint->alreadyAppliedPromoCodeMessage, PromoCode::ALREADY_APPLIED_PROMO_CODE_ERROR);
+        }
     }
 
     /**

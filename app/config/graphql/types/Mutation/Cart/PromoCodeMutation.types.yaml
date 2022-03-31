@@ -1,0 +1,12 @@
+PromoCodeMutation:
+    type: object
+    config:
+        fields:
+            ApplyPromoCodeToCart:
+                type: Cart!
+                description: "Apply new promo code for the future checkout"
+                args:
+                    input:
+                        type: ApplyPromoCodeToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('applyPromoCodeToCart', [args, validator])"
