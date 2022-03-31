@@ -10,3 +10,11 @@ PromoCodeMutation:
                         type: ApplyPromoCodeToCartInput!
                         validation: cascade
                 resolve: "@=mutation('applyPromoCodeToCart', [args, validator])"
+            RemovePromoCodeFromCart:
+                type: Cart!
+                description: "Remove already used promo code from cart"
+                args:
+                    input:
+                        type: RemovePromoCodeFromCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removePromoCodeFromCart', [args, validator])"

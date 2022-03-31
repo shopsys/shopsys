@@ -57,7 +57,6 @@ class CartPromoCodeFacade
     public function removePromoCode(Cart $cart, PromoCode $promoCode): void
     {
         $cart->removePromoCodeById($promoCode->getId());
-        $this->em->remove($promoCode);
 
         $this->em->flush();
     }
