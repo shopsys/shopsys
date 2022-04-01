@@ -108,6 +108,11 @@ export type GtmCartInfoType = {
     products: GtmCartItemType[] | undefined;
 };
 
+export type GtmCartInfoEventType = {
+    cart: GtmCartInfoType | null;
+    isLoaded: boolean;
+};
+
 export type GtmUserInfoType = {
     type: GtmUserType;
     group: string;

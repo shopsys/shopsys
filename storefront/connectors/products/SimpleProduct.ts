@@ -1,5 +1,5 @@
-import { getFirstImage } from 'connectors/image/Image';
 import { mapAvailabilityData } from 'connectors/availability/Availability';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import { SimpleProductFragmentApi } from 'graphql/generated';
 import { SimpleProductType } from 'types/product';

@@ -1,4 +1,5 @@
 import { mapStoreAvailabilities } from 'connectors/availability/Availability';
+import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductPriceData } from 'connectors/price/Prices';
@@ -18,7 +19,6 @@ import {
     ListedVariantType,
     SliderProductItemType,
 } from 'types/product';
-import { mapAvailabilityData } from 'connectors/availability/Availability';
 
 export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
     return {

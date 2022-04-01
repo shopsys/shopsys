@@ -4,12 +4,16 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import NewPassword from 'components/Pages/NewPassword';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
 
     const router = useRouter();
     const { hash, email } = router.query;

@@ -1,10 +1,10 @@
-import { PriceType, ProductPriceType } from 'types/price';
 import { AvailabilityType } from './availability';
+import { SimpleBrandType } from './brand';
 import { ImageType } from './image';
 import { PaymentType } from './payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { SimpleBrandType } from './brand';
 import { SimpleFlagType } from 'types/flag';
+import { PickupPlaceType } from 'types/pickupPlace';
+import { PriceType, ProductPriceType } from 'types/price';
 import { SimpleProductType } from 'types/product';
 import { TransportType } from 'types/transport';
 
@@ -16,6 +16,7 @@ export type CurrentCartType = {
     payment: PaymentType | null;
     paymentGoPayBankSwift: string | null;
     promoCode: string | null;
+    isLoaded: boolean;
 };
 
 export type ProductCartItemType = {

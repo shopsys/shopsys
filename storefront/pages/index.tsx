@@ -14,12 +14,17 @@ import {
 } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
+
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('home');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <CommonLayout>

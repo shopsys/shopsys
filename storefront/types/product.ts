@@ -1,3 +1,5 @@
+import { SimpleBrandType } from './brand';
+import { FilterOptionsType } from './productFilter';
 import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
@@ -5,8 +7,6 @@ import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
-import { SimpleBrandType } from './brand';
-import { FilterOptionsType } from './productFilter';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';

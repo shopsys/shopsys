@@ -21,6 +21,7 @@ import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandle
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -30,6 +31,7 @@ import { contactInformationActions } from 'redux/slices/contactInformation';
 import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -46,6 +48,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step3');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
 
     const onSuccessfullyCreatedOrderHandler = (createOrderResultData: CreateOrderMutationApi | undefined) => {
         dispatch(userActions.setCartUuid(null));

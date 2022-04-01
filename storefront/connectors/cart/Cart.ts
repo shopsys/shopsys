@@ -30,6 +30,10 @@ export const useCurrentCart = (): CurrentCartType => {
     });
 
     return useMemo(() => {
+        if (cartUuid === null && !isUserLoggedIn) {
+            return getEmptyCart();
+        }
+
         if (result.error !== undefined) {
             // EXTEND CART ERRORS HERE
             handleCartError(result.error, t);
@@ -37,7 +41,11 @@ export const useCurrentCart = (): CurrentCartType => {
             return getEmptyCart();
         }
 
-        if (!result.data?.cart) {
+        if (result.data === undefined) {
+            return getEmptyCart();
+        }
+
+        if (result.data.cart === null) {
             // EXTEND EMPTY CART HERE
             return getEmptyCart();
         }
@@ -55,11 +63,12 @@ export const useCurrentCart = (): CurrentCartType => {
             payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
             promoCode: result.data.cart.promoCode,
+            isLoaded: true,
         };
-    }, [currencyCode, result.data?.cart, result.error, t]);
+    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn]);
 };
 
-const getEmptyCart = (): CurrentCartType => ({
+const getEmptyCart = (isLoaded = true): CurrentCartType => ({
     cart: null,
     isCartEmpty: true,
     transport: null,
@@ -67,6 +76,7 @@ const getEmptyCart = (): CurrentCartType => ({
     payment: null,
     paymentGoPayBankSwift: null,
     promoCode: null,
+    isLoaded,
 });
 
 const handleCartError = (error: CombinedError, t: Translate) => {
