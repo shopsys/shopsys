@@ -18,6 +18,7 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 import { ListedProductType } from 'types/product';
 import { GtmListNameType } from 'types/gtm';
+import { onClickProductDetailGtmEvent } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {
     product: ListedProductType;
@@ -28,11 +29,21 @@ type ProductItemProps = {
 const ProductItem: FC<ProductItemProps> = (props) => {
     const testIdentifier = 'blocks-product-list-listeditem-' + props.product.catalogNumber;
 
+    const onProductDetailRedirectHandler = async (
+        product: ListedProductType,
+        listName: GtmListNameType,
+        index: number,
+    ) => {
+        await onClickProductDetailGtmEvent(product, listName, index);
+    };
+
     return (
         <ProductItemStyled data-testid={testIdentifier}>
             <ProductItemInStyled>
                 <NextLink href={props.product.slug} passHref>
-                    <ProductItemLinkStyled>
+                    <ProductItemLinkStyled
+                        onClick={() => onProductDetailRedirectHandler(props.product, props.gtmListName, props.index)}
+                    >
                         <ProductItemImageStyled>
                             <Image image={props.product.image} type="list" alt={props.product.fullName} />
                             <ProductItemFlagsStyled>
@@ -43,7 +54,7 @@ const ProductItem: FC<ProductItemProps> = (props) => {
                             <ProductItemTitleStyled>{props.product.fullName}</ProductItemTitleStyled>
                             <ProductPrice {...props.product.price} />
                             <ProductAvailabilityStyled>
-                                {props.product.availability}
+                                {props.product.availability.name}
                                 <ProductAvailableStoresCount
                                     isMainVariant={props.product.isMainVariant}
                                     availableStoresCount={props.product.availableStoresCount}
