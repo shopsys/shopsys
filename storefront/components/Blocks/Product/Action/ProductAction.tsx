@@ -32,7 +32,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
             <ProductActionStyled isButtonFullWidth={false}>
                 <AddToCart
                     productUuid={props.uuid}
-                    productName={props.name}
+                    productName={props.fullName}
                     minQuantity={1}
                     maxQuantity={props.stockQuantity}
                 />

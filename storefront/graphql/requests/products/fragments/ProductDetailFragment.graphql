@@ -1,9 +1,6 @@
 fragment ProductDetailFragment on Product {
     ... ProductDetailInterfaceFragment
     shortDescription
-    availability {
-        ...AvailabilityFragment
-    }
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }

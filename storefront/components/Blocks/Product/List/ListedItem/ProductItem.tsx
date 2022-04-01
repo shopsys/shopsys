@@ -27,13 +27,13 @@ const ProductItem: FC<ListedProductType> = (props) => {
                 <NextLink href={props.slug} passHref>
                     <ProductItemLinkStyled>
                         <ProductItemImageStyled>
-                            <Image image={props.image} type="list" alt={props.name} />
+                            <Image image={props.image} type="list" alt={props.fullName} />
                             <ProductItemFlagsStyled>
                                 <ProductFlags flags={props.flags} />
                             </ProductItemFlagsStyled>
                         </ProductItemImageStyled>
                         <ProductItemInfoStyled>
-                            <ProductItemTitleStyled>{props.name}</ProductItemTitleStyled>
+                            <ProductItemTitleStyled>{props.fullName}</ProductItemTitleStyled>
                             <ProductPrice {...props.price} />
                             <ProductAvailabilityStyled>
                                 {props.availability}

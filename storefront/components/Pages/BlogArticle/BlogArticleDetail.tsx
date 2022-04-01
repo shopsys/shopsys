@@ -38,7 +38,7 @@ const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
                 if (namedProduct === undefined) {
                     return ' ';
                 }
-                return `<a href='${namedProduct.slug}'> ${namedProduct.name}</a>`;
+                return `<a href='${namedProduct.slug}'> ${namedProduct.fullName}</a>`;
             };
             return matchedString.replaceAll(catalogNumbersPattern, replaceProducts).slice(10).slice(0, -1);
         };

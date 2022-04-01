@@ -27,14 +27,14 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
                 <NextLink href={props.slug} passHref>
                     <SliderProductItemLinkStyled>
                         <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
-                            <Image image={props.image} type="list" alt={props.name} />
+                            <Image image={props.image} type="list" alt={props.fullName} />
                             <SliderProductItemFlagsStyled>
                                 <ProductFlags flags={props.flags} />
                             </SliderProductItemFlagsStyled>
                         </SliderProductItemImageStyled>
                         <SliderProductItemInfoStyled>
                             <SliderProductItemTitleStyled data-testid={testIdentifier + 'name'}>
-                                {props.name}
+                                {props.fullName}
                             </SliderProductItemTitleStyled>
                             <ProductPrice {...props.price} />
                             <ProductAvailabilityStyled>

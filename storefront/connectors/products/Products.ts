@@ -18,14 +18,16 @@ import {
     ListedVariantType,
     SliderProductItemType,
 } from 'types/product';
+import { mapAvailabilityData } from 'connectors/availability/Availability';
 
 export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        availability: apiData.availability.name,
+        availability: mapAvailabilityData(apiData.availability),
         price: mapProductPriceData(apiData.price, currencyCode),
         image: getFirstImage(apiData.images),
+        categoryNames: apiData.categories.map((category) => category.name),
     };
 };
 
@@ -62,9 +64,10 @@ const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCod
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        availability: apiData.availability.name,
+        availability: mapAvailabilityData(apiData.availability),
         price: mapProductPriceData(apiData.price, currencyCode),
         image: getFirstImage(apiData.images),
+        categoryNames: apiData.categories.map((category) => category.name),
     };
 };
 

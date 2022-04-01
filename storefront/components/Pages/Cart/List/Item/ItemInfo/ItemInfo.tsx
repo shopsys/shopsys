@@ -33,7 +33,7 @@ const ItemInfo: FC<ItemInfoProps> = (props) => {
                 </CodeStyled>
             </NameStyled>
             <AvailabilityStyled data-testid={testIdentifier + 'availability'}>
-                {props.item.product.availability}
+                {props.item.product.availability.name}
                 {props.item.product.availableStoresCount > 0 && (
                     <AvailabilityMessageStyled>
                         {t('or immediately in {{ count }} stores', {

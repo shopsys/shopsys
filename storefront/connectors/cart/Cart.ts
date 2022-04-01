@@ -1,4 +1,5 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
+import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { mapPayment } from 'connectors/payments/Payment';
@@ -6,14 +7,14 @@ import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapTransport } from 'connectors/transports/Transports';
-import { AddToCartMutationApi, CartFragmentApi, useCartQueryApi } from 'graphql/generated';
+import { AddToCartMutationApi, CartFragmentApi, CartItemFragmentApi, useCartQueryApi } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { AddToCartPopupDataType, CartType, CurrentCartType } from 'types/cart';
+import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
 import { CombinedError } from 'urql';
 
 export const useCurrentCart = (): CurrentCartType => {
@@ -107,21 +108,24 @@ export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartTyp
     const totalItemsPrice = mapPriceData(apiData.totalItemsPrice, currencyCode);
 
     return {
-        items: apiData.items.map((item) => {
-            return {
-                ...item,
-                product: {
-                    ...item.product,
-                    price: mapProductPriceData(item.product.price, currencyCode),
-                    availability: item.product.availability.name,
-                    image: getFirstImage(item.product.images),
-                },
-            };
-        }),
+        items: apiData.items.map((item) => mapCartItem(item, currencyCode)),
         totalPrice: totalPrice,
         totalItemsPrice: totalItemsPrice,
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
         remainingAmountWithVatForFreeTransport:
             remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
+    };
+};
+
+export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string): CartItemType => {
+    return {
+        ...apiData,
+        product: {
+            ...apiData.product,
+            price: mapProductPriceData(apiData.product.price, currencyCode),
+            availability: mapAvailabilityData(apiData.product.availability),
+            image: getFirstImage(apiData.product.images),
+            categoryNames: apiData.product.categories.map((category) => category.name),
+        },
     };
 };

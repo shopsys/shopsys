@@ -2,14 +2,14 @@ import {
     AUTOCOMPLETE_CATEGORY_LIMIT,
     AUTOCOMPLETE_PRODUCT_LIMIT,
 } from 'components/Layout/Header/AutocompleteSearch/Autocomplete/Autocomplete';
+import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
+import { AutocompleteSearchType } from 'types/search';
+import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
-import { mapSimpleProductConnectionApiData } from 'connectors/products/SimpleProduct';
-import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useMemo } from 'react';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-import { AutocompleteSearchType } from 'types/search';
 
 export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
@@ -36,6 +36,6 @@ const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: stri
         ...apiData,
         articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
         categoriesSearch: mapSimpleCategoryConnectionApiData(apiData.categoriesSearch),
-        productsSearch: mapSimpleProductConnectionApiData(apiData.productsSearch, currencyCode),
+        productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
     };
 };

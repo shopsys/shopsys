@@ -5,7 +5,7 @@ import { PageInfoType } from 'types/pageInfo';
 import { SliderProductItemType } from 'types/product';
 
 export type BlogArticleDetailType = {
-    __typename: string | undefined;
+    __typename?: 'BlogArticle';
     uuid: string;
     name: string;
     slug: string;

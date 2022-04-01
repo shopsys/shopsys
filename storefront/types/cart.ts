@@ -1,10 +1,12 @@
+import { PriceType, ProductPriceType } from 'types/price';
+import { AvailabilityType } from './availability';
 import { ImageType } from './image';
 import { PaymentType } from './payment';
-import { PickupPlaceType } from './pickupPlace';
-import { TransportType } from './transport';
+import { PickupPlaceType } from 'types/pickupPlace';
+import { SimpleBrandType } from './brand';
 import { SimpleFlagType } from 'types/flag';
-import { PriceType, ProductPriceType } from 'types/price';
 import { SimpleProductType } from 'types/product';
+import { TransportType } from 'types/transport';
 
 export type CurrentCartType = {
     cart: CartType | null;
@@ -23,13 +25,15 @@ export type ProductCartItemType = {
     flags: SimpleFlagType[];
     image: ImageType | null;
     price: ProductPriceType;
-    availability: string;
+    availability: AvailabilityType;
     stockQuantity: number;
     availableStoresCount: number;
     catalogNumber: string;
     unit: {
         name: string;
     };
+    brand: SimpleBrandType | null;
+    categoryNames: string[];
 };
 
 export type CartItemType = {
