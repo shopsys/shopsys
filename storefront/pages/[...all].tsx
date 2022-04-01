@@ -21,6 +21,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
@@ -32,6 +33,7 @@ import { BlogCategoryDetailType } from 'types/blogCategory';
 import { BrandDetailType } from 'types/brand';
 import { CategoryDetailType } from 'types/category';
 import { FlagDetailType } from 'types/flag';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { StoreDetailType } from 'types/store';
 import { ssrExchange } from 'urql';
@@ -54,9 +56,12 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
         );
     }, [dispatch, router.query.page]);
 
-    const data = useFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
+    const slug = getUrlWithoutGetParameters(router.asPath);
+    const data = useFriendlyUrlResolvedData(slug);
 
-    if (data === null || data === undefined) {
+    useGtmCategoryProductListView(data, slug);
+
+    if (data === null) {
         return <Error404 />;
     }
 
@@ -70,18 +75,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-function renderContent(
-    data:
-        | ProductDetailType
-        | MainVariantDetailType
-        | CategoryDetailType
-        | StoreDetailType
-        | ArticleDetailType
-        | BlogArticleDetailType
-        | BlogCategoryDetailType
-        | BrandDetailType
-        | FlagDetailType,
-) {
+function renderContent(data: FriendlyUrlPageType) {
     if (data.__typename === 'RegularProduct' || data.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
     } else if (data.__typename === 'MainVariant') {

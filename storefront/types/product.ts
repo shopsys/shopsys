@@ -5,6 +5,7 @@ import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
+import { ProductCartItemType } from './cart';
 import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
 
@@ -92,3 +93,10 @@ export type MainVariantDetailType = ProductDetailInterfaceType & {
     __typename: 'MainVariant';
     variants: ListedVariantType[];
 };
+
+export type ProductInterfaceType =
+    | ProductDetailType
+    | MainVariantDetailType
+    | ProductCartItemType
+    | ListedProductType
+    | SimpleProductType;

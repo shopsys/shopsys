@@ -157,13 +157,13 @@ export type GtmProductInterface = {
     sku: string;
     brand: string;
     categories: string[];
-    collection: string;
-    coupon: string;
-    size: string;
-    color: string;
-    discount: number;
-    rating: number;
-    variant: string;
+    collection?: string;
+    coupon?: string;
+    size?: string;
+    color?: string;
+    discount?: number;
+    rating?: number;
+    variant?: string;
     imageUrl?: string;
 };
 

@@ -5,35 +5,14 @@ import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
-import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
-import { useSlugQueryApi } from 'graphql/generated';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-import { ArticleDetailType } from 'types/article';
-import { BlogArticleDetailType } from 'types/blogArticle';
-import { BlogCategoryDetailType } from 'types/blogCategory';
-import { BrandDetailType } from 'types/brand';
-import { CategoryDetailType } from 'types/category';
-import { FlagDetailType } from 'types/flag';
-import { MainVariantDetailType } from 'types/product';
-import { ProductDetailType } from 'types/product';
-import { StoreDetailType } from 'types/store';
+import { useSlugQueryApi } from 'graphql/generated';
 
-export function useFriendlyUrlResolvedData(
-    slug: string,
-):
-    | ProductDetailType
-    | MainVariantDetailType
-    | CategoryDetailType
-    | StoreDetailType
-    | ArticleDetailType
-    | BlogArticleDetailType
-    | BlogCategoryDetailType
-    | BrandDetailType
-    | FlagDetailType
-    | undefined
-    | null {
+export function useFriendlyUrlResolvedData(slug: string): FriendlyUrlPageType | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = useShopsysSelector((state) => state.optionsFilter);
@@ -50,7 +29,7 @@ export function useFriendlyUrlResolvedData(
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     if (data?.slug === null || data?.slug === undefined) {
-        return undefined;
+        return null;
     }
 
     switch (data.slug.__typename) {
@@ -74,6 +53,6 @@ export function useFriendlyUrlResolvedData(
         case 'BlogCategory':
             return mapBlogCategoryDetail(data.slug);
         default:
-            return undefined;
+            return null;
     }
 }
