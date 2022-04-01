@@ -1,4 +1,5 @@
 import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
+import { GtmListNameType } from 'types/gtm';
 import SliderProductItem from './SliderProductItem';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
@@ -7,6 +8,7 @@ import { SliderProductItemType } from 'types/product';
 
 type ProductsSliderProps = {
     products: SliderProductItemType[];
+    gtmListName: GtmListNameType;
 };
 
 const ProductsSlider: FC<ProductsSliderProps> = (props) => {
@@ -57,7 +59,12 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
         <ProductSliderWrapperStyled>
             <ProductSliderStyled ref={sliderRef} className="keen-slider">
                 {props.products.map((productItemData, index) => (
-                    <SliderProductItem key={index} {...productItemData} />
+                    <SliderProductItem
+                        key={index}
+                        product={productItemData}
+                        gtmListName={props.gtmListName}
+                        index={index}
+                    />
                 ))}
             </ProductSliderStyled>
             {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
