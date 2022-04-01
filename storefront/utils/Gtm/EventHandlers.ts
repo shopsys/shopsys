@@ -1,18 +1,21 @@
+import { CartItemType, CartType } from 'types/cart';
 import {
     getGtmChangeCartItemEvent,
     getGtmPaymentInfoEvent,
     getGtmProductDetailOnClickEvent,
+    getGtmSearchClickEvent,
     getGtmShippingInfoEvent,
     getNewGtmEcommerceEvent,
 } from './EventFactories';
-import { gtmSafePushEvent } from './Gtm';
+import { getGtmPurchaseData, gtmSafePushEvent } from './Gtm';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
-import { CartItemType } from 'types/cart';
-import { GtmCartInfoType, GtmListNameType } from 'types/gtm';
+import { GtmCartInfoType, GtmListNameType, GtmSectionType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
+import { TransportType } from 'types/transport';
+import { PaymentType } from 'types/payment';
 
 export const onClickProductDetailGtmEvent = (
     product: ListedProductType | SimpleProductType,
@@ -70,4 +73,22 @@ export const pushGtmPaymentChangeEvent = (
         event.ecommerce = getGtmPaymentInfoEvent(gtmCartInfo, mappedPayment);
         gtmSafePushEvent(event);
     }
+};
+
+export const onPurchaseOrder = (
+    cart: CartType,
+    transport: TransportType,
+    pickupPlace: PickupPlaceType | null,
+    payment: PaymentType,
+    promoCode: string | null,
+    orderNumber: string,
+): void => {
+    const event = getNewGtmEcommerceEvent('ec.purchase', true);
+    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber);
+    gtmSafePushEvent(event);
+};
+
+export const onClickSuggestResultEvent = (keyword: string, section: GtmSectionType, itemName: string): void => {
+    const event = getGtmSearchClickEvent(keyword, section, itemName);
+    gtmSafePushEvent(event);
 };
