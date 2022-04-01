@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ExistingEmail;
+use App\FrontendApi\Model\Component\Constraints\ResetPasswordHash;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RecoverPasswordTest extends GraphQlTestCase
@@ -56,9 +57,9 @@ class RecoverPasswordTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($query);
 
         $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-        $this->assertCount(1, $errors);
-        $this->assertSame('Provided hash is not valid.', $errors[0]['message']);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertCount(1, $validationErrors);
+        $this->assertSame(ResetPasswordHash::INVALID_HASH_ERROR, $validationErrors['input.hash'][0]['code']);
     }
 
     public function testRequestPasswordRecoveryWithInvalidEmail(): void

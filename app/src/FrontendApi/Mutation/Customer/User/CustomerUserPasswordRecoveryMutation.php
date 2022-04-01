@@ -10,7 +10,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\ArgumentFactory;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -81,10 +80,6 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
         $email = $input['email'];
         $hash = $input['hash'];
         $newPassword = $input['newPassword'];
-
-        if (!$this->customerUserPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
-            throw new UserError('Provided hash is not valid.');
-        }
 
         $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
 

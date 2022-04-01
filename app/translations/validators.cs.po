@@ -136,6 +136,9 @@ msgstr ""
 msgid "Prosím vyplňte GTM ID"
 msgstr ""
 
+msgid "Provided hash is not valid."
+msgstr "Zadaný hash není validní."
+
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
 
