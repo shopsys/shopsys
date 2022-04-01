@@ -3,7 +3,6 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { canUseDom } from 'helpers/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useShopsysSelector } from 'redux/main';
-import { BlogArticleDetailType } from 'types/blogArticle';
 import { CartItemType, CartType } from 'types/cart';
 import { CategoryDetailType } from 'types/category';
 import { CurrentCustomerType } from 'types/customer';
@@ -74,25 +73,37 @@ export const getGtmPageInfoForFriendlyUrl = (
         return defaultPageInfo;
     }
 
-    if (data.__typename === 'RegularProduct' || data.__typename === 'Variant' || data.__typename === 'MainVariant') {
-        defaultPageInfo.type = 'product';
-    } else if (data.__typename === 'Category') {
-        defaultPageInfo.type = 'category';
-        defaultPageInfo.category = getGtmCategoryInfo(data as CategoryDetailType);
-    } else if (data.__typename === 'Store') {
-        defaultPageInfo.type = 'store';
-    } else if (data.__typename === 'Article') {
-        defaultPageInfo.type = 'text';
-    } else if (data.__typename === 'BlogArticle') {
-        const blogArticle = data as BlogArticleDetailType;
-        defaultPageInfo.type = 'article';
-        defaultPageInfo.id = blogArticle.uuid;
-    } else if (data.__typename === 'Brand') {
-        defaultPageInfo.type = 'brand';
-    } else if (data.__typename === 'Flag') {
-        defaultPageInfo.type = 'flag';
-    } else if (data.__typename === 'BlogCategory') {
-        defaultPageInfo.type = 'blog';
+    switch (data.__typename) {
+        case 'RegularProduct':
+        case 'Variant':
+        case 'MainVariant':
+            defaultPageInfo.type = 'product';
+            break;
+        case 'Category':
+            defaultPageInfo.type = getCategoryOrSeoCategoryGtmListName(data, slug);
+            defaultPageInfo.category = getGtmCategoryInfo(data as CategoryDetailType);
+            break;
+        case 'Store':
+            defaultPageInfo.type = 'store';
+            break;
+        case 'Article':
+            defaultPageInfo.type = 'text';
+            break;
+        case 'BlogArticle':
+            defaultPageInfo.type = 'article';
+            defaultPageInfo.id = data.uuid;
+            break;
+        case 'Brand':
+            defaultPageInfo.type = 'brand';
+            break;
+        case 'Flag':
+            defaultPageInfo.type = 'flag';
+            break;
+        case 'BlogCategory':
+            defaultPageInfo.type = 'blog';
+            break;
+        default:
+            break;
     }
 
     return defaultPageInfo;
@@ -102,6 +113,10 @@ export const getGtmPageInfoType = (pageType: GtmPageType, path: string): GtmPage
     type: pageType,
     path,
 });
+
+const getGtmCategoryInfo = (category: CategoryDetailType) => {
+    return [category.name];
+};
 
 export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEventType | GtmSearchEventType): void => {
     if (canUseDom()) {
@@ -186,3 +201,14 @@ export const getGtmUserInfo = (
 
     return userInfo;
 };
+
+export const getCategoryOrSeoCategoryGtmListName = (
+    data: CategoryDetailType,
+    slug: string,
+): 'seo category' | 'category' =>
+    data.readyCategorySeoMixLinks.some((seoMixLink) => {
+        const slugWithoutLeadingSlash = slug.charAt(0) === '/' ? slug.slice(1) : slug;
+        return seoMixLink.slug === slugWithoutLeadingSlash;
+    })
+        ? 'seo category'
+        : 'category';

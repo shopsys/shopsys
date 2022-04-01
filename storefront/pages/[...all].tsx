@@ -15,6 +15,7 @@ import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls
 import { SlugQueryDocumentApi } from 'graphql/generated';
 import { createClient } from 'helpers/createClient';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
+import { getGtmPageInfoForFriendlyUrl } from 'utils/Gtm/Gtm';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -22,6 +23,8 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
+import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
+import { useGtmPageViewEvent } from 'utils/Gtm/EventFactories';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
@@ -59,7 +62,9 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const slug = getUrlWithoutGetParameters(router.asPath);
     const data = useFriendlyUrlResolvedData(slug);
 
+    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug));
     useGtmCategoryProductListView(data, slug);
+    useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
 
     if (data === null) {
         return <Error404 />;
