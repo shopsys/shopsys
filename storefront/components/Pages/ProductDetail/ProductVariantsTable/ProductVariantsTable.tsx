@@ -35,7 +35,12 @@ const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
                 </VariantsTableHeaderStyled>
                 <VariantsTableBodyStyled>
                     {props.variants.map((variant) => (
-                        <Variant key={variant.uuid} variant={variant} isSellingDenied={props.isSellingDenied} />
+                        <Variant
+                            key={variant.uuid}
+                            variant={variant}
+                            isSellingDenied={props.isSellingDenied}
+                            gtmListName="variants"
+                        />
                     ))}
                 </VariantsTableBodyStyled>
             </VariantsTableStyled>

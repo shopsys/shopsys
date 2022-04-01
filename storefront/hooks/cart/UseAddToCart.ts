@@ -1,16 +1,28 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
+import { mapCartItem, useCurrentCart } from 'connectors/cart/Cart';
 import { useAddToCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
+import { GtmListNameType } from 'types/gtm';
+import { onChangeCartItemGtmEvent } from 'utils/Gtm/EventHandlers';
 
 export const useAddToCart = (): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
+    const { cart } = useCurrentCart();
 
-    const addToCartAction = async (productUuid: string, quantity: number, isAbsoluteQuantity = false) => {
+    const addToCartAction = async (
+        productUuid: string,
+        quantity: number,
+        gtmListName: GtmListNameType,
+        isAbsoluteQuantity = false,
+    ) => {
+        const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
+        const initialQuantity = itemToBeAdded?.quantity ?? 0;
         const addToCartActionResult = await addToCart({
             input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
         });
@@ -43,6 +55,12 @@ export const useAddToCart = (): typeof addToCartAction => {
                 ),
             );
         }
+
+        onChangeCartItemGtmEvent(
+            mapCartItem(cartItem, currencyCode),
+            addToCartResult.addProductResult.addedQuantity - initialQuantity,
+            gtmListName,
+        );
 
         return addToCartResult;
     };

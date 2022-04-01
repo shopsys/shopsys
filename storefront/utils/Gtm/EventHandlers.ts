@@ -2,20 +2,17 @@ import {
     getGtmChangeCartItemEvent,
     getGtmPaymentInfoEvent,
     getGtmProductDetailOnClickEvent,
-    getGtmSearchClickEvent,
     getGtmShippingInfoEvent,
     getNewGtmEcommerceEvent,
 } from './EventFactories';
-import { getGtmPurchaseData, gtmSafePushEvent } from './Gtm';
+import { gtmSafePushEvent } from './Gtm';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
-import { CartItemType, CartType } from 'types/cart';
-import { GtmCartInfoType, GtmListNameType, GtmSectionType } from 'types/gtm';
-import { PaymentType } from 'types/payment';
+import { CartItemType } from 'types/cart';
+import { GtmCartInfoType, GtmListNameType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
-import { TransportType } from 'types/transport';
 
 export const onClickProductDetailGtmEvent = (
     product: ListedProductType | SimpleProductType,
@@ -27,15 +24,14 @@ export const onClickProductDetailGtmEvent = (
     gtmSafePushEvent(event);
 };
 
-export const onRemoveCartItemGtmEvent = (removedCartItem: CartItemType, listIndex: number, listName: string): void => {
+export const onRemoveCartItemGtmEvent = (removedCartItem: CartItemType, listName: string): void => {
     const event = getNewGtmEcommerceEvent('ec.remove_from_cart', true);
-    event.ecommerce = getGtmChangeCartItemEvent(removedCartItem, listIndex, removedCartItem.quantity, listName);
+    event.ecommerce = getGtmChangeCartItemEvent(removedCartItem, removedCartItem.quantity, listName);
     gtmSafePushEvent(event);
 };
 
 export const onChangeCartItemGtmEvent = (
     addedCartItem: CartItemType,
-    listIndex: number,
     quantityDifference: number,
     listName: GtmListNameType,
 ): void => {
@@ -44,25 +40,7 @@ export const onChangeCartItemGtmEvent = (
         event.event = 'ec.remove_from_cart';
     }
     const absoluteQuantity = Math.abs(quantityDifference);
-    event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, listIndex, absoluteQuantity, listName);
-    gtmSafePushEvent(event);
-};
-
-export const onPurchaseOrder = (
-    cart: CartType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
-    payment: PaymentType,
-    promoCode: string | null,
-    orderNumber: string,
-): void => {
-    const event = getNewGtmEcommerceEvent('ec.purchase', true);
-    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber);
-    gtmSafePushEvent(event);
-};
-
-export const onClickSuggestResultEvent = (keyword: string, section: GtmSectionType, itemName: string): void => {
-    const event = getGtmSearchClickEvent(keyword, section, itemName);
+    event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, absoluteQuantity, listName);
     gtmSafePushEvent(event);
 };
 

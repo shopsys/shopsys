@@ -46,7 +46,7 @@ const Item: FC<ItemProps> = (props) => {
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            changeCartItemQuantity(props.item.product.uuid, spinboxRef.current!.valueAsNumber, true);
+            changeCartItemQuantity(props.item.product.uuid, spinboxRef.current!.valueAsNumber, 'cart', true);
         }, 500);
     };
 

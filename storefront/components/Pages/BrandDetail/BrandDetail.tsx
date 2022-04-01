@@ -39,7 +39,7 @@ const BrandDetail: FC<BrandDetailProps> = (props) => {
                 <div ref={containerWrapRef}>
                     <SortingBar totalCount={props.brand.productConnection.totalCount} />
                     {props.brand.productConnection.products.length !== 0 && (
-                        <ProductsList products={props.brand.productConnection.products} />
+                        <ProductsList products={props.brand.productConnection.products} gtmListName="brand" />
                     )}
                     <Pagination
                         totalCount={props.brand.productConnection.totalCount}

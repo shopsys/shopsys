@@ -18,9 +18,10 @@ import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
 import { FilterOptionsType } from 'types/productFilter';
+import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
 
 type CategoryDetailProps = {
     category: CategoryDetailType;
@@ -59,6 +60,11 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
         }
     }, [props.category.productConnection.productFilterOptions, props.category.slug]);
 
+    const gtmListName = useMemo(
+        () => getCategoryOrSeoCategoryGtmListName(props.category, props.category.slug),
+        [props.category],
+    );
+
     return (
         <Webline>
             <CategoryDetailStyled ref={containerWrapRef}>
@@ -89,7 +95,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     </CategoryDetailPanelOpenerStyled>
                     <SortingBar totalCount={props.category.productConnection.totalCount} />
                     {props.category.productConnection.products.length !== 0 ? (
-                        <ProductsList products={props.category.productConnection.products} />
+                        <ProductsList products={props.category.productConnection.products} gtmListName={gtmListName} />
                     ) : (
                         <CategoryDetailContentMessageStyled>
                             <div>

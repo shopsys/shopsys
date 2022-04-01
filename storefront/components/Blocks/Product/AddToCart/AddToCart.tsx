@@ -7,12 +7,15 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
+import { GtmListNameType } from 'types/gtm';
 
 type AddToCartProps = {
     productUuid: string;
     productName: string;
     minQuantity: number;
     maxQuantity: number;
+    gtmListName: GtmListNameType;
+    listIndex: number;
 };
 
 const AddToCart: FC<AddToCartProps> = (props) => {
@@ -29,7 +32,11 @@ const AddToCart: FC<AddToCartProps> = (props) => {
             return;
         }
 
-        const addToCartResult = await changeCartItemQuantity(props.productUuid, spinboxRef.current.valueAsNumber);
+        const addToCartResult = await changeCartItemQuantity(
+            props.productUuid,
+            spinboxRef.current.valueAsNumber,
+            props.gtmListName,
+        );
         spinboxRef.current!.valueAsNumber = 1;
         setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
     };

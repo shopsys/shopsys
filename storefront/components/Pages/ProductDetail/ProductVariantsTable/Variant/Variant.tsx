@@ -18,11 +18,14 @@ import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVa
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useState } from 'react';
+import { GtmListNameType } from 'types/gtm';
 import { ListedVariantType } from 'types/product';
 
 type VariantProps = {
     variant: ListedVariantType;
     isSellingDenied: boolean;
+    gtmListName: GtmListNameType;
+    listIndex: number;
 };
 
 const Variant: FC<VariantProps> = (props) => {
@@ -68,6 +71,8 @@ const Variant: FC<VariantProps> = (props) => {
                                 productName={props.variant.fullName}
                                 minQuantity={1}
                                 maxQuantity={props.variant.stockQuantity}
+                                gtmListName={props.gtmListName}
+                                listIndex={props.listIndex}
                             />
                         </VariantActionStyled>
                     )}

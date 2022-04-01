@@ -68,7 +68,7 @@ const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
                 {props.blogArticle.blogArticleProducts.length === 0 ? null : (
                     <ProductSectionWrapper data-testid={testIdentifier + 'products'}>
                         <ProductSectionTitle>{t('Products mentioned in this article')}</ProductSectionTitle>
-                        <ProductsSlider products={props.blogArticle.blogArticleProducts} />
+                        <ProductsSlider products={props.blogArticle.blogArticleProducts} gtmListName="blog article" />
                     </ProductSectionWrapper>
                 )}
             </BlogArticleWrapper>

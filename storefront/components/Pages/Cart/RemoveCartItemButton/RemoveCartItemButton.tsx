@@ -13,7 +13,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const removeItemFromCart = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        removeItemFromCart(props.cartItemUuid);
+        removeItemFromCart(props.cartItemUuid, 'cart');
     };
 
     return (

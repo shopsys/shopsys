@@ -17,39 +17,46 @@ import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { ListedProductType } from 'types/product';
+import { GtmListNameType } from 'types/gtm';
 
-const ProductItem: FC<ListedProductType> = (props) => {
-    const testIdentifier = 'blocks-product-list-listeditem-' + props.catalogNumber;
+type ProductItemProps = {
+    product: ListedProductType;
+    listIndex: number;
+    gtmListName: GtmListNameType;
+};
+
+const ProductItem: FC<ProductItemProps> = (props) => {
+    const testIdentifier = 'blocks-product-list-listeditem-' + props.product.catalogNumber;
 
     return (
         <ProductItemStyled data-testid={testIdentifier}>
             <ProductItemInStyled>
-                <NextLink href={props.slug} passHref>
+                <NextLink href={props.product.slug} passHref>
                     <ProductItemLinkStyled>
                         <ProductItemImageStyled>
-                            <Image image={props.image} type="list" alt={props.fullName} />
+                            <Image image={props.product.image} type="list" alt={props.product.fullName} />
                             <ProductItemFlagsStyled>
-                                <ProductFlags flags={props.flags} />
+                                <ProductFlags flags={props.product.flags} />
                             </ProductItemFlagsStyled>
                         </ProductItemImageStyled>
                         <ProductItemInfoStyled>
-                            <ProductItemTitleStyled>{props.fullName}</ProductItemTitleStyled>
-                            <ProductPrice {...props.price} />
+                            <ProductItemTitleStyled>{props.product.fullName}</ProductItemTitleStyled>
+                            <ProductPrice {...props.product.price} />
                             <ProductAvailabilityStyled>
-                                {props.availability}
+                                {props.product.availability}
                                 <ProductAvailableStoresCount
-                                    isMainVariant={props.isMainVariant}
-                                    availableStoresCount={props.availableStoresCount}
+                                    isMainVariant={props.product.isMainVariant}
+                                    availableStoresCount={props.product.availableStoresCount}
                                 />
                                 <ProductExposedStoresCount
-                                    isMainVariant={props.isMainVariant}
-                                    exposedStoresCount={props.exposedStoresCount}
+                                    isMainVariant={props.product.isMainVariant}
+                                    exposedStoresCount={props.product.exposedStoresCount}
                                 />
                             </ProductAvailabilityStyled>
                         </ProductItemInfoStyled>
                     </ProductItemLinkStyled>
                 </NextLink>
-                <ProductAction {...props} />
+                <ProductAction product={props.product} gtmListName={props.gtmListName} />
             </ProductItemInStyled>
         </ProductItemStyled>
     );
