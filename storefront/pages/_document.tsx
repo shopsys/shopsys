@@ -1,5 +1,7 @@
 import { captureException } from '@sentry/nextjs';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
+import { GTM_ID } from 'utils/Gtm/Helpers';
 import { ReactElement } from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -46,6 +48,7 @@ export default class MyDocument extends Document {
             <Html>
                 <Head>
                     <script src="https://widget.packeta.com/v6/www/js/library.js" />
+                    {getGtmHeadScript(GTM_ID)}
                 </Head>
                 <body>
                     <Main />
