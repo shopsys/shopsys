@@ -25,6 +25,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListS
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { useGtmPageViewEvent } from 'utils/Gtm/EventFactories';
+import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
@@ -63,8 +64,9 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const data = useFriendlyUrlResolvedData(slug);
 
     const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug));
-    useGtmCategoryProductListView(data, slug);
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
+    useGtmCategoryProductListView(data, slug);
+    useGtmProductDetailView(data, slug);
 
     if (data === null) {
         return <Error404 />;

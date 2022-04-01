@@ -1,5 +1,11 @@
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface } from 'types/gtm';
-import { ListedProductType, ProductInterfaceType, SimpleProductType } from 'types/product';
+import {
+    ListedProductType,
+    MainVariantDetailType,
+    ProductDetailType,
+    ProductInterfaceType,
+    SimpleProductType,
+} from 'types/product';
 import { CartItemType } from 'types/cart';
 
 export const mapGtmCartItemType = (cartItem: CartItemType, quantity?: number): GtmCartItemType => ({
@@ -11,6 +17,9 @@ export const mapGtmListedProductType = (
     product: ListedProductType | SimpleProductType,
     listIndex: number,
 ): GtmListedProductType => mapGtmProductInterface(product, listIndex);
+
+export const mapGtmProductDetailType = (product: ProductDetailType | MainVariantDetailType): GtmProductInterface =>
+    mapGtmProductInterface(product, 1);
 
 const mapGtmProductInterface = (productInterface: ProductInterfaceType): GtmProductInterface => ({
     id: productInterface.uuid,
