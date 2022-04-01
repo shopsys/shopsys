@@ -3,18 +3,13 @@ import { GtmPageViewEventType } from 'types/gtm';
 import { getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
 import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
-export const useGtmCartView = (gtmStaticPageViewEvent: GtmPageViewEventType): void => {
+export const useGtmPaymentShippingView = (gtmStaticPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
 
     useEffect(() => {
-        if (
-            gtmStaticPageViewEvent._isLoaded &&
-            gtmStaticPageViewEvent.cart !== undefined &&
-            gtmStaticPageViewEvent.cart !== null &&
-            !wasViewedRef.current
-        ) {
+        if (gtmStaticPageViewEvent._isLoaded && gtmStaticPageViewEvent.cart !== null && !wasViewedRef.current) {
             wasViewedRef.current = true;
-            const event = getNewGtmEcommerceEvent('ec.cart', true);
+            const event = getNewGtmEcommerceEvent('ec.payment_shipping_info', true);
             event.ecommerce = gtmStaticPageViewEvent.cart;
             gtmSafePushEvent(event);
         }

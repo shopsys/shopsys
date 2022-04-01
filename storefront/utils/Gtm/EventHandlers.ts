@@ -11,7 +11,7 @@ import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { CartItemType, CartType } from 'types/cart';
-import { GtmCartInfoType, GtmSectionType } from 'types/gtm';
+import { GtmCartInfoType, GtmListNameType, GtmSectionType } from 'types/gtm';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
@@ -19,7 +19,7 @@ import { TransportType } from 'types/transport';
 
 export const onClickProductDetailGtmEvent = (
     product: ListedProductType | SimpleProductType,
-    listName: string,
+    listName: GtmListNameType,
     index: number,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.product_click', true);
@@ -37,7 +37,7 @@ export const onChangeCartItemGtmEvent = (
     addedCartItem: CartItemType,
     listIndex: number,
     quantityDifference: number,
-    listName: string,
+    listName: GtmListNameType,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.add_to_cart', true);
     if (quantityDifference < 0) {
@@ -46,34 +46,6 @@ export const onChangeCartItemGtmEvent = (
     const absoluteQuantity = Math.abs(quantityDifference);
     event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, listIndex, absoluteQuantity, listName);
     gtmSafePushEvent(event);
-};
-
-export const pushGtmTransportChangeEvent = (
-    gtmCartInfo: GtmCartInfoType | null,
-    updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
-    updatedPickupPlace: PickupPlaceType | null,
-    updatedPaymentName: string | undefined,
-    currencyCode: string,
-): void => {
-    if (gtmCartInfo !== null && updatedTransport !== null) {
-        const event = getNewGtmEcommerceEvent('ec.shipping_info', true);
-        const mappedTransport = mapTransport(updatedTransport, currencyCode);
-        event.ecommerce = getGtmShippingInfoEvent(gtmCartInfo, mappedTransport, updatedPickupPlace, updatedPaymentName);
-        gtmSafePushEvent(event);
-    }
-};
-
-export const pushGtmPaymentChangeEvent = (
-    gtmCartInfo: GtmCartInfoType | null,
-    updatedPayment: SimplePaymentFragmentApi | null,
-    currencyCode: string,
-): void => {
-    if (gtmCartInfo !== null && updatedPayment !== null) {
-        const event = getNewGtmEcommerceEvent('ec.payment_info', true);
-        const mappedPayment = mapPayment(updatedPayment, currencyCode);
-        event.ecommerce = getGtmPaymentInfoEvent(gtmCartInfo, mappedPayment);
-        gtmSafePushEvent(event);
-    }
 };
 
 export const onPurchaseOrder = (
@@ -92,4 +64,32 @@ export const onPurchaseOrder = (
 export const onClickSuggestResultEvent = (keyword: string, section: GtmSectionType, itemName: string): void => {
     const event = getGtmSearchClickEvent(keyword, section, itemName);
     gtmSafePushEvent(event);
+};
+
+export const pushGtmTransportChangeEvent = (
+    gtmCartInfo: GtmCartInfoType | undefined | null,
+    updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
+    updatedPickupPlace: PickupPlaceType | null,
+    updatedPaymentName: string | undefined,
+    currencyCode: string,
+): void => {
+    if (gtmCartInfo && updatedTransport !== null) {
+        const event = getNewGtmEcommerceEvent('ec.shipping_info', true);
+        const mappedTransport = mapTransport(updatedTransport, currencyCode);
+        event.ecommerce = getGtmShippingInfoEvent(gtmCartInfo, mappedTransport, updatedPickupPlace, updatedPaymentName);
+        gtmSafePushEvent(event);
+    }
+};
+
+export const pushGtmPaymentChangeEvent = (
+    gtmCartInfo: GtmCartInfoType | undefined | null,
+    updatedPayment: SimplePaymentFragmentApi | null,
+    currencyCode: string,
+): void => {
+    if (gtmCartInfo && updatedPayment !== null) {
+        const event = getNewGtmEcommerceEvent('ec.payment_info', true);
+        const mappedPayment = mapPayment(updatedPayment, currencyCode);
+        event.ecommerce = getGtmPaymentInfoEvent(gtmCartInfo, mappedPayment);
+        gtmSafePushEvent(event);
+    }
 };

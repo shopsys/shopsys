@@ -16,6 +16,7 @@ import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
+import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -44,6 +45,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step2');
     useGtmStaticPageView(gtmStaticPageViewEvent);
+    useGtmPaymentShippingView(gtmStaticPageViewEvent);
 
     const onSelectTransportAndPaymentHandler: SubmitHandler<TransportAndPaymentFormType> = () => {
         event?.preventDefault();

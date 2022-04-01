@@ -1,9 +1,9 @@
-import { getGtmProductDetailEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
-import { useEffect, useRef } from 'react';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 import { Maybe } from 'graphql/generated';
+import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { getGtmProductDetailEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
+import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undefined, slug: string): void => {
     const event = getNewGtmEcommerceEvent('ec.product_view', true);

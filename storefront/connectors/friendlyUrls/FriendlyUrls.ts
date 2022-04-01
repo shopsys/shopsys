@@ -5,12 +5,12 @@ import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
+import { useSlugQueryApi } from 'graphql/generated';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-import { useSlugQueryApi } from 'graphql/generated';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
 export function useFriendlyUrlResolvedData(slug: string): FriendlyUrlPageType | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);

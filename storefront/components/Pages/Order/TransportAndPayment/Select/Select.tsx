@@ -101,7 +101,7 @@ const Select: FC<SelectProps> = (props) => {
 
     const onChangePickupPlaceHandler = (selectedPickupPlace: PickupPlaceType | null) => {
         if (selectedPickupPlace !== null) {
-            changeTransportInCart(transportValue, selectedPickupPlace.identifier);
+            changeTransportInCart(transportValue, selectedPickupPlace);
         } else {
             removePacketeryCookie();
         }
@@ -121,7 +121,7 @@ const Select: FC<SelectProps> = (props) => {
         if (packeteryPoint !== null) {
             const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
             setPacketeryCookie(mappedPacketeryPoint);
-            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint.identifier);
+            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
         }
     };
 

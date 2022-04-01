@@ -1,11 +1,11 @@
 import { SimpleBrandType } from './brand';
+import { ProductCartItemType } from './cart';
 import { FilterOptionsType } from './productFilter';
 import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
-import { ProductCartItemType } from './cart';
 import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
 

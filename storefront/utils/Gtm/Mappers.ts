@@ -1,3 +1,4 @@
+import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface } from 'types/gtm';
 import {
     ListedProductType,
@@ -6,7 +7,6 @@ import {
     ProductInterfaceType,
     SimpleProductType,
 } from 'types/product';
-import { CartItemType } from 'types/cart';
 
 export const mapGtmCartItemType = (cartItem: CartItemType, quantity?: number): GtmCartItemType => ({
     ...mapGtmProductInterface(cartItem.product),
