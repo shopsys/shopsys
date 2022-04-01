@@ -9,6 +9,7 @@ import List from 'components/Pages/Cart/List';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useGtmCartView } from 'hooks/gtm/useGtmCartView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -23,6 +24,7 @@ const Cart: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('cart');
     useGtmStaticPageView(gtmStaticPageViewEvent);
+    useGtmCartView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
