@@ -17,6 +17,7 @@ import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -56,6 +57,8 @@ const AutocompleteSearch: FC = () => {
             setAutocompleteSearchResults(undefined);
         }
     }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
+
+    useGtmSearchResultView(autocompleteSearchApiResults, autocompleteSearchQueryValue);
 
     useEffectOnce(() => {
         if (!canUseDom()) {
