@@ -1,5 +1,6 @@
 fragment CustomerUserFragment on CustomerUser {
     __typename
+    uuid
     firstName
     lastName
     email

@@ -18,6 +18,7 @@ export type DeliveryAddressType = {
 };
 
 export type CurrentCustomerType = {
+    uuid: string;
     companyCustomer: boolean;
     firstName: string;
     lastName: string;
