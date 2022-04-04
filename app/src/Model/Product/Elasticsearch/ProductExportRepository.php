@@ -304,9 +304,9 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    private function getMaximalVariantPriceForFilteringMinimalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): ?Money
+    private function getMaximalVariantPriceForFilteringMinimalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): Money
     {
         $price = null;
         if (!$product->isMainVariant()) {
@@ -331,6 +331,10 @@ class ProductExportRepository extends BaseProductExportRepository
             }
         }
 
+        if ($price === null) {
+            $price = Money::zero();
+        }
+
         return $price;
     }
 
@@ -338,9 +342,9 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getMinimalVariantPriceForFilteringMaximalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): ?Money
+    public function getMinimalVariantPriceForFilteringMaximalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): Money
     {
         $price = null;
         if (!$product->isMainVariant()) {
@@ -362,6 +366,10 @@ class ProductExportRepository extends BaseProductExportRepository
             if ($price === null || $variantPrice->isLessThan($price)) {
                 $price = $variantPrice;
             }
+        }
+
+        if ($price === null) {
+            $price = Money::zero();
         }
 
         return $price;
