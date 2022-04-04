@@ -1,4 +1,4 @@
-import { Controller, FormProvider, Path, SubmitHandler } from 'react-hook-form';
+import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
 import {
@@ -9,6 +9,7 @@ import AddressList from 'components/Pages/Customer/AddressList';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { CombinedError } from 'urql';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfile.style';
@@ -77,28 +78,12 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
             },
         });
 
-        if (changeProfileResult.data?.ChangePersonalData.email !== undefined) {
-            showSuccessMessage(formMeta.messages.success);
-        }
-
-        if (changeProfileResult.error === undefined) {
-            return;
-        }
-
-        const { userError, applicationError } = getUserFriendlyErrors(changeProfileResult.error, t);
-
-        if (applicationError !== undefined) {
-            showErrorMessage(formMeta.messages.error);
-        }
-
-        if (userError?.validation !== undefined) {
-            for (const fieldName in userError.validation) {
-                formProviderMethods.setError(
-                    fieldName as Path<CustomerChangeProfileFormType>,
-                    userError.validation[fieldName],
-                );
-            }
-        }
+        handleUpdateResult(
+            changeProfileResult.data?.ChangePersonalData !== undefined,
+            changeProfileResult.error,
+            formProviderMethods,
+            formMeta.messages,
+        );
     };
 
     const onChangePasswordHandler = async (data: CustomerChangeProfileFormType) => {
@@ -112,19 +97,43 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
             newPassword: data.passwordFirst,
         });
 
-        if (changePasswordResult.data?.ChangePassword.email !== undefined) {
-            showSuccessMessage(t('Your password has been changed. You will be signed out.'));
-            setTimeout(() => logout(), 2000);
+        handleUpdateResult(
+            changePasswordResult.data?.ChangePassword !== undefined,
+            changePasswordResult.error,
+            formProviderMethods,
+            {
+                success: t('Your password has been changed. You will be signed out.'),
+                error: t('There was an error while changing your password'),
+            },
+            { success: () => setTimeout(() => logout(), 2000) },
+        );
+    };
+
+    const handleUpdateResult = (
+        isResultOk: boolean,
+        error: CombinedError | undefined,
+        formProviderMethods: UseFormReturn<any>,
+        messages: { success: string; error: string },
+        callbacks?: { success?: () => void; error?: () => void },
+    ) => {
+        if (isResultOk) {
+            showSuccessMessage(messages.success);
+            if (callbacks?.success !== undefined) {
+                callbacks.success();
+            }
         }
 
-        if (changePasswordResult.error === undefined) {
+        if (error === undefined) {
             return;
         }
 
-        const { userError, applicationError } = getUserFriendlyErrors(changePasswordResult.error, t);
+        const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
         if (applicationError !== undefined) {
-            showErrorMessage(t('There was an error while changing your password'));
+            showErrorMessage(messages.error);
+            if (callbacks?.error !== undefined) {
+                callbacks.error();
+            }
         }
 
         if (userError?.validation !== undefined) {
