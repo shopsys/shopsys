@@ -22,7 +22,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class OrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const ORDER_PREFIX = 'order_';
-    public const ORDER_WITH_GOPAY_PAYMENT = 'order_with_gopay_payment';
+    private const ORDER_WITH_GOPAY_PAYMENT_PREFIX = 'order_with_gopay_payment_';
+    public const ORDER_WITH_GOPAY_PAYMENT_CZ = 'order_with_gopay_payment_1';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
@@ -193,7 +194,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             $customerUser
         );
-        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT, $order);
+        $this->addReference(self::ORDER_WITH_GOPAY_PAYMENT_PREFIX . $domainId, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);

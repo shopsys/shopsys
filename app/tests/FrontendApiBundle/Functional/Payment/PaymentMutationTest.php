@@ -12,7 +12,7 @@ class PaymentMutationTest extends GraphQlTestCase
     public function testPayOrderWithGoPay(): void
     {
         /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
 
         $mutation = $this->getPayOrderMutation($order->getUuid());
 
@@ -50,7 +50,7 @@ class PaymentMutationTest extends GraphQlTestCase
     public function testCheckPaymentStatusWithGoPay(): void
     {
         /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
 
         $mutation = $this->getPayOrderMutation($order->getUuid());
         $this->getResponseContentForQuery($mutation);
