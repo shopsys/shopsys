@@ -1,5 +1,6 @@
 import { CartItemType } from 'types/cart';
-import { GtmCartItemType, GtmListedProductType, GtmProductInterface } from 'types/gtm';
+import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
+import { PickupPlaceType } from 'types/pickupPlace';
 import {
     ListedProductType,
     MainVariantDetailType,
@@ -45,4 +46,19 @@ const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType):
     return productInterface.images.length > 0
         ? productInterface.images[0].sizes?.find((size) => size.size === 'default')?.url
         : undefined;
+};
+
+export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShippingInfoType => {
+    let shippingDetail = '';
+    const shippingExtra = [];
+
+    if (pickupPlace !== null) {
+        shippingDetail = `${pickupPlace.name}, ${pickupPlace.street}, ${pickupPlace.city}, ${pickupPlace.country.name}, ${pickupPlace.postcode}`;
+        shippingExtra.push(pickupPlace.openingHoursHtml);
+    }
+
+    return {
+        shippingDetail,
+        shippingExtra,
+    };
 };

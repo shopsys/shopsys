@@ -254,3 +254,8 @@ export type GtmPaymentInfoEventType = {
     paymentPriceWithTax: number;
     products: GtmCartItemType[];
 };
+
+export type GtmShippingInfoType = {
+    shippingDetail: string;
+    shippingExtra: string[];
+};

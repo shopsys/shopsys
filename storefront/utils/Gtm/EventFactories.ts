@@ -135,17 +135,6 @@ export const getGtmProductDetailOnClickEvent = (
     products: [mapGtmListedProductType(product, index)],
 });
 
-export const getGtmProductDetailOnClickEvent = (
-    product: ListedProductType | SimpleProductType,
-    listName: GtmListNameType,
-    index: number,
-): GtmProductsListEventType => {
-    return {
-        listName,
-        products: [mapGtmListedProductType(product, index)],
-    };
-};
-
 export const getGtmProductDetailEvent = (
     product: ProductDetailType | MainVariantDetailType,
     currencyCode: string,
