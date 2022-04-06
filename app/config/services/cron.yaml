@@ -30,6 +30,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '2', minutes: '50', instanceName: service, readableName: 'Promazání pozůstalých uploadovaných souborů' }
 
+    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Download Heureka categories' }
+
     # This module should run as last because it creates multiple kernels and fake requests.
     Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
         tags:
