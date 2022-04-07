@@ -4,6 +4,7 @@ import {
     OrderSummaryTitle,
     OrderSummaryWrapperStyled,
 } from './OrderSummary.style';
+import Adverts from 'components/Blocks/Adverts';
 import { FC } from 'react';
 import ProductsPreview from './ProductsPreview';
 import TotalPrice from './TotalPrice';
@@ -22,16 +23,19 @@ const OrderSummary: FC = () => {
     }
 
     return (
-        <OrderSummaryWrapperStyled data-testid={testIdentifier}>
-            <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
-            <OrderSummaryContentWrapperStyled>
-                <OrderSummaryContentStyled>
-                    <ProductsPreview cartItems={cart.items} />
-                    <TransportAndPayment transport={transport} payment={payment} />
-                    <TotalPrice totalPrice={cart.totalPrice} />
-                </OrderSummaryContentStyled>
-            </OrderSummaryContentWrapperStyled>
-        </OrderSummaryWrapperStyled>
+        <>
+            <Adverts positionName="cartPreview" withGapBottom />
+            <OrderSummaryWrapperStyled data-testid={testIdentifier}>
+                <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
+                <OrderSummaryContentWrapperStyled>
+                    <OrderSummaryContentStyled>
+                        <ProductsPreview cartItems={cart.items} />
+                        <TransportAndPayment transport={transport} payment={payment} />
+                        <TotalPrice totalPrice={cart.totalPrice} />
+                    </OrderSummaryContentStyled>
+                </OrderSummaryContentWrapperStyled>
+            </OrderSummaryWrapperStyled>
+        </>
     );
 };
 

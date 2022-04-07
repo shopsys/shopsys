@@ -12,9 +12,13 @@ use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertData;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class AdvertFormTypeExtension extends AbstractTypeExtension
@@ -71,7 +75,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'constraints' => ($options['image_exists'] ? [] : $imageConstraints),
+                'constraints' => ($options['web_image_exists'] ? [] : $imageConstraints),
                 'label' => t('Upload new image'),
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -91,7 +95,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                             . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
-                'constraints' => ($options['image_exists'] ? [] : $imageConstraints),
+                'constraints' => ($options['mobile_image_exists'] ? [] : $imageConstraints),
                 'label' => t('Nahrát nový obrázek pro mobilní zařízení'),
                 'entity' => $options['advert'],
                 'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
@@ -133,6 +137,38 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
             'required' => false,
             'label' => t('Datum zobrazení DO'),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver
+            ->setRequired(['scenario', 'advert', 'web_image_exists', 'mobile_image_exists'])
+            ->setAllowedTypes('web_image_exists', 'bool')
+            ->setAllowedTypes('mobile_image_exists', 'bool')
+            ->setAllowedValues('scenario', [AdvertFormType::SCENARIO_CREATE, AdvertFormType::SCENARIO_EDIT])
+            ->setAllowedTypes('advert', [Advert::class, 'null'])
+            ->setDefaults([
+                'web_image_exists' => false,
+                'mobile_image_exists' => false,
+                'data_class' => AdvertData::class,
+                'attr' => ['novalidate' => 'novalidate'],
+                'validation_groups' => function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+
+                    /** @var \App\Model\Advert\AdvertData $advertData */
+                    $advertData = $form->getData();
+
+                    if ($advertData->type === Advert::TYPE_CODE) {
+                        $validationGroups[] = AdvertFormType::VALIDATION_GROUP_TYPE_CODE;
+                    } elseif ($advertData->type === Advert::TYPE_IMAGE) {
+                        $validationGroups[] = AdvertFormType::VALIDATION_GROUP_TYPE_IMAGE;
+                    }
+                    return $validationGroups;
+                },
+            ]);
     }
 
     /**

@@ -1,4 +1,5 @@
 import {
+    CategoryDetailAdvertsStyled,
     CategoryDetailContentMessageStyled,
     CategoryDetailContentStyled,
     CategoryDetailPanelIconStyled,
@@ -66,9 +67,11 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
+                    <CategoryDetailAdvertsStyled positionName="productList" />
                     <Heading type={'h1'}>
                         {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
                     </Heading>
+                    <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={props.category} />
                     <SubcategoriesSimpleNavigationStyled
                         listedItems={[...props.category.children, ...props.category.linkedCategories]}
                     />

@@ -1349,6 +1349,11 @@ Position of advert
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -1407,6 +1412,11 @@ Type of advert
 Position of advert
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
@@ -8194,6 +8204,11 @@ Type of advert
 Position of advert
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

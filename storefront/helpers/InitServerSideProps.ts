@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
-import { NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
+import { AdvertsQueryDocumentApi, NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { AppStore } from 'redux/main';
 import { DocumentNode } from 'graphql';
 import getConfig from 'next/config';
@@ -53,6 +53,7 @@ export async function initServerSideProps(
 
         prefetchedQueries.push({ query: NotificationBarsDocumentApi });
         prefetchedQueries.push({ query: NavigationQueryDocumentApi });
+        prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
 
         const resolvedQueries = await Promise.all(
             prefetchedQueries.map((queryObject) => client.query(queryObject.query, queryObject.variables).toPromise()),
