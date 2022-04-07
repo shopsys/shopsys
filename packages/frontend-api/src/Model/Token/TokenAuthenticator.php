@@ -92,8 +92,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
-        $token = $this->tokenFacade->getTokenByString($credentials);
-        $this->tokenFacade->validateToken($token);
+        $this->tokenFacade->getTokenByString($credentials);
 
         return true;
     }

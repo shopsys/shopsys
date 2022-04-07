@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 
 use GraphQL\Error\UserError;
+use Lcobucci\JWT\Token\DataSet;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -55,7 +56,9 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
         $refreshToken = $argument['input']['refreshToken'];
         $token = $this->tokenFacade->getTokenByString($refreshToken);
 
-        $userUuid = $token->getClaim('uuid');
+        $this->assertClaimsExists($token->claims());
+
+        $userUuid = $token->claims()->get('uuid');
 
         try {
             $customerUser = $this->customerUserFacade->getByUuid($userUuid);
@@ -63,7 +66,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
             throw new InvalidTokenUserMessageException('Token is not valid.');
         }
 
-        $tokenSecretChain = $token->getClaim('secretChain');
+        $tokenSecretChain = $token->claims()->get('secretChain');
         $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChain(
             $customerUser,
             $tokenSecretChain
@@ -83,6 +86,16 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
                 $customerUserValidRefreshTokenChain->getDeviceId()
             ),
         ];
+    }
+
+    /**
+     * @param \Lcobucci\JWT\Token\DataSet $claims
+     */
+    protected function assertClaimsExists(DataSet $claims): void
+    {
+        if (!$claims->has('uuid') || !$claims->has('secretChain')) {
+            throw new UserError('Token is not valid.');
+        }
     }
 
     /**

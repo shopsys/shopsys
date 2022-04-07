@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
-use BadMethodCallException;
 use DateInterval;
 use DateTime;
 use DateTimeImmutable;
+use DateTimeZone;
+use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\Signer;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Token;
-use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Encoding\ChainedFormatter;
+use Lcobucci\JWT\UnencryptedToken;
+use Lcobucci\JWT\Validation\Constraint\IssuedBy;
+use Lcobucci\JWT\Validation\Constraint\PermittedFor;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lcobucci\JWT\Validation\Constraint\StrictValidAt;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -21,8 +24,8 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageExcep
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Throwable;
+use function date_default_timezone_get;
 
 class TokenFacade
 {
@@ -38,28 +41,28 @@ class TokenFacade
     protected $domain;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
-    protected $parameterBag;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
     protected $customerUserFacade;
 
     /**
+     * @var \Lcobucci\JWT\Configuration
+     */
+    protected Configuration $jwtConfiguration;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Lcobucci\JWT\Configuration $jwtConfiguration
      */
     public function __construct(
         Domain $domain,
-        ParameterBagInterface $parameterBag,
-        CustomerUserFacade $customerUserFacade
+        CustomerUserFacade $customerUserFacade,
+        Configuration $jwtConfiguration
     ) {
         $this->domain = $domain;
-        $this->parameterBag = $parameterBag;
         $this->customerUserFacade = $customerUserFacade;
+        $this->jwtConfiguration = $jwtConfiguration;
     }
 
     /**
@@ -76,21 +79,23 @@ class TokenFacade
             $tokenBuilder->withClaim($key, $value);
         }
 
-        return (string)$tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey());
+        return $tokenBuilder
+            ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey())
+            ->toString();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $secretChain
-     * @return \Lcobucci\JWT\Token
+     * @return \Lcobucci\JWT\UnencryptedToken
      */
-    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): Token
+    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): UnencryptedToken
     {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
 
-        return $tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey());
+        return $tokenBuilder->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
     }
 
     /**
@@ -102,76 +107,56 @@ class TokenFacade
         $currentTime = new DateTimeImmutable();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
-        return (new Builder())
+        return $this->jwtConfiguration->builder(ChainedFormatter::withUnixTimestampDates())
             ->issuedBy($this->domain->getUrl())
             ->permittedFor($this->domain->getUrl())
             ->issuedAt($currentTime)
+            ->canOnlyBeUsedAfter($currentTime)
             ->expiresAt($expirationTime);
     }
 
     /**
-     * @return \Lcobucci\JWT\Signer\Key
-     */
-    public function getPrivateKey(): Key
-    {
-        return new Key(
-            sprintf('file://%s/private.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
-        );
-    }
-
-    /**
-     * @return \Lcobucci\JWT\Signer\Key
-     */
-    public function getPublicKey(): Key
-    {
-        return new Key(
-            sprintf('file://%s/public.key', $this->parameterBag->get('shopsys.frontend_api.keys_filepath'))
-        );
-    }
-
-    /**
-     * @return \Lcobucci\JWT\Signer
-     */
-    public function getSigner(): Signer
-    {
-        return new Signer\Rsa\Sha256();
-    }
-
-    /**
      * @param string $tokenString
-     * @return \Lcobucci\JWT\Token
+     * @return \Lcobucci\JWT\UnencryptedToken
      */
-    public function getTokenByString(string $tokenString): Token
+    public function getTokenByString(string $tokenString): UnencryptedToken
     {
         try {
-            return (new Parser())->parse($tokenString);
+            $token = $this->jwtConfiguration->parser()->parse($tokenString);
+
+            if (!($token instanceof UnencryptedToken)) {
+                throw new InvalidTokenUserMessageException('Token is not valid.');
+            }
+
+            $this->validateToken($token);
+
+            return $token;
         } catch (Throwable $throwable) {
             throw new InvalidTokenUserMessageException('Token is not valid.');
         }
     }
 
     /**
-     * @param \Lcobucci\JWT\Token $token
+     * @param \Lcobucci\JWT\UnencryptedToken $token
      */
-    public function validateToken(Token $token): void
+    public function validateToken(UnencryptedToken $token): void
     {
-        $validationData = new ValidationData();
-        $validationData->setAudience($this->domain->getUrl());
-        $validationData->setIssuer($this->domain->getUrl());
+        $validator = $this->jwtConfiguration->validator();
 
-        if ($token->isExpired(new DateTimeImmutable())) {
+        if (!$validator->validate($token, new StrictValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get()))))) {
             throw new ExpiredTokenUserMessageException('Token is expired. Please renew.');
         }
 
-        if (!$token->validate($validationData)) {
-            throw new InvalidTokenUserMessageException('Token is not valid.');
+        if (!$validator->validate($token, new SignedWith($this->jwtConfiguration->signer(), $this->jwtConfiguration->verificationKey()))) {
+            throw new NotVerifiedTokenUserMessageException('Token could not be verified.');
         }
 
-        try {
-            if (!$token->verify($this->getSigner(), $this->getPublicKey())) {
-                throw new NotVerifiedTokenUserMessageException('Token could not be verified.');
-            }
-        } catch (BadMethodCallException $badMethodCallException) {
+        if (!$validator->validate(
+            $token,
+            new IssuedBy($this->domain->getUrl()),
+            new PermittedFor($this->domain->getUrl())
+        )
+        ) {
             throw new InvalidTokenUserMessageException('Token is not valid.');
         }
     }
@@ -189,9 +174,9 @@ class TokenFacade
             $customerUser,
             $randomChain,
             $deviceId,
-            DateTime::createFromFormat('U', '' . $refreshToken->getClaim('exp'))
+            DateTime::createFromImmutable($refreshToken->claims()->get('exp'))
         );
 
-        return (string)$refreshToken;
+        return $refreshToken->toString();
     }
 }
