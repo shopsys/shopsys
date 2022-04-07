@@ -18,6 +18,8 @@ jobs:
             -   name: Install Composer dependencies
                 run: composer install --optimize-autoloader --no-interaction
             -   name: Run parallel-lint
-                run: php vendor/bin/parallel-lint ./src
+                run: php vendor/bin/parallel-lint ./src ./tests
             -   name: Run Easy Coding Standards
-                run: php vendor/bin/ecs check --verbose ./src
+                run: php vendor/bin/ecs check --verbose ./src ./tests
+            -   name: Run PHPUnit
+                run: php vendor/bin/phpunit tests
