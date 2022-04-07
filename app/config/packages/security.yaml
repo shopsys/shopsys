@@ -390,6 +390,8 @@ security:
         - { path: ^/%admin_url%/sso/, roles: ROLE_ADMIN }
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
+        # error pages preview
+        - { path: ^/%admin_url%/_error/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
