@@ -77,6 +77,12 @@ const cache = cacheExchange({
             Logout(_result, _args, cache) {
                 invalidateFields(cache, ['cart']);
             },
+            DeleteDeliveryAddress(_result, _args, cache) {
+                invalidateFields(cache, ['currentCustomerUser']);
+            },
+            CreateOrder(_result, _args, cache) {
+                invalidateFields(cache, ['currentCustomerUser']);
+            },
         },
     },
 });

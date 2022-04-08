@@ -1,4 +1,4 @@
-import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
+import { CustomerTypeEnum } from './customer';
 import { SelectOptionType } from './selectOptions';
 
 export type PromoCodeFormType = {
@@ -72,4 +72,23 @@ export type PersonalDataOverviewFormType = {
 
 export type PersonalDataExportFormType = {
     email: string;
+};
+
+export type CustomerChangeProfileFormType = {
+    companyCustomer: boolean;
+    email: string;
+    passwordOld: string;
+    passwordFirst: string;
+    passwordSecond: string;
+    telephone: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    companyNumber: string;
+    companyTaxNumber: string;
+    street: string;
+    city: string;
+    postcode: string;
+    country: SelectOptionType;
+    newsletterSubscription: boolean;
 };

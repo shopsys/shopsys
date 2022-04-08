@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ContactInformationFormType } from 'types/form';
-import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
+import { CustomerTypeEnum } from 'types/customer';
 import { HYDRATE } from 'next-redux-wrapper';
 import { SelectOptionType } from 'types/selectOptions';
 

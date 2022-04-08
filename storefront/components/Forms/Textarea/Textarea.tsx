@@ -31,7 +31,7 @@ type TextareaProps = NativeProps & {
     /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
-    fieldRef?: ControllerRenderProps;
+    fieldRef?: ControllerRenderProps<any, any>;
 };
 
 /**

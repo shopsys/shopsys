@@ -7,7 +7,7 @@ export enum ApplicationErrors {
     CART_NOT_FOUND = 'CART_NOT_FOUND',
 }
 
-export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction): ParsedErrors => {
+export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction<string>): ParsedErrors => {
     const errors: ParsedErrors = {};
 
     if (originalError.networkError) {

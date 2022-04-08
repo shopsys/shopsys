@@ -1,15 +1,11 @@
 import * as Yup from 'yup';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformationFormType } from 'types/form';
+import { CustomerTypeEnum } from 'types/customer';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export enum CustomerTypeEnum {
-    CommonCustomer = 'commonCustomer',
-    CompanyCustomer = 'companyCustomer',
-}
 
 export const useContactInformationForm = (): [
     UseFormReturn<ContactInformationFormType>,
@@ -68,7 +64,7 @@ export const useContactInformationForm = (): [
             postcode: Yup.string()
                 .required(t('Please enter zip code'))
                 .test(
-                    'less-or-equals-than-5',
+                    'less-than-or-equals-5',
                     t('Zip code cannot be longer than 5 characters'),
                     (value) => value !== undefined && value.length <= 5,
                 ),
@@ -139,7 +135,7 @@ export const useContactInformationForm = (): [
                 then: Yup.string()
                     .required(t('Please enter zip code'))
                     .test(
-                        'less-or-equals-than-5',
+                        'less-than-or-equals-5',
                         t('Zip code cannot be longer than 5 characters'),
                         (value) => value !== undefined && value.length <= 5,
                     ),

@@ -40,6 +40,9 @@ msgstr ""
 msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
 msgstr ""
 
+msgid "Identification number has to be exactly {{ limit }} characters long"
+msgstr "Identifikačné číslo musí obsahovať presne {{ limit }} znakov"
+
 msgid "Image can be only in JPG or PNG format"
 msgstr ""
 

@@ -14,10 +14,10 @@ export const SimpleLayoutStyled = styled.div`
 
 export const SimpleLayoutContentStyled = styled.div`
     ${({ theme }) => css`
-        margin-top: 28px;
+        margin-top: 0;
         margin-bottom: 0;
         width: 100%;
-        padding: 20px 30px 15px;
+        padding: 20px 10px 15px;
 
         border: 3px solid ${theme.color.greyLighter};
         border-radius: 22px;
@@ -25,6 +25,7 @@ export const SimpleLayoutContentStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             width: 690px;
             padding: 40px 60px 30px;
+            margin-top: 28px;
         }
     `}
 `;

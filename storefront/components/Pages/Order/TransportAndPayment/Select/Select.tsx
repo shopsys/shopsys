@@ -183,7 +183,7 @@ const Select: FC<SelectProps> = (props) => {
     const renderTransportListItem = (
         transportItem: TransportType,
         isActive: boolean,
-        fieldRef: ControllerRenderProps,
+        fieldRef: ControllerRenderProps<any, any>,
     ) => {
         return (
             <ListItemStyled
@@ -219,7 +219,11 @@ const Select: FC<SelectProps> = (props) => {
         );
     };
 
-    const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean, fieldRef: ControllerRenderProps) => {
+    const renderPaymentListItem = (
+        paymentItem: PaymentType,
+        isActive: boolean,
+        fieldRef: ControllerRenderProps<any, any>,
+    ) => {
         return (
             <ListItemStyled
                 key={paymentItem.uuid}

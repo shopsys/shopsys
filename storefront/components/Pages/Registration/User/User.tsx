@@ -1,9 +1,6 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import {
-    CustomerTypeEnum,
-    RegistrationFormType,
-    useRegistrationFormMeta,
-} from 'components/Pages/Registration/formMeta';
+import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { CustomerTypeEnum } from 'types/customer';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';

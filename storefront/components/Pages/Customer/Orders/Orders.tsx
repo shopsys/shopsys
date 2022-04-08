@@ -23,8 +23,8 @@ const Orders: FC<ListedOrdersProps> = (props) => {
     const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
-    const [customerOrdersUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
-        ['/customer/orders', '/customer/order-detail'],
+    const [customerUrl, customerOrdersUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
+        ['/customer', '/customer/orders', '/customer/order-detail'],
         url,
     );
     const orders = props.orders;
@@ -35,7 +35,13 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('My orders')}</Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('My orders'), slug: customerOrdersUrl }]} />
+                <Breadcrumbs
+                    key="breadcrumb"
+                    breadcrumb={[
+                        { name: t('Customer'), slug: customerUrl },
+                        { name: t('My orders'), slug: customerOrdersUrl },
+                    ]}
+                />
             </Webline>
             <div ref={containerWrapRef}>
                 <Webline>

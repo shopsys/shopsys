@@ -1,6 +1,6 @@
 import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
 import { ContactInformationFormType } from 'types/form';
-import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
+import { CustomerTypeEnum } from 'types/customer';
 
 export function useCurrentCustomerUser(): ContactInformationFormType | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();
@@ -40,49 +40,36 @@ const mapCurrentCustomerUserApiData = (
             label: companyCustomerUser.country.name,
         },
         deliveryFirstName:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
+            companyCustomerUser.defaultDeliveryAddress !== null
                 ? companyCustomerUser.deliveryAddresses[0].firstName
                 : '',
         deliveryLastName:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
+            companyCustomerUser.defaultDeliveryAddress !== null
                 ? companyCustomerUser.deliveryAddresses[0].lastName
                 : '',
         deliveryCompanyName:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
+            companyCustomerUser.defaultDeliveryAddress !== null
                 ? companyCustomerUser.deliveryAddresses[0].companyName
                 : '',
         deliveryTelephone:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
+            companyCustomerUser.defaultDeliveryAddress !== null
                 ? companyCustomerUser.deliveryAddresses[0].telephone
                 : '',
         deliveryStreet:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
-                ? companyCustomerUser.deliveryAddresses[0].street
-                : '',
+            companyCustomerUser.defaultDeliveryAddress !== null ? companyCustomerUser.deliveryAddresses[0].street : '',
         deliveryCity:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
-                ? companyCustomerUser.deliveryAddresses[0].city
-                : '',
+            companyCustomerUser.defaultDeliveryAddress !== null ? companyCustomerUser.deliveryAddresses[0].city : '',
         deliveryPostcode:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            companyCustomerUser.deliveryAddresses.length > 0
+            companyCustomerUser.defaultDeliveryAddress !== null
                 ? companyCustomerUser.deliveryAddresses[0].postcode
                 : '',
         deliveryCountry: {
             value:
-                apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-                companyCustomerUser.deliveryAddresses.length > 0
+                companyCustomerUser.defaultDeliveryAddress !== null
                     ? companyCustomerUser.deliveryAddresses[0].country.code
                     : '',
             label:
-                apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-                companyCustomerUser.deliveryAddresses.length > 0
+                companyCustomerUser.defaultDeliveryAddress !== null
                     ? companyCustomerUser.deliveryAddresses[0].country.name
                     : '',
         },
@@ -93,7 +80,7 @@ const mapCurrentCustomerUserApiData = (
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
-        differentDeliveryAddress: false,
+        differentDeliveryAddress: companyCustomerUser.defaultDeliveryAddress !== null,
     };
 
     return mappedCurrentCustomerUserData;

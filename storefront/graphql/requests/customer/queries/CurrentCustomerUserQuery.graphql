@@ -1,24 +1,5 @@
 query CurrentCustomerUserQuery {
     currentCustomerUser {
-        __typename
-        firstName
-        lastName
-        email
-        telephone
-        street
-        city
-        postcode
-        country {
-            ...CountryFragment
-        }
-        newsletterSubscription
-        deliveryAddresses {
-            ...DeliveryAddressFragment
-        }
-        ... on CompanyCustomerUser {
-            companyName
-            companyNumber
-            companyTaxNumber
-        }
+        ...CustomerUserFragment
     }
 }

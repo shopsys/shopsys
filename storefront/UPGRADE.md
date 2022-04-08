@@ -1,7 +1,13 @@
 ## Upgrade notes from SSFW team
 - this file contains information about various breaking changes introduced by the SSFW team
 - it is possible that some of the changes that are easy to implement, or are of a smaller nature may be skipped from these notes
-- each change note contains information about the original US, MR, reason behind the changes, most significant changes, and tips on how to implement them
+- each change note contains 
+  - information about the original US
+  - information about the original MR
+  - reason behind the changes (may be skipped for changes with obvious reasons, such as customer section)
+  - most significant changes
+  - tips on how to implement them
+  - section about seemingly unconnected changes that was brought as a part of the MR (may be skipped if there were no such changes)
 
 ### Intorduction of the rules of hooks ES lint rule
 - [FWCC-831](https://shopsys.atlassian.net/browse/FWCC-831)
@@ -19,3 +25,35 @@
   - make sure that every custom hook's name starts with a "use" prefix
     - custom hooks are all methods that call other hooks internally, and to which the rules of hooks apply
   - make sure that no hook is called conditionally (after or inside an if/else block, after early return)
+
+### Customer section of the website
+- [FWCC-439](https://shopsys.atlassian.net/browse/FWCC-439)
+- [FWCC-439 - customer profile ](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/435)
+- most significant changes
+  - customer page was added with links to other parts of the customer section
+  - edit profile page was added together with sections for
+    - password change
+    - delivery address modifiactions
+    - personal data change
+- other changes
+  - PageGuard component was introduced
+    - it helps with unauthorized access redirect on client
+    - was created because in come cases router redirect in the component was throwing a runtime error, as it can only be used on the client-side
+    - if you want this change, check for all the router.push redirects in your components, delete them, and use the page guard wrapper instead
+    - the component can be easily nested to introduce multiple redirect rules
+  - CustomerTypeEnum was unified to respect DRY
+    - this meant changes in many places but will be more scalable and robust in the future
+  - UserDataRefresher was refactored
+    - because the refresher was failing to refresh the user data in the most important situation (when the user data were modified) it had to be refactored
+    - now the user contact information are updated more often (as many update conditions were removed) but it works in all the known cases
+    - to save some performance, the two flows that were previously put in one useEffect hook were now split into two, so changes to dependencies does not trigger code that does not rely on those dependencies
+  - login/logout mechanism now uses simple handlers instead of hooks
+    - because of a bug that did not allow the user to log out, the login/logout mechanism was refactored to simple handler methods
+    - all changes happened only in useAuth hook and on the outside everything is the same
+    - this approach should be easier to understand and to extend
+  - isCompanyUser property was renamed to companyUser
+    - this was done as the datapoint is called companyUser on the API
+    - this should ease mapping and working with the property inside API calls/methods
+  - ControllerRenderProps and TFunction typings were fixed
+    - incorrect typings for ControllerRenderProps and TFunction were displaying annoying errors in some IDEs
+    - even though this was not a compilation error, it was refactored so now the errors are not displayed, which should ease debugging

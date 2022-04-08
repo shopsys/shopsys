@@ -672,7 +672,7 @@ export type DeliveryAddressApi = {
   /** Delivery address telephone */
   telephone: Scalars['String'];
   /** UUID */
-  uuid: Maybe<Scalars['Uuid']>;
+  uuid: Scalars['Uuid'];
 };
 
 /** Represents a downloadable file */
@@ -2499,12 +2499,41 @@ export type CountriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type CountriesQueryApi = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', name: string, code: string }> };
 
+type CustomerUserFragment_CompanyCustomerUser_Api = { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
+
+type CustomerUserFragment_RegularCustomerUser_Api = { __typename: 'RegularCustomerUser', uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
+
+export type CustomerUserFragmentApi = CustomerUserFragment_CompanyCustomerUser_Api | CustomerUserFragment_RegularCustomerUser_Api;
+
+export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
+
+export type ChangePasswordMutationVariablesApi = Exact<{
+  email: Scalars['String'];
+  oldPassword: Scalars['Password'];
+  newPassword: Scalars['Password'];
+}>;
+
+
+export type ChangePasswordMutationApi = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
+
+export type ChangePersonalDataMutationVariablesApi = Exact<{
+  input: ChangePersonalDataInputApi;
+}>;
+
+
+export type ChangePersonalDataMutationApi = { __typename?: 'Mutation', ChangePersonalData: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
+
+export type DeleteDeliveryAddressMutationVariablesApi = Exact<{
+  deliveryAddressUuid: Scalars['Uuid'];
+}>;
+
+
+export type DeleteDeliveryAddressMutationApi = { __typename?: 'Mutation', DeleteDeliveryAddress: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> };
+
 export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
-
-export type DeliveryAddressFragmentApi = { __typename?: 'DeliveryAddress', uuid: string | null, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } };
+export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, country: { __typename?: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } } | null, deliveryAddresses: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string, street: string, city: string, postcode: string, telephone: string, firstName: string, lastName: string, country: { __typename?: 'Country', name: string, code: string } }> } };
 
 export type FlagDetailFragmentApi = { __typename?: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename?: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename?: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } };
 
@@ -3509,6 +3538,35 @@ export const DeliveryAddressFragmentApi = gql`
   lastName
 }
     ${CountryFragmentApi}`;
+export const CustomerUserFragmentApi = gql`
+    fragment CustomerUserFragment on CustomerUser {
+  __typename
+  uuid
+  firstName
+  lastName
+  email
+  telephone
+  street
+  city
+  postcode
+  country {
+    ...CountryFragment
+  }
+  newsletterSubscription
+  defaultDeliveryAddress {
+    ...DeliveryAddressFragment
+  }
+  deliveryAddresses {
+    ...DeliveryAddressFragment
+  }
+  ... on CompanyCustomerUser {
+    companyName
+    companyNumber
+    companyTaxNumber
+  }
+}
+    ${CountryFragmentApi}
+${DeliveryAddressFragmentApi}`;
 export const FlagDetailFragmentApi = gql`
     fragment FlagDetailFragment on Flag {
   uuid
@@ -4009,33 +4067,48 @@ export const CountriesQueryDocumentApi = gql`
 export function useCountriesQueryApi(options: Omit<Urql.UseQueryArgs<CountriesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<CountriesQueryApi>({ query: CountriesQueryDocumentApi, ...options });
 };
+export const ChangePasswordMutationDocumentApi = gql`
+    mutation ChangePasswordMutation($email: String!, $oldPassword: Password!, $newPassword: Password!) {
+  ChangePassword(
+    input: {email: $email, oldPassword: $oldPassword, newPassword: $newPassword}
+  ) {
+    email
+  }
+}
+    `;
+
+export function useChangePasswordMutationApi() {
+  return Urql.useMutation<ChangePasswordMutationApi, ChangePasswordMutationVariablesApi>(ChangePasswordMutationDocumentApi);
+};
+export const ChangePersonalDataMutationDocumentApi = gql`
+    mutation ChangePersonalDataMutation($input: ChangePersonalDataInput!) {
+  ChangePersonalData(input: $input) {
+    ...CustomerUserFragment
+  }
+}
+    ${CustomerUserFragmentApi}`;
+
+export function useChangePersonalDataMutationApi() {
+  return Urql.useMutation<ChangePersonalDataMutationApi, ChangePersonalDataMutationVariablesApi>(ChangePersonalDataMutationDocumentApi);
+};
+export const DeleteDeliveryAddressMutationDocumentApi = gql`
+    mutation DeleteDeliveryAddressMutation($deliveryAddressUuid: Uuid!) {
+  DeleteDeliveryAddress(deliveryAddressUuid: $deliveryAddressUuid) {
+    ...DeliveryAddressFragment
+  }
+}
+    ${DeliveryAddressFragmentApi}`;
+
+export function useDeleteDeliveryAddressMutationApi() {
+  return Urql.useMutation<DeleteDeliveryAddressMutationApi, DeleteDeliveryAddressMutationVariablesApi>(DeleteDeliveryAddressMutationDocumentApi);
+};
 export const CurrentCustomerUserQueryDocumentApi = gql`
     query CurrentCustomerUserQuery {
   currentCustomerUser {
-    __typename
-    firstName
-    lastName
-    email
-    telephone
-    street
-    city
-    postcode
-    country {
-      ...CountryFragment
-    }
-    newsletterSubscription
-    deliveryAddresses {
-      ...DeliveryAddressFragment
-    }
-    ... on CompanyCustomerUser {
-      companyName
-      companyNumber
-      companyTaxNumber
-    }
+    ...CustomerUserFragment
   }
 }
-    ${CountryFragmentApi}
-${DeliveryAddressFragmentApi}`;
+    ${CustomerUserFragmentApi}`;
 
 export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<CurrentCustomerUserQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<CurrentCustomerUserQueryApi>({ query: CurrentCustomerUserQueryDocumentApi, ...options });

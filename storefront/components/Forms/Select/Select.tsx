@@ -14,7 +14,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type SelectProps = NativeProps & {
     hasError: boolean;
-    fieldRef?: ControllerRenderProps;
+    fieldRef?: ControllerRenderProps<any, any>;
     label: string | JSX.Element;
     required?: boolean;
 };
