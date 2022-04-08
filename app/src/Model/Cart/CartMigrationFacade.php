@@ -48,6 +48,11 @@ class CartMigrationFacade extends BaseCartMigrationFacade
                 $this->em->persist($newCartItem);
             }
         }
+
+        foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
+            $currentCart->applyPromoCode($promoCode);
+        }
+
         $currentCart->setModifiedNow();
 
         $this->em->flush();

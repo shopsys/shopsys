@@ -8,12 +8,15 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
+use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ApplyPromoCodeToCartTest extends GraphQlTestCase
@@ -47,6 +50,18 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
      * @inject
      */
     private CartFacade $cartFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
+     * @inject
+     */
+    private FrontendCustomerUserProvider $frontendCustomerUserProvider;
+
+    /**
+     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
+     * @inject
+     */
+    private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
     public function testApplyPromoCode(): void
     {
@@ -275,6 +290,44 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertEquals($validPromoCode->getCode(), $promoCodeModifications['noLongerApplicablePromoCode'][0]);
     }
 
+    public function testPromoCodeIsStillAppliedAfterMergingCart(): void
+    {
+        $testCartUuid = CartDataFixture::CART_UUID;
+
+        /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+
+        $applyPromoCodeMutation = 'mutation {
+            ApplyPromoCodeToCart(input: {
+                cartUuid: "' . $testCartUuid . '"
+                promoCode: "' . $promoCode->getCode() . '"
+            }) {
+                uuid
+                promoCode
+            }
+        }';
+        $this->getResponseContentForQuery($applyPromoCodeMutation);
+
+        $loginMutationWithCartUuid = 'mutation {
+                Login(input: {
+                    email: "no-reply@shopsys.com"
+                    password: "user123"
+                    cartUuid: "' . $testCartUuid . '"
+                }) {
+                    accessToken
+                    refreshToken
+                }
+            }
+        ';
+
+        $this->getResponseContentForQuery($loginMutationWithCartUuid);
+
+        $cart = $this->findCartOfCustomerByEmail('no-reply@shopsys.com');
+
+        self::assertNotNull($cart);
+        self::assertTrue($cart->isPromoCodeApplied($promoCode->getCode()), 'Promo code have to be applied after merging cart after login');
+    }
+
     /**
      * @dataProvider getInvalidPromoCodesDataProvider
      * @param string|null $promoCodeReferenceName
@@ -332,5 +385,19 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $this->productFacade->edit($product->getId(), $productData);
         $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+    }
+
+    /**
+     * @param string $email
+     * @return \App\Model\Cart\Cart|null
+     */
+    private function findCartOfCustomerByEmail(string $email): ?Cart
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($email);
+
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
+
+        return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
     }
 }
