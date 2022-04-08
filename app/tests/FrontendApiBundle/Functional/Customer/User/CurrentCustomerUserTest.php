@@ -23,6 +23,8 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(self::DEFAULT_USER_EMAIL, $this->domain->getId());
         /** @var \App\Model\Customer\DeliveryAddress $defaultDeliveryAddress */
         $defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
+        $pricingGroupName = $customerUser->getPricingGroup()->getName();
+
         $query = '
 {
     query: currentCustomerUser {
@@ -38,6 +40,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         country {
             code
         }
+        pricingGroup
         defaultDeliveryAddress {
             uuid
             companyName
@@ -89,6 +92,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             "country": {
                 "code": "CZ"
             },
+            "pricingGroup" : "' . $pricingGroupName . '",
             "defaultDeliveryAddress": {
                 "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
                 "companyName": "Rockpoint",
