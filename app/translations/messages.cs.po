@@ -79,6 +79,9 @@ msgstr "Rozšířené SEO kategorií"
 msgid "Advanced search"
 msgstr ""
 
+msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr ""
+
 msgid "Adverts - full"
 msgstr "Reklamní systém - vše"
 
@@ -597,6 +600,9 @@ msgstr "Editace skupiny práv pro administrátora"
 
 msgid "Editing administrator role group - %name%"
 msgstr "Editace skupiny práv pro administrátora - %name%"
+
+msgid "Editing advertising - %name%"
+msgstr ""
 
 msgid "Editing banner"
 msgstr "Upravit banner"
@@ -2148,9 +2154,6 @@ msgstr ""
 
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
-
-msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."
-msgstr ""
 
 msgid "Zadany kod neni spravny"
 msgstr ""

@@ -79,6 +79,9 @@ msgstr ""
 msgid "Advanced search"
 msgstr ""
 
+msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr ""
+
 msgid "Adverts - full"
 msgstr ""
 
@@ -593,6 +596,9 @@ msgid "Editing administrator role group"
 msgstr ""
 
 msgid "Editing administrator role group - %name%"
+msgstr ""
+
+msgid "Editing advertising - %name%"
 msgstr ""
 
 msgid "Editing banner"

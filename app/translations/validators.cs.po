@@ -124,11 +124,14 @@ msgstr ""
 msgid "Produkt s tímto katalogovým číslem již existuje"
 msgstr ""
 
+msgid "Promo code is already applied in the current cart."
+msgstr "Promo kód je již použit v aktuálním košíku."
+
 msgid "Promo code is available for registered customers only."
-msgstr ""
+msgstr "Promo kód je dostupný pouze přihlášeným uživatelům."
 
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
-msgstr ""
+msgstr "Promo kód není dostupný pro vaši cenovou skupinu. Možná jste se zapomněl přihlásit."
 
 msgid "Prosím vložte limit od"
 msgstr ""
@@ -152,16 +155,16 @@ msgid "The identifier must contain two characters"
 msgstr "Identifikátor musí obsahovat dva znaky"
 
 msgid "The promo code is no longer valid. Check it, please."
-msgstr ""
+msgstr "Promo kód už není platný. Zkontrolujte jej, prosím."
 
 msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
-msgstr ""
+msgstr "Promo kód není použitelný s žádným produktem v košíku. Zkontrolujte jej, prosím."
 
 msgid "The promo code is not valid or it has been already used. Check it, please."
-msgstr ""
+msgstr "Promo kód není platný, nebo už byl využit. Zkontrolujte jej, prosím."
 
 msgid "The promo code is not valid yet. Check it, please."
-msgstr ""
+msgstr "Promo kód ještě není platný. Zkontrolujte jej, prosím."
 
 msgid "Transport type name cannot be longer than {{ limit }} characters"
 msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"

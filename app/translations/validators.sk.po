@@ -124,6 +124,9 @@ msgstr ""
 msgid "Produkt s tímto katalogovým číslem již existuje"
 msgstr ""
 
+msgid "Promo code is already applied in the current cart."
+msgstr ""
+
 msgid "Promo code is available for registered customers only."
 msgstr ""
 
