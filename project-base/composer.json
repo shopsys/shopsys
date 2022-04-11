@@ -53,7 +53,7 @@
         "heureka/overeno-zakazniky": "^2.0.6",
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^2.4",
-        "jms/translation-bundle": "1.4.4",
+        "jms/translation-bundle": "^1.6.2",
         "league/flysystem": "^1.1.4",
         "nyholm/psr7": "^1.5",
         "phing/phing": "^2.16.1",
