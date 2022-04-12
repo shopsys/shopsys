@@ -228,18 +228,6 @@
             "project-base/config/packages/fos_ckeditor.yaml"
         ]
     },
-    "friendsofsymfony/rest-bundle": {
-        "version": "2.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.2",
-            "ref": "cad41ef93d6150067ae2bb3c7fd729492dff6f0a"
-        },
-        "files": [
-            "project-base/config/packages/fos_rest.yaml"
-        ]
-    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.37"
     },
@@ -336,9 +324,6 @@
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
-    "league/event": {
-        "version": "2.2.0"
-    },
     "league/flysystem": {
         "version": "1.0.57"
     },
@@ -347,9 +332,6 @@
     },
     "league/mime-type-detection": {
         "version": "1.5.1"
-    },
-    "league/oauth2-server": {
-        "version": "7.2.0"
     },
     "litipk/php-bignumbers": {
         "version": "0.8.6"
@@ -594,7 +576,16 @@
         "version": "1.0.1"
     },
     "sensio/framework-extra-bundle": {
-        "version": "v3.0.29"
+        "version": "5.6",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "project-base/config/packages/sensio_framework_extra.yaml"
+        ]
     },
     "shopsys/ordered-form": {
         "version": "4.0.0"
@@ -855,9 +846,6 @@
     "symfony/proxy-manager-bridge": {
         "version": "v3.4.32"
     },
-    "symfony/psr-http-message-bridge": {
-        "version": "v1.0.2"
-    },
     "symfony/routing": {
         "version": "3.3",
         "recipe": {
@@ -1044,9 +1032,6 @@
     "tracy/tracy": {
         "version": "v2.6.5"
     },
-    "trikoder/oauth2-bundle": {
-        "version": "v1.1.0"
-    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -1067,12 +1052,6 @@
     },
     "webonyx/graphql-php": {
         "version": "v0.13.8"
-    },
-    "willdurand/jsonp-callback-validator": {
-        "version": "v1.1.0"
-    },
-    "willdurand/negotiation": {
-        "version": "v2.3.1"
     },
     "zalas/injector": {
         "version": "v1.2.0"

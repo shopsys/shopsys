@@ -152,3 +152,5 @@ There you can find links to upgrade notes for other versions too.
     - the `Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsFinder` and `MigrationsLocator` classes were removed
         - to register migrations of a bundle, you should leverage `PrependExtensionInterface`
     - methods and properties visibility of all classes in `shopsys/migrations` package changed from `private` to `protected` to ease possible extension
+- shopsys/backend-api package was temporarily suspended as it was put under review to match our vision of the product ([#2422](https://github.com/shopsys/shopsys/pull/2422))
+    - if you need the backend-api in the current state, you can fork it and handle the compatibility with the new versions of the other packages

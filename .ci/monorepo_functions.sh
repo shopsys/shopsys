@@ -4,7 +4,6 @@
 # If you modify this list don't forget updating /docs/introduction/monorepo.md, /changelog-linker.yml, /CHANGELOG.md, and "replace" section in monorepo's composer.json as well
 get_all_packages() {
     echo "framework \
-        backend-api \
         frontend-api \
         read-model \
         google-cloud-bundle \

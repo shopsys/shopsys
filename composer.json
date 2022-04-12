@@ -6,7 +6,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "project-base/src/",
-            "Shopsys\\BackendApiBundle\\": "packages/backend-api/src/",
             "Shopsys\\CodingStandards\\": "packages/coding-standards/src/",
             "Shopsys\\FormTypesBundle\\": "packages/form-types-bundle/src/",
             "Shopsys\\FrontendApiBundle\\": "packages/frontend-api/src/",
@@ -33,7 +32,6 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "project-base/tests/",
-            "Tests\\BackendApiBundle\\": "packages/backend-api/tests/",
             "Tests\\CodingStandards\\": "packages/coding-standards/tests/",
             "Tests\\FrameworkBundle\\": "packages/framework/tests/",
             "Tests\\FrontendApiBundle\\": "packages/frontend-api/tests/",
@@ -94,7 +92,6 @@
         "fp/jsformvalidator-bundle": "^1.6.1",
         "friendsofphp/php-cs-fixer": "^2.14.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
-        "friendsofsymfony/rest-bundle": "^2.7.1",
         "gedmo/doctrine-extensions": "^3.5",
         "google/cloud-storage": "^1.10",
         "guzzlehttp/guzzle": "^6.3",
@@ -121,6 +118,7 @@
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
         "roave/better-reflection": "^3.5",
+        "sensio/framework-extra-bundle": "^5.2",
         "shopsys/ordered-form": "^4.0",
         "shopsys/postgres-search-bundle": "^0.2",
         "sinergi/browser-detector": "^6.1",
@@ -152,7 +150,6 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^4.4.0",
         "tracy/tracy": "^2.4.13",
-        "trikoder/oauth2-bundle": "^3.2",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.12",
         "webmozart/assert": "^1.4"
@@ -228,7 +225,6 @@
         }
     },
     "replace": {
-        "shopsys/backend-api": "self.version",
         "shopsys/form-types-bundle": "self.version",
         "shopsys/frontend-api": "self.version",
         "shopsys/google-cloud-bundle": "self.version",
