@@ -9,7 +9,7 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
     const t = useTypedTranslationFunction();
     const resolver = yupResolver(
         Yup.object().shape({
-            newPasswordFirst: Yup.string()
+            newPassword: Yup.string()
                 .required(t('Fill first password'))
                 .min(
                     6,
@@ -18,11 +18,11 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
                         count: 6,
                     }),
                 ),
-            newPasswordSecond: Yup.string().when('newPasswordFirst', {
-                is: (newPasswordFirst: string) => newPasswordFirst.length > 0,
+            newPasswordAgain: Yup.string().when('newPassword', {
+                is: (newPassword: string) => newPassword.length > 0,
                 then: Yup.string()
                     .required(t('Fill second password'))
-                    .oneOf([Yup.ref('newPasswordFirst'), null], t('Passwords must match'))
+                    .oneOf([Yup.ref('newPassword'), null], t('Passwords must match'))
                     .min(
                         6,
                         t('Password must be at least {{ count }} characters long', {
@@ -35,8 +35,8 @@ export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, 
         }),
     );
     const defaultValues = {
-        newPasswordFirst: '',
-        newPasswordSecond: '',
+        newPassword: '',
+        newPasswordAgain: '',
     };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
@@ -69,15 +69,15 @@ export const useRecoveryPasswordFormMeta = (
             success: t('Your password has been changed and you are now logged in'),
         },
         fields: {
-            newPasswordFirst: {
-                name: 'newPasswordFirst' as const,
+            newPassword: {
+                name: 'newPassword' as const,
                 label: t('New password'),
-                errorMessage: formProviderMethods.formState.errors.newPasswordFirst?.message,
+                errorMessage: formProviderMethods.formState.errors.newPassword?.message,
             },
-            newPasswordSecond: {
-                name: 'newPasswordSecond' as const,
+            newPasswordAgain: {
+                name: 'newPasswordAgain' as const,
                 label: t('New password again'),
-                errorMessage: formProviderMethods.formState.errors.newPasswordSecond?.message,
+                errorMessage: formProviderMethods.formState.errors.newPasswordAgain?.message,
             },
         },
     };

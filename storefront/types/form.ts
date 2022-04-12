@@ -62,8 +62,8 @@ export type PasswordResetFormType = {
 };
 
 export type NewPasswordFormType = {
-    newPasswordFirst: string;
-    newPasswordSecond: string;
+    newPassword: string;
+    newPasswordAgain: string;
 };
 
 export type PersonalDataOverviewFormType = {
