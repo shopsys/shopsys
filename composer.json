@@ -104,7 +104,7 @@
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^1.6",
         "jms/serializer-bundle": "^2.4",
-        "jms/translation-bundle": "1.4.4",
+        "jms/translation-bundle": "^1.6.2",
         "knplabs/knp-menu-bundle": "^2.2.1",
         "lcobucci/jwt": "^3.4.6",
         "league/flysystem": "^1.1.4",

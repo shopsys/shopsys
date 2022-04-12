@@ -38,6 +38,8 @@ There you can find links to upgrade notes for other versions too.
     - `Admin/SliderController` has a new dependency on `EntityManagerInterface` in the constructor
     - `uuid-ossp` Postgres extension is no longer created in `CreateDatabaseCommand` as DB-side UUID generation is deprecated now
         - see https://github.com/doctrine/orm/blob/2.11.x/UPGRADE.md#deprecated-database-side-uuid-generation
+- allow installation of `jms/translation-bundle` version `1.6.2` and higher in `composer.json` ([#2420](https://github.com/shopsys/shopsys/pull/2420))
+    - see #project-base-diff to update your project
 
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))
