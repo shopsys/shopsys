@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Front;
+namespace App\Controller\Admin;
 
 use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -17,6 +17,7 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
 
@@ -69,6 +70,8 @@ class ErrorController extends AbstractController
     }
 
     /**
+     * @Route("/_error/{code}", requirements={"code" = "\d+"}, name="admin_error_page")
+     * @Route("/_error/{code}/{_format}", requirements={"code" = "\d+", "_format" = "css|html|js|json|txt|xml"}, name="admin_error_page_format")
      * @param int $code
      */
     public function errorPageAction($code)
@@ -94,7 +97,7 @@ class ErrorController extends AbstractController
         }
 
         if ($this->exceptionController->isShownErrorPagePrototype()) {
-            return $this->createErrorPagePrototypeResponse($request, $exception, $logger);
+            return $this->createErrorPagePrototypeResponse($request, $exception);
         }
 
         if ($this->exceptionController->getDebug()) {
@@ -107,13 +110,11 @@ class ErrorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function createErrorPagePrototypeResponse(
         Request $request,
-        FlattenException $exception,
-        DebugLoggerInterface $logger
+        FlattenException $exception
     ) {
         // Same as in \Symfony\Bundle\TwigBundle\Controller\PreviewErrorController
         $format = $request->getRequestFormat();
@@ -123,8 +124,6 @@ class ErrorController extends AbstractController
         return $this->render($this->getTemplatePath($code, $format), [
             'status_code' => $code,
             'status_text' => Response::$statusTexts[$code] ?? '',
-            'exception' => $exception,
-            'logger' => $logger,
         ]);
     }
 
@@ -135,8 +134,12 @@ class ErrorController extends AbstractController
      */
     private function getTemplatePath(int $code, string $format): string
     {
+        if (preg_match('/4\d\d/', (string)$code)) {
+            $code = '4xx';
+        }
+
         return sprintf(
-            'Front/Content/Error/error%s.%s.twig',
+            'Admin/Content/Error/error%s.%s.twig',
             $format === 'html' ? $code : '',
             $format
         );

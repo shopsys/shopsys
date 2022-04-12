@@ -14,10 +14,8 @@ use Shopsys\FrameworkBundle\Component\Error\Exception\BadErrorPageStatusCodeExce
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-/**
- * @property \App\Component\Domain\Domain $domain
- */
 class ErrorPagesFacade extends BaseErrorPagesFacade
 {
     private string $environment;
@@ -78,5 +76,25 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
         }
 
         return $errorPageResponse->getContent();
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $statusCode
+     * @return string
+     */
+    protected function generateErrorPage(int $domainId, int $statusCode): string
+    {
+        $domainRouter = $this->domainRouterFactory->getRouter($domainId);
+        $errorPageUrl = $domainRouter->generate(
+            'admin_error_page_format',
+            [
+                '_format' => 'html',
+                'code' => $statusCode,
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        return $this->getUrlContent($errorPageUrl, $statusCode);
     }
 }

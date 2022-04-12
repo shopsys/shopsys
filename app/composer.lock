@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9de204ea5396b8a643285841bca7426f",
+    "content-hash": "a7e528d0e183e2addc6ab4c553ec1ec3",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -1446,11 +1446,11 @@
         },
         {
             "name": "devops/kubernetes-deployment",
-            "version": "1.7.3",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://gitlab+deploy-token-4:yqMfHR2F4qc6rbFequP4@gitlab.shopsys.cz/devops/kubernetes-deployment.git",
-                "reference": "381373256626eaa9a3835fae20309cc3a5747330"
+                "reference": "a126ebaf064ab715ee7fe7a5685a31b96ef931ab"
             },
             "require": {
                 "arvenil/ninja-mutex": "^0.4.1",
@@ -1495,7 +1495,7 @@
                 "shopsys",
                 "symfony"
             ],
-            "time": "2022-03-09T14:13:47+00:00"
+            "time": "2022-04-07T12:22:15+00:00"
         },
         {
             "name": "doctrine/annotations",

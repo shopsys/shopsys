@@ -20,7 +20,7 @@ framework:
     profiler:
         enabled: false
         collect: false
-    error_controller: 'App\Controller\Front\ErrorController::showAction'
+    error_controller: 'App\Controller\Admin\ErrorController::showAction'
     cache:
         pools:
             main_friendly_url_slug_cache:
