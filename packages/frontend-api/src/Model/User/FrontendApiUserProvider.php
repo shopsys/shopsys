@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\User;
 
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\UnencryptedToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -24,10 +24,10 @@ class FrontendApiUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param \Lcobucci\JWT\Token $token
+     * @param \Lcobucci\JWT\UnencryptedToken $token
      * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser
      */
-    public function loadUserByToken(Token $token): FrontendApiUser
+    public function loadUserByToken(UnencryptedToken $token): FrontendApiUser
     {
         return $this->frontendApiUserFactory->createFromToken($token);
     }

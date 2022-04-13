@@ -36,3 +36,6 @@ services:
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~
+
+    Lcobucci\JWT\Configuration:
+        factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]

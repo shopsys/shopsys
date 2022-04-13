@@ -40,6 +40,22 @@ There you can find links to upgrade notes for other versions too.
         - see https://github.com/doctrine/orm/blob/2.11.x/UPGRADE.md#deprecated-database-side-uuid-generation
 - allow installation of `jms/translation-bundle` version `1.6.2` and higher in `composer.json` ([#2420](https://github.com/shopsys/shopsys/pull/2420))
     - see #project-base-diff to update your project
+- **\[BC break\]** upgrade `lcobucci/jwt` ([#2419](https://github.com/shopsys/shopsys/pull/2419))
+    - see #project-base-diff to update your project
+    - make sure you check upgrading notes of the upgraded package and adjust your codebase appropriately
+        - https://lcobucci-jwt.readthedocs.io/en/latest/upgrading/
+    - methods from following classes now accepts and returns `UnencryptedToken` instead of `Token`
+        - `Shopsys\FrontendApiBundle\Model\Token\TokenFacade`
+        - `Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface`
+        - `Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory`
+        - `Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider`
+    - following methods were removed
+        - `Shopsys\FrontendApiBundle\Model\Token\TokenFacade::getPublicKey()`, use `Lcobucci\JWT\Configuration::signingKey()` instead
+        - `Shopsys\FrontendApiBundle\Model\Token\TokenFacade::getPrivateKey()`, use `Lcobucci\JWT\Configuration::verificationKey()` instead
+        - `Shopsys\FrontendApiBundle\Model\Token\TokenFacade::getSigner()`, use `Lcobucci\JWT\Configuration::signer()` instead
+        - `Lcobucci\JWT\Configuration` class is preconfigured as a service and can be injected with DI
+    - generated access and refresh tokens now contain mandatory claim `nbf` (not before), 
+      all your previously generated tokens need to be issued again, otherwise they will be rejected as expired
 
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))

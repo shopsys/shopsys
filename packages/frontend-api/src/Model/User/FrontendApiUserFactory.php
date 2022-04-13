@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\User;
 
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Token\DataSet;
+use Lcobucci\JWT\UnencryptedToken;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 
 class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
 {
     /**
-     * @param \Lcobucci\JWT\Token $token
+     * @param \Lcobucci\JWT\UnencryptedToken $token
      * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser
      */
-    public function createFromToken(Token $token): FrontendApiUser
+    public function createFromToken(UnencryptedToken $token): FrontendApiUser
     {
+        $this->assertAllClaimsExists($token->claims());
+
         return new FrontendApiUser(
             $token->claims()->get(FrontendApiUser::CLAIM_UUID),
             $token->claims()->get(FrontendApiUser::CLAIM_FULL_NAME),
@@ -21,5 +25,21 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             $token->claims()->get(FrontendApiUser::CLAIM_DEVICE_ID),
             $token->claims()->get(FrontendApiUser::CLAIM_ROLES)
         );
+    }
+
+    /**
+     * @param \Lcobucci\JWT\Token\DataSet $claims
+     */
+    protected function assertAllClaimsExists(DataSet $claims): void
+    {
+        if (
+            !$claims->has(FrontendApiUser::CLAIM_UUID) ||
+            !$claims->has(FrontendApiUser::CLAIM_FULL_NAME) ||
+            !$claims->has(FrontendApiUser::CLAIM_EMAIL) ||
+            !$claims->has(FrontendApiUser::CLAIM_DEVICE_ID) ||
+            !$claims->has(FrontendApiUser::CLAIM_ROLES)
+        ) {
+            throw new InvalidTokenUserMessageException('Token is not valid.');
+        }
     }
 }

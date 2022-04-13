@@ -345,6 +345,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/frontend-api/phpunit.xml"/>
+            <arg value="${path.packages}/frontend-api/tests/"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.utils}/releaser/phpunit.xml"/>
             <arg value="${path.utils}/releaser/tests/"/>
         </exec>
