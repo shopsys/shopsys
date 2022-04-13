@@ -283,9 +283,6 @@
     "jms/metadata": {
         "version": "1.7.0"
     },
-    "jms/parser-lib": {
-        "version": "1.0.0"
-    },
     "jms/serializer": {
         "version": "1.14.0"
     },
@@ -419,9 +416,6 @@
     "php-webdriver/webdriver": {
         "version": "1.8.1"
     },
-    "phpcollection/phpcollection": {
-        "version": "0.5.0"
-    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -430,9 +424,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
-    },
-    "phpoption/phpoption": {
-        "version": "1.5.0"
     },
     "phpspec/prophecy": {
         "version": "1.9.0"

@@ -56,6 +56,8 @@ There you can find links to upgrade notes for other versions too.
         - `Lcobucci\JWT\Configuration` class is preconfigured as a service and can be injected with DI
     - generated access and refresh tokens now contain mandatory claim `nbf` (not before), 
       all your previously generated tokens need to be issued again, otherwise they will be rejected as expired
+- upgrade `jms/metadata` and `jms/serializer-bundle` ([#2421](https://github.com/shopsys/shopsys/pull/2421))
+    - see #project-base-diff to update your project
 
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))
