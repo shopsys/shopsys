@@ -16,6 +16,7 @@ CustomerUserMutation:
                             -   Length:
                                     max: 255
                                     maxMessage: "Email cannot be longer than {{ limit }} characters"
+                            -   App\FrontendApi\Model\Component\Constraints\ExistingEmail: ~
                 resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
             RecoverPassword:
                 type: Token!

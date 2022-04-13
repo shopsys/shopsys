@@ -43,7 +43,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
     const router = useRouter();
     const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
 
-    useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error, formMeta.fields);
     useHandleFormSuccessfulSubmit(
         newPasswordResult,
         formProviderMethods,
@@ -53,7 +53,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
             if (newPasswordResult.data?.RecoverPassword.accessToken !== undefined) {
                 login({
                     email: props.email,
-                    password: formProviderMethods.getValues('newPasswordFirst'),
+                    password: formProviderMethods.getValues('newPassword'),
                     previousCartUuid: cartUuid,
                 });
                 router.push('/');
@@ -67,7 +67,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
         const formData = {
             hash: props.hash,
             email: props.email,
-            newPassword: data.newPasswordFirst,
+            newPassword: data.newPassword,
         };
         await newPassword(formData);
     };
@@ -104,13 +104,13 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)} noValidate>
                         <Controller
-                            name={formMeta.fields.newPasswordFirst.name}
+                            name={formMeta.fields.newPassword.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                 <FormLine bottomGap={true}>
                                     <TextInput
-                                        id={formMeta.formName + '-' + formMeta.fields.newPasswordFirst.name}
-                                        name={formMeta.fields.newPasswordFirst.name}
-                                        label={formMeta.fields.newPasswordFirst.label}
+                                        id={formMeta.formName + '-' + formMeta.fields.newPassword.name}
+                                        name={formMeta.fields.newPassword.name}
+                                        label={formMeta.fields.newPassword.label}
                                         required={true}
                                         type="password"
                                         isTouched={isTouched}
@@ -122,21 +122,21 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                                         error={error}
                                         inputType="text-input-password"
                                         data-testid={
-                                            formMeta.formName + '-' + formMeta.fields.newPasswordFirst.name + '-error'
+                                            formMeta.formName + '-' + formMeta.fields.newPassword.name + '-error'
                                         }
                                     />
                                 </FormLine>
                             )}
                         />
                         <Controller
-                            name={formMeta.fields.newPasswordSecond.name}
+                            name={formMeta.fields.newPasswordAgain.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                 <>
                                     <FormLine>
                                         <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.newPasswordSecond.name}
-                                            name={formMeta.fields.newPasswordSecond.name}
-                                            label={formMeta.fields.newPasswordSecond.label}
+                                            id={formMeta.formName + '-' + formMeta.fields.newPasswordAgain.name}
+                                            name={formMeta.fields.newPasswordAgain.name}
+                                            label={formMeta.fields.newPasswordAgain.label}
                                             required={true}
                                             type="password"
                                             isTouched={isTouched}
@@ -150,7 +150,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                                             data-testid={
                                                 formMeta.formName +
                                                 '-' +
-                                                formMeta.fields.newPasswordSecond.name +
+                                                formMeta.fields.newPasswordAgain.name +
                                                 '-error'
                                             }
                                         />
