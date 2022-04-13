@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
+use App\Model\Cart\Transport\CartTransportData;
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Transport\Transport;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -34,6 +37,25 @@ class Cart extends BaseCart
      * @ORM\OrderBy({"id" = "DESC"})
      */
     private $promoCodes;
+
+    /**
+     * @var \App\Model\Transport\Transport|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Transport")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private ?Transport $transport = null;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    private ?Money $transportWatchedPrice = null;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $pickupPlaceIdentifier = null;
 
     /**
      * @param string $cartIdentifier
@@ -152,5 +174,24 @@ class Cart extends BaseCart
                 return $promoCode->getCode() === $promoCodeCode;
             }
         );
+    }
+
+    public function unsetCartTransport(): void
+    {
+        $this->transport = null;
+        $this->transportWatchedPrice = null;
+        $this->pickupPlaceIdentifier = null;
+        $this->setModifiedNow();
+    }
+
+    /**
+     * @param \App\Model\Cart\Transport\CartTransportData $cartTransportData
+     */
+    public function editCartTransport(CartTransportData $cartTransportData): void
+    {
+        $this->transport = $cartTransportData->transport;
+        $this->transportWatchedPrice = $cartTransportData->watchedPrice;
+        $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
+        $this->setModifiedNow();
     }
 }

@@ -9,3 +9,4 @@ Mutation:
         - 'CustomerMutation'
         - 'ContactFormMutation'
         - 'PaymentMutation'
+        - 'TransportMutation'
