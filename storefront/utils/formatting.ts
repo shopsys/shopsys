@@ -1,9 +1,9 @@
-import { TFunction } from 'next-i18next';
+import { Translate } from 'next-translate';
 
 export function formatPrice(
     price: number,
     currencyCode: string,
-    t: TFunction,
+    t: Translate,
     options?: { explicitZero?: boolean },
 ): string {
     if (price === 0 && !options?.explicitZero) {

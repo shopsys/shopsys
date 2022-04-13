@@ -9,7 +9,7 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
-import { TFunction } from 'react-i18next';
+import { Translate } from 'next-translate';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -19,7 +19,7 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const getLoginFormResolver = (t: TFunction) => {
+const getLoginFormResolver = (t: Translate) => {
     return yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),

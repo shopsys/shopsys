@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { i18n } = require('./next-i18next.config');
 const { withSentryConfig } = require('@sentry/nextjs');
+const nextTranslate = require('next-translate');
 
 const staticUrls = {
     [process.env.DOMAIN_HOSTNAME_1]: {
@@ -56,8 +56,7 @@ const staticUrls = {
 // copy first domain as new third domain for acceptance (cypress) tests
 staticUrls['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/'] = staticUrls[process.env.DOMAIN_HOSTNAME_1];
 
-const moduleExports = {
-    i18n,
+const moduleExports = nextTranslate({
     reactStrictMode: true,
     sentry: {
         disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
@@ -127,7 +126,27 @@ const moduleExports = {
     eslint: {
         ignoreDuringBuilds: true,
     },
-};
+    // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
+    // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
+    webpack: config => {
+        config.resolve.fallback = {
+            child_process: false,
+            fs: false,
+            util: false,
+            http: false,
+            https: false,
+            tls: false,
+            net: false,
+            crypto: false,
+            path: false,
+            os: false,
+            stream: false,
+            zlib: false,
+        };
+
+        return config;
+    },
+});
 
 const SentryWebpackPluginOptions = {};
 

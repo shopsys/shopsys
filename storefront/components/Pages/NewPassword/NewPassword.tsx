@@ -13,7 +13,7 @@ import Link from 'components/Basic/Link';
 import { NewPasswordFormType } from 'types/form';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
@@ -74,7 +74,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
 
     useEffect(() => {
         if (props.hash === '' || props.email === '') {
-            showErrorMessage('Error occured while loading form data');
+            showErrorMessage(t('Error occured while loading form data'));
         }
     }, []);
 
@@ -86,8 +86,9 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
             >
                 <Trans
                     i18nKey="ResendRecoveryLink"
-                    defaults="Error occured while loading form data. <br> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
+                    defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."
                     components={{
+                        0: <br />,
                         lnk1: <Link href={resetPasswordUrl} />,
                     }}
                 />

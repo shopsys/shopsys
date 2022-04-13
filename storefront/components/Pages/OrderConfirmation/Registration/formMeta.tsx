@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
@@ -21,7 +21,6 @@ export const useRegistrationAfterOrderForm = (): [
                 .min(
                     6,
                     t('Password must be at least {{ count }} characters long', {
-                        postProcess: 'interval',
                         count: 6,
                     }),
                 ),
@@ -64,7 +63,7 @@ export const useRegistrationAfterOrderFormMeta = (
                 label: (
                     <Trans
                         i18nKey="I agree with terms and conditions and privacy policy"
-                        defaults="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
+                        defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
                         components={{
                             lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
                         }}

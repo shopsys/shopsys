@@ -18,10 +18,7 @@ const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props
 
     return (
         <ProductAvailableStoreCountStyled data-testid={testIdentifier}>
-            {t(
-                '(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];',
-                { postProcess: 'interval', count: props.availableStoresCount },
-            )}
+            {t('This item is available immediately in {{ count }} stores', { count: props.availableStoresCount })}
         </ProductAvailableStoreCountStyled>
     );
 };

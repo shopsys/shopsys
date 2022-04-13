@@ -53,7 +53,7 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
             id="gopay-payment-button"
         >
             <button name="pay" type="submit">
-                {t('Zaplatit pomocí GoPay')}
+                {t('Pay with GoPay')}
             </button>
         </form>
     );

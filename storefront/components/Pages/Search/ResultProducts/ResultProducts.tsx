@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { ListedProductType } from 'types/product';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import { ResultProductsStyled } from './ResultProducts.style';
-import { Trans } from 'next-i18next';
+import Trans from 'next-translate/Trans';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ResultProductsProps = {
@@ -24,11 +24,7 @@ const ResultProducts: FC<ResultProductsProps> = (props) => {
                         <strong>{t('No results match the filter')}</strong>
                     </div>
                     <div>
-                        <Trans i18nKey="ProductsNoResults">
-                            We currently have no results for your exact search.
-                            <br />
-                            Try to be more specific, or see if you have filtered out non-existent data.
-                        </Trans>
+                        <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
                     </div>
                 </ResultProductsStyled>
             )}

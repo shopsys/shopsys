@@ -9,7 +9,7 @@ import {
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { TFunction } from 'react-i18next';
+import { Translate } from 'next-translate';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -65,28 +65,22 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
     );
 };
 
-const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: TFunction<string>) => {
+const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: Translate) => {
     if (isPersonalPickup) {
         if (daysUntilDelivery < 7) {
-            return t(
-                '(0)[You can have immediately];(1)[Personal pickup in 1 day];(2-inf)[Personal pickup in {{count}} days];',
-                { postProcess: 'interval', count: daysUntilDelivery },
-            );
+            return t('Personal pickup in {{ count }} days', { count: daysUntilDelivery });
         }
-        return t('(1)[Personal pickup in 1 week];(2-inf)[Personal pickup in {{count}} weeks];', {
-            postProcess: 'interval',
+        return t('Personal pickup in {{count}} weeks', {
             count: Math.ceil(daysUntilDelivery / 7),
         });
     }
 
     if (daysUntilDelivery < 7) {
-        return t('(0)[You can have today];(1)[Delivery in 1 day];(2-inf)[Delivery in {{count}} days];', {
-            postProcess: 'interval',
+        return t('Delivery in {{count}} days', {
             count: daysUntilDelivery,
         });
     }
-    return t('(1)[Delivery in 1 week];(2-inf)[Delivery in {{count}} weeks];', {
-        postProcess: 'interval',
+    return t('Delivery in {{count}} weeks', {
         count: Math.ceil(daysUntilDelivery / 7),
     });
 };

@@ -6,15 +6,13 @@ import { DocumentNode } from 'graphql';
 import getConfig from 'next/config';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { hasTokenInCookie } from 'utils/Auth/TokensFromCookies';
-import nextI18NextConfig from 'next-i18next.config';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { SSRConfig } from 'next-i18next';
+import loadNamespaces from 'next-translate/loadNamespaces';
 import { ssrExchange } from '@urql/core';
 import { userActions } from 'redux/slices/user';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
-} & SSRConfig;
+};
 
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
@@ -42,15 +40,7 @@ export async function initServerSideProps(
         false,
     );
 
-    let serversideTranslationConfig;
-
     if (client !== null) {
-        serversideTranslationConfig = await serverSideTranslations(
-            domainConfig.defaultLocale,
-            undefined,
-            nextI18NextConfig,
-        );
-
         prefetchedQueries.push({ query: NotificationBarsDocumentApi });
         prefetchedQueries.push({ query: NavigationQueryDocumentApi });
         prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
@@ -73,7 +63,7 @@ export async function initServerSideProps(
 
         return {
             props: {
-                ...serversideTranslationConfig,
+                ...(await loadNamespaces({ locale: domainConfig.defaultLocale, pathname: trimmedUrl })),
                 urqlState: ssrCache.extractData(),
             },
         };

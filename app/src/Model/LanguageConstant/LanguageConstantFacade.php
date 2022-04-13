@@ -6,10 +6,13 @@ namespace App\Model\LanguageConstant;
 
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
+use League\Flysystem\FilesystemInterface;
 use function GuzzleHttp\json_decode;
 
 class LanguageConstantFacade
 {
+    private const GENERATED_FILE_NAME = 'common.json';
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -31,21 +34,37 @@ class LanguageConstantFacade
     private string $languageConstantsUrlPattern;
 
     /**
+     * @var string
+     */
+    private string $domainLocalesDirectory;
+
+    /**
+     * @var \League\Flysystem\FilesystemInterface
+     */
+    protected FilesystemInterface $filesystem;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
      * @param \App\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
      * @param string $languageConstantsUrlPattern
+     * @param string $domainLocalesDirectory
+     * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(
         EntityManagerInterface $em,
         LanguageConstantRepository $languageConstantRepository,
         LanguageConstantFactory $languageConstantFactory,
-        string $languageConstantsUrlPattern
+        string $languageConstantsUrlPattern,
+        string $domainLocalesDirectory,
+        FilesystemInterface $filesystem
     ) {
         $this->em = $em;
         $this->languageConstantRepository = $languageConstantRepository;
         $this->languageConstantFactory = $languageConstantFactory;
         $this->languageConstantsUrlPattern = $languageConstantsUrlPattern;
+        $this->domainLocalesDirectory = $domainLocalesDirectory;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -134,5 +153,21 @@ class LanguageConstantFacade
         $this->em->flush();
 
         return $languageConstant;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function generateLanguageConstantFile(string $locale): void
+    {
+        $userTranslations = $this->getUserTranslationsByLocaleIndexedByKey($locale);
+        $translations = json_encode($userTranslations);
+        $targetFilePath = $this->domainLocalesDirectory . $locale;
+
+        if (!$this->filesystem->has($targetFilePath)) {
+            $this->filesystem->createDir($targetFilePath);
+        }
+
+        $this->filesystem->put($targetFilePath . '/' . self::GENERATED_FILE_NAME, $translations);
     }
 }

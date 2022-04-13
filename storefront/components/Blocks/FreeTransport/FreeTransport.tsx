@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import { FreeTransportStyled } from './FreeTransport.style';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -22,11 +22,13 @@ const FreeTransport: FC = () => {
     if (amount > 0) {
         return (
             <FreeTransportStyled data-testid={testIdentifier}>
-                <Trans i18nKey="FreeTransportAmountLeft">
-                    Add products for
-                    <strong>{{ amountFormatted }}</strong>
-                    more, and enjoy <strong>free delivery!</strong>
-                </Trans>
+                <Trans
+                    i18nKey="FreeTransportAmountLeft"
+                    components={{
+                        0: <strong />,
+                    }}
+                    values={{ amountFormatted: amountFormatted }}
+                />
             </FreeTransportStyled>
         );
     }

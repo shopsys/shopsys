@@ -1,13 +1,13 @@
 import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
-import { TFunction } from 'react-i18next';
+import { Translate } from 'next-translate';
 
 export enum ApplicationErrors {
     DEFAULT = 'DEFAULT',
     CART_NOT_FOUND = 'CART_NOT_FOUND',
 }
 
-export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction<string>): ParsedErrors => {
+export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate): ParsedErrors => {
     const errors: ParsedErrors = {};
 
     if (originalError.networkError) {

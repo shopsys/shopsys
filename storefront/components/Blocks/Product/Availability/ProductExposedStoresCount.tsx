@@ -18,10 +18,7 @@ const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) =>
 
     return (
         <ProductExposedStoreCountStyled data-testid={testIdentifier}>
-            {t(
-                '(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];',
-                { postProcess: 'interval', count: props.exposedStoresCount },
-            )}
+            {t('You can check this item in {{ count }} stores', { count: props.exposedStoresCount })}
         </ProductExposedStoreCountStyled>
     );
 };

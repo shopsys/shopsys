@@ -25,7 +25,6 @@ export const useContactInformationForm = (): [
                     .min(
                         6,
                         t('Password must be at least {{ count }} characters long', {
-                            postProcess: 'interval',
                             count: 6,
                         }),
                     ),
@@ -38,7 +37,6 @@ export const useContactInformationForm = (): [
                     .min(
                         6,
                         t('Password must be at least {{ count }} characters long', {
-                            postProcess: 'interval',
                             count: 6,
                         }),
                     )

@@ -4,7 +4,7 @@ import { CustomerTypeEnum } from 'types/customer';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'components/Basic/Link';
 import { SelectOptionType } from 'types/selectOptions';
-import { Trans } from 'react-i18next';
+import Trans from 'next-translate/Trans';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -39,7 +39,6 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                 .min(
                     6,
                     t('Password must be at least {{ count }} characters long', {
-                        postProcess: 'interval',
                         count: 6,
                     }),
                 ),
@@ -48,7 +47,6 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                 .min(
                     6,
                     t('Password must be at least {{ count }} characters long', {
-                        postProcess: 'interval',
                         count: 6,
                     }),
                 )
@@ -251,7 +249,7 @@ export const useRegistrationFormMeta = (
                 label: (
                     <Trans
                         i18nKey="GdprAgreementCheckbox"
-                        defaults="I agree with <lnk1>processing of privacy policy</lnk1>."
+                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
                         components={{
                             lnk1: <Link href={GdprUrl} linkType="external" target="_blank" />,
                         }}

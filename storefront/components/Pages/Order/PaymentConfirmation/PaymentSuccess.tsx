@@ -23,8 +23,8 @@ const PaymentSuccess: FC = () => {
                 </ImageWrapperStyled>
                 <PaymentWrapperStyled>
                     <MessageStyled>
-                        <Heading type="h1">{t('Děkujeme za vaší objednávku, vaše platba proběhla úspěšně')}</Heading>
-                        <p>{t('Odeslali jsme na váš e-mail rekapitulaci objednávky.')}</p>
+                        <Heading type="h1">{t('Thank you for your order, your payment was successful')}</Heading>
+                        <p>{t('We have sent a recap of your order to your email')}</p>
                         <PaymentEmailStyled>{email}</PaymentEmailStyled>
                     </MessageStyled>
                 </PaymentWrapperStyled>

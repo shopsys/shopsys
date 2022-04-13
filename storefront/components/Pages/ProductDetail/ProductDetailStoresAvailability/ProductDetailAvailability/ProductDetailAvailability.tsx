@@ -37,18 +37,14 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
             </AvailabilityLinkStyled>
             {props.product.availableStoresCount > 0 && (
                 <AvailabilityInfoStyled data-testid={testIdentifier + '-availability'}>
-                    {t(
-                        '(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];',
-                        { postProcess: 'interval', count: props.product.availableStoresCount },
-                    )}
+                    {t('This item is available immediately in {{ count }} stores', {
+                        count: props.product.availableStoresCount,
+                    })}
                 </AvailabilityInfoStyled>
             )}
             {props.product.exposedStoresCount > 0 && (
                 <AvailabilityInfoStyled data-testid={testIdentifier + '-exposed'}>
-                    {t(
-                        '(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];',
-                        { postProcess: 'interval', count: props.product.exposedStoresCount },
-                    )}
+                    {t('You can check this item in {{ count }} stores', { count: props.product.exposedStoresCount })}
                 </AvailabilityInfoStyled>
             )}
         </AvailabilityStyled>

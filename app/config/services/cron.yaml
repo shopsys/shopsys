@@ -53,6 +53,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '10', instanceName: export, readableName: 'Generate image sitemap' }
 
+    App\Model\LanguageConstant\LanguageConstantCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '4', minutes: '40', instanceName: export, readableName: 'Generate language constants json files for storefront' }
+
     App\Model\Article\Elasticsearch\ArticleExportCronModule:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '10', instanceName: export, readableName: "Export articles to Elasticsearch" }
