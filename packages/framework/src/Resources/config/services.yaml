@@ -6,9 +6,6 @@ parameters:
     fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
     fp_js_form_validator.twig_extension.class: Shopsys\FrameworkBundle\Twig\JsFormValidatorTwigExtension
 
-    # Use Shopsys routing for knplabs/knp-menu-bundle that ignores missing parameters in routes
-    knp_menu.factory_extension.routing.class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
-
     # Use Shopsys Translatable listener for prezent/doctrine-translatable to allow set fallback language on postPersist event
     prezent_doctrine_translatable.listener.class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
 
@@ -60,6 +57,12 @@ services:
             - '@service_container'
             - '@request_stack'
             - '%kernel.debug%'
+
+    # Use Shopsys routing extension for knplabs/knp-menu-bundle that ignores missing parameters in routes
+    knp_menu.factory_extension.routing:
+        class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
+        tags:
+            - knp_menu.factory_extension
 
     Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector:
         tags:
