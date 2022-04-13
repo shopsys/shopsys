@@ -40,7 +40,7 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     public function load(ObjectManager $manager)
     {
         /** @var \App\Model\Order\Order $order */
-        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT);
+        $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_CZ);
         $paymentTransactionData = $this->paymentTransactionDataFactory->create();
         $paymentTransactionData->order = $order;
         $paymentTransactionData->payment = $order->getPayment();

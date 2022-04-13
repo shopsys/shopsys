@@ -11,9 +11,10 @@ use App\Model\Payment\Service\PaymentServiceInterface;
 use App\Model\Payment\Transaction\PaymentTransactionData;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\Cdn\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
+class GoPayFacade implements PaymentServiceInterface
 {
     private const GOPAY_RESULT_FAILED = 'FAILED';
 
@@ -54,12 +55,13 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \App\Model\GoPay\GoPayClient
      */
-    private function getGoPayClient(): GoPayClient
+    private function getGoPayClientByDomainConfig(DomainConfig $domain): GoPayClient
     {
         if ($this->goPayClient === null) {
-            $this->goPayClient = $this->goPayClientFactory->createByLocale($this->domain->getLocale());
+            $this->goPayClient = $this->goPayClientFactory->createByLocale($domain->getLocale());
         }
 
         return $this->goPayClient;
@@ -73,12 +75,13 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
     public function sendPaymentToGoPay(Order $order, ?string $goPayBankSwift): array
     {
         $goPayPaymentData = $this->goPayOrderMapper->createGoPayPaymentData($order, $goPayBankSwift);
-        $response = $this->getGoPayClient()->sendPaymentToGoPay($goPayPaymentData);
+        $domainConfig = $this->domain->getDomainConfigById($order->getDomainId());
+        $response = $this->getGoPayClientByDomainConfig($domainConfig)->sendPaymentToGoPay($goPayPaymentData);
 
         if ($response->hasSucceed()) {
             return [
                 'gatewayUrl' => $response->json['gw_url'],
-                'embedJs' => $this->getGoPayClient()->urlToEmbedJs(),
+                'embedJs' => $this->getGoPayClientByDomainConfig($domainConfig)->urlToEmbedJs(),
                 'goPayId' => $response->json['id'],
                 'state' => $response->json['state'],
             ];
@@ -107,7 +110,8 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
      */
     public function updateTransaction(PaymentTransactionData $paymentTransactionData): bool
     {
-        $goPayStatusResponse = $this->getGoPayClient()->getStatus($paymentTransactionData->externalPaymentIdentifier);
+        $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());
+        $goPayStatusResponse = $this->getGoPayClientByDomainConfig($domainConfig)->getStatus($paymentTransactionData->externalPaymentIdentifier);
         if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
             $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
             if ($paymentTransactionData->externalPaymentStatus === PaymentStatus::REFUNDED) {
@@ -126,7 +130,8 @@ class GoPayOnCurrentDomainFacade implements PaymentServiceInterface
      */
     public function refundTransaction(PaymentTransactionData $paymentTransactionData, Money $refundAmount): bool
     {
-        $refundResponse = $this->getGoPayClient()->refundTransaction($paymentTransactionData->externalPaymentIdentifier, $this->goPayOrderMapper->formatPriceForGoPay($refundAmount));
+        $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());
+        $refundResponse = $this->getGoPayClientByDomainConfig($domainConfig)->refundTransaction($paymentTransactionData->externalPaymentIdentifier, $this->goPayOrderMapper->formatPriceForGoPay($refundAmount));
         if (array_key_exists('result', (array)$refundResponse->json) && $refundResponse->json['result'] !== self::GOPAY_RESULT_FAILED) {
             $paymentTransactionData->refundedAmount = $paymentTransactionData->refundedAmount->add($refundAmount);
             return true;

@@ -6,7 +6,7 @@ namespace App\Model\Payment\Service;
 
 use App\FrontendApi\Model\Payment\PaymentSetupCreationData;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
-use App\Model\GoPay\GoPayOnCurrentDomainFacade;
+use App\Model\GoPay\GoPayFacade;
 use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use App\Model\Payment\Service\Exception\PaymentServiceFacadeNotRegisteredException;
@@ -45,21 +45,21 @@ class PaymentServiceFacade
     /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayOnCurrentDomainFacade
+     * @param \App\Model\GoPay\GoPayFacade $goPayFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
         PaymentTransactionFacade $paymentTransactionFacade,
         PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        GoPayOnCurrentDomainFacade $goPayOnCurrentDomainFacade,
+        GoPayFacade $goPayFacade,
         LoggerInterface $logger,
         ContainerInterface $container
     ) {
         $this->paymentTransactionFacade = $paymentTransactionFacade;
         $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
         $this->paymentServices = [];
-        $this->paymentServices[Payment::TYPE_GOPAY] = $goPayOnCurrentDomainFacade;
+        $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
         $this->logger = $logger;
         $this->container = $container;
     }
