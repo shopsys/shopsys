@@ -23,7 +23,7 @@ class ProductElasticsearchConverter
 
         $result['categories'] = $product['categories'] ?? [];
         $result['flags'] = $product['flags'] ?? [];
-        $result['parameters'] = $product['parameters'] ? $this->fillEmptyParameters($product['parameters']) : [];
+        $result['parameters'] = array_key_exists('parameters', $product) && $product['parameters'] ? $this->fillEmptyParameters($product['parameters']) : [];
         $result['prices'] = $product['prices'] ?? [];
         $result['visibility'] = $product['visibility'] ?? [];
         $result['accessories'] = $product['accessories'] ?? [];
