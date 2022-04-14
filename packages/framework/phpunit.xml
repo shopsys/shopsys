@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
-<phpunit
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     backupGlobals="false"
     backupStaticAttributes="false"
     bootstrap="tests/autoload.php"
@@ -12,7 +12,9 @@
     stopOnFailure="false"
     failOnWarning="true"
     beStrictAboutTestsThatDoNotTestAnything="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
 >
+    <coverage/>
 
     <testsuites>
         <testsuite name="Unit">
