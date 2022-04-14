@@ -73,7 +73,7 @@
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
-        "roave/better-reflection": "^3.5",
+        "roave/better-reflection": "^4.12.2",
         "sinergi/browser-detector": "^6.1",
         "shopsys/form-types-bundle": "9.2.x-dev",
         "shopsys/migrations": "9.2.x-dev",
@@ -98,13 +98,13 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.76",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.5.20",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12.18",
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "9.2.x-dev",
-        "sspooky13/yaml-standards": "^5.0.0",
+        "sspooky13/yaml-standards": "^7.0.1",
         "symfony/var-dumper": "^4.4"
     },
     "extra": {
