@@ -6,6 +6,7 @@ namespace App\Model\Order\PromoCode;
 
 use App\Model\Cart\Cart;
 use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
+use App\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
@@ -201,7 +202,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             $cart->getQuantifiedProducts()
         );
         if ($limit === null) {
-            throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
+            throw new LimitNotReachedException($promoCode);
         }
     }
 

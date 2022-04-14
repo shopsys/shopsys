@@ -7,6 +7,7 @@ namespace App\FrontendApi\Model\Component\Constraints;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
+use App\Model\Order\PromoCode\Exception\LimitNotReachedException;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
@@ -74,6 +75,8 @@ class PromoCodeValidator extends ConstraintValidator
             $this->addViolationWithCodeToContext($constraint->notYetValidMessage, PromoCode::NOT_YET_VALID_ERROR);
         } catch (NoLongerValidPromoCodeDateTimeException $exception) {
             $this->addViolationWithCodeToContext($constraint->noLongerValidMessage, PromoCode::NO_LONGER_VALID_ERROR);
+        } catch (LimitNotReachedException $exception) {
+            $this->addViolationWithCodeToContext($constraint->limitNotReachedMessage, PromoCode::LIMIT_NOT_REACHED_ERROR);
         } catch (PromoCodeWithoutRelationWithAnyProductFromCurrentCartException $exception) {
             $this->addViolationWithCodeToContext($constraint->noRelationToProductsInCartMessage, PromoCode::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR);
         } catch (AvailableForRegisteredCustomerUserOnly $exception) {

@@ -154,6 +154,9 @@ msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 msgid "The identifier must contain two characters"
 msgstr "Identifikátor musí obsahovat dva znaky"
 
+msgid "The promo code can only be used for a higher total price."
+msgstr "Promo kód lze použít pouze pro vyšší celkovou cenu."
+
 msgid "The promo code is no longer valid. Check it, please."
 msgstr "Promo kód už není platný. Zkontrolujte jej, prosím."
 

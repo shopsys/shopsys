@@ -18,6 +18,7 @@ class PromoCode extends Constraint
     public const FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR = 'db24a391-6f95-482e-b555-2cb750c68ad6';
     public const NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR = 'f9003c4b-4036-4625-b1c3-7b1c82c461f3';
     public const ALREADY_APPLIED_PROMO_CODE_ERROR = 'bde9e59e-6881-460e-8501-7f5e9a57a266';
+    public const LIMIT_NOT_REACHED_ERROR = '3f94ee5e-b496-441b-9744-d8b6375000e6';
 
     public string $invalidMessage = 'The promo code is not valid or it has been already used. Check it, please.';
 
@@ -33,6 +34,8 @@ class PromoCode extends Constraint
 
     public string $alreadyAppliedPromoCodeMessage = 'Promo code is already applied in the current cart.';
 
+    public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.';
+
     protected static $errorNames = [
         self::INVALID_ERROR => 'INVALID_ERROR',
         self::NOT_YET_VALID_ERROR => 'NOT_YET_VALID_ERROR',
@@ -41,6 +44,7 @@ class PromoCode extends Constraint
         self::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR => 'FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR',
         self::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR => 'NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR',
         self::ALREADY_APPLIED_PROMO_CODE_ERROR => 'ALREADY_APPLIED_PROMO_CODE_ERROR',
+        self::LIMIT_NOT_REACHED_ERROR => 'LIMIT_NOT_REACHED_ERROR',
     ];
 
     public function getTargets()
