@@ -12,9 +12,6 @@ input AddToCartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a transport in order"""
-  transport: TransportInput = null
-
   """Represents a payment in order"""
   payment: PaymentInput = null
 
@@ -430,9 +427,6 @@ input CartInput {
   Cart identifier, new cart will be created if not provided and customer is not logged in
   """
   cartUuid: Uuid = null
-
-  """Represents a transport in order"""
-  transport: TransportInput = null
 
   """Represents a payment in order"""
   payment: PaymentInput = null
@@ -2214,9 +2208,6 @@ input RemoveFromCartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a transport in order"""
-  transport: TransportInput = null
-
   """Represents a payment in order"""
   payment: PaymentInput = null
 
@@ -2396,9 +2387,6 @@ input TransportInput {
 
   """Price for transport"""
   price: PriceInput!
-
-  """The identifier of selected personal pickup place"""
-  pickupPlaceIdentifier: String = null
 }
 
 """Represents a transport type"""

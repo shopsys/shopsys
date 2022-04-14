@@ -9,7 +9,6 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\FrontendApi\Model\Payment\PaymentInputData;
-use App\FrontendApi\Model\Transport\TransportInputData;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -76,10 +75,9 @@ class CartMutation implements MutationInterface, AliasedInterface
             $cart
         );
 
-        $transportInputData = $input['transport'] !== null ? new TransportInputData($input['transport']) : null;
         $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData);
+        $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $paymentInputData);
 
         return new AddToCartResult($cartWithModifications, $addProductResult);
     }
@@ -108,10 +106,9 @@ class CartMutation implements MutationInterface, AliasedInterface
             $cart
         );
 
-        $transportInputData = $input['transport'] !== null ? new TransportInputData($input['transport']) : null;
         $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData);
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $paymentInputData);
     }
 
     /**

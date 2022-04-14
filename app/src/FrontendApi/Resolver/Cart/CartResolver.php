@@ -8,7 +8,6 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\FrontendApi\Model\Payment\PaymentInputData;
-use App\FrontendApi\Model\Transport\TransportInputData;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -63,10 +62,9 @@ class CartResolver implements ResolverInterface, AliasedInterface
         if ($cart === null) {
             return null;
         }
-        $transportInputData = $input['transport'] !== null ? new TransportInputData($input['transport']) : null;
         $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData);
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $paymentInputData);
     }
 
     /**

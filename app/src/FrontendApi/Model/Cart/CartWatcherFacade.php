@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\FrontendApi\Model\Payment\PaymentInputData;
-use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartPromoCodeFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
@@ -96,13 +95,11 @@ class CartWatcherFacade
 
     /**
      * @param \App\Model\Cart\Cart $cart
-     * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
      * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
     public function getCheckedCartWithModifications(
         Cart $cart,
-        ?TransportInputData $transportInputData = null,
         ?PaymentInputData $paymentInputData = null
     ): CartWithModificationsResult {
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
@@ -117,7 +114,6 @@ class CartWatcherFacade
         return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment(
             $this->cartWithModificationsResult,
             $cart,
-            $transportInputData,
             $paymentInputData
         );
     }

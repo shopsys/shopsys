@@ -15,20 +15,11 @@ class CartTransportTest extends GraphQlTestCase
 {
     public function testTransportIsReturnedFromCart(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
 
         $getCartQuery = '{
             cart(cartInput: {
                     cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                    }
                 }
             ) {
                 transport {
@@ -63,16 +54,14 @@ class CartTransportTest extends GraphQlTestCase
             }
         }';
 
-        $response = $this->getResponseContentForQuery($getCartQuery);
-        $transportResponse = $response['data']['cart']['transport'];
+        $transportResponse = $this->getTransportResponse($getCartQuery);
 
         self::assertEquals($this->getExpectedTransport(), $transportResponse);
     }
 
     public function testTransportIsReturnedAfterAddingToCart(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -80,16 +69,9 @@ class CartTransportTest extends GraphQlTestCase
         $getCartQuery = 'mutation {
             AddToCart(
                 input: {
+                    cartUuid: "' . CartDataFixture::CART_UUID . '"
                     productUuid: "' . $product->getUuid() . '", 
                     quantity: 1
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                    }
                 }
             ) {
                 transport {
@@ -124,8 +106,7 @@ class CartTransportTest extends GraphQlTestCase
             }
         }';
 
-        $response = $this->getResponseContentForQuery($getCartQuery);
-        $transportResponse = $response['data']['AddToCart']['transport'];
+        $transportResponse = $this->getTransportResponse($getCartQuery, 'AddToCart');
 
         self::assertEquals($this->getExpectedTransport(), $transportResponse);
     }
@@ -180,21 +161,35 @@ class CartTransportTest extends GraphQlTestCase
         ];
     }
 
+    public function testRemoveTransportFromCart(): void
+    {
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $this->addTransportToDemoCart($transport->getUuid());
+        $cartQuery = 'query {
+          cart(cartInput:{
+            cartUuid: "' . CartDataFixture::CART_UUID . '",
+          }) {
+            transport {uuid}
+          }
+        }';
+        $transportResponse = $this->getTransportResponse($cartQuery);
+
+        self::assertEquals(['uuid' => $transport->getUuid()], $transportResponse);
+
+        $this->removeTransportFromDemoCart();
+        $transportResponse = $this->getTransportResponse($cartQuery);
+
+        self::assertNull($transportResponse);
+    }
+
     public function testNotAvailableTransportIsNotReturned(): void
     {
-        $nonExistentTransportUuid = Uuid::uuid4()->toString();
+        $this->addNonExistingTransportToDemoCart();
 
         $getCartQuery = '{
             cart(cartInput: {
                     cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    transport: {
-                        uuid: "' . $nonExistentTransportUuid . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                    }
                 }
             ) {
                 transport {
@@ -213,8 +208,7 @@ class CartTransportTest extends GraphQlTestCase
 
     public function testWeightLimitTransportIsNotReturned(): void
     {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_CZECH_POST);
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
@@ -233,14 +227,6 @@ class CartTransportTest extends GraphQlTestCase
         $getCartQuery = '{
             cart(cartInput: {
                     cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                    }
                 }
             ) {
                 transport {
@@ -251,9 +237,69 @@ class CartTransportTest extends GraphQlTestCase
             }
         }';
 
-        $response = $this->getResponseContentForQuery($getCartQuery);
-        $transportResponse = $response['data']['cart']['transport'];
+        $transportResponse = $this->getTransportResponse($getCartQuery);
 
         self::assertNull($transportResponse);
+    }
+
+    /**
+     * @param string $transportReferenceName
+     */
+    private function addDemoTransportToDemoCart(string $transportReferenceName): void
+    {
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference($transportReferenceName);
+        $this->addTransportToDemoCart($transport->getUuid());
+    }
+
+    private function addNonExistingTransportToDemoCart(): void
+    {
+        $this->addTransportToDemoCart(Uuid::uuid4()->toString());
+    }
+
+    /**
+     * @param string $transportUuid
+     */
+    private function addTransportToDemoCart(string $transportUuid): void
+    {
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . CartDataFixture::CART_UUID . '"
+                    transportUuid: "' . $transportUuid . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    private function removeTransportFromDemoCart(): void
+    {
+        $removeTransportFromCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . CartDataFixture::CART_UUID . '"
+                    transportUuid: null
+                }) {
+                    uuid
+                }
+            }
+        ';
+
+        $this->getResponseContentForQuery($removeTransportFromCartMutation);
+    }
+
+    /**
+     * @param string $getCartWithTransportQuery
+     * @param string $queryOrMutationName
+     * @return array|null
+     */
+    private function getTransportResponse(string $getCartWithTransportQuery, string $queryOrMutationName = 'cart'): ?array
+    {
+        $response = $this->getResponseContentForQuery($getCartWithTransportQuery);
+
+        return $response['data'][$queryOrMutationName]['transport'];
     }
 }

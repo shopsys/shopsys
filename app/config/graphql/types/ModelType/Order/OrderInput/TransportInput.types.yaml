@@ -2,9 +2,3 @@ TransportInput:
     type: input-object
     inherits:
         - 'TransportInputDecorator'
-    config:
-        fields:
-            pickupPlaceIdentifier:
-                type: "String"
-                defaultValue: null
-                description: "The identifier of selected personal pickup place"

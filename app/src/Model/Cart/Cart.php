@@ -194,4 +194,36 @@ class Cart extends BaseCart
         $this->pickupPlaceIdentifier = $cartTransportData->pickupPlaceIdentifier;
         $this->setModifiedNow();
     }
+
+    /**
+     * @return \App\Model\Transport\Transport|null
+     */
+    public function getTransport(): ?Transport
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getTransportWatchedPrice(): ?Money
+    {
+        return $this->transportWatchedPrice;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPickupPlaceIdentifier(): ?string
+    {
+        return $this->pickupPlaceIdentifier;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $transportWatchedPrice
+     */
+    public function setTransportWatchedPrice(?Money $transportWatchedPrice): void
+    {
+        $this->transportWatchedPrice = $transportWatchedPrice;
+    }
 }
