@@ -7,7 +7,6 @@ arrange:
     - functional
     - frontend
     - administration
-    - backend-api
     - frontend-api
     - extensibility
     - automated-testing

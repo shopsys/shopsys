@@ -6,35 +6,21 @@
     <property name="path.root" value="${project.basedir}/project-base"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
-    <property name="path.backend-api" value="${path.packages}/backend-api"/>
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
     <property name="path.framework" value="${path.packages}/framework"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="translations.dump.flags" value=""/>
 
     <import file="${path.framework}/build.xml"/>
-    <import file="${path.backend-api}/build.xml"/>
     <import file="${path.frontend-api}/build.xml"/>
 
-    <target name="backend-api-install" description="Install backend API to the project">
-        <exec executable="${path.backend-api}/install/install.sh" checkreturn="true" passthru="true">
-            <arg value="monorepo"/>
-        </exec>
-    </target>
+    <target name="build-demo-ci" depends="composer-dev,shopsys_framework.build-demo-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="backend-api-uninstall" description="Uninstall backend API from the project">
-        <exec executable="${path.backend-api}/install/uninstall.sh" checkreturn="true" passthru="true">
-            <arg value="monorepo"/>
-        </exec>
-    </target>
-
-    <target name="build-demo-ci" depends="backend-api-install,composer-dev,backend-api-oauth-keys-generate,shopsys_framework.build-demo-ci,backend-api-uninstall" description="Builds application for development with clean demo DB and runs CI checks."/>
-
-    <target name="build-demo-dev" depends="backend-api-install,composer-dev,backend-api-oauth-keys-generate,shopsys_framework.build-demo-dev,backend-api-uninstall" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="composer-dev,shopsys_framework.build-demo-dev" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
     <target name="build-demo-dev-no-api" depends="shopsys_framework.build-demo-dev" description="Builds application for development with clean demo DB without API and runs checks on changed files."/>
 
-    <target name="build-dev" depends="backend-api-install,composer-dev,backend-api-oauth-keys-generate,shopsys_framework.build-dev,backend-api-uninstall" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="composer-dev,shopsys_framework.build-dev" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
     <target name="checks-internal" depends="shopsys_framework.checks-internal,project-base-vendor-check" description="Runs all internal checks for monorepo, eg. availability of services or validity of configuration f." hidden="true"/>
 
@@ -67,7 +53,6 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
-            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -86,7 +71,6 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
-            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -107,7 +91,6 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
-            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -127,7 +110,6 @@
             <arg path="${path.utils}/*/tests"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/docs"/>
-            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -237,7 +219,6 @@
             <arg path="${path.packages}/*/tests"/>
             <arg path="${path.utils}/*/src"/>
             <arg path="${path.utils}/*/tests"/>
-            <arg path="${path.backend-api}/install"/>
         </exec>
     </target>
 
@@ -335,12 +316,6 @@
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
             <arg value="${path.packages}/coding-standards/phpunit.xml"/>
-        </exec>
-        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="--colors=always"/>
-            <arg value="--configuration"/>
-            <arg value="${path.packages}/backend-api/phpunit.xml"/>
-            <arg value="${path.packages}/backend-api/tests/"/>
         </exec>
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>

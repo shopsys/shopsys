@@ -163,8 +163,3 @@ Now you can modify the version in your `composer.json` as well so all packages w
          }
 ```
 To apply the new setting, execute `composer update` and commit the changes.
-
-## Think about optional features of Shopsys Framework
-
-### Backend API
-Shopsys Framework provides [backend API](../backend-api/introduction-to-backend-api.md) that is not installed by default to ease development of projects which do not need API. If you know you will use it, it is better to install it from start - just follow the easy [Backend API installation instructions](../backend-api/backend-api-installation.md). Nevertheless, there is no necessity to do it now, you can install it anytime you want.

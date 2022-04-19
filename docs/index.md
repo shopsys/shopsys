@@ -28,8 +28,6 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Design implementation and customization, LESS, ...
 * [Administration](./administration/index.md)
     * Administration menu and grids.
-* [Backend API](./backend-api)
-    * Information about the backend REST API dedicated for integration with third party systems.
 * [Frontend API](./frontend-api)
     * Information about the frontend GraphQL API dedicated for connecting external storefront or mobile app.
 * [Extensibility](./extensibility/index.md)

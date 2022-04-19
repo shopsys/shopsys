@@ -18,9 +18,3 @@
 * [Create Advanced Grid](./create-advanced-grid.md)
 * [Extending Product List](./extending-product-list.md)
 * [Adding a New Email Template](./adding-a-new-email-template.md)
-
-## Backend API
-
-* [Adding an Attribute to Product Export](../cookbook/backend-api/adding-an-attribute-to-product-export.md)
-* [Adding an Attribute to Product Import](../cookbook/backend-api/adding-an-attribute-to-product-import.md)
-* [Creating Custom API Endpoint](../cookbook/backend-api/creating-custom-api-endpoint.md)

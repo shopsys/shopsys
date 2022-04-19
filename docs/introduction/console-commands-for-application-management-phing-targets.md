@@ -112,13 +112,6 @@ The difference between [clean-redis](#clean-redis) is that `clean-redis` cleans 
 
 Useful in a development environment and during deploying to production.
 
-#### backend-api-oauth-keys-generate
-
-Generates OAuth2 private and public key to directory `config/oauth2/`, be careful never commit private keys.
-Generates also encryption key to file `config/oauth2/parameters_oauth.yaml`.
-
-These keys are used by API OAuth2. The private key is used to sign tokens and public key is used to verify the signatures.
-
 #### build-version-generate
 
 Generates a Symfony configuration `build-version` variable that is used to distinguish different application builds.
@@ -299,22 +292,6 @@ This target comes handy when you need to debug some functionality on your develo
 Switching to development environment will also install composer dev dependencies.
 
 ### For monorepo developers
-
-#### backend-api-install
-
-Install backend API to the project from monorepo point of view.
-
-A tool that should be part of all `build-*` targets because it allows to run all checks with installed backend API.
-
-When the backend API is installed in monorepo, installed files should never be committed and always reverted by `backend-api-uninstall`.
-
-#### backend-api-uninstall
-
-Uninstall backend API from the project.
-
-Reverts changes done by `backend-api-install` because we don't commit the backend API integration.
-If the install script was successful, the uninstall will be successful as well.
-
 #### frontend-api-generate-apiary-blueprint
 
 Generate apiary blueprint for frontend API based on its pieces.

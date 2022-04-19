@@ -1,5 +1,7 @@
 # Shopsys Backend API
 
+*Backend API package is currently reviewed and is not compatible with upcoming Shopsys Framework release*
+
 [![Build Status](https://travis-ci.org/shopsys/backend-api.svg?branch=master)](https://travis-ci.org/shopsys/backend-api)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/backend-api.svg)](https://packagist.org/packages/shopsys/backend-api)
 
