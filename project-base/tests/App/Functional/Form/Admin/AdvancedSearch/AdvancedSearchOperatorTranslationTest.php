@@ -6,6 +6,8 @@ namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -17,19 +19,19 @@ class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig
      * @inject
      */
-    private $productAdvancedSearchConfig;
+    private ProductAdvancedSearchConfig $productAdvancedSearchConfig;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig
      * @inject
      */
-    private $orderAdvancedSearchConfig;
+    private OrderAdvancedSearchConfig $orderAdvancedSearchConfig;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation
      * @inject
      */
-    private $advancedSearchOperatorTranslation;
+    private AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation;
 
     public function testTranslateOperator()
     {

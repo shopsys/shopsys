@@ -7,6 +7,7 @@ namespace Tests\ReadModelBundle\Functional\Product\Listed;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -18,7 +19,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
      * @inject
      */
-    private $listedProductViewFacade;
+    private ListedProductViewFacadeInterface $listedProductViewFacade;
 
     public function testGetAllAccessories(): void
     {

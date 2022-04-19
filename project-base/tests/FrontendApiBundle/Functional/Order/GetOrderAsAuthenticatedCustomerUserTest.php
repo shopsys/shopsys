@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -14,7 +15,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
     public function testGetOrder(): void
     {

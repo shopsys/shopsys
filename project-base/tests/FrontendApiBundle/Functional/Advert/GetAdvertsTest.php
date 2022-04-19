@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Advert;
 
+use League\Flysystem\MountManager;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,29 +20,29 @@ class GetAdvertsTest extends GraphQlTestCase
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
      * @inject
      */
-    private $advertDataFactory;
+    private AdvertDataFactory $advertDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
      */
-    private $advertFacade;
+    private AdvertFacade $advertFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
      * @inject
      */
-    private $fileUpload;
+    private FileUpload $fileUpload;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
-    private $advertWithImage;
+    private Advert $advertWithImage;
 
     /**
      * @var \League\Flysystem\MountManager
      * @inject
      */
-    private $mountManager;
+    private MountManager $mountManager;
 
     public function setUp(): void
     {

@@ -23,42 +23,42 @@ class NumberFormatHelper extends Module
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
-    private $currencyFacade;
+    private CurrencyFacade $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
      */
-    private $currencyFormatterFactory;
+    private CurrencyFormatterFactory $currencyFormatterFactory;
 
     /**
      * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
      */
-    private $intlCurrencyRepository;
+    private CurrencyRepositoryInterface $intlCurrencyRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension
      */
-    private $numberFormatterExtension;
+    private NumberFormatterExtension $numberFormatterExtension;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
-    private $priceConverter;
+    private PriceConverter $priceConverter;
 
     /**
      * @var \CommerceGuys\Intl\Formatter\NumberFormatter
      */
-    private $numberFormatter;
+    private NumberFormatter $numberFormatter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
      */
-    private $rounding;
+    private Rounding $rounding;
 
     /**
      * @var \Tests\App\Test\Codeception\Helper\LocalizationHelper
      */
-    private $localizationHelper;
+    private LocalizationHelper $localizationHelper;
 
     /**
      * @param \Codeception\TestInterface $test

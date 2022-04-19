@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -15,7 +16,7 @@ class ProductOnCurrentDomainSqlFacadeTest extends ProductOnCurrentDomainFacadeTe
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
      * @inject
      */
-    private $productOnCurrentDomainFacade;
+    private ProductOnCurrentDomainFacade $productOnCurrentDomainFacade;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface

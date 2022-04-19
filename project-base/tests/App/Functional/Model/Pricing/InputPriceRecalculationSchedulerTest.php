@@ -6,6 +6,9 @@ namespace Tests\App\Functional\Model\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -13,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -29,37 +34,37 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      * @inject
      */
-    private $setting;
+    private Setting $setting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler
      * @inject
      */
-    private $inputPriceRecalculationScheduler;
+    private InputPriceRecalculationScheduler $inputPriceRecalculationScheduler;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      * @inject
      */
-    private $paymentFacade;
+    private PaymentFacade $paymentFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
-    private $paymentDataFactory;
+    private PaymentDataFactoryInterface $paymentDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
-    private $transportDataFactory;
+    private TransportDataFactoryInterface $transportDataFactory;
 
     public function testOnKernelResponseNoAction()
     {

@@ -6,11 +6,15 @@ namespace Tests\App\Functional\Model\Product\Search;
 
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
+use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -22,25 +26,25 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
      * @var \Elasticsearch\Client
      * @inject
      */
-    private $elasticsearchClient;
+    private Client $elasticsearchClient;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
      * @inject
      */
-    private $filterQueryFactory;
+    private FilterQueryFactory $filterQueryFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
-    private $priceConverter;
+    private PriceConverter $priceConverter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
      * @inject
      */
-    private $indexDefinitionLoader;
+    private IndexDefinitionLoader $indexDefinitionLoader;
 
     public function testBrand(): void
     {

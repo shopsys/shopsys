@@ -17,20 +17,20 @@ class ProductOneToOneBidirectionalEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
      * @ORM\OneToOne(targetEntity="ExtendedProduct", inversedBy="oneToOneBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id")
      */
-    protected $product;
+    protected ExtendedProduct $product;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name

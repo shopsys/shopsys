@@ -11,6 +11,14 @@ use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
+use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -22,49 +30,49 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      * @inject
      */
-    private $cartFacade;
+    private CartFacade $cartFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
      * @inject
      */
-    private $orderPreviewFactory;
+    private OrderPreviewFactory $orderPreviewFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
      * @inject
      */
-    private $orderRepository;
+    private OrderRepository $orderRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      * @inject
      */
-    private $productRepository;
+    private ProductRepository $productRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportRepository
      * @inject
      */
-    private $transportRepository;
+    private TransportRepository $transportRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository
      * @inject
      */
-    private $paymentRepository;
+    private PaymentRepository $paymentRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
-    private $orderDataFactory;
+    private OrderDataFactoryInterface $orderDataFactory;
 
     public function testCreate()
     {

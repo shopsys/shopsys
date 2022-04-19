@@ -7,6 +7,8 @@ namespace Tests\App\Functional\Model\Customer;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -21,13 +23,13 @@ class UserFacadeTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
-    protected $customerUserFacade;
+    protected CustomerUserFacade $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      * @inject
      */
-    protected $customerUserUpdateDataFactory;
+    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
     {

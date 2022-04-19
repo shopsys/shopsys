@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -19,13 +21,13 @@ class TransportDomainTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
-    private $transportDataFactory;
+    private TransportDataFactoryInterface $transportDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface
      * @inject
      */
-    private $transportFactory;
+    private TransportFactoryInterface $transportFactory;
 
     public function testCreateTransportEnabledOnDomain()
     {

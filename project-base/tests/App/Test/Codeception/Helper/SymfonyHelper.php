@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\App\Test\Codeception\Helper;
 
-use App\Kernel;
+use App\Kernel as AppKernel;
 use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Symfony\Component\HttpKernel\Kernel;
 
 class SymfonyHelper extends Module
 {
     /**
      * @var \Symfony\Component\HttpKernel\Kernel
      */
-    private $kernel;
+    private Kernel $kernel;
 
     /**
      * {@inheritDoc}
@@ -24,7 +25,7 @@ class SymfonyHelper extends Module
     {
         require_once Configuration::projectDir() . '/../app/autoload.php';
 
-        $this->kernel = new Kernel(EnvironmentType::ACCEPTANCE, EnvironmentType::isDebug(EnvironmentType::ACCEPTANCE));
+        $this->kernel = new AppKernel(EnvironmentType::ACCEPTANCE, EnvironmentType::isDebug(EnvironmentType::ACCEPTANCE));
         $this->kernel->boot();
     }
 
