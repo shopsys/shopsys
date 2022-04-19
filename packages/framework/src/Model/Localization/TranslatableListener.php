@@ -6,7 +6,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Metadata\MetadataFactory;
 use Prezent\Doctrine\Translatable\EventListener\TranslatableListener as PrezentTranslatableListener;
-use Prezent\Doctrine\Translatable\Mapping\TranslatableMetadata;
 
 class TranslatableListener extends PrezentTranslatableListener
 {
@@ -37,22 +36,6 @@ class TranslatableListener extends PrezentTranslatableListener
      */
     public function postPersist(LifecycleEventArgs $args)
     {
-        $entity = $args->getEntity();
-        $metadata = $this->getTranslatableMetadata(get_class($entity));
-        if (!($metadata instanceof TranslatableMetadata)) {
-            return;
-        }
-
-        /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $fallbackLocale */
-        $fallbackLocale = $metadata->fallbackLocale;
-        if ($fallbackLocale !== null) {
-            $metadata->fallbackLocale->setValue($entity, $this->getFallbackLocale());
-        }
-
-        /** @var \Prezent\Doctrine\Translatable\Mapping\PropertyMetadata|null $currentLocale */
-        $currentLocale = $metadata->currentLocale;
-        if ($currentLocale !== null) {
-            $metadata->currentLocale->setValue($entity, $this->getCurrentLocale());
-        }
+        $this->postLoad($args);
     }
 }
