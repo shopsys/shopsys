@@ -182,7 +182,6 @@ export const getGtmUserInfo = (
 ): GtmUserInfoType => {
     const userInfo: GtmUserInfoType = {
         type: 'visitor',
-        group: 'b2c',
     };
 
     if (isUserLoggedIn && currentCustomer !== undefined) {
@@ -196,7 +195,7 @@ export const getGtmUserInfo = (
         userInfo.city = currentCustomer.city;
         userInfo.psc = currentCustomer.postcode;
         userInfo.country = currentCustomer.country.code;
-        userInfo.group = userGroup;
+        userInfo.group = currentCustomer.pricingGroup;
     }
 
     return userInfo;

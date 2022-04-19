@@ -37,4 +37,5 @@ export type CurrentCustomerType = {
     passwordSecond: string;
     defaultDeliveryAddress: DeliveryAddressType | undefined;
     deliveryAddresses: DeliveryAddressType[];
+    pricingGroup: string;
 };

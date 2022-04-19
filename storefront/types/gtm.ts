@@ -115,7 +115,7 @@ export type GtmCartInfoEventType = {
 
 export type GtmUserInfoType = {
     type: GtmUserType;
-    group: string;
+    group?: string;
     id?: string;
     email?: string;
     name?: string;

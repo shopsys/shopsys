@@ -23,4 +23,5 @@ fragment CustomerUserFragment on CustomerUser {
         companyNumber
         companyTaxNumber
     }
+    pricingGroup
 }
