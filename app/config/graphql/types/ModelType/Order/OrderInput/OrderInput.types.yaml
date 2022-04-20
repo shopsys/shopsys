@@ -4,7 +4,8 @@ OrderInput:
         - 'OrderInputDecorator'
     config:
         validation:
-            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\TransportInOrder: ~
         fields:
             products:
                 type: "[OrderProductInput!]"

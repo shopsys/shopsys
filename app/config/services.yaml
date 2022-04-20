@@ -872,3 +872,8 @@ services:
 
     Shopsys\FrameworkBundle\Controller\Admin\AdvertController:
         class: App\Controller\Admin\AdvertController
+
+    Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelationValidator:
+        class: App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelationValidator
+        tags:
+            - validator.constraint_validator
