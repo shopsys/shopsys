@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 
 class FullOrderTest extends AbstractOrderTestCase
@@ -63,12 +62,15 @@ class FullOrderTest extends AbstractOrderTestCase
         $mutation = 'mutation {
             AddToCart(input: {
                 productUuid: "' . $product->getUuid() . '",
-                quantity: 10
+                quantity: 1
             }) {
                 uuid
             }
         }';
         $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+
+        $this->addCzechPostTransportToCart($cartUuid);
+
         $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
@@ -79,18 +81,12 @@ class FullOrderTest extends AbstractOrderTestCase
     private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
         $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
 
         return 'mutation {
                     CreateOrder(
@@ -112,10 +108,6 @@ class FullOrderTest extends AbstractOrderTestCase
                             payment: {
                                 uuid: "' . $paymentCashOnDelivery->getUuid() . '"
                                 price: ' . $paymentPrice . '
-                            }
-                            transport: {
-                                uuid: "' . $transportCzechPost->getUuid() . '"
-                                price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: true
                             deliveryFirstName: "deliveryFirstName"

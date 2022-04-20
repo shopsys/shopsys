@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 
 class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
@@ -53,6 +53,7 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
             ],
         ];
 
+        $this->addPplTransportToDemoCart();
         $response = $this->getResponseContentForQuery($this->getMutation());
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
@@ -74,17 +75,14 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
-        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
-        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
+        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCard */
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatZero);
 
         return 'mutation {
                     CreateOrder(
                         input: {
+                            cartUuid: "' . CartDataFixture::CART_UUID . '"
                             firstName: "firstName"
                             lastName: "lastName"
                             email: "user@example.com"
@@ -99,12 +97,8 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
                             country: "CZ"
                             note:"Thank You"
                             payment: {
-                                uuid: "' . $paymentCashOnDelivery->getUuid() . '"
+                                uuid: "' . $paymentCard->getUuid() . '"
                                 price: ' . $paymentPrice . '
-                            }
-                            transport: {
-                                uuid: "' . $transportCzechPost->getUuid() . '"
-                                price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: true
                             products: [

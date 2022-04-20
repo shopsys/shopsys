@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Order;
 
+use App\Model\Cart\Cart;
 use App\Model\Order\OrderData;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
 use App\Model\Store\Store;
@@ -12,6 +13,7 @@ use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -24,7 +26,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory as BaseOrderDataFacto
  * @property \App\Model\Transport\TransportFacade $transportFacade
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
  * @property \App\Model\Product\ProductFacade $productFacade
- * @method \App\Model\Order\OrderData withResolvedFields(array $input, \App\Model\Order\OrderData $orderData)
  */
 class OrderDataFactory extends BaseOrderDataFactory
 {
@@ -71,32 +72,41 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
         $orderData->goPayBankSwift = $input['payment']['goPayBankSwift'] ?? null;
 
-        if (isset($input['transport']['pickupPlaceIdentifier'])) {
-            $pickupPlaceIdentifier = $input['transport']['pickupPlaceIdentifier'];
+        return $orderData;
+    }
 
-            if ($orderData->transport->isPersonalPickup()) {
-                try {
-                    $store = $this->storeFacade->getByUuidEnabledOnDomain(
-                        $pickupPlaceIdentifier,
-                        $this->domain->getId()
-                    );
-                    $this->setOrderDataByStore($orderData, $store);
-                } catch (StoreByUuidNotFoundException $exception) {
-                    throw new UserError($exception->getMessage());
-                }
-            }
-
-            if (
-                $orderData->transport->isPacketery() &&
-                $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
-            ) {
-                throw new UserError('Wrong packetery address ID');
-            }
-
-            $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \App\Model\Cart\Cart $cart
+     */
+    public function updateOrderDataFromCart(OrderData $orderData, Cart $cart): void
+    {
+        $orderData->transport = $cart->getTransport();
+        $pickupPlaceIdentifier = $cart->getPickupPlaceIdentifier();
+        if ($cart->getPickupPlaceIdentifier() === null) {
+            return;
         }
 
-        return $orderData;
+        if ($orderData->transport->isPersonalPickup()) {
+            try {
+                $store = $this->storeFacade->getByUuidEnabledOnDomain(
+                    $pickupPlaceIdentifier,
+                    $this->domain->getId()
+                );
+                $this->setOrderDataByStore($orderData, $store);
+            } catch (StoreByUuidNotFoundException $exception) {
+                throw new UserError($exception->getMessage());
+            }
+        }
+
+        if (
+            $orderData->transport->isPacketery() &&
+            $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
+        ) {
+            throw new UserError('Wrong packetery address ID');
+        }
+
+        $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
     }
 
     /**
@@ -126,5 +136,31 @@ class OrderDataFactory extends BaseOrderDataFactory
     private function isPickupPlaceIdentifierIntegerInString(string $pickupPlaceIdentifier): bool
     {
         return (string)(int)$pickupPlaceIdentifier !== $pickupPlaceIdentifier;
+    }
+
+    /**
+     * @param array $input
+     * @param \App\Model\Order\OrderData $orderData
+     * @return \App\Model\Order\OrderData
+     */
+    protected function withResolvedFields(array $input, BaseOrderData $orderData): OrderData
+    {
+        /** @var \App\Model\Order\OrderData $cloneOrderData */
+        $cloneOrderData = clone $orderData;
+
+        $cloneOrderData->payment = $this->paymentFacade->getEnabledOnDomainByUuid(
+            $input['payment']['uuid'],
+            $this->domain->getId()
+        );
+
+        $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
+
+        $cloneOrderData->country = $this->countryFacade->findByCode($input['country']);
+
+        if ($input['differentDeliveryAddress']) {
+            $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
+        }
+
+        return $cloneOrderData;
     }
 }

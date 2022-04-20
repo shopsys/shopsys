@@ -14,3 +14,7 @@ OrderInput:
                 type: "Uuid"
                 description: "Cart identifier used for getting carts of not logged customers"
                 defaultValue: null
+            transport:
+                type: "TransportInput"
+                description: "Deprecated, this field is not used, the transport is taken from the server cart instead."
+                validation: ~

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -30,8 +32,8 @@ class AbstractOrderTestCase extends GraphQlTestCase
             0 => [
                 'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
-                'quantity' => 10,
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+                'quantity' => 1,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
@@ -105,5 +107,41 @@ class AbstractOrderTestCase extends GraphQlTestCase
             'priceWithoutVat' => $price->getPriceWithoutVat()->getAmount(),
             'vatAmount' => $price->getVatAmount()->getAmount(),
         ];
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCzechPostTransportToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Transport\Transport $transportCzechPost */
+        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $this->addTransportToCart($cartUuid, $transportCzechPost);
+    }
+
+    protected function addPplTransportToDemoCart(): void
+    {
+        /** @var \App\Model\Transport\Transport $transportPpl */
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPpl);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param \App\Model\Transport\Transport $transport
+     */
+    private function addTransportToCart(string $cartUuid, Transport $transport): void
+    {
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    transportUuid: "' . $transport->getUuid() . '"
+                }) {
+                    uuid                           
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 }

@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
@@ -48,6 +47,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
             ],
         ];
         $cartUuid = $this->addProductToCart();
+        $this->addCzechPostTransportToCart($cartUuid);
 
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
@@ -65,6 +65,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
 
         $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
+        $this->addCzechPostTransportToCart($cartUuid);
 
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($validPromoCode);
         $promoCodeData->remainingUses = 0;
@@ -137,18 +138,12 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
     private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
         $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
 
         return 'mutation {
                     CreateOrder(
@@ -166,10 +161,6 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                             payment: {
                                 uuid: "' . $paymentCashOnDelivery->getUuid() . '"
                                 price: ' . $paymentPrice . '
-                            }
-                            transport: {
-                                uuid: "' . $transportCzechPost->getUuid() . '"
-                                price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
                         }

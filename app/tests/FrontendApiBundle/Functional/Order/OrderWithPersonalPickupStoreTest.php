@@ -47,29 +47,24 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
         }';
         $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
 
-        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid, $store->getUuid()), $expected);
+        $this->addPersonalPickupTransportToCart($cartUuid, $store->getUuid());
+
+        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
     /**
      * @param string $cartUuid
-     * @param string $storeUuid
      * @return string
      */
-    private function getMutation(string $cartUuid, string $storeUuid): string
+    private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCard */
         $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
         $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportPersonalPickup */
-        $transportPersonalPickup = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('0', $vatHigh);
 
         return 'mutation {
                     CreateOrder(
@@ -89,11 +84,6 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                                 uuid: "' . $paymentCard->getUuid() . '"
                                 price: ' . $paymentPrice . '
                             }
-                            transport: {
-                                uuid: "' . $transportPersonalPickup->getUuid() . '"
-                                price: ' . $transportPrice . '
-                                pickupPlaceIdentifier: "' . $storeUuid . '"
-                            }
                             differentDeliveryAddress: false
                         }
                     ) {
@@ -109,5 +99,27 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                         }
                     }
                 }';
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param string $pickupPlaceIdentifier
+     */
+    private function addPersonalPickupTransportToCart(string $cartUuid, string $pickupPlaceIdentifier): void
+    {
+        /** @var \App\Model\Transport\Transport $transportPersonalPickup */
+        $transportPersonalPickup = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    transportUuid: "' . $transportPersonalPickup->getUuid() . '"
+                    pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 }
