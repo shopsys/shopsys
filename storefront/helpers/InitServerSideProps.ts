@@ -1,6 +1,6 @@
+import { AdvertsQueryDocumentApi, NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
-import { AdvertsQueryDocumentApi, NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
 import { AppStore } from 'redux/main';
 import { DocumentNode } from 'graphql';
 import getConfig from 'next/config';

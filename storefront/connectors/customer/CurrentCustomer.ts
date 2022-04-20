@@ -53,7 +53,14 @@ const mapCurrentCustomerApiData = (
 export const mapDeliveryAddress = (apiDeliveryAddressData: DeliveryAddressFragmentApi): DeliveryAddressType => {
     return {
         ...apiDeliveryAddressData,
-        country: apiDeliveryAddressData.country.name,
+        companyName: apiDeliveryAddressData.companyName ?? '',
+        street: apiDeliveryAddressData.street ?? '',
+        city: apiDeliveryAddressData.city ?? '',
+        postcode: apiDeliveryAddressData.postcode ?? '',
+        telephone: apiDeliveryAddressData.telephone ?? '',
+        firstName: apiDeliveryAddressData.firstName ?? '',
+        lastName: apiDeliveryAddressData.lastName ?? '',
+        country: apiDeliveryAddressData.country?.name ?? '',
     };
 };
 

@@ -4,10 +4,10 @@ import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { getAdverts } from 'connectors/adverts/Adverts';
 import Image from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import Link from 'next/link';
+import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import Webline from 'components/Layout/Webline';
@@ -23,7 +23,7 @@ type AdvertsProps = {
 };
 
 const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
-    const adverts = getAdverts();
+    const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
     const WrapperComponent = props.withWebline ? Webline : Fragment;

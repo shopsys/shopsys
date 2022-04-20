@@ -4,7 +4,7 @@ import { getFirstImageSize } from 'connectors/image/Image';
 import { mapSimpleCategories } from 'connectors/categories/Categories';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const getAdverts = (): AdvertType[] | undefined => {
+export const useAdverts = (): AdvertType[] | undefined => {
     const [{ data, error }] = useAdvertsQueryApi();
     useQueryError(error);
 

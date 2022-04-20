@@ -6,26 +6,26 @@ DeliveryAddress:
                 type: "Uuid!"
                 description: "UUID"
             companyName:
-                type: "String!"
+                type: "String"
                 description: "Delivery address company name"
             street:
-                type: "String!"
+                type: "String"
                 description: "Delivery address street name"
             city:
-                type: "String!"
+                type: "String"
                 description: "Delivery address city name"
             postcode:
-                type: "String!"
+                type: "String"
                 description: "Delivery address zip code"
             telephone:
-                type: "String!"
+                type: "String"
                 description: "Delivery address telephone"
             country:
-                type: "Country!"
+                type: "Country"
                 description: "Delivery address country"
             firstName:
-                type: "String!"
+                type: "String"
                 description: "Delivery address firstname"
             lastName:
-                type: "String!"
+                type: "String"
                 description: "Delivery address lastname"

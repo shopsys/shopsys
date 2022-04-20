@@ -1351,7 +1351,11 @@ Position of advert
 <tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
-<td></td>
+<td>
+
+Restricted categories of the advert (the advert is shown in these categories only)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>code</strong></td>
@@ -1416,7 +1420,11 @@ Position of advert
 <tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
-<td></td>
+<td>
+
+Restricted categories of the advert (the advert is shown in these categories only)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
@@ -3059,7 +3067,7 @@ UUID
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>companyName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address company name
@@ -3068,7 +3076,7 @@ Delivery address company name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address street name
@@ -3077,7 +3085,7 @@ Delivery address street name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address city name
@@ -3086,7 +3094,7 @@ Delivery address city name
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address zip code
@@ -3095,7 +3103,7 @@ Delivery address zip code
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address telephone
@@ -3104,7 +3112,7 @@ Delivery address telephone
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#country">Country</a>!</td>
+<td valign="top"><a href="#country">Country</a></td>
 <td>
 
 Delivery address country
@@ -3113,7 +3121,7 @@ Delivery address country
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address firstname
@@ -3122,7 +3130,7 @@ Delivery address firstname
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Delivery address lastname
@@ -8208,7 +8216,11 @@ Position of advert
 <tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
-<td></td>
+<td>
+
+Restricted categories of the advert (the advert is shown in these categories only)
+
+</td>
 </tr>
 </tbody>
 </table>
