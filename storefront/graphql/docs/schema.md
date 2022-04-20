@@ -86,6 +86,7 @@
     * [CartInput](#cartinput)
     * [ChangePasswordInput](#changepasswordinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
+    * [ChangeTransportInCartInput](#changetransportincartinput)
     * [ContactInput](#contactinput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
@@ -1133,6 +1134,20 @@ check payment status of order after callback from payment service
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ChangeTransportInCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Add a transport to the cart, or remove a transport from the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#changetransportincartinput">ChangeTransportInCartInput</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -6893,15 +6908,6 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a></td>
-<td>
-
-Represents a transport in order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
 <td valign="top"><a href="#paymentinput">PaymentInput</a></td>
 <td>
@@ -6990,15 +6996,6 @@ Promo code to be used after checkout
 <td>
 
 Cart identifier, new cart will be created if not provided and customer is not logged in
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a></td>
-<td>
-
-Represents a transport in order
 
 </td>
 </tr>
@@ -7171,6 +7168,47 @@ The customer’s company tax number (required when companyCustomer is true)
 <td>
 
 Whether customer user should receive newsletters or not
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ChangeTransportInCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier, new cart will be created if not provided and customer is not logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transportUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The identifier of selected personal pickup place
 
 </td>
 </tr>
@@ -7502,10 +7540,10 @@ Payment method applied to the order
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a>!</td>
+<td valign="top"><a href="#transportinput">TransportInput</a></td>
 <td>
 
-Transport method applied to the order
+Deprecated, this field is not used, the transport is taken from the server cart instead.
 
 </td>
 </tr>
@@ -8031,15 +8069,6 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a></td>
-<td>
-
-Represents a transport in order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
 <td valign="top"><a href="#paymentinput">PaymentInput</a></td>
 <td>
@@ -8120,15 +8149,6 @@ UUID
 <td>
 
 Price for transport
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The identifier of selected personal pickup place
 
 </td>
 </tr>

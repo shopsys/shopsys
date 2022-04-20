@@ -45,8 +45,6 @@ export type AddToCartInputApi = {
   productUuid: Scalars['Uuid'];
   /** Item quantity */
   quantity: Scalars['Int'];
-  /** Represents a transport in order */
-  transport: Maybe<TransportInputApi>;
 };
 
 export type AddToCartResultApi = CartInterfaceApi & {
@@ -409,8 +407,6 @@ export type CartInputApi = {
   cartUuid: Maybe<Scalars['Uuid']>;
   /** Represents a payment in order */
   payment: Maybe<PaymentInputApi>;
-  /** Represents a transport in order */
-  transport: Maybe<TransportInputApi>;
 };
 
 export type CartInterfaceApi = {
@@ -584,6 +580,15 @@ export type ChangePersonalDataInputApi = {
   street: Scalars['String'];
   /** The customer's telephone number */
   telephone: Scalars['String'];
+};
+
+export type ChangeTransportInCartInputApi = {
+  /** Cart identifier, new cart will be created if not provided and customer is not logged in */
+  cartUuid: Maybe<Scalars['Uuid']>;
+  /** The identifier of selected personal pickup place */
+  pickupPlaceIdentifier: Maybe<Scalars['String']>;
+  /** UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart */
+  transportUuid: Maybe<Scalars['Uuid']>;
 };
 
 /** Represents an currently logged customer user */
@@ -929,6 +934,8 @@ export type MutationApi = {
   ChangePassword: CustomerUserApi;
   /** Changes customer user personal data */
   ChangePersonalData: CustomerUserApi;
+  /** Add a transport to the cart, or remove a transport from the cart */
+  ChangeTransportInCart: CartApi;
   /** check payment status of order after callback from payment service */
   CheckPaymentStatus: Scalars['Boolean'];
   /** Send message to the site owner */
@@ -982,6 +989,11 @@ export type MutationChangePasswordArgsApi = {
 
 export type MutationChangePersonalDataArgsApi = {
   input: ChangePersonalDataInputApi;
+};
+
+
+export type MutationChangeTransportInCartArgsApi = {
+  input: ChangeTransportInCartInputApi;
 };
 
 
@@ -1247,8 +1259,8 @@ export type OrderInputApi = {
   street: Scalars['String'];
   /** The customer's phone number */
   telephone: Scalars['String'];
-  /** Transport method applied to the order */
-  transport: TransportInputApi;
+  /** Deprecated, this field is not used, the transport is taken from the server cart instead. */
+  transport: Maybe<TransportInputApi>;
 };
 
 /** Represent one item in the order */
@@ -2082,8 +2094,6 @@ export type RemoveFromCartInputApi = {
   cartUuid: Maybe<Scalars['Uuid']>;
   /** Represents a payment in order */
   payment: Maybe<PaymentInputApi>;
-  /** Represents a transport in order */
-  transport: Maybe<TransportInputApi>;
 };
 
 export type RemovePromoCodeFromCartInputApi = {
@@ -2243,8 +2253,6 @@ export type TransportPriceArgsApi = {
 
 /** Represents a transport in order */
 export type TransportInputApi = {
-  /** The identifier of selected personal pickup place */
-  pickupPlaceIdentifier: Maybe<Scalars['String']>;
   /** Price for transport */
   price: PriceInputApi;
   /** UUID */
@@ -2471,7 +2479,6 @@ export type CartModificationsFragmentApi = CartModificationsFragment_AddToCartRe
 
 export type AddToCartMutationVariablesApi = Exact<{
   cartUuid: Maybe<Scalars['Uuid']>;
-  transport: Maybe<TransportInputApi>;
   payment: Maybe<PaymentInputApi>;
   isAbsoluteQuantity: Maybe<Scalars['Boolean']>;
   productUuid: Scalars['Uuid'];
@@ -2491,7 +2498,6 @@ export type ApplyPromoCodeToCartMutationApi = { __typename?: 'Mutation', ApplyPr
 export type RemoveFromCartMutationVariablesApi = Exact<{
   cartUuid: Maybe<Scalars['Uuid']>;
   cartItemUuid: Scalars['Uuid'];
-  transport: Maybe<TransportInputApi>;
   payment: Maybe<PaymentInputApi>;
 }>;
 
@@ -2507,7 +2513,6 @@ export type RemovePromoCodeFromCartMutationApi = { __typename?: 'Mutation', Remo
 
 export type CartQueryVariablesApi = Exact<{
   cartUuid: Maybe<Scalars['Uuid']>;
-  transport: Maybe<TransportInputApi>;
   payment: Maybe<PaymentInputApi>;
 }>;
 
@@ -2650,7 +2655,6 @@ export type CreateOrderMutationVariablesApi = Exact<{
   deliveryCountry: Maybe<Scalars['String']>;
   note: Maybe<Scalars['String']>;
   payment: PaymentInputApi;
-  transport: TransportInputApi;
   cartUuid: Maybe<Scalars['Uuid']>;
 }>;
 
@@ -4071,9 +4075,9 @@ export function useBrandsQueryApi(options: Omit<Urql.UseQueryArgs<BrandsQueryVar
   return Urql.useQuery<BrandsQueryApi>({ query: BrandsQueryDocumentApi, ...options });
 };
 export const AddToCartMutationDocumentApi = gql`
-    mutation AddToCartMutation($cartUuid: Uuid, $transport: TransportInput, $payment: PaymentInput, $isAbsoluteQuantity: Boolean, $productUuid: Uuid!, $quantity: Int!) {
+    mutation AddToCartMutation($cartUuid: Uuid, $payment: PaymentInput, $isAbsoluteQuantity: Boolean, $productUuid: Uuid!, $quantity: Int!) {
   AddToCart(
-    input: {cartUuid: $cartUuid, transport: $transport, payment: $payment, isAbsoluteQuantity: $isAbsoluteQuantity, productUuid: $productUuid, quantity: $quantity}
+    input: {cartUuid: $cartUuid, payment: $payment, isAbsoluteQuantity: $isAbsoluteQuantity, productUuid: $productUuid, quantity: $quantity}
   ) {
     ...CartFragment
     addProductResult {
@@ -4102,9 +4106,9 @@ export function useApplyPromoCodeToCartMutationApi() {
   return Urql.useMutation<ApplyPromoCodeToCartMutationApi, ApplyPromoCodeToCartMutationVariablesApi>(ApplyPromoCodeToCartMutationDocumentApi);
 };
 export const RemoveFromCartMutationDocumentApi = gql`
-    mutation RemoveFromCartMutation($cartUuid: Uuid, $cartItemUuid: Uuid!, $transport: TransportInput, $payment: PaymentInput) {
+    mutation RemoveFromCartMutation($cartUuid: Uuid, $cartItemUuid: Uuid!, $payment: PaymentInput) {
   RemoveFromCart(
-    input: {cartUuid: $cartUuid, cartItemUuid: $cartItemUuid, transport: $transport, payment: $payment}
+    input: {cartUuid: $cartUuid, cartItemUuid: $cartItemUuid, payment: $payment}
   ) {
     ...CartFragment
   }
@@ -4126,8 +4130,8 @@ export function useRemovePromoCodeFromCartMutationApi() {
   return Urql.useMutation<RemovePromoCodeFromCartMutationApi, RemovePromoCodeFromCartMutationVariablesApi>(RemovePromoCodeFromCartMutationDocumentApi);
 };
 export const CartQueryDocumentApi = gql`
-    query CartQuery($cartUuid: Uuid, $transport: TransportInput, $payment: PaymentInput) {
-  cart(cartInput: {cartUuid: $cartUuid, transport: $transport, payment: $payment}) {
+    query CartQuery($cartUuid: Uuid, $payment: PaymentInput) {
+  cart(cartInput: {cartUuid: $cartUuid, payment: $payment}) {
     ...CartFragment
   }
 }
@@ -4248,9 +4252,9 @@ export function useCheckPaymentStatusMutationApi() {
   return Urql.useMutation<CheckPaymentStatusMutationApi, CheckPaymentStatusMutationVariablesApi>(CheckPaymentStatusMutationDocumentApi);
 };
 export const CreateOrderMutationDocumentApi = gql`
-    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $note: String, $payment: PaymentInput!, $transport: TransportInput!, $cartUuid: Uuid) {
+    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $note: String, $payment: PaymentInput!, $cartUuid: Uuid) {
   CreateOrder(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, note: $note, payment: $payment, transport: $transport, cartUuid: $cartUuid}
+    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, note: $note, payment: $payment, cartUuid: $cartUuid}
   ) {
     number
     uuid

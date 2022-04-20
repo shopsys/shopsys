@@ -1,13 +1,11 @@
 mutation RemoveFromCartMutation (
     $cartUuid: Uuid,
     $cartItemUuid: Uuid!
-    $transport: TransportInput
     $payment: PaymentInput
 ) {
     RemoveFromCart(input: {
         cartUuid: $cartUuid,
         cartItemUuid: $cartItemUuid,
-        transport: $transport,
         payment: $payment,
     }) {
         ...CartFragment

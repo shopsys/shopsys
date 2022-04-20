@@ -1,6 +1,5 @@
 mutation AddToCartMutation (
     $cartUuid: Uuid
-    $transport: TransportInput
     $payment: PaymentInput
     $isAbsoluteQuantity: Boolean
     $productUuid: Uuid!
@@ -8,7 +7,6 @@ mutation AddToCartMutation (
 ) {
     AddToCart(input: {
         cartUuid: $cartUuid,
-        transport: $transport,
         payment: $payment,
         isAbsoluteQuantity: $isAbsoluteQuantity,
         productUuid: $productUuid,
