@@ -9,6 +9,8 @@ ChangeTransportInCartInput:
             transportUuid:
                 type: "Uuid"
                 description: "UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart"
+                validation:
+                    -   App\FrontendApi\Model\Component\Constraints\ExistingTransport: ~
             pickupPlaceIdentifier:
                 type: "String"
                 defaultValue: null

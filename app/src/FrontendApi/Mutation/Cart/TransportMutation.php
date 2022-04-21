@@ -8,12 +8,10 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\Model\Cart\Transport\CartTransportFacade;
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportMutation implements MutationInterface, AliasedInterface
 {
@@ -69,11 +67,7 @@ class TransportMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
-        try {
-            $this->cartTransportFacade->updateTransportInCart($cart, $transportUuid, $pickupPlaceIdentifier);
-        } catch (TransportNotFoundException $transportNotFoundException) {
-            throw new UserError($transportNotFoundException->getMessage());
-        }
+        $this->cartTransportFacade->updateTransportInCart($cart, $transportUuid, $pickupPlaceIdentifier);
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }

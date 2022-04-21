@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\FrontendApi\Model\Component\Constraints\ExistingTransport;
 use Ramsey\Uuid\Uuid;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -183,27 +184,12 @@ class CartTransportTest extends GraphQlTestCase
         self::assertNull($transportResponse);
     }
 
-    public function testNotAvailableTransportIsNotReturned(): void
+    public function testNotAvailableTransportDoesNotPassValidation(): void
     {
-        $this->addNonExistingTransportToDemoCart();
+        $response = $this->addNonExistingTransportToDemoCart();
 
-        $getCartQuery = '{
-            cart(cartInput: {
-                    cartUuid: "' . CartDataFixture::CART_UUID . '"
-                }
-            ) {
-                transport {
-                    name
-                    description
-                    instruction
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($getCartQuery);
-        $transportResponse = $response['data']['cart']['transport'];
-
-        self::assertNull($transportResponse);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertSame(ExistingTransport::TRANSPORT_DOES_NOT_EXIST_ERROR, $validationErrors['input.transportUuid'][0]['code']);
     }
 
     public function testWeightLimitTransportIsNotReturned(): void
@@ -252,15 +238,19 @@ class CartTransportTest extends GraphQlTestCase
         $this->addTransportToDemoCart($transport->getUuid());
     }
 
-    private function addNonExistingTransportToDemoCart(): void
+    /**
+     * @return array
+     */
+    private function addNonExistingTransportToDemoCart(): array
     {
-        $this->addTransportToDemoCart(Uuid::uuid4()->toString());
+        return $this->addTransportToDemoCart(Uuid::uuid4()->toString());
     }
 
     /**
      * @param string $transportUuid
+     * @return array
      */
-    private function addTransportToDemoCart(string $transportUuid): void
+    private function addTransportToDemoCart(string $transportUuid): array
     {
         $changeTransportInCartMutation = '
             mutation {
@@ -272,7 +262,8 @@ class CartTransportTest extends GraphQlTestCase
                 }
             }
         ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+
+        return $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 
     private function removeTransportFromDemoCart(): void
