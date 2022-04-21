@@ -652,6 +652,9 @@ msgstr ""
 msgid "Entity ID"
 msgstr ""
 
+msgid "Error messages"
+msgstr ""
+
 msgid "Exposed in Stores"
 msgstr ""
 

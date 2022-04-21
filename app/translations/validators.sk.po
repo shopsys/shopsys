@@ -145,6 +145,15 @@ msgstr "Zadaný hash nie je validný."
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr ""
 
+msgid "Selected pickup place is not available"
+msgstr ""
+
+msgid "Selected transport is not available"
+msgstr ""
+
+msgid "Selected transport price has changed"
+msgstr ""
+
 msgid "Sklad s tímto externím kódem již existuje"
 msgstr ""
 
@@ -169,7 +178,13 @@ msgstr ""
 msgid "The promo code is not valid yet. Check it, please."
 msgstr ""
 
+msgid "Transport must be set in cart before sending the order"
+msgstr ""
+
 msgid "Transport type name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Transport with provided UUID does not exist"
 msgstr ""
 
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
