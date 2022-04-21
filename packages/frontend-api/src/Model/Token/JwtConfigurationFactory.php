@@ -12,6 +12,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class JwtConfigurationFactory
 {
+    private const FRONTEND_API_KEYS_FILEPATH_PARAMETER = 'shopsys.frontend_api.keys_filepath';
+
     /**
      * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
      */
@@ -39,6 +41,10 @@ class JwtConfigurationFactory
      */
     public function create(): Configuration
     {
+        if (!$this->parameterBag->has(self::FRONTEND_API_KEYS_FILEPATH_PARAMETER)) {
+            return Configuration::forUnsecuredSigner();
+        }
+
         return Configuration::forAsymmetricSigner(
             $this->getSigner(),
             $this->getPrivateKey(),
@@ -51,7 +57,7 @@ class JwtConfigurationFactory
      */
     public function getPrivateKey(): Key
     {
-        $apiKeyFilepath = $this->parameterBag->get('shopsys.frontend_api.keys_filepath');
+        $apiKeyFilepath = $this->parameterBag->get(self::FRONTEND_API_KEYS_FILEPATH_PARAMETER);
 
         return Key\InMemory::file($apiKeyFilepath . '/private.key');
     }
@@ -61,7 +67,7 @@ class JwtConfigurationFactory
      */
     public function getPublicKey(): Key
     {
-        $apiKeyFilepath = $this->parameterBag->get('shopsys.frontend_api.keys_filepath');
+        $apiKeyFilepath = $this->parameterBag->get(self::FRONTEND_API_KEYS_FILEPATH_PARAMETER);
 
         return Key\InMemory::file($apiKeyFilepath . '/public.key');
     }
