@@ -287,11 +287,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \App\Model\Payment\Payment|null $payment
+     * @return string|null
      */
-    public function setPayment(?Payment $payment): void
+    public function getPaymentGoPayBankSwift(): ?string
     {
-        $this->payment = $payment;
+        return $this->cart->getPaymentGoPayBankSwift();
     }
 
     /**

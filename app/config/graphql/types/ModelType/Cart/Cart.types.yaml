@@ -31,3 +31,7 @@ Cart:
             remainingAmountWithVatForFreeTransport:
                 type: "Money"
                 description: "Remaining amount for free transport and payment; null = transport cannot be free"
+            paymentGoPayBankSwift:
+                type: "String"
+                description: "Selected bank swift code of goPay payment bank transfer"
+
