@@ -82,6 +82,11 @@ class FileUploadController extends AdminBaseController
     public function deleteTemporaryFileAction(Request $request)
     {
         $filename = $request->get('filename');
+
+        if ($filename === null) {
+            return new JsonResponse(false);
+        }
+
         $actionResult = $this->fileUpload->tryDeleteTemporaryFile($filename);
 
         return new JsonResponse($actionResult);
