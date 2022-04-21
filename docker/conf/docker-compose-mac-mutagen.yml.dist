@@ -11,7 +11,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./app/var/postgres-data:/var/lib/postgresql/data:cached
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -131,7 +131,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./app/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
             - cluster.routing.allocation.disk.watermark.flood_stage=0.99
@@ -147,6 +147,10 @@ services:
 volumes:
     source-code:
     storefront:
+    elasticsearch-data:
+        driver: local
+    postgres-data:
+        driver: local
 
 x-mutagen:
     sync:

@@ -10,7 +10,7 @@ services:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./app/var/postgres-data:/var/lib/postgresql/data
+            - postgres-data:/var/lib/postgresql/data
             - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
@@ -143,4 +143,6 @@ services:
 
 volumes:
     elasticsearch-data:
+        driver: local
+    postgres-data:
         driver: local
