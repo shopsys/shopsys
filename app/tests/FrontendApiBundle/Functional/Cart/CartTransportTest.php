@@ -8,8 +8,6 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use App\FrontendApi\Model\Component\Constraints\ExistingTransport;
-use Ramsey\Uuid\Uuid;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartTransportTest extends GraphQlTestCase
@@ -184,14 +182,6 @@ class CartTransportTest extends GraphQlTestCase
         self::assertNull($transportResponse);
     }
 
-    public function testNotAvailableTransportDoesNotPassValidation(): void
-    {
-        $response = $this->addNonExistingTransportToDemoCart();
-
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(ExistingTransport::TRANSPORT_DOES_NOT_EXIST_ERROR, $validationErrors['input.transportUuid'][0]['code']);
-    }
-
     public function testWeightLimitTransportIsNotReturned(): void
     {
         $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_CZECH_POST);
@@ -239,18 +229,9 @@ class CartTransportTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
-     */
-    private function addNonExistingTransportToDemoCart(): array
-    {
-        return $this->addTransportToDemoCart(Uuid::uuid4()->toString());
-    }
-
-    /**
      * @param string $transportUuid
-     * @return array
      */
-    private function addTransportToDemoCart(string $transportUuid): array
+    private function addTransportToDemoCart(string $transportUuid)
     {
         $changeTransportInCartMutation = '
             mutation {
@@ -263,7 +244,7 @@ class CartTransportTest extends GraphQlTestCase
             }
         ';
 
-        return $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 
     private function removeTransportFromDemoCart(): void

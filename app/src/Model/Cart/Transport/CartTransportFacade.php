@@ -64,4 +64,13 @@ class CartTransportFacade
         $cart->setTransportWatchedPrice($transportWatchedPrice);
         $this->entityManager->flush();
     }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    public function unsetPickupPlaceIdentifierFromCart(Cart $cart): void
+    {
+        $cart->unsetPickupPlaceIdentifier();
+        $this->entityManager->flush();
+    }
 }

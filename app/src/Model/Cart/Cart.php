@@ -219,6 +219,11 @@ class Cart extends BaseCart
         return $this->pickupPlaceIdentifier;
     }
 
+    public function unsetPickupPlaceIdentifier(): void
+    {
+        $this->pickupPlaceIdentifier = null;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $transportWatchedPrice
      */

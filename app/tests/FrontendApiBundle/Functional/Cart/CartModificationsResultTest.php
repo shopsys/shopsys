@@ -12,10 +12,10 @@ use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -56,6 +56,12 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
+
+    /**
+     * @var \App\Model\Store\StoreFacade
+     * @inject
+     */
+    private StoreFacade $storeFacade;
 
     protected function setUp(): void
     {
@@ -342,8 +348,10 @@ class CartModificationsResultTest extends GraphQlTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
 
-        $notExistingPickupPlaceIdentifier = Uuid::uuid4()->toString();
-        $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $notExistingPickupPlaceIdentifier);
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $this->addTransportToCart($newlyCreatedCart['uuid'], $transport, $store->getUuid());
+        $this->storeFacade->delete($store->getId());
 
         $getCartQuery = '{
             cart(cartInput: {
