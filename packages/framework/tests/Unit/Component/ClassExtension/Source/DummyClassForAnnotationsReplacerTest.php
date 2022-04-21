@@ -50,6 +50,20 @@ class DummyClassForAnnotationsReplacerTest
     }
 
     /**
+     * @return array<string, int>
+     */
+    public function returnsAssocArray()
+    {
+    }
+
+    /**
+     * @return array
+     */
+    public function returnsNotTypedArray()
+    {
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacadeOrNull
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array

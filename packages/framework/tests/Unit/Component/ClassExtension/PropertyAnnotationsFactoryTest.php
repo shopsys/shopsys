@@ -9,6 +9,7 @@ use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
+use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
 use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass2;
@@ -38,7 +39,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
 
         $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap)
+            new AnnotationsReplacer($replacementMap, new DocBlockParser())
         );
     }
 

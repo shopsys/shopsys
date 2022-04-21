@@ -162,3 +162,30 @@ There you can find links to upgrade notes for other versions too.
     - if you need the backend-api in the current state, you can fork it and handle the compatibility with the new versions of the other packages
 - allow running npm scripts even when they are not executable ([#2403](https://github.com/shopsys/shopsys/pull/2403))
     - see #project-base-diff to update your project
+- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer` was changed
+    - constructor changed interface
+        ```diff
+            /**
+             * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
+        +    * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
+             */
+            public function __construct(
+                AnnotationsReplacementsMap $annotationsReplacementsMap,
+        +       DocBlockParser $docBlockParser
+            ) {
+    ```
+
+- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory` was changed
+    - constructor changed interface
+        ```diff
+            /**
+             * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
+             * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
+        +    * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
+             */
+             public function __construct(
+                 AnnotationsReplacementsMap $annotationsReplacementsMap,
+                 AnnotationsReplacer $annotationsReplacer,
+        +        DocBlockParser $docBlockParser
+             ) {
+        ```
