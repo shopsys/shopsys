@@ -46,7 +46,7 @@ export default class OrderPreview {
                     if (!_this.isLoaded && !_this.isLoading) {
                         _this.isLoading = true;
                         Ajax.ajax({
-                            loaderElement: null,
+                            loaderElement: 'none',
                             url: _this.url,
                             success: (data) => _this.onLoadPreview(data)
                         });
