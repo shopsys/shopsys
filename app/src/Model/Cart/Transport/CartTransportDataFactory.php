@@ -109,7 +109,7 @@ class CartTransportDataFactory
             $domainId,
             $cart->getQuantifiedProducts(),
             $transport,
-            null, // payment is irrelevant here, however, it can be taken from the cart after https://shopsys.atlassian.net/browse/FWCC-847 is implemented
+            $cart->getPayment(),
             $customerUser,
             null,
             null,

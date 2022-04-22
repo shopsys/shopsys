@@ -271,4 +271,28 @@ class Cart extends BaseCart
     {
         $this->transportWatchedPrice = $transportWatchedPrice;
     }
+
+    /**
+     * @return \App\Model\Payment\Payment|null
+     */
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getPaymentWatchedPrice(): ?Money
+    {
+        return $this->paymentWatchedPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPrice
+     */
+    public function setPaymentWatchedPrice(?Money $paymentWatchedPrice): void
+    {
+        $this->paymentWatchedPrice = $paymentWatchedPrice;
+    }
 }

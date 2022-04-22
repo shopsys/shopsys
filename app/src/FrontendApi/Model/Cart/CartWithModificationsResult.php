@@ -75,11 +75,6 @@ class CartWithModificationsResult
     private ?Price $totalDiscountPrice = null;
 
     /**
-     * @var \App\Model\Payment\Payment|null
-     */
-    private ?Payment $payment;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     private ?Money $remainingAmountWithVatForFreeTransport = null;
@@ -263,7 +258,7 @@ class CartWithModificationsResult
      */
     public function getPayment(): ?Payment
     {
-        return $this->payment;
+        return $this->cart->getPayment();
     }
 
     /**

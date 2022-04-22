@@ -1,0 +1,98 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\FrontendApi\Model\Payment;
+
+use App\FrontendApi\Model\Payment\Exception\PaymentPriceChangedException;
+use App\Model\Cart\Cart;
+use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Payment\Payment;
+use Shopsys\Cdn\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+
+class PaymentValidationFacade
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
+     */
+    private PaymentPriceCalculation $paymentPriceCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     */
+    private CurrentCustomerUser $currentCustomerUser;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    private CurrencyFacade $currencyFacade;
+
+    /**
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
+     */
+    private OrderPreviewFactory $orderPreviewFactory;
+
+    /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     */
+    public function __construct(
+        Domain $domain,
+        CurrencyFacade $currencyFacade,
+        OrderPreviewFactory $orderPreviewFactory,
+        CurrentCustomerUser $currentCustomerUser,
+        PaymentPriceCalculation $paymentPriceCalculation
+    ) {
+        $this->domain = $domain;
+        $this->currencyFacade = $currencyFacade;
+        $this->orderPreviewFactory = $orderPreviewFactory;
+        $this->currentCustomerUser = $currentCustomerUser;
+        $this->paymentPriceCalculation = $paymentPriceCalculation;
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment $payment
+     * @param \App\Model\Cart\Cart $cart
+     */
+    public function checkPaymentPrice(Payment $payment, Cart $cart): void
+    {
+        $domainId = $this->domain->getId();
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        /** @var \App\Model\Customer\User\CustomerUser $currentCustomerUser */
+        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $orderPreview = $this->orderPreviewFactory->create(
+            $currency,
+            $domainId,
+            $cart->getQuantifiedProducts(),
+            $cart->getTransport(),
+            $payment,
+            $currentCustomerUser,
+            null,
+            null,
+            $cart->getFirstAppliedPromoCode()
+        );
+
+        $calculatedPaymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $currency,
+            $orderPreview->getProductsPrice(),
+            $domainId
+        );
+
+        $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
+        if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
+            throw new PaymentPriceChangedException($calculatedPaymentPrice);
+        }
+    }
+}

@@ -7,7 +7,6 @@ namespace App\FrontendApi\Resolver\Cart;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
-use App\FrontendApi\Model\Payment\PaymentInputData;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -62,9 +61,8 @@ class CartResolver implements ResolverInterface, AliasedInterface
         if ($cart === null) {
             return null;
         }
-        $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $paymentInputData);
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
 
     /**
@@ -83,6 +81,6 @@ class CartResolver implements ResolverInterface, AliasedInterface
      */
     private function initializeDefaultValues(Argument $argument): array
     {
-        return $argument['cartInput'] ?? ['cartUuid' => null, 'transport' => null, 'payment' => null];
+        return $argument['cartInput'] ?? ['cartUuid' => null];
     }
 }
