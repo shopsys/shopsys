@@ -4,6 +4,7 @@ import {
     NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
 import { FC } from 'react';
+import Image from 'components/Basic/Image';
 import { NavigationCategory } from 'types/navigation';
 import NavigationSubList from 'components/Layout/Header/Navigation/NavigationSubList';
 import NextLink from 'next/link';
@@ -19,7 +20,7 @@ const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
         <NavigationColumnCategoryStyled data-testid={testIdentifier}>
             <NextLink href={props.columnCategory.slug} passHref>
                 <NavigationColumnCategoryImageStyled>
-                    <img src={props.columnCategory.image.url} width={props.columnCategory.image.width} />
+                    <Image image={props.columnCategory.image} type="default" alt={props.columnCategory.name} />
                 </NavigationColumnCategoryImageStyled>
             </NextLink>
             <NextLink href={props.columnCategory.slug} passHref>

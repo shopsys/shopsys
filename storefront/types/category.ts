@@ -1,5 +1,5 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 import { ListedProductConnectionType } from 'types/product';
 
 export type SimpleCategoryType = {
@@ -17,7 +17,7 @@ export type ListedCategoryType = {
     uuid: string;
     name: string;
     slug: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     totalCount?: number;
 };
 

@@ -124,7 +124,10 @@ const Search: FC<SearchProps> = (props) => {
                         <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found articles')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areArticlesResultsVisible}>
-                                <SimpleNavigation listedItems={props.searchResults.articlesSearch} />
+                                <SimpleNavigation
+                                    listedItems={props.searchResults.articlesSearch}
+                                    imageType="searchThumbnail"
+                                />
                             </SearchResultsBlockStyled>
                             {numberOfVisible < props.searchResults.articlesSearch.length && (
                                 <ShowResultsButtonWrapperStyled>

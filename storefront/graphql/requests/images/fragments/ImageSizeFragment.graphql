@@ -3,4 +3,7 @@ fragment ImageSizeFragment on ImageSize {
     url
     width
     height
+    additionalSizes {
+        ...AdditionalSizeFragment
+    }
 }

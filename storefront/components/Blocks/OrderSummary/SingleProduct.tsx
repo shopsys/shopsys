@@ -23,7 +23,7 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
     return (
         <ListItemStyled>
             <ListItemPictureWrapper data-testid={testIdentifier + 'image'}>
-                <Image image={props.item.product.image} alt={props.item.product.fullName} />
+                <Image image={props.item.product.image} type="thumbnailExtraSmall" alt={props.item.product.fullName} />
             </ListItemPictureWrapper>
             <ListItemInfoWrapper>
                 <ListItemInfo>

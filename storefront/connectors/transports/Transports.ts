@@ -1,5 +1,5 @@
 import { TransportWithAvailablePaymentsAndStoresFragmentApi, useTransportsQueryApi } from 'graphql/generated';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPickupPlacesApiData } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapPriceData } from 'connectors/price/Prices';
@@ -25,7 +25,7 @@ export const mapTransport = (
         ...apiData,
         description: apiData.description !== null ? apiData.description : '',
         instruction: apiData.instruction !== null ? apiData.instruction : '',
-        image: getFirstImageSize(apiData.images),
+        image: getFirstImage(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         isPersonalPickup:
             (apiData.stores?.edges !== undefined && apiData.stores.edges !== null && apiData.stores.edges.length > 0) ||

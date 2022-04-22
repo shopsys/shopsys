@@ -47,7 +47,7 @@ const SideSlider: FC<SideSliderProps> = (props) => {
                     >
                         <SideSliderImageStyled>
                             <SideSliderImageLinkStyled href={blogSideItem.link}>
-                                <Image image={blogSideItem.image} alt="alt" />
+                                <Image image={blogSideItem.image} type="list" alt="alt" />
                             </SideSliderImageLinkStyled>
                         </SideSliderImageStyled>
                         <SideSliderContentStyled>

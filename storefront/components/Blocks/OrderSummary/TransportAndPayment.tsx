@@ -31,7 +31,7 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                         <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-transport-name'}>
                             {props.transport.name}
                             <TransportAndPaymentImageWrapper>
-                                <Image image={props.transport.image} alt={props.transport.name} />
+                                <Image image={props.transport.image} type="default" alt={props.transport.name} />
                             </TransportAndPaymentImageWrapper>
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice data-testid={testIdentifier + '-transport-price'}>
@@ -46,7 +46,7 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                         <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-payment-name'}>
                             {props.payment.name}
                             <TransportAndPaymentImageWrapper>
-                                <Image image={props.payment.image} alt={props.payment.name} />
+                                <Image image={props.payment.image} type="default" alt={props.payment.name} />
                             </TransportAndPaymentImageWrapper>
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice data-testid={testIdentifier + '-payment-price'}>

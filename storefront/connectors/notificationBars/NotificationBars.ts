@@ -1,5 +1,5 @@
 import { NotificationBarsFragmentApi, useNotificationBarsApi } from 'graphql/generated';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { NotificationBarsType } from 'types/notificationBars';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
@@ -20,7 +20,7 @@ const mapNotificationBars = (apiData: NotificationBarsFragmentApi[]): Notificati
         const { images, ...notificationBarItemData } = notificationBarItem;
         mappedNotificationBars.push({
             ...notificationBarItemData,
-            image: getFirstImageSize(images),
+            image: getFirstImage(images),
         });
     }
 

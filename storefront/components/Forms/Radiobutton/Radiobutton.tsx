@@ -3,7 +3,7 @@ import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import Image from 'components/Basic/Image';
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -21,7 +21,7 @@ type RadiobuttonProps = NativeProps & {
      * A prop which, if present, provides a ImageSizeType object
      * with render values for a label image/icon
      */
-    image?: ImageSizeType | null;
+    image?: ImageType | null;
     /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
@@ -49,7 +49,7 @@ const Radiobutton: FC<RadiobuttonProps> = (props) => {
                 <div>
                     {props.image !== undefined && (
                         <LabelImageWrapper>
-                            <Image alt="" image={props.image} />
+                            <Image alt="" type="default" image={props.image} />
                         </LabelImageWrapper>
                     )}
                     {props.label}

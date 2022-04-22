@@ -63,7 +63,11 @@ const Item: FC<ItemProps> = (props) => {
             <ImageCellStyled data-testid={testIdentifier + 'image'}>
                 <NextLink href={props.item.product.slug} passHref>
                     <ImageWrapperStyled>
-                        <Image image={props.item.product.image} alt={props.item.product.fullName} />
+                        <Image
+                            image={props.item.product.image}
+                            type="thumbnailExtraSmall"
+                            alt={props.item.product.fullName}
+                        />
                     </ImageWrapperStyled>
                 </NextLink>
             </ImageCellStyled>

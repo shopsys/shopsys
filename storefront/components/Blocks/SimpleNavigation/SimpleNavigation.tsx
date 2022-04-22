@@ -10,6 +10,7 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
+    imageType?: string;
 };
 
 const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
@@ -33,7 +34,9 @@ const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
                 <SimpleNavigationStyled data-testid={testIdentifier}>
                     {props.listedItems.map((listedItem, key) => (
                         <ListItemStyled key={key} data-testid={testIdentifier + '-' + key}>
-                            <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
+                            <ListItem listedItem={listedItem} imageType={props.imageType}>
+                                {listedItem.name}
+                            </ListItem>
                         </ListItemStyled>
                     ))}
                 </SimpleNavigationStyled>

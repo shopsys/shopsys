@@ -1,5 +1,5 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { SimpleBlogCategoryType } from './blogCategory';
 import { SliderProductItemType } from 'types/product';
@@ -10,7 +10,7 @@ export type BlogArticleDetailType = {
     name: string;
     slug: string;
     link: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     breadcrumb: BreadcrumbItemType[];
     text: string | null;
     publishDate: string;
@@ -28,7 +28,7 @@ export type ListedBlogArticleType = {
     name: string;
     link: string;
     slug: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     publishDate: string;
     perex: string | null;
     blogCategories: SimpleBlogCategoryType[];
@@ -38,5 +38,5 @@ export type SimpleBlogArticleType = {
     __typename?: 'BlogArticle';
     name: string;
     slug: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
 };

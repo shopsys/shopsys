@@ -10,7 +10,7 @@ import {
 } from 'graphql/generated';
 
 import { DomainConfigType } from 'utils/Domain/Domain';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { initialState } from 'redux/slices/user';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapPriceData } from 'connectors/price/Prices';
@@ -68,7 +68,7 @@ const mapListedOrder = (apiOrder: ListedOrderFragmentApi, currentDomainConfig: D
         items: { quantity: apiOrder.items.length - 2 }, // -2 => we need to remove transport and payment
         transport: {
             name: apiOrder.transport.name,
-            image: getFirstImageSize(apiOrder.transport.images),
+            image: getFirstImage(apiOrder.transport.images),
         },
         payment: apiOrder.payment.name,
         totalPrice: mapPriceData(apiOrder.totalPrice, currentDomainConfig.currencyCode),

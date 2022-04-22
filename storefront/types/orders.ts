@@ -1,4 +1,4 @@
-import { ImageSizeType } from './image';
+import { ImageType } from './image';
 import { PageInfoType } from 'types/pageInfo';
 import { PriceType } from './price';
 
@@ -11,7 +11,7 @@ export type ListedOrderType = {
     };
     transport: {
         name: string;
-        image: ImageSizeType | null;
+        image: ImageType | null;
     };
     payment: string;
     totalPrice: PriceType;

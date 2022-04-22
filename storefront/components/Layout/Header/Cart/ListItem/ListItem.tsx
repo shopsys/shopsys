@@ -28,7 +28,7 @@ const ListItem: FC<ListItemProps> = (props) => {
     return (
         <ListItemStyled key={props.cartItem.uuid} data-testid={testIdentifier}>
             <ListItemImageWrapperStyled>
-                <Image alt={props.cartItem.product.fullName} image={props.cartItem.product.image} />
+                <Image alt={props.cartItem.product.fullName} type="thumbnail" image={props.cartItem.product.image} />
             </ListItemImageWrapperStyled>
             <ListItemDetailStyled>
                 <NextLink href={props.cartItem.product.slug}>

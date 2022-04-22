@@ -7,7 +7,7 @@ fragment ListedOrderFragment on Order {
     }
     transport {
         name
-        images(sizes: ["default"]) {
+        images {
             ...ImageSizesFragment
         }
     }

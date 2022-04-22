@@ -1,3 +1,5 @@
+import { ImageType } from './image';
+
 export type NavigationSubCategory = {
     name: string;
     slug: string;
@@ -6,11 +8,7 @@ export type NavigationSubCategory = {
 export type NavigationCategory = {
     name: string;
     slug: string;
-    image: {
-        url: string;
-        width: number;
-        height: number;
-    };
+    image: ImageType;
     children: NavigationSubCategory[];
 };
 

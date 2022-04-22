@@ -1,15 +1,15 @@
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 
 export type ListedItemPropType =
     | {
           slug: string;
-          image: ImageSizeType | null;
+          image: ImageType | null;
           name: string;
           totalCount?: number;
       }
     | {
           slug: string;
-          image: ImageSizeType | null;
+          image: ImageType | null;
           name: string;
       }
     | {

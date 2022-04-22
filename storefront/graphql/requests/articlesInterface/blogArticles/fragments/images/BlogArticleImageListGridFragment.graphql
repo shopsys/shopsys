@@ -1,5 +1,5 @@
 fragment BlogArticleImageListGridFragment on BlogArticle {
-    blogArticlesGridImages: images (sizes: ["listGrid"]) {
+    blogArticlesGridImages: images {
         ...ImageSizesFragment
     }
 }

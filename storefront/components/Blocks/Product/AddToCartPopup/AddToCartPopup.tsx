@@ -49,7 +49,7 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
             <ProductStyled data-testid={testIdentifier}>
                 {props.product.image !== null && (
                     <ImageStyled>
-                        <Image image={props.product.image} alt={props.product.fullName} />
+                        <Image image={props.product.image} type="thumbnailMedium" alt={props.product.fullName} />
                     </ImageStyled>
                 )}
                 <ContentStyled>

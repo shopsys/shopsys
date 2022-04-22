@@ -11,7 +11,7 @@ import {
     NavigationItem,
     NavigationSubCategory,
 } from 'types/navigation';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function useNavigationItems(): NavigationItem[] {
@@ -65,7 +65,7 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
         if (!(0 in category.images)) {
             continue;
         }
-        const mappedImage = getFirstImageSize(category.images);
+        const mappedImage = getFirstImage(category.images);
         if (mappedImage === null) {
             continue;
         }

@@ -27,7 +27,7 @@ const ProductItem: FC<ListedProductType> = (props) => {
                 <NextLink href={props.slug} passHref>
                     <ProductItemLinkStyled>
                         <ProductItemImageStyled>
-                            <Image image={props.image} alt={props.name} />
+                            <Image image={props.image} type="list" alt={props.name} />
                             <ProductItemFlagsStyled>
                                 <ProductFlags flags={props.flags} />
                             </ProductItemFlagsStyled>

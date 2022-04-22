@@ -29,7 +29,7 @@ const List: FC<ListProps> = (props) => {
                 <ListItemStyled key={blogArticle.uuid} data-testid={testIdentifier + blogArticleIndex}>
                     <ListItemImageStyled data-testid={testIdentifier + blogArticleIndex + '-image'}>
                         <a href={blogArticle.link}>
-                            <Image image={blogArticle.image} alt={blogArticle.name} />
+                            <Image image={blogArticle.image} type="list" alt={blogArticle.name} />
                         </a>
                     </ListItemImageStyled>
                     <ListItemContentStyled>

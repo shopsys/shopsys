@@ -1,0 +1,6 @@
+fragment AdditionalSizeFragment on AdditionalSize {
+    height
+    media
+    url
+    width
+}

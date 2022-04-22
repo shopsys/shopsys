@@ -1,4 +1,4 @@
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 import { SimpleCategoryType } from 'types/category';
 
 export type AdvertType = AdvertImageType | AdvertCodeType;
@@ -13,8 +13,8 @@ type AdvertCommonType = {
 
 type AdvertImageType = AdvertCommonType & {
     __typename: 'AdvertImage';
-    image: ImageSizeType | null;
-    imageMobile: ImageSizeType | null;
+    image: ImageType | null;
+    imageMobile: ImageType | null;
     link?: string;
 };
 

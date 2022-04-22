@@ -7,6 +7,12 @@ fragment NotificationBarsFragment on NotificationBar {
             url
             width
             height
+            additionalSizes {
+                media
+                url
+                width
+                height
+            }
         }
     }
 }

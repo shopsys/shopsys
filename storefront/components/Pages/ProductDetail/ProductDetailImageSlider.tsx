@@ -8,12 +8,12 @@ import {
     ProductDetailImageSliderStyled,
     SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
-import { ImageSizesType } from 'types/image';
+import { ImageType } from 'types/image';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductDetailImageSliderProps = {
-    galleryItems: ImageSizesType[];
+    galleryItems: ImageType[];
 };
 
 const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
@@ -78,7 +78,13 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
             <ProductDetailImageSliderStyled ref={sliderRef} className="keen-slider">
                 {props.galleryItems.map((galleryItem, index) => (
                     <ProductDetailImageSliderItemStyled key={index} className="keen-slider__slide">
-                        <SliderItemImageStyled src={loadedImageUrls[index] ? galleryItem.default.url : ''} />
+                        <SliderItemImageStyled
+                            src={
+                                loadedImageUrls[index]
+                                    ? galleryItem.sizes?.find((size) => size.size === 'default')?.url
+                                    : ''
+                            }
+                        />
                     </ProductDetailImageSliderItemStyled>
                 ))}
             </ProductDetailImageSliderStyled>

@@ -17,7 +17,7 @@ const Side: FC<SideProps> = (props) => {
                 <SideItemStyled key={index} data-testid={testIdentifier + index}>
                     <SideImageStyled>
                         <SideImageLinkStyled href={blogSideItem.link}>
-                            <Image image={blogSideItem.image} alt="alt" />
+                            <Image image={blogSideItem.image} type="listAside" alt="alt" />
                         </SideImageLinkStyled>
                     </SideImageStyled>
                     <SideContentStyled>

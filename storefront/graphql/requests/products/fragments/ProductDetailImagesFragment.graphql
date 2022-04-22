@@ -1,5 +1,5 @@
 fragment ProductDetailImagesFragment on Product {
-    images (sizes: ["default","galleryThumbnail"]) {
+    images {
         ...ImageSizesFragment
     }
 }

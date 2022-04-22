@@ -1,16 +1,15 @@
 import { css } from 'styled-components';
+import { HTMLAttributes } from 'react';
 import { styled } from 'components/Theme/main';
 
-type BannersSliderItemStyledProps = {
-    sliderItemImageUrl: string;
-};
+type BannersSliderItemStyledProps = HTMLAttributes<HTMLImageElement>;
 
-export const BannersSliderItemStyled = styled.div<BannersSliderItemStyledProps>`
-    ${({ theme, sliderItemImageUrl }) => css`
-        height: 100%;
-
-        background: ${`url(${sliderItemImageUrl}) center  no-repeat`};
-        background-size: cover;
+export const BannersSliderItemStyled = styled.img<BannersSliderItemStyledProps>`
+    ${({ theme }) => css`
         border-radius: ${theme.radius.big};
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
     `}
 `;

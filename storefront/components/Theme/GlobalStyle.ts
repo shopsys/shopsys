@@ -55,9 +55,8 @@ const GlobalStyle = createGlobalStyle`
             }
         }
 
-        img:not(.icon) {
+        img:not(.icon):not(.responsive-image) {
             max-width: 100%;
-            height: auto;
 
             image-rendering: -webkit-optimize-contrast;
         }

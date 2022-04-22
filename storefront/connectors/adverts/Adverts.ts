@@ -1,6 +1,6 @@
 import { AdvertsFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { AdvertType } from 'types/advert';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapSimpleCategories } from 'connectors/categories/Categories';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
@@ -24,8 +24,8 @@ const mapAdverts = (apiData: AdvertsFragmentApi[]): AdvertType[] => {
                 ? {
                       ...advertItem,
                       link: advertItem.link !== null ? advertItem.link : undefined,
-                      image: getFirstImageSize(advertItem.image),
-                      imageMobile: getFirstImageSize(advertItem.imageMobile),
+                      image: getFirstImage(advertItem.image),
+                      imageMobile: getFirstImage(advertItem.imageMobile),
                   }
                 : { ...advertItem }),
             categories: mapSimpleCategories(advertItem.categories),
