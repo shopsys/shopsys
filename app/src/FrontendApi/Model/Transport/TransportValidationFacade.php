@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Transport;
 
+use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
@@ -18,6 +20,11 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class TransportValidationFacade
 {
+    /**
+     * @var \App\FrontendApi\Model\Cart\CartFacade
+     */
+    private CartFacade $cartFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
@@ -55,6 +62,7 @@ class TransportValidationFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         StoreFacade $storeFacade,
@@ -62,7 +70,8 @@ class TransportValidationFacade
         CurrencyFacade $currencyFacade,
         OrderPreviewFactory $orderPreviewFactory,
         TransportPriceCalculation $transportPriceCalculation,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        CartFacade $cartFacade
     ) {
         $this->storeFacade = $storeFacade;
         $this->domain = $domain;
@@ -70,6 +79,7 @@ class TransportValidationFacade
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->transportPriceCalculation = $transportPriceCalculation;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -143,5 +153,22 @@ class TransportValidationFacade
         if (($transport->isPersonalPickup() || $transport->isPacketery()) && $pickupPlaceIdentifier === null) {
             throw new MissingPickupPlaceIdentifierException();
         }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $cartUuid
+     */
+    public function checkTransportPaymentRelation(Transport $transport, ?string $cartUuid): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $payment = $cart->getPayment();
+        if ($payment === null || in_array($payment, $transport->getPayments(), true)) {
+            return;
+        }
+
+        throw new InvalidTransportPaymentCombinationException();
     }
 }

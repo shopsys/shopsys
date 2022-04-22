@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Payment;
 
+use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Payment\Exception\InvalidPaymentTransportCombinationException;
 use App\FrontendApi\Model\Payment\Exception\PaymentPriceChangedException;
 use App\Model\Cart\Cart;
 use App\Model\Order\Preview\OrderPreviewFactory;
@@ -15,6 +17,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PaymentValidationFacade
 {
+    /**
+     * @var \App\FrontendApi\Model\Cart\CartFacade
+     */
+    private CartFacade $cartFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
      */
@@ -46,19 +53,22 @@ class PaymentValidationFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         Domain $domain,
         CurrencyFacade $currencyFacade,
         OrderPreviewFactory $orderPreviewFactory,
         CurrentCustomerUser $currentCustomerUser,
-        PaymentPriceCalculation $paymentPriceCalculation
+        PaymentPriceCalculation $paymentPriceCalculation,
+        CartFacade $cartFacade
     ) {
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->paymentPriceCalculation = $paymentPriceCalculation;
+        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -94,5 +104,22 @@ class PaymentValidationFacade
         if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
         }
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment $payment
+     * @param string|null $cartUuid
+     */
+    public function checkPaymentTransportRelation(Payment $payment, ?string $cartUuid): void
+    {
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $transport = $cart->getTransport();
+        if ($transport === null || in_array($transport, $payment->getTransports(), true)) {
+            return;
+        }
+
+        throw new InvalidPaymentTransportCombinationException();
     }
 }

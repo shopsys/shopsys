@@ -82,9 +82,10 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
     public function testInvalidTransportPaymentCombination(): void
     {
         $this->addCardPaymentToDemoCart();
+        $cart = $this->cartFacade->findCart(null, CartDataFixture::CART_UUID);
         /** @var \App\Model\Transport\Transport $transportOverLimit */
         $transportOverLimit = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
-        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportOverLimit);
+        $this->cartTransportFacade->updateTransportInCart($cart, $transportOverLimit->getUuid(), null);
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
 use App\FrontendApi\Model\Component\Constraints\PaymentInCart;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
@@ -72,6 +73,20 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         $this->assertSame(PaymentInCart::UNAVAILABLE_PAYMENT_ERROR, $validationErrors['input.paymentUuid'][0]['code']);
     }
 
+    public function testInvalidPaymentTransportCombination(): void
+    {
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $this->addTransportToDemoCart($transport->getUuid());
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
+        $response = $this->addPaymentToDemoCart($payment->getUuid());
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertSame(PaymentInCart::INVALID_PAYMENT_TRANSPORT_COMBINATION_ERROR, $validationErrors['input'][0]['code']);
+    }
+
     /**
      * @param string $paymentUuid
      * @return array
@@ -118,5 +133,24 @@ class PaymentInCartValidationTest extends GraphQlTestCase
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->enabled[1] = false;
         $this->paymentFacade->edit($payment, $paymentData);
+    }
+
+    /**
+     * @param string $transportUuid
+     */
+    private function addTransportToDemoCart(string $transportUuid): void
+    {
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . CartDataFixture::CART_UUID . '"
+                    transportUuid: "' . $transportUuid . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 }
