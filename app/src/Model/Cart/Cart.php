@@ -289,6 +289,14 @@ class Cart extends BaseCart
     }
 
     /**
+     * @return string|null
+     */
+    public function getPaymentGoPayBankSwift(): ?string
+    {
+        return $this->paymentGoPayBankSwift;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPrice
      */
     public function setPaymentWatchedPrice(?Money $paymentWatchedPrice): void

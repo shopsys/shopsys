@@ -123,5 +123,8 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         if (array_key_exists('transport', $input) && $input['transport'] !== null) {
             throw new UserError('Usage of "transport" input is deprecated, we do not work with this field anymore, the transport is taken from the server cart instead.');
         }
+        if (array_key_exists('payment', $input) && $input['payment'] !== null) {
+            throw new UserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
+        }
     }
 }

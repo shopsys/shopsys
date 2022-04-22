@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
-use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 
@@ -54,6 +53,7 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
         ];
 
         $this->addPplTransportToDemoCart();
+        $this->addCardPaymentToDemoCart();
         $response = $this->getResponseContentForQuery($this->getMutation());
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
 
@@ -68,16 +68,10 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCard */
-        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
-        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatZero);
 
         return 'mutation {
                     CreateOrder(
@@ -96,10 +90,6 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
                             postcode: "12345"
                             country: "CZ"
                             note:"Thank You"
-                            payment: {
-                                uuid: "' . $paymentCard->getUuid() . '"
-                                price: ' . $paymentPrice . '
-                            }
                             differentDeliveryAddress: true
                             products: [
                                 {

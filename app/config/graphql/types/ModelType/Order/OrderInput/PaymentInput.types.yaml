@@ -2,9 +2,3 @@ PaymentInput:
     type: input-object
     inherits:
         - 'PaymentInputDecorator'
-    config:
-        fields:
-            goPayBankSwift:
-                type: "String"
-                description: "Selected bank swift code of goPay payment bank transfer"
-                defaultValue: null
