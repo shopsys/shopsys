@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Component\Constraints;
 
 use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
@@ -83,6 +84,7 @@ class TransportInOrderValidator extends ConstraintValidator
                 ->addViolation();
             return;
         }
+        $this->checkRequiredPickupPlaceIdentifier($transportInCart, $cart->getPickupPlaceIdentifier(), $constraint);
         $this->checkTransportPrice($cart, $transportInCart, $constraint);
         $this->checkTransportWeightLimit($transportInCart, $cart, $constraint);
         $this->checkPersonalPickupStoreAvailability($transportInCart, $cart, $constraint);
@@ -135,6 +137,22 @@ class TransportInOrderValidator extends ConstraintValidator
         } catch (StoreByUuidNotFoundException $e) {
             $this->context->buildViolation($transportInOrderConstraint->pickupPlaceUnavailableMessage)
                 ->setCode(TransportInOrder::PICKUP_PLACE_UNAVAILABLE_ERROR)
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     * @param \App\FrontendApi\Model\Component\Constraints\TransportInOrder $transportInOrder
+     */
+    private function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier, TransportInOrder $transportInOrder): void
+    {
+        try {
+            $this->transportValidationFacade->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier);
+        } catch (MissingPickupPlaceIdentifierException $exception) {
+            $this->context->buildViolation($transportInOrder->missingPickupPlaceIdentifierMessage)
+                ->setCode(TransportInOrder::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR)
                 ->addViolation();
         }
     }

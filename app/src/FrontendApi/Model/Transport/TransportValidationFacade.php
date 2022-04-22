@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Transport;
 
+use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\Model\Cart\Cart;
@@ -130,6 +131,17 @@ class TransportValidationFacade
         $transportWatchedPrice = $cart->getTransportWatchedPrice();
         if ($transportWatchedPrice === null || !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice)) {
             throw new TransportPriceChangedException($calculatedTransportPrice);
+        }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     */
+    public function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier): void
+    {
+        if (($transport->isPersonalPickup() || $transport->isPacketery()) && $pickupPlaceIdentifier === null) {
+            throw new MissingPickupPlaceIdentifierException();
         }
     }
 }

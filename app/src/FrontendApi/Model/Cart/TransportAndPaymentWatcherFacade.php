@@ -10,7 +10,6 @@ use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededExcept
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
 use App\Model\Cart\Cart;
 use App\Model\Cart\Transport\CartTransportFacade;
-use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentFacade;
@@ -263,7 +262,8 @@ class TransportAndPaymentWatcherFacade
     /**
      * @param \App\Model\Cart\Cart $cart
      */
-    private function checkTransport(Cart $cart): void {
+    private function checkTransport(Cart $cart): void
+    {
         $transport = $cart->getTransport();
         if ($transport === null) {
             if ($cart->getTransportWatchedPrice() !== null) {

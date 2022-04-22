@@ -9,7 +9,11 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\TransportInOrder;
+use App\Model\Cart\Transport\CartTransportFacade;
+use App\Model\Store\Store;
+use App\Model\Store\StoreDataFactory;
 use App\Model\Store\StoreFacade;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -35,6 +39,24 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
      * @inject
      */
     private StoreFacade $storeFacade;
+
+    /**
+     * @var \App\Model\Store\StoreDataFactory
+     * @inject
+     */
+    private StoreDataFactory $storeDataFactory;
+
+    /**
+     * @var \App\Model\Cart\Transport\CartTransportFacade
+     * @inject
+     */
+    private CartTransportFacade $cartTransportFacade;
+
+    /**
+     * @var \App\FrontendApi\Model\Cart\CartFacade
+     * @inject
+     */
+    private CartFacade $cartFacade;
 
     public function testTransportNotSet(): void
     {
@@ -83,7 +105,23 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $this->assertSame(TransportInOrder::CHANGED_TRANSPORT_PRICE_ERROR, $validationErrors['input'][0]['code']);
     }
 
-    public function testPickupPlaceUnavailable(): void
+    public function testDisabledPickupPlaceUnavailable(): void
+    {
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        /** @var \App\Model\Transport\Transport $transportPersonal */
+        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPersonal, $store->getUuid());
+        $this->disableStoreOnFirstDomain($store);
+        $mutation = $this->getCreateOrderMutationFromDemoCartWithCardPayment();
+        $response = $this->getResponseContentForQuery($mutation);
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertSame(TransportInOrder::PICKUP_PLACE_UNAVAILABLE_ERROR, $validationErrors['input'][0]['code']);
+    }
+
+    public function testDeletedPickupPlaceUnavailable(): void
     {
         /** @var \App\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
@@ -97,6 +135,25 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
         $this->assertSame(TransportInOrder::PICKUP_PLACE_UNAVAILABLE_ERROR, $validationErrors['input'][0]['code']);
+    }
+
+    public function testRequiredPickupPlaceIdentifier(): void
+    {
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        /** @var \App\Model\Transport\Transport $transportPersonal */
+        $transportPersonal = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $demoCartUuid = CartDataFixture::CART_UUID;
+        $this->addTransportToCart($demoCartUuid, $transportPersonal, $store->getUuid());
+        $demoCart = $this->cartFacade->findCart(null, $demoCartUuid);
+        $this->cartTransportFacade->unsetPickupPlaceIdentifierFromCart($demoCart);
+
+        $mutation = $this->getCreateOrderMutationFromDemoCartWithCardPayment();
+        $response = $this->getResponseContentForQuery($mutation);
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertSame(TransportInOrder::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR, $validationErrors['input'][0]['code']);
     }
 
     public function testTransportWeightLimitExceeded(): void
@@ -173,5 +230,15 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $transportData = $this->transportDataFactory->createFromTransport($transportPpl);
         $transportData->maxWeight = 1;
         $this->transportFacade->edit($transportPpl, $transportData);
+    }
+
+    /**
+     * @param \App\Model\Store\Store $store
+     */
+    private function disableStoreOnFirstDomain(Store $store): void
+    {
+        $storeData = $this->storeDataFactory->createFromStore($store);
+        $storeData->isEnabledOnDomains[1] = false;
+        $this->storeFacade->edit($store->getId(), $storeData);
     }
 }

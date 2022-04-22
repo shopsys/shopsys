@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -162,9 +163,10 @@ class CartTransportTest extends GraphQlTestCase
 
     public function testRemoveTransportFromCart(): void
     {
+        $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $this->addTransportToDemoCart($transport->getUuid());
+        $transport = $this->getReference($referenceName);
+        $this->addDemoTransportToDemoCart($referenceName);
         $cartQuery = 'query {
           cart(cartInput:{
             cartUuid: "' . CartDataFixture::CART_UUID . '",
@@ -225,19 +227,31 @@ class CartTransportTest extends GraphQlTestCase
     {
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($transportReferenceName);
-        $this->addTransportToDemoCart($transport->getUuid());
+        $pickupPlaceIdentifier = null;
+        if ($transportReferenceName === TransportDataFixture::TRANSPORT_PERSONAL) {
+            /** @var \App\Model\Store\Store $store */
+            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+            $pickupPlaceIdentifier = $store->getUuid();
+        }
+        $this->addTransportToDemoCart($transport->getUuid(), $pickupPlaceIdentifier);
     }
 
     /**
      * @param string $transportUuid
+     * @param string|null $pickupPlaceIdentifier
      */
-    private function addTransportToDemoCart(string $transportUuid)
+    private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): void
     {
+        $pickupPlaceIdentifierLine = '';
+        if ($pickupPlaceIdentifier !== null) {
+            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
+        }
         $changeTransportInCartMutation = '
             mutation {
                 ChangeTransportInCart(input:{
                     cartUuid: "' . CartDataFixture::CART_UUID . '"
                     transportUuid: "' . $transportUuid . '"
+                    ' . $pickupPlaceIdentifierLine . '
                 }) {
                     uuid
                 }

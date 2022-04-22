@@ -319,7 +319,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testTransportWithModifiedPriceIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($referenceName);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
@@ -401,7 +401,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
         $this->transportFacade->deleteById($transport->getId());
         $getCartQuery = '{
@@ -424,7 +424,7 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testHiddenTransportIsReportedAsUnavailable(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($referenceName);
         $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);

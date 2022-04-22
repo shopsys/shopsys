@@ -318,7 +318,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     public function testTransportWithModifiedPriceIsReported(): void
     {
         $this->addTestingProductToNewCart(1);
-        $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($referenceName);
         $this->addTransportToExistingCart($transport);
@@ -389,7 +389,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     {
         $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
         $this->addTransportToExistingCart($transport);
         $this->transportFacade->deleteById($transport->getId());
         $getCartQuery = '{
@@ -409,7 +409,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     public function testHiddenTransportIsReportedAsUnavailable(): void
     {
         $this->addTestingProductToNewCart(1);
-        $referenceName = TransportDataFixture::TRANSPORT_PERSONAL;
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($referenceName);
         $this->addTransportToExistingCart($transport);

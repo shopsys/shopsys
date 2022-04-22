@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Component\Constraints;
 
 use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -81,6 +82,7 @@ class TransportInCartValidator extends ConstraintValidator
         }
         try {
             $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
+            $this->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier, $constraint);
             $this->checkPersonalPickupStoreAvailability($transport, $pickupPlaceIdentifier, $constraint);
             $this->checkTransportWeightLimit($transport, $value->cartUuid, $constraint);
         } catch (TransportNotFoundException $exception) {
@@ -89,6 +91,23 @@ class TransportInCartValidator extends ConstraintValidator
                 ->atPath('transportUuid')
                 ->addViolation();
             return;
+        }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
+     */
+    private function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier, TransportInCart $transportInCartConstraint): void
+    {
+        try {
+            $this->transportValidationFacade->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier);
+        } catch (MissingPickupPlaceIdentifierException $exception) {
+            $this->context->buildViolation($transportInCartConstraint->missingPickupPlaceIdentifierMessage)
+                ->setCode(TransportInCart::MISSING_PICKUP_PLACE_IDENTIFIER_ERROR)
+                ->atPath('pickupPlaceIdentifier')
+                ->addViolation();
         }
     }
 

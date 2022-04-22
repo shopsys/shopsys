@@ -154,6 +154,9 @@ msgstr ""
 msgid "Selected transport is not available"
 msgstr ""
 
+msgid "Selected transport needs to have pickup place identifier set"
+msgstr ""
+
 msgid "Selected transport price has changed"
 msgstr ""
 
