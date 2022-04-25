@@ -9,32 +9,32 @@ class PerformanceTestSample
     /**
      * @var string
      */
-    private $routeName;
+    private string $routeName;
 
     /**
      * @var string
      */
-    private $url;
+    private string $url;
 
     /**
      * @var float
      */
-    private $duration;
+    private float $duration;
 
     /**
      * @var int
      */
-    private $queryCount;
+    private int $queryCount;
 
     /**
      * @var int
      */
-    private $statusCode;
+    private int $statusCode;
 
     /**
      * @var bool
      */
-    private $isSuccessful;
+    private bool $isSuccessful;
 
     /**
      * @param string $routeName

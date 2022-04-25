@@ -11,7 +11,7 @@ class PerformanceResultsCsvExporter
     /**
      * @var \Tests\App\Performance\JmeterCsvReporter
      */
-    private $jmeterCsvReporter;
+    private JmeterCsvReporter $jmeterCsvReporter;
 
     /**
      * @param \Tests\App\Performance\JmeterCsvReporter $jmeterCsvReporter

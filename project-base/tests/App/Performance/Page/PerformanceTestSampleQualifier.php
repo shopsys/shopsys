@@ -13,22 +13,22 @@ class PerformanceTestSampleQualifier
     /**
      * @var int
      */
-    private $durationWarning;
+    private int $durationWarning;
 
     /**
      * @var int
      */
-    private $durationCritical;
+    private int $durationCritical;
 
     /**
      * @var int
      */
-    private $queryCountWarning;
+    private int $queryCountWarning;
 
     /**
      * @var int
      */
-    private $queryCountCritical;
+    private int $queryCountCritical;
 
     /**
      * @param int $durationWarning

@@ -25,6 +25,6 @@ class HomepageControllerTest extends FunctionalTestCase
         $client->request('GET', '/');
         $content = $client->getResponse()->getContent();
 
-        $this->assertRegExp('/<\/body>/ui', $content);
+        $this->assertMatchesRegularExpression('/<\/body>/ui', $content);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -12,7 +13,7 @@ class CategoryTest extends GraphQlTestCase
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    protected $category;
+    protected Category $category;
 
     protected function setUp(): void
     {

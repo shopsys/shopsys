@@ -9,6 +9,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
@@ -67,6 +68,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         Option::SKIP,
         [
+            PhpdocToPropertyTypeFixer::class => [
+                __DIR__ . '/src/*',
+                __DIR__ . '/app/*',
+                __DIR__ . '/tests/App/Acceptance/*',
+            ],
             FunctionLengthSniff::class => [
                 __DIR__ . '/src/DataFixtures/*/*DataFixture.php',
                 __DIR__ . '/src/DataFixtures/Demo/ProductDataFixtureLoader.php',
@@ -209,6 +215,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     // @deprecated This will be moved from project-base to coding-standards package in next major version
     $services->set(UselessIfConditionWithReturnSniff::class);
+
+    $services->set(PhpdocToPropertyTypeFixer::class);
 
     $containerConfigurator->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
 };

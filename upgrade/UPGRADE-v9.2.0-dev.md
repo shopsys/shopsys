@@ -58,6 +58,10 @@ There you can find links to upgrade notes for other versions too.
       all your previously generated tokens need to be issued again, otherwise they will be rejected as expired
 - upgrade `jms/metadata` and `jms/serializer-bundle` ([#2421](https://github.com/shopsys/shopsys/pull/2421))
     - see #project-base-diff to update your project
+- upgrade dependencies related to PhpUnit ([#2424](https://github.com/shopsys/shopsys/pull/2424))
+    - see #project-base-diff to update your project
+    - new version of `zalas/phpunit-injector` requires typehint for injected properties
+        - coding standard requiring typehints in tests can be enabled to help migration (see PR for details)
 
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))

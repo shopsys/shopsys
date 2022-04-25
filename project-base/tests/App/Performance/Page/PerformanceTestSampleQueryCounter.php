@@ -11,7 +11,7 @@ class PerformanceTestSampleQueryCounter implements SQLLogger
     /**
      * @var int
      */
-    private $queryCount = 0;
+    private int $queryCount = 0;
 
     /**
      * {@inheritdoc}

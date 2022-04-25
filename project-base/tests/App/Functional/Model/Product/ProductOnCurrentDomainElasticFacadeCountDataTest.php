@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -15,7 +16,7 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ProductOnCurrentD
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
      * @inject
      */
-    private $productOnCurrentDomainElasticFacade;
+    private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Category;
 
 use App\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -22,13 +24,13 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
      * @inject
      */
-    private $categoryDataFactory;
+    private CategoryDataFactoryInterface $categoryDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface
      * @inject
      */
-    private $categoryFactory;
+    private CategoryFactoryInterface $categoryFactory;
 
     public function testCreateCategoryEnabledOnDomain()
     {

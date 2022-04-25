@@ -15,7 +15,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
     /**
      * @var string
      */
-    protected $accessToken;
+    protected string $accessToken;
 
     protected function setUp(): void
     {

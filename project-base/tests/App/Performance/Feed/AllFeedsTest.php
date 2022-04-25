@@ -24,17 +24,17 @@ class AllFeedsTest extends KernelTestCase
     /**
      * @var int
      */
-    private $maxDuration;
+    private int $maxDuration;
 
     /**
      * @var int
      */
-    private $deliveryMaxDuration;
+    private int $deliveryMaxDuration;
 
     /**
      * @var int
      */
-    private $minDuration;
+    private int $minDuration;
 
     protected function setUp(): void
     {

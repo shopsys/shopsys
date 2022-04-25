@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Administrator;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use DateTime;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -18,7 +19,7 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
      * @inject
      */
-    private $administratorRepository;
+    private AdministratorRepository $administratorRepository;
 
     public function testGetByValidMultidomainLogin()
     {

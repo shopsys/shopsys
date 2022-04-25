@@ -105,19 +105,19 @@
         "codeception/codeception": "^4.1.22",
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
-        "codeception/phpunit-wrapper": "^8.0",
+        "codeception/phpunit-wrapper": "^9.0.7",
         "phpstan/phpstan": "^0.12.76",
         "phpstan/phpstan-doctrine": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan-symfony": "^0.12.18",
-        "phpunit/phpunit": "^8.0",
+        "phpunit/phpunit": "^9.5.20",
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "9.2.x-dev",
         "shopsys/http-smoke-testing": "9.2.x-dev",
-        "sspooky13/yaml-standards": "^5.0.0",
+        "sspooky13/yaml-standards": "^7.0.1",
         "symfony/var-dumper": "^4.4.0",
         "symfony/browser-kit": "^4.4.0",
-        "zalas/phpunit-injector": "^1.4"
+        "zalas/phpunit-injector": "^2.0"
     },
     "conflict": {
         "symfony/symfony": "*"

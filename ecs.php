@@ -7,6 +7,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionS
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
@@ -48,6 +49,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         Option::SKIP,
         [
+            PhpdocToPropertyTypeFixer::class => [
+                __DIR__ . '/packages/*',
+                __DIR__ . '/project-base/src/*',
+                __DIR__ . '/project-base/app/*',
+                __DIR__ . '/project-base/tests/App/Acceptance/*',
+                __DIR__ . '/utils/*',
+            ],
             DeclareStrictTypesFixer::class => [
                 __DIR__ . '/packages/*',
                 __DIR__ . '/utils/*',
@@ -90,6 +98,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->property('allowPartialUses', true);
 
     $services->set(DeprecatedAnnotationDeclarationSniff::class);
+
+    $services->set(PhpdocToPropertyTypeFixer::class);
 
     $services->set(DocCommentSpacingSniff::class)
         ->property('linesCountBetweenDifferentAnnotationsTypes', 0);

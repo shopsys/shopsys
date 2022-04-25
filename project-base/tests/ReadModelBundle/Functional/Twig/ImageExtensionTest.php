@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Sinergi\BrowserDetector\Browser;
@@ -21,13 +22,13 @@ class ImageExtensionTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      * @inject
      */
-    private $imageFacade;
+    private ImageFacade $imageFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */
-    private $imageLocator;
+    private ImageLocator $imageLocator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain

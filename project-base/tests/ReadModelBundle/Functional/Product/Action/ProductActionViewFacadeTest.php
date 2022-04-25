@@ -6,6 +6,7 @@ namespace Tests\ReadModelBundle\Functional\Product\Action;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductActionViewFacadeTest extends FunctionalTestCase
@@ -14,7 +15,7 @@ class ProductActionViewFacadeTest extends FunctionalTestCase
      * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface
      * @inject
      */
-    private $productActionViewFacade;
+    private ProductActionViewFacadeInterface $productActionViewFacade;
 
     public function testGetForSingleProduct(): void
     {

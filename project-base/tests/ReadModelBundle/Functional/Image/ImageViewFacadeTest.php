@@ -6,6 +6,7 @@ namespace Tests\ReadModelBundle\Functional\Image;
 
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ReadModelBundle\Image\ImageView;
+use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class ImageViewFacadeTest extends FunctionalTestCase
@@ -26,7 +27,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
      * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
      * @inject
      */
-    private $imageViewFacade;
+    private ImageViewFacadeInterface $imageViewFacade;
 
     public function testGetForSingleEntityId(): void
     {

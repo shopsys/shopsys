@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -26,7 +27,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
-    private $cartItemFactory;
+    private CartItemFactoryInterface $cartItemFactory;
 
     public function testMergeWithCartReturnsCartWithSummedProducts()
     {

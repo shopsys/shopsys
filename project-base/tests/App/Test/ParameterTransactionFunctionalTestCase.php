@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCase
 {
@@ -12,7 +13,7 @@ class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCa
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
      * @inject
      */
-    protected $parameterFacade;
+    protected ParameterFacade $parameterFacade;
 
     /**
      * @param string $parameterValueNameId
