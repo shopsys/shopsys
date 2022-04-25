@@ -19,7 +19,8 @@ const mapSliderItemApiData = (apiData: SliderItemFragmentApi): SliderItemType =>
         ...apiData,
         extendedText: apiData.extendedText === null ? '' : apiData.extendedText,
         extendedTextLink: apiData.extendedTextLink === null ? '' : apiData.extendedTextLink,
-        image: getFirstImage(apiData.images),
+        webImages: getFirstImage(apiData.webImages),
+        mobileImages: getFirstImage(apiData.mobileImages),
     };
 };
 

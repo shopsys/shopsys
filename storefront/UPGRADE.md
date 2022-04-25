@@ -69,3 +69,14 @@
   - all types that contain image now use `ImageType` instead of `ImageSizeType` (all possible sizes instead of only one)
   - the Image component now accepts `ImageType` instead of `ImageSizeType` and also new required parameter `type` which defines the specific size to be used (according to specification in images.yaml)
   - the Image component uses the html `<picture />` tag with sources instead of NextImage component
+
+### Mobile banner for home page
+- [FWCC-757](https://shopsys.atlassian.net/browse/FWCC-757)
+- [FWCC-757 - Banner images - mobile vs desktop](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/539/diffs)
+    - the reasons these changes were introduced:
+      - to allow us to use different images for desktop and mobile in home page slider
+    - most significant changes
+      - the definition of images in `images.yaml` has been changed to use only one (default) size for web and mobile devices and to implement the `additionalSizes` field
+      - the BannerSlider component now uses the `useGetWindowSize` hook and the `getBannersSliderItemImage` method that decides, which image should be used
+    - tips on how to implement them
+      - you can change the breakpoint when mobile/desktop variant is to be used by changing the `desktopVariant` parameter of `getBannersSliderItemImage` method

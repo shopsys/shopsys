@@ -5,4 +5,5 @@ fragment SliderItemFragment on SliderItem {
     extendedText
     extendedTextLink
     ...SliderItemImagesWebDefaultFragment
+    ...SliderItemImagesMobileDefaultFragment
 }

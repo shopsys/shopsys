@@ -6,5 +6,6 @@ export type SliderItemType = {
     link: string;
     extendedText: string;
     extendedTextLink: string;
-    image: ImageType | null;
+    webImages: ImageType | null;
+    mobileImages: ImageType | null;
 };

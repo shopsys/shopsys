@@ -8,26 +8,34 @@ import {
 } from './BannersSlider.style';
 import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizeType } from 'types/image';
 import { SliderItemType } from 'types/sliderItem';
 import { theme } from 'components/Theme/main';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useKeenSlider } from 'keen-slider/react';
 
 type BannersSliderProps = {
     sliderItems: SliderItemType[];
 };
 
+const DEVICE_BREAKPOINT_SIZE = {
+    size: 'tablet',
+    query: 'queryTablet',
+} as const;
+
 const BannersSlider: FC<BannersSliderProps> = (props) => {
     const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timer | null>(null);
+    const { width } = useGetWindowSize();
     const sliderBoxRef = useRef<HTMLDivElement>(null);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
         loop: true,
         duration: 1000,
         breakpoints: {
-            [theme.mediaQueries.queryTablet]: {
+            [theme.mediaQueries[DEVICE_BREAKPOINT_SIZE.query]]: {
                 slidesPerView: 2,
                 spacing: 15,
                 centered: true,
@@ -105,7 +113,11 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                 {props.sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
-                        image={getBannersSliderItemImage(sliderItem, loadedImageUrls[index])}
+                        image={getBannersSliderItemImage(
+                            sliderItem,
+                            loadedImageUrls[index],
+                            width > desktopFirstSizes[DEVICE_BREAKPOINT_SIZE.size],
+                        )}
                         link={sliderItem.link}
                     />
                 ))}
@@ -135,12 +147,18 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     );
 };
 
-export const getBannersSliderItemImage = (sliderItem: SliderItemType, isImageLoaded: boolean): ImageSizeType | null => {
-    if (!isImageLoaded || sliderItem.image === null || sliderItem.image.sizes === null) {
+export const getBannersSliderItemImage = (
+    sliderItem: SliderItemType,
+    isImageLoaded: boolean,
+    desktopVariant: boolean,
+): ImageSizeType | null => {
+    const image = desktopVariant ? sliderItem.webImages : sliderItem.mobileImages;
+
+    if (!isImageLoaded || image === null || image.sizes === null) {
         return null;
     }
 
-    return sliderItem.image.sizes.find((i) => i.size === 'default') ?? null;
+    return image.sizes.find((i) => i.size === 'default') ?? null;
 };
 
 export default BannersSlider;
