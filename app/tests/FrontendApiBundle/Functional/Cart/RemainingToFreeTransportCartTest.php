@@ -42,13 +42,15 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
                     quantity: 1
                 }
             ) {
-                uuid
-                remainingAmountWithVatForFreeTransport
+                cart {
+                    uuid
+                    remainingAmountWithVatForFreeTransport
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        $newlyCreatedCart = $response['data']['AddToCart'];
+        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
         self::assertNull(
             $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
@@ -88,16 +90,18 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
                     quantity: 1
                 }
             ) {
-                uuid
-                totalPrice{
-                    priceWithVat
+                cart {
+                    uuid
+                    totalPrice{
+                        priceWithVat
+                    }
+                    remainingAmountWithVatForFreeTransport
                 }
-                remainingAmountWithVatForFreeTransport
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        $newlyCreatedCart = $response['data']['AddToCart'];
+        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
         $totalCartPriceWithVat = Money::create($newlyCreatedCart['totalPrice']['priceWithVat']);
         $expectedRemainingPrice = $freeTransportAndPaymentLimit->subtract($totalCartPriceWithVat);
@@ -144,13 +148,15 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
                     quantity: 100
                 }
             ) {
-                uuid
-                remainingAmountWithVatForFreeTransport
+                cart {
+                    uuid
+                    remainingAmountWithVatForFreeTransport
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        $newlyCreatedCart = $response['data']['AddToCart'];
+        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
         self::assertTrue(
             Money::create($newlyCreatedCart['remainingAmountWithVatForFreeTransport'])->isZero(),

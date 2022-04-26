@@ -46,20 +46,22 @@ class ProductSourceEqualityTest extends GraphQlTestCase
                 productUuid: "' . $productUuid . '",
                 quantity: 1
             }) {
-                items {
-                    product {
-                        ' . $this->getAllProductFields() . '
-                        ... on Variant {
-                            mainVariant {
-                                ' . $this->getAllProductFields() . '
-                            } 
+                cart {
+                    items {
+                        product {
+                            ' . $this->getAllProductFields() . '
+                            ... on Variant {
+                                mainVariant {
+                                    ' . $this->getAllProductFields() . '
+                                } 
+                            }
                         }
                     }
                 }
             }
         }';
         $productEntityResponse = $this->getResponseContentForQuery($productEntityMutation);
-        $productEntityData = $this->getResponseDataForGraphQlType($productEntityResponse, 'AddToCart')['items'][0]['product'];
+        $productEntityData = $this->getResponseDataForGraphQlType($productEntityResponse, 'AddToCart')['cart']['items'][0]['product'];
 
         self::assertEquals($productArrayData, $productEntityData);
     }

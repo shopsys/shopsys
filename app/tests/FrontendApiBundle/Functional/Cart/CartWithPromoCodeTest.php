@@ -23,22 +23,24 @@ class CartWithPromoCodeTest extends GraphQlTestCase
                 productUuid: "' . $product1->getUuid() . '"
                 quantity: 1
             }) {
-                uuid
-                totalPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                totalDiscountPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
+                cart {
+                    uuid
+                    totalPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    totalDiscountPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
                 }
             }
         }';
 
         $initCartResult = $this->getResponseContentForQuery($initCartMutation)['data']['AddToCart'];
-        $cartUuid = $initCartResult['uuid'];
+        $cartUuid = $initCartResult['cart']['uuid'];
 
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, Domain::FIRST_DOMAIN_ID);
@@ -93,20 +95,22 @@ class CartWithPromoCodeTest extends GraphQlTestCase
                 productUuid: "' . $product72->getUuid() . '"
                 quantity: 1
             }) {
-                uuid
-                items{
+                cart {
                     uuid
-                    product{uuid}
-                }
-                totalPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                totalDiscountPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
+                    items{
+                        uuid
+                        product{uuid}
+                    }
+                    totalPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    totalDiscountPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
                 }
             }
         }';
@@ -134,7 +138,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ];
 
         $addToCartResult = $this->getResponseContentForQuery($addAnotherToCartMutation)['data']['AddToCart'];
-        $this->assertSame($totalPriceExpected, $addToCartResult['totalPrice']);
-        $this->assertSame($totalDiscountPriceExpected, $addToCartResult['totalDiscountPrice']);
+        $this->assertSame($totalPriceExpected, $addToCartResult['cart']['totalPrice']);
+        $this->assertSame($totalDiscountPriceExpected, $addToCartResult['cart']['totalDiscountPrice']);
     }
 }

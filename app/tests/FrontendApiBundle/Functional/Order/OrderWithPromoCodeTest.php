@@ -225,10 +225,12 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
-        return  $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        return  $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
     }
 }

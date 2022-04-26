@@ -71,8 +71,11 @@ export const useAddToCart = (): UseMutationResponse<AddToCartMutationApi, AddToC
     const [addToCartResult, addToCart] = useAddToCartMutationApi();
     const t = useTypedTranslationFunction();
 
-    useHandleCartErrors(addToCartResult.error, t('Could not add the product to cart'));
-    useHandleCartUpdate(addToCartResult.data?.AddToCart, cartInput.payment ? cartInput.payment.goPayBankSwift : null);
+    useEffect(() => {
+        if (addToCartResult.data?.AddToCart.cart.uuid !== undefined) {
+            dispatch(userActions.setCartUuid(addToCartResult.data.AddToCart.cart.uuid));
+        }
+    }, [addToCartResult.data?.AddToCart.cart.uuid]);
 
     return [addToCartResult, addToCart];
 };

@@ -62,10 +62,12 @@ class FullOrderTest extends AbstractOrderTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
 
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);

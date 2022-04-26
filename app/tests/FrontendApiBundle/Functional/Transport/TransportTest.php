@@ -55,7 +55,9 @@ class TransportTest extends GraphQlTestCase
                 productUuid: "' . $product->getUuid() . '"
                 quantity: 100
             }) {
-                uuid                
+                cart {
+                    uuid
+                }                
             }
         }';
 

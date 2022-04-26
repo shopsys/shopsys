@@ -1,6 +1,8 @@
 mutation AddToCartMutation($input: AddToCartInput!) {
     AddToCart(input: $input) {
-        ...CartFragment
+        cart {
+            ...CartFragment
+        }
         addProductResult {
             addedQuantity
             isNew

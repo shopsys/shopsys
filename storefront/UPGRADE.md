@@ -80,3 +80,14 @@
       - the BannerSlider component now uses the `useGetWindowSize` hook and the `getBannersSliderItemImage` method that decides, which image should be used
     - tips on how to implement them
       - you can change the breakpoint when mobile/desktop variant is to be used by changing the `desktopVariant` parameter of `getBannersSliderItemImage` method
+
+### Transport and Payment cart mutations
+- [FWCC-843](https://shopsys.atlassian.net/browse/FWCC-843)
+- most significant changes
+  - changes of transport and payment (together with related fields, such as personal pickup place identifier and GoPay SWIFT) are handled in separate mutations
+  - cart slice of redux has been completely removed with cart UUID being moved to the user slice
+  - all information about cart is now loaded from useCurrentCart hook
+  - each mutation has a handler method that can be easily extended for future needs (GTM, logging)
+- other changes
+  - AddToCart result now doesn't iherit from Cart, but implements Cart as its property
+  - URQL devtools exchange has been added
