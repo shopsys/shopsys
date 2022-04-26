@@ -15,10 +15,6 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const [, removeItemFromCart] = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        if (isCartEmpty) {
-            return;
-        }
-
         removeItemFromCart({ input: { cartItemUuid: props.cartItemUuid, cartUuid } });
     };
 
