@@ -1,0 +1,5 @@
+mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) {
+    ChangeTransportInCart(input: $input) {
+        ...CartFragment
+    }
+}

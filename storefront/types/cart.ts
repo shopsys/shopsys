@@ -1,10 +1,10 @@
-import { PaymentInputType, PaymentType } from 'types/payment';
+import { PaymentInputType, PaymentType } from './payment';
 import { PriceType, ProductPriceType } from 'types/price';
-import { TransportInputType, TransportType } from 'types/transport';
-import { ImageType } from 'types/image';
-import { PickupPlaceType } from 'types/pickupPlace';
+import { ImageType } from './image';
+import { PickupPlaceType } from './pickupPlace';
 import { SimpleFlagType } from 'types/flag';
 import { SimpleProductType } from 'types/product';
+import { TransportType } from './transport';
 
 export type CurrentCartType = {
     cart: CartType | null;
@@ -18,7 +18,6 @@ export type CurrentCartType = {
 
 export type CartInput = {
     cartUuid: string | null;
-    transport: TransportInputType | null;
     payment: PaymentInputType | null;
 };
 

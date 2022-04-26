@@ -1,14 +1,7 @@
 import { ImageType } from 'types/image';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { PriceFragmentApi } from 'graphql/generated';
 import { PriceType } from 'types/price';
-
-export type TransportInputType = {
-    uuid: string;
-    price: PriceFragmentApi;
-    pickupPlaceIdentifier: string | null;
-};
 
 export type TransportType = {
     uuid: string;
