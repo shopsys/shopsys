@@ -3,11 +3,7 @@ import { PaymentInputType, PaymentType } from 'types/payment';
 import { getFirstImage } from 'connectors/image/Image';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
 
-export const mapPayment = (
-    apiData: SimplePaymentFragmentApi,
-    currencyCode: string,
-    goPayBankSwift: string | null,
-): PaymentType => {
+export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
     return {
         ...apiData,
         description: apiData.description !== null ? apiData.description : '',
@@ -15,7 +11,6 @@ export const mapPayment = (
         image: getFirstImage(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         goPayPaymentMethod: apiData.goPayPaymentMethod !== null ? apiData.goPayPaymentMethod : undefined,
-        goPayBankSwift,
     };
 };
 

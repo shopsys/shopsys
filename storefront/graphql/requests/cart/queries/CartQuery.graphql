@@ -1,11 +1,5 @@
-query CartQuery (
-    $cartUuid: Uuid
-    $payment: PaymentInput
-){
-    cart(cartInput: {
-        cartUuid: $cartUuid
-        payment: $payment
-    }) {
+query CartQuery($cartUuid: Uuid) {
+    cart(cartInput: { cartUuid: $cartUuid }) {
         ...CartFragment
     }
 }

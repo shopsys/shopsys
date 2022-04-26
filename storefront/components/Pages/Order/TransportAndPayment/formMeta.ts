@@ -11,7 +11,7 @@ export const useTransportAndPaymentForm = (): [
     TransportAndPaymentFormType,
 ] => {
     const t = useTypedTranslationFunction();
-    const { transport, pickupPlace, payment } = useCurrentCart();
+    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -28,7 +28,7 @@ export const useTransportAndPaymentForm = (): [
     const defaultValues = {
         transport: transport?.uuid ?? null,
         payment: payment?.uuid ?? null,
-        goPaySwift: payment?.goPayBankSwift ?? null,
+        goPaySwift: paymentGoPayBankSwift,
     };
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };

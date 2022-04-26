@@ -1,0 +1,5 @@
+mutation ChangePaymentInCartMutation($input: ChangePaymentInCartInput!) {
+    ChangePaymentInCart(input: $input) {
+        ...CartFragment
+    }
+}

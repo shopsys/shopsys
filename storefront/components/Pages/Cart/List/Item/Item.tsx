@@ -34,7 +34,6 @@ const Item: FC<ItemProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { payment } = useCurrentCart();
     const [, changeCartItemQuantity] = useAddToCart();
 
     const onChangeValueHandler = () => {
@@ -54,7 +53,6 @@ const Item: FC<ItemProps> = (props) => {
                     cartUuid: cartUuid!,
                     quantity: spinboxRef.current!.valueAsNumber,
                     isAbsoluteQuantity: true,
-                    payment,
                 },
             });
         }, 500);

@@ -57,10 +57,8 @@ export const useCurrentCart = (): CurrentCartType => {
         isCartEmpty: mappedCart.items.length === 0,
         transport: mappedTransport,
         pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
-        payment:
-            result.data.cart.payment === null
-                ? null
-                : mapPayment(result.data.cart.payment, currencyCode, '' /* TODO add goPaySwift code */),
+        payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
+        paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
         promoCode: result.data.cart.promoCode,
     };
 };

@@ -1,6 +1,6 @@
-import { PaymentInputType, PaymentType } from './payment';
 import { PriceType, ProductPriceType } from 'types/price';
 import { ImageType } from './image';
+import { PaymentType } from './payment';
 import { PickupPlaceType } from './pickupPlace';
 import { SimpleFlagType } from 'types/flag';
 import { SimpleProductType } from 'types/product';
@@ -18,7 +18,6 @@ export type CurrentCartType = {
 
 export type CartInput = {
     cartUuid: string | null;
-    payment: PaymentInputType | null;
 };
 
 export type ProductCartItemType = {
@@ -49,16 +48,6 @@ export type CartType = {
     totalItemsPrice: PriceType;
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
-};
-
-export type CartResultValues = {
-    cartUuid: string | null;
-    cart: CartType | null;
-    transport: TransportType | null;
-    pickupPlace: PickupPlaceType | null;
-    goPayBankSwift: string | null;
-    payment: PaymentType | null;
-    promoCode: string | null;
 };
 
 export type AddToCartPopupDataType = SimpleProductType & {
