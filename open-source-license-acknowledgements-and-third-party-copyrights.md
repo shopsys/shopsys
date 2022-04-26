@@ -109,7 +109,7 @@ https://github.com/elastic/elasticsearch/blob/v6.3.2/LICENSE.txt
 Copyright 2009-2018 Elasticsearch
 
 ### Php
-Image: `php:7.4-fpm-buster`  
+Image: `php:8.1-fpm-bullseye`  
 License: The PHP License  
 http://php.net/license/  
 Copyright (c) 1999 - 2018 The PHP Group. All rights reserved.
