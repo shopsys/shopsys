@@ -162,7 +162,7 @@ There you can find links to upgrade notes for other versions too.
     - if you need the backend-api in the current state, you can fork it and handle the compatibility with the new versions of the other packages
 - allow running npm scripts even when they are not executable ([#2403](https://github.com/shopsys/shopsys/pull/2403))
     - see #project-base-diff to update your project
-- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer` was changed
+- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer` was changed ([#2426](https://github.com/shopsys/shopsys/pull/2426))
     - constructor changed interface
         ```diff
             /**
@@ -175,7 +175,7 @@ There you can find links to upgrade notes for other versions too.
             ) {
     ```
 
-- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory` was changed
+- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory` was changed ([#2426](https://github.com/shopsys/shopsys/pull/2426))
     - constructor changed interface
         ```diff
             /**
@@ -193,3 +193,9 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
     - if you use custom Dockerfile, don't forget to rebuild your image with the new version of PHP
+- class `\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser` no longer implements `Serializable` interface
+    - public methods `serialize()` and `unserialize()` were removed ([#2431](https://github.com/shopsys/shopsys/pull/2431))
+    - `__serialize()` and `__serialize()` are used instead
+- class `\Shopsys\FrameworkBundle\Model\Administrator\Administrator` no longer implements `Serializable` interface ([#2431](https://github.com/shopsys/shopsys/pull/2431))
+    - public methods `serialize()` and `unserialize()` were removed
+    - `__serialize()` and `__unserialize()` are used instead
