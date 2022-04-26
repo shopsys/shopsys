@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
 use Roave\BetterReflection\BetterReflection;
-use Roave\BetterReflection\Reflector\ClassReflector;
+use Roave\BetterReflection\Reflector\DefaultReflector;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
 use Symfony\Component\Finder\Finder;
 
@@ -85,8 +85,8 @@ class ClassExtensionRegistry
     protected function getFqcn(string $pathname): string
     {
         $astLocator = (new BetterReflection())->astLocator();
-        $reflector = new ClassReflector(new SingleFileSourceLocator($pathname, $astLocator));
-        return $reflector->getAllClasses()[0]->getName();
+        $reflector = new DefaultReflector(new SingleFileSourceLocator($pathname, $astLocator));
+        return $reflector->reflectAllClasses()[0]->getName();
     }
 
     /**
