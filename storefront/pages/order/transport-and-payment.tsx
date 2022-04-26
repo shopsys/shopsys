@@ -5,6 +5,7 @@ import {
     useTransportAndPaymentForm,
     useTransportAndPaymentFormMeta,
 } from 'components/Pages/Order/TransportAndPayment/formMeta';
+import { createClient } from 'helpers/createClient';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
 import Footer from 'components/Layout/Footer';
@@ -14,6 +15,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
+import { ssrExchange } from 'urql';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TransportAndPaymentFormType } from 'types/form';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
@@ -74,9 +76,10 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const cartState = store.getState().cart;
-    const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
-    return redirect === false ? initServerSideProps(context, store) : redirect;
+    const ssrCache = ssrExchange({ isClient: false });
+    const client = createClient(context, store, ssrCache);
+    const redirect = await handleOrderPagesRedirect(context, store, client);
+    return redirect === false ? initServerSideProps(context, store, [], client, ssrCache) : redirect;
 });
 
 export default TransportAndPayment;

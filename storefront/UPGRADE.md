@@ -92,3 +92,4 @@
 - other changes
   - AddToCart result now doesn't iherit from Cart, but implements Cart as its property
   - URQL devtools exchange has been added
+  - client can be now injected into initServerSideProps if it is needed outside of the method

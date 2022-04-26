@@ -8,6 +8,7 @@ import {
 } from 'components/Pages/Order/ContactInformation/formMeta';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
+import { createClient } from 'helpers/createClient';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
 import Footer from 'components/Layout/Footer';
@@ -17,6 +18,7 @@ import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
+import { ssrExchange } from 'urql';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
@@ -111,7 +113,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             cartUuid,
             ...formValues,
             ...deliveryInfo,
-            ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
             note: null,
@@ -150,9 +151,10 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const cartState = store.getState().cart;
-    const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
-    return redirect === false ? initServerSideProps(context, store) : redirect;
+    const ssrCache = ssrExchange({ isClient: false });
+    const client = createClient(context, store, ssrCache);
+    const redirect = await handleOrderPagesRedirect(context, store, client);
+    return redirect === false ? initServerSideProps(context, store, [], client, ssrCache) : redirect;
 });
 
 export default ContactInformation;
