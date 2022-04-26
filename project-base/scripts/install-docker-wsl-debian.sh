@@ -25,13 +25,13 @@ printf "${GREEN}Installing docker-compose 1.28.5${NC}\n"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-printf "${GREEN}Installing PHP 7.4${NC}\n"
+printf "${GREEN}Installing PHP 8.1${NC}\n"
 
 wget https://packages.sury.org/php/apt.gpg
 sudo apt-key add apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php7.list
 sudo apt update
-sudo apt install -y php7.4
+sudo apt install -y php8.1
 
 printf "${GREEN}Installing Composer${NC}\n"
 
