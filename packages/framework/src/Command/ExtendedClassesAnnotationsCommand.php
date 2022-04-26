@@ -144,7 +144,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $symfonyStyle->listing($filesForAddingPropertyOrMethodAnnotations);
             } else {
                 $symfonyStyle->note(
-                    ['@method or @property annotations were added to the following files:'] + $filesForAddingPropertyOrMethodAnnotations
+                    array_merge(['@method or @property annotations were added to the following files:'], $filesForAddingPropertyOrMethodAnnotations)
                 );
             }
         }
