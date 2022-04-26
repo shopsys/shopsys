@@ -30,37 +30,37 @@ class ExtendedClassesAnnotationsCommand extends Command
     /**
      * @var string
      */
-    protected $projectRootDirectory;
+    protected string $projectRootDirectory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry
      */
-    protected $classExtensionRegistry;
+    protected ClassExtensionRegistry $classExtensionRegistry;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
      */
-    protected $annotationsReplacer;
+    protected AnnotationsReplacer $annotationsReplacer;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
      */
-    protected $annotationsReplacementsMap;
+    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory
      */
-    protected $propertyAnnotationsFactory;
+    protected PropertyAnnotationsFactory $propertyAnnotationsFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
      */
-    protected $methodAnnotationsAdder;
+    protected MethodAnnotationsFactory $methodAnnotationsAdder;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder
      */
-    protected $annotationsAdder;
+    protected AnnotationsAdder $annotationsAdder;
 
     /**
      * {@inheritdoc}
