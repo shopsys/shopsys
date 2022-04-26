@@ -12,7 +12,7 @@ jobs:
             -   name: Install PHP, extensions and tools
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: '7.4'
+                    php-version: '8.1'
                     extensions: bcmath, gd, intl, pdo_pgsql, redis, pgsql, zip
                     tools: composer
             -   name: Install Composer dependencies
