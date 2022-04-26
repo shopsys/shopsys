@@ -48,7 +48,7 @@
         }
     },
     "require": {
-        "php": "^7.4.1",
+        "php": "^8.1",
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
@@ -111,15 +111,15 @@
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
         "overblog/graphiql-bundle": "^0.2",
         "overblog/graphql-bundle": "^0.13",
-        "phing/phing": "^2.16.1",
+        "phing/phing": "dev-oldstable",
         "presta/sitemap-bundle": "^1.5.3",
         "prezent/doctrine-translatable": "^3.0",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
-        "roave/better-reflection": "^4.12.2",
+        "roave/better-reflection": "^5.4.0",
         "sensio/framework-extra-bundle": "^5.2",
-        "shopsys/ordered-form": "^4.0",
+        "shopsys/ordered-form": "^5.0",
         "shopsys/postgres-search-bundle": "^0.2",
         "sinergi/browser-detector": "^6.1",
         "snc/redis-bundle": "^3.2.2",
@@ -206,7 +206,7 @@
         "component-dir": "project-base/web/components",
         "sort-packages": true,
         "platform": {
-            "php": "7.4.1"
+            "php": "8.1"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,

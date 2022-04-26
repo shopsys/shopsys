@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^7.4.1",
+        "php": "^8.1",
         "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
@@ -73,11 +73,11 @@
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
-        "roave/better-reflection": "^4.12.2",
+        "roave/better-reflection": "^5.4.0",
         "sinergi/browser-detector": "^6.1",
         "shopsys/form-types-bundle": "9.2.x-dev",
         "shopsys/migrations": "9.2.x-dev",
-        "shopsys/ordered-form": "^4.0",
+        "shopsys/ordered-form": "^5.0",
         "shopsys/plugin-interface": "9.2.x-dev",
         "shopsys/postgres-search-bundle": "^0.2",
         "snc/redis-bundle": "^3.2.1",

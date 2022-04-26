@@ -16,7 +16,7 @@
         }
     },
     "require": {
-        "php": "^7.4.1",
+        "php": "^8.1",
         "symfony/monolog-bridge": "^4.4.0"
     },
     "require-dev": {
