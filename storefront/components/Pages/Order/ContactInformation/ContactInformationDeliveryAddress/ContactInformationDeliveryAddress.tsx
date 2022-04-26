@@ -4,7 +4,6 @@ import {
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -17,12 +16,14 @@ import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
+import { useCurrentCart } from 'connectors/cart/Cart';
+import { useShopsysDispatch } from 'redux/main';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const { pickupPlace } = useShopsysSelector((state) => state.cart);
+    const { pickupPlace } = useCurrentCart();
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);

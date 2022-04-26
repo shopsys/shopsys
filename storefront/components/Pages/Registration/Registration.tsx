@@ -11,7 +11,6 @@ import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } fr
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Address from './Address';
 import Button from 'components/Forms/Button';
-import { cartActions } from 'redux/slices/cart';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import Company from './Company';
@@ -36,7 +35,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const Registration: FC = () => {
     const t = useTypedTranslationFunction();
     const [registerResult, register] = useRegistrationMutationApi();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const { url } = useShopsysSelector((state) => state.domain);
     const [RegistrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
@@ -55,7 +54,6 @@ const Registration: FC = () => {
 
             if (accessToken !== undefined && refreshToken !== undefined) {
                 dispatch(userActions.setIsUserLoggedIn(true));
-                dispatch(cartActions.setIsCartEmpty(false));
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
             } else {

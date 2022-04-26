@@ -46,7 +46,7 @@ const Login: FC = () => {
     const testIdentifier = 'blocks-popup-login';
 
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
+    const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
     const { url } = useShopsysSelector((state) => state.domain);
     const [resetPasswordUrl, registrationUrl] = getInternationalizedStaticUrls(
         ['/reset-password', '/registration'],

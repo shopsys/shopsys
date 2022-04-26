@@ -24,7 +24,7 @@ import Webline from 'components/Layout/Webline';
 
 const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],

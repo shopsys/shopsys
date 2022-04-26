@@ -88,6 +88,7 @@
   - cart slice of redux has been completely removed with cart UUID being moved to the user slice
   - all information about cart is now loaded from useCurrentCart hook
   - each mutation has a handler method that can be easily extended for future needs (GTM, logging)
+  - cart state utility hooks and methods were removed as they were not needed anymore
 - other changes
   - AddToCart result now doesn't iherit from Cart, but implements Cart as its property
   - URQL devtools exchange has been added

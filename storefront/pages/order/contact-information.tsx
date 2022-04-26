@@ -18,7 +18,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { updateCartState } from 'utils/Cart/UpdateCartState';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
@@ -33,11 +33,12 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const dispatch = useShopsysDispatch();
     const contactInformationValues = useShopsysSelector((state) => state.contactInformation);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace, cartInput } = useShopsysSelector((state) => state.cart);
+    const { pickupPlace } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
@@ -45,7 +46,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
     const onSuccessfullyCreatedOrderHandler = (createOrderResultData: CreateOrderMutationApi | undefined) => {
-        updateCartState(dispatch);
+        dispatch(userActions.setCartUuid(null));
         dispatch(userActions.setOrderConfirmationAccess(true));
         dispatch(userActions.setOrderUrlHash(createOrderResultData?.CreateOrder.urlHash));
         dispatch(userActions.setLastOrderUuid(createOrderResultData?.CreateOrder.uuid ?? ''));
@@ -63,10 +64,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues, event) => {
         event?.preventDefault();
-        if (cartInput.transport === null || cartInput.payment === null) {
-            router.replace(transportAndPaymentUrl);
-            return;
-        }
 
         dispatch(contactInformationActions.setContactInformation(formValues));
 
@@ -111,6 +108,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         }
 
         await createOrder({
+            cartUuid,
             ...formValues,
             ...deliveryInfo,
             ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },

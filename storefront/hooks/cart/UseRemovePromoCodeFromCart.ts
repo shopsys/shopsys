@@ -1,14 +1,12 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { cartActions } from 'redux/slices/cart';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useRemovePromoCodeFromCart = (): typeof removePromoCodeHandler => {
     const [, removePromoCode] = useRemovePromoCodeFromCartMutationApi();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
-    const dispatch = useShopsysDispatch();
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const t = useTypedTranslationFunction();
 
     const removePromoCodeHandler = async (
@@ -31,7 +29,6 @@ export const useRemovePromoCodeFromCart = (): typeof removePromoCodeHandler => {
             showErrorMessage(messages.error);
         } else if (removePromoCodeResult.data !== undefined) {
             showSuccessMessage(messages.success);
-            dispatch(cartActions.setPromoCode(removePromoCodeResult.data.RemovePromoCodeFromCart.promoCode));
         }
     };
 

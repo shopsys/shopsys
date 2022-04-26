@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import { TransportAndPaymentFormType } from 'types/form';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -11,10 +11,7 @@ export const useTransportAndPaymentForm = (): [
     TransportAndPaymentFormType,
 ] => {
     const t = useTypedTranslationFunction();
-    const {
-        transport,
-        cartInput: { transport: transportInput, payment: paymentInput },
-    } = useShopsysSelector((state) => state.cart);
+    const { transport, pickupPlace, payment } = useCurrentCart();
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -23,16 +20,15 @@ export const useTransportAndPaymentForm = (): [
                 .test(
                     'is-transport-correctly-selected',
                     t('Please select transport with a personal pickup place'),
-                    () =>
-                        transport?.isPersonalPickup === true ? transportInput?.pickupPlaceIdentifier !== null : true,
+                    () => (transport?.isPersonalPickup ? pickupPlace?.identifier !== undefined : true),
                 ),
             payment: Yup.string().required(t('Please select payment')),
         }),
     );
     const defaultValues = {
-        transport: transportInput === null ? null : transportInput.uuid,
-        payment: paymentInput === null ? null : paymentInput.uuid,
-        goPaySwift: paymentInput?.goPayBankSwift ?? null,
+        transport: transport?.uuid ?? null,
+        payment: payment?.uuid ?? null,
+        goPaySwift: payment?.goPayBankSwift ?? null,
     };
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };

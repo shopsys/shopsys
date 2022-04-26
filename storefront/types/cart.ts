@@ -6,6 +6,16 @@ import { PickupPlaceType } from 'types/pickupPlace';
 import { SimpleFlagType } from 'types/flag';
 import { SimpleProductType } from 'types/product';
 
+export type CurrentCartType = {
+    cart: CartType | null;
+    isCartEmpty: boolean;
+    transport: TransportType | null;
+    pickupPlace: PickupPlaceType | null;
+    payment: PaymentType | null;
+    paymentGoPayBankSwift: string | null;
+    promoCode: string | null;
+};
+
 export type CartInput = {
     cartUuid: string | null;
     transport: TransportInputType | null;

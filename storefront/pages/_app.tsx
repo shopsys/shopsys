@@ -1,7 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
 import appWithI18n from 'next-translate/appWithI18n';
-import CartRefresher from 'components/Helpers/CartRefresher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getUrqlExchanges } from 'urql/exchanges';
 import Head from 'next/head';
@@ -28,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <CartRefresher />
                 <UserDataRefresher />
                 <Component {...pageProps} />
             </ShopsysGlobalProvider>

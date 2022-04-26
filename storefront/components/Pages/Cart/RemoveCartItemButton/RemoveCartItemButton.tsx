@@ -11,10 +11,7 @@ type RemoveCartItemButtonProps = {
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const testIdentifier = 'pages-cart-removecartitembutton';
 
-    const {
-        isCartEmpty,
-        cartInput: { cartUuid, payment },
-    } = useShopsysSelector((state) => state.cart);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const [, removeItemFromCart] = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {

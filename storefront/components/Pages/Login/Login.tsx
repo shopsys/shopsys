@@ -30,7 +30,7 @@ const getLoginFormResolver = (t: Translate) => {
 
 const Login: FC = () => {
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const { url } = useShopsysSelector((state) => state.domain);
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
