@@ -29,11 +29,13 @@ const AddToCart: FC<AddToCartProps> = (props) => {
         }
 
         changeCartItemQuantity({
+            input: {
             cartUuid,
             isAbsoluteQuantity: false,
             productUuid: props.productUuid,
             quantity: spinboxRef.current.valueAsNumber,
             payment,
+            },
         });
         spinboxRef.current!.valueAsNumber = 1;
     };

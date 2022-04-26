@@ -48,11 +48,13 @@ const Item: FC<ItemProps> = (props) => {
     const setUpdateTimeout = () => {
         return setTimeout(() => {
             changeCartItemQuantity({
-                productUuid: props.item.product.uuid,
-                cartUuid: cartUuid!,
-                quantity: spinboxRef.current!.valueAsNumber,
-                isAbsoluteQuantity: true,
-                payment,
+                input: {
+                    productUuid: props.item.product.uuid,
+                    cartUuid: cartUuid!,
+                    quantity: spinboxRef.current!.valueAsNumber,
+                    isAbsoluteQuantity: true,
+                    payment,
+                },
             });
         }, 500);
     };

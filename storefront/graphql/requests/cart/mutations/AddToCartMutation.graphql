@@ -1,17 +1,5 @@
-mutation AddToCartMutation (
-    $cartUuid: Uuid
-    $payment: PaymentInput
-    $isAbsoluteQuantity: Boolean
-    $productUuid: Uuid!
-    $quantity: Int!
-) {
-    AddToCart(input: {
-        cartUuid: $cartUuid,
-        payment: $payment,
-        isAbsoluteQuantity: $isAbsoluteQuantity,
-        productUuid: $productUuid,
-        quantity: $quantity
-    }) {
+mutation AddToCartMutation($input: AddToCartInput!) {
+    AddToCart(input: $input) {
         ...CartFragment
         addProductResult {
             addedQuantity

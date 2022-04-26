@@ -1,13 +1,5 @@
-mutation RemoveFromCartMutation (
-    $cartUuid: Uuid,
-    $cartItemUuid: Uuid!
-    $payment: PaymentInput
-) {
-    RemoveFromCart(input: {
-        cartUuid: $cartUuid,
-        cartItemUuid: $cartItemUuid,
-        payment: $payment,
-    }) {
+mutation RemoveFromCartMutation($input: RemoveFromCartInput!) {
+    RemoveFromCart(input: $input) {
         ...CartFragment
     }
 }

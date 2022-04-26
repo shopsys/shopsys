@@ -22,7 +22,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
             return;
         }
 
-        removeItemFromCart({ cartItemUuid: props.cartItemUuid, cartUuid, payment });
+        removeItemFromCart({ input: { cartItemUuid: props.cartItemUuid, cartUuid } });
     };
 
     return (
