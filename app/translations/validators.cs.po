@@ -154,6 +154,9 @@ msgstr "Zadaný hash není validní."
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
 
+msgid "Selected payment price has changed"
+msgstr "Cena vybrané dopravy se změnila"
+
 msgid "Selected pickup place is not available"
 msgstr "Vybrané odběrné místo není dostupné"
 
