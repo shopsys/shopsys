@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
@@ -26,6 +27,11 @@ class MethodAnnotationsFactory
     protected DocBlockParser $docBlockParser;
 
     /**
+     * @var \InvalidArgumentException[]
+     */
+    protected array $warningBag = [];
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
@@ -38,6 +44,14 @@ class MethodAnnotationsFactory
         $this->annotationsReplacementsMap = $annotationsReplacementsMap;
         $this->annotationsReplacer = $annotationsReplacer;
         $this->docBlockParser = $docBlockParser;
+    }
+
+    /**
+     * @return \InvalidArgumentException[]
+     */
+    public function getWarnings(): array
+    {
+        return $this->warningBag;
     }
 
     /**
@@ -77,9 +91,17 @@ class MethodAnnotationsFactory
                 continue;
             }
 
+            try {
+                $docBlockReturnTypes = $this->docBlockParser
+                    ->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment());
+            } catch (InvalidArgumentException $exception) {
+                $this->warningBag[] = $exception;
+                continue;
+            }
+
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $this->docBlockParser->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment())
+                $docBlockReturnTypes
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(

@@ -131,6 +131,13 @@ class ExtendedClassesAnnotationsCommand extends Command
             }
         }
         $filesForAddingPropertyOrMethodAnnotations = $this->addPropertyAndMethodAnnotationsToProjectClasses($isDryRun);
+
+        if (count($this->methodAnnotationsAdder->getWarnings()) > 0) {
+            foreach ($this->methodAnnotationsAdder->getWarnings() as $exception) {
+                $symfonyStyle->warning($exception->getMessage());
+            }
+        }
+
         if (count($filesForAddingPropertyOrMethodAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('@method or @property annotations need to be added to the following files:');
