@@ -85,6 +85,7 @@
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
     * [CartInput](#cartinput)
     * [ChangePasswordInput](#changepasswordinput)
+    * [ChangePaymentInCartInput](#changepaymentincartinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
     * [ContactInput](#contactinput)
@@ -1137,6 +1138,20 @@ check payment status of order after callback from payment service
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>ChangePaymentInCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Add a payment to the cart, or remove a payment from the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#changepaymentincartinput">ChangePaymentInCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>ChangeTransportInCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
@@ -1208,86 +1223,13 @@ Add a transport to the cart, or remove a transport from the cart
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-UUID of the cart, null for authenticated user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
-<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
-<td>
-
-All items in the cart
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a></td>
-<td>
-
-Selected transport if transport provided
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#payment">Payment</a></td>
-<td>
-
-Selected payment if payment provided
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Selected pickup place identifier if provided
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Applied promo code if provided
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>modifications</strong></td>
-<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
-<td>
-
-Remaining amount for free transport and payment; null = transport cannot be free
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>addProductResult</strong></td>
 <td valign="top"><a href="#addproductresult">AddProductResult</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -2446,6 +2388,15 @@ Applied promo code if provided
 <td>
 
 Remaining amount for free transport and payment; null = transport cannot be free
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected bank swift code of goPay payment bank transfer
 
 </td>
 </tr>
@@ -6908,15 +6859,6 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#paymentinput">PaymentInput</a></td>
-<td>
-
-Represents a payment in order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -6999,15 +6941,6 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 
 </td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#paymentinput">PaymentInput</a></td>
-<td>
-
-Represents a payment in order
-
-</td>
-</tr>
 </tbody>
 </table>
 
@@ -7046,6 +6979,47 @@ Current customer user password.
 <td>
 
 New customer user password.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ChangePaymentInCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier or null if customer is logged in
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected bank swift code of goPay payment bank transfer
 
 </td>
 </tr>
@@ -7190,7 +7164,7 @@ Whether customer user should receive newsletters or not
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-Cart identifier, new cart will be created if not provided and customer is not logged in
+Cart identifier or null if customer is logged in
 
 </td>
 </tr>
@@ -7531,10 +7505,10 @@ Other information related to the order
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#paymentinput">PaymentInput</a>!</td>
+<td valign="top"><a href="#paymentinput">PaymentInput</a></td>
 <td>
 
-Payment method applied to the order
+Deprecated, this field is not used, the payment is taken from the server cart instead.
 
 </td>
 </tr>
@@ -7673,15 +7647,6 @@ UUID
 <td>
 
 Price for payment
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>goPayBankSwift</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Selected bank swift code of goPay payment bank transfer
 
 </td>
 </tr>
@@ -8065,15 +8030,6 @@ Uuid of the cart that should be merged to the cart of the newly registered user
 <td>
 
 Cart identifier, new cart will be created if not provided and customer is not logged in
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#paymentinput">PaymentInput</a></td>
-<td>
-
-Represents a payment in order
 
 </td>
 </tr>
@@ -8484,6 +8440,11 @@ Hierarchy of the current element in relation to the structure
 <tr>
 <td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 </tbody>
