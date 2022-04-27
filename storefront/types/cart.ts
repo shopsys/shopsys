@@ -16,10 +16,6 @@ export type CurrentCartType = {
     promoCode: string | null;
 };
 
-export type CartInput = {
-    cartUuid: string | null;
-};
-
 export type ProductCartItemType = {
     uuid: string;
     slug: string;
