@@ -24,6 +24,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\InlineCommentSniff;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidClassNameSniff;
 use PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods\CamelCapsMethodNameSniff;
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionCallSignatureSniff;
+use PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions\FunctionDeclarationArgumentSpacingSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff as PhpCsValidVariableNameSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowMultipleAssignmentsSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP\DisallowSizeFunctionsInLoopsSniff;
@@ -60,7 +61,6 @@ use PhpCsFixer\Fixer\ControlStructure\IncludeFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoTrailingCommaInListCallFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUnneededControlParenthesesFixer;
 use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
-use PhpCsFixer\Fixer\FunctionNotation\FunctionTypehintSpaceFixer;
 use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
 use PhpCsFixer\Fixer\Import\OrderedImportsFixer;
 use PhpCsFixer\Fixer\LanguageConstruct\CombineConsecutiveUnsetsFixer;
@@ -245,7 +245,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->call('configure', [['syntax' => 'short']]);
     $services->set(CombineConsecutiveUnsetsFixer::class);
     $services->set(EregToPregFixer::class);
-    $services->set(FunctionTypehintSpaceFixer::class);
+    $services->set(FunctionDeclarationArgumentSpacingSniff::class)
+        ->property('equalsSpacing', 1);
     $services->set(IncludeFixer::class);
     $services->set(YodaStyleFixer::class)
         ->call('configure', [['equal' => false, 'identical' => false]]);

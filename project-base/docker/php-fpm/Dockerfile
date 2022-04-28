@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-buster as base
+FROM php:8.1-fpm-bullseye as base
 
 ARG project_root=.
 
@@ -63,7 +63,7 @@ RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-k
     apt-get update && apt-get install -y postgresql-12 postgresql-client-12 && apt-get clean
 
 # install redis extension
-RUN pecl install redis-5.2.1 && \
+RUN pecl install redis-5.3.7 && \
     docker-php-ext-enable redis
 
 # install locales and switch to en_US.utf8 in order to enable UTF-8 support

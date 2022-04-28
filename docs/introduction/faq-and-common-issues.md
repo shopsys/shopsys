@@ -26,7 +26,7 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
 - [Do you have any tips how to debug emails during development in Docker?](#do-you-have-any-tips-how-to-debug-emails-during-development-in-docker)
 - [Can I see what is really happening in the Codeception acceptance tests when using Docker?](#can-i-see-what-is-really-happening-in-the-codeception-acceptance-tests-when-using-docker)
-- [Why is there a faked PHP 7.4.1 platform in the Composer config?](#why-is-there-a-faked-php-741-platform-in-the-composer-config)
+- [Why is there a faked PHP 8.1 platform in the Composer config?](#why-is-there-a-faked-php-81-platform-in-the-composer-config)
 - [How to make PHPStorm and PHPStan understand that I use extended classes?](#how-to-make-phpstorm-and-phpstan-understand-that-i-use-extended-classes)
 - [SMTP container cannot send email with error "Helo command rejected: need fully-qualified hostname"](#smtp-container-cannot-send-email-with-error-helo-command-rejected-need-fully-qualified-hostname)
 
@@ -152,9 +152,9 @@ See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in t
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
 Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
 
-## Why is there a faked PHP 7.4.1 platform in the Composer config?
-As a general rule, packages and libraries that depend on PHP 7.4.1 will work as expected even on any higher 7.x version, but not vice versa.
-Maintainers of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration74.incompatible.php) introduced in PHP 7.4, in practice it doesn't cause issues).
+## Why is there a faked PHP 8.1 platform in the Composer config?
+As a general rule, packages and libraries that depend on PHP 8.1 will work as expected even on any higher 8.x version, but not vice versa.
+Maintainers of PHP are focusing on backward-compatibility (even if there were [some incompatible changes](https://www.php.net/manual/en/migration81.incompatible.php) introduced in PHP 8.1, in practice it doesn't cause issues).
 
 Using [the `config.platform.php` option](https://getcomposer.org/doc/06-config.md#platform) in `composer.json` allows us to force Composer to install such dependencies, that work for all supported versions of PHP by Shopsys Framework.
 These dependencies are locked during each release of SSFW so users that install it can download exact versions of all libraries and tools that were tested and proved working.

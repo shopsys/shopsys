@@ -16,7 +16,7 @@
         }
     },
     "require": {
-        "php": "^7.4.1",
+        "php": "^8.1",
         "google/cloud-storage": "^1.10",
         "shopsys/form-types-bundle": "9.2.x-dev",
         "shopsys/framework": "9.2.x-dev",

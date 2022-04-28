@@ -189,3 +189,7 @@ There you can find links to upgrade notes for other versions too.
         +        DocBlockParser $docBlockParser
              ) {
         ```
+- upgrade PHP version to 8.1 ([#2430](https://github.com/shopsys/shopsys/pull/2430))
+    - see #project-base-diff to update your project
+    - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
+    - if you use custom Dockerfile, don't forget to rebuild your image with the new version of PHP

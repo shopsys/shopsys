@@ -68,7 +68,7 @@ kind of recipe by which final image is cooked.
 
 Dockerfile example command:
 ```dockerfile
-FROM php:7.4-fpm-buster
+FROM php:8.1-fpm-bullseye
 ```
 
 !!! note

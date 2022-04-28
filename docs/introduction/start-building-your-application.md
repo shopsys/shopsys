@@ -125,7 +125,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
          "preferred-install": "dist",
 -        "component-dir": "project-base/web/components",
 -        "platform": {
--            "php": "7.4.1"
+-            "php": "8.1"
 -        }
 +        "component-dir": "project-base/web/components"
      },
@@ -143,23 +143,23 @@ After all, your production server is the one that matters the most.
 
 First, run `php -v` on your server to find our the exact version, for example:
 ``` no-highlight
-PHP 7.4.12 (cli) (built: Oct  29 2020 18:37:21) ( NTS )
+PHP 8.1.3 (cli) (built: Mar  1 2022 09:21:02) ( NTS )
 Copyright (c) The PHP Group
-Zend Engine v3.4.0, Copyright (c) Zend Technologies
-    with Zend OPcache v7.4.12, Copyright (c), by Zend Technologies
+Zend Engine v4.1.3, Copyright (c) Zend Technologies
+    with Zend OPcache v8.1.3, Copyright (c), by Zend Technologies
 ```
 Then change the version in your `docker/php-fpm/Dockerfile`:
 ```diff
-- FROM php:7.4-fpm-buster as base
-+ FROM php:7.4.12-fpm-buster as base
+- FROM php:8.1-fpm-bullseye as base
++ FROM php:8.1.3-fpm-bullseye as base
 ```
 After running `docker-compose up -d --build` you'll have the application running on the same PHP.
 
 Now you can modify the version in your `composer.json` as well so all packages will always be installed in a compatible version.
 ```diff
          "platform": {
--            "php": "7.4.1"
-+            "php": "7.4.12"
+-            "php": "8.1"
++            "php": "8.1.3"
          }
 ```
 To apply the new setting, execute `composer update` and commit the changes.
