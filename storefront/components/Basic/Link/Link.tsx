@@ -49,7 +49,7 @@ const Link: FC<LinkProps> = (props) => {
     }
 
     return (
-        <NextLink {...props}>
+        <NextLink {...props} passHref>
             <LinkStyled data-testid={testIdentifier}>{props.children}</LinkStyled>
         </NextLink>
     );
