@@ -1,9 +1,10 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
+import { AddToCartPopupDataType } from 'types/cart';
 import Button from 'components/Forms/Button';
+import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCart } from 'connectors/cart/Cart';
-import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
+import { useAddToCart } from 'hooks/cart/UseAddToCart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -19,24 +20,18 @@ const AddToCart: FC<AddToCartProps> = (props) => {
 
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
-    const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.productUuid);
+    const changeCartItemQuantity = useAddToCart();
+    const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
             return;
         }
 
-        changeCartItemQuantity({
-            input: {
-                cartUuid,
-                isAbsoluteQuantity: false,
-                productUuid: props.productUuid,
-                quantity: spinboxRef.current.valueAsNumber,
-            },
-        });
+        const addToCartResult = await changeCartItemQuantity(props.productUuid, spinboxRef.current.valueAsNumber);
         spinboxRef.current!.valueAsNumber = 1;
+        setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
     };
 
     return (

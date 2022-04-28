@@ -1,21 +1,20 @@
 import {
     AddToCartMutationApi,
-    AddToCartMutationVariablesApi,
     CartFragmentApi,
     RemoveFromCartMutationApi,
     RemoveFromCartMutationVariablesApi,
-    useAddToCartMutationApi,
     useCartQueryApi,
     useRemoveFromCartMutationApi,
 } from 'graphql/generated';
+import { AddToCartPopupDataType, CartType, CurrentCartType } from 'types/cart';
 import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { CartType, CurrentCartType } from 'types/cart';
 import { CombinedError, UseMutationResponse } from 'urql';
 import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getFirstImage } from 'connectors/image/Image';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapPayment } from 'connectors/payments/Payment';
+import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { mapTransport } from 'connectors/transports/Transports';
 import { PriceType } from 'types/price';
 import { showErrorMessage } from 'components/Helpers/Toasts';
@@ -91,17 +90,18 @@ const handleCartError = (error: CombinedError, t: Translate) => {
     }
 };
 
-export const useAddToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
-    const [addToCartResult, addToCart] = useAddToCartMutationApi();
-    const dispatch = useShopsysDispatch();
+export const mapAddToCartPopupData = (
+    addToCartResult: AddToCartMutationApi['AddToCart'] | null,
+    currencyCode: string,
+): AddToCartPopupDataType | null => {
+    if (addToCartResult === null) {
+        return null;
+    }
 
-    useEffect(() => {
-        if (addToCartResult.data?.AddToCart.cart.uuid !== undefined) {
-            dispatch(userActions.setCartUuid(addToCartResult.data.AddToCart.cart.uuid));
-        }
-    }, [addToCartResult.data?.AddToCart.cart.uuid]);
-
-    return [addToCartResult, addToCart];
+    return {
+        ...mapSimpleProductApiData(addToCartResult.addProductResult.cartItem.product, currencyCode),
+        quantity: addToCartResult.addProductResult.addedQuantity,
+    };
 };
 
 export const useRemoveFromCart = (): UseMutationResponse<
