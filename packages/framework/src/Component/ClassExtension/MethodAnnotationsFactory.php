@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
 use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
@@ -13,23 +14,44 @@ class MethodAnnotationsFactory
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
      */
-    protected $annotationsReplacementsMap;
+    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
      */
-    protected $annotationsReplacer;
+    protected AnnotationsReplacer $annotationsReplacer;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser
+     */
+    protected DocBlockParser $docBlockParser;
+
+    /**
+     * @var \InvalidArgumentException[]
+     */
+    protected array $warningBag = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
      */
     public function __construct(
         AnnotationsReplacementsMap $annotationsReplacementsMap,
-        AnnotationsReplacer $annotationsReplacer
+        AnnotationsReplacer $annotationsReplacer,
+        DocBlockParser $docBlockParser
     ) {
         $this->annotationsReplacementsMap = $annotationsReplacementsMap;
         $this->annotationsReplacer = $annotationsReplacer;
+        $this->docBlockParser = $docBlockParser;
+    }
+
+    /**
+     * @return \InvalidArgumentException[]
+     */
+    public function getWarnings(): array
+    {
+        return $this->warningBag;
     }
 
     /**
@@ -69,9 +91,17 @@ class MethodAnnotationsFactory
                 continue;
             }
 
+            try {
+                $docBlockReturnTypes = $this->docBlockParser
+                    ->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment());
+            } catch (InvalidArgumentException $exception) {
+                $this->warningBag[] = $exception;
+                continue;
+            }
+
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes()
+                $docBlockReturnTypes
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
@@ -151,6 +181,7 @@ class MethodAnnotationsFactory
                 return true;
             }
         }
+
         return false;
     }
 
@@ -164,10 +195,14 @@ class MethodAnnotationsFactory
         array $methodParameters
     ): bool {
         foreach ($methodParameters as $methodParameter) {
-            foreach ($methodParameter->getDocBlockTypeStrings() as $typeString) {
-                if (preg_match($frameworkClassPattern, $typeString)) {
-                    return true;
-                }
+            $type = $this->docBlockParser->getParameterType($methodParameter);
+
+            if ($type === null) {
+                return false;
+            }
+
+            if (preg_match($frameworkClassPattern, (string)$type)) {
+                return true;
             }
         }
 

@@ -13,14 +13,21 @@ class AnnotationsReplacer
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
      */
-    protected $annotationsReplacementsMap;
+    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser
+     */
+    protected DocBlockParser $docBlockParser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
      */
-    public function __construct(AnnotationsReplacementsMap $annotationsReplacementsMap)
+    public function __construct(AnnotationsReplacementsMap $annotationsReplacementsMap, DocBlockParser $docBlockParser)
     {
         $this->annotationsReplacementsMap = $annotationsReplacementsMap;
+        $this->docBlockParser = $docBlockParser;
     }
 
     /**
@@ -42,7 +49,7 @@ class AnnotationsReplacer
      */
     public function replaceInMethodReturnType(ReflectionMethod $reflectionMethod): string
     {
-        $methodReturnTypes = $reflectionMethod->getDocBlockReturnTypes();
+        $methodReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
         $replacedReturnTypes = [];
         foreach ($methodReturnTypes as $methodReturnType) {
             $replacedReturnTypes[] = $this->replaceIn((string)$methodReturnType);
@@ -57,9 +64,13 @@ class AnnotationsReplacer
      */
     public function replaceInPropertyType(ReflectionProperty $reflectionProperty): string
     {
-        $propertyType = implode('|', $reflectionProperty->getDocBlockTypeStrings());
+        $type = $this->docBlockParser->getPropertyType($reflectionProperty);
 
-        return $this->replaceIn($propertyType);
+        if ($type === null) {
+            return '';
+        }
+
+        return $this->replaceIn((string)$type);
     }
 
     /**
@@ -68,12 +79,12 @@ class AnnotationsReplacer
      */
     public function replaceInParameterType(ReflectionParameter $reflectionParameter): string
     {
-        $parameterTypes = $reflectionParameter->getDocBlockTypeStrings();
-        $replacedTypes = [];
-        foreach ($parameterTypes as $parameterType) {
-            $replacedTypes[] = $this->replaceIn((string)$parameterType);
+        $type = $this->docBlockParser->getParameterType($reflectionParameter);
+
+        if ($type === null) {
+            return '';
         }
 
-        return implode('|', $replacedTypes);
+        return $this->replaceIn((string)$type);
     }
 }
