@@ -1,16 +1,8 @@
-import {
-    AddToCartMutationApi,
-    CartFragmentApi,
-    RemoveFromCartMutationApi,
-    RemoveFromCartMutationVariablesApi,
-    useCartQueryApi,
-    useRemoveFromCartMutationApi,
-} from 'graphql/generated';
+import { AddToCartMutationApi, CartFragmentApi, useCartQueryApi } from 'graphql/generated';
 import { AddToCartPopupDataType, CartType, CurrentCartType } from 'types/cart';
 import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { CombinedError, UseMutationResponse } from 'urql';
 import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { CombinedError } from 'urql';
 import { getFirstImage } from 'connectors/image/Image';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapPayment } from 'connectors/payments/Payment';
@@ -19,8 +11,7 @@ import { mapTransport } from 'connectors/transports/Transports';
 import { PriceType } from 'types/price';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { Translate } from 'next-translate';
-import { useEffect } from 'react';
-import { userActions } from 'redux/slices/user';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useCurrentCart = (): CurrentCartType => {
@@ -102,22 +93,6 @@ export const mapAddToCartPopupData = (
         ...mapSimpleProductApiData(addToCartResult.addProductResult.cartItem.product, currencyCode),
         quantity: addToCartResult.addProductResult.addedQuantity,
     };
-};
-
-export const useRemoveFromCart = (): UseMutationResponse<
-    RemoveFromCartMutationApi,
-    RemoveFromCartMutationVariablesApi
-> => {
-    const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
-    const dispatch = useShopsysDispatch();
-
-    useEffect(() => {
-        if (removeItemFromCartResult.data?.RemoveFromCart.uuid !== undefined) {
-            dispatch(userActions.setCartUuid(removeItemFromCartResult.data.RemoveFromCart.uuid));
-        }
-    }, [removeItemFromCartResult]);
-
-    return [removeItemFromCartResult, removeItemFromCart];
 };
 
 export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {
