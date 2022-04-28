@@ -4,6 +4,9 @@ mutation AddToCartMutation($input: AddToCartInput!) {
             ...CartFragment
         }
         addProductResult {
+            cartItem {
+                ...CartItemFragment
+            }
             addedQuantity
             isNew
             isQuantityOverLimit

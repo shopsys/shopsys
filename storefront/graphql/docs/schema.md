@@ -1183,6 +1183,11 @@ Add a transport to the cart, or remove a transport from the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>cartItem</strong></td>
+<td valign="top"><a href="#cartitem">CartItem</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>notOnStockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>

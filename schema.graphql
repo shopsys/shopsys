@@ -1,4 +1,5 @@
 type AddProductResult {
+  cartItem: CartItem!
   notOnStockQuantity: Int!
   overLimitQuantity: Int
   isQuantityOverLimit: Boolean
