@@ -132,7 +132,6 @@
         "tuscanicz/enum": "^2.1",
         "twig/extensions": "^1.5.1",
         "twig/twig": "^2.14.11",
-        "vasek-purchart/console-errors-bundle": "^3.0.0",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
