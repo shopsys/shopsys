@@ -276,12 +276,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface:
         alias: App\Model\Product\ProductOnCurrentDomainElasticFacade
 
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface:
-        alias: Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
-
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade:
-        alias: App\Model\Product\Listed\ListedProductViewElasticFacade
-
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade:
         alias: App\Model\Product\ProductOnCurrentDomainElasticFacade
 
@@ -389,12 +383,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
-
-    Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory:
-        alias: App\Model\Product\Listed\ListedProductViewFactory
-
-    Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory:
-        alias: App\Model\Product\Action\ProductActionViewFactory
 
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
@@ -620,21 +608,6 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
-    twig_cache_extension.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
-        arguments:
-            - '@snc_redis.twig'
-
-    shopsys.shop.component.image.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.image'] }
-
-    App\Component\Image\ImageCacheFacade:
-        arguments:
-            - '@shopsys.shop.component.image.cache_provider'
-
     App\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
@@ -676,15 +649,6 @@ services:
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
         alias: fos_ck_editor.configuration
 
-    shopsys.shop.model.product_filter.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.product_filter'] }
-
-    App\Model\Product\Filter\ProductFilterCacheFacade:
-        arguments:
-            - '@shopsys.shop.model.product_filter.cache_provider'
-
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
         alias: App\Model\Product\Pricing\ProductInputPriceFacade
 
@@ -708,12 +672,6 @@ services:
     App\Model\Cart\CartMigrationFacade:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
-    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
-        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFacade
-
-    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory:
-        alias: App\Model\Product\Detail\ProductDetailViewElasticsearchFactory
 
     Endroid\QrCode\Writer\PngWriter: ~
 

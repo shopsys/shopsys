@@ -21,11 +21,6 @@ framework:
         enabled: false
         collect: false
     error_controller: 'App\Controller\Admin\ErrorController::showAction'
-    cache:
-        pools:
-            main_friendly_url_slug_cache:
-                adapter: cache.adapter.redis
-                provider: snc_redis.main_friendly_url_slugs
     assets:
         base_urls:
             # When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
