@@ -11,6 +11,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunction
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff;
 use PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer;
+use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer;
 use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
@@ -68,6 +69,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(
         Option::SKIP,
         [
+            PhpdocToPropertyTypeFixer::class => [
+                __DIR__ . '/src/*',
+                __DIR__ . '/app/*',
+                __DIR__ . '/tests/App/Acceptance/*',
+            ],
             FunctionLengthSniff::class => [
                 __DIR__ . '/src/Migrations/Version20190801103940.php',
                 __DIR__ . '/src/DataFixtures/*/*DataFixture.php',
@@ -264,6 +270,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(CyclomaticComplexitySniff::class)
         ->property('absoluteComplexity', 19);
+
+    $services->set(PhpdocToPropertyTypeFixer::class);
 
     $containerConfigurator->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
 

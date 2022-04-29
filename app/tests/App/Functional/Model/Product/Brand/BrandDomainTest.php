@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Brand;
 
 use App\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class BrandDomainTest extends FunctionalTestCase
@@ -18,13 +20,13 @@ class BrandDomainTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface
      * @inject
      */
-    private $brandDataFactory;
+    private BrandDataFactoryInterface $brandDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface
      * @inject
      */
-    private $brandFactory;
+    private BrandFactoryInterface $brandFactory;
 
     /**
      * @group multidomain

@@ -11,7 +11,7 @@ class PerformanceTestSummaryPrinter
     /**
      * @var \Tests\App\Performance\Page\PerformanceTestSampleQualifier
      */
-    private $performanceTestSampleQualifier;
+    private PerformanceTestSampleQualifier $performanceTestSampleQualifier;
 
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSampleQualifier $performanceTestSampleQualifier

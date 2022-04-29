@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Transport\Transport;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportTest extends GraphQlTestCase
@@ -14,7 +15,7 @@ class TransportTest extends GraphQlTestCase
     /**
      * @var \App\Model\Transport\Transport
      */
-    protected $transport;
+    protected Transport $transport;
 
     protected function setUp(): void
     {

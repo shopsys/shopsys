@@ -9,8 +9,10 @@ use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Tests\App\Test\FunctionalTestCase;
@@ -21,13 +23,13 @@ class CartTest extends FunctionalTestCase
      * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     public function testRemoveItem()
     {

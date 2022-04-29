@@ -19,35 +19,35 @@ class ExtendedCategory extends Category
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $stringField;
+    protected ?string $stringField;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\ManyToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $manyToOneUnidirectionalEntity;
+    protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\OneToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $oneToOneUnidirectionalEntity;
+    protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity
      * @ORM\OneToOne(targetEntity="CategoryOneToOneBidirectionalEntity", mappedBy="category")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $oneToOneBidirectionalEntity;
+    protected CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
      * @ORM\OneToOne(targetEntity="ExtendedCategory")
      * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
      */
-    protected $oneToOneSelfReferencingEntity;
+    protected ExtendedCategory $oneToOneSelfReferencingEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity[]

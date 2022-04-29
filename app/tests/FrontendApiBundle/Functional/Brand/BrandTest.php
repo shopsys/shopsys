@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
 use App\DataFixtures\Demo\BrandDataFixture;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -13,7 +14,7 @@ class BrandTest extends GraphQlTestCase
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    protected $brand;
+    protected Brand $brand;
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface

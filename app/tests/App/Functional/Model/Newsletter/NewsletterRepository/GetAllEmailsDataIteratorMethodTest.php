@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Newsletter\NewsletterRepository;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository;
 use Tests\App\Test\FunctionalTestCase;
 
 class GetAllEmailsDataIteratorMethodTest extends FunctionalTestCase
@@ -17,7 +18,7 @@ class GetAllEmailsDataIteratorMethodTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository
      * @inject
      */
-    private $newsletterRepository;
+    private NewsletterRepository $newsletterRepository;
 
     public function testSubscriberFoundInFirstDomain(): void
     {

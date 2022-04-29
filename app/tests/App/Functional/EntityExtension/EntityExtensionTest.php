@@ -47,13 +47,13 @@ class EntityExtensionTest extends FunctionalTestCase
      * @var \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
      * @inject
      */
-    private $entityNameResolver;
+    private OverwritableEntityNameResolver $entityNameResolver;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber
      * @inject
      */
-    private $entityExtensionSubscriber;
+    private OverwritableEntityExtensionSubscriber $entityExtensionSubscriber;
 
     protected function setUp(): void
     {

@@ -12,37 +12,37 @@ class PerformanceTestSample
     /**
      * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
      */
-    private $feedInfo;
+    private FeedInfoInterface $feedInfo;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    private $domainConfig;
+    private DomainConfig $domainConfig;
 
     /**
      * @var string
      */
-    private $generationUri;
+    private string $generationUri;
 
     /**
      * @var float
      */
-    private $duration;
+    private float $duration;
 
     /**
      * @var int
      */
-    private $statusCode;
+    private int $statusCode;
 
     /**
      * @var string|null
      */
-    private $message;
+    private ?string $message;
 
     /**
      * @var string[]
      */
-    private $failMessages = [];
+    private array $failMessages = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo

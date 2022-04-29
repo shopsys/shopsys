@@ -7,7 +7,10 @@ namespace Tests\App\Functional\Model\Product;
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductDomainTest extends FunctionalTestCase
@@ -24,19 +27,19 @@ class ProductDomainTest extends FunctionalTestCase
      * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface
      * @inject
      */
-    private $productFactory;
+    private ProductFactoryInterface $productFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @group multidomain

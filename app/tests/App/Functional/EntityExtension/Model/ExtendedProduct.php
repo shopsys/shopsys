@@ -19,35 +19,35 @@ class ExtendedProduct extends Product
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $stringField;
+    protected ?string $stringField;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\ManyToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $manyToOneUnidirectionalEntity;
+    protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\OneToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $oneToOneUnidirectionalEntity;
+    protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity
      * @ORM\OneToOne(targetEntity="ProductOneToOneBidirectionalEntity", mappedBy="product")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $oneToOneBidirectionalEntity;
+    protected ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
      * @ORM\OneToOne(targetEntity="ExtendedProduct")
      * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
      */
-    protected $oneToOneSelfReferencingEntity;
+    protected ExtendedProduct $oneToOneSelfReferencingEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity[]
@@ -76,7 +76,7 @@ class ExtendedProduct extends Product
      * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManySelfReferencingEntities")
      * @ORM\JoinColumn(nullable=true, name="oneToManySelfReferencingParent_id", referencedColumnName="id")
      */
-    protected $oneToManySelfReferencingInverseEntity;
+    protected ExtendedProduct $oneToManySelfReferencingInverseEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]

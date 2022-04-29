@@ -12,6 +12,9 @@ use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductRepositoryTest extends FunctionalTestCase
@@ -20,19 +23,19 @@ class ProductRepositoryTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      * @inject
      */
-    private $productRepository;
+    private ProductRepository $productRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     public function testVisibleAndNotSellingDeniedProductIsListed()
     {

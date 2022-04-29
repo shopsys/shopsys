@@ -6,6 +6,8 @@ namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class TransportDomainTest extends FunctionalTestCase
@@ -17,13 +19,13 @@ class TransportDomainTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
-    private $transportDataFactory;
+    private TransportDataFactoryInterface $transportDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface
      * @inject
      */
-    private $transportFactory;
+    private TransportFactoryInterface $transportFactory;
 
     public function testCreateTransportEnabledOnDomain()
     {

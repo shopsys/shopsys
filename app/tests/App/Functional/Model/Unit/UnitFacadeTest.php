@@ -7,6 +7,9 @@ namespace Tests\App\Functional\Model\Unit;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Unit\UnitData;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\FunctionalTestCase;
 
 class UnitFacadeTest extends FunctionalTestCase
@@ -15,19 +18,19 @@ class UnitFacadeTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
      * @inject
      */
-    private $unitFacade;
+    private UnitFacade $unitFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     public function testDeleteByIdAndReplace()
     {

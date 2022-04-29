@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductVariantTest extends GraphQlTestCase
@@ -12,12 +13,12 @@ class ProductVariantTest extends GraphQlTestCase
     /**
      * @var \App\Model\Product\Product
      */
-    private $productAsMainVariant;
+    private Product $productAsMainVariant;
 
     /**
      * @var \App\Model\Product\Product
      */
-    private $productAsVariant;
+    private Product $productAsVariant;
 
     protected function setUp(): void
     {

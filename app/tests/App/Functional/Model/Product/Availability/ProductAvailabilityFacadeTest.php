@@ -5,8 +5,14 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductFacade;
+use App\Model\Stock\ProductStockDataFactory;
+use App\Model\Stock\StockFacade;
 use App\Model\Stock\StockSettingsData;
+use App\Model\Stock\StockSettingsDataFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductAvailabilityFacadeTest extends FunctionalTestCase
@@ -17,37 +23,37 @@ class ProductAvailabilityFacadeTest extends FunctionalTestCase
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      * @inject
      */
-    private $productAvailabilityFacade;
+    private ProductAvailabilityFacade $productAvailabilityFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
      * @var \App\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @var \App\Model\Stock\ProductStockDataFactory
      * @inject
      */
-    private $productStockDataFactory;
+    private ProductStockDataFactory $productStockDataFactory;
 
     /**
      * @var \App\Model\Stock\StockSettingsDataFacade
      * @inject
      */
-    private $stockSettingsDataFacade;
+    private StockSettingsDataFacade $stockSettingsDataFacade;
 
     /**
      * @var \App\Model\Stock\StockFacade
      * @inject
      */
-    private $stockFacade;
+    private StockFacade $stockFacade;
 
     public function testShippingDaysByDomainIdForEmptyStock()
     {

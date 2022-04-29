@@ -26,7 +26,7 @@ class RouteConfigCustomization
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    private $container;
+    private ContainerInterface $container;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
