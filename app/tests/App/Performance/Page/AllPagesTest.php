@@ -280,15 +280,16 @@ class AllPagesTest extends KernelTestCase
     private function injectQueryCounter(EntityManagerInterface $entityManager)
     {
         $connectionConfiguration = $entityManager->getConnection()->getConfiguration();
-        $loggerChain = new LoggerChain();
 
         $currentLogger = $connectionConfiguration->getSQLLogger();
+        $loggers = [];
         if ($currentLogger !== null) {
-            $loggerChain->addLogger($currentLogger);
+            $loggers[] = $currentLogger;
         }
 
         $queryCounter = new PerformanceTestSampleQueryCounter();
-        $loggerChain->addLogger($queryCounter);
+        $loggers[] = $queryCounter;
+        $loggerChain = new LoggerChain($loggers);
 
         $connectionConfiguration->setSQLLogger($loggerChain);
 

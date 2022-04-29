@@ -44,7 +44,7 @@ class NavigationItemCategoryFacade
 
         foreach ($navigationItemCategories as $navigationItemCategory) {
             $this->em->remove($navigationItemCategory);
-            $this->em->flush($navigationItemCategory);
+            $this->em->flush();
         }
 
         foreach ($navigationItemData->categoriesByColumnNumber as $columnNumber => $categories) {
@@ -72,8 +72,9 @@ class NavigationItemCategoryFacade
             );
 
             $this->em->persist($navigationItemCategory);
-            $this->em->flush($navigationItemCategory);
         }
+
+        $this->em->flush();
     }
 
     /**

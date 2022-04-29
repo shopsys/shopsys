@@ -131,7 +131,7 @@ class Version20190801103940 extends AbstractMigration
             ADD
                 CONSTRAINT FK_D35087A99452A475 FOREIGN KEY (blog_article_id) REFERENCES blog_articles (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $categoriesCount = $this->sql('SELECT count(*) FROM blog_categories')->fetchColumn(0);
+        $categoriesCount = $this->sql('SELECT count(*) FROM blog_categories')->fetchOne();
 
         if ($categoriesCount <= 0) {
             $this->sql('INSERT INTO blog_categories (id, parent_id, level, lft, rgt) VALUES (1, null, 0, 0, 3)');

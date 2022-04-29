@@ -26,7 +26,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken($validMultidomainLoginToken);
 
@@ -43,7 +43,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 
@@ -59,7 +59,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 

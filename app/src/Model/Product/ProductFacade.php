@@ -377,7 +377,7 @@ class ProductFacade extends BaseProductFacade
         foreach ($oldProductParameterValues as $oldProductParameterValue) {
             $this->em->remove($oldProductParameterValue);
         }
-        $this->em->flush($oldProductParameterValues);
+        $this->em->flush();
 
         $toFlush = [];
         foreach ($productParameterValuesData as $productParameterValueData) {
@@ -397,7 +397,7 @@ class ProductFacade extends BaseProductFacade
         }
 
         if (count($toFlush) > 0) {
-            $this->em->flush($toFlush);
+            $this->em->flush();
         }
     }
 

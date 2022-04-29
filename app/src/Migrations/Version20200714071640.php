@@ -14,7 +14,7 @@ class Version20200714071640 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $isFlagProductHit = $this->sql('SELECT count(*) FROM flags WHERE akeneo_code =\'flag__product_hit\'')->fetchColumn(0);
+        $isFlagProductHit = $this->sql('SELECT count(*) FROM flags WHERE akeneo_code =\'flag__product_hit\'')->fetchOne();
         if ($isFlagProductHit !== 0) {
             return;
         }
