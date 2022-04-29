@@ -18,13 +18,16 @@ export const useApplyPromoCodeToCart = (): typeof applyPromoCodeHandler => {
             const { userError } = getUserFriendlyErrors(applyPromoCodeResult.error, t);
             if (userError?.validation?.promoCode !== undefined) {
                 showErrorMessage(userError.validation.promoCode.message);
-
-                return;
+            } else {
+                showErrorMessage(messages.error);
             }
-            showErrorMessage(messages.error);
-        } else if (applyPromoCodeResult.data !== undefined) {
-            showSuccessMessage(messages.success);
+
+            return null;
         }
+
+        showSuccessMessage(messages.success);
+
+        return applyPromoCodeResult.data?.ApplyPromoCodeToCart;
     };
 
     return applyPromoCodeHandler;
