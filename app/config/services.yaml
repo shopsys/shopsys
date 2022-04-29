@@ -36,9 +36,6 @@ services:
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
 
-    Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory:
-        alias: App\Component\ClassExtension\MethodAnnotationsFactory
-
     Symfony\Component\Validator\Constraints\FileValidator:
 
     app.component.validator.file_validator:
