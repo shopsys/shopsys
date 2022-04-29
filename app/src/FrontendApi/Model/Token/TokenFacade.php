@@ -8,7 +8,7 @@ use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\Model\Administrator\Administrator;
 use App\Model\User\FrontendApi\FrontendApiUser;
 use DateTime;
-use Lcobucci\JWT\Token;
+use Lcobucci\JWT\UnencryptedToken;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade as BaseTokenFacade;
@@ -40,7 +40,9 @@ class TokenFacade extends BaseTokenFacade
             $tokenBuilder->withClaim($key, $value);
         }
 
-        return $tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey())->toString();
+        return $tokenBuilder
+            ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey())
+            ->toString();
     }
 
     /**
@@ -76,28 +78,28 @@ class TokenFacade extends BaseTokenFacade
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param string $secretChain
      * @param string $deviceId
-     * @return \Lcobucci\JWT\Token
+     * @return \Lcobucci\JWT\UnencryptedToken
      */
     public function generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
         string $deviceId
-    ): Token {
+    ): UnencryptedToken {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
 
-        return $tokenBuilder->getToken($this->getSigner(), $this->getPrivateKey());
+        return $tokenBuilder->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
     }
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param string $secretChain
-     * @return \Lcobucci\JWT\Token
+     * @return \Lcobucci\JWT\UnencryptedToken
      * @deprecated Method is deprecated. Use "generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId()" instead.
      */
-    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): Token
+    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): UnencryptedToken
     {
         throw new DeprecatedMethodException();
     }
