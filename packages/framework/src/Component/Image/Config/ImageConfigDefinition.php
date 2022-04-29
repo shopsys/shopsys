@@ -27,9 +27,9 @@ class ImageConfigDefinition implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder('images');
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root('images');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->buildItemsNode($rootNode->arrayPrototype());
 
@@ -67,9 +67,9 @@ class ImageConfigDefinition implements ConfigurationInterface
      */
     protected function createSizesNode()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder(self::CONFIG_SIZES);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root(self::CONFIG_SIZES);
+        $rootNode = $treeBuilder->getRootNode();
 
         return $rootNode
             ->defaultValue([])
