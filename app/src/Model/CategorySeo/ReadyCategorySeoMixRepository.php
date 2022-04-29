@@ -6,9 +6,9 @@ namespace App\Model\CategorySeo;
 
 use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\Persistence\ObjectRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use function GuzzleHttp\json_encode;
@@ -36,7 +36,7 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return \Doctrine\Persistence\ObjectRepository
      */
     private function getRepository(): ObjectRepository
     {
