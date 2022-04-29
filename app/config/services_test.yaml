@@ -18,10 +18,9 @@ services:
     Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver:
         alias: Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
 
-    Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber:
+    Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber:
         arguments:
-            - "@service_container"
-            - "%shopsys.entity_extension.map%"
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
         tags:
             - { name: doctrine.event_subscriber, priority: -10 }
 
