@@ -189,6 +189,10 @@
         "sort-packages": true,
         "platform": {
             "php": "7.4.1"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/flex": true
         }
     },
     "extra": {
