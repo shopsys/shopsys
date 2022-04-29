@@ -17,7 +17,7 @@
     {% if row.s.isDefault %}
         <span title="{{ 'Default stock cannot be removed'|trans }}"
             class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left">
-            <i class="svg svg-info"></i>
+            {{ icon('info') }}
         </span>
     {% else %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}

@@ -25,7 +25,7 @@
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ blogCategoryWithPreloadedChildren.blogCategory.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
                             <a href="{{ url('admin_blogcategory_edit', {id: blogCategoryWithPreloadedChildren.blogCategory.id}) }}" class="form-tree__item__control">
-                                <i class="svg svg-pencil"></i>
+                                {{ icon('pencil') }}
                             </a>
                             {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_blogcategory_delete' %}
                             {% set blogCategoryDeleteUrl = url('admin_blogcategory_delete', {
@@ -46,7 +46,7 @@
                                             return false;"
                                     class="form-tree__item__control"
                                 >
-                                    <i class="svg svg-trash"></i>
+                                    {{ icon('trash') }}
                                 </a>
                             {% endif %}
                         </span>
