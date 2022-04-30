@@ -31,7 +31,7 @@ const Item: FC<ItemProps> = (props) => {
     const itemCatnum = props.item.product.catalogNumber;
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const spinboxRef = useRef<HTMLInputElement | null>(null);
+    const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const [, changeCartItemQuantity] = useAddToCart();
