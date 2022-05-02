@@ -194,7 +194,7 @@ export const useContactInformationFormMeta = (
 
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = {
+    return {
         formName: 'contact-information-form',
         messages: {
             error: t('Could not create order'),
@@ -333,6 +333,4 @@ export const useContactInformationFormMeta = (
             },
         },
     };
-
-    return formMeta;
 };

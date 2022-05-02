@@ -20,7 +20,7 @@ export function useCurrentCustomerData(): CurrentCustomerType | undefined {
 const mapCurrentCustomerApiData = (
     apiCurrentCustomerData: CurrentCustomerUserQueryApi['currentCustomerUser'],
 ): CurrentCustomerType => {
-    const mappedCurrentCustomerData = {
+    return {
         ...apiCurrentCustomerData,
         companyCustomer: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
         telephone: apiCurrentCustomerData.telephone === null ? '' : apiCurrentCustomerData.telephone,
@@ -46,8 +46,6 @@ const mapCurrentCustomerApiData = (
         passwordFirst: '',
         passwordSecond: '',
     };
-
-    return mappedCurrentCustomerData;
 };
 
 export const mapDeliveryAddress = (apiDeliveryAddressData: DeliveryAddressFragmentApi): DeliveryAddressType => {
