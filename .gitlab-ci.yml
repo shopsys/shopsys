@@ -65,7 +65,7 @@ test:storefront-standards-with-jest-and-codegen:
     variables:
         GIT_STRATEGY: none
     script:
-        - docker run -i ${STOREFRONT_TAG} /bin/sh -c "./check-code-gen.sh; npm run lint; npm run tests-jest"
+        - docker run -i ${STOREFRONT_TAG} /bin/sh -c "./check-code-gen.sh; npm run lint; npm run stylelint; npm run tests-jest"
     interruptible: true
 
 tests:functional-and-acceptance:
