@@ -1,9 +1,9 @@
 import {
-    OrderSummaryContent,
-    SummaryPrice,
-    SummaryRow,
-    SummaryTextAndImage,
-    SummaryWrapper,
+    OrderSummaryContentStyled,
+    OrderSummaryPriceStyled,
+    OrderSummaryRowStyled,
+    OrderSummaryRowWrapperStyled,
+    OrderSummaryTextAndImageStyled,
 } from './OrderSummary.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -21,18 +21,18 @@ const PromoCode: FC<PromoCodeProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <SummaryWrapper data-testid={testIdentifier}>
-            <OrderSummaryContent>
-                <SummaryRow>
-                    <SummaryTextAndImage data-testid={testIdentifier + '-transport-name'}>
+        <OrderSummaryRowWrapperStyled data-testid={testIdentifier}>
+            <OrderSummaryContentStyled>
+                <OrderSummaryRowStyled>
+                    <OrderSummaryTextAndImageStyled data-testid={testIdentifier + '-promocode-name'}>
                         {`${t('Promo code')}: ${props.promoCode}`}
-                    </SummaryTextAndImage>
-                    <SummaryPrice data-testid={testIdentifier + '-transport-price'}>
+                    </OrderSummaryTextAndImageStyled>
+                    <OrderSummaryPriceStyled data-testid={testIdentifier + '-promocode-discount'}>
                         <strong>-{formatPrice(props.discount.priceWithVat, props.discount.currencyCode, t)}</strong>
-                    </SummaryPrice>
-                </SummaryRow>
-            </OrderSummaryContent>
-        </SummaryWrapper>
+                    </OrderSummaryPriceStyled>
+                </OrderSummaryRowStyled>
+            </OrderSummaryContentStyled>
+        </OrderSummaryRowWrapperStyled>
     );
 };
 

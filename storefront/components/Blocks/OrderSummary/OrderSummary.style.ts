@@ -17,7 +17,7 @@ export const OrderSummaryWrapperStyled = styled.div`
     `}
 `;
 
-export const OrderSummaryTitle = styled.h3`
+export const OrderSummaryTitleStyled = styled.h3`
     ${({ theme }) => css`
         margin-bottom: 11px;
 
@@ -71,19 +71,19 @@ export const ListItemStyled = styled.li`
     `}
 `;
 
-export const ListItemPictureWrapper = styled.div`
+export const ListItemPictureWrapperStyled = styled.div`
     margin-right: 17px;
     width: 54px;
 `;
 
-export const ListItemInfoWrapper = styled.div`
+export const ListItemInfoWrapperStyled = styled.div`
     display: flex;
     flex-direction: row;
     flex: 1;
     align-items: center;
 `;
 
-export const ListItemInfo = styled.span`
+export const ListItemInfoStyled = styled.span`
     ${({ theme }) => css`
         padding-right: 10px;
         flex: 1;
@@ -92,7 +92,7 @@ export const ListItemInfo = styled.span`
     `}
 `;
 
-export const ListItemPrice = styled.strong`
+export const ListItemPriceStyled = styled.strong`
     ${({ theme }) => css`
         margin-left: auto;
         width: 95px;
@@ -102,7 +102,7 @@ export const ListItemPrice = styled.strong`
     `}
 `;
 
-export const SummaryWrapper = styled.div`
+export const OrderSummaryRowWrapperStyled = styled.div`
     ${({ theme }) => css`
         padding-bottom: 10px;
         margin-bottom: ${localVariables.marginBottom};
@@ -111,22 +111,22 @@ export const SummaryWrapper = styled.div`
     `}
 `;
 
-export const OrderSummaryContent = styled.div`
+export const OrderSummaryRowContentStyled = styled.div`
     display: table;
     width: 100%;
 `;
 
-export const SummaryRow = styled.div`
+export const OrderSummaryRowStyled = styled.div`
     display: flex;
     justify-content: space-between;
 `;
 
-export const PriceWrapper = styled.div`
+export const PriceWrapperStyled = styled.div`
     display: flex;
     justify-content: flex-end;
 `;
 
-export const SummaryTextAndImage = styled.div`
+export const OrderSummaryTextAndImageStyled = styled.div`
     ${({ theme }) => css`
         display: table-row;
         padding: 6px 0;
@@ -137,7 +137,7 @@ export const SummaryTextAndImage = styled.div`
     `}
 `;
 
-export const SummaryPrice = styled.div`
+export const OrderSummaryPriceStyled = styled.div`
     ${({ theme }) => css`
         padding: 6px 0;
         vertical-align: baseline;
@@ -148,7 +148,7 @@ export const SummaryPrice = styled.div`
     `}
 `;
 
-export const TransportAndPaymentImageWrapper = styled.span`
+export const TransportAndPaymentImageWrapperStyled = styled.span`
     display: inline-block;
     height: 18px;
     margin-left: 8px;
@@ -159,17 +159,17 @@ export const TransportAndPaymentImageWrapper = styled.span`
     }
 `;
 
-export const OrderSummaryTotalPriceWrapper = styled.div`
+export const OrderSummaryTotalPriceWrapperStyled = styled.div`
     margin-bottom: ${localVariables.marginBottom};
 `;
 
-export const OrderSummaryTotalPriceText = styled.span`
+export const OrderSummaryTotalPriceTextStyled = styled.span`
     margin-right: 15px;
     display: inline-flex;
     align-items: end;
 `;
 
-export const OrderSummaryTotalPriceAmount = styled.strong`
+export const OrderSummaryTotalPriceAmountStyled = styled.strong`
     ${({ theme }) => css`
         color: ${theme.color.primary};
 

@@ -1,8 +1,8 @@
 import {
-    ListItemInfo,
-    ListItemInfoWrapper,
-    ListItemPictureWrapper,
-    ListItemPrice,
+    ListItemInfoStyled,
+    ListItemInfoWrapperStyled,
+    ListItemPictureWrapperStyled,
+    ListItemPriceStyled,
     ListItemStyled,
 } from './OrderSummary.style';
 import Image from 'components/Basic/Image/Image';
@@ -22,24 +22,24 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
 
     return (
         <ListItemStyled>
-            <ListItemPictureWrapper data-testid={testIdentifier + 'image'}>
+            <ListItemPictureWrapperStyled data-testid={testIdentifier + 'image'}>
                 <Image image={props.item.product.image} type="thumbnailExtraSmall" alt={props.item.product.fullName} />
-            </ListItemPictureWrapper>
-            <ListItemInfoWrapper>
-                <ListItemInfo>
+            </ListItemPictureWrapperStyled>
+            <ListItemInfoWrapperStyled>
+                <ListItemInfoStyled>
                     <strong data-testid={testIdentifier + 'count'}>
                         {props.item.quantity} {props.item.product.unit.name} &nbsp;
                     </strong>
                     <span data-testid={testIdentifier + 'name'}>{props.item.product.fullName}</span>
-                </ListItemInfo>
-                <ListItemPrice data-testid={testIdentifier + 'price'}>
+                </ListItemInfoStyled>
+                <ListItemPriceStyled data-testid={testIdentifier + 'price'}>
                     {formatPrice(
                         props.item.product.price.priceWithVat * props.item.quantity,
                         props.item.product.price.currencyCode,
                         t,
-                    )}
-                </ListItemPrice>
-            </ListItemInfoWrapper>
+                    )}{' '}
+                </ListItemPriceStyled>
+            </ListItemInfoWrapperStyled>
         </ListItemStyled>
     );
 };

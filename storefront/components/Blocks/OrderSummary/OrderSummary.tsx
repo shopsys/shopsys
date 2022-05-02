@@ -1,7 +1,7 @@
 import {
     OrderSummaryContentStyled,
     OrderSummaryContentWrapperStyled,
-    OrderSummaryTitle,
+    OrderSummaryTitleStyled,
     OrderSummaryWrapperStyled,
 } from './OrderSummary.style';
 import ProductsPreview from './ProductsPreview';
@@ -27,7 +27,7 @@ const OrderSummary: FC = () => {
         <>
             <Adverts positionName="cartPreview" withGapBottom />
             <OrderSummaryWrapperStyled data-testid={testIdentifier}>
-                <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
+                <OrderSummaryTitleStyled>{t('Your order')}</OrderSummaryTitleStyled>
                 <OrderSummaryContentWrapperStyled>
                     <OrderSummaryContentStyled>
                         <ProductsPreview cartItems={cart.items} />

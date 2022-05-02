@@ -1,9 +1,9 @@
 import {
-    OrderSummaryContent,
-    OrderSummaryTotalPriceAmount,
-    OrderSummaryTotalPriceText,
-    OrderSummaryTotalPriceWrapper,
-    PriceWrapper,
+    OrderSummaryContentStyled,
+    OrderSummaryTotalPriceAmountStyled,
+    OrderSummaryTotalPriceTextStyled,
+    OrderSummaryTotalPriceWrapperStyled,
+    PriceWrapperStyled,
 } from './OrderSummary.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -20,16 +20,16 @@ const TotalPrice: FC<TotalPriceProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <OrderSummaryTotalPriceWrapper data-testid={testIdentifier}>
-            <OrderSummaryContent>
-                <PriceWrapper>
-                    <OrderSummaryTotalPriceText>{t('Total price')}</OrderSummaryTotalPriceText>
-                    <OrderSummaryTotalPriceAmount data-testid={testIdentifier + '-amount'}>
+        <OrderSummaryTotalPriceWrapperStyled data-testid={testIdentifier}>
+            <OrderSummaryContentStyled>
+                <PriceWrapperStyled>
+                    <OrderSummaryTotalPriceTextStyled>{t('Total price')}</OrderSummaryTotalPriceTextStyled>
+                    <OrderSummaryTotalPriceAmountStyled data-testid={testIdentifier + '-amount'}>
                         {formatPrice(props.totalPrice.priceWithVat, props.totalPrice.currencyCode, t)}
-                    </OrderSummaryTotalPriceAmount>
-                </PriceWrapper>
-            </OrderSummaryContent>
-        </OrderSummaryTotalPriceWrapper>
+                    </OrderSummaryTotalPriceAmountStyled>
+                </PriceWrapperStyled>
+            </OrderSummaryContentStyled>
+        </OrderSummaryTotalPriceWrapperStyled>
     );
 };
 
