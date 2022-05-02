@@ -16,13 +16,23 @@ export const useTransportAndPaymentForm = (): [
     const resolver = yupResolver(
         Yup.object().shape({
             transport: Yup.string()
+                .nullable()
                 .required(t('Please select transport'))
                 .test(
                     'is-transport-correctly-selected',
                     t('Please select transport with a personal pickup place'),
                     () => (transport?.isPersonalPickup ? pickupPlace?.identifier !== undefined : true),
                 ),
-            payment: Yup.string().required(t('Please select payment')),
+            payment: Yup.string()
+                .nullable()
+                .test('is-transport-selected-and-payment-is-not-selected', t('Please select payment'), () =>
+                    transport !== null ? payment !== null : true,
+                ),
+            goPaySwift: Yup.string()
+                .nullable()
+                .test('is-payment-gopay-swift-and-swift-is-not-selected', t('Please select your bank'), () =>
+                    payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT' ? paymentGoPayBankSwift !== null : true,
+                ),
         }),
     );
     const defaultValues = {
@@ -64,8 +74,8 @@ export const useTransportAndPaymentFormMeta = (
             },
             goPaySwift: {
                 name: 'goPaySwift' as const,
-                label: t('Choose GoPay payment type'),
-                errorMessage: formProviderMethods.formState.errors.payment?.message,
+                label: t('Choose your bank'),
+                errorMessage: formProviderMethods.formState.errors.goPaySwift?.message,
             },
         },
     };
