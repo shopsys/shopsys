@@ -23,14 +23,11 @@ export const OverlayStyled = styled.div<OverlayStyledProps>`
         transition: ${theme.transition};
         cursor: pointer;
 
-        ${
-            isHiddenOnDesktop &&
-            css`
-                @media ${theme.mediaQueries.queryVl} {
-                    display: none;
-                }
-            `
-        }
-        };
+        ${isHiddenOnDesktop &&
+        css`
+            @media ${theme.mediaQueries.queryVl} {
+                display: none;
+            }
+        `}
     `}
 `;

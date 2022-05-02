@@ -17,7 +17,7 @@ export const AddToCartWrapperStyled = styled.div`
 
         @media ${theme.mediaQueries.queryLg} {
             margin-bottom: 12px;
-        } ;
+        }
     `}
 `;
 

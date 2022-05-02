@@ -11,7 +11,7 @@ export const ArticleWrapper = styled.div`
     ${({ theme }) => css`
         padding: 0 20px;
 
-        @media${theme.mediaQueries.queryVl} {
+        @media ${theme.mediaQueries.queryVl} {
             display: flex;
         }
     `}
@@ -19,7 +19,6 @@ export const ArticleWrapper = styled.div`
 
 export const ArticleTitle = styled.h1`
     ${({ theme }) => css`
-        font-weight: 700;
         display: block;
         line-height: ${localVariables.TitleLineheight};
         padding: 0 20px;
