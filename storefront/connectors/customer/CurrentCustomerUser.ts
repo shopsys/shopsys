@@ -2,22 +2,24 @@ import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'gra
 import { ContactInformationFormType } from 'types/form';
 import { CustomerTypeEnum } from 'types/customer';
 
-export function useCurrentCustomerUser(): ContactInformationFormType | undefined {
+export function useCurrentCustomerContactInformationQuery(): ContactInformationFormType | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();
 
     if (data?.currentCustomerUser === undefined) {
         return undefined;
     }
 
-    return mapCurrentCustomerUserApiData(data);
+    return mapCurrentCustomerContactInformationApiData(data);
 }
 
-const mapCurrentCustomerUserApiData = (
+const mapCurrentCustomerContactInformationApiData = (
     apiCurrentCustomerUserData: CurrentCustomerUserQueryApi,
-): ContactInformationFormType | undefined => {
+): ContactInformationFormType => {
     const companyCustomerUser = apiCurrentCustomerUserData.currentCustomerUser;
 
-    const mappedCurrentCustomerUserData = {
+    // EXTEND CUSTOMER CONTACT INFORMATION HERE
+
+    return {
         ...companyCustomerUser,
         companyName:
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
@@ -86,6 +88,4 @@ const mapCurrentCustomerUserApiData = (
                 : CustomerTypeEnum.CommonCustomer,
         differentDeliveryAddress: companyCustomerUser.defaultDeliveryAddress !== null,
     };
-
-    return mappedCurrentCustomerUserData;
 };

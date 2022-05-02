@@ -2,8 +2,8 @@ import * as Yup from 'yup';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformationFormType } from 'types/form';
 import { CustomerTypeEnum } from 'types/customer';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -12,7 +12,7 @@ export const useContactInformationForm = (): [
     ContactInformationFormType,
 ] => {
     const t = useTypedTranslationFunction();
-    const contactInformationValues = useShopsysSelector((state) => state.contactInformation);
+    const contactInformationValues = useCurrentUserContactInformation();
 
     const resolver = yupResolver(
         Yup.object().shape({

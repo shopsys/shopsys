@@ -6,11 +6,12 @@ import { initServerSideProps } from 'helpers/InitServerSideProps';
 import Orders from 'components/Pages/Customer/Orders';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useOrders } from 'connectors/customer/Orders';
 
 const Index: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
+    const { isUserLoggedIn } = useCurrentUserData();
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const ordersData = useOrders(currentDomainConfig);
 

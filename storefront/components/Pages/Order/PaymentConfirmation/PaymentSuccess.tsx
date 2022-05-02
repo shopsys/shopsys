@@ -7,13 +7,13 @@ import {
 } from './PaymentConfirmation.style';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
-import { useShopsysSelector } from 'redux/main';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const PaymentSuccess: FC = () => {
     const t = useTypedTranslationFunction();
-    const { email } = useShopsysSelector((state) => state.contactInformation);
+    const { email } = useCurrentUserContactInformation();
 
     return (
         <Webline>

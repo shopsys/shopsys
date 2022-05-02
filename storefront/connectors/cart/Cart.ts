@@ -11,11 +11,13 @@ import { mapTransport } from 'connectors/transports/Transports';
 import { PriceType } from 'types/price';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { Translate } from 'next-translate';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useCurrentCart = (): CurrentCartType => {
-    const { isUserLoggedIn, cartUuid } = useShopsysSelector((state) => state.user);
+    const { isUserLoggedIn } = useCurrentUserData();
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
 

@@ -167,3 +167,16 @@
     - the stylelint package was added to the project and CI config
 - tips on how to implement these changes
     - run `npm run stylelint` locally and fix reported issues
+
+### User data queries
+- [FWCC-843](https://shopsys.atlassian.net/browse/FWCC-894)
+- [FWCC-439 - User data & user contact information refactoring](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/544)
+- most significant changes
+  - `UserDataRefresher` was removed - now we store only data of a not-logged-in user in Redux, so we don't need to update store from API
+  - user data are read from Redux (for an anonymous user) or directly from API (for a signed user) (uses new `useCurrentUserContactInformation` hook), it helps us to keep the data always up-to-date thanks to the GraphQl cache
+  - `isUserLoggedIn` was removed from Redux UserSlice, use `useCurrentUserData` hook instead - the property is now based on data from the API which helps us to avoid incorrect values and issues with updating this values in the Redux store
+- other changes
+  - `useCurrentCustomerUser` was renamed to `useCurrentCustomerContactInformationQuery`
+- tips on how to implement these changes
+  - if you need to extend the contact information, extend the `ContactInformationFormType` type in `form.ts`, the `mapCurrentCustomerContactInformationApiData` mapper in `CurrentCustomerUser.ts` (for API data) and the `contactInformationSlice` in Redux (for anonymous user)
+  - if you need to extend the user data, extend the `CurrentCustomerType` type and the `mapCurrentCustomerApiData` mapper in `CurrentCustomer.ts`

@@ -9,6 +9,7 @@ import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import { OrderDetailQueryDocumentApi } from 'graphql/generated';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useOrderDetail } from 'connectors/customer/Orders';
 import { useRouter } from 'next/router';
 
@@ -16,7 +17,7 @@ const Index: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
+    const { isUserLoggedIn } = useCurrentUserData();
     const order = useOrderDetail(getStringFromUrlQuery(router.query.orderNumber), domainConfig);
 
     return (

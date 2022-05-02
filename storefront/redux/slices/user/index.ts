@@ -14,18 +14,11 @@ export type PaginationType = {
     pageSize: number;
 };
 
-type UserNameType = {
-    firstName: string;
-    lastName: string;
-};
-
 type InitialState = {
     sort: ProductOrderingModeEnumApi;
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
-    isUserLoggedIn: boolean;
     lastOrderUuid: string;
-    userName: UserNameType;
     urlHash: string | undefined;
     cartUuid: string | null;
 };
@@ -38,11 +31,6 @@ export const initialState = {
         pageSize: 9,
     },
     canAccessOrderConfirmation: false,
-    isUserLoggedIn: false,
-    userName: {
-        firstName: '',
-        lastName: '',
-    },
     urlHash: undefined,
     cartUuid: null,
 } as InitialState;
@@ -62,12 +50,6 @@ export const userSlice = createSlice({
         },
         setLastOrderUuid(state, action: PayloadAction<string>) {
             state.lastOrderUuid = action.payload;
-        },
-        setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
-            state.isUserLoggedIn = action.payload;
-        },
-        setUserName(state, action: PayloadAction<UserNameType>) {
-            state.userName = action.payload;
         },
         setOrderUrlHash(state, action: PayloadAction<string | undefined>) {
             state.urlHash = action.payload;

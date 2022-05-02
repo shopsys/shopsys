@@ -17,6 +17,7 @@ import NextLink from 'next/link';
 import nookies from 'nookies';
 import Popup from 'components/Layout/Popup';
 import { useAuth } from 'hooks/auth/UseAuth';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -25,7 +26,7 @@ const MenuIconic: FC = () => {
 
     const t = useTypedTranslationFunction();
     const [, [, logout]] = useAuth();
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
+    const { isUserLoggedIn } = useCurrentUserData();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [storesUrl, customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/stores', '/customer', '/customer/orders', '/customer/edit-profile'],

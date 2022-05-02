@@ -33,7 +33,6 @@ import Webline from 'components/Layout/Webline';
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const contactInformationValues = useShopsysSelector((state) => state.contactInformation);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
@@ -58,7 +57,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     useHandleFormSuccessfulSubmit(
         createOrderResult,
         formProviderMethods,
-        contactInformationValues,
+        defaultValues,
         onSuccessfullyCreatedOrderHandler,
     );
     useHandleFormErrors(createOrderResult.error, formProviderMethods, formMeta.messages.error);

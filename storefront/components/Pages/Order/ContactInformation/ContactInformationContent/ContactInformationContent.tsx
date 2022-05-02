@@ -13,7 +13,7 @@ import ContactInformationRegister from 'components/Pages/Order/ContactInformatio
 import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { CSSTransition } from 'react-transition-group';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useShopsysSelector } from 'redux/main';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 
 type ContactInformationContentProps = {
     isEmailEntered: boolean;
@@ -26,7 +26,7 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
-    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
+    const { isUserLoggedIn } = useCurrentUserData();
 
     const calcHeight = () => {
         if (contentElement.current) {

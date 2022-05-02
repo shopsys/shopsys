@@ -38,7 +38,6 @@ export const useAuth = (): [
 
         if (accessToken !== undefined && refreshToken !== undefined) {
             dispatch(userActions.setCartUuid(null));
-            dispatch(userActions.setIsUserLoggedIn(true));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
             window.location.href = router.asPath;
@@ -49,7 +48,6 @@ export const useAuth = (): [
         const logoutResult = await logout();
 
         if (logoutResult.data?.Logout === true) {
-            dispatch(userActions.setIsUserLoggedIn(false));
             removeTokensFromCookies();
             showSuccessMessage(t('Successfully logged out'));
             window.location.href = router.asPath;

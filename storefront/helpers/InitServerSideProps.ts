@@ -1,13 +1,16 @@
-import { AdvertsQueryDocumentApi, NavigationQueryDocumentApi, NotificationBarsDocumentApi } from 'graphql/generated';
+import {
+    AdvertsQueryDocumentApi,
+    CurrentCustomerUserQueryDocumentApi,
+    NavigationQueryDocumentApi,
+    NotificationBarsDocumentApi,
+} from 'graphql/generated';
 import { Client, ssrExchange } from 'urql';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { SSRData, SSRExchange } from 'next-urql';
 import { AppStore } from 'redux/main';
 import { createClient } from './createClient';
 import { DocumentNode } from 'graphql';
-import { hasTokenInCookie } from 'utils/Auth/TokensFromCookies';
 import loadNamespaces from 'next-translate/loadNamespaces';
-import { userActions } from 'redux/slices/user';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -20,8 +23,6 @@ export async function initServerSideProps(
     client: Client | null = null,
     ssrCache: SSRExchange | null = null,
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
-    store.dispatch(userActions.setIsUserLoggedIn(hasTokenInCookie(context)));
-
     const domainConfig = store.getState().domain;
     let currentClient = client;
     let currentSsrCache = ssrCache;
@@ -38,6 +39,7 @@ export async function initServerSideProps(
         prefetchedQueries.push({ query: NotificationBarsDocumentApi });
         prefetchedQueries.push({ query: NavigationQueryDocumentApi });
         prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
+        prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
 
         const resolvedQueries = await Promise.all(
             prefetchedQueries.map((queryObject) =>
