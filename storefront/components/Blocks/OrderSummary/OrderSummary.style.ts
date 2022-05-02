@@ -102,7 +102,7 @@ export const ListItemPrice = styled.strong`
     `}
 `;
 
-export const TransportAndPaymentWrapper = styled.div`
+export const SummaryWrapper = styled.div`
     ${({ theme }) => css`
         padding-bottom: 10px;
         margin-bottom: ${localVariables.marginBottom};
@@ -126,7 +126,7 @@ export const PriceWrapper = styled.div`
     justify-content: flex-end;
 `;
 
-export const TransportAndPaymentTextAndImage = styled.div`
+export const SummaryTextAndImage = styled.div`
     ${({ theme }) => css`
         display: table-row;
         padding: 6px 0;
@@ -137,7 +137,7 @@ export const TransportAndPaymentTextAndImage = styled.div`
     `}
 `;
 
-export const TransportAndPaymentPrice = styled.div`
+export const SummaryPrice = styled.div`
     ${({ theme }) => css`
         padding: 6px 0;
         vertical-align: baseline;

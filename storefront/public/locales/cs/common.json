@@ -310,5 +310,6 @@
     "Your profile has been changed successfully": "Váš profil byl úspěšně změněn",
     "Your purchase": "Váš nákup",
     "Zip code cannot be longer than 5 characters": "PSČ nesmí být delší než 5 znaků",
-    "Please select your bank": "Zvolte prosím svoji banku"
+    "Please select your bank": "Zvolte prosím svoji banku",
+    "Promo code": "Slevový kupón"
 }

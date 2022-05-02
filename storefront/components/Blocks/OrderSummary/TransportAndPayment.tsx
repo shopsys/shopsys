@@ -1,10 +1,10 @@
 import {
     OrderSummaryContent,
+    SummaryPrice,
     SummaryRow,
+    SummaryTextAndImage,
+    SummaryWrapper,
     TransportAndPaymentImageWrapper,
-    TransportAndPaymentPrice,
-    TransportAndPaymentTextAndImage,
-    TransportAndPaymentWrapper,
 } from './OrderSummary.style';
 import Image from 'components/Basic/Image';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -24,40 +24,40 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <TransportAndPaymentWrapper data-testid={testIdentifier}>
+        <SummaryWrapper data-testid={testIdentifier}>
             <OrderSummaryContent>
                 {props.transport !== null && (
                     <SummaryRow>
-                        <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-transport-name'}>
+                        <SummaryTextAndImage data-testid={testIdentifier + '-transport-name'}>
                             {props.transport.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.transport.image} type="default" alt={props.transport.name} />
                             </TransportAndPaymentImageWrapper>
-                        </TransportAndPaymentTextAndImage>
-                        <TransportAndPaymentPrice data-testid={testIdentifier + '-transport-price'}>
+                        </SummaryTextAndImage>
+                        <SummaryPrice data-testid={testIdentifier + '-transport-price'}>
                             <strong>
                                 {formatPrice(props.transport.price.priceWithVat, props.transport.price.currencyCode, t)}
                             </strong>
-                        </TransportAndPaymentPrice>
+                        </SummaryPrice>
                     </SummaryRow>
                 )}
                 {props.payment !== null && (
                     <SummaryRow>
-                        <TransportAndPaymentTextAndImage data-testid={testIdentifier + '-payment-name'}>
+                        <SummaryTextAndImage data-testid={testIdentifier + '-payment-name'}>
                             {props.payment.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.payment.image} type="default" alt={props.payment.name} />
                             </TransportAndPaymentImageWrapper>
-                        </TransportAndPaymentTextAndImage>
-                        <TransportAndPaymentPrice data-testid={testIdentifier + '-payment-price'}>
+                        </SummaryTextAndImage>
+                        <SummaryPrice data-testid={testIdentifier + '-payment-price'}>
                             <strong>
                                 {formatPrice(props.payment.price.priceWithVat, props.payment.price.currencyCode, t)}
                             </strong>
-                        </TransportAndPaymentPrice>
+                        </SummaryPrice>
                     </SummaryRow>
                 )}
             </OrderSummaryContent>
-        </TransportAndPaymentWrapper>
+        </SummaryWrapper>
     );
 };
 
