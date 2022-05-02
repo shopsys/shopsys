@@ -27,7 +27,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
      */
-    private $methodAnnotationsFactory;
+    private MethodAnnotationsFactory $methodAnnotationsFactory;
 
     protected function setUp(): void
     {
@@ -119,7 +119,7 @@ class MethodAnnotationsFactoryTest extends TestCase
             $annotationLines
         );
         $this->assertStringContainsString(
-            '@method setCategoryWithString(\App\Model\Category\Category $category, string $string = "default")',
+            '@method setCategoryWithStringWithDefaultParameters(\App\Model\Category\Category $category, string $string = "default", string $constant = \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5::DEFAULT_VALUE, bool $true = true, bool $false = false, ?string $null = null, array $emptyArray = [])',
             $annotationLines
         );
     }

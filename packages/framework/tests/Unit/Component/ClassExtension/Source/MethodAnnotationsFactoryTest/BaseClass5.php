@@ -24,8 +24,20 @@ class BaseClass5
      *
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param string $string
+     * @param string $constant
+     * @param bool $true
+     * @param bool $false
+     * @param ?string $null
+     * @param mixed[] $emptyArray
      */
-    public function setCategoryWithString(Category $category, string $string = self::DEFAULT_VALUE)
-    {
+    public function setCategoryWithStringWithDefaultParameters(
+        Category $category,
+        string $string = 'default',
+        string $constant = self::DEFAULT_VALUE,
+        bool $true = true,
+        bool $false = false,
+        ?string $null = null,
+        array $emptyArray = []
+    ) {
     }
 }

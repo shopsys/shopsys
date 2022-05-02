@@ -157,11 +157,19 @@ class MethodAnnotationsFactory
     {
         $methodParameterNamesWithTypes = [];
         foreach ($reflectionMethod->getParameters() as $methodParameter) {
+            $defaultValue = '';
+
+            if ($methodParameter->isDefaultValueAvailable()) {
+                $defaultValue .= $methodParameter->isDefaultValueConstant()
+                    ? ' = \\' . $methodParameter->getDefaultValueConstantName()
+                    : ' = ' . json_encode($methodParameter->getDefaultValue());
+            }
+
             $methodParameterNamesWithTypes[] = sprintf(
                 '%s $%s%s',
                 $this->annotationsReplacer->replaceInParameterType($methodParameter),
                 $methodParameter->getName(),
-                $methodParameter->isDefaultValueAvailable() ? ' = ' . json_encode($methodParameter->getDefaultValue()) : ''
+                $defaultValue,
             );
         }
 
