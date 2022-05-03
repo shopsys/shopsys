@@ -6,7 +6,6 @@ use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSn
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 /**
  * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
@@ -15,12 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set(
-        Option::SETS,
-        [
-            SetList::PSR_12,
-        ]
-    );
+    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
     $parameters->set(
         Option::SKIP,
@@ -30,8 +24,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]
     );
-
-    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
     $containerConfigurator->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
 };
