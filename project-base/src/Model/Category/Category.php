@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  * @property \App\Model\Category\Category[]|\Doctrine\Common\Collections\Collection $children
  * @method \App\Model\Category\Category|null getParent()
  * @method \App\Model\Category\Category[] getChildren()
- * @method setParent(\App\Model\Category\Category|null $parent)
+ * @method setParent(\App\Model\Category\Category|null $parent = null)
  * @method setTranslations(\App\Model\Category\CategoryData $categoryData)
  * @method setDomains(\App\Model\Category\CategoryData $categoryData)
  * @method createDomains(\App\Model\Category\CategoryData $categoryData)

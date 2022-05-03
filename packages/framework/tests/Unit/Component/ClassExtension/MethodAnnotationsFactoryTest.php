@@ -15,17 +15,19 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotations
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5;
 
 class MethodAnnotationsFactoryTest extends TestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
      */
-    private $methodAnnotationsFactory;
+    private MethodAnnotationsFactory $methodAnnotationsFactory;
 
     protected function setUp(): void
     {
@@ -36,6 +38,7 @@ class MethodAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5',
         ]);
 
         $docBlockParser = new DocBlockParser();
@@ -49,7 +52,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     /**
      * @return array
      */
-    public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
+    public function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
             'method redeclared in the child using annotation' => [ReflectionObject::createFromName(
@@ -71,7 +74,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider
+     * @dataProvider getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
      */
@@ -100,6 +103,23 @@ class MethodAnnotationsFactoryTest extends TestCase
         );
         $this->assertStringContainsString(
             '@method setCategory(\App\Model\Category\Category $category)',
+            $annotationLines
+        );
+    }
+
+    public function testGetProjectClassNecessaryMethodWithDefaultValueAnnotationsLines(): void
+    {
+        $annotationLines = $this->methodAnnotationsFactory->getProjectClassNecessaryMethodAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass5::class),
+            ReflectionObject::createFromName(ChildClass5::class)
+        );
+
+        $this->assertStringContainsString(
+            '@method setCategory(\App\Model\Category\Category|null $category = null)',
+            $annotationLines
+        );
+        $this->assertStringContainsString(
+            '@method setCategoryWithStringWithDefaultParameters(\App\Model\Category\Category $category, string $string = "default", string $constant = \Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5::DEFAULT_VALUE, bool $true = true, bool $false = false, ?string $null = null, array $emptyArray = [])',
             $annotationLines
         );
     }
