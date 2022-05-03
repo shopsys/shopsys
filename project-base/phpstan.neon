@@ -40,6 +40,12 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
+        -
+            # ignore errors caused by @inject
+            message: '#Property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9]+ is never written, only read.#'
+            paths:
+                - %currentWorkingDirectory%/project-base/tests/*/Functional/*
+                - %currentWorkingDirectory%/project-base/tests/*/Smoke/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
