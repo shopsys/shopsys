@@ -33,8 +33,7 @@ class DocBlockParser
             return [];
         }
 
-        /** @var \phpDocumentor\Reflection\DocBlock\Tags\TagWithType[] $tags */
-        $tags = $this->docBlockFactory->create($docBlock)->getTagsByName('return');
+        $tags = $this->docBlockFactory->create($docBlock)->getTagsWithTypeByName('return');
 
         return array_map(static fn (TagWithType $tag) => $tag->getType(), $tags);
     }
@@ -54,7 +53,7 @@ class DocBlockParser
         /** @var \phpDocumentor\Reflection\DocBlock\Tags\Param[] $functionParamTags */
         $functionParamTags = $this->docBlockFactory
             ->create($docBlock)
-            ->getTagsByName('param');
+            ->getTagsWithTypeByName('param');
 
         /** @var \phpDocumentor\Reflection\Type|null $paramType */
         $paramType = null;
