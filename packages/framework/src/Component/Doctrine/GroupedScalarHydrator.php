@@ -15,7 +15,13 @@ class GroupedScalarHydrator extends AbstractHydrator
     {
         $result = [];
 
-        while ($data = $this->_stmt->fetchAssociative()) {
+        while (true) {
+            $data = $this->_stmt->fetchAssociative();
+
+            if ($data === false) {
+                break;
+            }
+
             $this->hydrateRowData($data, $result);
         }
 

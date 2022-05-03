@@ -203,11 +203,18 @@ class IndexFacade
         );
 
         $lastProcessedId = 0;
-        while (($changedIdsBatch = $index->getChangedIdsForBatch(
-            $indexDefinition->getDomainId(),
-            $lastProcessedId,
-            $index->getExportBatchSize()
-        )) !== []) {
+
+        while (true) {
+            $changedIdsBatch = $index->getChangedIdsForBatch(
+                $indexDefinition->getDomainId(),
+                $lastProcessedId,
+                $index->getExportBatchSize()
+            );
+
+            if ($changedIdsBatch === []) {
+                break;
+            }
+
             $this->exportIds($index, $indexDefinition, $changedIdsBatch);
 
             $progressBar->advance(count($changedIdsBatch));
