@@ -142,15 +142,18 @@ const Filter: FC<FilterProps> = (props) => {
 
     useEffect(() => {
         const queryParams = router.query;
-        const routerPathName = router.asPath.split('?')[0];
+        const pathname = router.asPath.split('?')[0];
 
+        delete queryParams.all;
         if (isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions)) {
             delete queryParams.filter;
         } else {
             queryParams.filter = JSON.stringify(parametersFilterState);
         }
 
-        router.replace({ pathname: routerPathName, query: queryParams }, undefined, { scroll: false });
+        router.replace({ pathname, query: queryParams }, undefined, {
+            scroll: false,
+        });
     }, [parametersFilterState]);
 
     const onBrandCheck = (uuid: string) => {
