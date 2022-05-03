@@ -29,7 +29,10 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
         ->from(NewsletterSubscriber::class, 'ns')
         ->where('ns.email = :email')
         ->andWhere('ns.domainId = :domainId')
-        ->setParameters(['email' => 'no-reply@shopsys.com', 'domainId' => Domain::FIRST_DOMAIN_ID])
+        ->setParameters([
+            'email' => 'no-reply@shopsys.com',
+            'domainId' => Domain::FIRST_DOMAIN_ID,
+        ])
         ->getQuery()->getOneOrNullResult();
 
         Assert::assertEquals($newsletterSubscriber, $found);

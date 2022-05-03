@@ -38,7 +38,10 @@ class MailTemplateRepository
      */
     public function findByNameAndDomainId($templateName, $domainId)
     {
-        $criteria = ['name' => $templateName, 'domainId' => $domainId];
+        $criteria = [
+            'name' => $templateName,
+            'domainId' => $domainId,
+        ];
 
         return $this->getMailTemplateRepository()->findOneBy($criteria);
     }

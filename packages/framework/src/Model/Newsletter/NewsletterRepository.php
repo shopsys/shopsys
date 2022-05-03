@@ -38,7 +38,10 @@ class NewsletterRepository
     public function existsSubscribedEmail($email, $domainId)
     {
         return $this->getNewsletterSubscriberRepository()->findOneBy(
-            ['email' => $email, 'domainId' => $domainId]
+            [
+                'email' => $email,
+                'domainId' => $domainId,
+            ]
         ) !== null;
     }
 
@@ -96,6 +99,9 @@ class NewsletterRepository
     public function findNewsletterSubscribeByEmailAndDomainId($email, $domainId)
     {
         return $this->getNewsletterSubscriberRepository()
-            ->findOneBy(['email' => $email, 'domainId' => $domainId]);
+            ->findOneBy([
+                'email' => $email,
+                'domainId' => $domainId,
+            ]);
     }
 }

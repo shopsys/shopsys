@@ -77,7 +77,10 @@ class SideMenuBuilder
     {
         $menu = $this->menuFactory->createItem(
             'dashboard',
-            ['route' => 'admin_default_dashboard', 'label' => t('Dashboard')]
+            [
+                'route' => 'admin_default_dashboard',
+                'label' => t('Dashboard'),
+            ]
         );
         $menu->setExtra('icon', 'house');
 
@@ -91,10 +94,17 @@ class SideMenuBuilder
      */
     protected function createOrdersMenu(): ItemInterface
     {
-        $menu = $this->menuFactory->createItem('orders', ['route' => 'admin_order_list', 'label' => t('Orders')]);
+        $menu = $this->menuFactory->createItem('orders', [
+            'route' => 'admin_order_list',
+            'label' => t('Orders'),
+        ]);
         $menu->setExtra('icon', 'document-copy');
 
-        $menu->addChild('edit', ['route' => 'admin_order_edit', 'label' => t('Editing order'), 'display' => false]);
+        $menu->addChild('edit', [
+            'route' => 'admin_order_edit',
+            'label' => t('Editing order'),
+            'display' => false,
+        ]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ORDERS, $menu);
 
@@ -108,14 +118,25 @@ class SideMenuBuilder
     {
         $menu = $this->menuFactory->createItem(
             'customers',
-            ['route' => 'admin_customer_list', 'label' => t('Customers')]
+            [
+                'route' => 'admin_customer_list',
+                'label' => t('Customers'),
+            ]
         );
         $menu->setExtra('icon', 'person-public');
 
-        $menu->addChild('new', ['route' => 'admin_customer_new', 'label' => t('New customer'), 'display' => false]);
+        $menu->addChild('new', [
+            'route' => 'admin_customer_new',
+            'label' => t('New customer'),
+            'display' => false,
+        ]);
         $menu->addChild(
             'edit',
-            ['route' => 'admin_customer_edit', 'label' => t('Editing customer'), 'display' => false]
+            [
+                'route' => 'admin_customer_edit',
+                'label' => t('Editing customer'),
+                'display' => false,
+            ]
         );
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);

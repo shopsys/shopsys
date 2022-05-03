@@ -72,7 +72,9 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
         $generatedXml = $this->twigEnvironment->render('Front/Content/PersonalData/export.xml.twig', [
             'customerUser' => $customerUser,
-            'orders' => [0 => $order],
+            'orders' => [
+                0 => $order,
+            ],
             'newsletterSubscriber' => null,
         ]);
 

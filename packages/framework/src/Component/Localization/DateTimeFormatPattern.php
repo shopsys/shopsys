@@ -15,13 +15,13 @@ class DateTimeFormatPattern
     protected $locale;
 
     /**
-     * @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @var int|null
      */
     protected $dateType;
 
     /**
-     * @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @var int|null
      */
     protected $timeType;
@@ -29,8 +29,8 @@ class DateTimeFormatPattern
     /**
      * @param string $pattern
      * @param string $locale
-     * @param int|null $dateType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @param int|null $timeType @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @param int|null $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @param int|null $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
     public function __construct($pattern, $locale, $dateType = null, $timeType = null)
     {
@@ -57,7 +57,7 @@ class DateTimeFormatPattern
     }
 
     /**
-     * @return int|null @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @return int|null @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
     public function getDateType()
     {
@@ -65,7 +65,7 @@ class DateTimeFormatPattern
     }
 
     /**
-     * @return int|null @link http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+     * @return int|null @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      */
     public function getTimeType()
     {

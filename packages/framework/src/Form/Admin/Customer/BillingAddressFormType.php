@@ -61,7 +61,9 @@ class BillingAddressFormType extends AbstractType
                 $builderCompanyDataGroup
                     ->create('companyFields', FormType::class, [
                         'inherit_data' => true,
-                        'attr' => ['class' => 'js-company-fields form-line__js'],
+                        'attr' => [
+                            'class' => 'js-company-fields form-line__js',
+                        ],
                         'render_form_row' => false,
                     ])
                     ->add('companyName', TextType::class, [

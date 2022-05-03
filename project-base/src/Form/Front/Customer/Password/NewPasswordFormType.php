@@ -25,7 +25,9 @@ class NewPasswordFormType extends AbstractType
             ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
                 ],
                 'first_options' => [
                     'constraints' => [

@@ -44,7 +44,9 @@ class CategoryFormType extends AbstractType
             'label' => $this->translator->trans('Heureka category'),
             'choices' => $heurekaCategories,
             'required' => false,
-            'attr' => ['class' => 'js-autocomplete-selectbox'],
+            'attr' => [
+                'class' => 'js-autocomplete-selectbox',
+            ],
             'choice_label' => 'getName',
         ]);
     }

@@ -51,7 +51,9 @@ class DeliveryAddressFormType extends AbstractType
                 $builderDeliveryAddress
                     ->create('deliveryAddressFields', FormType::class, [
                         'inherit_data' => true,
-                        'attr' => ['class' => 'js-delivery-address-fields form-line__js'],
+                        'attr' => [
+                            'class' => 'js-delivery-address-fields form-line__js',
+                        ],
                         'render_form_row' => false,
                     ])
                     ->add('companyName', TextType::class, [
