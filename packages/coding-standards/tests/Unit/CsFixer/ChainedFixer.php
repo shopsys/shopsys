@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\CodingStandards\Unit\CsFixer;
 
 use PhpCsFixer\Fixer\FixerInterface;
+use PhpCsFixer\FixerDefinition\FixerDefinition;
+use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
 
@@ -26,7 +28,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function isCandidate(Tokens $tokens)
+    public function isCandidate(Tokens $tokens): bool
     {
         foreach ($this->fixers as $fixer) {
             if ($fixer->isCandidate($tokens)) {
@@ -40,7 +42,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function isRisky()
+    public function isRisky(): bool
     {
         foreach ($this->fixers as $fixer) {
             if ($fixer->isRisky()) {
@@ -54,7 +56,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function fix(SplFileInfo $file, Tokens $tokens)
+    public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         foreach ($this->fixers as $fixer) {
             $fixer->fix($file, $tokens);
@@ -64,7 +66,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return 'chained';
     }
@@ -72,7 +74,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function getPriority()
+    public function getPriority(): int
     {
         return 0;
     }
@@ -80,7 +82,7 @@ class ChainedFixer implements FixerInterface
     /**
      * {@inheritDoc}
      */
-    public function supports(SplFileInfo $file)
+    public function supports(SplFileInfo $file): bool
     {
         foreach ($this->fixers as $fixer) {
             if ($fixer->supports($file)) {
@@ -89,5 +91,13 @@ class ChainedFixer implements FixerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return \PhpCsFixer\FixerDefinition\FixerDefinitionInterface
+     */
+    public function getDefinition(): FixerDefinitionInterface
+    {
+        return new FixerDefinition('Chained fixer', []);
     }
 }

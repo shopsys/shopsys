@@ -6,7 +6,6 @@ namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
 use Nette\Utils\Strings;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Token;
@@ -24,27 +23,27 @@ use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
  * Inspiration:
  * - https://github.com/FriendsOfPHP/PHP-CS-Fixer/commit/fbca90cc5837b26996d41f02b4ba5c759943c8fa
  */
-abstract class AbstractMissingAnnotationsFixer implements FixerInterface, DefinedFixerInterface
+abstract class AbstractMissingAnnotationsFixer implements FixerInterface
 {
     /**
      * @var \PhpCsFixer\WhitespacesFixerConfig
      */
-    protected $whitespacesFixerConfig;
+    protected WhitespacesFixerConfig $whitespacesFixerConfig;
 
     /**
      * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
      */
-    protected $functionsAnalyzer;
+    protected FunctionsAnalyzer $functionsAnalyzer;
 
     /**
      * @var \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
      */
-    private $indentDetector;
+    private IndentDetector $indentDetector;
 
     /**
      * @var \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer
      */
-    protected $phpToDocTypeTransformer;
+    protected PhpToDocTypeTransformer $phpToDocTypeTransformer;
 
     /**
      * @param \PhpCsFixer\WhitespacesFixerConfig $whitespacesFixerConfig

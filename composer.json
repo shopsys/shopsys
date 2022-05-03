@@ -43,8 +43,7 @@
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ReadModelBundle\\": "packages/read-model/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
-            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests",
-            "Symplify\\EasyCodingStandard\\Yaml\\": "packages/coding-standards/src/Yaml/"
+            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
         }
     },
     "require": {
@@ -71,7 +70,7 @@
         "arvenil/ninja-mutex": "^0.4.1",
         "barryvdh/elfinder-flysystem-driver": "^0.2",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.10.23",
+        "composer/composer": "^2.2.12",
         "craue/formflow-bundle": "^3.0.3",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6.0",
@@ -90,7 +89,6 @@
         "enlightn/security-checker": "^1.3",
         "fakerphp/faker": "^1.19.0",
         "fp/jsformvalidator-bundle": "^1.6.1",
-        "friendsofphp/php-cs-fixer": "^2.14.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.5",
         "google/cloud-storage": "^1.10",
@@ -124,7 +122,6 @@
         "shopsys/postgres-search-bundle": "^0.2",
         "sinergi/browser-detector": "^6.1",
         "snc/redis-bundle": "^3.2.2",
-        "squizlabs/php_codesniffer": "^3.2.0",
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "superbalist/flysystem-google-storage": "^7.1",
         "swiftmailer/swiftmailer": "^6.0",
@@ -161,6 +158,7 @@
         "codeception/module-db": "^1.0",
         "codeception/module-webdriver": "^1.0",
         "codeception/phpunit-wrapper": "^9.0.7",
+        "friendsofphp/php-cs-fixer": "^3.3.1",
         "nette/utils": "^3.0",
         "php-parallel-lint/php-parallel-lint": "^1.3.1",
         "phpstan/phpstan": "^0.12.76",
@@ -170,15 +168,16 @@
         "phpunit/phpunit": "^9.5.20",
         "psr/event-dispatcher": "^1.0.0",
         "slevomat/coding-standard": "^6.3.5",
+        "squizlabs/php_codesniffer": "^3.6.2",
         "sspooky13/yaml-standards": "^7.0.1",
         "symfony/var-dumper": "^4.4.0",
-        "symplify/easy-coding-standard": "^8.3.48",
+        "symplify/easy-coding-standard": "^10.2.2",
         "symplify/monorepo-builder": "^8.3.48",
         "zalas/phpunit-injector": "^2.0"
     },
     "conflict": {
         "symfony/symfony": "*",
-        "friendsofphp/php-cs-fixer": "2.19.0",
+        "friendsofphp/php-cs-fixer": ">=3.3.2",
         "doctrine/orm": "2.12.0"
     },
     "scripts": {

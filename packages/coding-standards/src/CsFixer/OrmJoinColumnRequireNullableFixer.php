@@ -6,15 +6,15 @@ namespace Shopsys\CodingStandards\CsFixer;
 
 use PhpCsFixer\DocBlock\Annotation;
 use PhpCsFixer\DocBlock\DocBlock;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
 
-final class OrmJoinColumnRequireNullableFixer implements FixerInterface, DefinedFixerInterface
+final class OrmJoinColumnRequireNullableFixer implements FixerInterface
 {
     /**
      * {@inheritdoc}
@@ -65,12 +65,12 @@ SAMPLE
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
         /** @var \PhpCsFixer\Tokenizer\Token $token */
-        foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $token) {
+        foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $index => $token) {
             $doc = new DocBlock($token->getContent());
             foreach ($doc->getAnnotations() as $annotation) {
                 if ($this->isRelationAnnotation($annotation)) {
                     $this->fixRelationAnnotation($doc, $annotation);
-                    $token->setContent($doc->getContent());
+                    $tokens[$index] = new Token([T_DOC_COMMENT, $doc->getContent()]);
                 }
             }
         }
