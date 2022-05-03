@@ -807,7 +807,6 @@
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
 
-            <arg value="--level=${phpstan.level}"/>
             <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>
         </exec>

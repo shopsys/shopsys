@@ -1,5 +1,5 @@
 parameters:
-
+    level: 5
     treatPhpDocTypesAsCertain: false
     symfony:
         container_xml_path: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
