@@ -20,8 +20,8 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
 use Symplify\EasyCodingStandard\ValueObject\Option;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 /**
  * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
@@ -30,12 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set(
-        Option::SETS,
-        [
-            SetList::PSR_12,
-        ]
-    );
+    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
     $parameters->set(
         Option::SKIP,
@@ -128,6 +123,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             UnusedVariableSniff::class => [
                 __DIR__ . '/src/Component/Form/ResizeFormListener.php',
             ],
+            RemoveUselessDefaultCommentFixer::class => [
+                __DIR__ . '/tests/Unit/Component/ClassExtension/Source/AnnotationsAdderTest/DummyClassWithAnAnnotation.php',
+            ],
         ]
     );
 
@@ -146,8 +144,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 ],
             ],
         ]);
-
-    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
     // @deprecated This will be moved to coding-standards package in next major version
     $services->set(DisallowEqualOperatorsSniff::class);
