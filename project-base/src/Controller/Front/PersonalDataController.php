@@ -275,7 +275,6 @@ class PersonalDataController extends FrontBaseController
                 'customerUser' => $customerUser,
                 'newsletterSubscriber' => $newsletterSubscriber,
                 'orders' => $orders,
-
             ])->getContent();
 
             $fileName = $personalDataAccessRequest->getEmail() . '.xml';

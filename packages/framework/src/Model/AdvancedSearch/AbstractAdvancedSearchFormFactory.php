@@ -57,7 +57,9 @@ abstract class AbstractAdvancedSearchFormFactory
     {
         $options = [
             'csrf_protection' => false,
-            'attr' => ['novalidate' => 'novalidate'],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
         ];
         $formBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, $options);
         $formBuilder->setMethod('GET');
