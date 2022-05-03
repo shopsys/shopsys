@@ -38,21 +38,12 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         initialState.pagination.pageSize,
     );
 
-    useEffect(() => {
-        dispatch(userActions.setPagination({ ...initialState.pagination }));
-    }, [router.asPath]);
-
-    if (paginationButtons === null || paginationButtons.length === 1) {
-        return null;
-    }
-
-    if (paginationState.currentPage > paginationButtons[paginationButtons.length - 1]) {
-        dispatch(userActions.setPagination({ ...initialState.pagination }));
-    }
-
     const updateUrlWithCurrentPage = (currentPage: number) => {
         const queryParams = new URLSearchParams(window.location.search);
-        if (paginationButtons.length < 2 || currentPage === initialState.pagination.currentPage) {
+        if (
+            (paginationButtons && paginationButtons.length < 2) ||
+            currentPage === initialState.pagination.currentPage
+        ) {
             queryParams.delete('page');
         } else {
             queryParams.set('page', currentPage.toString());
@@ -64,8 +55,22 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         history.replaceState(history.state, document.title, newState);
     };
 
-    if (typeof window !== 'undefined') {
-        updateUrlWithCurrentPage(paginationState.currentPage);
+    useEffect(() => {
+        dispatch(userActions.setPagination({ ...initialState.pagination }));
+    }, [router.asPath]);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            updateUrlWithCurrentPage(paginationState.currentPage);
+        }
+    }, [paginationState.currentPage]);
+
+    if (paginationButtons === null || paginationButtons.length === 1) {
+        return null;
+    }
+
+    if (paginationState.currentPage > paginationButtons[paginationButtons.length - 1]) {
+        dispatch(userActions.setPagination({ ...initialState.pagination }));
     }
 
     const scrollToListTop = () => {
