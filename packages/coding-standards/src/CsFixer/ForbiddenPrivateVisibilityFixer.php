@@ -6,7 +6,9 @@ namespace Shopsys\CodingStandards\CsFixer;
 
 use PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException;
 use PhpCsFixer\Fixer\ConfigurableFixerInterface;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolver;
+use PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface;
+use PhpCsFixer\FixerConfiguration\FixerOption;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
 use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
@@ -15,11 +17,11 @@ use PhpCsFixer\Tokenizer\Tokens;
 use Shopsys\CodingStandards\Exception\NamespaceNotFoundException;
 use SplFileInfo;
 
-final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, ConfigurableFixerInterface
+final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterface
 {
     private const OPTION_ANALYZED_NAMESPACE = 'analyzed_namespaces';
 
-    private $analyzedNamespaces = [];
+    private array $analyzedNamespaces = [];
 
     /**
      * {@inheritdoc}
@@ -29,6 +31,19 @@ final class ForbiddenPrivateVisibilityFixer implements DefinedFixerInterface, Co
         if ($configuration !== null) {
             $this->analyzedNamespaces = $this->extractNamespaces($configuration);
         }
+    }
+
+    /**
+     * @return \PhpCsFixer\FixerConfiguration\FixerConfigurationResolverInterface
+     */
+    public function getConfigurationDefinition(): FixerConfigurationResolverInterface
+    {
+        return new FixerConfigurationResolver(
+            new FixerOption(
+                self::OPTION_ANALYZED_NAMESPACE,
+                'Define analyzed namespace.',
+            )
+        );
     }
 
     /**

@@ -62,8 +62,14 @@
     "composer/composer": {
         "version": "1.9.0"
     },
+    "composer/metadata-minifier": {
+        "version": "1.0.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.5"
+    },
+    "composer/pcre": {
+        "version": "1.0.1"
     },
     "composer/semver": {
         "version": "1.5.0"
@@ -202,15 +208,15 @@
         "version": "1.5-dev"
     },
     "friendsofphp/php-cs-fixer": {
-        "version": "2.2",
+        "version": "3.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.2",
-            "ref": "cc05ab6abf6894bddb9bbd6a252459010ebe040b"
+            "branch": "main",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
         },
         "files": [
-            ".php_cs.dist"
+            ".php-cs-fixer.dist.php"
         ]
     },
     "friendsofphp/proxy-manager-lts": {
@@ -342,9 +348,6 @@
     "nette/finder": {
         "version": "v2.5.1"
     },
-    "nette/robot-loader": {
-        "version": "v3.1.1"
-    },
     "nette/utils": {
         "version": "v2.5.3"
     },
@@ -405,7 +408,7 @@
         "version": "2.16.1"
     },
     "php-cs-fixer/diff": {
-        "version": "v1.3.0"
+        "version": "v2.0.2"
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
@@ -502,9 +505,6 @@
     },
     "psr/log": {
         "version": "1.1.1"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
@@ -825,9 +825,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.12.0"
     },
-    "symfony/polyfill-php70": {
-        "version": "v1.17.1"
-    },
     "symfony/polyfill-php72": {
         "version": "v1.12.0"
     },
@@ -1005,13 +1002,7 @@
     "symplify/autowire-array-parameter": {
         "version": "v7.2.3"
     },
-    "symplify/coding-standard": {
-        "version": "v5.4.16"
-    },
     "symplify/composer-json-manipulator": {
-        "version": "v7.3.18"
-    },
-    "symplify/console-color-diff": {
         "version": "v7.3.18"
     },
     "symplify/easy-coding-standard": {

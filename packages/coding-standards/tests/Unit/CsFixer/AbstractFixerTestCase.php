@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Tests\CodingStandards\Unit\CsFixer;
 
 use PhpCsFixer\Fixer\FixerInterface;
-use PhpCsFixer\Tests\Test\Assert\AssertTokensTrait;
-use PhpCsFixer\Tests\Test\IsIdenticalConstraint;
+use PhpCsFixer\Tokenizer\Token;
 use PhpCsFixer\Tokenizer\Tokens;
 use PHPUnit\Framework\TestCase;
 use SplFileInfo;
+use Tests\CodingStandards\Unit\CsFixer\Constraint\IsIdenticalString;
+use function is_string;
 
 abstract class AbstractFixerTestCase extends TestCase
 {
-    use IsIdenticalConstraint;
-    use AssertTokensTrait;
-
     /**
      * @return \PhpCsFixer\Fixer\FixerInterface
      */
@@ -52,9 +50,12 @@ abstract class AbstractFixerTestCase extends TestCase
 
             static::assertThat(
                 $tokens->generateCode(),
-                self::createIsIdenticalStringConstraint($expected)
+                new IsIdenticalString($expected)
             );
-            static::assertTrue($tokens->isChanged(), 'Tokens collection built on input code must be marked as changed after fixing.');
+            static::assertTrue(
+                $tokens->isChanged(),
+                'Tokens collection built on input code must be marked as changed after fixing.'
+            );
 
             $tokens->clearEmptyTokens();
 
@@ -75,8 +76,58 @@ abstract class AbstractFixerTestCase extends TestCase
 
         static::assertThat(
             $tokens->generateCode(),
-            self::createIsIdenticalStringConstraint($expected)
+            new IsIdenticalString($expected)
         );
-        static::assertFalse($tokens->isChanged(), 'Tokens collection built on expected code must not be marked as changed after fixing.');
+        static::assertFalse(
+            $tokens->isChanged(),
+            'Tokens collection built on expected code must not be marked as changed after fixing.'
+        );
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $expectedTokens
+     * @param \PhpCsFixer\Tokenizer\Tokens $inputTokens
+     */
+    private static function assertTokens(Tokens $expectedTokens, Tokens $inputTokens): void
+    {
+        foreach ($expectedTokens as $index => $expectedToken) {
+            if (!isset($inputTokens[$index])) {
+                static::fail(
+                    sprintf(
+                        "The token at index %d must be:\n%s, but is not set in the input collection.",
+                        $index,
+                        $expectedToken->toJson()
+                    )
+                );
+            }
+
+            $inputToken = $inputTokens[$index];
+
+            static::assertTrue(
+                $expectedToken->equals($inputToken),
+                sprintf(
+                    "The token at index %d must be:\n%s,\ngot:\n%s.",
+                    $index,
+                    $expectedToken->toJson(),
+                    $inputToken->toJson()
+                )
+            );
+
+            $expectedTokenKind = $expectedToken->isArray() ? $expectedToken->getId() : $expectedToken->getContent();
+            static::assertTrue(
+                $inputTokens->isTokenKindFound($expectedTokenKind),
+                sprintf(
+                    'The token kind %s (%s) must be found in tokens collection.',
+                    $expectedTokenKind,
+                    is_string($expectedTokenKind) ? $expectedTokenKind : Token::getNameForId($expectedTokenKind)
+                )
+            );
+        }
+
+        static::assertSame(
+            $expectedTokens->count(),
+            $inputTokens->count(),
+            'Both collections must have the same length.'
+        );
     }
 }

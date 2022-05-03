@@ -7,7 +7,6 @@ namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 use Nette\Utils\Strings;
 use PhpCsFixer\DocBlock\DocBlock;
 use PhpCsFixer\DocBlock\Line;
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
@@ -18,12 +17,12 @@ use PhpCsFixer\Tokenizer\Tokens;
 use Shopsys\CodingStandards\Helper\PhpdocRegex;
 use SplFileInfo;
 
-final class OrderedParamAnnotationsFixer implements FixerInterface, DefinedFixerInterface
+final class OrderedParamAnnotationsFixer implements FixerInterface
 {
     /**
      * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
      */
-    private $functionsAnalyzer;
+    private FunctionsAnalyzer $functionsAnalyzer;
 
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
