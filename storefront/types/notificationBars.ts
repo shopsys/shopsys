@@ -1,7 +1,7 @@
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 
 export type NotificationBarsType = {
     text: string;
     rgbColor: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
 };

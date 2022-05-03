@@ -12,7 +12,7 @@ import {
     SimpleCategoryConnectionType,
     SimpleCategoryType,
 } from 'types/category';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 
 export const mapCategoryDetailData = (
@@ -31,7 +31,7 @@ export const mapCategoryDetailData = (
 export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFragmentApi): ListedCategoryType => {
     return {
         ...listedCategoryApiData,
-        image: getFirstImageSize(listedCategoryApiData.images),
+        image: getFirstImage(listedCategoryApiData.images),
     };
 };
 

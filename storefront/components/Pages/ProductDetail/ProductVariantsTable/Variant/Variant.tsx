@@ -37,7 +37,7 @@ const Variant: FC<VariantProps> = (props) => {
             <VariantsTableRowStyled key={props.variant.uuid} data-testid={testIdentifier + props.variant.catalogNumber}>
                 <VariantImageCellStyled>
                     <VariantImageWrapperStyled>
-                        <Image alt={props.variant.name} image={props.variant.image} />
+                        <Image alt={props.variant.name} type="default" image={props.variant.image} />
                     </VariantImageWrapperStyled>
                 </VariantImageCellStyled>
                 <VariantCellStyled data-testid={testIdentifier + 'name'}>{props.variant.name}</VariantCellStyled>

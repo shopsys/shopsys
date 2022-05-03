@@ -6,14 +6,15 @@ import {
 } from './ProductDetailGallery.style';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizesType } from 'types/image';
+import Image from 'components/Basic/Image';
+import { ImageType } from 'types/image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type ProductDetailGalleryProps = {
-    images: ImageSizesType[];
+    images: ImageType[];
     productName: string;
 };
 
@@ -35,7 +36,8 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
         return null;
     }
 
-    const mainImage = props.images[0].default;
+    const mainImage = props.images[0];
+    const mainImageUrl = props.images[0].sizes?.find((size) => size.size === 'default')?.url;
 
     return isSliderVisible ? (
         <ProductDetailImageSlider galleryItems={props.images} />
@@ -61,26 +63,16 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                         (image, index) =>
                             index > 0 && (
                                 <ProductDetailGalleryThumbnailsItemStyled key={index}>
-                                    <a href={image.default.url}>
-                                        <img
-                                            src={image.galleryThumbnail.url}
-                                            alt={props.productName}
-                                            width={image.galleryThumbnail.width}
-                                            height={image.galleryThumbnail.height}
-                                        />
+                                    <a href={image.sizes?.find((size) => size.size === 'default')?.url}>
+                                        <Image image={image} alt={props.productName} type="default" />
                                     </a>
                                 </ProductDetailGalleryThumbnailsItemStyled>
                             ),
                     )}
                 </ProductDetailGalleryThumbnailsStyled>
                 <ProductDetailGalleryMainImageStyled>
-                    <a href={mainImage.url}>
-                        <img
-                            src={mainImage.url}
-                            alt={props.productName}
-                            width={mainImage.width}
-                            height={mainImage.height}
-                        />
+                    <a href={mainImageUrl}>
+                        <Image image={mainImage} alt={props.productName} type="default" maxHeight="400px" />
                     </a>
                 </ProductDetailGalleryMainImageStyled>
             </SRLWrapper>

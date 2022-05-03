@@ -1,7 +1,7 @@
 import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
-import { ImageSizesType, ImageSizeType } from 'types/image';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
+import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
@@ -12,7 +12,7 @@ export type SimpleProductType = {
     slug: string;
     fullName: string;
     price: ProductPriceType;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     unitName: string;
 };
 
@@ -37,7 +37,7 @@ export type ListedProductType = {
     exposedStoresCount: number;
     flags: SimpleFlagType[];
     availability: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     price: ProductPriceType;
     isMainVariant: boolean;
     catalogNumber: string;
@@ -58,7 +58,7 @@ export type ProductDetailInterfaceType = {
     breadcrumb: BreadcrumbItemType[];
     catalogNumber: string;
     description: string;
-    images: ImageSizesType[];
+    images: ImageType[];
     price: ProductPriceType;
     parameters: ProductParameterType[];
     stockQuantity: number;

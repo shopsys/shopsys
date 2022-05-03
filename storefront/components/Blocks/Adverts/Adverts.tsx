@@ -1,5 +1,5 @@
-import { AdvertsLinkStyled, AdvertsStyled } from './Adverts.style';
 import { FC, Fragment, HTMLAttributes, useState } from 'react';
+import { AdvertsStyled } from './Adverts.style';
 import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
@@ -55,20 +55,24 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
                             <Fragment key={index}>
                                 {item.link !== undefined ? (
                                     <Link href={item.link} passHref>
-                                        <AdvertsLinkStyled target="_blank">
+                                        <a target="_blank">
                                             {isMobile ? (
-                                                <Image image={item.imageMobile} alt={item.name} />
+                                                <Image
+                                                    image={item.imageMobile}
+                                                    type={item.positionName}
+                                                    alt={item.name}
+                                                />
                                             ) : (
-                                                <Image image={item.image} alt={item.name} />
+                                                <Image image={item.image} type={item.positionName} alt={item.name} />
                                             )}
-                                        </AdvertsLinkStyled>
+                                        </a>
                                     </Link>
                                 ) : (
                                     <>
                                         {isMobile ? (
-                                            <Image image={item.imageMobile} alt={item.name} />
+                                            <Image image={item.imageMobile} type={item.positionName} alt={item.name} />
                                         ) : (
-                                            <Image image={item.image} alt={item.name} />
+                                            <Image image={item.image} type={item.positionName} alt={item.name} />
                                         )}
                                     </>
                                 )}

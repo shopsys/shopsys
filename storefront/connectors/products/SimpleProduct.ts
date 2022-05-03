@@ -1,6 +1,6 @@
 import { SimpleProductConnectionFragmentApi, SimpleProductFragmentApi } from 'graphql/generated';
 import { SimpleProductConnectionType, SimpleProductType } from 'types/product';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 
 export const mapSimpleProductApiData = (
@@ -10,7 +10,7 @@ export const mapSimpleProductApiData = (
     return {
         ...simpleProductApiData,
         price: mapProductPriceData(simpleProductApiData.price, currencyCode),
-        image: getFirstImageSize(simpleProductApiData.images),
+        image: getFirstImage(simpleProductApiData.images),
         unitName: simpleProductApiData.unit.name,
     };
 };

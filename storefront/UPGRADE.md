@@ -57,3 +57,15 @@
   - ControllerRenderProps and TFunction typings were fixed
     - incorrect typings for ControllerRenderProps and TFunction were displaying annoying errors in some IDEs
     - even though this was not a compilation error, it was refactored so now the errors are not displayed, which should ease debugging
+
+### Using picture tag instead of NextImage in Image component
+- [FWCC-322](https://shopsys.atlassian.net/browse/FWCC-322)
+- [FWCC-322 - Responsive picture element](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/538/)
+- the reasons these changes were introduced:
+  - we need simple generic way to display images in different sizes on different devices (as defined in images.yaml)
+- most significant changes
+  - the `ImageSizeFragment` now contains `additionalSizes` property with an array of all other sizes of the image
+  - a new `ImageType` was introduced, this type contains array of all possible sizes of the image
+  - all types that contain image now use `ImageType` instead of `ImageSizeType` (all possible sizes instead of only one)
+  - the Image component now accepts `ImageType` instead of `ImageSizeType` and also new required parameter `type` which defines the specific size to be used (according to specification in images.yaml)
+  - the Image component uses the html `<picture />` tag with sources instead of NextImage component

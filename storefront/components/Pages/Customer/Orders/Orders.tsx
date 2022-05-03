@@ -80,7 +80,11 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                                     </td>
                                     <td data-testid={testIdentifier + 'transport'}>
                                         <TransportImageWrapperStyled>
-                                            <Image image={order.transport.image} alt={order.transport.name} />
+                                            <Image
+                                                image={order.transport.image}
+                                                type="default"
+                                                alt={order.transport.name}
+                                            />
                                         </TransportImageWrapperStyled>
                                         {order.transport.name}
                                     </td>

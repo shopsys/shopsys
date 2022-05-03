@@ -27,7 +27,7 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
                 <NextLink href={props.slug} passHref>
                     <SliderProductItemLinkStyled>
                         <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
-                            <Image image={props.image} alt={props.name} />
+                            <Image image={props.image} type="list" alt={props.name} />
                             <SliderProductItemFlagsStyled>
                                 <ProductFlags flags={props.flags} />
                             </SliderProductItemFlagsStyled>

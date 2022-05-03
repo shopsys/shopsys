@@ -15,7 +15,7 @@ import { mapPriceData, mapPriceInputData, mapProductPriceData } from 'connectors
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
 import { UseMutationResponse, UseQueryResponse } from 'urql';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
 import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
@@ -115,7 +115,7 @@ export const mapCart = (
                     ...item.product,
                     price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
-                    image: getFirstImageSize(item.product.images),
+                    image: getFirstImage(item.product.images),
                 },
             };
         }),

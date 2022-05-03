@@ -11,7 +11,7 @@ import {
     ListedVariantType,
     SliderProductItemType,
 } from 'types/product';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
 import { mapProductPriceData } from 'connectors/price/Prices';
@@ -25,7 +25,7 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
         isMainVariant: apiData.__typename === 'MainVariant',
         availability: apiData.availability.name,
         price: mapProductPriceData(apiData.price, currencyCode),
-        image: getFirstImageSize(apiData.images),
+        image: getFirstImage(apiData.images),
     };
 };
 
@@ -64,7 +64,7 @@ const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCod
         isMainVariant: apiData.__typename === 'MainVariant',
         availability: apiData.availability.name,
         price: mapProductPriceData(apiData.price, currencyCode),
-        image: getFirstImageSize(apiData.images),
+        image: getFirstImage(apiData.images),
     };
 };
 

@@ -54,7 +54,7 @@ const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
                 <BlogArticleTextContent>
                     {props.blogArticle.image === null ? null : (
                         <ArticleImageWrapper data-testid={testIdentifier + 'image'}>
-                            <Image image={props.blogArticle.image} alt={props.blogArticle.name} />
+                            <Image image={props.blogArticle.image} type="default" alt={props.blogArticle.name} />
                         </ArticleImageWrapper>
                     )}
                     <BlogArticleDate data-testid={testIdentifier + 'date'}>

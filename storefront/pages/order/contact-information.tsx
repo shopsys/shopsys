@@ -43,7 +43,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
 
     const onSuccessfullyCreatedOrderHandler = (createOrderResultData: CreateOrderMutationApi | undefined) => {
         updateCartState(dispatch);

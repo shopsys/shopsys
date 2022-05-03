@@ -86,6 +86,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                                 <ProductSearchResultImageWrapperStyled>
                                                                     <Image
                                                                         image={product.image}
+                                                                        type="thumbnailMedium"
                                                                         alt={product.fullName}
                                                                     />
                                                                 </ProductSearchResultImageWrapperStyled>

@@ -8,6 +8,7 @@ import {
 } from './BannersSlider.style';
 import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
+import { ImageSizeType } from 'types/image';
 import { SliderItemType } from 'types/sliderItem';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
@@ -104,7 +105,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                 {props.sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
-                        imageUrl={getBannersSliderItemImageUrl(sliderItem, loadedImageUrls[index] === true)}
+                        image={getBannersSliderItemImage(sliderItem, loadedImageUrls[index])}
                         link={sliderItem.link}
                     />
                 ))}
@@ -134,16 +135,12 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     );
 };
 
-export const getBannersSliderItemImageUrl = (sliderItem: SliderItemType, isImageLoaded: boolean): string => {
-    if (!isImageLoaded) {
-        return '';
+export const getBannersSliderItemImage = (sliderItem: SliderItemType, isImageLoaded: boolean): ImageSizeType | null => {
+    if (!isImageLoaded || sliderItem.image === null || sliderItem.image.sizes === null) {
+        return null;
     }
 
-    if (sliderItem.image === null) {
-        return 'images/optimized-noimage.png';
-    }
-
-    return sliderItem.image.url;
+    return sliderItem.image.sizes.find((i) => i.size === 'default') ?? null;
 };
 
 export default BannersSlider;

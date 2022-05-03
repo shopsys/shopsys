@@ -1,4 +1,4 @@
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 import { PriceFragmentApi } from 'graphql/generated';
 import { PriceType } from 'types/price';
 
@@ -22,6 +22,6 @@ export type PaymentType = {
     goPayPaymentMethod: GoPayPaymentMethodType | undefined;
     goPayBankSwift: string | null;
     price: PriceType;
-    image: ImageSizeType | null;
+    image: ImageType | null;
     type: string;
 };

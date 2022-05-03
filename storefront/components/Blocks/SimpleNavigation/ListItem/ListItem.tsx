@@ -12,6 +12,7 @@ import NextLink from 'next/link';
 
 type ListItemProps = {
     listedItem: ListedItemPropType;
+    imageType?: string;
 };
 
 const ListItem: FC<ListItemProps> = (props) => {
@@ -22,7 +23,11 @@ const ListItem: FC<ListItemProps> = (props) => {
             <ListItemBlockStyled data-testid={testIdentifier}>
                 {'image' in props.listedItem && (
                     <ListItemImageStyled>
-                        <Image image={props.listedItem.image} alt={props.listedItem.name} />
+                        <Image
+                            image={props.listedItem.image}
+                            type={props.imageType ?? 'default'}
+                            alt={props.listedItem.name}
+                        />
                     </ListItemImageStyled>
                 )}
                 <ListItemNameWrapperStyled>

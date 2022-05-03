@@ -19,7 +19,3 @@ export const AdvertsStyled = styled.div<AdvertsStyledProps>`
         `}
     `}
 `;
-
-export const AdvertsLinkStyled = styled.a`
-    display: flex;
-`;

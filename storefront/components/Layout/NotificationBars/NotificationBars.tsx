@@ -20,7 +20,7 @@ const NotificationBars: FC = () => {
                             <NotificationBarsBlockStyled backgroundColor={item.rgbColor}>
                                 {item.image !== null && (
                                     <NotificationBarsImageStyled>
-                                        <Image image={item.image} alt={item.text} />
+                                        <Image image={item.image} type="default" alt={item.text} />
                                     </NotificationBarsImageStyled>
                                 )}
                                 <div dangerouslySetInnerHTML={{ __html: item.text }} />

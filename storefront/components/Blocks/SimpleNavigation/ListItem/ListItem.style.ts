@@ -30,10 +30,11 @@ export const ListItemBlockStyled = styled.a`
 
 export const ListItemImageStyled = styled.div`
     ${({ theme }) => css`
-        position: relative;
-        width: 64px;
+        flex: 0 0 auto;
         height: 48px;
         margin-bottom: 6px;
+        position: relative;
+        width: 64px;
 
         @media ${theme.mediaQueries.queryLg} {
             margin-bottom: 0;
@@ -47,7 +48,6 @@ export const ListItemImageStyled = styled.div`
 `;
 
 export const ListItemNameWrapperStyled = styled.div`
-    flex: 1;
     margin: 0;
     line-height: 18px;
     max-width: 100%;
@@ -55,12 +55,10 @@ export const ListItemNameWrapperStyled = styled.div`
 
 export const ListItemNameStyled = styled.span`
     ${({ theme }) => css`
+        display: block;
         max-width: 100%;
 
-        word-wrap: break-word;
         font-size: ${theme.fontSize.small};
-        word-break: break-all;
-        white-space: nowrap;
         color: ${theme.color.base};
 
         @media ${theme.mediaQueries.queryLg} {

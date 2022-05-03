@@ -1,6 +1,6 @@
 import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
 import { PaymentInputType, PaymentType } from 'types/payment';
-import { getFirstImageSize } from 'connectors/image/Image';
+import { getFirstImage } from 'connectors/image/Image';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
 
 export const mapPayment = (
@@ -12,7 +12,7 @@ export const mapPayment = (
         ...apiData,
         description: apiData.description !== null ? apiData.description : '',
         instruction: apiData.instruction !== null ? apiData.instruction : '',
-        image: getFirstImageSize(apiData.images),
+        image: getFirstImage(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         goPayPaymentMethod: apiData.goPayPaymentMethod !== null ? apiData.goPayPaymentMethod : undefined,
         goPayBankSwift,

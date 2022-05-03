@@ -32,10 +32,13 @@ exports[`test render list item 1`] = `
 }
 
 .c1 {
-  position: relative;
-  width: 64px;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
   height: 48px;
   margin-bottom: 6px;
+  position: relative;
+  width: 64px;
 }
 
 .c1 img {
@@ -44,20 +47,15 @@ exports[`test render list item 1`] = `
 }
 
 .c2 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   margin: 0;
   line-height: 18px;
   max-width: 100%;
 }
 
 .c3 {
+  display: block;
   max-width: 100%;
-  word-wrap: break-word;
   font-size: 14px;
-  word-break: break-all;
-  white-space: nowrap;
   color: #0d0d0d;
 }
 

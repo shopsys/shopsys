@@ -42,7 +42,7 @@ const Main: FC<MainProps> = (props) => {
                         <MainItemStyled key={index} data-testid={testIdentifier + index}>
                             <MainImageStyled>
                                 <MainImageLinkStyled href={blogMainItem.link}>
-                                    <Image image={blogMainItem.image} alt="alt" />
+                                    <Image image={blogMainItem.image} type="list" alt="alt" />
                                 </MainImageLinkStyled>
                             </MainImageStyled>
                             <MainContentStyled>

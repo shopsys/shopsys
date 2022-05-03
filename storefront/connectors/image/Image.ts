@@ -1,8 +1,8 @@
 import { ImageSizeFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
-import { ImageSizesType, ImageSizeType } from 'types/image';
+import { ImageSizeType, ImageType } from 'types/image';
 
 export const mapImageSizeTypeApiData = (apiData: ImageSizeFragmentApi): ImageSizeType | null => {
-    if (apiData.width === null || apiData.height === null) {
+    if (apiData.width === null && apiData.height === null) {
         return null;
     }
 
@@ -11,29 +11,35 @@ export const mapImageSizeTypeApiData = (apiData: ImageSizeFragmentApi): ImageSiz
         url: apiData.url,
         width: apiData.width,
         height: apiData.height,
+        additionalSizes: apiData.additionalSizes.map((image) => ({
+            height: image.height,
+            url: image.url,
+            width: image.width,
+            media: image.media,
+        })),
     };
 };
 
-export const getFirstImageSize = (apiData: ImageSizesFragmentApi[]): ImageSizeType | null => {
+export const getFirstImage = (apiData: ImageSizesFragmentApi[]): ImageType | null => {
     if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
         return null;
     }
 
-    return mapImageSizeTypeApiData(apiData[0].sizes[0]);
+    return {
+        sizes: apiData[0].sizes
+            .map((size) => mapImageSizeTypeApiData(size))
+            .filter((i) => i !== null) as ImageSizeType[],
+    };
 };
 
-export const mapImageSizesTypeApiData = (images: ImageSizesFragmentApi[]): ImageSizesType[] => {
-    const mappedImages = [];
+export const mapImageSizesTypeApiData = (images: ImageSizesFragmentApi[]): ImageType[] => {
+    const mappedImages: ImageType[] = [];
     for (const image of images) {
-        const mappedImage: ImageSizesType = {};
-        for (const imageSize of image.sizes) {
-            mappedImage[imageSize.size] = {
-                ...imageSize,
-                width: imageSize.width !== null ? imageSize.width : 0,
-                height: imageSize.height !== null ? imageSize.height : 0,
-            };
-        }
-        mappedImages.push(mappedImage);
+        mappedImages.push({
+            sizes: image.sizes
+                .map((size) => mapImageSizeTypeApiData(size))
+                .filter((i) => i !== null) as ImageSizeType[],
+        });
     }
 
     return mappedImages;

@@ -1,4 +1,4 @@
-import { ImageSizeType } from 'types/image';
+import { ImageType } from 'types/image';
 
 export type SliderItemType = {
     uuid: string;
@@ -6,5 +6,5 @@ export type SliderItemType = {
     link: string;
     extendedText: string;
     extendedTextLink: string;
-    image: ImageSizeType | null;
+    image: ImageType | null;
 };
