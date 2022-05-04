@@ -180,7 +180,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function getPrices()
     {
-        return $this->prices->toArray();
+        return $this->prices->getValues();
     }
 
     /**
@@ -337,7 +337,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function getPayments()
     {
-        return $this->payments->toArray();
+        return $this->payments->getValues();
     }
 
     /**

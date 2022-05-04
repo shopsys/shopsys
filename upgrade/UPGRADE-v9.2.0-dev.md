@@ -199,3 +199,10 @@ There you can find links to upgrade notes for other versions too.
 - upgrade easy coding standards to v10 ([#2435](https://github.com/shopsys/shopsys/pull/2435))
     - see #project-base-diff to update your project
     - code style was adjusted, don't forget to check standards and update your code accordingly
+- Doctrine Collections - use `getValues()` instead of `toArray()` ([#2439](https://github.com/shopsys/shopsys/pull/2439))
+    - For details see issue ([#2409](https://github.com/shopsys/shopsys/issues/2409))
+    ```diff
+        $collection = new ArrayCollection([0, 1]);
+    -   $collection->toArray();
+    +   $collection->getValues();
+    ```

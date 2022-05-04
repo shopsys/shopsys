@@ -111,7 +111,7 @@ class Customer
      */
     public function getDeliveryAddresses(): array
     {
-        return $this->deliveryAddresses->toArray();
+        return $this->deliveryAddresses->getValues();
     }
 
     /**

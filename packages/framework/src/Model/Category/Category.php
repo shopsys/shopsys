@@ -181,7 +181,7 @@ class Category extends AbstractTranslatableEntity
      */
     public function getChildren()
     {
-        return $this->children->toArray();
+        return $this->children->getValues();
     }
 
     /**

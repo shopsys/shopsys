@@ -615,7 +615,7 @@ class Product extends AbstractTranslatableEntity
         foreach ($productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray(
                 $productCategoryDomain,
-                $this->productCategoryDomains->toArray()
+                $this->productCategoryDomains->getValues()
             ) === false) {
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
@@ -668,7 +668,7 @@ class Product extends AbstractTranslatableEntity
      */
     public function getFlags()
     {
-        return $this->flags->toArray();
+        return $this->flags->getValues();
     }
 
     /**
@@ -809,7 +809,7 @@ class Product extends AbstractTranslatableEntity
 
         $this->variants->add($variant);
         $variant->setMainVariant($this);
-        $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
+        $variant->copyProductCategoryDomains($this->productCategoryDomains->getValues());
     }
 
     /**
@@ -842,7 +842,7 @@ class Product extends AbstractTranslatableEntity
      */
     public function getVariants()
     {
-        return $this->variants->toArray();
+        return $this->variants->getValues();
     }
 
     public function unsetMainVariant()
