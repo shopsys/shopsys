@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: migrate-application
+spec:
+    template:
+        spec:
+            volumes:
+                -   name: domains-urls
+                    configMap:
+                        name: domains-urls
+                -   name: parameters
+                    configMap:
+                        name: parameters
+            containers:
+                -   name: migrate-application
+                    image: "{{TAG}}"
+                    command: ["sh", "-c", "cd /var/www/html && ./bin/console doctrine:migrations:sync-metadata-storage && ./phing db-migrations-count-with-maintenance build-deploy-part-2-db-dependent"]
+                    securityContext:
+                        runAsUser: 33
+                    volumeMounts:
+                        -   name: domains-urls
+                            mountPath: /var/www/html/{{DOMAINS_URLS_FILEPATH}}
+                            subPath: "{{DOMAINS_URLS_FILENAME}}"
+                        -   name: parameters
+                            mountPath: /var/www/html/{{PARAMETERS_FILEPATH}}
+                            subPath: "{{PARAMETERS_FILENAME}}"
+            restartPolicy: Never
+            imagePullSecrets:
+                -   name: dockerregistry
+    backoffLimit: 0
