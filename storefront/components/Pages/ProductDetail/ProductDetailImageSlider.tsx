@@ -63,7 +63,7 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
             }
             return newLoadedImageUrls;
         });
-    }, [currentSlide]);
+    }, [currentSlide, props.galleryItems.length, slider]);
 
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);

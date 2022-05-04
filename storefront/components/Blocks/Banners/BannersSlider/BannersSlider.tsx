@@ -67,6 +67,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
             });
         },
     });
+
     useEffect(() => {
         setLoadedImageUrls((currentLoadedImageUrls) => {
             const newLoadedImageUrls = { ...currentLoadedImageUrls };
@@ -78,7 +79,8 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
             }
             return newLoadedImageUrls;
         });
-    }, [currentSlide]);
+    }, [currentSlide, props.sliderItems.length, slider]);
+
     useEffect(() => {
         if (sliderBoxRef.current !== null) {
             sliderBoxRef.current.addEventListener('mouseover', () => {
@@ -89,6 +91,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
             });
         }
     }, [sliderRef]);
+
     useEffect(() => {
         timer.current = setInterval(() => {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

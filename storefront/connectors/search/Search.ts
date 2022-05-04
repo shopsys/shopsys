@@ -32,10 +32,10 @@ export const useSearch = (
 
     useQueryError(result.error);
     useEffect(() => {
-        if (result.stale === false) {
+        if (!result.stale) {
             setMappedResult(mapSearchResult(result.data, currencyCode));
         }
-    }, [result.data]);
+    }, [currencyCode, result.data, result.stale]);
 
     if (typeof window === 'undefined' && result.data !== undefined) {
         return mapSearchResult(result.data, currencyCode);

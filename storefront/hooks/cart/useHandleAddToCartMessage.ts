@@ -7,6 +7,7 @@ import { UseMutationState } from 'urql';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
+// TODO:
 export const useHandleAddToCartMessage = (
     result: UseMutationState<AddToCartMutationApi, AddToCartMutationVariablesApi>,
     productUuid: string,
@@ -51,6 +52,7 @@ export const useHandleAddToCartMessage = (
 
             setPopupData(mappedPopupData);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result.fetching]);
 
     return [popupData, setPopupData];

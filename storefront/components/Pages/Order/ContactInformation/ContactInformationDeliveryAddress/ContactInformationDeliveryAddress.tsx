@@ -26,6 +26,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const { pickupPlace } = useCurrentCart();
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [
         differentDeliveryAddressValue,
@@ -79,14 +80,14 @@ const ContactInformationDeliveryAddress: FC = () => {
         setTimeout(() => {
             const firstCountrySelectOption = { ...countrySelectOptions[0] };
 
-            formProviderMethods.setValue(formMeta.fields.deliveryFirstName.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryLastName.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryCompanyName.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryTelephone.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryStreet.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryCity.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryPostcode.name, '');
-            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, firstCountrySelectOption);
+            setValue(formMeta.fields.deliveryFirstName.name, '');
+            setValue(formMeta.fields.deliveryLastName.name, '');
+            setValue(formMeta.fields.deliveryCompanyName.name, '');
+            setValue(formMeta.fields.deliveryTelephone.name, '');
+            setValue(formMeta.fields.deliveryStreet.name, '');
+            setValue(formMeta.fields.deliveryCity.name, '');
+            setValue(formMeta.fields.deliveryPostcode.name, '');
+            setValue(formMeta.fields.deliveryCountry.name, firstCountrySelectOption);
             dispatch(
                 contactInformationActions.setDeliveryAddressFromPickupPlace({
                     city: '',
@@ -96,13 +97,34 @@ const ContactInformationDeliveryAddress: FC = () => {
                 }),
             );
         }, 500);
-    }, [JSON.stringify(pickupPlace), differentDeliveryAddressValue]);
+    }, [
+        pickupPlace,
+        differentDeliveryAddressValue,
+        countrySelectOptions,
+        setValue,
+        formMeta.fields.deliveryFirstName.name,
+        formMeta.fields.deliveryLastName.name,
+        formMeta.fields.deliveryCompanyName.name,
+        formMeta.fields.deliveryTelephone.name,
+        formMeta.fields.deliveryStreet.name,
+        formMeta.fields.deliveryCity.name,
+        formMeta.fields.deliveryPostcode.name,
+        formMeta.fields.deliveryCountry.name,
+        dispatch,
+        formProviderMethods,
+    ]);
 
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
-            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
+            setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
         }
-    }, [JSON.stringify(countrySelectOptions), differentDeliveryAddressValue]);
+    }, [
+        countrySelectOptions,
+        differentDeliveryAddressValue,
+        formMeta.fields.deliveryCountry.name,
+        pickupPlace,
+        setValue,
+    ]);
 
     const calcHeight = () => {
         if (contentElement.current) {

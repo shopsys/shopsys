@@ -1,8 +1,9 @@
-import { FC, useEffect } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { nextReduxWrapper } from 'redux/main';
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 
 const Index: FC<ServerSidePropsType> = () => {
@@ -23,9 +24,9 @@ const Index: FC<ServerSidePropsType> = () => {
         await checkPaymentStatus({ orderUuid });
     };
 
-    useEffect(() => {
+    useEffectOnce(() => {
         checkPaymentOnApi(orderUuidParam);
-    }, []);
+    });
 
     return <></>;
 };

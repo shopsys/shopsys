@@ -31,11 +31,11 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     const testIdentifier = 'basic-rangeslider';
 
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useFormContext<FilterFormType>();
+    const { control, setValue } = useFormContext<FilterFormType>();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
     const [minimalPriceValue, maximalPriceValue] = useWatch({
         name: ['minimalPrice', 'maximalPrice'],
-        control: formProviderMethods.control,
+        control,
     });
     const dispatch = useShopsysDispatch();
 
@@ -51,47 +51,49 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
 
     useEffect(() => {
         if (minValueThumb !== minimalPriceValue) {
-            formProviderMethods.setValue('minimalPrice', minValueThumb);
+            setValue('minimalPrice', minValueThumb);
         }
-    }, [debouncedMinValue]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedMinValue, setValue]);
 
     useEffect(() => {
         if (maxValueThumb !== maximalPriceValue) {
-            formProviderMethods.setValue('maximalPrice', maxValueThumb);
+            setValue('maximalPrice', maxValueThumb);
         }
-    }, [debouncedMaxValue]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedMaxValue, setValue]);
 
     useEffect(() => {
         if (minimalPriceValue < props.min) {
             setMinValueThumb(props.min);
             setMinValueInput(props.min);
-            formProviderMethods.setValue('minimalPrice', props.min);
+            setValue('minimalPrice', props.min);
         } else if (minimalPriceValue > maximalPriceValue) {
             setMinValueThumb(maximalPriceValue - 1);
             setMinValueInput(maximalPriceValue - 1);
-            formProviderMethods.setValue('minimalPrice', maximalPriceValue - 1);
+            setValue('minimalPrice', maximalPriceValue - 1);
         } else {
             setMinValueThumb(minimalPriceValue);
             setMinValueInput(minimalPriceValue);
-            formProviderMethods.setValue('minimalPrice', minimalPriceValue);
+            setValue('minimalPrice', minimalPriceValue);
         }
-    }, [minimalPriceValue]);
+    }, [maximalPriceValue, minimalPriceValue, props.min, setValue]);
 
     useEffect(() => {
         if (maximalPriceValue > props.max) {
             setMaxValueThumb(props.max);
             setMaxValueInput(props.max);
-            formProviderMethods.setValue('maximalPrice', props.max);
+            setValue('maximalPrice', props.max);
         } else if (maximalPriceValue < minimalPriceValue) {
             setMaxValueThumb(minimalPriceValue + 1);
             setMaxValueInput(minimalPriceValue + 1);
-            formProviderMethods.setValue('maximalPrice', minimalPriceValue + 1);
+            setValue('maximalPrice', minimalPriceValue + 1);
         } else {
             setMaxValueThumb(maximalPriceValue);
             setMaxValueInput(maximalPriceValue);
-            formProviderMethods.setValue('maximalPrice', maximalPriceValue);
+            setValue('maximalPrice', maximalPriceValue);
         }
-    }, [maximalPriceValue]);
+    }, [maximalPriceValue, minimalPriceValue, props.max, setValue]);
 
     // Convert to percentage
     const getPercent = useCallback(
@@ -115,7 +117,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
             setMinValueThumb(props.min);
             setMinValueInput(props.min);
         } else {
-            formProviderMethods.setValue('minimalPrice', value);
+            setValue('minimalPrice', value);
         }
     };
 
@@ -135,7 +137,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
             setMaxValueThumb(props.max);
             setMaxValueInput(props.max);
         } else {
-            formProviderMethods.setValue('maximalPrice', value);
+            setValue('maximalPrice', value);
         }
     };
 
@@ -160,7 +162,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
             range.current.style.left = `${minPercent}%`;
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
-    }, [minValueThumb]);
+    }, [getPercent, maxValueThumb, minValueThumb]);
 
     // Set width of the range to decrease from the right side
     useEffect(() => {
@@ -170,7 +172,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
         if (range.current) {
             range.current.style.width = `${maxPercent - minPercent}%`;
         }
-    }, [maxValueThumb]);
+    }, [getPercent, maxValueThumb, minValueThumb]);
 
     return (
         <RangeSliderContainerStyled data-testid={testIdentifier}>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import {
     SortingBarItemLinkStyled,
@@ -17,6 +17,7 @@ import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -43,11 +44,12 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         { stateValue: ProductOrderingModeEnumApi.PriceAscApi, displayValue: t('price ascending') },
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
-    useEffect(() => {
+
+    useEffectOnce(() => {
         if (typeof window !== 'undefined') {
             updateUrlWithCurrentSort(selectedSort);
         }
-    }, []);
+    });
 
     const updateUrlWithCurrentSort = (sort: string) => {
         const queryParams = new URLSearchParams(window.location.search);

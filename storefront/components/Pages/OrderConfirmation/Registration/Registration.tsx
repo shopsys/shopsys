@@ -1,5 +1,4 @@
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { FC, useEffect } from 'react';
 import {
     RegistrationBenefitsListItem,
     RegistrationFormColumnStyled,
@@ -14,6 +13,7 @@ import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -23,6 +23,7 @@ import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import Trans from 'next-translate/Trans';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { userActions } from 'redux/slices/user';
 import { useRegistrationMutationApi } from 'graphql/generated';
@@ -35,19 +36,27 @@ const Registration: FC = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const contactInformation = useCurrentUserContactInformation();
-    const [registerResult, register] = useRegistrationMutationApi();
+    const [, register] = useRegistrationMutationApi();
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
-    useEffect(() => {
+    useEffectOnce(() => {
         return () => {
             dispatch(userActions.setOrderConfirmationAccess(false));
         };
-    }, []);
+    });
 
-    useEffect(() => {
+    const onRegistrationSubmitHandler: SubmitHandler<RegistrationAfterOrderFormType> = async (data) => {
+        const registerResult = await register({
+            ...data,
+            ...contactInformation,
+            country: contactInformation.country.value,
+            companyCustomer: contactInformation.customer === 'companyCustomer',
+            previousCartUuid: null,
+        });
+
         if (registerResult.data !== undefined && registerResult.error === undefined) {
             router.push('/');
             return;
@@ -58,16 +67,6 @@ const Registration: FC = () => {
                 showErrorMessage(validationErrors[fieldName].message);
             }
         }
-    }, [registerResult.data, registerResult.error]);
-
-    const onRegistrationSubmitHandler: SubmitHandler<RegistrationAfterOrderFormType> = async (data) => {
-        await register({
-            ...data,
-            ...contactInformation,
-            country: contactInformation.country.value,
-            companyCustomer: contactInformation.customer === 'companyCustomer',
-            previousCartUuid: null,
-        });
     };
 
     return (

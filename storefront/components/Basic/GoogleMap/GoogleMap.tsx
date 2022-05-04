@@ -14,12 +14,12 @@ type GoogleMapProps = {
     lng?: number | null;
     zoom?: number | null;
     markers?: GoogleMapMarker[];
-    activeMarker?: (index: number) => void;
+    activeMarkerHandler?: (index: number) => void;
     isDetail?: boolean;
     closeMarkers?: boolean;
 };
 
-const GoogleMap: FC<GoogleMapProps> = (props) => {
+const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
     const testIdentifier = 'basic-googlemap';
 
     const { publicRuntimeConfig } = getConfig();
@@ -30,22 +30,22 @@ const GoogleMap: FC<GoogleMapProps> = (props) => {
     const [activeMarker, setActiveMarker] = useState(-1);
 
     const markerClickHandler = (index: number) => {
-        if (props.isDetail !== true) {
+        if (!props.isDetail) {
             setActiveMarker(activeMarker === index ? -1 : index);
         }
     };
 
     useEffect(() => {
-        if (props.closeMarkers === true) {
+        if (props.closeMarkers) {
             setActiveMarker(-1);
         }
     }, [props.closeMarkers]);
 
     useEffect(() => {
-        if (typeof props.activeMarker === 'function') {
-            props.activeMarker(activeMarker);
+        if (activeMarkerHandler) {
+            activeMarkerHandler(activeMarker);
         }
-    }, [activeMarker]);
+    }, [activeMarkerHandler, activeMarker]);
 
     return (
         <GoogleMapWrapStyled data-testid={testIdentifier}>

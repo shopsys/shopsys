@@ -1,12 +1,13 @@
-import { FC, useEffect } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
+import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import PaymentFail from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import PaymentSuccess from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 
 const Index: FC<ServerSidePropsType> = () => {
@@ -29,9 +30,9 @@ const Index: FC<ServerSidePropsType> = () => {
         await checkPaymentStatus({ orderUuid });
     };
 
-    useEffect(() => {
+    useEffectOnce(() => {
         checkPaymentOnApi(orderUuidParam);
-    }, []);
+    });
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>

@@ -47,7 +47,7 @@ const DropdownItem: FC<DropdownItemProps> = (props) => {
             setItemLink(props.columnCategoryChild.slug);
             setItemName(props.columnCategoryChild.name);
         }
-    }, [hasChildren, itemLink, itemName]);
+    }, [hasChildren, itemLink, itemName, props.columnCategory, props.columnCategoryChild, props.navigationItem]);
 
     return (
         <DropdownItemStyled variant={props.variant} onClick={scrollToTop} data-testid={testIdentifier}>

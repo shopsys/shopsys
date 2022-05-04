@@ -1,10 +1,10 @@
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { FC, useEffect } from 'react';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import { ButtonWrapperStyled } from './NewPassword.style';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -15,6 +15,7 @@ import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
 import Trans from 'next-translate/Trans';
 import { useAuth } from 'hooks/auth/UseAuth';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -72,11 +73,11 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
         await newPassword(formData);
     };
 
-    useEffect(() => {
+    useEffectOnce(() => {
         if (props.hash === '' || props.email === '') {
             showErrorMessage(t('Error occured while loading form data'));
         }
-    }, []);
+    });
 
     if (props.hash === '' || props.email === '') {
         return (

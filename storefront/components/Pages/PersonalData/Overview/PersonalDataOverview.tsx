@@ -51,7 +51,7 @@ const PersonalDataOverview: FC = () => {
         if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {
             showSuccessMessage(formMeta.messages.success);
         }
-    }, [personalDataOverviewResult]);
+    }, [formMeta.messages.success, personalDataOverviewResult]);
 
     const contentSiteText: string | undefined =
         personalDataPageTextResult.data?.personalDataPage !== undefined &&

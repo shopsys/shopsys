@@ -1,4 +1,4 @@
-import { FC, Fragment, RefObject, useEffect, useState } from 'react';
+import { FC, Fragment, RefObject, useCallback, useEffect, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -38,32 +38,35 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         initialState.pagination.pageSize,
     );
 
-    const updateUrlWithCurrentPage = (currentPage: number) => {
-        const queryParams = new URLSearchParams(window.location.search);
-        if (
-            (paginationButtons && paginationButtons.length < 2) ||
-            currentPage === initialState.pagination.currentPage
-        ) {
-            queryParams.delete('page');
-        } else {
-            queryParams.set('page', currentPage.toString());
-        }
-        let newState = document.location.pathname;
-        if (queryParams.toString().length > 0) {
-            newState = '?' + queryParams.toString();
-        }
-        history.replaceState(history.state, document.title, newState);
-    };
+    const updateUrlWithCurrentPage = useCallback(
+        (currentPage: number) => {
+            const queryParams = new URLSearchParams(window.location.search);
+            if (
+                (paginationButtons && paginationButtons.length < 2) ||
+                currentPage === initialState.pagination.currentPage
+            ) {
+                queryParams.delete('page');
+            } else {
+                queryParams.set('page', currentPage.toString());
+            }
+            let newState = document.location.pathname;
+            if (queryParams.toString().length > 0) {
+                newState = '?' + queryParams.toString();
+            }
+            history.replaceState(history.state, document.title, newState);
+        },
+        [paginationButtons],
+    );
 
     useEffect(() => {
         dispatch(userActions.setPagination({ ...initialState.pagination }));
-    }, [router.asPath]);
+    }, [dispatch, router.asPath]);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             updateUrlWithCurrentPage(paginationState.currentPage);
         }
-    }, [paginationState.currentPage]);
+    }, [paginationState.currentPage, updateUrlWithCurrentPage]);
 
     if (paginationButtons === null || paginationButtons.length === 1) {
         return null;

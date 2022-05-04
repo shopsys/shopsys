@@ -1,6 +1,7 @@
 import { CountryType } from 'types/country';
 import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesQueryApi } from 'graphql/generated';
+import { useMemo } from 'react';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const useCountries = (): CountryType[] => {
@@ -17,10 +18,14 @@ export const useCountries = (): CountryType[] => {
 export const useCountriesAsSelectOptions = (): SelectOptionType[] => {
     const countries = useCountries();
 
-    return countries.map((country) => {
-        return {
-            label: country.name,
-            value: country.code,
-        };
-    });
+    return useMemo(
+        () =>
+            countries.map((country) => {
+                return {
+                    label: country.name,
+                    value: country.code,
+                };
+            }),
+        [countries],
+    );
 };

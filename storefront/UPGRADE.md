@@ -180,3 +180,16 @@
 - tips on how to implement these changes
   - if you need to extend the contact information, extend the `ContactInformationFormType` type in `form.ts`, the `mapCurrentCustomerContactInformationApiData` mapper in `CurrentCustomerUser.ts` (for API data) and the `contactInformationSlice` in Redux (for anonymous user)
   - if you need to extend the user data, extend the `CurrentCustomerType` type and the `mapCurrentCustomerApiData` mapper in `CurrentCustomer.ts`
+
+### Introduction of the eslint react-hooks/exhaustive-deps rule
+- [FWCC-909](https://shopsys.atlassian.net/browse/FWCC-909)
+- [FWCC-909 - add eslint rule react-hooks/exhaustive-deps](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/553/diffs)
+- the reasons these changes were introduced
+    - the new rule helps to keep the deps of React hooks (useEffect, useCallback and useMemo) being set correctly which prevents bugs and unexpected behavior
+- most significant changes
+    - the `eslint react-hooks/exhaustive-deps` eslint rule was configured and reported bugs were fixed
+    - new `useEffectOnce` hook was introduced. It should be used when you want to call the code only once on the first render
+- other changes
+    - in the process of fixing reported bugs it was necessary to change some code, some useMemo and useCallback hooks were added
+- tips on how to implement them
+    - run `npm run lint` and fix all newly reported bugs

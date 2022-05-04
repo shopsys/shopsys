@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { PayOrderMutationApi, usePayOrderMutationApi } from 'graphql/generated';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type GoPayGatewayProps = {
@@ -34,11 +35,11 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
         }
     };
 
-    useEffect(() => {
+    useEffectOnce(() => {
         if (props.orderUuid !== undefined) {
             getGatewayVariables(props.orderUuid);
         }
-    }, []);
+    });
 
     useEffect(() => {
         {

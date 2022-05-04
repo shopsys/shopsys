@@ -19,6 +19,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const { trigger, formState } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
@@ -27,17 +28,17 @@ const ContactInformation: FC = () => {
     const { isUserLoggedIn } = useCurrentUserData();
 
     useEffect(() => {
-        if (formProviderMethods.formState.touchedFields.email !== undefined) {
-            setIsEmailFilledCorrectly(formProviderMethods.formState.errors.email === undefined);
+        if (formState.touchedFields.email !== undefined) {
+            setIsEmailFilledCorrectly(formState.errors.email === undefined);
             return;
         }
 
         if (emailValue.length > 0) {
-            formProviderMethods.trigger('email', { shouldFocus: true }).then((isEmailValid) => {
+            trigger('email', { shouldFocus: true }).then((isEmailValid) => {
                 setIsEmailFilledCorrectly(isEmailValid);
             });
         }
-    }, [emailValue]);
+    }, [emailValue, trigger, formState.touchedFields, formState.errors]);
 
     return (
         <>

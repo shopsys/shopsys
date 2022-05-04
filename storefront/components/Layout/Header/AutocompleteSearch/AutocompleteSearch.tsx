@@ -18,6 +18,7 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 import Icon from 'components/Basic/Icon';
 import { useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import useDebounce from 'hooks/helpers/UseDebounce';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
@@ -53,7 +54,7 @@ const AutocompleteSearch: FC = () => {
         } else {
             setAutocompleteSearchResults(undefined);
         }
-    }, [JSON.stringify(autocompleteSearchApiResults), autocompleteSearchQueryValue]);
+    }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
 
     useEffect(() => {
         if (typeof document === 'undefined') {
@@ -61,11 +62,11 @@ const AutocompleteSearch: FC = () => {
         }
 
         document.addEventListener('click', onDocumentClickHandler);
-    }, [typeof document]);
-
-    useEffect(() => {
-        return () => document.removeEventListener('click', onDocumentClickHandler);
     }, []);
+
+    useEffectOnce(() => {
+        return () => document.removeEventListener('click', onDocumentClickHandler);
+    });
 
     useResizeWidthEffect(
         width,

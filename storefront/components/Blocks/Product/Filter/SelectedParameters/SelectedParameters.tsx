@@ -40,14 +40,14 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
             parametersFilterState.minimalPrice !== props.productFilterOptions.minimalPrice &&
                 parametersFilterState.minimalPrice !== null,
         );
-    }, [parametersFilterState.minimalPrice]);
+    }, [parametersFilterState.minimalPrice, props.productFilterOptions.minimalPrice]);
 
     useEffect(() => {
         setMaximalPriceVisibility(
             parametersFilterState.maximalPrice !== props.productFilterOptions.maximalPrice &&
                 parametersFilterState.maximalPrice !== null,
         );
-    }, [parametersFilterState.maximalPrice]);
+    }, [parametersFilterState.maximalPrice, props.productFilterOptions.maximalPrice]);
 
     const onUncheckFlag = (uuid: string) => {
         const indexOfValue = flagsValue.findIndex((item) => item.uuid === uuid);

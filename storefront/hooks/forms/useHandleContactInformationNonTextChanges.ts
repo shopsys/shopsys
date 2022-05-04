@@ -31,20 +31,20 @@ export const useHandleContactInformationNonTextChanges = (
 
     useEffect(() => {
         dispatch(contactInformationActions.setRegister(registerValue));
-    }, [registerValue]);
+    }, [dispatch, registerValue]);
     useEffect(() => {
         dispatch(contactInformationActions.setCustomer(customerValue));
-    }, [customerValue]);
+    }, [customerValue, dispatch]);
     useEffect(() => {
         dispatch(contactInformationActions.setCountry(countryValue));
-    }, [countryValue]);
+    }, [countryValue, dispatch]);
     useEffect(() => {
         dispatch(contactInformationActions.setDifferentDeliveryAddress(differentDeliveryAddressValue));
-    }, [differentDeliveryAddressValue]);
+    }, [differentDeliveryAddressValue, dispatch]);
     useEffect(() => {
         dispatch(contactInformationActions.setDeliveryCountry(deliveryCountryValue));
-    }, [deliveryCountryValue]);
+    }, [deliveryCountryValue, dispatch]);
     useEffect(() => {
         dispatch(contactInformationActions.setNewsletterSubscription(newsletterSubscriptionValue));
-    }, [newsletterSubscriptionValue]);
+    }, [dispatch, newsletterSubscriptionValue]);
 };

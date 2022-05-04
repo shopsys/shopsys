@@ -21,5 +21,5 @@ export const useQueryError = (error: CombinedError | undefined): void => {
         }
 
         showErrorMessage(parsedErrors.applicationError.message);
-    }, [error]);
+    }, [error, t]);
 };

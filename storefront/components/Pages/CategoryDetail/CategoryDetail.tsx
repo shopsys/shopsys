@@ -57,7 +57,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
             setProductFilterOptionsData(props.category.productConnection.productFilterOptions);
             setCategorySlug(props.category.slug);
         }
-    }, [props.category.productConnection.productFilterOptions]);
+    }, [props.category.productConnection.productFilterOptions, props.category.slug]);
 
     return (
         <Webline>

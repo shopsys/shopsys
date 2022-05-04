@@ -35,7 +35,7 @@ const Search: FC<ServerSidePropsType> = () => {
 
     useEffect(() => {
         dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
-    }, [router.query.sort]);
+    }, [dispatch, router.query.sort]);
 
     useEffect(() => {
         dispatch(
@@ -43,7 +43,7 @@ const Search: FC<ServerSidePropsType> = () => {
                 getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
             ),
         );
-    }, [router.query.page]);
+    }, [dispatch, router.query.page]);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>

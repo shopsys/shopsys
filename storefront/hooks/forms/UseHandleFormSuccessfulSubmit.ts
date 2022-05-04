@@ -2,6 +2,7 @@ import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
 import { useEffect } from 'react';
 import { UseMutationState } from 'urql';
 
+// TODO: předělat z hooku na normální handler
 export const useHandleFormSuccessfulSubmit = <T>(
     result: UseMutationState,
     formProviderMethods: UseFormReturn<T>,
@@ -21,11 +22,13 @@ export const useHandleFormSuccessfulSubmit = <T>(
         if (onSuccessAction !== undefined) {
             onSuccessAction(result.data);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [result.data, result.error]);
 
     useEffect(() => {
         if (options?.reset && formProviderMethods.formState.isSubmitSuccessful && !result.fetching) {
             formProviderMethods.reset(defaultValues, { keepValues: result.error !== undefined, keepErrors: true });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formProviderMethods.formState, formProviderMethods.reset, result.fetching, result.error]);
 };

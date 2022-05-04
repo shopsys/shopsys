@@ -13,14 +13,15 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const Address: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
+    const { setValue } = formProviderMethods;
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
 
     useEffect(() => {
         if (countrySelectOptions.length > 0) {
-            formProviderMethods.setValue(formMeta.fields.country.name, countrySelectOptions[0]);
+            setValue(formMeta.fields.country.name, countrySelectOptions[0]);
         }
-    }, [JSON.stringify(countrySelectOptions)]);
+    }, [countrySelectOptions, formMeta.fields.country.name, setValue]);
 
     if (countrySelectOptions.length === 0) {
         return null;

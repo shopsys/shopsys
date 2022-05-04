@@ -34,14 +34,14 @@ const Parameters: FC = () => {
             if (
                 parametersFilterState.parameters.some(
                     (stateParameter) => stateParameter.parameter === parameter.parameterUuid,
-                ) === true
+                )
             ) {
                 updatedFilteredParameters.push(parameter);
             }
         }
 
         setFilteredParameters(updatedFilteredParameters);
-    }, [parametersFilterState.parameters]);
+    }, [parametersFilterState.parameters, parametersValue]);
 
     return (
         <>

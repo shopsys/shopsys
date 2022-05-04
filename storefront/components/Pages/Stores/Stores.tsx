@@ -11,7 +11,7 @@ import {
     StoresList,
     StoresStyled,
 } from './Stores.style';
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import GoogleMap from 'components/Basic/GoogleMap';
 import Image from 'next/image';
 import InfoBox from './InfoBox';
@@ -27,13 +27,12 @@ const Stores: FC = () => {
     const [activeInfoBox, setActiveInfoBox] = useState(-1);
     const [closeInfoBox, setCloseInfoBox] = useState(true);
 
-    const activeMarkerHandler = (index: number) => {
-        setActiveInfoBox(activeInfoBox !== index ? index : -1);
-
-        if (activeInfoBox !== index) {
+    const activeMarkerHandler = useCallback((index: number) => {
+        setActiveInfoBox((prev) => (prev !== index ? index : -1));
+        if (index === -1) {
             setCloseInfoBox(false);
         }
-    };
+    }, []);
 
     const closeInfoBoxHandler = () => {
         setCloseInfoBox(true);
@@ -47,7 +46,7 @@ const Stores: FC = () => {
         >
             <StoresStyled>
                 <MapStyled>
-                    <GoogleMap markers={stores} activeMarker={activeMarkerHandler} closeMarkers={closeInfoBox} />
+                    <GoogleMap markers={stores} activeMarkerHandler={activeMarkerHandler} closeMarkers={closeInfoBox} />
                 </MapStyled>
                 <InfoStyled>
                     <ImageStyled>

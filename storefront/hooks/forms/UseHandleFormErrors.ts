@@ -5,6 +5,7 @@ import { showErrorMessage } from 'components/Helpers/Toasts';
 import { useEffect } from 'react';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
+// TODO: předělat z hooku na normální handler
 export const useHandleFormErrors = <T>(
     error: CombinedError | undefined,
     formProviderMethods: UseFormReturn<T>,
@@ -35,5 +36,6 @@ export const useHandleFormErrors = <T>(
                 showErrorMessage(userError.validation[fieldName].message);
             }
         }
-    }, [error]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error, t]);
 };

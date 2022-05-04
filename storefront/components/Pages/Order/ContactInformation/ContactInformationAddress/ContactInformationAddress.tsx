@@ -17,6 +17,7 @@ const ContactInformationAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
     const [streetValue, cityValue, postcodeValue] = useWatch({
@@ -26,9 +27,9 @@ const ContactInformationAddress: FC = () => {
 
     useEffect(() => {
         if (countrySelectOptions.length > 0) {
-            formProviderMethods.setValue(formMeta.fields.country.name, countrySelectOptions[0]);
+            setValue(formMeta.fields.country.name, countrySelectOptions[0]);
         }
-    }, [JSON.stringify(countrySelectOptions)]);
+    }, [countrySelectOptions, formMeta.fields.country.name, setValue]);
 
     if (countrySelectOptions.length === 0) {
         return null;

@@ -28,6 +28,7 @@ const PromoCode: FC = () => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [formProviderMethods] = usePromoCodeForm();
+    const { setValue } = formProviderMethods;
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
     const applyPromoCode = useApplyPromoCodeToCart();
     const removePromoCode = useRemovePromoCodeFromCart();
@@ -49,9 +50,9 @@ const PromoCode: FC = () => {
 
     useEffect(() => {
         if (promoCode === null) {
-            formProviderMethods.setValue('promoCode', '');
+            setValue('promoCode', '');
         }
-    }, [promoCode]);
+    }, [promoCode, setValue]);
 
     return (
         <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>

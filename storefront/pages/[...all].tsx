@@ -42,7 +42,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 
     useEffect(() => {
         dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
-    }, [router.query.sort]);
+    }, [dispatch, router.query.sort]);
 
     useEffect(() => {
         dispatch(
@@ -50,7 +50,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
                 getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
             ),
         );
-    }, [router.query.page]);
+    }, [dispatch, router.query.page]);
 
     const data = useFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
     if (data === null || data === undefined) {

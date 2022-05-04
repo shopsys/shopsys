@@ -12,6 +12,7 @@ import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutCha
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import SelectedParameters from './SelectedParameters';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -154,6 +155,7 @@ const Filter: FC<FilterProps> = (props) => {
         router.replace({ pathname, query: queryParams }, undefined, {
             scroll: false,
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [parametersFilterState]);
 
     const onBrandCheck = (uuid: string) => {
@@ -178,7 +180,7 @@ const Filter: FC<FilterProps> = (props) => {
     };
 
     // this useEffect triggered only on the first render
-    useEffect(() => {
+    useEffectOnce(() => {
         parametersFilterState.brands.forEach((brandUuid) => onBrandCheck(brandUuid));
         parametersFilterState.flags.forEach((flagUuid) => onFlagCheck(flagUuid));
         parametersFilterState.parameters.forEach((parameterItem) =>
@@ -193,7 +195,7 @@ const Filter: FC<FilterProps> = (props) => {
         if (parametersFilterState.maximalPrice !== null) {
             formProviderMethods.setValue(`maximalPrice`, parametersFilterState.maximalPrice);
         }
-    }, []);
+    });
 
     return (
         <FormProvider {...formProviderMethods}>
