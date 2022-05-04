@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Image;
 
+use Ramsey\Uuid\Uuid;
+
 class ImageBatchLoadData
 {
     /**
@@ -39,7 +41,7 @@ class ImageBatchLoadData
      */
     public function __construct(int $entityId, string $entityName, array $sizeConfigs, ?string $type)
     {
-        $this->id = uniqid();
+        $this->id = Uuid::uuid4()->toString();
         $this->entityId = $entityId;
         $this->entityName = $entityName;
         $this->sizeConfigs = $sizeConfigs;
