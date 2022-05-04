@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -22,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *   }
  * )
  */
-class Administrator implements UserInterface, Serializable, UniqueLoginInterface, TimelimitLoginInterface
+class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -305,37 +304,34 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTime}
      */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->realName,
-            $this->loginToken,
-            time(),
-            $this->rolesChangedAt,
-        ]);
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'realName' => $this->realName,
+            'loginToken' => $this->loginToken,
+            'timestamp' => time(),
+            'rolesChangedAt' => $this->rolesChangedAt,
+        ];
     }
 
     /**
-     * @inheritDoc
+     * @param array{id: int, username: string, password: string, realName: string, loginToken: string, timestamp: int, rolesChangedAt: ?\DateTime} $data
      */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        [
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->realName,
-            $this->loginToken,
-            $timestamp,
-            $this->rolesChangedAt
-        ] = unserialize($serialized);
+        $this->id = $data['id'];
+        $this->username = $data['username'];
+        $this->password = $data['password'];
+        $this->realName = $data['realName'];
+        $this->loginToken = $data['loginToken'];
+        $this->rolesChangedAt = $data['rolesChangedAt'];
         $this->lastActivity = new DateTime();
-        $this->lastActivity->setTimestamp($timestamp);
+        $this->lastActivity->setTimestamp($data['timestamp']);
     }
 
     /**

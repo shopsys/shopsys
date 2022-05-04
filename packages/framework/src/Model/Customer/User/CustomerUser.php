@@ -6,7 +6,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use Serializable;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -25,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity
  */
-class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializable
+class CustomerUser implements UserInterface, TimelimitLoginInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -322,33 +321,30 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     }
 
     /**
-     * @inheritDoc
+     * @return array{id: int , email: string, password: string, timestamp: int, domainId: int}
      */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize([
-            $this->id,
-            $this->email,
-            $this->password,
-            time(), // lastActivity
-            $this->domainId,
-        ]);
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'password' => $this->password,
+            'timestamp' => time(), // lastActivity
+            'domainId' => $this->domainId,
+        ];
     }
 
     /**
-     * @inheritDoc
+     * @param array{id: int , email: string, password: string, timestamp: int, domainId: int} $data
      */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        [
-            $this->id,
-            $this->email,
-            $this->password,
-            $timestamp,
-            $this->domainId
-        ] = unserialize($serialized);
+        $this->id = $data['id'];
+        $this->email = $data['email'];
+        $this->password = $data['password'];
+        $this->domainId = $data['domainId'];
         $this->lastActivity = new DateTime();
-        $this->lastActivity->setTimestamp($timestamp);
+        $this->lastActivity->setTimestamp($data['timestamp']);
     }
 
     /**
