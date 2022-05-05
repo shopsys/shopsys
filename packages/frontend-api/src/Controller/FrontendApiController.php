@@ -83,7 +83,9 @@ class FrontendApiController
      */
     protected function createApiNotEnabledResponse(): Response
     {
-        return new JsonResponse(['errors' => [['message' => 'Frontend API is not enabled on current domain']]], 404);
+        return new JsonResponse([
+            'errors' => [['message' => 'Frontend API is not enabled on current domain']],
+        ], 404);
     }
 
     /**

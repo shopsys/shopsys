@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\CsFixer;
 
-use PhpCsFixer\Fixer\DefinedFixerInterface;
 use PhpCsFixer\Fixer\FixerInterface;
 use PhpCsFixer\FixerDefinition\CodeSample;
 use PhpCsFixer\FixerDefinition\FixerDefinition;
@@ -12,7 +11,7 @@ use PhpCsFixer\FixerDefinition\FixerDefinitionInterface;
 use PhpCsFixer\Tokenizer\Tokens;
 use SplFileInfo;
 
-final class RedundantMarkDownTrailingSpacesFixer implements FixerInterface, DefinedFixerInterface
+final class RedundantMarkDownTrailingSpacesFixer implements FixerInterface
 {
     /**
      * {@inheritdoc}

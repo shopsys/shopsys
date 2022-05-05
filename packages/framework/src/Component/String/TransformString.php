@@ -49,7 +49,7 @@ class TransformString
     /**
      * @param string $string
      * @return string
-     * @link http://php.vrana.cz/vytvoreni-pratelskeho-url.php
+     * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */
     public static function stringToFriendlyUrlSlug($string)
     {

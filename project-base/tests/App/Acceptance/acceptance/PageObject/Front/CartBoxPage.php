@@ -25,7 +25,10 @@ class CartBoxPage extends AbstractPage
         $translatedMessageWithTags = tc(
             $messageId,
             $expectedCount,
-            ['%itemsCount%' => $expectedCount, '%priceWithVat%' => $expectedFormattedPriceWithCurrency],
+            [
+                '%itemsCount%' => $expectedCount,
+                '%priceWithVat%' => $expectedFormattedPriceWithCurrency,
+            ],
             'messages',
             $this->tester->getFrontendLocale()
         );

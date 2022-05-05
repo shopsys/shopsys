@@ -21,7 +21,10 @@ class HeurekaDeliveryFeedItemTest extends TestCase
 
     public function testHeurekaDeliveryFeedItemIsCreatable()
     {
-        $heurekaDeliveryFeedItem = $this->heurekaDeliveryFeedItemFactory->create(['id' => 1, 'stockQuantity' => 5]);
+        $heurekaDeliveryFeedItem = $this->heurekaDeliveryFeedItemFactory->create([
+            'id' => 1,
+            'stockQuantity' => 5,
+        ]);
 
         self::assertInstanceOf(HeurekaDeliveryFeedItem::class, $heurekaDeliveryFeedItem);
 

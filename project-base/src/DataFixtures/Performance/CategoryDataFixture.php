@@ -147,7 +147,10 @@ class CategoryDataFixture
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;
-        $categoryData->name = ['cs' => $categoryName, 'en' => $categoryName];
+        $categoryData->name = [
+            'cs' => $categoryName,
+            'en' => $categoryName,
+        ];
         $categoryData->descriptions = [
             1 => $this->faker->paragraph(3, false),
             2 => $this->faker->paragraph(3, false),

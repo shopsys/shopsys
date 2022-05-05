@@ -132,7 +132,11 @@ class TranslationReplaceSourceCommand extends Command
         $translationSourceReplacements = [];
         $item = $defaults;
 
-        while ($line = fgets($stream)) {
+        while (true) {
+            $line = fgets($stream);
+            if ($line === false) {
+                break;
+            }
             $line = trim($line);
 
             if ($line === '') {
@@ -169,9 +173,9 @@ class TranslationReplaceSourceCommand extends Command
                 $item['translated'][(int)substr($line, 7, 1)] = substr($line, $size + 3, -1);
             }
         }
+
         // save last item
         $this->parsePoFileItem($translationSourceReplacements, $item);
-
         fclose($stream);
 
         return $translationSourceReplacements;
@@ -506,7 +510,13 @@ class TranslationReplaceSourceCommand extends Command
                 $match = null;
                 $matchContent = '';
 
-                while ($line = fgets($stream)) {
+                while (true) {
+                    $line = fgets($stream);
+
+                    if ($line === false) {
+                        break;
+                    }
+
                     $line = trim($line);
 
                     if (substr($line, 0, 7) === 'msgid "') {

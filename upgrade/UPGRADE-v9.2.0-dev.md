@@ -171,9 +171,8 @@ There you can find links to upgrade notes for other versions too.
                 AnnotationsReplacementsMap $annotationsReplacementsMap,
         +       DocBlockParser $docBlockParser
             ) {
-    ```
-
-- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory` was changed ([#2426](https://github.com/shopsys/shopsys/pull/2426))
+        ```
+- **\[BC break\]** class `\Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory` was changed
     - constructor changed interface
         ```diff
             /**
@@ -197,3 +196,6 @@ There you can find links to upgrade notes for other versions too.
 - class `\Shopsys\FrameworkBundle\Model\Administrator\Administrator` no longer implements `Serializable` interface ([#2431](https://github.com/shopsys/shopsys/pull/2431))
     - public methods `serialize()` and `unserialize()` were removed
     - `__serialize()` and `__unserialize()` are used instead
+- upgrade easy coding standards to v10 ([#2435](https://github.com/shopsys/shopsys/pull/2435))
+    - see #project-base-diff to update your project
+    - code style was adjusted, don't forget to check standards and update your code accordingly

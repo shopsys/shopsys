@@ -17,23 +17,12 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set(
-        Option::SETS,
-        [
-            SetList::PSR_12,
-        ]
-    );
-
-    $parameters->set(
-        Option::EXCLUDE_PATHS,
-        [
-            __DIR__ . '/src/Resources/views/Migration/migration.php.twig',
-        ]
-    );
+    $containerConfigurator->import(SetList::PSR_12);
 
     $parameters->set(
         Option::SKIP,
         [
+            __DIR__ . '/src/Resources/views/Migration/migration.php.twig',
             ObjectIsCreatedByFactorySniff::class => [
                 __DIR__ . '/tests/*',
             ],

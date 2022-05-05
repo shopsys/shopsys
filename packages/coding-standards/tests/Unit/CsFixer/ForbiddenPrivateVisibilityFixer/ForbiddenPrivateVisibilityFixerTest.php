@@ -15,7 +15,9 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
     protected function createFixerService(): ForbiddenPrivateVisibilityFixer
     {
         $fixer = new ForbiddenPrivateVisibilityFixer();
-        $fixer->configure(['analyzed_namespaces' => ['TestNamespace']]);
+        $fixer->configure([
+            'analyzed_namespaces' => ['TestNamespace'],
+        ]);
 
         return $fixer;
     }
