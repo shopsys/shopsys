@@ -220,10 +220,42 @@ class CartTransportTest extends GraphQlTestCase
         self::assertNull($transportResponse);
     }
 
+    public function testTransportPickupPlaceIdentifierIsReturnedFromCart(): void
+    {
+        $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $pickupPlaceIdentifier = $store->getUuid();
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . CartDataFixture::CART_UUID . '"
+                }
+            ) {
+                selectedPickupPlaceIdentifier
+            }
+        }';
+        $response = $this->getResponseContentForQuery($getCartQuery);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'cart');
+
+        $this->assertSame($pickupPlaceIdentifier, $responseData['selectedPickupPlaceIdentifier']);
+    }
+
+    public function testTransportPickupPlaceIdentifierIsReturnedAfterAddingToCart(): void
+    {
+        $response = $this->addDemoTransportToDemoCart(TransportDataFixture::TRANSPORT_PERSONAL);
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $pickupPlaceIdentifier = $store->getUuid();
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangeTransportInCart');
+
+        $this->assertSame($pickupPlaceIdentifier, $responseData['selectedPickupPlaceIdentifier']);
+    }
+
     /**
      * @param string $transportReferenceName
+     * @return array
      */
-    private function addDemoTransportToDemoCart(string $transportReferenceName): void
+    private function addDemoTransportToDemoCart(string $transportReferenceName): array
     {
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($transportReferenceName);
@@ -233,14 +265,15 @@ class CartTransportTest extends GraphQlTestCase
             $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
             $pickupPlaceIdentifier = $store->getUuid();
         }
-        $this->addTransportToDemoCart($transport->getUuid(), $pickupPlaceIdentifier);
+        return $this->addTransportToDemoCart($transport->getUuid(), $pickupPlaceIdentifier);
     }
 
     /**
      * @param string $transportUuid
      * @param string|null $pickupPlaceIdentifier
+     * @return array
      */
-    private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): void
+    private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
         $pickupPlaceIdentifierLine = '';
         if ($pickupPlaceIdentifier !== null) {
@@ -254,11 +287,12 @@ class CartTransportTest extends GraphQlTestCase
                     ' . $pickupPlaceIdentifierLine . '
                 }) {
                     uuid
+                    selectedPickupPlaceIdentifier
                 }
             }
         ';
 
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        return $this->getResponseContentForQuery($changeTransportInCartMutation);
     }
 
     private function removeTransportFromDemoCart(): void

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
-use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
@@ -48,6 +47,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         ];
         $cartUuid = $this->addProductToCart();
         $this->addCzechPostTransportToCart($cartUuid);
+        $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
         $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
@@ -66,6 +66,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
 
         $this->applyPromoCode($cartUuid, $validPromoCode->getCode());
         $this->addCzechPostTransportToCart($cartUuid);
+        $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($validPromoCode);
         $promoCodeData->remainingUses = 0;
@@ -137,14 +138,6 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
      */
     private function getMutation(string $cartUuid): string
     {
-        $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
-        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
-        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
         return 'mutation {
                     CreateOrder(
                         input: {
@@ -158,10 +151,6 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                             city: "Springfield"
                             postcode: "12345"
                             country: "CZ"
-                            payment: {
-                                uuid: "' . $paymentCashOnDelivery->getUuid() . '"
-                                price: ' . $paymentPrice . '
-                            }
                             differentDeliveryAddress: false
                         }
                     ) {

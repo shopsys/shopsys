@@ -58,6 +58,12 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
+msgid "Payment must be set in cart before sending the order"
+msgstr ""
+
+msgid "Payment with provided UUID is not available"
+msgstr ""
+
 msgid "Pickup place with provided UUID is not available"
 msgstr ""
 
@@ -148,6 +154,9 @@ msgstr "Zadaný hash nie je validný."
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr ""
 
+msgid "Selected payment price has changed"
+msgstr ""
+
 msgid "Selected pickup place is not available"
 msgstr ""
 
@@ -172,6 +181,9 @@ msgstr "Názov ulice nemôže byť dlhší než {{ limit }} znakov"
 msgid "The identifier must contain two characters"
 msgstr ""
 
+msgid "The payment is not allowed in combination with already selected transport"
+msgstr ""
+
 msgid "The promo code can only be used for a higher total price."
 msgstr ""
 
@@ -185,6 +197,9 @@ msgid "The promo code is not valid or it has been already used. Check it, please
 msgstr ""
 
 msgid "The promo code is not valid yet. Check it, please."
+msgstr ""
+
+msgid "The transport is not allowed in combination with already selected payment"
 msgstr ""
 
 msgid "Transport must be set in cart before sending the order"

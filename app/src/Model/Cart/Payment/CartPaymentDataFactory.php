@@ -2,30 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Cart\Transport;
+namespace App\Model\Cart\Payment;
 
 use App\Model\Cart\Cart;
 use App\Model\Order\Preview\OrderPreviewFactory;
-use App\Model\Transport\Transport;
-use App\Model\Transport\TransportFacade;
+use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentFacade;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
-class CartTransportDataFactory
+class CartPaymentDataFactory
 {
-    /**
-     * @var \Shopsys\Cdn\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
@@ -42,64 +32,71 @@ class CartTransportDataFactory
     private OrderPreviewFactory $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
      */
-    private TransportPriceCalculation $transportPriceCalculation;
+    private PaymentPriceCalculation $paymentPriceCalculation;
 
     /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
+     * @var \App\Model\Payment\PaymentFacade
+     */
+    private PaymentFacade $paymentFacade;
+
+    /**
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
-     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      */
     public function __construct(
+        PaymentFacade $paymentFacade,
         Domain $domain,
-        TransportFacade $transportFacade,
         CurrentCustomerUser $currentCustomerUser,
         CurrencyFacade $currencyFacade,
         OrderPreviewFactory $orderPreviewFactory,
-        TransportPriceCalculation $transportPriceCalculation
+        PaymentPriceCalculation $paymentPriceCalculation
     ) {
+        $this->paymentFacade = $paymentFacade;
         $this->domain = $domain;
-        $this->transportFacade = $transportFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->currencyFacade = $currencyFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->transportPriceCalculation = $transportPriceCalculation;
+        $this->paymentPriceCalculation = $paymentPriceCalculation;
     }
 
     /**
      * @param \App\Model\Cart\Cart $cart
-     * @param string $transportUuid
-     * @param string|null $pickupPlaceIdentifier
-     * @return \App\Model\Cart\Transport\CartTransportData
+     * @param string $paymentUuid
+     * @param string|null $goPayBankSwift
+     * @return \App\Model\Cart\Payment\CartPaymentData
      */
-    public function create(
-        Cart $cart,
-        string $transportUuid,
-        ?string $pickupPlaceIdentifier
-    ): CartTransportData {
+    public function create(Cart $cart, string $paymentUuid, ?string $goPayBankSwift): CartPaymentData
+    {
         $domainId = $this->domain->getId();
-        $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
-        $watchedPriceWithVat = $this->getTransportWatchedPriceWithVat($domainId, $cart, $transport);
+        $payment = $this->paymentFacade->getEnabledOnDomainByUuid($paymentUuid, $domainId);
+        $watchedPriceWithVat = $this->getPaymentWatchedPriceWithVat($domainId, $cart, $payment);
 
-        $cartTransportData = new CartTransportData();
-        $cartTransportData->transport = $transport;
-        $cartTransportData->watchedPrice = $watchedPriceWithVat;
-        $cartTransportData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
+        $cartPaymentData = new CartPaymentData();
+        $cartPaymentData->payment = $payment;
+        $cartPaymentData->watchedPrice = $watchedPriceWithVat;
+        $cartPaymentData->goPayBankSwift = $goPayBankSwift;
 
-        return $cartTransportData;
+        return $cartPaymentData;
     }
 
     /**
      * @param int $domainId
      * @param \App\Model\Cart\Cart $cart
-     * @param \App\Model\Transport\Transport $transport
+     * @param \App\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    private function getTransportWatchedPriceWithVat(int $domainId, Cart $cart, Transport $transport): Money
+    private function getPaymentWatchedPriceWithVat(int $domainId, Cart $cart, Payment $payment): Money
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -108,16 +105,16 @@ class CartTransportDataFactory
             $currency,
             $domainId,
             $cart->getQuantifiedProducts(),
-            $transport,
-            $cart->getPayment(),
+            $cart->getTransport(),
+            $payment,
             $customerUser,
             null,
             null,
             $cart->getFirstAppliedPromoCode()
         );
 
-        $watchedPrice = $this->transportPriceCalculation->calculatePrice(
-            $transport,
+        $watchedPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
             $currency,
             $orderPreview->getProductsPrice(),
             $domainId

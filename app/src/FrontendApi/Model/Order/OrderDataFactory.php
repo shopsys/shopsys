@@ -70,7 +70,6 @@ class OrderDataFactory extends BaseOrderDataFactory
 
         $input = $argument['input'];
         $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
-        $orderData->goPayBankSwift = $input['payment']['goPayBankSwift'] ?? null;
 
         return $orderData;
     }
@@ -81,7 +80,9 @@ class OrderDataFactory extends BaseOrderDataFactory
      */
     public function updateOrderDataFromCart(OrderData $orderData, Cart $cart): void
     {
+        $orderData->payment = $cart->getPayment();
         $orderData->transport = $cart->getTransport();
+        $orderData->goPayBankSwift = $cart->getPaymentGoPayBankSwift();
         $pickupPlaceIdentifier = $cart->getPickupPlaceIdentifier();
         if ($cart->getPickupPlaceIdentifier() === null) {
             return;
@@ -147,11 +148,6 @@ class OrderDataFactory extends BaseOrderDataFactory
     {
         /** @var \App\Model\Order\OrderData $cloneOrderData */
         $cloneOrderData = clone $orderData;
-
-        $cloneOrderData->payment = $this->paymentFacade->getEnabledOnDomainByUuid(
-            $input['payment']['uuid'],
-            $this->domain->getId()
-        );
 
         $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 

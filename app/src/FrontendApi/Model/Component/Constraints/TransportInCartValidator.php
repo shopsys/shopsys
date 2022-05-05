@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Component\Constraints;
 
 use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use App\FrontendApi\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
@@ -82,6 +83,7 @@ class TransportInCartValidator extends ConstraintValidator
         }
         try {
             $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
+            $this->checkTransportPaymentRelation($transport, $value->cartUuid, $constraint);
             $this->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier, $constraint);
             $this->checkPersonalPickupStoreAvailability($transport, $pickupPlaceIdentifier, $constraint);
             $this->checkTransportWeightLimit($transport, $value->cartUuid, $constraint);
@@ -143,6 +145,22 @@ class TransportInCartValidator extends ConstraintValidator
         } catch (TransportWeightLimitExceededException $exception) {
             $this->context->buildViolation($transportInCartConstraint->weightLimitExceededMessage)
                 ->setCode(TransportInCart::WEIGHT_LIMIT_EXCEEDED_ERROR)
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $cartUuid
+     * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
+     */
+    private function checkTransportPaymentRelation(Transport $transport, ?string $cartUuid, TransportInCart $transportInCartConstraint): void
+    {
+        try {
+            $this->transportValidationFacade->checkTransportPaymentRelation($transport, $cartUuid);
+        } catch (InvalidTransportPaymentCombinationException $exception) {
+            $this->context->buildViolation($transportInCartConstraint->invalidTransportPaymentCombinationMessage)
+                ->setCode(TransportInCart::INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR)
                 ->addViolation();
         }
     }

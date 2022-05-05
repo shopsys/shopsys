@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Cart;
 
 use App\Model\Cart\Item\CartItem;
+use App\Model\Cart\Payment\CartPaymentData;
 use App\Model\Cart\Transport\CartTransportData;
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,6 +58,25 @@ class Cart extends BaseCart
      * @ORM\Column(type="string", nullable=true)
      */
     private ?string $pickupPlaceIdentifier = null;
+
+    /**
+     * @var \App\Model\Payment\Payment|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Payment\Payment")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private ?Payment $payment = null;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
+     */
+    private ?Money $paymentWatchedPrice = null;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private ?string $paymentGoPayBankSwift = null;
 
     /**
      * @param string $cartIdentifier
@@ -196,6 +217,25 @@ class Cart extends BaseCart
     }
 
     /**
+     * @param \App\Model\Cart\Payment\CartPaymentData $cartPaymentData
+     */
+    public function editCartPayment(CartPaymentData $cartPaymentData): void
+    {
+        $this->payment = $cartPaymentData->payment;
+        $this->paymentWatchedPrice = $cartPaymentData->watchedPrice;
+        $this->paymentGoPayBankSwift = $cartPaymentData->goPayBankSwift;
+        $this->setModifiedNow();
+    }
+
+    public function unsetCartPayment(): void
+    {
+        $this->payment = null;
+        $this->paymentWatchedPrice = null;
+        $this->paymentGoPayBankSwift = null;
+        $this->setModifiedNow();
+    }
+
+    /**
      * @return \App\Model\Transport\Transport|null
      */
     public function getTransport(): ?Transport
@@ -230,5 +270,37 @@ class Cart extends BaseCart
     public function setTransportWatchedPrice(?Money $transportWatchedPrice): void
     {
         $this->transportWatchedPrice = $transportWatchedPrice;
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment|null
+     */
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getPaymentWatchedPrice(): ?Money
+    {
+        return $this->paymentWatchedPrice;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPaymentGoPayBankSwift(): ?string
+    {
+        return $this->paymentGoPayBankSwift;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $paymentWatchedPrice
+     */
+    public function setPaymentWatchedPrice(?Money $paymentWatchedPrice): void
+    {
+        $this->paymentWatchedPrice = $paymentWatchedPrice;
     }
 }

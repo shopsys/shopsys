@@ -7,7 +7,6 @@ namespace App\FrontendApi\Model\Component\Constraints;
 use App\FrontendApi\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -70,29 +69,22 @@ class AppPaymentTransportRelationValidator extends PaymentTransportRelationValid
         if (!$constraint instanceof PaymentTransportRelation) {
             throw new UnexpectedTypeException($constraint, PaymentTransportRelation::class);
         }
-        if ($value->payment === null) {
-            return;
-        }
         $cartUuid = $value->cartUuid;
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
         $transportInCart = $cart->getTransport();
-        if ($transportInCart === null) {
+        $paymentInCart = $cart->getPayment();
+        if ($transportInCart === null || $paymentInCart === null) {
             return;
         }
-        try {
-            $payment = $this->paymentFacade->getByUuid($value->payment['uuid']);
 
-            $relationExists = in_array($transportInCart, $payment->getTransports(), true);
+        $relationExists = in_array($transportInCart, $paymentInCart->getTransports(), true);
 
-            if (!$relationExists) {
-                $this->context->buildViolation($constraint->invalidCombinationMessage)
-                    ->setCode(PaymentTransportRelation::INVALID_COMBINATION_ERROR)
-                    ->addViolation();
-            }
-        } catch (PaymentNotFoundException $exception) {
-            return;
+        if (!$relationExists) {
+            $this->context->buildViolation($constraint->invalidCombinationMessage)
+                ->setCode(PaymentTransportRelation::INVALID_COMBINATION_ERROR)
+                ->addViolation();
         }
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart;
 
-use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartPromoCodeFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
@@ -95,13 +94,10 @@ class CartWatcherFacade
 
     /**
      * @param \App\Model\Cart\Cart $cart
-     * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function getCheckedCartWithModifications(
-        Cart $cart,
-        ?PaymentInputData $paymentInputData = null
-    ): CartWithModificationsResult {
+    public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
+    {
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
 
         $this->checkUnavailableStockQuantityItems($cart);
@@ -111,11 +107,7 @@ class CartWatcherFacade
 
         $this->em->flush();
 
-        return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment(
-            $this->cartWithModificationsResult,
-            $cart,
-            $paymentInputData
-        );
+        return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
     }
 
     /**

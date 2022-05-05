@@ -8,6 +8,8 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentDataFactory;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
@@ -62,6 +64,12 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private StoreFacade $storeFacade;
+
+    /**
+     * @var \App\Model\Payment\PaymentDataFactory
+     * @inject
+     */
+    private PaymentDataFactory $paymentDataFactory;
 
     protected function setUp(): void
     {
@@ -478,20 +486,16 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testPaymentWithModifiedPriceIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $payment */
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
-        $inputPaymentPrice = $payment->getPrice(1)->getPrice()->add(Money::create(10))->getAmount();
+        $referenceName = PaymentDataFixture::PAYMENT_CARD;
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $this->getReference($referenceName);
+        $cartUuid = $newlyCreatedCart['uuid'];
+        $this->addPaymentToCart($cartUuid, $payment);
+        $this->changePaymentPrice($referenceName);
+
         $getCartQuery = '{
             cart(cartInput: {
-                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
-                    payment: {
-                        uuid: "' . $payment->getUuid() . '"
-                        price: {
-                            priceWithVat: "' . $inputPaymentPrice . '"
-                            priceWithoutVat: "' . $inputPaymentPrice . '"
-                            vatAmount: "0"
-                        }
-                    }
+                    cartUuid: "' . $cartUuid . '"
                 }
             ) {
                 modifications {
@@ -509,22 +513,14 @@ class CartModificationsResultTest extends GraphQlTestCase
     public function testUnavailablePaymentIsReported(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
-        /** @var \App\Model\Transport\Transport $payment */
+        /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
-        $inputPaymentPrice = $payment->getPrice(1)->getPrice()->getAmount();
-        $paymentUuid = $payment->getUuid();
+        $cartUuid = $newlyCreatedCart['uuid'];
+        $this->addPaymentToCart($cartUuid, $payment);
         $this->paymentFacade->deleteById($payment->getId());
         $getCartQuery = '{
             cart(cartInput: {
-                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
-                    payment: {
-                        uuid: "' . $paymentUuid . '"
-                        price: {
-                            priceWithVat: "' . $inputPaymentPrice . '"
-                            priceWithoutVat: "' . $inputPaymentPrice . '"
-                            vatAmount: "0"
-                        }
-                    }
+                    cartUuid: "' . $cartUuid . '"
                 }
             ) {
                 modifications {
@@ -705,5 +701,37 @@ class CartModificationsResultTest extends GraphQlTestCase
         $transportData = $this->transportDataFactory->createFromTransport($transport);
         $transportData->hidden = true;
         $this->transportFacade->edit($transport, $transportData);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param \App\Model\Payment\Payment $payment
+     */
+    private function addPaymentToCart(string $cartUuid, Payment $payment): void
+    {
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangePaymentInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    paymentUuid: "' . $payment->getUuid() . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    /**
+     * @param string $paymentReferenceName
+     */
+    private function changePaymentPrice(string $paymentReferenceName): void
+    {
+        // refresh transport, so we're able to work with it as with an entity
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $this->getReference($paymentReferenceName);
+        $paymentData = $this->paymentDataFactory->createFromPayment($payment);
+        $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
+        $this->paymentFacade->edit($payment, $paymentData);
     }
 }

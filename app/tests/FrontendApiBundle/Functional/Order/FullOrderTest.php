@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
-use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\VatDataFixture;
 
 class FullOrderTest extends AbstractOrderTestCase
 {
@@ -70,6 +68,7 @@ class FullOrderTest extends AbstractOrderTestCase
         $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
 
         $this->addCzechPostTransportToCart($cartUuid);
+        $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
         $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
@@ -80,14 +79,6 @@ class FullOrderTest extends AbstractOrderTestCase
      */
     private function getMutation(string $cartUuid): string
     {
-        $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
-        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
-        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
         return 'mutation {
                     CreateOrder(
                         input: {
@@ -105,10 +96,6 @@ class FullOrderTest extends AbstractOrderTestCase
                             postcode: "12345"
                             country: "CZ"
                             note:"Thank You"
-                            payment: {
-                                uuid: "' . $paymentCashOnDelivery->getUuid() . '"
-                                price: ' . $paymentPrice . '
-                            }
                             differentDeliveryAddress: true
                             deliveryFirstName: "deliveryFirstName"
                             deliveryLastName: "deliveryLastName"

@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Cart;
+namespace App\FrontendApi\Mutation\Cart;
 
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
+use App\Model\Cart\Payment\CartPaymentFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
-class CartResolver implements ResolverInterface, AliasedInterface
+class PaymentInCartMutation implements MutationInterface, AliasedInterface
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
+     * @var \App\Model\Cart\Payment\CartPaymentFacade
      */
-    private CartFacade $cartFacade;
+    private CartPaymentFacade $cartPaymentFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
@@ -25,62 +26,59 @@ class CartResolver implements ResolverInterface, AliasedInterface
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
+     * @var \App\FrontendApi\Model\Cart\CartFacade
+     */
+    private CartFacade $cartFacade;
+
+    /**
      * @var \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
     private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
+     * @param \App\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
      */
     public function __construct(
-        CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
-        CartWatcherFacade $cartWatcherFacade
+        CartFacade $cartFacade,
+        CartWatcherFacade $cartWatcherFacade,
+        CartPaymentFacade $cartPaymentFacade
     ) {
-        $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->cartFacade = $cartFacade;
         $this->cartWatcherFacade = $cartWatcherFacade;
+        $this->cartPaymentFacade = $cartPaymentFacade;
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
+     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function resolve(Argument $argument): ?CartWithModificationsResult
+    public function changePaymentInCart(Argument $argument): CartWithModificationsResult
     {
-        // default values are not properly propagated from configuration
-        // should be fixed after update to overblog/graphql-bundle 0.14
-        $input = $this->initializeDefaultValues($argument);
+        $input = $argument['input'];
+        $cartUuid = $input['cartUuid'];
+        $paymentUuid = $input['paymentUuid'];
+        $paymentGoPayBankSwift = $input['paymentGoPayBankSwift'];
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        $cart = $this->cartFacade->findCart($customerUser, $input['cartUuid']);
-        if ($cart === null) {
-            return null;
-        }
+        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $this->cartPaymentFacade->updatePaymentInCart($cart, $paymentUuid, $paymentGoPayBankSwift);
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
     }
 
     /**
-     * @return array<string, string>
+     * @return string[]
      */
     public static function getAliases(): array
     {
         return [
-            'resolve' => 'getCart',
+            'changePaymentInCart' => 'changePaymentInCart',
         ];
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array<string, array|string|null>
-     */
-    private function initializeDefaultValues(Argument $argument): array
-    {
-        return $argument['cartInput'] ?? ['cartUuid' => null];
     }
 }

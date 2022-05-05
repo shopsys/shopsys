@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart;
 
-use App\FrontendApi\Model\Payment\PaymentInputData;
+use App\FrontendApi\Model\Payment\Exception\PaymentPriceChangedException;
+use App\FrontendApi\Model\Payment\PaymentValidationFacade;
 use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
 use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
 use App\FrontendApi\Model\Transport\TransportValidationFacade;
 use App\Model\Cart\Cart;
+use App\Model\Cart\Payment\CartPaymentFacade;
 use App\Model\Cart\Transport\CartTransportFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
@@ -18,29 +20,30 @@ use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
 class TransportAndPaymentWatcherFacade
 {
+    /**
+     * @var \App\FrontendApi\Model\Payment\PaymentValidationFacade
+     */
+    private PaymentValidationFacade $paymentValidationFacade;
+
     /**
      * @var \App\FrontendApi\Model\Transport\TransportValidationFacade
      */
     private TransportValidationFacade $transportValidationFacade;
 
     /**
+     * @var \App\Model\Cart\Payment\CartPaymentFacade
+     */
+    private CartPaymentFacade $cartPaymentFacade;
+
+    /**
      * @var \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
     private CartWithModificationsResult $cartWithModificationsResult;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    private PaymentPriceCalculation $paymentPriceCalculation;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
@@ -83,7 +86,6 @@ class TransportAndPaymentWatcherFacade
     private CartTransportFacade $cartTransportFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
@@ -93,9 +95,10 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \App\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
      * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
+     * @param \App\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade
+     * @param \App\FrontendApi\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      */
     public function __construct(
-        PaymentPriceCalculation $paymentPriceCalculation,
         CurrencyFacade $currencyFacade,
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
@@ -104,9 +107,10 @@ class TransportAndPaymentWatcherFacade
         CurrentCustomerUser $currentCustomerUser,
         FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
         CartTransportFacade $cartTransportFacade,
-        TransportValidationFacade $transportValidationFacade
+        TransportValidationFacade $transportValidationFacade,
+        CartPaymentFacade $cartPaymentFacade,
+        PaymentValidationFacade $paymentValidationFacade
     ) {
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->currencyFacade = $currencyFacade;
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
@@ -116,19 +120,17 @@ class TransportAndPaymentWatcherFacade
         $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
         $this->cartTransportFacade = $cartTransportFacade;
         $this->transportValidationFacade = $transportValidationFacade;
+        $this->cartPaymentFacade = $cartPaymentFacade;
+        $this->paymentValidationFacade = $paymentValidationFacade;
     }
 
     /**
      * @param \App\FrontendApi\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
      * @param \App\Model\Cart\Cart $cart
-     * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function checkTransportAndPayment(
-        CartWithModificationsResult $cartWithModificationsResult,
-        Cart $cart,
-        ?PaymentInputData $paymentInputData = null
-    ): CartWithModificationsResult {
+    public function checkTransportAndPayment(CartWithModificationsResult $cartWithModificationsResult, Cart $cart): CartWithModificationsResult
+    {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
 
         $domainId = $this->domain->getId();
@@ -136,11 +138,7 @@ class TransportAndPaymentWatcherFacade
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $transport = $cart->getTransport();
-        $payment = null;
-
-        if ($paymentInputData) {
-            $payment = $this->getPaymentFromInputData($paymentInputData);
-        }
+        $payment = $cart->getPayment();
 
         $orderPreview = $this->orderPreviewFactory->create(
             $currency,
@@ -165,33 +163,11 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
-        $this->cartWithModificationsResult->setPayment($payment);
 
         $this->checkTransport($cart);
-
-        if ($payment !== null) {
-            $this->checkPaymentPrice($payment, $paymentInputData, $orderPreview->getProductsPrice(), $currency);
-        }
+        $this->checkPayment($cart);
 
         return $this->cartWithModificationsResult;
-    }
-
-    /**
-     * @param \App\FrontendApi\Model\Payment\PaymentInputData $paymentInputData
-     * @return \App\Model\Payment\Payment
-     */
-    private function getPaymentFromInputData(PaymentInputData $paymentInputData): ?Payment
-    {
-        try {
-            return $this->paymentFacade->getEnabledOnDomainByUuid(
-                $paymentInputData->getUuid(),
-                $this->domain->getId()
-            );
-        } catch (PaymentNotFoundException $exception) {
-            $this->cartWithModificationsResult->setPaymentIsUnavailable();
-        }
-
-        return null;
     }
 
     /**
@@ -209,26 +185,17 @@ class TransportAndPaymentWatcherFacade
     }
 
     /**
+     * @param \App\Model\Cart\Cart $cart
      * @param \App\Model\Payment\Payment $payment
-     * @param \App\FrontendApi\Model\Payment\PaymentInputData $paymentInputData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
-    private function checkPaymentPrice(Payment $payment, PaymentInputData $paymentInputData, Price $productsPrice, Currency $currency): void
+    private function checkPaymentPrice(Cart $cart, Payment $payment): void
     {
-        $domainId = $this->domain->getId();
-
-        $selectedPaymentPrice = $paymentInputData->getPrice();
-        $calculatedPaymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $currency,
-            $productsPrice,
-            $domainId
-        );
-
-        $this->cartWithModificationsResult->setPaymentPriceChanged(
-            !$calculatedPaymentPrice->getPriceWithVat()->equals($selectedPaymentPrice->getPriceWithVat())
-        );
+        try {
+            $this->paymentValidationFacade->checkPaymentPrice($payment, $cart);
+        } catch (PaymentPriceChangedException $exception) {
+            $this->cartWithModificationsResult->setPaymentPriceChanged(true);
+            $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
+        }
     }
 
     /**
@@ -286,9 +253,38 @@ class TransportAndPaymentWatcherFacade
     /**
      * @param \App\Model\Cart\Cart $cart
      */
+    private function checkPayment(Cart $cart): void
+    {
+        $payment = $cart->getPayment();
+        if ($payment === null) {
+            if ($cart->getPaymentWatchedPrice() !== null) {
+                // this might happen when payment is set to null in cart thanks to "onDelete=SET NULL" ORM setting
+                $this->setPaymentInCartUnavailable($cart);
+            }
+            return;
+        }
+        if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($payment) === false) {
+            $this->setPaymentInCartUnavailable($cart);
+            return;
+        }
+        $this->checkPaymentPrice($cart, $payment);
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
     private function setTransportInCartUnavailable(Cart $cart): void
     {
         $this->cartWithModificationsResult->setTransportIsUnavailable();
         $this->cartTransportFacade->unsetCartTransport($cart);
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function setPaymentInCartUnavailable(Cart $cart): void
+    {
+        $this->cartWithModificationsResult->setPaymentIsUnavailable();
+        $this->cartPaymentFacade->unsetCartPayment($cart);
     }
 }

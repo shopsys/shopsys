@@ -58,6 +58,12 @@ msgstr ""
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
 
+msgid "Payment must be set in cart before sending the order"
+msgstr "Platba musí být vybrána před odesláním objednávky"
+
+msgid "Payment with provided UUID is not available"
+msgstr "Platba se zadaným UUID není dostupná"
+
 msgid "Pickup place with provided UUID is not available"
 msgstr "Odběrné místo se zadaným UUID není dostupné"
 
@@ -148,6 +154,9 @@ msgstr "Zadaný hash není validní."
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
 
+msgid "Selected payment price has changed"
+msgstr "Cena vybrané dopravy se změnila"
+
 msgid "Selected pickup place is not available"
 msgstr "Vybrané odběrné místo není dostupné"
 
@@ -172,6 +181,9 @@ msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 msgid "The identifier must contain two characters"
 msgstr "Identifikátor musí obsahovat dva znaky"
 
+msgid "The payment is not allowed in combination with already selected transport"
+msgstr "Platba není povolena v kombinaci s již vybranou dopravou"
+
 msgid "The promo code can only be used for a higher total price."
 msgstr "Promo kód lze použít pouze pro vyšší celkovou cenu."
 
@@ -186,6 +198,9 @@ msgstr "Promo kód není platný, nebo už byl využit. Zkontrolujte jej, prosí
 
 msgid "The promo code is not valid yet. Check it, please."
 msgstr "Promo kód ještě není platný. Zkontrolujte jej, prosím."
+
+msgid "The transport is not allowed in combination with already selected payment"
+msgstr "Doprava není povolena v kombinaci s již vybranou platbou"
 
 msgid "Transport must be set in cart before sending the order"
 msgstr "Doprava musí být vybrána před odesláním objednávky"

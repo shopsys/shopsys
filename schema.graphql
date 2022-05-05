@@ -12,9 +12,6 @@ input AddToCartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a payment in order"""
-  payment: PaymentInput = null
-
   """Product UUID"""
   productUuid: Uuid!
 
@@ -54,6 +51,9 @@ type AddToCartResult implements CartInterface {
   Remaining amount for free transport and payment; null = transport cannot be free
   """
   remainingAmountWithVatForFreeTransport: Money
+
+  """Selected bank swift code of goPay payment bank transfer"""
+  paymentGoPayBankSwift: String
   addProductResult: AddProductResult!
 }
 
@@ -420,6 +420,9 @@ type Cart implements CartInterface {
   Remaining amount for free transport and payment; null = transport cannot be free
   """
   remainingAmountWithVatForFreeTransport: Money
+
+  """Selected bank swift code of goPay payment bank transfer"""
+  paymentGoPayBankSwift: String
 }
 
 input CartInput {
@@ -427,9 +430,6 @@ input CartInput {
   Cart identifier, new cart will be created if not provided and customer is not logged in
   """
   cartUuid: Uuid = null
-
-  """Represents a payment in order"""
-  payment: PaymentInput = null
 }
 
 interface CartInterface {
@@ -568,6 +568,19 @@ input ChangePasswordInput {
 
   """New customer user password."""
   newPassword: Password!
+}
+
+input ChangePaymentInCartInput {
+  """Cart identifier or null if customer is logged in"""
+  cartUuid: Uuid = null
+
+  """
+  UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
+  """
+  paymentUuid: Uuid
+
+  """Selected bank swift code of goPay payment bank transfer"""
+  paymentGoPayBankSwift: String = null
 }
 
 input ChangePersonalDataInput {
@@ -1086,6 +1099,9 @@ type Mutation {
   """check payment status of order after callback from payment service"""
   CheckPaymentStatus(orderUuid: Uuid!): Boolean!
 
+  """Add a payment to the cart, or remove a payment from the cart"""
+  ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
+
   """Add a transport to the cart, or remove a transport from the cart"""
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
 }
@@ -1352,11 +1368,15 @@ input OrderInput {
   """Other information related to the order"""
   note: String
 
-  """Payment method applied to the order"""
-  payment: PaymentInput!
+  """
+  Deprecated, this field is not used, the payment is taken from the server cart instead.
+  """
+  payment: PaymentInput
 
-  """Transport method applied to the order"""
-  transport: TransportInput!
+  """
+  Deprecated, this field is not used, the transport is taken from the server cart instead.
+  """
+  transport: TransportInput
 
   """
   Deprecated, this field is not used, the products are taken from the server cart instead.
@@ -1534,9 +1554,6 @@ input PaymentInput {
 
   """Price for payment"""
   price: PriceInput!
-
-  """Selected bank swift code of goPay payment bank transfer"""
-  goPayBankSwift: String = null
 }
 
 type PaymentSetupCreationData {
@@ -2207,9 +2224,6 @@ input RemoveFromCartInput {
   Cart identifier, new cart will be created if not provided and customer is not logged in
   """
   cartUuid: Uuid = null
-
-  """Represents a payment in order"""
-  payment: PaymentInput = null
 
   """Cart item UUID"""
   cartItemUuid: Uuid!

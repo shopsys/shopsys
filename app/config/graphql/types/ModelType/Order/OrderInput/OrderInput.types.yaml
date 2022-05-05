@@ -6,6 +6,7 @@ OrderInput:
         validation:
             -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
             -   App\FrontendApi\Model\Component\Constraints\TransportInOrder: ~
+            -   App\FrontendApi\Model\Component\Constraints\PaymentInOrder: ~
         fields:
             products:
                 type: "[OrderProductInput!]"
@@ -18,4 +19,8 @@ OrderInput:
             transport:
                 type: "TransportInput"
                 description: "Deprecated, this field is not used, the transport is taken from the server cart instead."
+                validation: ~
+            payment:
+                type: "PaymentInput"
+                description: "Deprecated, this field is not used, the payment is taken from the server cart instead."
                 validation: ~

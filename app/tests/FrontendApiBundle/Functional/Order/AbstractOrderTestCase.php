@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -149,5 +150,77 @@ class AbstractOrderTestCase extends GraphQlTestCase
             }
         ';
         $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCashOnDeliveryPaymentToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
+        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->addPaymentToCart($cartUuid, $paymentCashOnDelivery);
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCardPaymentToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCard */
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $this->addPaymentToCart($cartUuid, $paymentCard);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param \App\Model\Payment\Payment $payment
+     */
+    protected function addPaymentToCart(string $cartUuid, Payment $payment): void
+    {
+        $changePaymentInCartMutation = '
+            mutation {
+                ChangePaymentInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    paymentUuid: "' . $payment->getUuid() . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changePaymentInCartMutation);
+    }
+
+    protected function addCardPaymentToDemoCart(): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCard */
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $this->addPaymentToCart(CartDataFixture::CART_UUID, $paymentCard);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCreateOrderMutationFromDemoCart(): string
+    {
+        return 'mutation {
+                    CreateOrder(
+                        input: {
+                            cartUuid: "' . CartDataFixture::CART_UUID . '"
+                            firstName: "firstName"
+                            lastName: "lastName"
+                            email: "user@example.com"
+                            telephone: "+53 123456789"
+                            onCompanyBehalf: false
+                            street: "123 Fake Street"
+                            city: "Springfield"
+                            postcode: "12345"
+                            country: "CZ"
+                            differentDeliveryAddress: false
+                        }
+                    ) {
+                        uuid
+                    }
+                }';
     }
 }
