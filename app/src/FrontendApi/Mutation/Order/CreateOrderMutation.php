@@ -79,13 +79,13 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         $orderData = $this->orderDataFactory->createOrderDataFromArgument($argument);
 
         $input = $argument['input'];
-        if (array_key_exists('products', $input) && $input['products'] !== null) {
-            throw new UserError('Usage of "products" input is deprecated, we do not work with this field anymore, the products are taken from the server cart instead.');
-        }
+        $this->handleDeprecatedFields($input);
         $cartUuid = $input['cartUuid'];
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $this->orderDataFactory->updateOrderDataFromCart($orderData, $cart);
+
         $quantifiedProducts = $cart->getQuantifiedProducts();
         if (count($quantifiedProducts) === 0) {
             throw new UserError('There are no products in the cart.');
@@ -110,5 +110,18 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         }
 
         return $order;
+    }
+
+    /**
+     * @param array $input
+     */
+    private function handleDeprecatedFields(array $input): void
+    {
+        if (array_key_exists('products', $input) && $input['products'] !== null) {
+            throw new UserError('Usage of "products" input is deprecated, we do not work with this field anymore, the products are taken from the server cart instead.');
+        }
+        if (array_key_exists('transport', $input) && $input['transport'] !== null) {
+            throw new UserError('Usage of "transport" input is deprecated, we do not work with this field anymore, the transport is taken from the server cart instead.');
+        }
     }
 }

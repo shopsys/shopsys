@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 
 class MinimalOrderTest extends AbstractOrderTestCase
@@ -63,12 +62,13 @@ class MinimalOrderTest extends AbstractOrderTestCase
         $mutation = 'mutation {
             AddToCart(input: {
                 productUuid: "' . $product->getUuid() . '",
-                quantity: 10
+                quantity: 1
             }) {
                 uuid
             }
         }';
         $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        $this->addCzechPostTransportToCart($cartUuid);
 
         $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
@@ -80,18 +80,12 @@ class MinimalOrderTest extends AbstractOrderTestCase
     private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
         $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
 
         return 'mutation {
                     CreateOrder(
@@ -109,10 +103,6 @@ class MinimalOrderTest extends AbstractOrderTestCase
                             payment: {
                                 uuid: "' . $paymentCashOnDelivery->getUuid() . '"
                                 price: ' . $paymentPrice . '
-                            }
-                            transport: {
-                                uuid: "' . $transportCzechPost->getUuid() . '"
-                                price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
                         }
@@ -176,7 +166,9 @@ class MinimalOrderTest extends AbstractOrderTestCase
 
     public function testCreateMinimalOrderWithNoProductsThrowError(): void
     {
-        $response = $this->getResponseContentForQuery($this->getMutationWithNoProducts());
+        $cartUuid = $this->addProductToCartAndRemoveIt();
+        $this->addCzechPostTransportToCart($cartUuid);
+        $response = $this->getResponseContentForQuery($this->getMutationWithNoProducts($cartUuid));
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
         static::assertCount(1, $errors);
@@ -185,25 +177,18 @@ class MinimalOrderTest extends AbstractOrderTestCase
     }
 
     /**
+     * @param string $cartUuid
      * @return string
      */
-    private function getMutationWithNoProducts(): string
+    private function getMutationWithNoProducts(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
         $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
-        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
-
-        $cartUuid = $this->addProductToCartAndRemoveIt();
 
         return 'mutation {
                     CreateOrder(
@@ -221,10 +206,6 @@ class MinimalOrderTest extends AbstractOrderTestCase
                             payment: {
                                 uuid: "' . $paymentCashOnDelivery->getUuid() . '"
                                 price: ' . $paymentPrice . '
-                            }
-                            transport: {
-                                uuid: "' . $transportCzechPost->getUuid() . '"
-                                price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
                         }

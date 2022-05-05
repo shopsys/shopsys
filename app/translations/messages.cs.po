@@ -22,9 +22,6 @@ msgstr "301 (Trvalé přesměrování)"
 msgid "302 (Temporary redirect)"
 msgstr "302 (Dočasné přesměrování)"
 
-msgid "404"
-msgstr ""
-
 msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"
 msgstr ""
 
@@ -654,6 +651,9 @@ msgstr "Entita"
 
 msgid "Entity ID"
 msgstr "ID entity"
+
+msgid "Error messages"
+msgstr "Chybové hlášky"
 
 msgid "Exposed in Stores"
 msgstr "Vystavení na prodejnách"

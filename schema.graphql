@@ -12,9 +12,6 @@ input AddToCartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a transport in order"""
-  transport: TransportInput = null
-
   """Represents a payment in order"""
   payment: PaymentInput = null
 
@@ -431,9 +428,6 @@ input CartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a transport in order"""
-  transport: TransportInput = null
-
   """Represents a payment in order"""
   payment: PaymentInput = null
 }
@@ -618,6 +612,21 @@ input ChangePersonalDataInput {
 
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
+}
+
+input ChangeTransportInCartInput {
+  """
+  Cart identifier, new cart will be created if not provided and customer is not logged in
+  """
+  cartUuid: Uuid = null
+
+  """
+  UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart
+  """
+  transportUuid: Uuid
+
+  """The identifier of selected personal pickup place"""
+  pickupPlaceIdentifier: String = null
 }
 
 """Represents an currently logged customer user"""
@@ -1076,6 +1085,9 @@ type Mutation {
 
   """check payment status of order after callback from payment service"""
   CheckPaymentStatus(orderUuid: Uuid!): Boolean!
+
+  """Add a transport to the cart, or remove a transport from the cart"""
+  ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
 }
 
 """Represents a navigation structure item"""
@@ -2196,9 +2208,6 @@ input RemoveFromCartInput {
   """
   cartUuid: Uuid = null
 
-  """Represents a transport in order"""
-  transport: TransportInput = null
-
   """Represents a payment in order"""
   payment: PaymentInput = null
 
@@ -2378,9 +2387,6 @@ input TransportInput {
 
   """Price for transport"""
   price: PriceInput!
-
-  """The identifier of selected personal pickup place"""
-  pickupPlaceIdentifier: String = null
 }
 
 """Represents a transport type"""

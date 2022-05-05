@@ -75,11 +75,6 @@ class CartWithModificationsResult
     private ?Price $totalDiscountPrice = null;
 
     /**
-     * @var \App\Model\Transport\Transport|null
-     */
-    private ?Transport $transport;
-
-    /**
      * @var \App\Model\Payment\Payment|null
      */
     private ?Payment $payment;
@@ -88,11 +83,6 @@ class CartWithModificationsResult
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     private ?Money $remainingAmountWithVatForFreeTransport = null;
-
-    /**
-     * @var string|null
-     */
-    private ?string $selectedPickupPlaceIdentifier = null;
 
     /**
      * @param \App\Model\Cart\Cart $cart
@@ -265,7 +255,7 @@ class CartWithModificationsResult
      */
     public function getTransport(): ?Transport
     {
-        return $this->transport;
+        return $this->cart->getTransport();
     }
 
     /**
@@ -293,15 +283,7 @@ class CartWithModificationsResult
      */
     public function getSelectedPickupPlaceIdentifier(): ?string
     {
-        return $this->selectedPickupPlaceIdentifier;
-    }
-
-    /**
-     * @param \App\Model\Transport\Transport|null $transport
-     */
-    public function setTransport(?Transport $transport): void
-    {
-        $this->transport = $transport;
+        return $this->cart->getPickupPlaceIdentifier();
     }
 
     /**
@@ -318,13 +300,5 @@ class CartWithModificationsResult
     public function addChangedPromoCode(string $promoCode): void
     {
         $this->promoCodeModifications['noLongerApplicablePromoCode'][] = $promoCode;
-    }
-
-    /**
-     * @param string|null $selectedPickupPlaceIdentifier
-     */
-    public function setSelectedPickupPlaceIdentifier(?string $selectedPickupPlaceIdentifier): void
-    {
-        $this->selectedPickupPlaceIdentifier = $selectedPickupPlaceIdentifier;
     }
 }

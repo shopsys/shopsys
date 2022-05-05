@@ -12,8 +12,10 @@ use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use App\Model\Store\StoreFacade;
+use App\Model\Transport\Transport;
+use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
@@ -48,6 +50,18 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private PaymentFacade $paymentFacade;
+
+    /**
+     * @var \App\Model\Transport\TransportDataFactory
+     * @inject
+     */
+    private TransportDataFactory $transportDataFactory;
+
+    /**
+     * @var \App\Model\Store\StoreFacade
+     * @inject
+     */
+    private StoreFacade $storeFacade;
 
     protected function setUp(): void
     {
@@ -304,21 +318,13 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     public function testTransportWithModifiedPriceIsReported(): void
     {
         $this->addTestingProductToNewCart(1);
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $inputTransportPrice = $transport->getPrice(1)->getPrice()->add(Money::create(10))->getAmount();
+        $transport = $this->getReference($referenceName);
+        $this->addTransportToExistingCart($transport);
+        $this->changeTransportPrice($referenceName);
         $getCartQuery = '{
-            cart(cartInput: {
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "' . $inputTransportPrice . '"
-                            priceWithoutVat: "' . $inputTransportPrice . '"
-                            vatAmount: "0"
-                        }
-                    }
-                }
-            ) {
+            cart {
                 modifications {
                     transportModifications {
                         transportPriceChanged
@@ -336,20 +342,13 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $this->addTransportToExistingCart($transport, $store->getUuid());
+        $this->storeFacade->delete($store->getId());
 
         $getCartQuery = '{
-            cart(cartInput: {
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                        pickupPlaceIdentifier: "' . Uuid::uuid4()->toString() . '"
-                    }
-                }
-            ) {
+            cart {
                 modifications {
                     transportModifications {
                         personalPickupStoreUnavailable
@@ -370,20 +369,10 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         /** @var \App\Model\Store\Store $store */
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+        $this->addTransportToExistingCart($transport, $store->getUuid());
 
         $getCartQuery = '{
-            cart(cartInput: {
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "0"
-                            priceWithoutVat: "0"
-                            vatAmount: "0"
-                        }
-                        pickupPlaceIdentifier: "' . $store->getUuid() . '"
-                    }
-                }
-            ) {
+            cart {
                 modifications {
                     transportModifications {
                         personalPickupStoreUnavailable
@@ -396,26 +385,37 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         self::assertFalse($transportModifications['personalPickupStoreUnavailable']);
     }
 
-    public function testUnavailableTransportIsReported(): void
+    public function testDeletedTransportIsReportedAsUnavailable(): void
     {
         $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
-        $inputTransportPrice = $transport->getPrice(1)->getPrice()->getAmount();
-        $transportUuid = $transport->getUuid();
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $this->addTransportToExistingCart($transport);
         $this->transportFacade->deleteById($transport->getId());
         $getCartQuery = '{
-            cart(cartInput: {
-                    transport: {
-                        uuid: "' . $transportUuid . '"
-                        price: {
-                            priceWithVat: "' . $inputTransportPrice . '"
-                            priceWithoutVat: "' . $inputTransportPrice . '"
-                            vatAmount: "0"
-                        }
+            cart {
+                modifications {
+                    transportModifications {
+                        transportUnavailable
                     }
                 }
-            ) {
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertTrue($transportModifications['transportUnavailable']);
+    }
+
+    public function testHiddenTransportIsReportedAsUnavailable(): void
+    {
+        $this->addTestingProductToNewCart(1);
+        $referenceName = TransportDataFixture::TRANSPORT_PPL;
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference($referenceName);
+        $this->addTransportToExistingCart($transport);
+        $this->hideTransport($referenceName);
+        $getCartQuery = '{
+            cart {
                 modifications {
                     transportModifications {
                         transportUnavailable
@@ -433,19 +433,9 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addTestingProductToNewCart(1);
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
-        $inputTransportPrice = $transport->getPrice(1)->getPrice()->getAmount();
+        $this->addTransportToExistingCart($transport);
         $getCartQuery = '{
-            cart(cartInput: {
-                    transport: {
-                        uuid: "' . $transport->getUuid() . '"
-                        price: {
-                            priceWithVat: "' . $inputTransportPrice . '"
-                            priceWithoutVat: "' . $inputTransportPrice . '"
-                            vatAmount: "0"
-                        }
-                    }
-                }
-            ) {
+            cart {
                 modifications {
                     transportModifications {
                         transportWeightLimitExceeded
@@ -457,8 +447,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transportModifications = $this->getTransportModifications($getCartQuery);
         self::assertFalse($transportModifications['transportWeightLimitExceeded']);
 
-        $this->addTestingProductToExistingCart(1);
-        $transportModifications = $this->getTransportModifications($getCartQuery);
+        $transportModifications = $this->addTestingProductToExistingCartAndGetTransportModifications(1);
         self::assertTrue($transportModifications['transportWeightLimitExceeded']);
     }
 
@@ -598,29 +587,35 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
     /**
      * @param int $productQuantity
+     * @return array
      */
-    private function addTestingProductToExistingCart(int $productQuantity): void
+    private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity): array
     {
         $mutation = 'mutation {
             AddToCart(input: {
                 productUuid: "' . $this->testingProduct->getUuid() . '"
                 quantity: ' . $productQuantity . '
             }) {
-                uuid
+                modifications {
+                    transportModifications {
+                        transportWeightLimitExceeded
+                    }
+                }
             }
         }';
 
-        $this->getResponseContentForQuery($mutation);
+        return $this->getTransportModifications($mutation, 'AddToCart');
     }
 
     /**
-     * @param string $getCartQuery
+     * @param string $queryOrMutation
+     * @param string $graphQlType
      * @return array
      */
-    private function getTransportModifications(string $getCartQuery): array
+    private function getTransportModifications(string $queryOrMutation, string $graphQlType = 'cart'): array
     {
-        $response = $this->getResponseContentForQuery($getCartQuery);
-        $data = $this->getResponseDataForGraphQlType($response, 'cart');
+        $response = $this->getResponseContentForQuery($queryOrMutation);
+        $data = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         return $data['modifications']['transportModifications'];
     }
@@ -635,5 +630,54 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
         return $data['modifications']['paymentModifications'];
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     */
+    private function addTransportToExistingCart(Transport $transport, ?string $pickupPlaceIdentifier = null): void
+    {
+        $pickupPlaceIdentifierLine = '';
+        if ($pickupPlaceIdentifier !== null) {
+            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
+        }
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    transportUuid: "' . $transport->getUuid() . '"
+                    ' . $pickupPlaceIdentifierLine . '
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    /**
+     * @param string $transportReferenceName
+     */
+    private function changeTransportPrice(string $transportReferenceName): void
+    {
+        // refresh transport, so we're able to work with it as with an entity
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference($transportReferenceName);
+        $transportData = $this->transportDataFactory->createFromTransport($transport);
+        $transportData->pricesIndexedByDomainId[1] = $transport->getPrice(1)->getPrice()->add(Money::create(10));
+        $this->transportFacade->edit($transport, $transportData);
+    }
+
+    /**
+     * @param string $transportReferenceName
+     */
+    private function hideTransport(string $transportReferenceName): void
+    {
+        // refresh transport, so we're able to work with it as with an entity
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference($transportReferenceName);
+        $transportData = $this->transportDataFactory->createFromTransport($transport);
+        $transportData->hidden = true;
+        $this->transportFacade->edit($transport, $transportData);
     }
 }

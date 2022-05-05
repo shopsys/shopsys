@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\FrontendApi\Model\Payment\PaymentInputData;
-use App\FrontendApi\Model\Transport\TransportInputData;
+use App\FrontendApi\Model\Transport\Exception\TransportPriceChangedException;
+use App\FrontendApi\Model\Transport\Exception\TransportWeightLimitExceededException;
+use App\FrontendApi\Model\Transport\TransportValidationFacade;
 use App\Model\Cart\Cart;
-use App\Model\Order\Preview\OrderPreview;
+use App\Model\Cart\Transport\CartTransportFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
-use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
 use Shopsys\Cdn\Component\Domain\Domain;
@@ -22,12 +23,15 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
 class TransportAndPaymentWatcherFacade
 {
+    /**
+     * @var \App\FrontendApi\Model\Transport\TransportValidationFacade
+     */
+    private TransportValidationFacade $transportValidationFacade;
+
     /**
      * @var \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
@@ -37,11 +41,6 @@ class TransportAndPaymentWatcherFacade
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
      */
     private PaymentPriceCalculation $paymentPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    private TransportPriceCalculation $transportPriceCalculation;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
@@ -74,62 +73,60 @@ class TransportAndPaymentWatcherFacade
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade
      */
     private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
 
     /**
+     * @var \App\Model\Cart\Transport\CartTransportFacade
+     */
+    private CartTransportFacade $cartTransportFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
+     * @param \App\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
+     * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
      */
     public function __construct(
         PaymentPriceCalculation $paymentPriceCalculation,
-        TransportPriceCalculation $transportPriceCalculation,
         CurrencyFacade $currencyFacade,
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
-        StoreFacade $storeFacade,
-        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
+        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        CartTransportFacade $cartTransportFacade,
+        TransportValidationFacade $transportValidationFacade
     ) {
         $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->transportPriceCalculation = $transportPriceCalculation;
         $this->currencyFacade = $currencyFacade;
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->storeFacade = $storeFacade;
         $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
+        $this->cartTransportFacade = $cartTransportFacade;
+        $this->transportValidationFacade = $transportValidationFacade;
     }
 
     /**
      * @param \App\FrontendApi\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
      * @param \App\Model\Cart\Cart $cart
-     * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
      * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
         Cart $cart,
-        ?TransportInputData $transportInputData = null,
         ?PaymentInputData $paymentInputData = null
     ): CartWithModificationsResult {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
@@ -138,18 +135,8 @@ class TransportAndPaymentWatcherFacade
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $transport = null;
+        $transport = $cart->getTransport();
         $payment = null;
-
-        if ($transportInputData !== null) {
-            $transport = $this->getTransportFromInputData($transportInputData);
-
-            if ($transport !== null && !$transport->isPacketery()) {
-                $this->checkPersonalPickupStoreAvailability($transportInputData);
-            }
-
-            $this->cartWithModificationsResult->setSelectedPickupPlaceIdentifier($transportInputData->getPickupPlaceIdentifier());
-        }
 
         if ($paymentInputData) {
             $payment = $this->getPaymentFromInputData($paymentInputData);
@@ -178,34 +165,15 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
-        $this->cartWithModificationsResult->setTransport($transport);
         $this->cartWithModificationsResult->setPayment($payment);
 
-        $this->checkTransport($transport, $transportInputData, $orderPreview, $currency, $cart);
+        $this->checkTransport($cart);
 
         if ($payment !== null) {
             $this->checkPaymentPrice($payment, $paymentInputData, $orderPreview->getProductsPrice(), $currency);
         }
 
         return $this->cartWithModificationsResult;
-    }
-
-    /**
-     * @param \App\FrontendApi\Model\Transport\TransportInputData $transportInputData
-     * @return \App\Model\Transport\Transport|null
-     */
-    private function getTransportFromInputData(TransportInputData $transportInputData): ?Transport
-    {
-        try {
-            return $this->transportFacade->getEnabledOnDomainByUuid(
-                $transportInputData->getUuid(),
-                $this->domain->getId()
-            );
-        } catch (TransportNotFoundException $exception) {
-            $this->cartWithModificationsResult->setTransportIsUnavailable();
-        }
-
-        return null;
     }
 
     /**
@@ -228,25 +196,16 @@ class TransportAndPaymentWatcherFacade
 
     /**
      * @param \App\Model\Transport\Transport $transport
-     * @param \App\FrontendApi\Model\Transport\TransportInputData $transportInputData
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function checkTransportPrice(Transport $transport, TransportInputData $transportInputData, Price $productsPrice, Currency $currency): void
+    private function checkTransportPrice(Transport $transport, Cart $cart): void
     {
-        $domainId = $this->domain->getId();
-        $selectedTransportPrice = $transportInputData->getPrice();
-
-        $calculatedTransportPrice = $this->transportPriceCalculation->calculatePrice(
-            $transport,
-            $currency,
-            $productsPrice,
-            $domainId
-        );
-
-        $this->cartWithModificationsResult->setTransportPriceChanged(
-            !$calculatedTransportPrice->getPriceWithVat()->equals($selectedTransportPrice->getPriceWithVat())
-        );
+        try {
+            $this->transportValidationFacade->checkTransportPrice($transport, $cart);
+        } catch (TransportPriceChangedException $exception) {
+            $this->cartWithModificationsResult->setTransportPriceChanged(true);
+            $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
+        }
     }
 
     /**
@@ -274,56 +233,62 @@ class TransportAndPaymentWatcherFacade
 
     /**
      * @param \App\Model\Transport\Transport $transport
-     * @param int $cartTotalWeight
-     * @return bool
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function checkTransportWeightLimit(Transport $transport, int $cartTotalWeight): bool
+    private function checkTransportWeightLimit(Transport $transport, Cart $cart): void
     {
-        $transportWeightLimitExceeded = $transport->getMaxWeight() !== null && $transport->getMaxWeight() < $cartTotalWeight;
-        $this->cartWithModificationsResult->setTransportWeightLimitExceeded($transportWeightLimitExceeded);
-
-        return $transportWeightLimitExceeded;
+        try {
+            $this->transportValidationFacade->checkTransportWeightLimit($transport, $cart);
+        } catch (TransportWeightLimitExceededException $exception) {
+            $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
+            $this->cartTransportFacade->unsetCartTransport($cart);
+        }
     }
 
     /**
-     * @param \App\FrontendApi\Model\Transport\TransportInputData $transportInputData
+     * @param \App\Model\Transport\Transport $transport
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function checkPersonalPickupStoreAvailability(TransportInputData $transportInputData): void
+    private function checkPersonalPickupStoreAvailability(Transport $transport, Cart $cart): void
     {
-        if ($transportInputData->getPickupPlaceIdentifier() === null) {
+        try {
+            $this->transportValidationFacade->checkPersonalPickupStoreAvailability($transport, $cart->getPickupPlaceIdentifier());
+        } catch (StoreByUuidNotFoundException $e) {
+            $this->cartWithModificationsResult->setPersonalPickupStoreUnavailable(true);
+            $this->cartTransportFacade->unsetPickupPlaceIdentifierFromCart($cart);
+        }
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function checkTransport(Cart $cart): void
+    {
+        $transport = $cart->getTransport();
+        if ($transport === null) {
+            if ($cart->getTransportWatchedPrice() !== null) {
+                // this might happen when transport is set to null in cart thanks to "onDelete=SET NULL" ORM setting
+                $this->setTransportInCartUnavailable($cart);
+            }
             return;
         }
 
-        try {
-            $this->storeFacade->getByUuidEnabledOnDomain(
-                $transportInputData->getPickupPlaceIdentifier(),
-                $this->domain->getId()
-            );
-        } catch (StoreByUuidNotFoundException $e) {
-            $this->cartWithModificationsResult->setPersonalPickupStoreUnavailable(true);
+        if ($this->transportFacade->isTransportVisibleAndEnabledOnCurrentDomain($transport) === false) {
+            $this->setTransportInCartUnavailable($cart);
+
+            return;
         }
+        $this->checkTransportPrice($transport, $cart);
+        $this->checkTransportWeightLimit($transport, $cart);
+        $this->checkPersonalPickupStoreAvailability($transport, $cart);
     }
 
     /**
-     * @param \App\Model\Transport\Transport|null $transport
-     * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \App\Model\Cart\Cart $cart
      */
-    private function checkTransport(
-        ?Transport $transport,
-        ?TransportInputData $transportInputData,
-        OrderPreview $orderPreview,
-        Currency $currency,
-        Cart $cart
-    ): void {
-        if ($transport !== null) {
-            $this->checkTransportPrice($transport, $transportInputData, $orderPreview->getProductsPrice(), $currency);
-            $transportWeightLimitExceeded = $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());
-            if ($transportWeightLimitExceeded) {
-                $this->cartWithModificationsResult->setTransport(null);
-            }
-        }
+    private function setTransportInCartUnavailable(Cart $cart): void
+    {
+        $this->cartWithModificationsResult->setTransportIsUnavailable();
+        $this->cartTransportFacade->unsetCartTransport($cart);
     }
 }
