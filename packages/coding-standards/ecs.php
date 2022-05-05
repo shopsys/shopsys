@@ -105,6 +105,7 @@ use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\RedundantMarkDownTrailingSpacesFixer;
+use Shopsys\CodingStandards\CsFixer\UniqIdPrefixAndEntropyFixer;
 use Shopsys\CodingStandards\Finder\FileFinder;
 use Shopsys\CodingStandards\Helper\FqnNameResolver;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
@@ -316,6 +317,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->property('maxLength', 60);
     $services->set(PropertyPerClassLimitSniff::class)
         ->property('maxCount', 30);
+
+    $services->set(UniqIdPrefixAndEntropyFixer::class);
 
     $parameters->set(
         Option::SKIP,

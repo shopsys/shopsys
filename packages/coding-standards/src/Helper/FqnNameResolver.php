@@ -29,6 +29,7 @@ final class FqnNameResolver
      */
     public function resolve(Tokens $tokens, string $className): string
     {
+        uniqid();
         if ($className === '') {
             return '';
         }
