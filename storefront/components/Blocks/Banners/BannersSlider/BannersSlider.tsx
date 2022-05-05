@@ -82,14 +82,24 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     }, [currentSlide, props.sliderItems.length, slider]);
 
     useEffect(() => {
-        if (sliderBoxRef.current !== null) {
-            sliderBoxRef.current.addEventListener('mouseover', () => {
-                setPause(true);
-            });
-            sliderBoxRef.current.addEventListener('mouseout', () => {
-                setPause(false);
-            });
+        const setPauseTrue = () => {
+            setPause(true);
+        };
+        const setPauseFalse = () => {
+            setPause(false);
+        };
+
+        const sliderBox = sliderBoxRef.current;
+
+        if (sliderBox !== null) {
+            sliderBox.addEventListener('mouseover', setPauseTrue);
+            sliderBox.addEventListener('mouseout', setPauseFalse);
         }
+
+        return () => {
+            sliderBox?.removeEventListener('mouseover', setPauseTrue);
+            sliderBox?.removeEventListener('mouseout', setPauseFalse);
+        };
     }, [sliderRef]);
 
     useEffect(() => {

@@ -28,18 +28,20 @@ const Popup: FC<PopupProps> = (props) => {
         if (event.key === 'Escape') {
             props.onCloseCallback();
         }
-    });
+    }).current;
 
     useEffect(() => {
         if (!canUseDom()) {
-            return;
+            return undefined;
         }
 
         if (props.isVisible) {
-            document.addEventListener('keydown', onEscapeButtonPressHandler.current);
+            document.addEventListener('keydown', onEscapeButtonPressHandler);
         } else {
-            document.removeEventListener('keydown', onEscapeButtonPressHandler.current);
+            document.removeEventListener('keydown', onEscapeButtonPressHandler);
         }
+
+        return () => document.removeEventListener('keydown', onEscapeButtonPressHandler);
     }, [onEscapeButtonPressHandler, props.isVisible]);
 
     const onClickCloseActionHandler: MouseEventHandler<HTMLElement> = () => {

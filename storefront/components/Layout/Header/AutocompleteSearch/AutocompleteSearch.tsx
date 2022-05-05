@@ -57,15 +57,26 @@ const AutocompleteSearch: FC = () => {
         }
     }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
 
-    useEffect(() => {
+    useEffectOnce(() => {
         if (!canUseDom()) {
-            return;
+            return undefined;
         }
 
-        document.addEventListener('click', onDocumentClickHandler);
-    }, []);
+        const onDocumentClickHandler: EventListener = (event) => {
+            if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
+                setAutocompleteSearchFocus(false);
+                return;
+            }
 
-    useEffectOnce(() => {
+            if (autocompleteSearchInRef.current.contains(event.target)) {
+                setAutocompleteSearchFocus(true);
+            } else {
+                setAutocompleteSearchFocus(false);
+            }
+        };
+
+        document.addEventListener('click', onDocumentClickHandler);
+
         return () => document.removeEventListener('click', onDocumentClickHandler);
     });
 
@@ -75,19 +86,6 @@ const AutocompleteSearch: FC = () => {
         () => setIsDesktop(true),
         () => setIsDesktop(false),
     );
-
-    const onDocumentClickHandler: EventListener = (event) => {
-        if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
-            setAutocompleteSearchFocus(false);
-            return;
-        }
-
-        if (autocompleteSearchInRef.current.contains(event.target)) {
-            setAutocompleteSearchFocus(true);
-        } else {
-            setAutocompleteSearchFocus(false);
-        }
-    };
 
     const onAutocompleteSearchSubmitHandler: SubmitHandler<AutocompleteSearchFormType> = (_data, event) => {
         event?.preventDefault();
