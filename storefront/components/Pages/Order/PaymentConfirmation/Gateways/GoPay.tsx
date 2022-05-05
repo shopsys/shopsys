@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react';
 import { PayOrderMutationApi, usePayOrderMutationApi } from 'graphql/generated';
+import { canUseDom } from 'helpers/canUseDom';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -16,6 +17,10 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
     };
 
     const goPayInit = (goPayCreatePaymentSetup: PayOrderMutationApi['PayOrder']['goPayCreatePaymentSetup']): void => {
+        if (!canUseDom()) {
+            return;
+        }
+
         const existingScript = document.getElementById('goPayEmbedJs');
 
         if (existingScript === null && goPayCreatePaymentSetup !== null) {

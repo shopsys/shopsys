@@ -7,6 +7,7 @@ import {
     PopupStyled,
 } from './Popup.style';
 import { AnyStyledComponent } from 'styled-components';
+import { canUseDom } from 'helpers/canUseDom';
 import Overlay from 'components/Basic/Overlay';
 import Portal from 'components/Basic/Portal';
 
@@ -30,6 +31,10 @@ const Popup: FC<PopupProps> = (props) => {
     });
 
     useEffect(() => {
+        if (!canUseDom()) {
+            return;
+        }
+
         if (props.isVisible) {
             document.addEventListener('keydown', onEscapeButtonPressHandler.current);
         } else {

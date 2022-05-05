@@ -14,6 +14,7 @@ import {
     SortingBarTitleStyled,
 } from './SortingBar.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { canUseDom } from 'helpers/canUseDom';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -46,12 +47,14 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
     ];
 
     useEffectOnce(() => {
-        if (typeof window !== 'undefined') {
-            updateUrlWithCurrentSort(selectedSort);
-        }
+        updateUrlWithCurrentSort(selectedSort);
     });
 
     const updateUrlWithCurrentSort = (sort: string) => {
+        if (!canUseDom()) {
+            return;
+        }
+
         const queryParams = new URLSearchParams(window.location.search);
         if (sort === initialState.sort) {
             queryParams.delete('sort');

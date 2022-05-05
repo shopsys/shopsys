@@ -1,4 +1,5 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
+import { canUseDom } from 'helpers/canUseDom';
 import nookies from 'nookies';
 import { PickupPlaceType } from 'types/pickupPlace';
 
@@ -7,13 +8,13 @@ import { PickupPlaceType } from 'types/pickupPlace';
  */
 
 export const packeteryClose = (): void => {
-    if (typeof window !== 'undefined') {
+    if (canUseDom()) {
         window.Packeta.Widget.close();
     }
 };
 
 export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inElement) => {
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
+    if (!canUseDom()) {
         return;
     }
 

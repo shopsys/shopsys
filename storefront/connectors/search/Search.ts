@@ -1,6 +1,7 @@
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { FilterOptionsStateType } from 'types/productFilter';
+import { isServer } from 'helpers/isServer';
 import { mapListedBrandsApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
@@ -37,7 +38,7 @@ export const useSearch = (
         }
     }, [currencyCode, result.data, result.stale]);
 
-    if (typeof window === 'undefined' && result.data !== undefined) {
+    if (isServer() && result.data !== undefined) {
         return mapSearchResult(result.data, currencyCode);
     }
 

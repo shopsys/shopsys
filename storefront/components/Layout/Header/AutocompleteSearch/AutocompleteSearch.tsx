@@ -13,6 +13,7 @@ import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './form
 import Autocomplete from './Autocomplete';
 import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
+import { canUseDom } from 'helpers/canUseDom';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Icon from 'components/Basic/Icon';
@@ -57,7 +58,7 @@ const AutocompleteSearch: FC = () => {
     }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
 
     useEffect(() => {
-        if (typeof document === 'undefined') {
+        if (!canUseDom()) {
             return;
         }
 
