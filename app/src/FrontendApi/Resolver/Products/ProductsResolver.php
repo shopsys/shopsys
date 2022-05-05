@@ -17,6 +17,7 @@ use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
@@ -118,7 +119,7 @@ class ProductsResolver extends BaseProductsResolver
         );
 
         $productFilterData->flags[] = $flag;
-        $batchLoadDataId = uniqid();
+        $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
@@ -201,7 +202,7 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $brand
         );
-        $batchLoadDataId = uniqid();
+        $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForBrand(
             $brand,
@@ -252,7 +253,7 @@ class ProductsResolver extends BaseProductsResolver
         ?string $orderingMode = null
     ): Promise {
         $this->setDefaultFirstOffsetIfNecessary($argument);
-        $batchLoadDataId = uniqid();
+        $batchLoadDataId = Uuid::uuid4()->toString();
 
         return $this->productConnectionFactory->createConnectionPromiseForCategory(
             $category,
