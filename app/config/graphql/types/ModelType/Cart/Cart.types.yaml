@@ -34,4 +34,3 @@ Cart:
             paymentGoPayBankSwift:
                 type: "String"
                 description: "Selected bank swift code of goPay payment bank transfer"
-
