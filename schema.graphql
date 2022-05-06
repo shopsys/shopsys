@@ -25,36 +25,9 @@ input AddToCartInput {
   isAbsoluteQuantity: Boolean = false
 }
 
-type AddToCartResult implements CartInterface {
-  """UUID of the cart, null for authenticated user"""
-  uuid: Uuid
-
-  """All items in the cart"""
-  items: [CartItem!]!
-
-  """Selected transport if transport provided"""
-  transport: Transport
-
-  """Selected payment if payment provided"""
-  payment: Payment
-
-  """Selected pickup place identifier if provided"""
-  selectedPickupPlaceIdentifier: String
-
-  """Applied promo code if provided"""
-  promoCode: String
-  modifications: CartModificationsResult!
-  totalPrice: Price!
-  totalDiscountPrice: Price!
-
-  """
-  Remaining amount for free transport and payment; null = transport cannot be free
-  """
-  remainingAmountWithVatForFreeTransport: Money
-
-  """Selected bank swift code of goPay payment bank transfer"""
-  paymentGoPayBankSwift: String
+type AddToCartResult {
   addProductResult: AddProductResult!
+  cart: Cart!
 }
 
 """Represents a singe additional image size"""
@@ -443,6 +416,7 @@ interface CartInterface {
   totalPrice: Price!
   totalDiscountPrice: Price!
   remainingAmountWithVatForFreeTransport: Money
+  paymentGoPayBankSwift: String
 }
 
 """Represent one item in the cart"""
@@ -628,9 +602,7 @@ input ChangePersonalDataInput {
 }
 
 input ChangeTransportInCartInput {
-  """
-  Cart identifier, new cart will be created if not provided and customer is not logged in
-  """
+  """Cart identifier or null if customer is logged in"""
   cartUuid: Uuid = null
 
   """

@@ -9,11 +9,12 @@ import List from 'components/Pages/Cart/List';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Cart: FC<ServerSidePropsType> = () => {
-    const { cart } = useShopsysSelector((state) => state.cart);
+    const { cart } = useCurrentCart();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
     const t = useTypedTranslationFunction();

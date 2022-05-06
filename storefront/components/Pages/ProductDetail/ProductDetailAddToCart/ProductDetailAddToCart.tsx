@@ -25,7 +25,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cart.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
     const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.product.uuid);
 
@@ -35,12 +35,12 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
         }
 
         changeCartItemQuantity({
-            cartUuid,
-            isAbsoluteQuantity: false,
-            productUuid: props.product.uuid,
-            quantity: spinboxRef.current.valueAsNumber,
-            transport,
-            payment,
+            input: {
+                cartUuid,
+                isAbsoluteQuantity: false,
+                productUuid: props.product.uuid,
+                quantity: spinboxRef.current.valueAsNumber,
+            },
         });
         spinboxRef.current!.valueAsNumber = 1;
     };

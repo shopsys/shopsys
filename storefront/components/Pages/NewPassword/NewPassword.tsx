@@ -41,7 +41,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const [[, login]] = useAuth();
     const router = useRouter();
-    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
+    const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
 
     useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error, formMeta.fields);
     useHandleFormSuccessfulSubmit(

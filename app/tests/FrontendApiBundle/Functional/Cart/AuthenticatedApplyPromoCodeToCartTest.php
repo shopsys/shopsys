@@ -76,7 +76,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $cartResponseData = $this->createUserCartWithHelloKittyProduct();
 
-        $totalPriceWithoutVat = $cartResponseData['totalPrice']['priceWithoutVat'];
+        $totalPriceWithoutVat = $cartResponseData['cart']['totalPrice']['priceWithoutVat'];
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -354,16 +354,18 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 2
             }) {
-                uuid
-                totalPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                items {
+                cart { 
                     uuid
-                    product {
-                        name
+                    totalPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    items {
+                        uuid
+                        product {
+                            name
+                        }
                     }
                 }
             }

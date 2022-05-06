@@ -11,18 +11,11 @@ type RemoveCartItemButtonProps = {
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const testIdentifier = 'pages-cart-removecartitembutton';
 
-    const {
-        isCartEmpty,
-        cartInput: { cartUuid, transport, payment },
-    } = useShopsysSelector((state) => state.cart);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const [, removeItemFromCart] = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        if (isCartEmpty) {
-            return;
-        }
-
-        removeItemFromCart({ cartItemUuid: props.cartItemUuid, cartUuid, transport, payment });
+        removeItemFromCart({ input: { cartItemUuid: props.cartItemUuid, cartUuid } });
     };
 
     return (

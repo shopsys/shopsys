@@ -59,13 +59,15 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $addedProductQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
 
-        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['uuid']);
+        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
         $cart = $this->cartFacade->findCartByCartIdentifier($newlyCreatedCart['uuid']);
         self::assertNotNull($cart);
@@ -89,13 +91,15 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $secondProduct->getUuid() . '",
                 quantity: ' . $secondProductQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
 
-        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['uuid']);
+        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
         $cart = $this->cartFacade->findCartByCartIdentifier($newlyCreatedCart['uuid']);
         self::assertNotNull($cart);
@@ -124,13 +128,15 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 quantity: ' . $desiredProductQuantity . '
                 isAbsoluteQuantity: true
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
 
-        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['uuid']);
+        self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
         $cart = $this->cartFacade->findCartByCartIdentifier($newlyCreatedCart['uuid']);
         self::assertNotNull($cart);
@@ -151,7 +157,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $invalidQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
@@ -203,7 +211,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $unknownUuid . '",
                 quantity: 10
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
@@ -227,7 +237,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: 10
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
@@ -251,11 +263,13 @@ class AnonymousAddToCartTest extends GraphQlTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $productQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        return $response['data']['AddToCart'];
+        return $response['data']['AddToCart']['cart'];
     }
 }

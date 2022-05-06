@@ -21,6 +21,7 @@ import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import ListItem from './ListItem';
 import NextLink from 'next/link';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
@@ -31,7 +32,7 @@ const Cart: FC = () => {
 
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
+    const { cart, isCartEmpty } = useCurrentCart();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
@@ -48,18 +49,13 @@ const Cart: FC = () => {
                     <CartPiecesStyled>
                         <CartIconStyled iconType="icon" icon="Cart" />
                         <CartCountStyled data-testid={testIdentifier + 'itemcount'}>
-                            {cart !== null && !isCartEmpty ? cart.items.length : 0}
+                            {cart?.items.length ?? 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled data-testid={testIdentifier + 'totalprice'}>
-                        {formatPrice(
-                            cart?.totalItemsPrice.priceWithVat === undefined ? 0 : cart.totalItemsPrice.priceWithVat,
-                            domainConfig.currencyCode,
-                            t,
-                            {
-                                explicitZero: true,
-                            },
-                        )}
+                        {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, domainConfig.currencyCode, t, {
+                            explicitZero: true,
+                        })}
                     </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
@@ -68,10 +64,10 @@ const Cart: FC = () => {
                 isHovered={isCartHovered}
                 data-testid={testIdentifier + 'detail'}
             >
-                {cart !== null && !isCartEmpty ? (
+                {!isCartEmpty ? (
                     <>
                         <CartDetailList>
-                            {cart.items.map((cartItem) => (
+                            {cart?.items.map((cartItem) => (
                                 <ListItem key={cartItem.uuid} cartItem={cartItem} />
                             ))}
                         </CartDetailList>
@@ -97,7 +93,7 @@ const Cart: FC = () => {
                 <NextLink href={cartUrl} passHref>
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled>{cart !== null && !isCartEmpty ? cart.items.length : 0}</CartCountStyled>
+                        <CartCountStyled>{cart?.items.length ?? 0}</CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>
             </CartButtonMobileStyled>

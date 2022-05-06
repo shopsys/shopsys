@@ -27,7 +27,7 @@ export const useHandleAddToCartMessage = (
             return;
         }
 
-        const cartItem = result.data.AddToCart.items.find((cartItem) => cartItem.product.uuid === productUuid);
+        const cartItem = result.data.AddToCart.cart.items.find((cartItem) => cartItem.product.uuid === productUuid);
 
         if (cartItem === undefined) {
             return;

@@ -186,7 +186,9 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: ' . $productQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 

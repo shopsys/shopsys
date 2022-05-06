@@ -20,7 +20,6 @@ export type PaymentType = {
     description: string;
     instruction: string;
     goPayPaymentMethod: GoPayPaymentMethodType | undefined;
-    goPayBankSwift: string | null;
     price: PriceType;
     image: ImageType | null;
     type: string;

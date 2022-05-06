@@ -208,10 +208,12 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 productUuid: "' . $product1->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
@@ -221,7 +223,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 quantity: 2
                 cartUuid: "' . $cartUuid . '"
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
         $this->getResponseContentForQuery($mutation);

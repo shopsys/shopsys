@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\AddProductResult;
-use App\Model\Payment\Payment;
-use App\Model\Transport\Transport;
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class AddToCartResult
 {
@@ -33,19 +29,11 @@ class AddToCartResult
     }
 
     /**
-     * @return string|null
+     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function getUuid(): ?string
+    public function getCart(): CartWithModificationsResult
     {
-        return $this->cartWithModifications->getUuid();
-    }
-
-    /**
-     * @return \App\Model\Cart\Item\CartItem[]
-     */
-    public function getItems(): array
-    {
-        return $this->cartWithModifications->getItems();
+        return $this->cartWithModifications;
     }
 
     /**
@@ -54,69 +42,5 @@ class AddToCartResult
     public function getAddProductResult(): AddProductResult
     {
         return $this->addProductResult;
-    }
-
-    /**
-     * @return array<string, array<int, \App\Model\Cart\Item\CartItem>>
-     */
-    public function getModifications(): array
-    {
-        return $this->cartWithModifications->getModifications();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getTotalPrice(): Price
-    {
-        return $this->cartWithModifications->getTotalPrice();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getRemainingAmountWithVatForFreeTransport(): ?Money
-    {
-        return $this->cartWithModifications->getRemainingAmountWithVatForFreeTransport();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getTotalDiscountPrice(): Price
-    {
-        return $this->cartWithModifications->getTotalDiscountPrice();
-    }
-
-    /**
-     * @return \App\Model\Transport\Transport|null
-     */
-    public function getTransport(): ?Transport
-    {
-        return $this->cartWithModifications->getTransport();
-    }
-
-    /**
-     * @return \App\Model\Payment\Payment|null
-     */
-    public function getPayment(): ?Payment
-    {
-        return $this->cartWithModifications->getPayment();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCode(): ?string
-    {
-        return $this->cartWithModifications->getPromoCode();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSelectedPickupPlaceIdentifier(): ?string
-    {
-        return $this->cartWithModifications->getSelectedPickupPlaceIdentifier();
     }
 }

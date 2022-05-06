@@ -31,9 +31,9 @@ const Item: FC<ItemProps> = (props) => {
     const itemCatnum = props.item.product.catalogNumber;
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const spinboxRef = useRef<HTMLInputElement | null>(null);
+    const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cart.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.user);
     const [, changeCartItemQuantity] = useAddToCart();
 
     const onChangeValueHandler = () => {
@@ -48,12 +48,12 @@ const Item: FC<ItemProps> = (props) => {
     const setUpdateTimeout = () => {
         return setTimeout(() => {
             changeCartItemQuantity({
-                productUuid: props.item.product.uuid,
-                cartUuid: cartUuid!,
-                quantity: spinboxRef.current!.valueAsNumber,
-                isAbsoluteQuantity: true,
-                transport,
-                payment,
+                input: {
+                    productUuid: props.item.product.uuid,
+                    cartUuid: cartUuid!,
+                    quantity: spinboxRef.current!.valueAsNumber,
+                    isAbsoluteQuantity: true,
+                },
             });
         }, 500);
     };

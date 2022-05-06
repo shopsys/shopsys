@@ -178,12 +178,14 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 productUuid: "' . $productInCart->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($addToCartMutation);
-        $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['uuid'];
+        $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {

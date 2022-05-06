@@ -10,19 +10,18 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
-
 import { CSSTransition } from 'react-transition-group';
 import Form from 'components/Forms/Form';
 import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
 import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
-    const { promoCode } = useShopsysSelector((state) => state.cart);
+    const { promoCode } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);

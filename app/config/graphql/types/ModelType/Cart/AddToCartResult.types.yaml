@@ -1,8 +1,8 @@
 AddToCartResult:
     type: object
-    inherits:
-        - Cart
     config:
         fields:
             addProductResult:
                 type: "AddProductResult!"
+            cart:
+                type: "Cart!"

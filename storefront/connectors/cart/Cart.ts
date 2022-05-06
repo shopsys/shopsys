@@ -2,108 +2,132 @@ import {
     AddToCartMutationApi,
     AddToCartMutationVariablesApi,
     CartFragmentApi,
-    CartQueryApi,
-    CartQueryVariablesApi,
-    RemoveFromCartInputApi,
     RemoveFromCartMutationApi,
+    RemoveFromCartMutationVariablesApi,
     useAddToCartMutationApi,
     useCartQueryApi,
     useRemoveFromCartMutationApi,
 } from 'graphql/generated';
-import { CartInput, CartType } from 'types/cart';
-import { mapPriceData, mapPriceInputData, mapProductPriceData } from 'connectors/price/Prices';
-import { PaymentInputType, PaymentType } from 'types/payment';
-import { TransportInputType, TransportType } from 'types/transport';
-import { UseMutationResponse, UseQueryResponse } from 'urql';
+import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { CartType, CurrentCartType } from 'types/cart';
+import { CombinedError, UseMutationResponse } from 'urql';
+import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getFirstImage } from 'connectors/image/Image';
-import { PickupPlaceType } from 'types/pickupPlace';
+import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
+import { mapPayment } from 'connectors/payments/Payment';
+import { mapTransport } from 'connectors/transports/Transports';
 import { PriceType } from 'types/price';
-import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
-import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
-import { useShopsysSelector } from 'redux/main';
+import { showErrorMessage } from 'components/Helpers/Toasts';
+import { Translate } from 'next-translate';
+import { useEffect } from 'react';
+import { userActions } from 'redux/slices/user';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-export const mapTransportToTransportInput = (
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
-): TransportInputType => {
-    return {
-        uuid: transport.uuid,
-        price: mapPriceInputData(transport.price),
-        pickupPlaceIdentifier: pickupPlace === null ? null : pickupPlace.identifier,
-    };
-};
+export const useCurrentCart = (): CurrentCartType => {
+    const { isUserLoggedIn, cartUuid } = useShopsysSelector((state) => state.user);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const t = useTypedTranslationFunction();
 
-export const mapPaymentToPaymentInput = (payment: PaymentType, goPayBankSwift: string | null): PaymentInputType => {
-    return {
-        uuid: payment.uuid,
-        price: {
-            priceWithVat: payment.price.priceWithVat.toString(),
-            priceWithoutVat: payment.price.priceWithoutVat.toString(),
-            vatAmount: payment.price.vatAmount.toString(),
-        },
-        goPayBankSwift,
-    };
-};
-
-export const useLoadCart = (
-    cartUuid: CartInput['cartUuid'],
-    transport: CartInput['transport'],
-    payment: CartInput['payment'],
-    goPayBankSwift: string | null,
-): UseQueryResponse<CartQueryApi> => {
-    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
-    const [result, refresh] = useCartQueryApi({
-        variables: { cartUuid, transport, payment } as CartQueryVariablesApi,
+    const [result] = useCartQueryApi({
+        variables: { cartUuid },
         pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: 'network-only',
     });
-    const t = useTypedTranslationFunction();
 
-    useHandleCartErrors(result.error, t('Could not load your cart'));
-    useHandleCartUpdate(result.data?.cart, goPayBankSwift);
+    if (result.error !== undefined) {
+        // EXTEND CART ERRORS HERE
+        handleCartError(result.error, t);
 
-    return [result, refresh];
+        return getEmptyCart();
+    }
+
+    if (!result.data?.cart) {
+        // EXTEND EMPTY CART HERE
+        return getEmptyCart();
+    }
+
+    // EXTEND CART UPDATE HERE
+    const mappedCart = mapCart(result.data.cart, currencyCode);
+
+    const mappedTransport =
+        result.data.cart.transport === null ? null : mapTransport(result.data.cart.transport, currencyCode);
+    return {
+        cart: mappedCart,
+        isCartEmpty: mappedCart.items.length === 0,
+        transport: mappedTransport,
+        pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
+        payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
+        paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
+        promoCode: result.data.cart.promoCode,
+    };
+};
+
+const getEmptyCart = (): CurrentCartType => ({
+    cart: null,
+    isCartEmpty: true,
+    transport: null,
+    pickupPlace: null,
+    payment: null,
+    paymentGoPayBankSwift: null,
+    promoCode: null,
+});
+
+const handleCartError = (error: CombinedError, t: Translate) => {
+    const { userError, applicationError } = getUserFriendlyErrors(error, t);
+
+    switch (applicationError?.type) {
+        case ApplicationErrors.CART_NOT_FOUND:
+            break;
+        case ApplicationErrors.DEFAULT:
+            showErrorMessage(applicationError.message);
+            break;
+    }
+
+    if (userError?.validation !== undefined) {
+        for (const invalidFieldName in userError.validation) {
+            showErrorMessage(userError.validation[invalidFieldName].message);
+        }
+    }
 };
 
 export const useAddToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
-    const { cartInput } = useShopsysSelector((state) => state.cart);
     const [addToCartResult, addToCart] = useAddToCartMutationApi();
-    const t = useTypedTranslationFunction();
+    const dispatch = useShopsysDispatch();
 
-    useHandleCartErrors(addToCartResult.error, t('Could not add the product to cart'));
-    useHandleCartUpdate(addToCartResult.data?.AddToCart, cartInput.payment ? cartInput.payment.goPayBankSwift : null);
+    useEffect(() => {
+        if (addToCartResult.data?.AddToCart.cart.uuid !== undefined) {
+            dispatch(userActions.setCartUuid(addToCartResult.data.AddToCart.cart.uuid));
+        }
+    }, [addToCartResult.data?.AddToCart.cart.uuid]);
 
     return [addToCartResult, addToCart];
 };
 
-export const useRemoveFromCart = (): UseMutationResponse<RemoveFromCartMutationApi, RemoveFromCartInputApi> => {
-    const { cartInput } = useShopsysSelector((state) => state.cart);
+export const useRemoveFromCart = (): UseMutationResponse<
+    RemoveFromCartMutationApi,
+    RemoveFromCartMutationVariablesApi
+> => {
     const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
-    const t = useTypedTranslationFunction();
+    const dispatch = useShopsysDispatch();
 
-    useHandleCartErrors(removeItemFromCartResult.error, t('Could not remove the product from cart'));
-    useHandleCartUpdate(
-        removeItemFromCartResult.data?.RemoveFromCart,
-        cartInput.payment ? cartInput.payment.goPayBankSwift : null,
-    );
+    useEffect(() => {
+        if (removeItemFromCartResult.data?.RemoveFromCart.uuid !== undefined) {
+            dispatch(userActions.setCartUuid(removeItemFromCartResult.data.RemoveFromCart.uuid));
+        }
+    }, [removeItemFromCartResult]);
 
     return [removeItemFromCartResult, removeItemFromCart];
 };
 
-export const mapCart = (
-    apiData: CartFragmentApi,
-    transportPrice: PriceType,
-    paymentPrice: PriceType,
-    currencyCode: string,
-): CartType => {
+export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
 
     const totalPrice = mapPriceData(apiData.totalPrice, currencyCode);
     const totalItemsPrice: PriceType = {
-        priceWithVat: totalPrice.priceWithVat - transportPrice.priceWithVat - paymentPrice.priceWithVat,
-        priceWithoutVat: totalPrice.priceWithoutVat - transportPrice.priceWithoutVat - paymentPrice.priceWithoutVat,
-        vatAmount: totalPrice.vatAmount - transportPrice.vatAmount - paymentPrice.vatAmount,
+        priceWithVat: totalPrice.priceWithVat,
+        priceWithoutVat: totalPrice.priceWithoutVat,
+        vatAmount: totalPrice.vatAmount,
         currencyCode: currencyCode,
     };
 

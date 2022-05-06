@@ -7,6 +7,7 @@ import {
 } from './CartPreview.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -14,10 +15,10 @@ const CartPreview: FC = () => {
     const testIdentifier = 'pages-cart-cartpreview';
 
     const t = useTypedTranslationFunction();
-    const { cart, isCartEmpty } = useShopsysSelector((state) => state.cart);
+    const { cart, isCartEmpty } = useCurrentCart();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
-    if (cart === null || isCartEmpty === true) {
+    if (cart === null || isCartEmpty) {
         return null;
     }
 

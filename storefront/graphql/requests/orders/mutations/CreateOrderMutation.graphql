@@ -21,8 +21,6 @@ mutation CreateOrderMutation(
     $deliveryPostcode: String
     $deliveryCountry: String
     $note: String
-    $payment: PaymentInput!
-    $transport: TransportInput!
     $cartUuid: Uuid
 ) {
     CreateOrder(
@@ -49,8 +47,6 @@ mutation CreateOrderMutation(
             deliveryPostcode: $deliveryPostcode
             deliveryCountry: $deliveryCountry
             note: $note
-            payment: $payment
-            transport: $transport
             cartUuid: $cartUuid
         }
     ) {

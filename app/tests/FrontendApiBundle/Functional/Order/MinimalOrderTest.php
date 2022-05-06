@@ -62,10 +62,12 @@ class MinimalOrderTest extends AbstractOrderTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
@@ -255,16 +257,18 @@ class MinimalOrderTest extends AbstractOrderTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 1
             }) {
-                uuid
-                items {
+                cart {
                     uuid
+                    items {
+                        uuid
+                    }
                 }
             }
         }';
 
         $response = $this->getResponseContentForQuery($addToCartMutation);
-        $cartUuid = $response['data']['AddToCart']['uuid'];
-        $cartItemUuid = $response['data']['AddToCart']['items'][0]['uuid'];
+        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
+        $cartItemUuid = $response['data']['AddToCart']['cart']['items'][0]['uuid'];
 
         $removeFromCartMutation = 'mutation {
             RemoveFromCart(input: {

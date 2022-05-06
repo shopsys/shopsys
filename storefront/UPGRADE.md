@@ -80,3 +80,70 @@
       - the BannerSlider component now uses the `useGetWindowSize` hook and the `getBannersSliderItemImage` method that decides, which image should be used
     - tips on how to implement them
       - you can change the breakpoint when mobile/desktop variant is to be used by changing the `desktopVariant` parameter of `getBannersSliderItemImage` method
+
+### Transport and Payment cart mutations
+- [FWCC-843](https://shopsys.atlassian.net/browse/FWCC-843)
+- most significant changes
+  - changes of transport and payment (together with related fields, such as personal pickup place identifier and GoPay SWIFT) are handled in separate mutations (ChangeTransportInCart and ChangePaymentInCart)
+  - cart slice of redux has been completely removed with cart UUID being moved to the user slice
+  - all information about cart is now loaded from useCurrentCart hook
+  - each mutation has a handler method that can be easily extended for future needs (GTM, logging)
+    - the reason behind this decision is that the logic for same operation was often scattered around, breaking DRY
+    - it was also hard to pinpoint the exact place where an event could be extended
+    - simple handler methods with async/await handling are easier to understand and work with
+    - in all of the hooks (useApplyPromoCodeToCart, useChangeTransportInCart, usePaymentInCart, useRemovePromoCodeFromCart) there is a handler method with a comment where the event can be extended
+    ```js
+        const applyPromoCodeHandler = async (newPromoCode: string, messages: { success: string; error: string }) => {
+        const applyPromoCodeResult = await applyPromoCodeToCart({ input: { promoCode: newPromoCode, cartUuid } });
+
+        // EXTEND PROMO CODE MODIFICATIONS HERE
+        console.log('Is applyPromoCodeResult null?', applyPromoCodeResult === null)
+
+        if (applyPromoCodeResult.error !== undefined) {
+            const { userError } = getUserFriendlyErrors(applyPromoCodeResult.error, t);
+            if (userError?.validation?.promoCode !== undefined) {
+                showErrorMessage(userError.validation.promoCode.message);
+            } else {
+                showErrorMessage(messages.error);
+            }
+
+            return null;
+        }
+
+        showSuccessMessage(messages.success);
+
+        return applyPromoCodeResult.data?.ApplyPromoCodeToCart;
+    };
+    ```
+  - cart state utility hooks and methods were removed as they were not needed anymore
+  - inputs for cart queries/mutations now use input objects that use types generated based on API schema
+    - instead of having 2 arguments for the mutation (foo, bar) we now only use input, that has the separate arguments inside
+    ```
+    mutation FooMutation($input: FooMutationInput!) {
+      Foo(input: $input) {
+        ...
+      }
+    }
+    ```
+
+    instead of
+
+        ```
+    mutation FooMutation($foo: String!, bar: String!) {
+      Foo(input: {foo: $foo, bar: $bar}) {
+        ...
+      }
+    }
+    ```
+    - this allows us to modify input types without having to touch the GQL definitions
+- other changes
+  - AddToCart result now doesn't iherit from Cart, but implements Cart as its property
+    - the reason behind this decision is that the GQL cache did not catch updates to cart fragment when AddToCart result extended cart
+    - by using composition instead of inheritance the issue was solved
+  - URQL devtools exchange has been added which allows for better debugging of the current state of the GQL cache and various operations performed on it
+  - client can be now injected into initServerSideProps if it is needed outside of the method
+    - this is required if we want to call a query/mutation inside getServerSideProps but outside of initServerSideProps
+    - we can easily initialize the client before, call the required operation and then inject the client into initServerSideProps method to still the same GQL cache
+- tips on how to implement these changes
+  - if you need the current cart in a component, use the useCurrentCart hook, which also includes transport, payment, promo code, pickup place identifier, and GoPay bank swift
+  - if you have a custom data point in the current cart implementation in redux, you can either use its value directly from GQL if the value comes from the API, or you can keep it in redux as a single value and then use it in the useCurrentCart hook to propagate it further

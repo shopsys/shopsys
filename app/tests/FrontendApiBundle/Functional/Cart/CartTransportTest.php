@@ -66,7 +66,7 @@ class CartTransportTest extends GraphQlTestCase
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        $getCartQuery = 'mutation {
+        $addToCartMutation = 'mutation {
             AddToCart(
                 input: {
                     cartUuid: "' . CartDataFixture::CART_UUID . '"
@@ -74,31 +74,33 @@ class CartTransportTest extends GraphQlTestCase
                     quantity: 1
                 }
             ) {
-                transport {
-                    name
-                    description
-                    instruction
-                    position
-                    daysUntilDelivery
-                    transportType {
+                cart {
+                    transport {
                         name
-                        code
-                    }
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    },
-                    images {
+                        description
+                        instruction
                         position
-                        sizes {
-                            url
+                        daysUntilDelivery
+                        transportType {
+                            name
+                            code
                         }
-                    },
-                    stores {
-                        edges {
-                            node {
-                                name
+                        price {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        },
+                        images {
+                            position
+                            sizes {
+                                url
+                            }
+                        },
+                        stores {
+                            edges {
+                                node {
+                                    name
+                                }
                             }
                         }
                     }
@@ -106,7 +108,7 @@ class CartTransportTest extends GraphQlTestCase
             }
         }';
 
-        $transportResponse = $this->getTransportResponse($getCartQuery, 'AddToCart');
+        $transportResponse = $this->getTransportResponseAfterAddingToCart($addToCartMutation);
 
         self::assertEquals($this->getExpectedTransport(), $transportResponse);
     }
@@ -197,7 +199,9 @@ class CartTransportTest extends GraphQlTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 40
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
         $this->getResponseContentForQuery($mutation);
@@ -313,13 +317,23 @@ class CartTransportTest extends GraphQlTestCase
 
     /**
      * @param string $getCartWithTransportQuery
-     * @param string $queryOrMutationName
      * @return array|null
      */
-    private function getTransportResponse(string $getCartWithTransportQuery, string $queryOrMutationName = 'cart'): ?array
+    private function getTransportResponse(string $getCartWithTransportQuery): ?array
     {
         $response = $this->getResponseContentForQuery($getCartWithTransportQuery);
 
-        return $response['data'][$queryOrMutationName]['transport'];
+        return $response['data']['cart']['transport'];
+    }
+
+    /**
+     * @param string $addToCartMutation
+     * @return array|null
+     */
+    private function getTransportResponseAfterAddingToCart(string $addToCartMutation): ?array
+    {
+        $response = $this->getResponseContentForQuery($addToCartMutation);
+
+        return $response['data']['AddToCart']['cart']['transport'];
     }
 }

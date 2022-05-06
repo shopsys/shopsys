@@ -22,3 +22,5 @@ CartInterface:
                 type: "Price!"
             remainingAmountWithVatForFreeTransport:
                 type: "Money"
+            paymentGoPayBankSwift:
+                type: "String"

@@ -27,6 +27,7 @@ type InitialState = {
     lastOrderUuid: string;
     userName: UserNameType;
     urlHash: string | undefined;
+    cartUuid: string | null;
 };
 
 export const initialState = {
@@ -43,6 +44,7 @@ export const initialState = {
         lastName: '',
     },
     urlHash: undefined,
+    cartUuid: null,
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -69,6 +71,9 @@ export const userSlice = createSlice({
         },
         setOrderUrlHash(state, action: PayloadAction<string | undefined>) {
             state.urlHash = action.payload;
+        },
+        setCartUuid(state, action: PayloadAction<string | null>) {
+            state.cartUuid = action.payload;
         },
     },
     extraReducers: {

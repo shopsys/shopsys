@@ -19,7 +19,9 @@ class AuthenticatedRetrieveCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $product->getUuid() . '",
                 quantity: 2
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 

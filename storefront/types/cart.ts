@@ -1,15 +1,19 @@
-import { PaymentInputType, PaymentType } from 'types/payment';
 import { PriceType, ProductPriceType } from 'types/price';
-import { TransportInputType, TransportType } from 'types/transport';
-import { ImageType } from 'types/image';
-import { PickupPlaceType } from 'types/pickupPlace';
+import { ImageType } from './image';
+import { PaymentType } from './payment';
+import { PickupPlaceType } from './pickupPlace';
 import { SimpleFlagType } from 'types/flag';
 import { SimpleProductType } from 'types/product';
+import { TransportType } from './transport';
 
-export type CartInput = {
-    cartUuid: string | null;
-    transport: TransportInputType | null;
-    payment: PaymentInputType | null;
+export type CurrentCartType = {
+    cart: CartType | null;
+    isCartEmpty: boolean;
+    transport: TransportType | null;
+    pickupPlace: PickupPlaceType | null;
+    payment: PaymentType | null;
+    paymentGoPayBankSwift: string | null;
+    promoCode: string | null;
 };
 
 export type ProductCartItemType = {
@@ -40,16 +44,6 @@ export type CartType = {
     totalItemsPrice: PriceType;
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
-};
-
-export type CartResultValues = {
-    cartUuid: string | null;
-    cart: CartType | null;
-    transport: TransportType | null;
-    pickupPlace: PickupPlaceType | null;
-    goPayBankSwift: string | null;
-    payment: PaymentType | null;
-    promoCode: string | null;
 };
 
 export type AddToCartPopupDataType = SimpleProductType & {

@@ -1,21 +1,22 @@
 import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
-import { mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
-import { PaymentInputType, PaymentType } from 'types/payment';
-import { TransportInputType, TransportType } from 'types/transport';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
-import { mapPaymentToPaymentInput } from 'connectors/payments/Payment';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
+import { PaymentType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
 import { PickupPlaceType } from 'types/pickupPlace';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
 import { TransportAndPaymentFormType } from 'types/form';
+import { TransportType } from 'types/transport';
+import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
+import { useChangeTransportInCart } from 'hooks/cart/UseChangeTransportInCart';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { useShopsysSelector } from 'redux/main';
 import { useTransportAndPaymentFormMeta } from 'components/Pages/Order/TransportAndPayment/formMeta';
@@ -31,124 +32,86 @@ const Select: FC<SelectProps> = (props) => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<TransportAndPaymentFormType>();
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
-    const { defaultLocale } = useShopsysSelector((state) => state.domain);
+    const { defaultLocale, currencyCode } = useShopsysSelector((state) => state.domain);
     const [transportValue, paymentValue, goPaySwiftValue] = useWatch({
         name: [formMeta.fields.transport.name, formMeta.fields.payment.name, formMeta.fields.goPaySwift.name],
         control: formProviderMethods.control,
     });
+    const [preSelectedTransport, setPreselectedTransport] = useState<TransportType | null>(null);
+    const { transport, pickupPlace, payment } = useCurrentCart();
+    const changeTransportInCart = useChangeTransportInCart();
+    const changePaymentInCart = useChangePaymentInCart();
+    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({
+        variables: { currencyCode: currencyCode },
+    });
 
-    const {
-        payment,
-        transport,
-        pickupPlace,
-        cartInput: { cartUuid, transport: transportInput, payment: paymentInput },
-    } = useShopsysSelector((state) => state.cart);
+    useComponentUpdate(async () => {
+        const potentialNewTransport = props.transports.find((transport) => transport.uuid === transportValue);
 
-    const [isPreSelectingTransport, setIsPreSelectingTransport] = useState(false);
-
-    const [mappedTransportInput, setMappedTransportInput] = useState<TransportInputType | null>(transportInput);
-    const [mappedPaymentInput, setMappedPaymentInput] = useState<PaymentInputType | null>(paymentInput);
-
-    const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
-    const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
-    useLoadCart(cartUuid, mappedTransportInput, mappedPaymentInput, goPaySwiftValue);
-
-    useEffect(() => {
-        formProviderMethods.setValue(
-            formMeta.fields.transport.name,
-            transport?.uuid === undefined ? null : transport.uuid,
-        );
-        formProviderMethods.setValue(formMeta.fields.payment.name, payment?.uuid === undefined ? null : payment.uuid);
-        updateTransport(transport);
-        updatePickupPlace(pickupPlace);
-    }, [transport, pickupPlace, payment]);
-
-    useComponentUpdate(() => {
-        const newTransport = props.transports.find((transport) => transport.uuid === transportValue);
-        formProviderMethods.setValue(
-            formMeta.fields.transport.name,
-            newTransport?.uuid === undefined ? null : newTransport.uuid,
-        );
-
-        if (newTransport?.isPersonalPickup === true) {
-            onChangePersonalPickupTransportHandler(newTransport);
+        if (potentialNewTransport === undefined) {
+            changeTransportInCart(null, null);
+            return;
         }
-        if (newTransport === undefined) {
-            updateTransport(null);
-            setMappedTransportInput(null);
-        } else {
-            updateTransport(newTransport);
-            setMappedTransportInput(mapTransportToTransportInput(newTransport, updatedPickupPlace));
+
+        if (potentialNewTransport.isPersonalPickup) {
+            openPersonalPickupPopup(potentialNewTransport);
+            return;
         }
+
+        changeTransportInCart(transportValue, null);
     }, [transportValue]);
 
     useComponentUpdate(() => {
-        const newPayment = updatedTransport?.payments.find((payment) => payment.uuid === paymentValue);
-        formProviderMethods.setValue(
-            formMeta.fields.payment.name,
-            newPayment?.uuid === undefined ? null : newPayment.uuid,
-        );
-
-        formProviderMethods.setValue(formMeta.fields.goPaySwift.name, goPaySwiftValue);
-
-        if (newPayment === undefined) {
-            setMappedPaymentInput(null);
-        } else {
-            setMappedPaymentInput(mapPaymentToPaymentInput(newPayment, goPaySwiftValue));
-        }
+        changePaymentInCart(paymentValue, goPaySwiftValue);
     }, [paymentValue, goPaySwiftValue]);
 
-    const isPickupPlaceSelected = () => transportInput !== null && transportInput.pickupPlaceIdentifier !== null;
+    const isPickupPlaceSelected = pickupPlace !== null;
 
-    const onChangePersonalPickupTransportHandler = (newTransport: TransportType) => {
+    const openPersonalPickupPopup = (newTransport: TransportType) => {
         if (newTransport.transportType.code === 'packetery') {
-            if (!isPickupPlaceSelected()) {
-                const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
-                if (packeteryApiKey !== undefined) {
-                    packeteryPick(
-                        packeteryApiKey,
-                        (point) => {
-                            onSelectPacketeryPickupPlaceCallback(point, newTransport);
-                        },
-                        { language: defaultLocale },
-                    );
-                }
-            }
+            openPacketeryPopup(newTransport);
             return;
         }
 
         removePacketeryCookie();
-        setIsPreSelectingTransport(updatedTransport === null);
+        setPreselectedTransport(newTransport);
+    };
+
+    const openPacketeryPopup = (newTransport: TransportType) => {
+        if (!isPickupPlaceSelected) {
+            const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
+            if (packeteryApiKey !== undefined) {
+                packeteryPick(
+                    packeteryApiKey,
+                    (point) => {
+                        onSelectPacketeryPickupPlaceCallback(point, newTransport);
+                    },
+                    { language: defaultLocale },
+                );
+            }
+        }
     };
 
     const resetTransportAndPayment = () => {
         formProviderMethods.setValue(formMeta.fields.transport.name, null);
         formProviderMethods.setValue(formMeta.fields.payment.name, null);
         formProviderMethods.setValue(formMeta.fields.goPaySwift.name, null);
-        resetPickupPlace();
+        removePacketeryCookie();
     };
 
     const onChangePickupPlaceHandler = (selectedPickupPlace: PickupPlaceType | null) => {
-        setIsPreSelectingTransport(false);
-        if (selectedPickupPlace !== null && updatedTransport !== null) {
-            updatePickupPlace(selectedPickupPlace);
-            setMappedTransportInput(mapTransportToTransportInput(updatedTransport, selectedPickupPlace));
+        if (selectedPickupPlace !== null) {
+            changeTransportInCart(transportValue, selectedPickupPlace.identifier);
         } else {
-            resetPickupPlace();
             removePacketeryCookie();
         }
+
+        setPreselectedTransport(null);
     };
 
     const onClosePickupPlacePopupHandler = () => {
-        setIsPreSelectingTransport(false);
-        resetPickupPlace();
-    };
-
-    const resetPickupPlace = () => {
-        updateTransport(null);
-        updatePickupPlace(null);
-        setMappedTransportInput(null);
         removePacketeryCookie();
+        setPreselectedTransport(null);
     };
 
     const onSelectPacketeryPickupPlaceCallback = (
@@ -158,27 +121,16 @@ const Select: FC<SelectProps> = (props) => {
         if (packeteryPoint !== null) {
             const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
             setPacketeryCookie(mappedPacketeryPoint);
-            updateTransport(packeteryTransport);
-            updatePickupPlace(mappedPacketeryPoint);
-            setMappedTransportInput(mapTransportToTransportInput(packeteryTransport, mappedPacketeryPoint));
-        } else {
-            formProviderMethods.setValue(formMeta.fields.transport.name, null);
+            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint.identifier);
         }
     };
 
-    // goPay Payments load
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [getGoPaySwiftsResult, getGoPaySwifts] = useGoPaySwiftsQueryApi({
-        variables: { currencyCode: currencyCode },
-    });
-
-    const loadGoPaySwiftsFromApi = async () => {
-        await getGoPaySwifts();
+    const getPickupPlaceDetail = (transportItem: TransportType) => {
+        return transportValue === transportItem.uuid &&
+            transportItem.stores.some((store) => store.identifier === pickupPlace?.identifier)
+            ? pickupPlace
+            : null;
     };
-
-    useEffect(() => {
-        loadGoPaySwiftsFromApi();
-    }, []);
 
     const renderTransportListItem = (
         transportItem: TransportType,
@@ -206,12 +158,7 @@ const Select: FC<SelectProps> = (props) => {
                             daysUntilDelivery={transportItem.daysUntilDelivery}
                             price={transportItem.price}
                             description={transportItem.description}
-                            pickupPlaceDetail={
-                                transportValue === transportItem.uuid &&
-                                transportItem.stores.some((store) => store.identifier === pickupPlace?.identifier)
-                                    ? pickupPlace
-                                    : null
-                            }
+                            pickupPlaceDetail={getPickupPlaceDetail(transportItem)}
                         />
                     }
                 />
@@ -262,8 +209,8 @@ const Select: FC<SelectProps> = (props) => {
                         name={formMeta.fields.transport.name}
                         render={({ field }) => (
                             <ul>
-                                {transportValue !== null && updatedTransport !== null
-                                    ? renderTransportListItem(updatedTransport, true, field)
+                                {transport !== null
+                                    ? renderTransportListItem(transport, true, field)
                                     : props.transports.map((transportItem) =>
                                           renderTransportListItem(transportItem, false, field),
                                       )}
@@ -280,10 +227,10 @@ const Select: FC<SelectProps> = (props) => {
                             <Icon iconType="icon" icon="Arrow" />
                         </ResetButtonStyled>
                     )}
-                    {updatedTransport !== null && (
+                    {preSelectedTransport !== null && (
                         <PickupPlacePopup
-                            isVisible={isPreSelectingTransport}
-                            transport={updatedTransport}
+                            isVisible={true}
+                            transport={preSelectedTransport}
                             onChangePickupPlaceCallback={onChangePickupPlaceHandler}
                             onClosePickupPlacePopupCallback={onClosePickupPlacePopupHandler}
                         />
@@ -292,7 +239,7 @@ const Select: FC<SelectProps> = (props) => {
                 {transport !== null &&
                     transportValue !== null &&
                     transport.uuid === transportValue &&
-                    !isPreSelectingTransport && (
+                    preSelectedTransport === null && (
                         <PaymentListWrapper data-testid={testIdentifier + 'payment'}>
                             <Heading type="h3">{formMeta.fields.payment.label}</Heading>
                             <Controller

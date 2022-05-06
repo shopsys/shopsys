@@ -50,18 +50,20 @@ class RetrieveCartTest extends GraphQlTestCase
                     quantity: ' . $desiredQuantity . '
                 }
             ) {
-                uuid
+                cart {
+                    uuid
+                    totalPrice{
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                }
                 addProductResult{
                     notOnStockQuantity
                     overLimitQuantity
                     isQuantityOverLimit
                     isNew
                     addedQuantity
-                }
-                totalPrice{
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
                 }
             }
         }';
@@ -81,7 +83,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
-        self::assertEquals($this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, $maximumAvailableQuantity), $newlyCreatedCart['totalPrice']);
+        self::assertEquals($this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, $maximumAvailableQuantity), $newlyCreatedCart['cart']['totalPrice']);
     }
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStockOnSecondAdd(): void
@@ -99,7 +101,9 @@ class RetrieveCartTest extends GraphQlTestCase
                     quantity: ' . $firstAddQuantity . '
                 }
             ) {
-                uuid
+                cart {
+                    uuid
+                }
                 addProductResult{
                     notOnStockQuantity
                     overLimitQuantity
@@ -127,21 +131,23 @@ class RetrieveCartTest extends GraphQlTestCase
         $mutation = 'mutation {
             AddToCart(
                 input: {
-                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    cartUuid: "' . $newlyCreatedCart['cart']['uuid'] . '"
                     productUuid: "' . $this->testingProduct->getUuid() . '"
                     quantity: ' . ($decrease + $notOnStockCount) . '
                 }
             ) {
-                uuid
+                cart {
+                    uuid
+                    items {
+                        quantity
+                    }
+                }
                 addProductResult {
                     notOnStockQuantity
                     overLimitQuantity
                     isQuantityOverLimit
                     isNew
                     addedQuantity
-                }
-                items {
-                    quantity
                 }
             }
         }';
@@ -171,7 +177,9 @@ class RetrieveCartTest extends GraphQlTestCase
                     quantity: ' . $desiredQuantity . '
                 }
             ) {
-                uuid
+                cart {
+                    uuid
+                }
                 addProductResult{
                     notOnStockQuantity
                     overLimitQuantity
@@ -199,21 +207,23 @@ class RetrieveCartTest extends GraphQlTestCase
         $mutation = 'mutation {
             AddToCart(
                 input: {
-                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    cartUuid: "' . $newlyCreatedCart['cart']['uuid'] . '"
                     productUuid: "' . $this->testingProduct->getUuid() . '"
                     quantity: ' . $desiredQuantity . '
                 }
             ) {
-                uuid
+                cart {
+                    uuid
+                    items {
+                        quantity
+                    }
+                }
                 addProductResult {
                     notOnStockQuantity
                     overLimitQuantity
                     isQuantityOverLimit
                     isNew
                     addedQuantity
-                }
-                items {
-                    quantity
                 }
             }
         }';
@@ -230,7 +240,7 @@ class RetrieveCartTest extends GraphQlTestCase
         ];
 
         self::assertEquals($expectedAddProductResultData, $existingCart['addProductResult']);
-        self::assertEquals($desiredQuantity * 2, $existingCart['items'][0]['quantity']);
+        self::assertEquals($desiredQuantity * 2, $existingCart['cart']['items'][0]['quantity']);
     }
 
     public function testProductFromCartCanBeRetrieved(): void
@@ -243,19 +253,21 @@ class RetrieveCartTest extends GraphQlTestCase
                     quantity: ' . $desiredQuantity . '
                 }
             ) {
-                uuid
-                items {
+                cart {
                     uuid
-                    product {
-                        ' . $this->getAllProductAttributes() . '
+                    items {
+                        uuid
+                        product {
+                            ' . $this->getAllProductAttributes() . '
+                        }
+                        quantity
                     }
-                    quantity
                 }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        $newlyCreatedCart = $response['data']['AddToCart'];
+        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
         $getCartQuery = '{
             cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
@@ -285,18 +297,20 @@ class RetrieveCartTest extends GraphQlTestCase
                     quantity: ' . $desiredQuantity . '
                 }
             ) {
-                uuid
-                items {
-                    product {
-                        ' . $this->getAllProductAttributes() . '
+                cart {    
+                    uuid
+                    items {
+                        product {
+                            ' . $this->getAllProductAttributes() . '
+                        }
+                        quantity
                     }
-                    quantity
                 }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        $data = $response['data']['AddToCart'];
+        $data = $response['data']['AddToCart']['cart'];
 
         self::assertEquals($this->getExpectedProductDetailWithAllAttributes(), $data['items'][0]['product']);
         self::assertEquals($desiredQuantity, $data['items'][0]['quantity']);

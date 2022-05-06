@@ -73,7 +73,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $addedProductQuantity . '
             }) {
-                uuid
+                cart { 
+                    uuid
+                }
             }
         }';
 
@@ -100,7 +102,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $secondProduct->getUuid() . '",
                 quantity: ' . $secondProductQuantity . '
             }) {
-                uuid
+                cart { 
+                    uuid
+                }
             }
         }';
 
@@ -132,7 +136,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
                 quantity: ' . $desiredProductQuantity . '
                 isAbsoluteQuantity: true
             }) {
-                uuid
+                cart { 
+                    uuid
+                }
             }
         }';
 
@@ -157,12 +163,14 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $productQuantity . '
             }) {
-                uuid
+                cart { 
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        return $response['data']['AddToCart'];
+        return $response['data']['AddToCart']['cart'];
     }
 
     /**

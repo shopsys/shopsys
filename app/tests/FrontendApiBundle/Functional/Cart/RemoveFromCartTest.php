@@ -36,14 +36,16 @@ class RemoveFromCartTest extends GraphQlTestCase
                 productUuid: "' . $secondProduct->getUuid() . '",
                 quantity: ' . $secondProductQuantity . '
             }) {
-                items {
-                    uuid
+                cart {
+                    items {
+                        uuid
+                    }
                 }
             }
         }';
 
         $response = $this->getResponseContentForQuery($addToCartMutation);
-        $cartItems = $response['data']['AddToCart']['items'];
+        $cartItems = $response['data']['AddToCart']['cart']['items'];
         $firstCartItemUuid = $cartItems[0]['uuid'];
         $secondCartItemUuid = $cartItems[1]['uuid'];
 
@@ -101,11 +103,13 @@ class RemoveFromCartTest extends GraphQlTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $productQuantity . '
             }) {
-                uuid
+                cart {
+                    uuid
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        return $response['data']['AddToCart'];
+        return $response['data']['AddToCart']['cart'];
     }
 }
