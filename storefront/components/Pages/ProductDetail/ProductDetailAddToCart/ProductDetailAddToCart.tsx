@@ -6,13 +6,14 @@ import {
     AddToCartPriceStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
+import { AddToCartPopupDataType } from 'types/cart';
 import { formatPrice } from 'utils/formatting';
+import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { ProductDetailType } from 'types/product';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCart } from 'connectors/cart/Cart';
-import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
+import { useAddToCart } from 'hooks/cart/UseAddToCart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -25,24 +26,18 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.user);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
-    const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.product.uuid);
+    const changeCartItemQuantity = useAddToCart();
+    const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
             return;
         }
 
-        changeCartItemQuantity({
-            input: {
-                cartUuid,
-                isAbsoluteQuantity: false,
-                productUuid: props.product.uuid,
-                quantity: spinboxRef.current.valueAsNumber,
-            },
-        });
+        const addToCartResult = await changeCartItemQuantity(props.product.uuid, spinboxRef.current.valueAsNumber);
         spinboxRef.current!.valueAsNumber = 1;
+        setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
     };
 
     return (

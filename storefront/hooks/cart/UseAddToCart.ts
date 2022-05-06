@@ -1,0 +1,51 @@
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { showErrorMessage } from 'components/Helpers/Toasts';
+import { useAddToCartMutationApi } from 'graphql/generated';
+import { userActions } from 'redux/slices/user';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+
+export const useAddToCart = (): typeof addToCartAction => {
+    const [, addToCart] = useAddToCartMutationApi();
+    const { cartUuid } = useShopsysSelector((state) => state.user);
+    const dispatch = useShopsysDispatch();
+    const t = useTypedTranslationFunction();
+
+    const addToCartAction = async (productUuid: string, quantity: number, isAbsoluteQuantity = false) => {
+        const addToCartActionResult = await addToCart({
+            input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
+        });
+        dispatch(userActions.setCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null));
+
+        // EXTEND ADDING TO CART HERE
+
+        if (addToCartActionResult.error !== undefined) {
+            showErrorMessage(t('Unable to add product to cart'));
+            return null;
+        }
+
+        const addToCartResult = addToCartActionResult.data?.AddToCart;
+
+        if (addToCartResult === undefined) {
+            return null;
+        }
+
+        const cartItem = addToCartResult.addProductResult.cartItem;
+        const notOnStockQuantity = addToCartResult.addProductResult.notOnStockQuantity;
+
+        if (notOnStockQuantity > 0) {
+            showErrorMessage(
+                t(
+                    'You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})',
+                    {
+                        quantity: cartItem.quantity,
+                        unitName: cartItem.product.unit.name,
+                    },
+                ),
+            );
+        }
+
+        return addToCartResult;
+    };
+
+    return addToCartAction;
+};

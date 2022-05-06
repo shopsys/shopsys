@@ -147,3 +147,13 @@
 - tips on how to implement these changes
   - if you need the current cart in a component, use the useCurrentCart hook, which also includes transport, payment, promo code, pickup place identifier, and GoPay bank swift
   - if you have a custom data point in the current cart implementation in redux, you can either use its value directly from GQL if the value comes from the API, or you can keep it in redux as a single value and then use it in the useCurrentCart hook to propagate it further
+
+### Add to cart and remove from cart handlers refactoring
+- [FWCC-845](https://shopsys.atlassian.net/browse/FWCC-845)
+- [FWCC-845 added handlers for adding to and removing from cart ](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/543)
+- most significant changes
+  - adding to cart and removing from cart is now done using extendable handlers
+  - AddToCartPopup is mapped using a simple mapper and its state is stored in a useState hook
+  - other messages and errors regarding adding to cart are handled directly inside the handler method
+- other changes
+  - AddToCart result now also returns the added cart item so we do not have to perfrom search on the result to find the added item

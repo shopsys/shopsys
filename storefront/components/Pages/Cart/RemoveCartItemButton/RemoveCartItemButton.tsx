@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import Icon from 'components/Basic/Icon';
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
-import { useRemoveFromCart } from 'connectors/cart/Cart';
-import { useShopsysSelector } from 'redux/main';
+import { useRemoveFromCart } from 'hooks/cart/UseRemoveFromCart';
 
 type RemoveCartItemButtonProps = {
     cartItemUuid: string;
@@ -11,11 +10,10 @@ type RemoveCartItemButtonProps = {
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const testIdentifier = 'pages-cart-removecartitembutton';
 
-    const { cartUuid } = useShopsysSelector((state) => state.user);
-    const [, removeItemFromCart] = useRemoveFromCart();
+    const removeItemFromCart = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        removeItemFromCart({ input: { cartItemUuid: props.cartItemUuid, cartUuid } });
+        removeItemFromCart(props.cartItemUuid);
     };
 
     return (

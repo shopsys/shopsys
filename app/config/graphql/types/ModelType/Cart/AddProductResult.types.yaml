@@ -2,6 +2,8 @@ AddProductResult:
     type: object
     config:
         fields:
+            cartItem:
+                type: CartItem!
             notOnStockQuantity:
                 type: Int!
             overLimitQuantity:

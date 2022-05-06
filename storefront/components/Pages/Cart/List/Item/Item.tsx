@@ -18,8 +18,7 @@ import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
 import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCart } from 'connectors/cart/Cart';
-import { useShopsysSelector } from 'redux/main';
+import { useAddToCart } from 'hooks/cart/UseAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {
@@ -33,8 +32,7 @@ const Item: FC<ItemProps> = (props) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.user);
-    const [, changeCartItemQuantity] = useAddToCart();
+    const changeCartItemQuantity = useAddToCart();
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {
@@ -47,14 +45,7 @@ const Item: FC<ItemProps> = (props) => {
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            changeCartItemQuantity({
-                input: {
-                    productUuid: props.item.product.uuid,
-                    cartUuid: cartUuid!,
-                    quantity: spinboxRef.current!.valueAsNumber,
-                    isAbsoluteQuantity: true,
-                },
-            });
+            changeCartItemQuantity(props.item.product.uuid, spinboxRef.current!.valueAsNumber, true);
         }, 500);
     };
 
