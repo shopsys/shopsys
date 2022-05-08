@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\PersonalData;
 
+use App\FrontendApi\Mutation\PersonalData\Exception\InvalidPersonalDataRequestTypeUserError;
 use App\FrontendApi\Resolver\PersonalData\PersonalDataResolver;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
@@ -81,7 +81,7 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
         } elseif ($type === PersonalDataAccessRequest::TYPE_EXPORT) {
             $personalDataAccessRequestData = $this->personalDataAccessRequestDataFactory->createForExport();
         } else {
-            throw new UserError('Requested type of data is not valid.');
+            throw new InvalidPersonalDataRequestTypeUserError('Requested type of data is not valid.');
         }
 
         $personalDataAccessRequestData->email = $input['email'];

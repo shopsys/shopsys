@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Blog\Category;
 
+use App\FrontendApi\Resolver\Blog\Category\Exception\BlogCategoryNotFoundUserError;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
@@ -82,7 +83,7 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
 
             return $this->blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | BlogCategoryNotFoundException $blogCategoryNotFoundException) {
-            throw new UserError(sprintf('No visible blog category was found by slug "%s"', $urlSlug));
+            throw new BlogCategoryNotFoundUserError(sprintf('No visible blog category was found by slug "%s"', $urlSlug));
         }
     }
 

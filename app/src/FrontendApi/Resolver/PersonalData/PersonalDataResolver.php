@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\PersonalData;
 
 use App\Component\Setting\Setting;
+use App\FrontendApi\Resolver\PersonalData\Exception\PersonalDataHashInvalidUserError;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\OrderFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
@@ -109,7 +109,7 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId($hash, $domainId);
 
         if ($personalDataAccessRequest === null || $personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_EXPORT) {
-            throw new UserError('Provided hash does not exists or is no longer valid.');
+            throw new PersonalDataHashInvalidUserError('Provided hash does not exists or is no longer valid.');
         }
 
         $email = $personalDataAccessRequest->getEmail();

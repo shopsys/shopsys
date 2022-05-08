@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
+use App\FrontendApi\Resolver\Store\Exception\StoreNotFoundUserError;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
 use App\Model\Store\Exception\StoreNotFoundException;
 use App\Model\Store\Store;
@@ -96,7 +97,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
 
             return $this->storeFacade->getByIdEnabledOnDomain($friendlyUrl->getEntityId(), $this->domain->getId());
         } catch (FriendlyUrlNotFoundException | StoreNotFoundException $exception) {
-            throw new UserError(sprintf('Store with URL slug "%s" does not exist.', $urlSlug));
+            throw new StoreNotFoundUserError(sprintf('Store with URL slug "%s" does not exist.', $urlSlug));
         }
     }
 }

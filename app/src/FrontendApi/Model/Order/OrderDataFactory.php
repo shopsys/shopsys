@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Order;
 
+use App\FrontendApi\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
 use App\Model\Cart\Cart;
 use App\Model\Order\OrderData;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -104,7 +105,7 @@ class OrderDataFactory extends BaseOrderDataFactory
             $orderData->transport->isPacketery() &&
             $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
         ) {
-            throw new UserError('Wrong packetery address ID');
+            throw new InvalidPacketeryAddressIdUserError('Wrong packetery address ID');
         }
 
         $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;

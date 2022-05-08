@@ -7,6 +7,8 @@ namespace App\FrontendApi\Mutation\Order;
 use App\FrontendApi\Exception\ValidationError;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\FrontendApi\Mutation\Order\Exception\OrderEmailsNotSentUserError;
+use App\FrontendApi\Mutation\Order\Exception\OrderEmptyCartUserError;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -88,7 +90,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
 
         $quantifiedProducts = $cart->getQuantifiedProducts();
         if (count($quantifiedProducts) === 0) {
-            throw new UserError('There are no products in the cart.');
+            throw new OrderEmptyCartUserError('There are no products in the cart.');
         }
 
         $promoCode = $cart->getFirstAppliedPromoCode();
@@ -106,7 +108,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         try {
             $this->sendEmail($order);
         } catch (MailException $e) {
-            throw new UserError('Unable to send some emails, please contact us for order verification.');
+            throw new OrderEmailsNotSentUserError('Unable to send some emails, please contact us for order verification.');
         }
 
         return $order;

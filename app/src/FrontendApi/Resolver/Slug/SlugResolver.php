@@ -10,6 +10,7 @@ use App\FrontendApi\Resolver\Blog\Article\BlogArticleResolver;
 use App\FrontendApi\Resolver\Blog\Category\BlogCategoryResolver;
 use App\FrontendApi\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver;
 use App\FrontendApi\Resolver\Products\Flag\FlagResolver;
+use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\FrontendApi\Resolver\Store\StoreResolver;
 use App\Model\Article\Article;
 use App\Model\Blog\Article\BlogArticle;
@@ -22,7 +23,6 @@ use App\Model\Product\Product;
 use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver;
@@ -134,7 +134,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($this->domain->getId(), $slugWithoutSlash);
 
         if ($friendlyUrl === null) {
-            throw new UserError('No result found for request.');
+            throw new NoResultFoundForSlugUserError('No result found for request.');
         }
 
         $routeNameToEntityMap = $this->friendlyUrlRepository->getRouteNameToEntityMap();
@@ -176,7 +176,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
                 return $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
         }
 
-        throw new UserError('No result found for request.');
+        throw new NoResultFoundForSlugUserError('No result found for request.');
     }
 
     /**

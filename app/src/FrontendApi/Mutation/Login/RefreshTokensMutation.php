@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Login;
 
-use GraphQL\Error\UserError;
+use App\FrontendApi\Mutation\Login\Exception\InvalidRefreshTokenUserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation as BaseRefreshTokensMutation;
@@ -49,7 +49,7 @@ class RefreshTokensMutation extends BaseRefreshTokensMutation
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
-            throw new UserError('Token is not valid.');
+            throw new InvalidRefreshTokenUserError('Token is not valid.');
         }
 
         $tokens = [

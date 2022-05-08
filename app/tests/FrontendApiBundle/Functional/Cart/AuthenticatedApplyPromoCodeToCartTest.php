@@ -168,7 +168,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        self::assertEquals('cart-unavailable', $errors[0]['extensions']['code']);
+        self::assertEquals('cart-unavailable', $errors[0]['extensions']['userCode']);
         self::assertEquals('Cart is unavailable.', $errors[0]['message']);
     }
 

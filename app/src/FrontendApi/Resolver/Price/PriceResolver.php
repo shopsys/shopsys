@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Price;
 
 use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Resolver\Price\Exception\ProductPriceMissingUserError;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Product;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -159,7 +159,7 @@ class PriceResolver extends BasePriceResolver
         }
 
         if ($productPrice === null) {
-            throw new UserError('The product price is not set.');
+            throw new ProductPriceMissingUserError('The product price is not set.');
         }
 
         return $productPrice;
