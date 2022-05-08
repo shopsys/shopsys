@@ -85,9 +85,6 @@ msgstr "Přidat stát"
 msgid "Add item"
 msgstr "Přidat položku"
 
-msgid "Add only to order confirmation page"
-msgstr "Vložit jen na stránku s potvrzením objednávky"
-
 msgid "Add product"
 msgstr "Přidat zboží"
 
@@ -165,9 +162,6 @@ msgstr "Všechny e-maily budou doručeny pouze na uvedenou adresu."
 
 msgid "All emails will be sent only to entered addresses."
 msgstr "Všechny e-maily budou doručeny pouze na uvedené adresy."
-
-msgid "All pages"
-msgstr "Všechny stránky"
 
 msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
 msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
@@ -571,9 +565,6 @@ msgstr "Cron se serviceId `%serviceId%` byl naplánován"
 msgid "Cropping"
 msgstr "Ořezávání"
 
-msgid "Currencies"
-msgstr "Měny"
-
 msgid "Currencies and rounding"
 msgstr "Měny a zaokrouhlování"
 
@@ -678,9 +669,6 @@ msgstr "Smazat"
 
 msgid "Delete and set"
 msgstr "Smazat a nastavit"
-
-msgid "Delete status of order"
-msgstr "Smazat stav objednávky"
 
 msgid "Delivery address"
 msgstr "Dodací adresa"
