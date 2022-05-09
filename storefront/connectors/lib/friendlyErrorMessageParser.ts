@@ -1,5 +1,6 @@
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { getErrorMessage, hasErrorMessage } from 'helpers/errors/errorMessageMapper';
+import { ApplicationIgnoredErrors } from 'helpers/errors/ignoredErrors';
 import { Translate } from 'next-translate';
 import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
