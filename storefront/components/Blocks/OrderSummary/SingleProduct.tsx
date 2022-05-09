@@ -33,7 +33,11 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
                     <span data-testid={testIdentifier + 'name'}>{props.item.product.fullName}</span>
                 </ListItemInfo>
                 <ListItemPrice data-testid={testIdentifier + 'price'}>
-                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t)}
+                    {formatPrice(
+                        props.item.product.price.priceWithVat * props.item.quantity,
+                        props.item.product.price.currencyCode,
+                        t,
+                    )}
                 </ListItemPrice>
             </ListItemInfoWrapper>
         </ListItemStyled>
