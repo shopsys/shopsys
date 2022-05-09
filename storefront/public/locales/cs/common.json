@@ -20,7 +20,7 @@
     "Change password": "Změna hesla",
     "Change payment type": "Změnit platbu",
     "Change transport type": "Změnit dopravu",
-    "Choose GoPay payment type": "Choose GoPay payment type",
+    "Choose your bank": "Vyberte svoji banku",
     "Choose payment type": "Vyberte způsob platby",
     "Choose the store where you are going to pick up your order": "Vyberte prodejnu, kde si vyzvednete zásilku",
     "Choose transport type": "Vyberte způsob dopravy",
@@ -309,5 +309,6 @@
     "Your payment was unsuccessful": "Vaše platba byla neúspěšná",
     "Your profile has been changed successfully": "Váš profil byl úspěšně změněn",
     "Your purchase": "Váš nákup",
-    "Zip code cannot be longer than 5 characters": "PSČ nesmí být delší než 5 znaků"
+    "Zip code cannot be longer than 5 characters": "PSČ nesmí být delší než 5 znaků",
+    "Please select your bank": "Zvolte prosím svoji banku"
 }

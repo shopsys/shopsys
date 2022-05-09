@@ -20,7 +20,7 @@
     "Change password": "Change password",
     "Change payment type": "Change payment type",
     "Change transport type": "Change transport type",
-    "Choose GoPay payment type": "Choose GoPay payment type",
+    "Choose your bank": "Choose your bank",
     "Choose payment type": "Choose payment type",
     "Choose the store where you are going to pick up your order": "Choose the store where you are going to pick up your order",
     "Choose transport type": "Choose transport type",
@@ -290,5 +290,6 @@
     "Your payment was unsuccessful": "Your payment was unsuccessful",
     "Your profile has been changed successfully": "Your profile has been changed successfully",
     "Your purchase": "Your purchase",
-    "Zip code cannot be longer than 5 characters": "Zip code cannot be longer than 5 characters"
+    "Zip code cannot be longer than 5 characters": "Zip code cannot be longer than 5 characters",
+    "Please select your bank": "Please select your bank"
 }
