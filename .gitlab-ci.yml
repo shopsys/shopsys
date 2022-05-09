@@ -51,6 +51,8 @@ test:standards-with-graphql-schema-check:
     <<: *only-default
     tags:
         - tests
+    needs:
+        - build
     variables:
         GIT_STRATEGY: none
     script:
@@ -60,12 +62,20 @@ test:standards-with-graphql-schema-check:
 test:storefront-standards-with-jest-and-codegen:
     stage: test
     <<: *only-default
+    image: node:16.15.0-alpine
     tags:
         - tests
-    variables:
-        GIT_STRATEGY: none
+    needs:
+        - build-storefront
+    before_script:
+        - cp ./schema.graphql ./storefront/schema.graphql
+        - cd ./storefront
+        - npm ci
     script:
-        - docker run -i ${STOREFRONT_TAG} /bin/sh -c "./check-code-gen.sh && npm run lint && npm run stylelint && npm run tests-jest"
+        - ./check-code-gen.sh
+        - npm run lint
+        - npm run stylelint
+        - npm run tests-jest
     interruptible: true
 
 tests:functional-and-acceptance:
