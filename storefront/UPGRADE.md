@@ -193,3 +193,11 @@
     - in the process of fixing reported bugs it was necessary to change some code, some useMemo and useCallback hooks were added
 - tips on how to implement them
     - run `npm run lint` and fix all newly reported bugs
+
+### Build storefront from Alpine Linux 
+- [FWCC-819](https://shopsys.atlassian.net/browse/FWCC-819)
+- [FWCC-819 - Build storefront container from Alpine Linux](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/563/diffs)
+    - to achieve smaller image resulting in slightly faster builds and reduction of network traffic and storage necessary
+    - you have to update your local docker-compose files with changes introduced in `docker-*.yaml.dist` files
+    - you need to rebuild and recreate your storefront docker containers
+        - `docker-compose up -d --force-recreate --build storefront` should do the trick

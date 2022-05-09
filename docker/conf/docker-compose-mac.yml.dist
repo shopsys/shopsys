@@ -38,14 +38,12 @@ services:
         restart: always
         build:
             context: ./storefront
-            dockerfile: ./docker/Dockerfile
+            dockerfile: ./docker/dev.Dockerfile
             target: development
-            args:
-                <<: *common_build_args
         container_name: shopsys-framework-storefront
         volumes:
-            - shopsys-storefront-sync:/app
-            - ./schema.graphql:/app/schema.graphql
+            - shopsys-storefront-sync:/home/node/app
+            - ./schema.graphql:/home/node/app/schema.graphql
         ports:
             - "3000:3000"
 
