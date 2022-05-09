@@ -64,5 +64,5 @@ export async function initServerSideProps(
             },
         };
     }
-    return { props: <ServerSidePropsType>{} };
+    return { props: {} as ServerSidePropsType };
 }

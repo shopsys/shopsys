@@ -1,5 +1,5 @@
 import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
-import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style.';
+import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';

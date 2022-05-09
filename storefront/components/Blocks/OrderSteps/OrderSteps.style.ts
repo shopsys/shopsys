@@ -8,7 +8,6 @@ type OrderStepsListItemLinkStyledProps = {
 
 export const OrderStepsListStyled = styled.ul`
     ${({ theme }) => css`
-        margin: 0 0 12px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

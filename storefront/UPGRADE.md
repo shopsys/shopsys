@@ -157,3 +157,13 @@
   - other messages and errors regarding adding to cart are handled directly inside the handler method
 - other changes
   - AddToCart result now also returns the added cart item so we do not have to perfrom search on the result to find the added item
+
+### Setting up the stylelint linter
+- [FWCC-901](https://shopsys.atlassian.net/browse/FWCC-901)
+- [FWCC-901 Stylelint](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/548)
+- the reasons these changes were introduced:
+    - type checking of the CSS notation within styled-components to keep the CSS code clean and valid
+- most significant changes
+    - the stylelint package was added to the project and CI config
+- tips on how to implement these changes
+    - run `npm run stylelint` locally and fix reported issues

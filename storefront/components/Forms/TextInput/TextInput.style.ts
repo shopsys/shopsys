@@ -45,7 +45,7 @@ export const TextInputStyled = styled.input<TextInputStyledProps>`
         border-radius: ${theme.radius.big};
         font-size: ${inputSize === 'small' ? '13px' : theme.fontSize.default};
 
-        // iOS ugly appearance fix
+        /* iOS ugly appearance fix */
         -webkit-appearance: none !important;
         -moz-appearance: textfield !important;
 

@@ -26,7 +26,7 @@ export const TextareaStyled = styled.textarea<TextareaStyledProps>`
         border-radius: ${theme.radius.big};
         font-size: ${theme.fontSize.default};
 
-        // iOS ugly appearance fix
+        /* iOS ugly appearance fix */
         -webkit-appearance: none !important;
 
         &::placeholder {

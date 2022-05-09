@@ -23,7 +23,7 @@ export const SideImageLinkStyled = styled.a`
         font-size: 0;
 
         img {
-            ax-height: 82px;
+            max-height: 82px;
 
             border-radius: ${theme.radius.medium};
         }

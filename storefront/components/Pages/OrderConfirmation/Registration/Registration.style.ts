@@ -5,7 +5,6 @@ import { styled } from 'components/Theme/main';
 export const RegistrationStyled = styled.div`
     ${({ theme }) => css`
         flex-direction: row;
-        margin-bottom: 100px;
         display: flex;
         margin-bottom: 84px;
         position: relative;
@@ -50,7 +49,6 @@ export const RegistrationMessageColumnStyled = styled.div`
 
 export const RegistrationFormColumnStyled = styled.div`
     ${({ theme }) => css`
-        padding-top: 30px;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -59,7 +57,6 @@ export const RegistrationFormColumnStyled = styled.div`
         width: 50%;
 
         @media ${theme.mediaQueries.queryTablet} {
-            padding-top: 0;
             padding: 20px;
             width: 100%;
         }

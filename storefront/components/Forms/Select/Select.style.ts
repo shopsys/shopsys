@@ -22,6 +22,8 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
         .select__control {
             min-height: 54px;
 
+            align-self: flex-end;
+            align-items: flex-end;
             border: ${localVariables.selectBorderWidth} solid ${theme.color.border};
             border-radius: ${theme.radius.big};
             box-shadow: none;
@@ -107,11 +109,6 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
         .select__option--is-selected,
         .select__option--is-focused {
             background-color: ${theme.color.blueLight};
-        }
-
-        .select__control {
-            align-self: flex-end;
-            align-items: flex-end;
         }
 
         .select__control--menu-is-open {

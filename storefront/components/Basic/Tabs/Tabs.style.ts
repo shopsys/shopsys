@@ -150,6 +150,6 @@ export const TabsIconStyled = styled(Icon)<TabsIconStyledProps>`
         css`
             transform: rotate(-180deg);
             transition: ${theme.transition};
-        `},
+        `}
     `}
 `;
