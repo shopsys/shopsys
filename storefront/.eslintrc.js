@@ -17,7 +17,6 @@ module.exports = {
     ],
     extends: [
         'eslint:recommended',
-        'plugin:prettier/recommended',
         'plugin:react/recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
@@ -32,7 +31,7 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ['tsconfig.json'], // Specify it only for TypeScript files
     },
-    plugins: ['react', 'unused-imports', 'prettier', '@typescript-eslint', 'react-hooks'],
+    plugins: ['react', 'unused-imports', '@typescript-eslint', 'react-hooks'],
     rules: {
         'array-callback-return': 'error',
         'block-scoped-var': 'error',
@@ -65,7 +64,6 @@ module.exports = {
         'no-useless-concat': 'error',
         'no-useless-return': 'error',
         'padded-blocks': 'off',
-        'prettier/prettier': 'error',
         'react/jsx-props-no-spreading': 'off',
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
