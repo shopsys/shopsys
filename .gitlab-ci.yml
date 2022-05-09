@@ -211,6 +211,9 @@ service:merge_request:
     image:
         name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
     stage: deploy
+    needs:
+        - build
+        - build-storefront
     tags:
         - deploy
     rules:
@@ -225,8 +228,6 @@ service:merge_request:
 deploy:production:
     <<: *deploy
     resource_group: deploy_production
-    needs:
-        - build
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
@@ -244,8 +245,6 @@ deploy:production:
 deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
-    needs:
-        - build
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
