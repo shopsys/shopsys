@@ -259,7 +259,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     public function getAdministratorRoles(): array
     {
-        return $this->roles->toArray();
+        return $this->roles->getValues();
     }
 
     /**
@@ -348,7 +348,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     {
         $roles = [];
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
-        foreach ($this->roles->toArray() as $role) {
+        foreach ($this->roles->getValues() as $role) {
             $roles[] = $role->getRole();
         }
 
@@ -414,7 +414,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
 
     protected function checkRolesContainAdminRole(): void
     {
-        foreach ($this->roles->toArray() as $role) {
+        foreach ($this->roles->getValues() as $role) {
             if (in_array($role->getRole(), Roles::getMandatoryAdministratorRoles(), true)) {
                 return;
             }

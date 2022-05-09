@@ -128,6 +128,6 @@ class HeurekaCategory
      */
     public function getCategories()
     {
-        return $this->categories->toArray();
+        return $this->categories->getValues();
     }
 }

@@ -165,7 +165,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function getTransports()
     {
-        return $this->transports->toArray();
+        return $this->transports->getValues();
     }
 
     /**
@@ -245,7 +245,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function getPrices()
     {
-        return $this->prices->toArray();
+        return $this->prices->getValues();
     }
 
     /**
