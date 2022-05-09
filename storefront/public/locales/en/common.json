@@ -292,5 +292,20 @@
     "Your purchase": "Your purchase",
     "Zip code cannot be longer than 5 characters": "Zip code cannot be longer than 5 characters",
     "Please select your bank": "Please select your bank",
-    "Promo code": "Promo code"
+    "Promo code": "Promo code",
+    "Max allowed limit reached.": "Max allowed limit reached.",
+    "Invalid Packetery address id.": "Invalid Packetery address id.",
+    "Invalid credentials.":  "Invalid credentials.",
+    "Invalid refresh token.": "Invalid refresh token.",
+    "Automatic order emails was not sent.":  "Automatic order emails was not sent.",
+    "Cart is empty.": "Cart is empty.",
+    "Invalid request type.":  "Invalid request type.",
+    "Category not found.": "Category not found.",
+    "Invalid image type.":  "Invalid image type.",
+    "Invalid image size.": "Invalid image size.",
+    "Order not found.":  "Order not found.",
+    "Invalid hash.": "Invalid hash.",
+    "Product price is missing.":  "Product price is missing.",
+    "No result found for slug.": "No result found for slug.",
+    "Store not found.":  "Store not found."
 }

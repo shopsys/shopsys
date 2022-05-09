@@ -1,4 +1,4 @@
-import { ApplicationErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { ApplicationErrorsType } from 'helpers/errors/applicationErrors';
 
 export type ValidationErrors = {
     [fieldName: string]: {
@@ -9,7 +9,7 @@ export type ValidationErrors = {
 
 export type ParsedErrors = {
     networkError?: string;
-    applicationError?: { type: ApplicationErrors; message: string };
+    applicationError?: { type: ApplicationErrorsType; message: string };
     userError?: {
         validation?: ValidationErrors;
     };
