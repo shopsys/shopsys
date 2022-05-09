@@ -31,7 +31,9 @@ const OrderSummary: FC = () => {
                 <OrderSummaryContentWrapperStyled>
                     <OrderSummaryContentStyled>
                         <ProductsPreview cartItems={cart.items} />
-                        <TransportAndPayment transport={transport} payment={payment} />
+                        {(transport !== null || payment !== null) && (
+                            <TransportAndPayment transport={transport} payment={payment} />
+                        )}
                         {promoCode !== null && <PromoCode promoCode={promoCode} discount={cart.totalDiscountPrice} />}
                         <TotalPrice totalPrice={cart.totalPrice} />
                     </OrderSummaryContentStyled>
