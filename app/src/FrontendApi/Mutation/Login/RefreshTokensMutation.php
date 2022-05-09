@@ -55,11 +55,13 @@ class RefreshTokensMutation extends BaseRefreshTokensMutation
         $tokens = [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString(
                 $customerUser,
-                $customerUserValidRefreshTokenChain->getDeviceId()
+                $customerUserValidRefreshTokenChain->getDeviceId(),
+                $customerUserValidRefreshTokenChain->getAdministrator()
             ),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
                 $customerUser,
-                $customerUserValidRefreshTokenChain->getDeviceId()
+                $customerUserValidRefreshTokenChain->getDeviceId(),
+                $customerUserValidRefreshTokenChain->getAdministrator()
             ),
         ];
 

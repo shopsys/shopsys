@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository as BaseCustomerUserRefreshTokenChainRepository;
 
 /**
- * @method \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[] findCustomersTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Customer\User\CustomerUserRefreshTokenChain[] findCustomersTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserRefreshTokenChainRepository extends BaseCustomerUserRefreshTokenChainRepository
@@ -35,7 +35,7 @@ class CustomerUserRefreshTokenChainRepository extends BaseCustomerUserRefreshTok
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain
+     * @param \App\Model\Customer\User\CustomerUserRefreshTokenChain $refreshTokenChain
      */
     public function removeCustomerRefreshTokenChain(CustomerUserRefreshTokenChain $refreshTokenChain): void
     {

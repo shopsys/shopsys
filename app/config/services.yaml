@@ -874,3 +874,9 @@ services:
         class: App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelationValidator
         tags:
             - validator.constraint_validator
+
+    Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade:
+        alias: App\Model\Security\LoginAsUserFacade
+
+    Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory:
+        alias: App\Model\User\FrontendApi\FrontendApiUserFactory

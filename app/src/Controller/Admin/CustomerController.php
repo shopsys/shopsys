@@ -9,15 +9,20 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Controller\Admin\CustomerController as BaseCustomerController;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
  * @property \App\Model\Order\OrderFacade $orderFacade
+ * @property \App\Model\Security\LoginAsUserFacade $loginAsUserFacade
  * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+ * @method __construct(\App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\Order\OrderFacade $orderFacade, \App\Model\Security\LoginAsUserFacade $loginAsUserFacade, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory, \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain = null)
  * @method string getSsoLoginAsCustomerUserUrl(\App\Model\Customer\User\CustomerUser $customerUser)
- * @method __construct(\App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade, \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade, \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory, \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain = null)
  */
 class CustomerController extends BaseCustomerController
 {
@@ -71,5 +76,26 @@ class CustomerController extends BaseCustomerController
             'gridView' => $grid->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/customer/login-as-user/{customerUserId}/")
+     * @param int $customerUserId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function loginAsCustomerUserAction(int $customerUserId): Response
+    {
+        try {
+            return $this->render('Admin/Content/Login/loginAsCustomerUser.html.twig', [
+                'tokens' => $this->loginAsUserFacade->loginAsCustomerUserAndGetAccessAndRefreshToken($customerUserId),
+                'url' => $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            ]);
+        } catch (CustomerUserNotFoundException $e) {
+            $this->addErrorFlash(t('Customer not found.'));
+
+            return $this->redirectToRoute('admin_customer_list');
+        } catch (LoginAsRememberedUserException $e) {
+            throw $this->createAccessDeniedException('Access denied', $e);
+        }
     }
 }

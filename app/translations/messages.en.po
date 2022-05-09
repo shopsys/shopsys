@@ -355,6 +355,9 @@ msgstr ""
 msgid "Cron overview"
 msgstr ""
 
+msgid "Customer not found."
+msgstr ""
+
 msgid "Customers - full"
 msgstr ""
 

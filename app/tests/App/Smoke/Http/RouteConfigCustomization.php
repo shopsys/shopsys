@@ -17,6 +17,7 @@ use Shopsys\HttpSmokeTesting\RouteConfig;
 use Shopsys\HttpSmokeTesting\RouteConfigCustomizer;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class RouteConfigCustomization
 {
@@ -356,8 +357,8 @@ class RouteConfigCustomization
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
             })
-            ->customizeByRouteName('admin_customer_loginasuser', function (RouteConfig $config) {
-                $config->skipRoute('Login as customer is currently not supported (it is not implemented on JS storefront)');
+            ->customizeByRouteName(['admin_customer_loginascustomeruser'], function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet()->setExpectedStatusCode(Response::HTTP_FOUND);
             })
             ->customizeByRouteName('admin_languageconstant_edit', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')

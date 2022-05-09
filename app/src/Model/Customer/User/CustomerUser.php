@@ -20,6 +20,8 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  * )
  * @ORM\Entity
  * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChain[]|\Doctrine\Common\Collections\Collection $refreshTokenChain
+ * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
  * @method \App\Model\Customer\DeliveryAddress|null getDefaultDeliveryAddress()
  */
 class CustomerUser extends BaseUser
