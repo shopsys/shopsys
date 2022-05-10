@@ -12,12 +12,8 @@ import { clickOnCategoryFromMenu } from '../../../Functions/HeaderPage';
 import { addProductToCartFromProductList } from '../../../Functions/ProductListPage';
 
 describe('Test for adding product to cart from product list', () => {
-    beforeEach(() => {
-        cy.intercept('POST', '/graphql/').as('preview');
-        cy.visit('/');
-    });
-
     it('Product list - Adding product to cart from product list and check product in cart', () => {
+        cy.visit('/');
         clickOnCategoryFromMenu(category1_name);
         cy.url().should('contain', category1_url);
         addProductToCartFromProductList(product1_catnum);

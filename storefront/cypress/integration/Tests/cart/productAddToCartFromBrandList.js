@@ -5,15 +5,14 @@ import {
     product1_name_prefix_suffix,
     url_brand_overview,
     url_cart,
-} from '../../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../../Functions/CartPage';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../../Functions/CartPopupWindow';
-import { addProductToCartFromProductList } from '../../../Functions/ProductListPage';
+} from '../../../fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/CartPage';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { addProductToCartFromProductList } from '../../Functions/ProductListPage';
 
 describe('Test for adding product to cart from brand list', () => {
     beforeEach(() => {
         cy.intercept('POST', '/graphql/').as('preview');
-        cy.visit('/');
     });
 
     it('Brand list - Adding product to cart from brand list and check product in cart', () => {

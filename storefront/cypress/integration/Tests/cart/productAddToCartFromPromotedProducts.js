@@ -9,11 +9,8 @@ import { checkProductAndGoToCartFromCartPopupWindow } from '../../../Functions/C
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../../Functions/HomepagePage';
 
 describe('Test for adding product to cart from promoted products', () => {
-    beforeEach(() => {
-        cy.intercept('POST', '/graphql/').as('preview');
-        cy.visit('/');
-    });
     it('Homepage promoted products - Adding product to cart from promoted products on homepage and check product in cart', () => {
+        cy.visit('/');
         addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
         checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
         checkProductInCart(product1_catnum, product1_name_prefix_suffix);

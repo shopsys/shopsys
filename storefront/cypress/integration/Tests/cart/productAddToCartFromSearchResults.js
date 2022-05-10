@@ -11,12 +11,8 @@ import { searchProductByNameTypeEnterAndCheckResult } from '../../../Functions/H
 import { addProductToCartFromProductList } from '../../../Functions/ProductListPage';
 
 describe('Test for adding product to cart from search results', () => {
-    beforeEach(() => {
-        cy.intercept('POST', '/graphql/').as('preview');
-        cy.visit('/');
-    });
-
     it('Search results - Adding product to cart from search results list and check product in cart', () => {
+        cy.visit('/');
         searchProductByNameTypeEnterAndCheckResult(product1_name, product1_catnum);
         addProductToCartFromProductList(product1_catnum);
         checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
