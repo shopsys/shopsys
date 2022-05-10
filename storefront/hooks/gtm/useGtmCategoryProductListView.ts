@@ -13,6 +13,7 @@ export const useGtmCategoryProductListView = (data: Maybe<FriendlyUrlPageType> |
     useEffect(() => {
         if (
             data !== null &&
+            data !== undefined &&
             data.__typename === 'Category' &&
             (lastViewedCategorySlug.current !== slug ||
                 lastViewedCategoryPageStartCursor.current !== data.productConnection.pageInfo.startCursor)

@@ -116,7 +116,7 @@ export type GtmCartInfoEventType = {
 export type GtmUserInfoType = {
     type: GtmUserType;
     group: string;
-    id?: string; // what to fill when not logged in?
+    id?: string;
     email?: string;
     name?: string;
     surname?: string;

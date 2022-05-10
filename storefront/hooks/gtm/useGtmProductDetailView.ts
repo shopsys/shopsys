@@ -13,6 +13,7 @@ export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undef
     useEffect(() => {
         if (
             data !== null &&
+            data !== undefined &&
             (data.__typename === 'MainVariant' ||
                 data.__typename === 'RegularProduct' ||
                 data.__typename === 'Variant') &&

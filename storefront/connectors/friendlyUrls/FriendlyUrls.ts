@@ -6,13 +6,13 @@ import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
-import { useSlugQueryApi } from 'graphql/generated';
+import { Maybe, useSlugQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
-export function useFriendlyUrlResolvedData(slug: string): FriendlyUrlPageType | null {
+export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageType> {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = useShopsysSelector((state) => state.optionsFilter);
@@ -28,7 +28,7 @@ export function useFriendlyUrlResolvedData(slug: string): FriendlyUrlPageType | 
     useQueryError(error);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
-    if (data?.slug === null || data?.slug === undefined) {
+    if (data?.slug?.__typename === undefined) {
         return null;
     }
 
