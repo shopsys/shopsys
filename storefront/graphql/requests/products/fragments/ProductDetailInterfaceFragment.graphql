@@ -16,4 +16,7 @@ fragment ProductDetailInterfaceFragment on Product {
     accessories {
         ...SliderProductFragment
     }
+    flags {
+        ...SimpleFlagFragment
+    }
 }

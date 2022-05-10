@@ -30,12 +30,17 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
 
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
+
     return (
         <>
             <Webline>
                 <ProductDetailStyled>
                     <ProductDetailImageStyled data-testid={testIdentifier + 'gallery'}>
-                        <ProductDetailGallery images={props.product.images} productName={props.product.name} />
+                        <ProductDetailGallery
+                            flags={props.product.flags}
+                            images={props.product.images}
+                            productName={props.product.name}
+                        />
                     </ProductDetailImageStyled>
                     <ProductDetailInfoStyled>
                         <ProductDetailPrefixStyled data-testid={testIdentifier + 'prefix'}>

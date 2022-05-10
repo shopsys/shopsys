@@ -63,6 +63,7 @@ export type ProductDetailInterfaceType = {
     parameters: ProductParameterType[];
     stockQuantity: number;
     accessories: SliderProductItemType[];
+    flags: SimpleFlagType[];
 };
 
 export type ProductDetailType = ProductDetailInterfaceType & {

@@ -72,9 +72,20 @@ export const ProductDetailGalleryMainImageStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             display: block;
             padding: 15px;
+            position: relative;
 
             border-radius: ${theme.radius.big};
             overflow: hidden;
         }
     `}
+`;
+
+export const ProductDetailGalleryFlagsStyled = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 14px;
+
+    font-size: 0;
 `;

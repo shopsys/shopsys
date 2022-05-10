@@ -32,7 +32,11 @@ const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = (props) => {
             <Webline>
                 <ProductDetailStyled>
                     <ProductDetailImageStyled data-testid={testIdentifier + 'gallery'}>
-                        <ProductDetailGallery images={props.product.images} productName={props.product.name} />
+                        <ProductDetailGallery
+                            images={props.product.images}
+                            productName={props.product.name}
+                            flags={props.product.flags}
+                        />
                     </ProductDetailImageStyled>
                     <ProductDetailInfoStyled>
                         <ProductDetailPrefixStyled data-testid={testIdentifier + 'prefix'}>

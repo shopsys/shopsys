@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import {
+    ProductDetailGalleryFlagsStyled,
     ProductDetailGalleryMainImageStyled,
     ProductDetailGalleryThumbnailsItemStyled,
     ProductDetailGalleryThumbnailsStyled,
@@ -10,12 +11,15 @@ import Image from 'components/Basic/Image';
 import { ImageType } from 'types/image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
+import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import { SimpleFlagType } from 'types/flag';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type ProductDetailGalleryProps = {
     images: ImageType[];
     productName: string;
+    flags: SimpleFlagType[];
 };
 
 /**
@@ -40,7 +44,7 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
     const mainImageUrl = props.images[0].sizes?.find((size) => size.size === 'default')?.url;
 
     return isSliderVisible ? (
-        <ProductDetailImageSlider galleryItems={props.images} />
+        <ProductDetailImageSlider galleryItems={props.images} flags={props.flags} />
     ) : (
         <SimpleReactLightbox>
             <SRLWrapper
@@ -74,6 +78,9 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                     <a href={mainImageUrl}>
                         <Image image={mainImage} alt={props.productName} type="default" maxHeight="400px" />
                     </a>
+                    <ProductDetailGalleryFlagsStyled>
+                        <ProductFlags flags={props.flags} />
+                    </ProductDetailGalleryFlagsStyled>
                 </ProductDetailGalleryMainImageStyled>
             </SRLWrapper>
         </SimpleReactLightbox>

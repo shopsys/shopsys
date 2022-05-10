@@ -9,11 +9,15 @@ import {
     SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
 import { ImageType } from 'types/image';
+import { ProductDetailGalleryFlagsStyled } from './ProductDetailGallery.style';
+import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import { SimpleFlagType } from 'types/flag';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductDetailImageSliderProps = {
     galleryItems: ImageType[];
+    flags: SimpleFlagType[];
 };
 
 const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
@@ -97,6 +101,9 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
                     <ImageSliderControlNextStyled onClick={onMoveToNextSlideHandler}>n</ImageSliderControlNextStyled>
                 </>
             ) : null}
+            <ProductDetailGalleryFlagsStyled>
+                <ProductFlags flags={props.flags} />
+            </ProductDetailGalleryFlagsStyled>
         </ProductDetailImageSliderBoxStyled>
     );
 };
