@@ -4,11 +4,11 @@ import {
     product1_name,
     product1_name_prefix_suffix,
     url_cart,
-} from '../../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../../Functions/CartPage';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../../Functions/CartPopupWindow';
-import { searchProductByNameTypeEnterAndCheckResult } from '../../../Functions/HeaderPage';
-import { addProductToCartFromProductList } from '../../../Functions/ProductListPage';
+} from '../../../fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/CartPage';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { searchProductByNameTypeEnterAndCheckResult } from '../../Functions/HeaderPage';
+import { addProductToCartFromProductList } from '../../Functions/ProductListPage';
 
 describe('Test for adding product to cart from search results', () => {
     it('Search results - Adding product to cart from search results list and check product in cart', () => {

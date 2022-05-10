@@ -11,13 +11,8 @@ import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/Cart
 import { addProductToCartFromProductList } from '../../Functions/ProductListPage';
 
 describe('Test for adding product to cart from brand list', () => {
-    beforeEach(() => {
-        cy.intercept('POST', '/graphql/').as('preview');
-    });
-
     it('Brand list - Adding product to cart from brand list and check product in cart', () => {
         cy.visit(url_brand_overview);
-        cy.wait('@preview');
         cy.get('[data-testid="blocks-simplenavigation-22"]').contains(brand_name1).click();
         addProductToCartFromProductList(product1_catnum);
         checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);

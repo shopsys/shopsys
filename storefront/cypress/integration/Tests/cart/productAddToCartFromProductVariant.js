@@ -6,11 +6,11 @@ import {
     product3_catnum,
     product3_name,
     url_cart,
-} from '../../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../../Functions/CartPage';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../../Functions/CartPopupWindow';
-import { productClickFromPromotedProductsOnHomepage } from '../../../Functions/HomepagePage';
-import { addProductVariantToCartFromProductDetail } from '../../../Functions/ProductDetailPage';
+} from '../../../fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/CartPage';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { productClickFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
+import { addProductVariantToCartFromProductDetail } from '../../Functions/ProductDetailPage';
 
 describe('Test for adding product to cart from product variant', () => {
     it('Product variant - Adding variant product to cart from product detail and check product in cart', () => {
