@@ -12,12 +12,8 @@ import { productClickFromPromotedProductsOnHomepage } from '../../../Functions/H
 import { addProductToCartFromProductDetail } from '../../../Functions/ProductDetailPage';
 
 describe('Test for adding product to cart from product detail', () => {
-    beforeEach(() => {
-        cy.intercept('POST', '/graphql/').as('preview');
-        cy.visit('/');
-    });
-
     it('Product detail - Adding product to cart from product detail and check product in cart', () => {
+        cy.visit('/');
         productClickFromPromotedProductsOnHomepage(product1_catnum, product1_name);
         cy.url().should('contain', product1_url_prefix_suffix);
         addProductToCartFromProductDetail();
