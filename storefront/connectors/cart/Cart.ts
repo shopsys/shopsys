@@ -8,7 +8,6 @@ import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/Pickup
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { mapTransport } from 'connectors/transports/Transports';
-import { PriceType } from 'types/price';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { Translate } from 'next-translate';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -101,12 +100,7 @@ export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartTyp
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
 
     const totalPrice = mapPriceData(apiData.totalPrice, currencyCode);
-    const totalItemsPrice: PriceType = {
-        priceWithVat: totalPrice.priceWithVat,
-        priceWithoutVat: totalPrice.priceWithoutVat,
-        vatAmount: totalPrice.vatAmount,
-        currencyCode: currencyCode,
-    };
+    const totalItemsPrice = mapPriceData(apiData.totalItemsPrice, currencyCode);
 
     return {
         items: apiData.items.map((item) => {

@@ -2380,7 +2380,20 @@ Applied promo code if provided
 <tr>
 <td colspan="2" valign="top"><strong>totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
+<td>
+
+Total price including transport and payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total items price (excluding transport and payment)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
@@ -8435,7 +8448,20 @@ Hierarchy of the current element in relation to the structure
 <tr>
 <td colspan="2" valign="top"><strong>totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
+<td>
+
+Total price including transport and payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total items price (excluding transport and payment)
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>

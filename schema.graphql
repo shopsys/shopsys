@@ -387,7 +387,12 @@ type Cart implements CartInterface {
   """Applied promo code if provided"""
   promoCode: String
   modifications: CartModificationsResult!
+
+  """Total price including transport and payment"""
   totalPrice: Price!
+
+  """Total items price (excluding transport and payment)"""
+  totalItemsPrice: Price!
   totalDiscountPrice: Price!
 
   """
@@ -414,7 +419,12 @@ interface CartInterface {
   selectedPickupPlaceIdentifier: String
   promoCode: String
   modifications: CartModificationsResult!
+
+  """Total price including transport and payment"""
   totalPrice: Price!
+
+  """Total items price (excluding transport and payment)"""
+  totalItemsPrice: Price!
   totalDiscountPrice: Price!
   remainingAmountWithVatForFreeTransport: Money
   paymentGoPayBankSwift: String
