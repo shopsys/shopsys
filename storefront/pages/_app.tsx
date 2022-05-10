@@ -10,7 +10,6 @@ import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { ToastContainer } from 'react-toastify';
-import UserDataRefresher from 'components/Helpers/UserDataRefresher/UserDataRefresher';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
@@ -27,7 +26,6 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <UserDataRefresher />
                 <Component {...pageProps} />
             </ShopsysGlobalProvider>
         </>

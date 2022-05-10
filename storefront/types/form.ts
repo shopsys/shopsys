@@ -14,6 +14,7 @@ export type AutocompleteSearchFormType = {
     autocompleteSearchQuery: string;
 };
 
+// EXTEND CUSTOMER CONTACT INFORMATION FORM HERE
 export type ContactInformationFormType = {
     email: string;
     register: boolean;

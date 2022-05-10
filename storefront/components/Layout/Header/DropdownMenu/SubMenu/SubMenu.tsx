@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Link from 'next/link';
 import { useAuth } from 'hooks/auth/UseAuth';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -10,7 +11,7 @@ const SubMenu: FC = () => {
     const testIdentifier = 'layout-header-dropdownmenu-submenu';
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
+    const { isUserLoggedIn } = useCurrentUserData();
     const [storesUrl, loginUrl] = getInternationalizedStaticUrls(['/stores', '/login'], domainConfig.url);
     const [, [, logout]] = useAuth();
 

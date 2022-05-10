@@ -14,6 +14,7 @@ import Link from 'components/Basic/Link';
 import TextInput from 'components/Forms/TextInput';
 import Trans from 'next-translate/Trans';
 import { useContactInformationFormMeta } from './formMeta';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -23,7 +24,7 @@ const ContactInformation: FC = () => {
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
     const { url } = useShopsysSelector((state) => state.domain);
     const [TermsAndConditionUrl, GdprUrl] = getInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
-    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
+    const { isUserLoggedIn } = useCurrentUserData();
 
     useEffect(() => {
         if (formProviderMethods.formState.touchedFields.email !== undefined) {
@@ -50,7 +51,7 @@ const ContactInformation: FC = () => {
                                 name={formMeta.fields.email.name}
                                 label={formMeta.fields.email.label}
                                 disabled={isUserLoggedIn}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}

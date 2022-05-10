@@ -96,7 +96,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                 }),
             );
         }, 500);
-    }, [pickupPlace, differentDeliveryAddressValue]);
+    }, [JSON.stringify(pickupPlace), differentDeliveryAddressValue]);
 
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {

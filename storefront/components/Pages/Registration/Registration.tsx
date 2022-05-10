@@ -8,7 +8,6 @@ import {
 } from './Registration.style';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Address from './Address';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
@@ -28,8 +27,8 @@ import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVi
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import User from './User';
-import { userActions } from 'redux/slices/user';
 import { useRegistrationMutationApi } from 'graphql/generated';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Registration: FC = () => {
@@ -41,7 +40,6 @@ const Registration: FC = () => {
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    const dispatch = useShopsysDispatch();
 
     useHandleFormErrors(registerResult.error, formProviderMethods, formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
@@ -53,7 +51,6 @@ const Registration: FC = () => {
             const refreshToken = registerResult.data?.Register.refreshToken;
 
             if (accessToken !== undefined && refreshToken !== undefined) {
-                dispatch(userActions.setIsUserLoggedIn(true));
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
             } else {

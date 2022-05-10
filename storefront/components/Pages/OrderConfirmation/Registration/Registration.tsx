@@ -10,7 +10,6 @@ import {
     RegistrationStyled,
 } from './Registration.style';
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
@@ -23,17 +22,19 @@ import { RegistrationAfterOrderFormType } from 'types/form';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import Trans from 'next-translate/Trans';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { userActions } from 'redux/slices/user';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { useRouter } from 'next/router';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Registration: FC = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const contactInformation = useShopsysSelector((state) => state.contactInformation);
+    const contactInformation = useCurrentUserContactInformation();
     const [registerResult, register] = useRegistrationMutationApi();
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useRegistrationAfterOrderForm();

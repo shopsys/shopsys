@@ -6,6 +6,7 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 import GoPayGateway from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPay';
 import Heading from 'components/Basic/Heading';
 import Link from 'components/Basic/Link';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { userActions } from 'redux/slices/user';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -15,8 +16,8 @@ const OrderConfirmation: FC = () => {
 
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
+    const { email } = useCurrentUserContactInformation();
     const { urlHash } = useShopsysSelector((state) => state.user);
-    const { email } = useShopsysSelector((state) => state.contactInformation);
     const { lastOrderUuid } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [orderDetailUrl] = getInternationalizedStaticUrls(

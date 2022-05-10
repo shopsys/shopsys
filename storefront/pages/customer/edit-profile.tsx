@@ -10,12 +10,13 @@ import PageGuard from 'components/Helpers/PageGuard';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const EditProfilePage: FC = () => {
     const t = useTypedTranslationFunction();
+    const { isUserLoggedIn } = useCurrentUserData();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const [customerUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer', '/customer/edit-profile'],
         domainUrl,
