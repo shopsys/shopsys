@@ -247,6 +247,13 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
             $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
+
+            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+                $domainId,
+                'front_product_detail',
+                $product->getId()
+            );
+            $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 
         $productData->catnum = $product->getCatnum();
