@@ -173,7 +173,7 @@ class OrderMail implements MessageFactoryInterface
             self::VARIABLE_TOTAL_PRICE => $this->getFormattedPrice($order),
             self::VARIABLE_BILLING_ADDRESS => $this->getBillingAddressHtmlTable($order),
             self::VARIABLE_DELIVERY_ADDRESS => $this->getDeliveryAddressHtmlTable($order),
-            self::VARIABLE_NOTE => htmlspecialchars($order->getNote(), ENT_QUOTES),
+            self::VARIABLE_NOTE => $order->getNote() !== null ? htmlspecialchars($order->getNote(), ENT_QUOTES) : null,
             self::VARIABLE_PRODUCTS => $this->getProductsHtmlTable($order),
             self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
             self::VARIABLE_TRANSPORT_INSTRUCTIONS => $transportInstructions,

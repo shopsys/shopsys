@@ -57,12 +57,12 @@ class LegalConditionsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $termsAndConditions
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $termsAndConditions
      */
-    public function setTermsAndConditions(?Article $termsAndConditions = null, $domainId)
+    public function setTermsAndConditions(int $domainId, ?Article $termsAndConditions = null): void
     {
-        $this->setArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $termsAndConditions, $domainId);
+        $this->setArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId, $termsAndConditions);
     }
 
     /**
@@ -86,12 +86,12 @@ class LegalConditionsFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $privacyPolicy
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $privacyPolicy
      */
-    public function setPrivacyPolicy(?Article $privacyPolicy = null, $domainId)
+    public function setPrivacyPolicy(int $domainId, ?Article $privacyPolicy = null): void
     {
-        $this->setArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $privacyPolicy, $domainId);
+        $this->setArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId, $privacyPolicy);
     }
 
     /**
@@ -132,14 +132,14 @@ class LegalConditionsFacade
 
     /**
      * @param string $settingKey
-     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $privacyPolicy
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Article\Article|null $article
      */
-    protected function setArticle($settingKey, ?Article $privacyPolicy = null, $domainId)
+    protected function setArticle(string $settingKey, int $domainId, ?Article $article = null): void
     {
         $articleId = null;
-        if ($privacyPolicy !== null) {
-            $articleId = $privacyPolicy->getId();
+        if ($article !== null) {
+            $articleId = $article->getId();
         }
 
         $this->setting->setForDomain($settingKey, $articleId, $domainId);

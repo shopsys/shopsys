@@ -219,3 +219,40 @@ All the changes are considered as backwards incompatible.
     - `__serialize()` and `__unserialize()` are used instead
 - allow running npm scripts even when they are not executable ([#2403](https://github.com/shopsys/shopsys/pull/2403))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/76cfa5d35b11689ffdd126e3ca2079acbefb659f) to update your project
+- PHP deprecation warnings were removed from our codebase ([#2446](https://github.com/shopsys/shopsys/pull/2446))
+    - the interface of the following methods in `LegalConditionsFacade` has been changed:
+        ```diff
+        - setTermsAndConditions(?Article $termsAndConditions = null, $domainId)
+        + setTermsAndConditions(int $domainId, ?Article $termsAndConditions = null): void
+
+        - public function setPrivacyPolicy(?Article $privacyPolicy = null, $domainId)
+        + public function setPrivacyPolicy(int $domainId, ?Article $privacyPolicy = null): void
+
+        - protected function setArticle($settingKey, ?Article $privacyPolicy = null, $domainId)
+        + protected function setArticle(string $settingKey, int $domainId, ?Article $article = null): void
+        ```
+    - `CategoryDomainNotFoundException` constructor has been changed:
+        ```diff
+        - public function __construct(?int $categoryId = null, int $domainId, ?Exception $previous = null)
+        + public function __construct(int $domainId, ?int $categoryId = null, ?Exception $previous = null)
+        ```
+    - `PaymentDomainNotFoundException` constructor has been changed:
+        ```diff
+        - public function __construct(?int $paymentId = null, int $domainId, ?Exception $previous = null)
+        + public function __construct(int $domainId, ?int $paymentId = null, ?Exception $previous = null)
+        ```
+    - `BrandDomainNotFoundException` constructor has been changed:
+        ```diff
+        - public function __construct(?int $brandId = null, int $domainId, ?Exception $previous = null)
+        + public function __construct(int $domainId, ?int $brandId = null, ?Exception $previous = null)
+        ```
+    - `ProductDomainNotFoundException` constructor has been changed:
+        ```diff
+        - public function __construct(?int $productId = null, int $domainId, ?Exception $previous = null)
+        + public function __construct(int $domainId, ?int $productId = null, ?Exception $previous = null)
+        ```
+    - `TransportDomainNotFoundException` constructor has been changed:
+        ```diff
+        - public function __construct(?int $transportId = null, int $domainId, ?Exception $previous = null)
+        + public function __construct(int $domainId, ?int $transportId = null, ?Exception $previous = null)
+        ```

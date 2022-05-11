@@ -8,12 +8,12 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseL
 
 /**
  * @method \App\Model\Article\Article|null findTermsAndConditions(int $domainId)
- * @method setTermsAndConditions(\App\Model\Article\Article|null $termsAndConditions = null, int $domainId)
+ * @method setTermsAndConditions(int $domainId, \App\Model\Article\Article|null $termsAndConditions = null)
  * @method \App\Model\Article\Article|null findPrivacyPolicy(int $domainId)
- * @method setPrivacyPolicy(\App\Model\Article\Article|null $privacyPolicy = null, int $domainId)
+ * @method setPrivacyPolicy(int $domainId, \App\Model\Article\Article|null $privacyPolicy = null)
  * @method bool isArticleUsedAsLegalConditions(\App\Model\Article\Article $article)
  * @method \App\Model\Article\Article|null findArticle(string $settingKey, int $domainId)
- * @method setArticle(string $settingKey, \App\Model\Article\Article|null $privacyPolicy = null, int $domainId)
+ * @method setArticle(string $settingKey, int $domainId, \App\Model\Article\Article|null $article = null)
  */
 class LegalConditionsFacade extends BaseLegalConditionsFacade
 {

@@ -921,7 +921,7 @@ class Product extends AbstractTranslatableEntity
             }
         }
 
-        throw new ProductDomainNotFoundException($this->id, $domainId);
+        throw new ProductDomainNotFoundException($domainId, $this->id);
     }
 
     /**

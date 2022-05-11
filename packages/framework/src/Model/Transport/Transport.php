@@ -141,7 +141,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @param string|null $locale
-     * @return string
+     * @return string|null
      */
     public function getName($locale = null)
     {
@@ -352,7 +352,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
             }
         }
 
-        throw new TransportDomainNotFoundException($this->id, $domainId);
+        throw new TransportDomainNotFoundException($domainId, $this->id);
     }
 
     /**

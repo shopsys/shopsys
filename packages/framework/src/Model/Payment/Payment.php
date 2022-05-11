@@ -233,7 +233,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
 
     /**
      * @param string|null $locale
-     * @return string
+     * @return string|null
      */
     public function getName($locale = null)
     {
@@ -368,7 +368,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
             }
         }
 
-        throw new PaymentDomainNotFoundException($this->id, $domainId);
+        throw new PaymentDomainNotFoundException($domainId, $this->id);
     }
 
     /**
