@@ -38,14 +38,12 @@ services:
         restart: always
         build:
             context: ./storefront
-            dockerfile: ./docker/Dockerfile
+            dockerfile: ./docker/dev.Dockerfile
             target: development
-            args:
-                <<: *common_build_args
         container_name: shopsys-framework-storefront
         volumes:
-            - storefront:/app
-            - ./schema.graphql:/app/schema.graphql
+            - storefront:/home/node/app
+            - ./schema.graphql:/home/node/app/schema.graphql
         ports:
             - "3000:3000"
 
@@ -182,5 +180,5 @@ x-mutagen:
             mode: "two-way-resolved"
             configurationBeta:
                 permissions:
-                    defaultOwner: "id:501"
+                    defaultOwner: "id:1000"
                     defaultDirectoryMode: 0777
