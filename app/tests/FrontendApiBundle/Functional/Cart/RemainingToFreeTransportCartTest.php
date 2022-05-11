@@ -9,9 +9,9 @@ use App\DataFixtures\Demo\SettingValueDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+use Tests\FrontendApiBundle\Functional\Order\AbstractOrderTestCase;
 
-class RemainingToFreeTransportCartTest extends GraphQlTestCase
+class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
 {
     /**
      * @var \App\Model\Product\Product
@@ -92,7 +92,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
             ) {
                 cart {
                     uuid
-                    totalPrice{
+                    totalItemsPrice{
                         priceWithVat
                     }
                     remainingAmountWithVatForFreeTransport
@@ -103,8 +103,8 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($mutation);
         $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
-        $totalCartPriceWithVat = Money::create($newlyCreatedCart['totalPrice']['priceWithVat']);
-        $expectedRemainingPrice = $freeTransportAndPaymentLimit->subtract($totalCartPriceWithVat);
+        $totalItemsPriceWithVat = Money::create($newlyCreatedCart['totalItemsPrice']['priceWithVat']);
+        $expectedRemainingPrice = $freeTransportAndPaymentLimit->subtract($totalItemsPriceWithVat);
 
         self::assertTrue(
             $expectedRemainingPrice->equals(Money::create($newlyCreatedCart['remainingAmountWithVatForFreeTransport'])),
@@ -115,12 +115,16 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
             )
         );
 
+        $newlyCreatedCartUuid = $newlyCreatedCart['uuid'];
+        $this->addCardPaymentToCart($newlyCreatedCartUuid);
+        $this->addCzechPostTransportToCart($newlyCreatedCartUuid);
+
         $query = '{
             cart(
-                cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}
+                cartInput: {cartUuid: "' . $newlyCreatedCartUuid . '"}
             ) {
                 remainingAmountWithVatForFreeTransport
-                totalPrice {
+                totalItemsPrice {
                     priceWithVat
                 }
             }
@@ -129,12 +133,24 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($query);
         $cart = $response['data']['cart'];
 
+        $totalItemsPriceWithVat = Money::create($cart['totalItemsPrice']['priceWithVat']);
+        $expectedRemainingPriceAfterAddingTransportAndPayment = $freeTransportAndPaymentLimit->subtract($totalItemsPriceWithVat);
+
         self::assertTrue(
-            $expectedRemainingPrice->equals(Money::create($cart['remainingAmountWithVatForFreeTransport'])),
+            $expectedRemainingPriceAfterAddingTransportAndPayment->equals(Money::create($cart['remainingAmountWithVatForFreeTransport'])),
             sprintf(
                 'Actual remaining price (%s) is different than expected (%s)',
-                $expectedRemainingPrice->getAmount(),
+                $expectedRemainingPriceAfterAddingTransportAndPayment->getAmount(),
                 $newlyCreatedCart['remainingAmountWithVatForFreeTransport']
+            )
+        );
+
+        self::assertTrue(
+            $expectedRemainingPriceAfterAddingTransportAndPayment->equals($expectedRemainingPrice),
+            sprintf(
+                'Remaining price after adding transport and payment (%s) differs from the original remaining price (%s)',
+                $expectedRemainingPriceAfterAddingTransportAndPayment->getAmount(),
+                $expectedRemainingPrice->getAmount(),
             )
         );
     }
