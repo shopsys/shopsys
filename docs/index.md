@@ -5,7 +5,7 @@ On these pages, you can find everything you need to know when you want to build 
 If you want to know more about what Shopsys Framework is, you can take a look at our [README.md](https://github.com/shopsys/shopsys/blob/master/README.md).
 
 ## Need help?
-If you are not able to find the desired information here, you can always ask us directly on our [public slack](http://slack.shopsys-framework.com/) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on Github.
+If you are not able to find the desired information here, you can always ask us directly on our [public slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ) or [report an issue](https://github.com/shopsys/shopsys/issues/new) on Github.
 If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-troubleshooting.md) might help you.
 
 ## What is new and how to upgrade

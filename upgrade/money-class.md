@@ -464,4 +464,4 @@ Refactor your code if you have used them (you can take a look at [the original c
 
 We know that the change is huge and upgrading might be difficult.
 We want to keep improving Shopsys Framework for you, we hope that this article helped you to safely upgrade your project.
-If you find anything we missed or if you'll need to explain anything more, please [create an issue](https://github.com/shopsys/shopsys/issues/new) or contact us on [our Slack](http://slack.shopsys-framework.com/).
+If you find anything we missed or if you'll need to explain anything more, please [create an issue](https://github.com/shopsys/shopsys/issues/new) or join us on [our Slack](https://join.slack.com/t/shopsysframework/shared_invite/zt-11wx9au4g-e5pXei73UJydHRQ7nVApAQ).
