@@ -43,6 +43,7 @@ const ProductAction: FC<ProductActionProps> = (props) => {
                     minQuantity={1}
                     maxQuantity={props.product.stockQuantity}
                     gtmListName={props.gtmListName}
+                    listIndex={props.listIndex}
                 />
             </ProductActionStyled>
         </ProductActionWrapperStyled>

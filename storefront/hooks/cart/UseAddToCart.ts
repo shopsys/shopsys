@@ -17,6 +17,7 @@ export const useAddToCart = (): typeof addToCartAction => {
 
     const addToCartAction = async (
         productUuid: string,
+        listIndex: number,
         quantity: number,
         gtmListName: GtmListNameType,
         isAbsoluteQuantity = false,
@@ -58,6 +59,7 @@ export const useAddToCart = (): typeof addToCartAction => {
 
         onChangeCartItemGtmEvent(
             mapCartItem(cartItem, currencyCode),
+            listIndex,
             addToCartResult.addProductResult.addedQuantity - initialQuantity,
             gtmListName,
         );

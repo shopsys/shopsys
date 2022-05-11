@@ -157,6 +157,7 @@ export type GtmProductInterface = {
     sku: string;
     brand: string;
     categories: string[];
+    listIndex: number;
     collection?: string;
     coupon?: string;
     size?: string;

@@ -23,6 +23,7 @@ import { CartItemType } from 'types/cart';
 
 type ItemProps = {
     item: CartItemType;
+    listIndex: number;
 };
 
 const Item: FC<ItemProps> = (props) => {
@@ -46,7 +47,13 @@ const Item: FC<ItemProps> = (props) => {
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            changeCartItemQuantity(props.item.product.uuid, spinboxRef.current!.valueAsNumber, 'cart', true);
+            changeCartItemQuantity(
+                props.item.product.uuid,
+                props.listIndex,
+                spinboxRef.current!.valueAsNumber,
+                'cart',
+                true,
+            );
         }, 500);
     };
 
@@ -87,7 +94,7 @@ const Item: FC<ItemProps> = (props) => {
                 </TotalPriceStyled>
             </TotalPriceCellStyled>
             <RemoveButtonCellStyled>
-                <RemoveCartItemButton cartItemUuid={props.item.uuid} />
+                <RemoveCartItemButton cartItem={props.item} listIndex={props.listIndex} />
             </RemoveButtonCellStyled>
         </ItemStyled>
     );

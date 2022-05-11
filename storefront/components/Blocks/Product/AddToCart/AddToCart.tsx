@@ -34,6 +34,7 @@ const AddToCart: FC<AddToCartProps> = (props) => {
 
         const addToCartResult = await changeCartItemQuantity(
             props.productUuid,
+            props.listIndex,
             spinboxRef.current.valueAsNumber,
             props.gtmListName,
         );

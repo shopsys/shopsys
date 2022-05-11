@@ -39,7 +39,7 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
 
     let products: GtmCartItemType[] | undefined = undefined;
     if (cart.items.length > 0) {
-        products = cart.items.map((cartItem) => mapGtmCartItemType(cartItem));
+        products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index));
     }
 
     const coupons: string[] = [];

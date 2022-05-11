@@ -63,7 +63,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
                         key={index}
                         product={productItemData}
                         gtmListName={props.gtmListName}
-                        index={index}
+                        listIndex={index}
                     />
                 ))}
             </ProductSliderStyled>

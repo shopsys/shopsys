@@ -1,6 +1,7 @@
 import { useRemoveFromCartMutationApi } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { CartItemType } from 'types/cart';
+import { GtmListNameType } from 'types/gtm';
 import { onRemoveCartItemGtmEvent } from 'utils/Gtm/EventHandlers';
 import { userActions } from 'redux/slices/user';
 
@@ -9,14 +10,20 @@ export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const dispatch = useShopsysDispatch();
 
-    const removeItemFromCartAction = async (cartItemUuid: string, gtmListName: string) => {
-        const removeItemFromCartActionResult = await removeItemFromCart({ input: { cartUuid, cartItemUuid } });
+    const removeItemFromCartAction = async (
+        cartItem: CartItemType,
+        listIndex: number,
+        gtmListName: GtmListNameType,
+    ) => {
+        const removeItemFromCartActionResult = await removeItemFromCart({
+            input: { cartUuid, cartItemUuid: cartItem.uuid },
+        });
 
         if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
             dispatch(userActions.setCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid));
         }
 
-        onRemoveCartItemGtmEvent({} as unknown as CartItemType, gtmListName);
+        onRemoveCartItemGtmEvent(cartItem, listIndex, gtmListName);
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;
     };

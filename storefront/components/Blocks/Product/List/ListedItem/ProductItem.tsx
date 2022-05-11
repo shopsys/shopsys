@@ -42,7 +42,9 @@ const ProductItem: FC<ProductItemProps> = (props) => {
             <ProductItemInStyled>
                 <NextLink href={props.product.slug} passHref>
                     <ProductItemLinkStyled
-                        onClick={() => onProductDetailRedirectHandler(props.product, props.gtmListName, props.index)}
+                        onClick={() =>
+                            onProductDetailRedirectHandler(props.product, props.gtmListName, props.listIndex)
+                        }
                     >
                         <ProductItemImageStyled>
                             <Image image={props.product.image} type="list" alt={props.product.fullName} />
@@ -67,7 +69,7 @@ const ProductItem: FC<ProductItemProps> = (props) => {
                         </ProductItemInfoStyled>
                     </ProductItemLinkStyled>
                 </NextLink>
-                <ProductAction product={props.product} gtmListName={props.gtmListName} />
+                <ProductAction product={props.product} gtmListName={props.gtmListName} listIndex={props.listIndex} />
             </ProductItemInStyled>
         </ProductItemStyled>
     );

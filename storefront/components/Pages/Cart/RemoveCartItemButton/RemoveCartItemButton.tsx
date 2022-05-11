@@ -2,9 +2,11 @@ import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
 import Icon from 'components/Basic/Icon';
 import { useRemoveFromCart } from 'hooks/cart/UseRemoveFromCart';
 import { FC } from 'react';
+import { CartItemType } from 'types/cart';
 
 type RemoveCartItemButtonProps = {
-    cartItemUuid: string;
+    cartItem: CartItemType;
+    listIndex: number;
 };
 
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
@@ -13,7 +15,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const removeItemFromCart = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        removeItemFromCart(props.cartItemUuid, 'cart');
+        removeItemFromCart(props.cartItem, props.listIndex, 'cart');
     };
 
     return (

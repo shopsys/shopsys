@@ -9,8 +9,8 @@ import {
     SimpleProductType,
 } from 'types/product';
 
-export const mapGtmCartItemType = (cartItem: CartItemType, quantity?: number): GtmCartItemType => ({
-    ...mapGtmProductInterface(cartItem.product),
+export const mapGtmCartItemType = (cartItem: CartItemType, listIndex: number, quantity?: number): GtmCartItemType => ({
+    ...mapGtmProductInterface(cartItem.product, listIndex),
     quantity: quantity ?? cartItem.quantity,
 });
 
@@ -22,7 +22,7 @@ export const mapGtmListedProductType = (
 export const mapGtmProductDetailType = (product: ProductDetailType | MainVariantDetailType): GtmProductInterface =>
     mapGtmProductInterface(product, 1);
 
-const mapGtmProductInterface = (productInterface: ProductInterfaceType): GtmProductInterface => ({
+const mapGtmProductInterface = (productInterface: ProductInterfaceType, listIndex: number): GtmProductInterface => ({
     id: productInterface.uuid,
     name: productInterface.fullName,
     availability: productInterface.availability.name,
@@ -36,6 +36,7 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType): GtmProd
     sku: productInterface.catalogNumber,
     brand: productInterface.brand?.name ?? '',
     categories: productInterface.categoryNames,
+    listIndex: listIndex + 1,
 });
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {

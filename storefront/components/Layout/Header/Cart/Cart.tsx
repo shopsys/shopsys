@@ -68,8 +68,8 @@ const Cart: FC = () => {
                 {!isCartEmpty ? (
                     <>
                         <CartDetailList>
-                            {cart?.items.map((cartItem) => (
-                                <ListItem key={cartItem.uuid} cartItem={cartItem} />
+                            {cart?.items.map((cartItem, index) => (
+                                <ListItem key={cartItem.uuid} cartItem={cartItem} listIndex={index} />
                             ))}
                         </CartDetailList>
                         <CartDetailButtonWrapperStyled>

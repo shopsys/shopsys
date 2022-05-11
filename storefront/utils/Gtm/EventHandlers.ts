@@ -27,14 +27,19 @@ export const onClickProductDetailGtmEvent = (
     gtmSafePushEvent(event);
 };
 
-export const onRemoveCartItemGtmEvent = (removedCartItem: CartItemType, listName: string): void => {
+export const onRemoveCartItemGtmEvent = (
+    removedCartItem: CartItemType,
+    listIndex: number,
+    listName: GtmListNameType,
+): void => {
     const event = getNewGtmEcommerceEvent('ec.remove_from_cart', true);
-    event.ecommerce = getGtmChangeCartItemEvent(removedCartItem, removedCartItem.quantity, listName);
+    event.ecommerce = getGtmChangeCartItemEvent(removedCartItem, listIndex, removedCartItem.quantity, listName);
     gtmSafePushEvent(event);
 };
 
 export const onChangeCartItemGtmEvent = (
     addedCartItem: CartItemType,
+    listIndex: number,
     quantityDifference: number,
     listName: GtmListNameType,
 ): void => {
@@ -43,7 +48,7 @@ export const onChangeCartItemGtmEvent = (
         event.event = 'ec.remove_from_cart';
     }
     const absoluteQuantity = Math.abs(quantityDifference);
-    event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, absoluteQuantity, listName);
+    event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, listIndex, absoluteQuantity, listName);
     gtmSafePushEvent(event);
 };
 

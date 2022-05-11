@@ -39,6 +39,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
         const addToCartResult = await changeCartItemQuantity(
             props.product.uuid,
+            1,
             spinboxRef.current.valueAsNumber,
             'detail',
         );

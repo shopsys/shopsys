@@ -16,8 +16,8 @@ const List: FC<ListProps> = (props) => {
     return (
         <Webline>
             <ListStyled>
-                {props.items.map((item) => (
-                    <Item key={item.uuid} item={item} />
+                {props.items.map((item, index) => (
+                    <Item key={item.uuid} item={item} listIndex={index} />
                 ))}
             </ListStyled>
         </Webline>

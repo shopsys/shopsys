@@ -64,7 +64,7 @@ const ProductItem: FC<ProductItemProps> = (props) => {
                         </SliderProductItemInfoStyled>
                     </SliderProductItemLinkStyled>
                 </NextLink>
-                <ProductAction product={props.product} gtmListName={props.gtmListName} />
+                <ProductAction product={props.product} gtmListName={props.gtmListName} listIndex={props.listIndex} />
             </SliderProductItemInStyled>
         </SliderProductItemStyled>
     );
