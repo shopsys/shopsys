@@ -6,20 +6,10 @@ namespace App\FrontendApi\Model\Cart\Exception;
 
 use App\FrontendApi\Error\UserErrorWithCodeInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Throwable;
 
 class InvalidCartItemUserError extends UserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'cart-item-invalid';
-
-    /**
-     * @param string $message
-     * @param \Throwable|null $previous
-     */
-    public function __construct($message = '', ?Throwable $previous = null)
-    {
-        parent::__construct($message, 0, $previous);
-    }
 
     /**
      * {@inheritDoc}
