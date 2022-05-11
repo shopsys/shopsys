@@ -13,6 +13,7 @@ import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/Product
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { SlugQueryDocumentApi } from 'graphql/generated';
+import { createClient } from 'helpers/createClient';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
@@ -33,6 +34,7 @@ import { CategoryDetailType } from 'types/category';
 import { FlagDetailType } from 'types/flag';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { StoreDetailType } from 'types/store';
+import { ssrExchange } from 'urql';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
@@ -53,6 +55,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     }, [dispatch, router.query.page]);
 
     const data = useFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
+
     if (data === null || data === undefined) {
         return <Error404 />;
     }
@@ -114,18 +117,38 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
     );
 
-    return initServerSideProps(context, store, [
-        {
-            query: SlugQueryDocumentApi,
-            variables: {
-                slug: getUrlWithoutGetParameters(context.resolvedUrl),
-                sortingMode: store.getState().user.sort,
-                endCursorForPagination: store.getState().user.pagination.paginationCursor,
-                pageSize: initialState.pagination.pageSize,
-                filter: mapParametersFilter(store.getState().optionsFilter),
+    const exchange = ssrExchange({ isClient: false });
+    const client = createClient(context, store, exchange);
+
+    const slugQueryVariables = {
+        slug: getUrlWithoutGetParameters(context.resolvedUrl),
+        sortingMode: store.getState().user.sort,
+        endCursorForPagination: store.getState().user.pagination.paginationCursor,
+        pageSize: initialState.pagination.pageSize,
+        filter: mapParametersFilter(store.getState().optionsFilter),
+    };
+
+    const initServerSideData = await initServerSideProps(
+        context,
+        store,
+        [
+            {
+                query: SlugQueryDocumentApi,
+                variables: slugQueryVariables,
             },
-        },
-    ]);
+        ],
+        client,
+        exchange,
+    );
+
+    const slugQueryResult = client?.readQuery(SlugQueryDocumentApi, slugQueryVariables);
+
+    if (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) {
+        // eslint-disable-next-line require-atomic-updates
+        context.res.statusCode = 404;
+    }
+
+    return initServerSideData;
 });
 
 const getUrlWithoutGetParameters = (originalUrl: string) => {
