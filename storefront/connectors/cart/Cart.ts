@@ -11,6 +11,7 @@ import { mapTransport } from 'connectors/transports/Transports';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { Translate } from 'next-translate';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -26,32 +27,34 @@ export const useCurrentCart = (): CurrentCartType => {
         requestPolicy: 'network-only',
     });
 
-    if (result.error !== undefined) {
-        // EXTEND CART ERRORS HERE
-        handleCartError(result.error, t);
+    return useMemo(() => {
+        if (result.error !== undefined) {
+            // EXTEND CART ERRORS HERE
+            handleCartError(result.error, t);
 
-        return getEmptyCart();
-    }
+            return getEmptyCart();
+        }
 
-    if (!result.data?.cart) {
-        // EXTEND EMPTY CART HERE
-        return getEmptyCart();
-    }
+        if (!result.data?.cart) {
+            // EXTEND EMPTY CART HERE
+            return getEmptyCart();
+        }
 
-    // EXTEND CART UPDATE HERE
-    const mappedCart = mapCart(result.data.cart, currencyCode);
+        // EXTEND CART UPDATE HERE
+        const mappedCart = mapCart(result.data.cart, currencyCode);
 
-    const mappedTransport =
-        result.data.cart.transport === null ? null : mapTransport(result.data.cart.transport, currencyCode);
-    return {
-        cart: mappedCart,
-        isCartEmpty: mappedCart.items.length === 0,
-        transport: mappedTransport,
-        pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
-        payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
-        paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
-        promoCode: result.data.cart.promoCode,
-    };
+        const mappedTransport =
+            result.data.cart.transport === null ? null : mapTransport(result.data.cart.transport, currencyCode);
+        return {
+            cart: mappedCart,
+            isCartEmpty: mappedCart.items.length === 0,
+            transport: mappedTransport,
+            pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
+            payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
+            paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
+            promoCode: result.data.cart.promoCode,
+        };
+    }, [currencyCode, result.data?.cart, result.error, t]);
 };
 
 const getEmptyCart = (): CurrentCartType => ({

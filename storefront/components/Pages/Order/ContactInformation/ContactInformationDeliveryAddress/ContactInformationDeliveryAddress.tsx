@@ -26,7 +26,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const { pickupPlace } = useCurrentCart();
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext<ContactInformationFormType>();
-    const { setValue } = formProviderMethods;
+    const { setValue, getValues } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [
         differentDeliveryAddressValue,
@@ -59,15 +59,15 @@ const ContactInformationDeliveryAddress: FC = () => {
                 return option.value === pickupPlace?.country.code;
             });
             if (selectedCountryOption !== undefined && pickupPlace !== null) {
-                const formValues = formProviderMethods.getValues();
-                formProviderMethods.setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName);
-                formProviderMethods.setValue(formMeta.fields.deliveryLastName.name, formValues.lastName);
-                formProviderMethods.setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName);
-                formProviderMethods.setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone);
-                formProviderMethods.setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street);
-                formProviderMethods.setValue(formMeta.fields.deliveryCity.name, pickupPlace.city);
-                formProviderMethods.setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode);
-                formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
+                const formValues = getValues();
+                setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName);
+                setValue(formMeta.fields.deliveryLastName.name, formValues.lastName);
+                setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName);
+                setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone);
+                setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street);
+                setValue(formMeta.fields.deliveryCity.name, pickupPlace.city);
+                setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode);
+                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
                 dispatch(
                     contactInformationActions.setDeliveryAddressFromPickupPlace({
                         ...pickupPlace,
@@ -75,9 +75,10 @@ const ContactInformationDeliveryAddress: FC = () => {
                     }),
                 );
             }
-            return;
+            return undefined;
         }
-        setTimeout(() => {
+
+        const timeout = setTimeout(() => {
             const firstCountrySelectOption = { ...countrySelectOptions[0] };
 
             setValue(formMeta.fields.deliveryFirstName.name, '');
@@ -97,10 +98,12 @@ const ContactInformationDeliveryAddress: FC = () => {
                 }),
             );
         }, 500);
+        return () => clearTimeout(timeout);
     }, [
         pickupPlace,
         differentDeliveryAddressValue,
         countrySelectOptions,
+        getValues,
         setValue,
         formMeta.fields.deliveryFirstName.name,
         formMeta.fields.deliveryLastName.name,
@@ -111,7 +114,6 @@ const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryPostcode.name,
         formMeta.fields.deliveryCountry.name,
         dispatch,
-        formProviderMethods,
     ]);
 
     useEffect(() => {
