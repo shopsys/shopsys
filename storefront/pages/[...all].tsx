@@ -131,6 +131,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const initServerSideData = await initServerSideProps(
         context,
         store,
+        false,
         [
             {
                 query: SlugQueryDocumentApi,

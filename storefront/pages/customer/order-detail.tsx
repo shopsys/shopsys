@@ -6,7 +6,6 @@ import { useOrderDetail } from 'connectors/customer/Orders';
 import { OrderDetailQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
@@ -17,17 +16,14 @@ const Index: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
-    const { isUserLoggedIn } = useCurrentUserData();
     const order = useOrderDetail(getStringFromUrlQuery(router.query.orderNumber), domainConfig);
 
     return (
         <StaticUrlGuard domainUrl={domainConfig.url}>
-            <PageGuard accessCondition={isUserLoggedIn} errorRedirectUrl="/">
-                <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
-                    <CommonLayout>
-                        <OrderDetail order={order!} />
-                    </CommonLayout>
-                </PageGuard>
+            <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
+                <CommonLayout>
+                    <OrderDetail order={order!} />
+                </CommonLayout>
             </PageGuard>
         </StaticUrlGuard>
     );
@@ -44,7 +40,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     }
 
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [
+    return initServerSideProps(context, store, true, [
         { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
     ]);
 });
