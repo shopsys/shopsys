@@ -162,7 +162,7 @@ class Brand extends AbstractTranslatableEntity
             }
         }
 
-        throw new BrandDomainNotFoundException($this->id, $domainId);
+        throw new BrandDomainNotFoundException($domainId, $this->id);
     }
 
     /**

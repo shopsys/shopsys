@@ -212,7 +212,7 @@ class Category extends AbstractTranslatableEntity
             }
         }
 
-        throw new CategoryDomainNotFoundException($this->id, $domainId);
+        throw new CategoryDomainNotFoundException($domainId, $this->id);
     }
 
     /**

@@ -851,7 +851,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getNote()
     {
