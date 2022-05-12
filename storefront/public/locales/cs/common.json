@@ -326,5 +326,7 @@
     "Invalid hash.": "Neplatný hash.",
     "Product price is missing.":  "U produktu chybí cena.",
     "No result found for slug.": "Nebyly nalezeny žádné výsledky.",
-    "Store not found.":  "Prodejna nebyla nalezena."
+    "Store not found.":  "Prodejna nebyla nalezena.",
+    "Something went wrong.": "Něco se nepovedlo.",
+    "Please try again later or contact us.": "Zkuste to prosím později, nebo nás kontaktujte."
 }
