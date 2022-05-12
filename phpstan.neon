@@ -4,8 +4,8 @@ parameters:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
     symfony:
-        container_xml_path: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        constant_hassers: false
+        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constantHassers: false
 
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
