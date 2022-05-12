@@ -170,6 +170,40 @@ All the changes are considered as backwards incompatible.
 - upgrade PhpStan to the latest version ([#2452](https://github.com/shopsys/shopsys/pull/2452))
     - see #project-base-diff to update your project
     - run `php phing phpstan` and fix violations in your code
+- upgrade `presta/sitemap-bundle` to version `^3.3` ([#2450](https://github.com/shopsys/shopsys/pull/2450))
+    - constructor of `Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory` was changed:
+        ```diff
+        public function __construct(
+            EventDispatcherInterface $eventDispatcher,
+            Filesystem $localFilesystem,
+            FilesystemInterface $filesystem,
+            MountManager $mountManager,
+        -    SitemapFilePrefixer $sitemapFilePrefixer
+        +    SitemapFilePrefixer $sitemapFilePrefixer,
+        +    UrlGeneratorInterface $urlGenerator
+        ```
+    - constructor of `Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper` was changed:
+        ```diff
+        public function __construct(
+            EventDispatcherInterface $dispatcher,
+            Filesystem $filesystem,
+            FilesystemInterface $abstractFilesystem,
+            MountManager $mountManager,
+        -    $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
+        -    $itemsBySet = null
+        +    UrlGeneratorInterface $urlGenerator,
+        +    string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
+        +    ?int $itemsBySet = null
+        ```
+    - interface of the following methods in `Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper` was changed:
+        ```diff
+      - protected function activate($targetDir)
+      + protected function activate(string $targetDir): void
+      
+      - protected function deleteExistingSitemaps($targetDir)
+      + protected function deleteExistingSitemaps(string $targetDir): void
+       ```
+    - you might need to apply other changes in case you leverage more features from the sitemap bundle, for reference, see the [bundle releases page](https://github.com/prestaconcept/PrestaSitemapBundle/releases)
 
 ## Application
 

@@ -54,7 +54,7 @@ class SitemapListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            SitemapPopulateEvent::ON_SITEMAP_POPULATE => 'populateSitemap',
+            SitemapPopulateEvent::class => 'populateSitemap',
         ];
     }
 

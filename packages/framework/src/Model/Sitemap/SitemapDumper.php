@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapDumper extends Dumper
 {
@@ -28,18 +29,20 @@ class SitemapDumper extends Dumper
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \League\Flysystem\FilesystemInterface $abstractFilesystem
      * @param \League\Flysystem\MountManager $mountManager
-     * @param mixed $sitemapFilePrefix
-     * @param mixed|null $itemsBySet
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
+     * @param string $sitemapFilePrefix
+     * @param int|null $itemsBySet
      */
     public function __construct(
         EventDispatcherInterface $dispatcher,
         Filesystem $filesystem,
         FilesystemInterface $abstractFilesystem,
         MountManager $mountManager,
-        $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
-        $itemsBySet = null
+        UrlGeneratorInterface $urlGenerator,
+        string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
+        ?int $itemsBySet = null
     ) {
-        parent::__construct($dispatcher, $filesystem, $sitemapFilePrefix, $itemsBySet);
+        parent::__construct($dispatcher, $filesystem, $sitemapFilePrefix, $itemsBySet, $urlGenerator);
 
         $this->abstractFilesystem = $abstractFilesystem;
         $this->mountManager = $mountManager;
@@ -51,7 +54,7 @@ class SitemapDumper extends Dumper
      * @param string $targetDir Directory to move created sitemaps to
      * @throws \RuntimeException
      */
-    protected function activate($targetDir)
+    protected function activate(string $targetDir): void
     {
         $this->deleteExistingSitemaps($targetDir);
 
@@ -76,7 +79,7 @@ class SitemapDumper extends Dumper
      *
      * @param string $targetDir
      */
-    protected function deleteExistingSitemaps($targetDir)
+    protected function deleteExistingSitemaps(string $targetDir): void
     {
         $files = array_filter($this->abstractFilesystem->listContents($targetDir), function ($file) {
             return strpos($file['filename'], $this->sitemapFilePrefix) === 0;

@@ -6,6 +6,7 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapDumperFactory
 {
@@ -37,24 +38,32 @@ class SitemapDumperFactory
     protected $filesystem;
 
     /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     */
+    protected UrlGeneratorInterface $urlGenerator;
+
+    /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Filesystem $localFilesystem,
         FilesystemInterface $filesystem,
         MountManager $mountManager,
-        SitemapFilePrefixer $sitemapFilePrefixer
+        SitemapFilePrefixer $sitemapFilePrefixer,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->localFilesystem = $localFilesystem;
         $this->sitemapFilePrefixer = $sitemapFilePrefixer;
         $this->mountManager = $mountManager;
         $this->filesystem = $filesystem;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -68,6 +77,7 @@ class SitemapDumperFactory
             $this->localFilesystem,
             $this->filesystem,
             $this->mountManager,
+            $this->urlGenerator,
             $this->sitemapFilePrefixer->getSitemapFilePrefixForDomain($domainId),
             static::MAX_ITEMS_IN_FILE
         );

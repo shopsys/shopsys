@@ -112,7 +112,7 @@
         "overblog/graphql-bundle": "^0.13",
         "phing/phing": "dev-oldstable",
         "phpdocumentor/reflection-docblock": "^5.3.0",
-        "presta/sitemap-bundle": "^1.5.3",
+        "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable": "^3.0",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
