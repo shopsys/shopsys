@@ -2,6 +2,7 @@ import { FC, Fragment, RefObject, useCallback, useEffect, useState } from 'react
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { canUseDom } from 'helpers/canUseDom';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
@@ -40,6 +41,10 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
 
     const updateUrlWithCurrentPage = useCallback(
         (currentPage: number) => {
+            if (!canUseDom()) {
+                return;
+            }
+
             const queryParams = new URLSearchParams(window.location.search);
             if (
                 (paginationButtons && paginationButtons.length < 2) ||

@@ -221,3 +221,15 @@
     - so your key for `t()` function will be `"{{count}} points"`
   - for minor changes in `<Trans />` component see [Trans Component](https://github.com/vinissimus/next-translate#trans-component) in docs
   - for Typescript typing use `Translate` type instead of `TFunction`
+
+### Server vs Client helpers
+- [FWCC-912](https://shopsys.atlassian.net/browse/FWCC-912)
+- [FWCC-912 - Refaktor conditions server vs client](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/556/diffs)
+    - the reasons these changes were introduced:
+      - to have simple helpers that anyone can use to check if they can use server- specific or client-specific code (such as DOM, etc.)
+    - most significant changes
+      - the new `isServer` helper was added to check if you are on server
+      - the new `canUseDom` helper was added to check if you are in browser and can work with DOM
+      - these helpers were implemented on all places with conditions like `document !== undefined` etc.
+    - tips on how to implement them
+      - find all the places where you use the `window` or `document` in the conditions and replace them with adequate helpers

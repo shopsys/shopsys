@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import { canUseDom } from 'helpers/canUseDom';
 
 export const useGetWindowSize = (): { height: number; width: number } => {
     const [windowSize, setWindowSize] = useState({ height: -1, width: -1 });
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (canUseDom()) {
             const updateSize = () => {
                 setWindowSize({ height: window.innerHeight, width: window.innerWidth });
             };

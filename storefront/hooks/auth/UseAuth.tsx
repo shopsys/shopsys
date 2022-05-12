@@ -8,6 +8,7 @@ import {
 } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { canUseDom } from 'helpers/canUseDom';
 import { UseMutationState } from 'urql';
 import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
@@ -40,7 +41,10 @@ export const useAuth = (): [
             dispatch(userActions.setCartUuid(null));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
-            window.location.href = router.asPath;
+
+            if (canUseDom()) {
+                window.location.href = router.asPath;
+            }
         }
     };
 
@@ -50,7 +54,10 @@ export const useAuth = (): [
         if (logoutResult.data?.Logout === true) {
             removeTokensFromCookies();
             showSuccessMessage(t('Successfully logged out'));
-            window.location.href = router.asPath;
+
+            if (canUseDom()) {
+                window.location.href = router.asPath;
+            }
         }
     };
 

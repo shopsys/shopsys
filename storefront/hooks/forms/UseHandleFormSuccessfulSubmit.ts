@@ -1,4 +1,5 @@
 import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
+import { canUseDom } from 'helpers/canUseDom';
 import { useEffect } from 'react';
 import { UseMutationState } from 'urql';
 
@@ -15,7 +16,7 @@ export const useHandleFormSuccessfulSubmit = <T>(
             return;
         }
 
-        if (options?.blur && document.activeElement instanceof HTMLElement) {
+        if (options?.blur && canUseDom() && document.activeElement instanceof HTMLElement) {
             document.activeElement.blur();
         }
 
