@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
-use League\Flysystem\FileNotFoundException;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -53,9 +52,9 @@ class ImageAbstractFilesystemValidator extends ImageValidator
         $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());
         $localPath = $this->parameterBag->get('shopsys.root_dir') . $localFileUniqueName;
 
-        try {
-            $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
-        } catch (FileNotFoundException $exception) {
+        $copyResult = $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
+
+        if ($copyResult === false) {
             $this->context->buildViolation(
                 'This image could not be found. Please remove it and try to upload it again.'
             )
