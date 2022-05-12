@@ -69,10 +69,6 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/project-base/tests/App/*
-        -
-            # our fork of doctrine-orm (https://github.com/shopsys/doctrine-orm) needs to be updated to resolve the reported issues
-            message: '#^Method Shopsys\\FrameworkBundle\\Component\\EntityExtension\\EntityManagerDecorator::.*\(\) should return T of object\|null but returns object\|null.#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityManagerDecorator.php
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
