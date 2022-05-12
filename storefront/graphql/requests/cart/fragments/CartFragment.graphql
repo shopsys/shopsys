@@ -6,6 +6,9 @@ fragment CartFragment on CartInterface {
     totalPrice {
         ...PriceFragment
     }
+    totalItemsPrice {
+        ...PriceFragment
+    }
     totalDiscountPrice {
         ...PriceFragment
     }

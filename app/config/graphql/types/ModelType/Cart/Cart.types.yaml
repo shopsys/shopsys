@@ -26,6 +26,10 @@ Cart:
                 type: "CartModificationsResult!"
             totalPrice:
                 type: "Price!"
+                description: "Total price including transport and payment"
+            totalItemsPrice:
+                type: "Price!"
+                description: "Total items price (excluding transport and payment)"
             totalDiscountPrice:
                 type: "Price!"
             remainingAmountWithVatForFreeTransport:
