@@ -15,8 +15,8 @@ export async function getFreshTranslates(locale, namespace) {
         fetch(`${ENDPOINT_URL}/content/locales/${locale}/${namespace}.json`),
     ]);
 
-    const localTranslates = await localTranslatesResponse.json();
-    const userTranslates = await userTranslatesResponse.json();
+    const localTranslates = localTranslatesResponse.status === 200 ? await localTranslatesResponse.json() : {};
+    const userTranslates = userTranslatesResponse.status === 200 ? await userTranslatesResponse.json() : {};
 
     return { ...localTranslates, ...userTranslates };
 }

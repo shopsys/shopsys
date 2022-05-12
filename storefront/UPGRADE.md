@@ -201,3 +201,23 @@
     - you have to update your local docker-compose files with changes introduced in `docker-*.yaml.dist` files
     - you need to rebuild and recreate your storefront docker containers
         - `docker-compose up -d --force-recreate --build storefront` should do the trick
+
+### How to work with language constants
+
+- introduced by [TES-353](https://shopsys.atlassian.net/browse/TES-353)
+    - local language constants (locales) used in `.ts(x)` files and defined by FE in `./public/locales/${language}/common.json` can be overwritten by user constants via user administration
+    - user constants are fetched from remote endpoint, merged with local constants and cached locally
+- new NPM package `next-translate` installed:
+  - provides `loadLocaleFrom` function for fetching and applying remote language files
+  - use new standardized plural rules system ([CS](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html#cs), [EN](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html#en) example)
+- **breaking changes:**
+  - old plurals:
+    - `"(0)[bodů];(1)[bod];(2-4)[body];(5-inf)[bodů];"`
+  - will be (see [CS rules](https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html#cs)):
+    - `"{{count}} points_0": "0 bodů"`
+    - `"{{count}} points_one": "1 bod"`
+    - `"{{count}} points_few": "{{count}} body"`
+    - `"{{count}} points_many": "{{count}} bodů"`
+    - so your key for `t()` function will be `"{{count}} points"`
+  - for minor changes in `<Trans />` component see [Trans Component](https://github.com/vinissimus/next-translate#trans-component) in docs
+  - for Typescript typing use `Translate` type instead of `TFunction`
