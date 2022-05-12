@@ -335,6 +335,8 @@ class ProductDataFixture
             $performanceCategoryIds,
             $this->faker->numberBetween(1, 4)
         );
+
+        /** @var \App\Model\Category\Category[] $randomPerformanceCategories */
         $randomPerformanceCategories = $this->categoryRepository->getCategoriesByIds($randomPerformanceCategoryIds);
 
         foreach ($randomPerformanceCategories as $performanceCategory) {
