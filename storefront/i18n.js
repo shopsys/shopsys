@@ -3,8 +3,8 @@ const Sentry = require('@sentry/nextjs');
 
 const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
 const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:translates:`;
-const REDIS_IS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
-const REDIS_IS_CACHED_TIMEOUT = 300; // seconds (default: 5 * 60)
+const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
+const REDIS_IS_CACHED_TIMEOUT = 30; // seconds (default: 5 * 60)
 
 module.exports = {
     pages: {
@@ -57,7 +57,7 @@ module.exports = {
                     const cacheToRedis = async () => {
                         const setUpdatingFlag = await redisClient.set(redisKey + '/updating', 'true', {
                             NX: true,
-                            EX: REDIS_IS_UPDATE_JOB_TIMEOUT,
+                            EX: REDIS_UPDATE_JOB_TIMEOUT,
                         });
 
                         if (setUpdatingFlag !== null) {
