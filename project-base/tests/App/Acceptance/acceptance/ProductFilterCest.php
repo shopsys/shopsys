@@ -34,10 +34,10 @@ class ProductFilterCest
         $productFilterPage->setMaximalPrice('10000');
         $productListPage->assertProductsTotalCount(16);
 
-        $productFilterPage->filterByBrand(static::BRAND_LG_POSITION);
+        $productFilterPage->filterByBrand(self::BRAND_LG_POSITION);
         $productListPage->assertProductsTotalCount(3);
 
-        $productFilterPage->filterByBrand(static::BRAND_HYUNDAI_POSITION);
+        $productFilterPage->filterByBrand(self::BRAND_HYUNDAI_POSITION);
         $productListPage->assertProductsTotalCount(7);
 
         $productFilterPage->filterByParameter('HDMI', 'Yes');
