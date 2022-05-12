@@ -79,7 +79,7 @@
         "symfony/debug": "^4.4.0",
         "symfony/debug-bundle": "^4.4.0",
         "symfony/dotenv": "^4.4.0",
-        "symfony/flex": "^1.4",
+        "symfony/flex": "^1.17",
         "symfony/form": "^4.4.0",
         "symfony/monolog-bridge": "^4.4.0",
         "symfony/monolog-bundle": "^3.5.0",
