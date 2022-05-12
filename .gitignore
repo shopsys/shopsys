@@ -18,3 +18,4 @@
 /.env.local.php
 /.env.*.local
 /utils/releaser/.phpunit.result.cache
+/packages/frontend-api/.phpunit.result.cache
