@@ -56,7 +56,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $result = $this->cartFacade->addProductToExistingCart($product, 4, $cart);
+        $result = $this->cartFacade->addProductToExistingCart($product, 2, $cart);
         $this->updateCartItemUuid($result->getCartItem()->getId(), '5096bd50-45e1-40a6-bbe8-6192592feb56');
 
         /** @var \App\Model\Product\Product $product */

@@ -216,8 +216,8 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90.10', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('164.50', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.20', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder6 = [
             'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),

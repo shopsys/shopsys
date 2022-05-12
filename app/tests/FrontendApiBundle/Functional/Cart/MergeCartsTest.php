@@ -92,7 +92,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Product\Product $firstProduct */
         $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         self::assertEquals($firstProduct->getFullname(), $cartItems[2]->getName(), 'Third product name mismatch');
-        self::assertEquals(4, $cartItems[2]->getQuantity(), 'Third product quantity mismatch');
+        self::assertEquals(2, $cartItems[2]->getQuantity(), 'Third product quantity mismatch');
 
         $this->expectException(UnavailableCartUserError::class);
         $this->frontendApiCartFacade->getCart(null, $testCartUuid);
@@ -142,7 +142,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Product\Product $firstProduct */
         $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         self::assertEquals($firstProduct->getFullname(), $cartItems[1]->getName(), 'Third product name mismatch');
-        self::assertEquals(4, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
+        self::assertEquals(2, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
 
         $this->expectException(UnavailableCartUserError::class);
         $this->frontendApiCartFacade->getCart(null, $testCartUuid);
