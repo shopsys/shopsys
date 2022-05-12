@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7e528d0e183e2addc6ab4c553ec1ec3",
+    "content-hash": "ea4e0911867a884580072623219d603c",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -851,16 +851,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.10.25",
+            "version": "1.10.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "892838f84440b4851ec7e57221d52cb65a8991a5"
+                "reference": "3e196135eacf9e519a6b00986bc6fe6aff977997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/892838f84440b4851ec7e57221d52cb65a8991a5",
-                "reference": "892838f84440b4851ec7e57221d52cb65a8991a5",
+                "url": "https://api.github.com/repos/composer/composer/zipball/3e196135eacf9e519a6b00986bc6fe6aff977997",
+                "reference": "3e196135eacf9e519a6b00986bc6fe6aff977997",
                 "shasum": ""
             },
             "require": {
@@ -930,7 +930,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/1.10.25"
+                "source": "https://github.com/composer/composer/tree/1.10.26"
             },
             "funding": [
                 {
@@ -946,7 +946,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-21T09:02:15+00:00"
+            "time": "2022-04-13T14:39:56+00:00"
         },
         {
             "name": "composer/package-versions-deprecated",
