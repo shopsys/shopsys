@@ -246,6 +246,7 @@ class CronCommand extends Command
      */
     private function getCronTimeZone(): DateTimeZone
     {
+        /** @var string|null $cronTimezone */
         $cronTimezone = $this->parameterBag->get('shopsys.cron_timezone');
         $cronTimezone = $cronTimezone ?? date_default_timezone_get();
 
