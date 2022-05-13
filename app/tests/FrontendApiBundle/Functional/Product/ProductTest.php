@@ -224,6 +224,30 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'accessories' => [
                         [
+                            'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon EH-22L', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon EOS 700D', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon MG3550', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('CD-R VERBATIM 210MB', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
                             'name' => t(
                                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                                 [],
@@ -233,6 +257,12 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('24" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
                         ],
                     ],
                     'isSellingDenied' => false,
