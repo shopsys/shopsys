@@ -10,6 +10,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
 use Symfony\Component\Routing\RouterInterface;
 
+// @phpstan-ignore-next-line
 class RouterDebugCommandForDomain extends RouterDebugCommand
 {
     /**
