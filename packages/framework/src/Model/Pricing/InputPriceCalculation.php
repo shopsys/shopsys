@@ -39,7 +39,7 @@ class InputPriceCalculation
      */
     protected function getInputPriceWithoutVat(Money $basePriceWithVat, string $vatPercent): Money
     {
-        $divisor = (string)(1 + $vatPercent / 100);
+        $divisor = (string)(1 + (float)$vatPercent / 100);
 
         return $basePriceWithVat->divide($divisor, static::INPUT_PRICE_SCALE);
     }

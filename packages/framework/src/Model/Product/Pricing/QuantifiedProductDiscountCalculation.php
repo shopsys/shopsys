@@ -46,7 +46,7 @@ class QuantifiedProductDiscountCalculation
         Currency $currency
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
-        $multiplier = (string)($discountPercent / 100);
+        $multiplier = (string)((float)$discountPercent / 100);
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
             $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($multiplier),
             $currency
