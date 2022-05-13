@@ -74,7 +74,7 @@
         "prezent/doctrine-translatable": "^3.0",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "psr/log": "^1.0",
-        "ramsey/uuid": "^3.8",
+        "ramsey/uuid": "^4.3.1",
         "roave/better-reflection": "^5.4.0",
         "sinergi/browser-detector": "^6.1",
         "shopsys/form-types-bundle": "9.2.x-dev",
