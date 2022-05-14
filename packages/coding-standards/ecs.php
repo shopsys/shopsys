@@ -153,7 +153,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(SetList::CONTROL_STRUCTURES);
     $containerConfigurator->import(SetList::DOCBLOCK);
     $containerConfigurator->import(SetList::NAMESPACES);
-    $containerConfigurator->import(SetList::STRICT);
 
     $parameters->set(Option::LINE_ENDING, '\n');
 
