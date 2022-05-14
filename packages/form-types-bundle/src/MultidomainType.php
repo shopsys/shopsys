@@ -30,7 +30,7 @@ class MultidomainType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $entryOptions = $options['entry_options'];
-        $entryOptions['required'] = $options['required'] && $entryOptions['required'] ?? false;
+        $entryOptions['required'] = ($options['required'] ?? false) && ($entryOptions['required'] ?? false);
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
         $domainIds = $this->domainIdsProvider->getAllIds();
