@@ -220,17 +220,12 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
 
-        return  $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
+        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        return  $response['data']['AddToCart']['cart']['uuid'];
     }
 }

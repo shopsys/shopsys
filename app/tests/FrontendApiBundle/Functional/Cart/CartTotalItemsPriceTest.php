@@ -29,24 +29,17 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     private function addHelloKittyToNewCart(): array
     {
         /** @var \App\Model\Product\Product $helloKittyProduct */
         $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $addToCartMutation = 'mutation {
-            AddToCart(
-                input: {
-                    productUuid: "' . $helloKittyProduct->getUuid() . '"
-                    quantity: 1
-                }
-            ) {
-                cart {uuid}
-            }
-        }';
 
-        return $this->getResponseContentForQuery($addToCartMutation);
+        return $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $helloKittyProduct->getUuid(),
+            'quantity' => 1,
+        ]);
     }
 
     /**

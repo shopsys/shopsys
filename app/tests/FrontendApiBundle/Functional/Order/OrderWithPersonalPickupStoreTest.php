@@ -34,17 +34,13 @@ class OrderWithPersonalPickupStoreTest extends AbstractOrderTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
 
         $this->addPersonalPickupTransportToCart($cartUuid, $store->getUuid());
         $this->addCardPaymentToCart($cartUuid);

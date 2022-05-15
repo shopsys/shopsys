@@ -203,32 +203,22 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product1->getUuid() . '",
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $product1->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product72->getUuid() . '",
-                quantity: 2
-                cartUuid: "' . $cartUuid . '"
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-        $this->getResponseContentForQuery($mutation);
+
+        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'productUuid' => $product72->getUuid(),
+            'quantity' => 2,
+        ]);
 
         return $cartUuid;
     }

@@ -14,18 +14,10 @@ class AuthenticatedRetrieveCartTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 2
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 2,
+        ]);
 
         $getCartQuery = '{
             cart {

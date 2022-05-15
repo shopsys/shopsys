@@ -87,24 +87,12 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $this->hideTestingProduct();
 
-        $addToCartMutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $newlyCreatedCart['uuid'] . '"
-                productUuid: "' . $secondProduct->getUuid() . '",
-                quantity: ' . $productQuantity . '
-            }) {
-                cart {
-                    modifications {
-                        itemModifications {
-                            noLongerListableCartItems{
-                                uuid
-                            }
-                        }
-                    }
-                }
-            }
-        }';
-        $response = $this->getResponseContentForQuery($addToCartMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+            'productUuid' => $secondProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
+
         $modifications = $response['data']['AddToCart']['cart']['modifications'];
 
         self::assertNotEmpty($modifications['itemModifications']['noLongerListableCartItems']);
@@ -116,20 +104,13 @@ class CartModificationsResultTest extends GraphQlTestCase
         $newlyCreatedCart = $this->addTestingProductToNewCart($productQuantity);
 
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
-        $addToCartMutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $newlyCreatedCart['uuid'] . '"
-                productUuid: "' . $secondProduct->getUuid() . '",
-                quantity: ' . $productQuantity . '
-            }) {
-                cart {
-                    items {
-                        uuid
-                    }
-                }
-            }
-        }';
-        $response = $this->getResponseContentForQuery($addToCartMutation);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+            'productUuid' => $secondProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
+
         $cartItemUuid = $response['data']['AddToCart']['cart']['items'][1]['uuid'];
 
         // product has to be refreshed to prevent Doctrine from trying to flush not-persisted entity Vat
@@ -545,18 +526,11 @@ class CartModificationsResultTest extends GraphQlTestCase
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $productQuantity . '
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
 
-        $response = $this->getResponseContentForQuery($mutation);
         return $response['data']['AddToCart']['cart'];
     }
 
@@ -616,23 +590,15 @@ class CartModificationsResultTest extends GraphQlTestCase
      */
     private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity, string $cartUuid): array
     {
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid:"' . $cartUuid . '"
-                productUuid: "' . $this->testingProduct->getUuid() . '"
-                quantity: ' . $productQuantity . '
-            }) {
-                cart {
-                    modifications {
-                        transportModifications {
-                            transportWeightLimitExceeded
-                        }
-                    }
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
 
-        return $this->getTransportModificationsAfterAddingToCart($mutation);
+        $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
+
+        return $data['cart']['modifications']['transportModifications'];
     }
 
     /**
@@ -645,18 +611,6 @@ class CartModificationsResultTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
         return $data['modifications']['transportModifications'];
-    }
-
-    /**
-     * @param string $addToCartMutation
-     * @return array
-     */
-    private function getTransportModificationsAfterAddingToCart(string $addToCartMutation): array
-    {
-        $response = $this->getResponseContentForQuery($addToCartMutation);
-        $data = $this->getResponseDataForGraphQlType($response, 'AddToCart');
-
-        return $data['cart']['modifications']['transportModifications'];
     }
 
     /**

@@ -68,18 +68,10 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
         $addedProductQuantity = 3;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $addedProductQuantity . '
-            }) {
-                cart { 
-                    uuid
-                }
-            }
-        }';
-
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $addedProductQuantity,
+        ]);
 
         $cart = $this->findCartOfCurrentCustomer();
         self::assertNotNull($cart);
@@ -97,18 +89,10 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
         $secondProductQuantity = 5;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $secondProduct->getUuid() . '",
-                quantity: ' . $secondProductQuantity . '
-            }) {
-                cart { 
-                    uuid
-                }
-            }
-        }';
-
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $secondProduct->getUuid(),
+            'quantity' => $secondProductQuantity,
+        ]);
 
         $cart = $this->findCartOfCurrentCustomer();
         self::assertNotNull($cart);
@@ -130,19 +114,11 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
         $desiredProductQuantity = 3;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $desiredProductQuantity . '
-                isAbsoluteQuantity: true
-            }) {
-                cart { 
-                    uuid
-                }
-            }
-        }';
-
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $desiredProductQuantity,
+            'isAbsoluteQuantity' => true,
+        ]);
 
         $cart = $this->findCartOfCurrentCustomer();
         self::assertNotNull($cart);
@@ -158,18 +134,11 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
      */
     private function addTestingProductToCustomerCart(int $productQuantity): array
     {
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $productQuantity . '
-            }) {
-                cart { 
-                    uuid
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
 
-        $response = $this->getResponseContentForQuery($mutation);
         return $response['data']['AddToCart']['cart'];
     }
 
