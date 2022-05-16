@@ -138,3 +138,17 @@ There you can find links to upgrade notes for other versions too.
         - method `getProductsByBrand()` was removed, use `getFilteredProductsByBrand()` instead
         - method `getProductsByBrandCount()` was removed, use `getFilteredProductsByBrandCount()` instead
     - removed parameter `shopsys.var_dir` from shopsys/framework package, add this parameter to your project config (it should be already set in paths.yaml if you properly followed all the previous upgrade notes or started your project on at least 9.0.2 version of Shopsys Framework)
+    - `Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrderedValidator`
+        - property `$productFacade` was removed
+        - property `$frontendApiProductFacade` is no longer nullable
+        - method `__construct()` changed its interface:
+            ```diff
+                public function __construct(
+            -       ProductFacade $productFacade,
+                    ProductCachedAttributesFacade $productCachedAttributesFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+            -       ?FrontendApiProductFacade $frontendApiProductFacade = null
+            +       FrontendApiProductFacade $frontendApiProductFacade
+                )
+            ```
