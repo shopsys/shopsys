@@ -9,3 +9,6 @@ There you can find links to upgrade notes for other versions too.
 
 - check that your code don't use any removed code ([#](https://github.com/shopsys/shopsys/pull/))
     - Phing property `path.env.test` was removed
+    - function `getCategoriesOrderingData()` from `@shopsys/framework/assets/js/admin/components/CategoryTreeSorting.js` was removed, use `getNestedSetData()` instead
+    - method `Shopsys\FrameworkBundle\Controller\Admin\CategoryController::saveOrderAction()` was removed, use `applySortingAction()` instead
+    - method `Shopsys\FrameworkBundle\Model\Category\CategoryFacade::editOrdering()` was removed, use `reorderByNestedSetValues()` instead
