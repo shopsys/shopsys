@@ -201,3 +201,21 @@ There you can find links to upgrade notes for other versions too.
             +       ProductArrayFieldMapper $productArrayFieldMapper
                 )
             ```
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver`
+        - constant `EDGE_COUNT` was removed
+        - property `$productOnCurrentDomainFacade` was removed
+        - property `$productFacade` is no longer nullable
+        - property `$productFilterFacade` is no longer nullable
+        - property `$productConnectionFactory` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+            -       ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+            -       ?ProductFacade $productFacade = null,
+            +       ProductFacade $productFacade,
+            -       ?ProductFilterFacade $productFilterFacade = null,
+            +       ProductFilterFacade $productFilterFacade,
+            -       ?ProductConnectionFactory $productConnectionFactory = null
+            +       ProductConnectionFactory $productConnectionFactory
+                )
+            ```
