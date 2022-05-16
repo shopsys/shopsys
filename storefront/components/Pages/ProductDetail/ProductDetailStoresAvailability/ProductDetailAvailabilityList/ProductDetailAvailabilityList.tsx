@@ -5,12 +5,12 @@ import {
     ProductDetailAvailabilityListItemStyled as AvailabilityListItemStyled,
     ProductDetailAvailabilityListWrapperStyled as AvailabilityListWrapperStyled,
 } from './ProductDetailAvailabilityList.style';
-import { forwardRef } from 'react';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
-import NextLink from 'next/link';
-import { StoreAvailabilityType } from 'types/availability';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
+import { forwardRef } from 'react';
+import { StoreAvailabilityType } from 'types/availability';
 
 type ProductDetailAvailabilityListProps = {
     storeAvailabilities: StoreAvailabilityType[];

@@ -1,16 +1,16 @@
+import { createClient } from './createClient';
+import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
 } from 'graphql/generated';
-import { Client, ssrExchange } from 'urql';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
 import { AppStore } from 'redux/main';
-import { createClient } from './createClient';
-import { DocumentNode } from 'graphql';
-import loadNamespaces from 'next-translate/loadNamespaces';
+import { Client, ssrExchange } from 'urql';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;

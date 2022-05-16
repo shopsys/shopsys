@@ -6,11 +6,11 @@ import {
     OperationResult,
     TypedDocumentNode,
 } from '@urql/core';
-import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { DocumentNode } from 'graphql';
-import { GetServerSidePropsContext } from 'next';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
+import { GetServerSidePropsContext } from 'next';
 import { TokenType } from 'urql/types';
+import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 function isRefreshTokenMutation(operation: Operation) {
     return (

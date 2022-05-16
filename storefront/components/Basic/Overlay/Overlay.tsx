@@ -1,5 +1,5 @@
-import { FC, MouseEventHandler } from 'react';
 import { OverlayStyled } from './Overlay.style';
+import { FC, MouseEventHandler } from 'react';
 
 type OverlayProps = {
     onClick: MouseEventHandler;

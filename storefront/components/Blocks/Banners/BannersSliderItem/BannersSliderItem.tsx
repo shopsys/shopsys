@@ -1,5 +1,5 @@
-import 'keen-slider/keen-slider.min.css';
 import { BannersSliderItemStyled } from './BannersSliderItem.style';
+import 'keen-slider/keen-slider.min.css';
 import { FC } from 'react';
 import { ImageSizeType } from 'types/image';
 

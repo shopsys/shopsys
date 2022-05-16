@@ -15,17 +15,17 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
-import { FC, useState } from 'react';
+import ListItem from './ListItem';
 import Button from 'components/Forms/Button';
+import { useCurrentCart } from 'connectors/cart/Cart';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
 import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import ListItem from './ListItem';
-import NextLink from 'next/link';
-import { useCurrentCart } from 'connectors/cart/Cart';
-import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
-import { useRouter } from 'next/router';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC = () => {
     const testIdentifier = 'layout-header-cart-';

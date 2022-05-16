@@ -1,6 +1,6 @@
+import { GetServerSidePropsContext } from 'next';
 import { FC } from 'react';
 import { getDomainConfig } from 'utils/Domain/Domain';
-import { GetServerSidePropsContext } from 'next';
 
 const getRobotsTxtContent = (domain: string, domainId: number): string => {
     return `User-Agent: *

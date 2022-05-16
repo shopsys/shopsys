@@ -1,10 +1,10 @@
-import { PriceType, ProductPriceType } from 'types/price';
 import { ImageType } from './image';
 import { PaymentType } from './payment';
 import { PickupPlaceType } from './pickupPlace';
-import { SimpleFlagType } from 'types/flag';
-import { SimpleProductType } from 'types/product';
 import { TransportType } from './transport';
+import { SimpleFlagType } from 'types/flag';
+import { PriceType, ProductPriceType } from 'types/price';
+import { SimpleProductType } from 'types/product';
 
 export type CurrentCartType = {
     cart: CartType | null;

@@ -1,10 +1,10 @@
-import * as Yup from 'yup';
-import { PromoCodeFormType } from 'types/form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { UseFormReturn } from 'react-hook-form';
+import { PromoCodeFormType } from 'types/form';
+import * as Yup from 'yup';
 
 export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCodeFormType] => {
     const t = useTypedTranslationFunction();

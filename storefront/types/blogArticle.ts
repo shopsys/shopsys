@@ -1,7 +1,7 @@
+import { SimpleBlogCategoryType } from './blogCategory';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
-import { SimpleBlogCategoryType } from './blogCategory';
 import { SliderProductItemType } from 'types/product';
 
 export type BlogArticleDetailType = {

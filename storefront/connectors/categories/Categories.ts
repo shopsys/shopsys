@@ -1,3 +1,5 @@
+import { getFirstImage } from 'connectors/image/Image';
+import { mapListedProductConnectionType } from 'connectors/products/Products';
 import {
     CategoryDetailFragmentApi,
     ListedCategoryConnectionFragmentApi,
@@ -12,8 +14,6 @@ import {
     SimpleCategoryConnectionType,
     SimpleCategoryType,
 } from 'types/category';
-import { getFirstImage } from 'connectors/image/Image';
-import { mapListedProductConnectionType } from 'connectors/products/Products';
 
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,

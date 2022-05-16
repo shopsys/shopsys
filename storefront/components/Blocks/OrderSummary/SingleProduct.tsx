@@ -5,11 +5,11 @@ import {
     ListItemPrice,
     ListItemStyled,
 } from './OrderSummary.style';
-import { CartItemType } from 'types/cart';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image/Image';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { CartItemType } from 'types/cart';
+import { formatPrice } from 'utils/formatting';
 
 type SingleProductProps = {
     item: CartItemType;

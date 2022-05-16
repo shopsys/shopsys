@@ -1,12 +1,12 @@
 import { OrderLayoutContentStyled, OrderLayoutStyled, OrderLayoutSummaryStyled } from './OrderLayout.style';
 import Adverts from 'components/Blocks/Adverts';
-import { FC } from 'react';
-import Header from 'components/Layout/Header';
-import NotificationBars from 'components/Layout/NotificationBars';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import OrderSummary from 'components/Blocks/OrderSummary';
-import { useShopsysSelector } from 'redux/main';
+import Header from 'components/Layout/Header';
+import NotificationBars from 'components/Layout/NotificationBars';
 import Webline from 'components/Layout/Webline';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
 
 type OrderLayoutProps = {
     activeStep: number;

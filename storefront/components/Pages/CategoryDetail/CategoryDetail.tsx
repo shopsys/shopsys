@@ -8,19 +8,19 @@ import {
     CategoryDetailStyled,
     SubcategoriesSimpleNavigationStyled,
 } from './CategoryDetail.style';
-import { FC, useEffect, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
-import { CategoryDetailType } from 'types/category';
-import { FilterOptionsType } from 'types/productFilter';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
-import Trans from 'next-translate/Trans';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
+import { FC, useEffect, useRef, useState } from 'react';
+import { CategoryDetailType } from 'types/category';
+import { FilterOptionsType } from 'types/productFilter';
 
 type CategoryDetailProps = {
     category: CategoryDetailType;

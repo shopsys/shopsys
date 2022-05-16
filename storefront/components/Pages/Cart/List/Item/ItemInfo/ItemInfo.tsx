@@ -6,10 +6,10 @@ import {
     NameTitleStyled,
     NameTitleTextStyled,
 } from './ItemInfo.style';
-import { CartItemType } from 'types/cart';
-import { FC } from 'react';
-import NextLink from 'next/link';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
+import { FC } from 'react';
+import { CartItemType } from 'types/cart';
 
 type ItemInfoProps = {
     item: CartItemType;

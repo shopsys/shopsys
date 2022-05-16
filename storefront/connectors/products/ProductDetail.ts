@@ -1,3 +1,7 @@
+import { mapListedVariantType, mapSliderProductApiData } from './Products';
+import { mapAvailabilityData, mapStoreAvailabilities } from 'connectors/availability/Availability';
+import { mapImageSizesTypeApiData } from 'connectors/image/Image';
+import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ImageSizesFragmentApi,
     ListedVariantFragmentApi,
@@ -6,10 +10,6 @@ import {
     ProductDetailInterfaceFragmentApi,
 } from 'graphql/generated';
 import { MainVariantDetailType, ProductDetailInterfaceType, ProductDetailType } from 'types/product';
-import { mapAvailabilityData, mapStoreAvailabilities } from 'connectors/availability/Availability';
-import { mapListedVariantType, mapSliderProductApiData } from './Products';
-import { mapImageSizesTypeApiData } from 'connectors/image/Image';
-import { mapProductPriceData } from 'connectors/price/Prices';
 
 const mapProductDetailInterface = (
     productDetailApiData: ProductDetailInterfaceFragmentApi,

@@ -1,4 +1,3 @@
-import { FC, useState } from 'react';
 import {
     FooterContactHeadingStyled,
     FooterContactInstagramIconStyled,
@@ -10,11 +9,12 @@ import {
     FooterContactStyled,
     FooterContactYoutubeIconStyled,
 } from './FooterContact.style';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Icon from 'components/Basic/Icon';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useState } from 'react';
 
 const FooterContact: FC = () => {
     const testIdentifier = 'layout-footer-footercontact';

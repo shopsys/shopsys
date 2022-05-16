@@ -1,8 +1,8 @@
 import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled, ErrorPopupStyled } from './ErrorPopup.style';
-import { FC, ReactElement } from 'react';
 import Heading from 'components/Basic/Heading';
 import Popup from 'components/Layout/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, ReactElement } from 'react';
 
 type ErrorPopupProps = {
     isVisible: boolean;

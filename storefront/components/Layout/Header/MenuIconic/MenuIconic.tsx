@@ -1,4 +1,3 @@
-import { FC, useEffect, useState } from 'react';
 import {
     MenuIconicButtonMobileLinkStyled,
     MenuIconicButtonMobileStyled,
@@ -10,16 +9,17 @@ import {
     MenuIconicSubItemStyled,
     MenuIconicSubStyled,
 } from './MenuIconic.style';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import Login from 'components/Blocks/Popup/Login';
-import NextLink from 'next/link';
-import nookies from 'nookies';
 import Popup from 'components/Layout/Popup';
 import { useAuth } from 'hooks/auth/UseAuth';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import NextLink from 'next/link';
+import nookies from 'nookies';
+import { FC, useEffect, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const MenuIconic: FC = () => {
     const testIdentifier = 'layout-header-menuiconic';

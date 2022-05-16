@@ -1,20 +1,20 @@
 import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformation.style';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useEffect, useState } from 'react';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import ContactInformationContent from './ContactInformationContent';
+import { useContactInformationFormMeta } from './formMeta';
+import Link from 'components/Basic/Link';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { contactInformationActions } from 'redux/slices/contactInformation';
-import ContactInformationContent from './ContactInformationContent';
-import { ContactInformationFormType } from 'types/form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import Link from 'components/Basic/Link';
 import TextInput from 'components/Forms/TextInput';
-import Trans from 'next-translate/Trans';
-import { useContactInformationFormMeta } from './formMeta';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import Trans from 'next-translate/Trans';
+import { FC, useEffect, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { contactInformationActions } from 'redux/slices/contactInformation';
+import { ContactInformationFormType } from 'types/form';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();

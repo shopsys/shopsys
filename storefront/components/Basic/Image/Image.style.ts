@@ -1,6 +1,6 @@
-import { css, CSSProperties } from 'styled-components';
-import { HTMLAttributes } from 'react';
 import { styled } from 'components/Theme/main';
+import { HTMLAttributes } from 'react';
+import { css, CSSProperties } from 'styled-components';
 
 type ImageType = HTMLAttributes<HTMLImageElement> & {
     maxHeight?: CSSProperties['maxHeight'];

@@ -1,8 +1,8 @@
+import { useCountriesQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useMemo } from 'react';
 import { CountryType } from 'types/country';
 import { SelectOptionType } from 'types/selectOptions';
-import { useCountriesQueryApi } from 'graphql/generated';
-import { useMemo } from 'react';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const useCountries = (): CountryType[] => {
     const [{ data, error }] = useCountriesQueryApi();

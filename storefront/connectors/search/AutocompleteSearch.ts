@@ -2,14 +2,14 @@ import {
     AUTOCOMPLETE_CATEGORY_LIMIT,
     AUTOCOMPLETE_PRODUCT_LIMIT,
 } from 'components/Layout/Header/AutocompleteSearch/Autocomplete/Autocomplete';
-import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
-import { AutocompleteSearchType } from 'types/search';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapSimpleProductConnectionApiData } from 'connectors/products/SimpleProduct';
-import { useMemo } from 'react';
+import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { AutocompleteSearchType } from 'types/search';
 
 export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({

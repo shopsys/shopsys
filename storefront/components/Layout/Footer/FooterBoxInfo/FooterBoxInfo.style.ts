@@ -1,7 +1,7 @@
-import Button from 'components/Forms/Button';
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
+import Button from 'components/Forms/Button';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     footerBoxInfoImageSize: '61px',

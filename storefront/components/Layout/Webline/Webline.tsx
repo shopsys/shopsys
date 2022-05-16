@@ -1,7 +1,7 @@
+import { WeblinePropType } from './propTypes';
 import { ContainerStyled, WeblineStyled } from './Webline.style';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { WeblinePropType } from './propTypes';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, 'children', 'style'>;
 

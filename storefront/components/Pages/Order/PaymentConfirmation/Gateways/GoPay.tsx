@@ -1,8 +1,8 @@
-import { FC, useEffect } from 'react';
 import { PayOrderMutationApi, usePayOrderMutationApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import { FC, useEffect } from 'react';
 
 type GoPayGatewayProps = {
     orderUuid?: string;

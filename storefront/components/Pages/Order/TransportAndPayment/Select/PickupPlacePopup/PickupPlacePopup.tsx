@@ -1,14 +1,14 @@
-import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
 import { usePickupPlaceForm, usePickupPlaceFormMeta } from './formMeta';
-import Button from 'components/Forms/Button';
-import { FC } from 'react';
-import Heading from 'components/Basic/Heading';
-import { PickupPlaceType } from 'types/pickupPlace';
-import Popup from 'components/Layout/Popup';
+import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
 import StoreSelect from './PlaceSelect/StoreSelect';
-import { TransportType } from 'types/transport';
+import Heading from 'components/Basic/Heading';
+import Button from 'components/Forms/Button';
+import Popup from 'components/Layout/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 import { useWatch } from 'react-hook-form';
+import { PickupPlaceType } from 'types/pickupPlace';
+import { TransportType } from 'types/transport';
 
 type PickupPlacePopupProps = {
     isVisible: boolean;

@@ -1,8 +1,8 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useShopsysSelector } from 'redux/main';
 
 export const useRemovePromoCodeFromCart = (): typeof removePromoCodeHandler => {
     const [, removePromoCode] = useRemovePromoCodeFromCartMutationApi();

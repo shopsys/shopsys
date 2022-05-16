@@ -1,5 +1,5 @@
-import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext } from 'next';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { OptionalTokenType } from 'urql/types';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext): void => {

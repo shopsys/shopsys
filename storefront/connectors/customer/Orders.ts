@@ -1,4 +1,6 @@
-import { ListedOrderConnectionType, ListedOrderType, OrderDetailItemType, OrderDetailType } from 'types/orders';
+import { getFirstImage } from 'connectors/image/Image';
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { mapPriceData } from 'connectors/price/Prices';
 import {
     ListedOrderFragmentApi,
     OrderDetailFragmentApi,
@@ -8,14 +10,11 @@ import {
     useOrderDetailQueryApi,
     useOrdersQueryApi,
 } from 'graphql/generated';
-
-import { DomainConfigType } from 'utils/Domain/Domain';
-import { getFirstImage } from 'connectors/image/Image';
-import { initialState } from 'redux/slices/user';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapPriceData } from 'connectors/price/Prices';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
+import { initialState } from 'redux/slices/user';
+import { ListedOrderConnectionType, ListedOrderType, OrderDetailItemType, OrderDetailType } from 'types/orders';
+import { DomainConfigType } from 'utils/Domain/Domain';
 
 export const useOrders = (currentDomainConfig: DomainConfigType): ListedOrderConnectionType | undefined => {
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);

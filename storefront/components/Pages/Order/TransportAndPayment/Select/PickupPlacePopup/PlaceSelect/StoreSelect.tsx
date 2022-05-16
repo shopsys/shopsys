@@ -1,9 +1,9 @@
-import { Control, Controller } from 'react-hook-form';
-import { FC } from 'react';
-import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/Select/Select.style';
-import { PickupPlaceFormType } from 'types/form';
 import Radiobutton from 'components/Forms/Radiobutton';
+import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/Select/Select.style';
 import SelectItemLabel from 'components/Pages/Order/TransportAndPayment/Select/SelectItemLabel';
+import { FC } from 'react';
+import { Control, Controller } from 'react-hook-form';
+import { PickupPlaceFormType } from 'types/form';
 import { TransportType } from 'types/transport';
 
 type StoreSelectProps = {

@@ -1,7 +1,7 @@
 import Error404 from 'components/Pages/ErrorPage/404';
-import { FC } from 'react';
-import { useRouter } from 'next/router';
 import { useStaticUrlGuard } from 'hooks/staticUrls/UseStaticUrlGuard';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
 
 type StaticUrlGuardProps = {
     domainUrl: string;

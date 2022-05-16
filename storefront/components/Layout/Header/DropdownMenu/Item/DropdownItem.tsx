@@ -1,15 +1,15 @@
-import * as smoothscroll from 'smoothscroll-polyfill';
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//DropdownMenu';
+import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
+import Link from 'next/link';
 import { FC, useContext, useEffect, useState } from 'react';
+import * as smoothscroll from 'smoothscroll-polyfill';
+import { DropdownItemType } from 'types/dropdown';
 import {
     NavigationCategory as NavigationCategoryType,
     NavigationItem as NavigationItemType,
     NavigationSubCategory as NavigationSubCategoryType,
 } from 'types/navigation';
-import { DropdownItemType } from 'types/dropdown';
-import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//DropdownMenu';
-import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
-import Link from 'next/link';
 
 type DropdownItemProps = DropdownItemType & {
     variant?: 'small';

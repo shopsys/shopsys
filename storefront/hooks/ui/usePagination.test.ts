@@ -1,7 +1,7 @@
-import 'jest-styled-components';
+import { usePagination } from './usePagination';
 import { expect, test } from '@jest/globals';
 import { renderHook } from '@testing-library/react-hooks';
-import { usePagination } from './usePagination';
+import 'jest-styled-components';
 
 test('test pagination numbers', async () => {
     expect(renderHook(() => usePagination(59, 3, false, 9)).result.current).toStrictEqual([1, 2, 3, 4, 5, 6, 7]);

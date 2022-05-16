@@ -1,20 +1,20 @@
-import { FC, useState } from 'react';
 import {
     ProductDetailGalleryFlagsStyled,
     ProductDetailGalleryMainImageStyled,
     ProductDetailGalleryThumbnailsItemStyled,
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
-import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import Image from 'components/Basic/Image';
-import { ImageType } from 'types/image';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
+import Image from 'components/Basic/Image';
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
-import { SimpleFlagType } from 'types/flag';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { FC, useState } from 'react';
+import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
+import { SimpleFlagType } from 'types/flag';
+import { ImageType } from 'types/image';
 
 type ProductDetailGalleryProps = {
     images: ImageType[];

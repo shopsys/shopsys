@@ -1,7 +1,7 @@
+import { FormLineStyled } from './FormLine.style';
+import { FormLinePropType } from './propTypes';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { FormLinePropType } from './propTypes';
-import { FormLineStyled } from './FormLine.style';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 

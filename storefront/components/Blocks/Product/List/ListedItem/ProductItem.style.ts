@@ -1,5 +1,5 @@
-import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     productsItemGap: '20px',

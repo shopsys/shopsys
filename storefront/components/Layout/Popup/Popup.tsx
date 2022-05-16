@@ -1,4 +1,3 @@
-import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import {
     PopupButtonCloseIconStyled,
     PopupButtonCloseStyled,
@@ -6,10 +5,11 @@ import {
     PopupHeaderStyled,
     PopupStyled,
 } from './Popup.style';
-import { AnyStyledComponent } from 'styled-components';
-import { canUseDom } from 'helpers/canUseDom';
 import Overlay from 'components/Basic/Overlay';
 import Portal from 'components/Basic/Portal';
+import { canUseDom } from 'helpers/canUseDom';
+import { FC, MouseEventHandler, useEffect, useRef } from 'react';
+import { AnyStyledComponent } from 'styled-components';
 
 type PopupProps = {
     isVisible: boolean;

@@ -1,12 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-
-import 'jest-styled-components';
-import { expect, test } from '@jest/globals';
 import ListItem from './ListItem';
-import renderer from 'react-test-renderer';
+import { expect, test } from '@jest/globals';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
+import 'jest-styled-components';
+import renderer from 'react-test-renderer';
 
 test('test render list item', async () => {
     const component = renderer

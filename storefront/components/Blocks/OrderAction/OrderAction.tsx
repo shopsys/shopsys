@@ -7,9 +7,9 @@ import {
     OrderActionStyled,
 } from './OrderAction.style';
 import Button from 'components/Forms/Button';
-import { FC } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 
 type OrderActionProps = {
     buttonBack: string;

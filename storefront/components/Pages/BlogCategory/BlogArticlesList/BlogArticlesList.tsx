@@ -1,4 +1,3 @@
-import { FC, Fragment } from 'react';
 import {
     ListItemContentDateStyled,
     ListItemContentStyled,
@@ -8,11 +7,12 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import { BlogArticleConnectionType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
+import { FC, Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BlogArticleConnectionType } from 'types/blogArticle';
 
 type ListProps = {
     blogArticles: BlogArticleConnectionType;

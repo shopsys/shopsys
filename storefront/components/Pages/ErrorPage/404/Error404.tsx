@@ -7,11 +7,11 @@ import {
     ErrorPageTextStyled,
 } from './Error404.style';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { NextPage } from 'next';
-import React from 'react';
-import { useRouter } from 'next/router';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 const Error404: NextPage = () => {
     const t = useTypedTranslationFunction();

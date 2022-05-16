@@ -1,7 +1,7 @@
 import { OrderSummaryListStyled, ProductsPreviewStyled } from './OrderSummary.style';
-import { CartItemType } from 'types/cart';
-import { FC } from 'react';
 import SingleProduct from './SingleProduct';
+import { FC } from 'react';
+import { CartItemType } from 'types/cart';
 
 type ProductsPreviewProps = {
     cartItems: CartItemType[];

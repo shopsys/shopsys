@@ -1,6 +1,6 @@
+import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { AvailabilityFragmentApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import { AvailabilityStatusType, AvailabilityType, StoreAvailabilityType } from 'types/availability';
-import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 
 const mapAvailabilityStatus = (availabilityStatus: string): AvailabilityStatusType => {
     return (availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock') as AvailabilityStatusType;

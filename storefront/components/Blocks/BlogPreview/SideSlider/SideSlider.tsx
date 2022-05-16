@@ -1,5 +1,3 @@
-import 'keen-slider/keen-slider.min.css';
-import { FC, Fragment } from 'react';
 import {
     SideSliderContentStyled,
     SideSliderImageLinkStyled,
@@ -9,9 +7,11 @@ import {
 } from './SideSlider.style';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
-import { ListedBlogArticleType } from 'types/blogArticle';
 import { theme } from 'components/Theme/main';
+import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { FC, Fragment } from 'react';
+import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideSliderProps = {
     blogSideItems: ListedBlogArticleType[];

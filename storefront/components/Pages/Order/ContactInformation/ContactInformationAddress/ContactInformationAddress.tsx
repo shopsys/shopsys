@@ -1,17 +1,17 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useEffect } from 'react';
-import { contactInformationActions } from 'redux/slices/contactInformation';
-import { ContactInformationFormType } from 'types/form';
+import Heading from 'components/Basic/Heading';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
-import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useEffect } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useShopsysDispatch } from 'redux/main';
+import { contactInformationActions } from 'redux/slices/contactInformation';
+import { ContactInformationFormType } from 'types/form';
 
 const ContactInformationAddress: FC = () => {
     const dispatch = useShopsysDispatch();

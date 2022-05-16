@@ -1,10 +1,10 @@
-import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 import {
     CurrentCustomerUserQueryApi,
     DeliveryAddressFragmentApi,
     useCurrentCustomerUserQueryApi,
 } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export function useCurrentCustomerData(): CurrentCustomerType | undefined {
     const [{ data, error }] = useCurrentCustomerUserQueryApi();

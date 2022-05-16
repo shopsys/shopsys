@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
 import ShopsysHeading from 'components/Basic/Heading';
-import { SliderProductItemType } from 'types/product';
+import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { SliderProductItemType } from 'types/product';
 
 type ProductDetailAccessoriesProps = {
     accessories: SliderProductItemType[];

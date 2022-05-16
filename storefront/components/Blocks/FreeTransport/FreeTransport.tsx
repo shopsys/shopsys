@@ -1,10 +1,10 @@
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
 import { FreeTransportStyled } from './FreeTransport.style';
-import Trans from 'next-translate/Trans';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { formatPrice } from 'utils/formatting';
 
 const FreeTransport: FC = () => {
     const testIdentifier = 'blocks-freetransport';

@@ -1,3 +1,4 @@
+import InfoBox from './InfoBox';
 import {
     ButtonBottomIconStyled,
     ButtonBottomItemStyled,
@@ -11,14 +12,13 @@ import {
     StoresList,
     StoresStyled,
 } from './Stores.style';
-import { FC, useCallback, useState } from 'react';
 import GoogleMap from 'components/Basic/GoogleMap';
-import Image from 'next/image';
-import InfoBox from './InfoBox';
 import SimpleLayout from 'components/Layout/SimpleLayout';
-import { useShopsysSelector } from 'redux/main';
 import { useStores } from 'connectors/stores/Stores';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Image from 'next/image';
+import { FC, useCallback, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
 
 const Stores: FC = () => {
     const t = useTypedTranslationFunction();

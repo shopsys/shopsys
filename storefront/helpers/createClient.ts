@@ -1,8 +1,8 @@
+import { GetServerSidePropsContext } from 'next';
 import { initUrqlClient, SSRExchange } from 'next-urql';
+import getConfig from 'next/config';
 import { AppStore } from 'redux/main';
 import { Client } from 'urql';
-import getConfig from 'next/config';
-import { GetServerSidePropsContext } from 'next';
 import { getUrqlExchanges } from 'urql/exchanges';
 
 export const createClient = (

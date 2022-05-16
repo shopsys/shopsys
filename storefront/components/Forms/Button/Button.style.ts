@@ -1,5 +1,5 @@
-import { styled, Theme } from 'components/Theme/main';
 import { ButtonDefaultPropType } from './propTypes';
+import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 type ButtonStyledProps = ButtonDefaultPropType & {

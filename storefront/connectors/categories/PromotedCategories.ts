@@ -1,7 +1,7 @@
-import { PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
-import { ListedCategoryType } from 'types/category';
 import { mapListedCategoryApiData } from './Categories';
+import { PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { ListedCategoryType } from 'types/category';
 
 export function usePromotedCategories(): ListedCategoryType[] | undefined {
     const [{ data, error }] = usePromotedCategoriesQueryApi();

@@ -1,7 +1,7 @@
 import { FooterCopyrightLogoStyled, FooterCopyrightStyled, FooterCopyrightTextStyled } from './FooterCopyright.style';
-import { FC } from 'react';
-import Image from 'next/image';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Image from 'next/image';
+import { FC } from 'react';
 
 const FooterCopyright: FC = () => {
     const testIdentifier = 'layout-footer-footercopyright';

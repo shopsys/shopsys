@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from 'react';
-import { FilterFormParameterType, FilterFormType } from 'types/productFilter';
 import {
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
+import { FC, useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
+import { FilterFormParameterType, FilterFormType } from 'types/productFilter';
 
 const Parameters: FC = () => {
     const testIdentifier = 'blocks-product-filter-selectedparameters-parameters-';

@@ -1,28 +1,28 @@
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useNewsletterForm, useNewsletterFormMeta } from './formMeta';
 import {
     NewsletterFormButtonWrapperStyled,
     NewsletterFormColumnStyled,
     NewsletterFormInputWrapperStyled,
     NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
-import { useNewsletterForm, useNewsletterFormMeta } from './formMeta';
+import Heading from 'components/Basic/Heading';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
+import Form from 'components/Forms/Form';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
-import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import Heading from 'components/Basic/Heading';
-import { NewsletterFormType } from 'types/form';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { NewsletterFormType } from 'types/form';
 
 /**
  * Newsletter form block, which is displayed in the Footer section and serves as

@@ -1,8 +1,8 @@
-import { css } from 'styled-components';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import Link from 'components/Basic/Link';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
 export const InfoBoxStyled = styled.div`

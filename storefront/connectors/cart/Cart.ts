@@ -1,19 +1,19 @@
-import { AddToCartMutationApi, CartFragmentApi, useCartQueryApi } from 'graphql/generated';
-import { AddToCartPopupDataType, CartType, CurrentCartType } from 'types/cart';
-import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
-import { CombinedError } from 'urql';
-import { getFirstImage } from 'connectors/image/Image';
-import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
-import { mapPayment } from 'connectors/payments/Payment';
-import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
-import { mapTransport } from 'connectors/transports/Transports';
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { Translate } from 'next-translate';
+import { getFirstImage } from 'connectors/image/Image';
+import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { mapPayment } from 'connectors/payments/Payment';
+import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
+import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
+import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
+import { mapTransport } from 'connectors/transports/Transports';
+import { AddToCartMutationApi, CartFragmentApi, useCartQueryApi } from 'graphql/generated';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { Translate } from 'next-translate';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { AddToCartPopupDataType, CartType, CurrentCartType } from 'types/cart';
+import { CombinedError } from 'urql';
 
 export const useCurrentCart = (): CurrentCartType => {
     const { isUserLoggedIn } = useCurrentUserData();

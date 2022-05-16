@@ -1,3 +1,4 @@
+import Autocomplete from './Autocomplete';
 import {
     AutocompleteSearchFormStyled,
     AutocompleteSearchInStyled,
@@ -7,24 +8,23 @@ import {
     AutocompleteSearchStyled,
     AutocompleteSearchTextInputStyled,
 } from './AutocompleteSearch.style';
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { FC, useEffect, useRef, useState } from 'react';
 import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './formMeta';
-import Autocomplete from './Autocomplete';
-import { AutocompleteSearchFormType } from 'types/form';
-import { AutocompleteSearchType } from 'types/search';
-import { canUseDom } from 'helpers/canUseDom';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Icon from 'components/Basic/Icon';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
+import { canUseDom } from 'helpers/canUseDom';
 import useDebounce from 'hooks/helpers/UseDebounce';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
+import { FC, useEffect, useRef, useState } from 'react';
+import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { AutocompleteSearchFormType } from 'types/form';
+import { AutocompleteSearchType } from 'types/search';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const AutocompleteSearch: FC = () => {
     const testIdentifier = 'layout-header-search-autocomplete-input';

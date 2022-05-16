@@ -1,8 +1,8 @@
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { useAddToCartMutationApi } from 'graphql/generated';
-import { userActions } from 'redux/slices/user';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { userActions } from 'redux/slices/user';
 
 export const useAddToCart = (): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();

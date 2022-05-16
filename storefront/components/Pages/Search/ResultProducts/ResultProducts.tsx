@@ -1,9 +1,9 @@
+import { ResultProductsStyled } from './ResultProducts.style';
+import ProductsList from 'components/Blocks/Product/List/ProductsList';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
 import { FC } from 'react';
 import { ListedProductType } from 'types/product';
-import ProductsList from 'components/Blocks/Product/List/ProductsList';
-import { ResultProductsStyled } from './ResultProducts.style';
-import Trans from 'next-translate/Trans';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ResultProductsProps = {
     products: ListedProductType[];

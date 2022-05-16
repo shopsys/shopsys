@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
-import { styled } from 'components/Theme/main';
 import TextInput from 'components/Forms/TextInput';
+import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 type AutocompleteSearchFormStyledProps = {
     isActive: boolean;

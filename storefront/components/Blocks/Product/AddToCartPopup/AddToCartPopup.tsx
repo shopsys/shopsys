@@ -12,15 +12,15 @@ import {
     PriceStyled,
     ProductStyled,
 } from './AddToCartPopup.style';
-import { AddToCartPopupDataType } from 'types/cart';
+import Image from 'components/Basic/Image';
+import Popup from 'components/Layout/Popup';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
 import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { AddToCartPopupDataType } from 'types/cart';
 import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import Image from 'components/Basic/Image';
-import NextLink from 'next/link';
-import Popup from 'components/Layout/Popup';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type AddToCartPopupProps = {
     isVisible: boolean;

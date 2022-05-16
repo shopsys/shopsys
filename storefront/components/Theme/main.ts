@@ -1,5 +1,5 @@
-import initialStyled, { ThemedStyledInterface } from 'styled-components';
 import mediaQueries from './mediaQueries';
+import initialStyled, { ThemedStyledInterface } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
 /* Main theme */

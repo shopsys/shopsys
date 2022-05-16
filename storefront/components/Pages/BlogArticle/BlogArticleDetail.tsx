@@ -6,14 +6,14 @@ import {
     ProductSectionTitle,
     ProductSectionWrapper,
 } from './BlogArticleDetail.style';
-import { ArticleTitle } from 'components/Pages/Article/ArticleDetail.style';
-import { BlogArticleDetailType } from 'types/blogArticle';
-import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
 import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
 import UserText from 'components/Helpers/UserText';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { ArticleTitle } from 'components/Pages/Article/ArticleDetail.style';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { BlogArticleDetailType } from 'types/blogArticle';
 
 type BlogArticleDetailProps = {
     blogArticle: BlogArticleDetailType;

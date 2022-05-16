@@ -1,14 +1,14 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
 import PaymentFail from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
 import PaymentSuccess from 'components/Pages/Order/PaymentConfirmation/PaymentSuccess';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);

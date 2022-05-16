@@ -5,10 +5,10 @@ import {
     ListItemNameStyled,
     ListItemNameWrapperStyled,
 } from './ListItem.style';
-import { FC } from 'react';
 import Image from 'components/Basic/Image';
-import { ListedItemPropType } from 'types/simpleNavigation';
 import NextLink from 'next/link';
+import { FC } from 'react';
+import { ListedItemPropType } from 'types/simpleNavigation';
 
 type ListItemProps = {
     listedItem: ListedItemPropType;

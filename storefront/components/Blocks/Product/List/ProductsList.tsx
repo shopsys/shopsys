@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import { ListedProductType } from 'types/product';
 import ProductItem from './ListedItem';
 import { ProductsListStyled } from './ProductsList.style';
+import { FC } from 'react';
+import { ListedProductType } from 'types/product';
 
 type ProductsListProps = {
     products: ListedProductType[];

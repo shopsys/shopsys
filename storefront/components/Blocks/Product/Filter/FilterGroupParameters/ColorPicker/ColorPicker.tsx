@@ -1,6 +1,6 @@
 import CheckboxColor from 'components/Forms/CheckboxColor';
-import { Controller } from 'react-hook-form';
 import { FC } from 'react';
+import { Controller } from 'react-hook-form';
 import { FilterFormParameterValuesType } from 'types/productFilter';
 
 type ColorPickerProps = {

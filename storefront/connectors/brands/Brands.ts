@@ -1,8 +1,8 @@
-import { BrandDetailFragmentApi, ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
-import { BrandDetailType, ListedBrandType } from 'types/brand';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
+import { BrandDetailFragmentApi, ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { BrandDetailType, ListedBrandType } from 'types/brand';
 
 export function useBrands(): ListedBrandType[] | undefined {
     const [{ data, error }] = useBrandsQueryApi();

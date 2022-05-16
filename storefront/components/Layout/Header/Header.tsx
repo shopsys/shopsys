@@ -1,4 +1,8 @@
-import { FC, useState } from 'react';
+import AutocompleteSearch from './AutocompleteSearch';
+import Cart from './Cart';
+import HeaderContact from './Contact/HeaderContact';
+import DropdownMenu from './DropdownMenu';
+import HamburgerMenu from './HamburgerMenu';
 import {
     HeaderCartStyled,
     HeaderLinksStyled,
@@ -7,15 +11,11 @@ import {
     HeaderMiddleStyled,
     HeaderStyled,
 } from './Header.style';
-import AutocompleteSearch from './AutocompleteSearch';
-import Cart from './Cart';
-import DropdownMenu from './DropdownMenu';
-import HamburgerMenu from './HamburgerMenu';
-import HeaderContact from './Contact/HeaderContact';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import Overlay from 'components/Layout/Overlay';
 import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
 
 const Header: FC = () => {
     const testIdentifier = 'layout-header';

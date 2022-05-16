@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
 import { FormLinePropType } from './propTypes';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 type FormLineStyledProps = FormLinePropType;
 

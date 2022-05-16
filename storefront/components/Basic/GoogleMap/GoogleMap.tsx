@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from 'react';
 import { GoogleMapMarkerStyled, GoogleMapWrapStyled } from './GoogleMap.style';
-import getConfig from 'next/config';
 import GoogleMapReact from 'google-map-react';
+import getConfig from 'next/config';
+import { FC, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 type GoogleMapMarker = {

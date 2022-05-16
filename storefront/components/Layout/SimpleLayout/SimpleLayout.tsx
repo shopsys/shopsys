@@ -1,9 +1,9 @@
 import { HeadingWrapperStyled, SimpleLayoutContentStyled, SimpleLayoutStyled } from './SimpleLayout.style';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
+import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import Webline from 'components/Layout/Webline';
+import { FC } from 'react';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type SimpleLayoutProps = {
     heading: string;

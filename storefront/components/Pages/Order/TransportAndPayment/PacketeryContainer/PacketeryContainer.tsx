@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { PacketeryContainerStyled } from './PacketeryContainer.style';
+import { FC } from 'react';
 
 const PacketeryContainer: FC = () => {
     const testIdentifier = 'pages-order-transportandpayment-packeterycontainer';

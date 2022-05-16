@@ -1,16 +1,16 @@
-import { FC, Fragment, HTMLAttributes, useState } from 'react';
 import { AdvertsStyled } from './Adverts.style';
-import { AdvertType } from 'types/advert';
-import { CategoryDetailType } from 'types/category';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import Image from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import Link from 'next/link';
+import Webline from 'components/Layout/Webline';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import Webline from 'components/Layout/Webline';
+import Link from 'next/link';
+import { FC, Fragment, HTMLAttributes, useState } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { AdvertType } from 'types/advert';
+import { CategoryDetailType } from 'types/category';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 

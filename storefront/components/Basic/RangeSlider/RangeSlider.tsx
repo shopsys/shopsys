@@ -1,5 +1,3 @@
-import { ChangeEvent, FC, FocusEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
     RangeSliderContainerStyled,
     RangeSliderLeftThumbStyled,
@@ -10,12 +8,14 @@ import {
     RangeSliderStyled,
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { FilterFormType } from 'types/productFilter';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import TextInput from 'components/Forms/TextInput';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { ChangeEvent, FC, FocusEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { optionsFilterActions } from 'redux/slices/optionsFilter';
+import { FilterFormType } from 'types/productFilter';
 
 /*
  * Shopsys slider component inspired by

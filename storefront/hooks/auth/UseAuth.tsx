@@ -1,3 +1,4 @@
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import {
     LoginApi,
     LoginVariablesApi,
@@ -6,14 +7,13 @@ import {
     useLoginApi,
     useLogoutApi,
 } from 'graphql/generated';
-import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { canUseDom } from 'helpers/canUseDom';
-import { UseMutationState } from 'urql';
-import { userActions } from 'redux/slices/user';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { userActions } from 'redux/slices/user';
+import { UseMutationState } from 'urql';
+import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 export const useAuth = (): [
     [UseMutationState<LoginApi, LoginVariablesApi>, (variables: LoginVariablesApi) => void],

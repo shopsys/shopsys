@@ -1,4 +1,4 @@
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
 import {
     RegistrationBenefitsListItem,
     RegistrationFormColumnStyled,
@@ -8,29 +8,29 @@ import {
     RegistrationMessageColumnStyled,
     RegistrationStyled,
 } from './Registration.style';
-import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
+import Form from 'components/Forms/Form';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
-import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { RegistrationAfterOrderFormType } from 'types/form';
-import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
-import Trans from 'next-translate/Trans';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { userActions } from 'redux/slices/user';
-import { useRegistrationMutationApi } from 'graphql/generated';
-import { useRouter } from 'next/router';
-import { useShopsysDispatch } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import Webline from 'components/Layout/Webline';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { useRegistrationMutationApi } from 'graphql/generated';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import Trans from 'next-translate/Trans';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useShopsysDispatch } from 'redux/main';
+import { userActions } from 'redux/slices/user';
+import { RegistrationAfterOrderFormType } from 'types/form';
 
 const Registration: FC = () => {
     const router = useRouter();

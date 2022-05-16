@@ -1,4 +1,3 @@
-import { FC, useRef } from 'react';
 import {
     ProductDetailCodeStyled,
     ProductDetailHeadingStyled,
@@ -10,13 +9,14 @@ import {
 } from './ProductDetail.style';
 import ProductDetailAccessories from './ProductDetailAccessories';
 import ProductDetailAddToCart from './ProductDetailAddToCart';
+import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
-import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
-import { ProductDetailType } from 'types/product';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useRef } from 'react';
+import { ProductDetailType } from 'types/product';
 
 type ProductDetailProps = {
     product: ProductDetailType;

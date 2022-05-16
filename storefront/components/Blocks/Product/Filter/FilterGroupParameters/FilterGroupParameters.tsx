@@ -1,6 +1,4 @@
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { FC, useState } from 'react';
-import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'types/productFilter';
+import ColorPicker from './ColorPicker';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,
@@ -10,7 +8,9 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import ColorPicker from './ColorPicker';
+import { FC, useState } from 'react';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     /**

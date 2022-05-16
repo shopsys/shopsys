@@ -14,17 +14,17 @@ import {
     SearchResultLinkStyled,
     ShowAllResultsButtonWrapper,
 } from './Autocomplete.style';
-import { AutocompleteSearchType } from 'types/search';
-import Button from 'components/Forms/Button';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
+import Button from 'components/Forms/Button';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { AutocompleteSearchType } from 'types/search';
+import { formatPrice } from 'utils/formatting';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;

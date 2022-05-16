@@ -6,12 +6,12 @@ import {
     TransportAndPaymentTextAndImage,
     TransportAndPaymentWrapper,
 } from './OrderSummary.style';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 import { PaymentType } from 'types/payment';
 import { TransportType } from 'types/transport';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { formatPrice } from 'utils/formatting';
 
 type TransportAndPaymentProps = {
     transport: TransportType | null;

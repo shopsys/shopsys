@@ -9,13 +9,13 @@ import {
     ListPopupStyled,
     ListStyled,
 } from './AddressList.style';
-import { FC, useState } from 'react';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import Button from 'components/Forms/Button';
-import { DeliveryAddressType } from 'types/customer';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import Popup from 'components/Layout/Popup';
 import { useDeleteDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useState } from 'react';
+import { DeliveryAddressType } from 'types/customer';
 
 type AddressListProps = {
     defaultDeliveryAddress: DeliveryAddressType | undefined;

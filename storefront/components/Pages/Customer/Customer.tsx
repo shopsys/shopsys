@@ -1,14 +1,14 @@
 import { CustomerListItemStyled, CustomerListStyled } from './Customer.style';
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
+import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
-import NextLink from 'next/link';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useAuth } from 'hooks/auth/UseAuth';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Customer: FC = () => {
     const t = useTypedTranslationFunction();

@@ -1,16 +1,16 @@
-import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
-import { useEffect, useState } from 'react';
-import { FilterOptionsStateType } from 'types/productFilter';
-import { isServer } from 'helpers/isServer';
+import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapListedBrandsApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
+import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
-import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
-import { PaginationType } from 'redux/slices/user';
-import { SearchType } from 'types/search';
+import { isServer } from 'helpers/isServer';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { PaginationType } from 'redux/slices/user';
+import { FilterOptionsStateType } from 'types/productFilter';
+import { SearchType } from 'types/search';
 
 export const useSearch = (
     searchQuery: string,

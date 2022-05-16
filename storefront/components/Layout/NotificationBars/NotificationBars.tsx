@@ -3,10 +3,10 @@ import {
     NotificationBarsImageStyled,
     NotificationBarsStyled,
 } from './NotificationBars.style';
-import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
-import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
 import Webline from 'components/Layout/Webline';
+import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
+import { FC } from 'react';
 
 const NotificationBars: FC = () => {
     const items = useNotificationBars();

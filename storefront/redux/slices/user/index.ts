@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const enabledSortTypes = [
     ProductOrderingModeEnumApi.PriorityApi,

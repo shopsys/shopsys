@@ -1,15 +1,15 @@
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
-import OrderDetail from 'components/Pages/Customer/OrderDetail';
-import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import CommonLayout from 'components/Layout/CommonLayout';
+import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import { useOrderDetailByHash } from 'connectors/customer/Orders';
+import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 
 const OrderDetailByHash: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);

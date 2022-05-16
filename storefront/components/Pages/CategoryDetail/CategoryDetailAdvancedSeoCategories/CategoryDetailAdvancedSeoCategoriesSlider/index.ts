@@ -1,2 +1,3 @@
 import CategoryDetailAdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
+
 export default CategoryDetailAdvancedSeoCategoriesSlider;

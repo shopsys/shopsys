@@ -4,10 +4,10 @@ import {
     MessageWrapperStyled,
     PaymentWrapperStyled,
 } from './PaymentConfirmation.style';
-import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 
 const PaymentFail: FC = () => {
     const t = useTypedTranslationFunction();

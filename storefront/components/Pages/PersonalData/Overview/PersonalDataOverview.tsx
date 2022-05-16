@@ -1,28 +1,28 @@
+import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './formMeta';
 import { ButtonWrapperStyled, ContentTextStyled } from './PersonalDataOverview.style';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { FC, useEffect } from 'react';
+import Button from 'components/Forms/Button';
+import Form from 'components/Forms/Form';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import FormLine from 'components/Forms/Lib/FormLine';
+import FormLineError from 'components/Forms/Lib/FormLineError';
+import TextInput from 'components/Forms/TextInput';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
+import UserText from 'components/Helpers/UserText';
+import SimpleLayout from 'components/Layout/SimpleLayout';
 import {
     PersonalDataAccessRequestTypeEnumApi,
     usePersonalDataPageTextQueryApi,
     usePersonalDataRequestMutationApi,
 } from 'graphql/generated';
-import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './formMeta';
-import Button from 'components/Forms/Button';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import Form from 'components/Forms/Form';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { PersonalDataOverviewFormType } from 'types/form';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
-import SimpleLayout from 'components/Layout/SimpleLayout';
-import TextInput from 'components/Forms/TextInput';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import UserText from 'components/Helpers/UserText';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useEffect } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { PersonalDataOverviewFormType } from 'types/form';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const PersonalDataOverview: FC = () => {
     const t = useTypedTranslationFunction();

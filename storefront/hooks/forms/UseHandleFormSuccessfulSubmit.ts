@@ -1,6 +1,6 @@
-import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
 import { canUseDom } from 'helpers/canUseDom';
 import { useEffect } from 'react';
+import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
 import { UseMutationState } from 'urql';
 
 // TODO: předělat z hooku na normální handler

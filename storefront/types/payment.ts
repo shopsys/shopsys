@@ -1,5 +1,5 @@
-import { ImageType } from 'types/image';
 import { PriceFragmentApi } from 'graphql/generated';
+import { ImageType } from 'types/image';
 import { PriceType } from 'types/price';
 
 export type PaymentInputType = {

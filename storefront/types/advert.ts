@@ -1,5 +1,5 @@
-import { ImageType } from 'types/image';
 import { SimpleCategoryType } from 'types/category';
+import { ImageType } from 'types/image';
 
 export type AdvertType = AdvertImageType | AdvertCodeType;
 

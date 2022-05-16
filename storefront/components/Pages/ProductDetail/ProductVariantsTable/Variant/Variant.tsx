@@ -8,18 +8,18 @@ import {
     VariantImageWrapperStyled,
     VariantPriceCellStyled,
 } from './Variant.style';
-import { FC, useState } from 'react';
-import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
-import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
-import { ListedVariantType } from 'types/product';
-import Popup from 'components/Layout/Popup';
+import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
-import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Popup from 'components/Layout/Popup';
+import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { ListedVariantType } from 'types/product';
+import { formatPrice } from 'utils/formatting';
 
 type VariantProps = {
     variant: ListedVariantType;

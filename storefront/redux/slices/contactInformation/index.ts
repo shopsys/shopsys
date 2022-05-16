@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ContactInformationFormType } from 'types/form';
-import { CustomerTypeEnum } from 'types/customer';
 import { HYDRATE } from 'next-redux-wrapper';
+import { CustomerTypeEnum } from 'types/customer';
+import { ContactInformationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const initialState = {

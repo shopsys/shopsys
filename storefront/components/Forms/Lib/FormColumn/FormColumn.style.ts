@@ -1,7 +1,7 @@
-import { css } from 'styled-components';
 import { FormColumnPropType } from './propTypes';
 import { FormLineStyled } from 'components/Forms/Lib/FormLine/FormLine.style';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 type FormColumnStyledProps = FormColumnPropType;
 

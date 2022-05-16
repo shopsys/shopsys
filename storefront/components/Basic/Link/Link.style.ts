@@ -1,7 +1,7 @@
-import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import { buttonSettings } from 'components/Forms/Button/Button.style';
-import { css } from 'styled-components';
+import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 export const LinkStyled = styled.a`
     ${({ theme }) => css`

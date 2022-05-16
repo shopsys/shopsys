@@ -6,14 +6,14 @@ import {
     ListItemStyled,
     ListItemTitleStyled,
 } from './ListItem.style';
-import { CartItemType } from 'types/cart';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
-import NextLink from 'next/link';
 import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { CartItemType } from 'types/cart';
+import { formatPrice } from 'utils/formatting';
 
 type ListItemProps = {
     cartItem: CartItemType;

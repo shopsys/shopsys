@@ -1,4 +1,3 @@
-import { FC, useState } from 'react';
 import {
     FilterGroupArrowStyled,
     FilterGroupContentItemStyled,
@@ -7,8 +6,9 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { Controller } from 'react-hook-form';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useState } from 'react';
+import { Controller } from 'react-hook-form';
 
 type FilterGroupInStockProps = {
     /**

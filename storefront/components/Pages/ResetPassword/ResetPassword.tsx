@@ -1,23 +1,23 @@
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
-import Button from 'components/Forms/Button';
 import { ButtonWrapperStyled } from './ResetPassword.style';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
+import Button from 'components/Forms/Button';
 import Form from 'components/Forms/Form';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { PasswordResetFormType } from 'types/form';
+import TextInput from 'components/Forms/TextInput';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import SimpleLayout from 'components/Layout/SimpleLayout';
-import TextInput from 'components/Forms/TextInput';
+import { usePasswordRecoveryMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { usePasswordRecoveryMutationApi } from 'graphql/generated';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { PasswordResetFormType } from 'types/form';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const ResetPassword: FC = () => {
     const t = useTypedTranslationFunction();

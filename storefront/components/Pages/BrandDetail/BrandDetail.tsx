@@ -1,10 +1,3 @@
-import {
-    BrandDetailImageStyled,
-    BrandDetailStyled,
-    BrandDetailTextStyled,
-} from 'components/Pages/BrandDetail/BrandDetail.style';
-import { FC, useRef } from 'react';
-import { BrandDetailType } from 'types/brand';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
 import Pagination from 'components/Blocks/Pagination';
@@ -12,6 +5,13 @@ import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import UserText from 'components/Helpers/UserText';
 import Webline from 'components/Layout/Webline';
+import {
+    BrandDetailImageStyled,
+    BrandDetailStyled,
+    BrandDetailTextStyled,
+} from 'components/Pages/BrandDetail/BrandDetail.style';
+import { FC, useRef } from 'react';
+import { BrandDetailType } from 'types/brand';
 
 type BrandDetailProps = {
     brand: BrandDetailType;

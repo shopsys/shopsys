@@ -1,13 +1,13 @@
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
-import Orders from 'components/Pages/Customer/Orders';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import CommonLayout from 'components/Layout/CommonLayout';
+import Orders from 'components/Pages/Customer/Orders';
 import { useOrders } from 'connectors/customer/Orders';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const Index: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);

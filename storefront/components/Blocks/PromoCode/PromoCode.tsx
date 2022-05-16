@@ -1,5 +1,4 @@
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { FC, useEffect, useRef, useState } from 'react';
+import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import {
     PromoCodeButtonIconStyled,
     PromoCodeButtonStyled,
@@ -9,15 +8,16 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
-import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
-import { CSSTransition } from 'react-transition-group';
-import Form from 'components/Forms/Form';
-import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
-import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
+import Form from 'components/Forms/Form';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useEffect, useRef, useState } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { CSSTransition } from 'react-transition-group';
+import { PromoCodeFormType } from 'types/form';
 
 const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';

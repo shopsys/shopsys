@@ -1,6 +1,6 @@
+import { SimpleFlagFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ListedProductConnectionType } from 'types/product';
-import { SimpleFlagFragmentApi } from 'graphql/generated';
 
 export type FlagDetailType = {
     __typename: 'Flag';

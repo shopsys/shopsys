@@ -1,10 +1,10 @@
-import { components, Props } from 'react-select';
-import { ControllerRenderProps } from 'react-hook-form';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { FC } from 'react';
+import { SelectStyled } from './Select.style';
 import Icon from 'components/Basic/Icon';
 import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
-import { SelectStyled } from './Select.style';
+import { FC } from 'react';
+import { ControllerRenderProps } from 'react-hook-form';
+import { components, Props } from 'react-select';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     Props,

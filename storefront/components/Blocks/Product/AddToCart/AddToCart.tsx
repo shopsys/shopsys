@@ -1,12 +1,12 @@
-import { FC, useRef, useState } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
-import { AddToCartPopupDataType } from 'types/cart';
 import Button from 'components/Forms/Button';
-import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import Spinbox from 'components/Forms/Spinbox';
+import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useRef, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { AddToCartPopupDataType } from 'types/cart';
 
 type AddToCartProps = {
     productUuid: string;

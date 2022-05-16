@@ -1,5 +1,5 @@
-import Link from 'components/Basic/Link';
 import { LogoStyled } from './Logo.style';
+import Link from 'components/Basic/Link';
 import { ReactElement } from 'react';
 
 const Logo = (): ReactElement => {

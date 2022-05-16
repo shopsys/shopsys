@@ -1,7 +1,7 @@
-import NavigationItem from './NavigationItem';
 import { NavigationStyled } from './Navigation.style';
-import { ReactElement } from 'react';
+import NavigationItem from './NavigationItem';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
+import { ReactElement } from 'react';
 
 const Navigation = (): ReactElement | null => {
     const testIdentifier = 'layout-header-navigation';

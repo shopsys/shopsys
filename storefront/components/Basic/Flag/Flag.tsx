@@ -1,6 +1,6 @@
+import { FlagStyled } from './Flag.style';
 import { AnchorHTMLAttributes, FC } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { FlagStyled } from './Flag.style';
 
 type NativeProps = ExtractNativePropsFromDefault<AnchorHTMLAttributes<HTMLAnchorElement>, 'href', never>;
 

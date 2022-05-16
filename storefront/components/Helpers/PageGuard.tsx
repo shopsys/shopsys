@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 
 type PageGuardProps = {
     accessCondition: boolean;

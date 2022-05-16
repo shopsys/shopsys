@@ -6,12 +6,12 @@ import {
     SelectItemLabelStyled,
     TransportDaysUntilDeliveryStyled,
 } from './SelectItemLabel.style';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { Translate } from 'next-translate';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Translate } from 'next-translate';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { PickupPlaceType } from 'types/pickupPlace';
+import { formatPrice } from 'utils/formatting';
 
 type SelectItemLabelProps = {
     name: string;

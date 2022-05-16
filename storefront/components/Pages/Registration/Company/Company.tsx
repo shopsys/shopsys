@@ -1,11 +1,11 @@
-import { Controller, useFormContext } from 'react-hook-form';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
-import { FC } from 'react';
+import Heading from 'components/Basic/Heading';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import Heading from 'components/Basic/Heading';
 import TextInput from 'components/Forms/TextInput';
+import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 const Company: FC = () => {
     const t = useTypedTranslationFunction();

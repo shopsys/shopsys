@@ -5,11 +5,11 @@ import {
     PaymentEmailStyled,
     PaymentWrapperStyled,
 } from './PaymentConfirmation.style';
-import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { FC } from 'react';
 
 const PaymentSuccess: FC = () => {
     const t = useTypedTranslationFunction();

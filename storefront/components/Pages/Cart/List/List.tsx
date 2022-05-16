@@ -1,8 +1,8 @@
-import { CartItemType } from 'types/cart';
-import { FC } from 'react';
 import Item from './Item';
 import { ListStyled } from './List.style';
 import Webline from 'components/Layout/Webline';
+import { FC } from 'react';
+import { CartItemType } from 'types/cart';
 
 type ListProps = {
     items?: CartItemType[];
