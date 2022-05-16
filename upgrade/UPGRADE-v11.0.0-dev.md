@@ -263,3 +263,22 @@ There you can find links to upgrade notes for other versions too.
             +       ListedProductViewFactory $listedProductViewFactory
                 )
             ```
+    - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory`
+        - method `getProductPriceFromArrayByPricingGroup()` was removed, use `Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory::createProductPriceFromArrayByPricingGroup()`
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    Domain $domain,
+                    ProductCachedAttributesFacade $productCachedAttributesFacade,
+            -       ?ImageViewFacadeInterface $imageViewFacade = null,
+            +       ImageViewFacadeInterface $imageViewFacade,
+            -       ?ProductActionViewFacadeInterface $productActionViewFacade = null,
+            +       ProductActionViewFacadeInterface $productActionViewFacade,
+            -       ?ProductActionViewFactory $productActionViewFactory = null,
+            +       ProductActionViewFactory $productActionViewFactory,
+            -       ?CurrentCustomerUser $currentCustomerUser = null,
+            +       CurrentCustomerUser $currentCustomerUser,
+            -       ?PriceFactory $priceFactory = null
+            +       PriceFactory $priceFactory
+                )
+            ```

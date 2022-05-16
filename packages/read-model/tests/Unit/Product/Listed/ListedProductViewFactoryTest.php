@@ -6,14 +6,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
+use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
 
@@ -44,8 +49,21 @@ class ListedProductViewFactoryTest extends TestCase
     ): void {
         $domainMock = $this->createDomainMock();
         $productCachedAttributesFacadeMock = $this->createProductCachedAttributesFacadeMock($priceAmount);
+        $imageViewFacade = $this->createMock(ImageViewFacade::class);
+        $productActionViewFacade = $this->createMock(ProductActionViewFacade::class);
+        $productActionViewFactory = $this->createMock(ProductActionViewFactory::class);
+        $currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
+        $priceFactory = $this->createMock(PriceFactory::class);
 
-        $listedProductViewFactory = new ListedProductViewFactory($domainMock, $productCachedAttributesFacadeMock);
+        $listedProductViewFactory = new ListedProductViewFactory(
+            $domainMock,
+            $productCachedAttributesFacadeMock,
+            $imageViewFacade,
+            $productActionViewFacade,
+            $productActionViewFactory,
+            $currentCustomerUser,
+            $priceFactory
+        );
 
         $productMock = $this->createProductMock($id, $productName, $shortDescription, $availabilityName, $flags);
 
