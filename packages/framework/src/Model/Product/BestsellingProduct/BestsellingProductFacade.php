@@ -8,10 +8,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class BestsellingProductFacade
 {
-    /**
-     * @deprecated This constant will be removed in next major version. There was need to change its visibility that would cause BC break
-     */
-    protected const MAX_RESULTS = 10;
     protected const ORDERS_CREATED_AT_LIMIT = '-1 month';
     public const MAX_SHOW_RESULTS = 3;
     public const MAX_RESULTS_ADMIN = 10;
