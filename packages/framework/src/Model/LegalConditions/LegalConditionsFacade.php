@@ -2,16 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Model\LegalConditions;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
-/**
- * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
- */
-class LegalConditionsFacade
+abstract class LegalConditionsFacade
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
@@ -38,10 +34,6 @@ class LegalConditionsFacade
         Setting $setting,
         Domain $domain
     ) {
-        if (static::class === self::class) {
-            DeprecationHelper::triggerAbstractClass(self::class);
-        }
-
         $this->articleFacade = $articleFacade;
         $this->setting = $setting;
         $this->domain = $domain;
@@ -66,15 +58,9 @@ class LegalConditionsFacade
     }
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    public function getTermsAndConditionsDownloadFilename()
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('Terms-and-conditions.html');
-    }
+    abstract public function getTermsAndConditionsDownloadFilename();
 
     /**
      * @param int $domainId

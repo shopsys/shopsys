@@ -66,3 +66,20 @@ There you can find links to upgrade notes for other versions too.
             +       Localization $localization
                 )
             ```
+    - class `Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getTranslatedBreadcrumbForNotFoundPage()`
+        - `getTranslatedBreadcrumbForErrorPage()`
+    - class `Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getTranslatedBreadcrumbsByRouteNames()`
+    - class `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getMessageForNoLongerAvailableExistingProduct()`
+        - `getMessageForNoLongerAvailableProduct()`
+        - `getMessageForChangedProduct()`
+    - class `Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getTermsAndConditionsDownloadFilename()`
+    - class `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getSupportedOrderingModesNamesById()`
+    - class `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getSupportedOrderingModesNamesById()`
+    - class `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade` was changed to abstract, don't forget to extend this class and implement following methods:
+        - `getSupportedOrderingModesNamesById()`
