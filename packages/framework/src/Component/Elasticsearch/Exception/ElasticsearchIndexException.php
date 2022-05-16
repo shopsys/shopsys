@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Exception;
 
 use Exception;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
 class ElasticsearchIndexException extends Exception
 {
@@ -74,25 +73,6 @@ class ElasticsearchIndexException extends Exception
             'Error when deleting index "%s":' . PHP_EOL . '"%s"',
             $indexName,
             json_encode($error)
-        ));
-    }
-
-    /**
-     * @deprecated Throwing an exception by static method is deprecated. Use ElasticsearchIndexAlreadyExists directly
-     * @param string $indexName
-     * @return static
-     */
-    public static function indexAlreadyExists(string $indexName): self
-    {
-        DeprecationHelper::trigger(
-            'Method "%s()" is deprecated. For throwing an exception use "%s" directly',
-            __METHOD__,
-            ElasticsearchIndexAlreadyExistsException::class
-        );
-
-        return new static(sprintf(
-            'Index "%s" already exists',
-            $indexName
         ));
     }
 
