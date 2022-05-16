@@ -11,6 +11,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.9.3"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {
@@ -508,6 +511,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "ramsey/collection": {
+        "version": "1.2.2"
     },
     "ramsey/uuid": {
         "version": "3.8.0"
