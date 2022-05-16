@@ -4,26 +4,19 @@ declare(strict_types=1);
 
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symplify\EasyCodingStandard\ValueObject\Option;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
- * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
+ * @param Symplify\EasyCodingStandard\Config\ECSConfig $ecsConfig
  */
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-    $parameters = $containerConfigurator->parameters();
+return static function (ECSConfig $ecsConfig): void {
+    $ecsConfig->rule(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
-    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
+    $ecsConfig->skip([
+        ObjectIsCreatedByFactorySniff::class => [
+            __DIR__ . '/tests/*',
+        ],
+    ]);
 
-    $parameters->set(
-        Option::SKIP,
-        [
-            ObjectIsCreatedByFactorySniff::class => [
-                __DIR__ . '/tests/*',
-            ],
-        ]
-    );
-
-    $containerConfigurator->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
+    $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
 };

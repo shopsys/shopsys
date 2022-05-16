@@ -6,35 +6,20 @@ use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symplify\EasyCodingStandard\ValueObject\Option;
-use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
- * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
+ * @param Symplify\EasyCodingStandard\Config\ECSConfig $ecsConfig
  */
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-    $parameters = $containerConfigurator->parameters();
+return static function (ECSConfig $ecsConfig): void {
+    $ecsConfig->rule(ForceLateStaticBindingForProtectedConstantsSniff::class);
 
-    $containerConfigurator->import(SetList::PSR_12);
-
-    $parameters->set(
-        Option::SKIP,
-        [
-            __DIR__ . '/src/Resources/views/Migration/migration.php.twig',
-            ObjectIsCreatedByFactorySniff::class => [
-                __DIR__ . '/tests/*',
-            ],
-            FunctionLengthSniff::class => [
-                __DIR__ . '/tests/Unit/Component/Doctrine/SchemaDiffFilterTest.php',
-                __DIR__ . '/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
-            ],
-        ]
-    );
-
-    // this package is meant to be extensible using class inheritance, so we want to avoid private visibilities in these namespaces
-    $services->set('forbidden_private_visibility_fixer.framework', ForbiddenPrivateVisibilityFixer::class)
+    /*
+     * this package is meant to be extensible using class inheritance,
+     * so we want to avoid private visibilities in the model namespace
+     */
+    $services = $ecsConfig->services();
+    $services->set('forbidden_private_visibility_fixer.migrations', ForbiddenPrivateVisibilityFixer::class)
         ->call('configure', [
             [
                 'analyzed_namespaces' => [
@@ -44,7 +29,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]);
 
-    $services->set(ForceLateStaticBindingForProtectedConstantsSniff::class);
+    $ecsConfig->skip([
+        __DIR__ . '/src/Resources/views/Migration/migration.php.twig',
+        ObjectIsCreatedByFactorySniff::class => [
+            __DIR__ . '/tests/*',
+        ],
+        FunctionLengthSniff::class => [
+            __DIR__ . '/tests/Unit/Component/Doctrine/SchemaDiffFilterTest.php',
+            __DIR__ . '/tests/Unit/Component/Doctrine/Migrations/MigrationsLockComparatorTest.php',
+        ],
+    ]);
 
-    $containerConfigurator->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
+    $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);
 };
