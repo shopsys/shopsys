@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
-use Shopsys\ReadModelBundle\Image\ImageViewFacade;
-use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 
 class ListedProductViewFacade implements ListedProductViewFacadeInterface
 {
@@ -55,20 +51,6 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     protected $listedProductViewFactory;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacade
-     * @deprecated since Shopsys Framework 9.1
-     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
-     */
-    protected $imageViewFacade;
-
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade
-     * @deprecated since Shopsys Framework 9.1
-     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
-     */
-    protected $productActionViewFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -76,8 +58,6 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
-     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -86,9 +66,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         CurrentCustomerUser $currentCustomerUser,
         TopProductFacade $topProductFacade,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ListedProductViewFactory $listedProductViewFactory,
-        ProductActionViewFacade $productActionViewFacade,
-        ImageViewFacade $imageViewFacade
+        ListedProductViewFactory $listedProductViewFactory
     ) {
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
@@ -97,8 +75,6 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         $this->topProductFacade = $topProductFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->listedProductViewFactory = $listedProductViewFactory;
-        $this->productActionViewFacade = $productActionViewFacade;
-        $this->imageViewFacade = $imageViewFacade;
     }
 
     /**
@@ -114,7 +90,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
 
         $topProducts = array_slice($topProducts, 0, $limit);
 
-        return $this->createFromProducts($topProducts);
+        return $this->listedProductViewFactory->createFromProducts($topProducts);
     }
 
     /**
@@ -127,7 +103,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $this->currentCustomerUser->getPricingGroup()
         );
 
-        return $this->createFromProducts($topProducts);
+        return $this->listedProductViewFactory->createFromProducts($topProducts);
     }
 
     /**
@@ -146,7 +122,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $limit
         );
 
-        return $this->createFromProducts($accessories);
+        return $this->listedProductViewFactory->createFromProducts($accessories);
     }
 
     /**
@@ -164,7 +140,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             null
         );
 
-        return $this->createFromProducts($accessories);
+        return $this->listedProductViewFactory->createFromProducts($accessories);
     }
 
     /**
@@ -235,33 +211,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $paginationResult->getPage(),
             $paginationResult->getPageSize(),
             $paginationResult->getTotalCount(),
-            $this->createFromProducts($paginationResult->getResults())
+            $this->listedProductViewFactory->createFromProducts($paginationResult->getResults())
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
-     * @deprecated since Shopsys Framework 9.1, use ListedProductViewFactory::createFromProducts() instead
-     */
-    protected function createFromProducts(array $products): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::createFromProducts()');
-
-        return $this->listedProductViewFactory->createFromProducts($products);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @return int[]
-     * @deprecated since Shopsys Framework 9.1, use ListedProductViewFactory::getIdsForProducts() class instead
-     */
-    protected function getIdsForProducts(array $products): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::getIdsForProducts()');
-
-        return array_map(static function (Product $product): int {
-            return $product->getId();
-        }, $products);
     }
 }

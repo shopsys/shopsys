@@ -243,3 +243,23 @@ There you can find links to upgrade notes for other versions too.
             +       ProductElasticsearchProvider $productElasticsearchProvider
                 )
             ```
+    - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade`
+        - property `$imageViewFacade` was removed
+        - property `$productActionViewFacade` was removed
+        - method `createFromProducts()` was removed, use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - method `getIdsForProducts()` was removed, use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    ProductFacade $productFacade,
+                    ProductAccessoryFacade $productAccessoryFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+                    TopProductFacade $topProductFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+            -       ListedProductViewFactory $listedProductViewFactory,
+            -       ProductActionViewFacade $productActionViewFacade,
+            -       ImageViewFacade $imageViewFacade
+            +       ListedProductViewFactory $listedProductViewFactory
+                )
+            ```
