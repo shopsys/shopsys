@@ -221,3 +221,25 @@ There you can find links to upgrade notes for other versions too.
             ```
     - method `Shopsys\ReadModelBundle\Image\ImageViewFacade::getForEntityIds()` was removed, use `getMainImagesByEntityIds()` instead
     - method `Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade::getForArray()` was removed, use `ProductActionViewFactory::createFromArray()` instead
+    - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade`
+        - property `$productActionViewFacade` was removed
+        - method `createFromProducts()` was removed, use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::createFromProducts()` instead
+        - method `getIdsForProducts()` was removed, use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    ProductFacade $productFacade,
+                    ProductAccessoryFacade $productAccessoryFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+                    TopProductFacade $topProductFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    ListedProductViewFactory $listedProductViewFactory,
+            -       ProductActionViewFacade $productActionViewFacade,
+                    ImageViewFacadeInterface $imageViewFacade,
+            -       ?ProductActionViewFactory $productActionViewFactory = null,
+            +       ProductActionViewFactory $productActionViewFactory,
+            -       ?ProductElasticsearchProvider $productElasticsearchProvider = null
+            +       ProductElasticsearchProvider $productElasticsearchProvider
+                )
+            ```
