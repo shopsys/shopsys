@@ -127,6 +127,7 @@ There you can find links to upgrade notes for other versions too.
         - method `getProductsByCategory()` was removed
     - constant `Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade::MAX_RESULTS` was removed
     - method `Shopsys\FrameworkBundle\Model\Script\ScriptFacade::getAllPagesScriptCodes()` was removed, use `getAllPagesBeforeContentScriptCodes()` instead
+    - all unnecessary service definitions were removed from `services_test.yaml` file
     - `Shopsys\FrontendApiBundle\Model\Product\ProductFacade`
         - method `getProductsCountOnCurrentDomain()` was removed, use `getFilteredProductsCountOnCurrentDomain()` instead
         - method `getProductsOnCurrentDomain()` was removed, use `getFilteredProductsOnCurrentDomain()` instead
