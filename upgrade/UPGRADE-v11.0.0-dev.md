@@ -19,3 +19,4 @@ There you can find links to upgrade notes for other versions too.
     - method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition::getLegacyIndexAlias()` was removed
     - visibility of method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade::create()` was changed to `protected`
     - method `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException::indexAlreadyExists()` was removed, use `ElasticsearchIndexAlreadyExistsException` directly
+    - class `Shopsys\FrameworkBundle\Component\DataFixture\AbstractNativeFixture` was removed
