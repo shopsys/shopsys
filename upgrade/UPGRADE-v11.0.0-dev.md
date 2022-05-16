@@ -165,3 +165,17 @@ There you can find links to upgrade notes for other versions too.
         - method `getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class
         - method `getArticlesByDomainIdQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class
         - method `getAllVisibleQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver`
+        - property `$domain` is no longer nullable
+        - property `$friendlyUrlFacade` is no longer nullable
+        - method `__construct()` changed its interface
+            ```diff
+                public function __construct(
+                    CategoryFacade $categoryFacade,
+            -       ?Domain $domain = null,
+            +       Domain $domain,
+            -       ?FriendlyUrlFacade $friendlyUrlFacade = null
+            +       FriendlyUrlFacade $friendlyUrlFacade
+                )
+            ```
+        - method `resolver` used as resolver with an alias `category` was removed, use `resolveByUuidOrUrlSlug` method and resolver alias instead
