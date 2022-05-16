@@ -5,20 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Localization\Localization as LocalizationAlias;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductCategoryFilter implements AdvancedSearchFilterInterface
 {
-    use SetterInjectionTrait;
-
     public const NAME = 'productCategory';
 
     /**
@@ -27,39 +22,20 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     protected $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
-     * @deprecated This will be removed in next major version
-     */
-    protected $domain;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization|null
      */
     protected $localization;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization|null $localization
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         CategoryFacade $categoryFacade,
-        ?Domain $domain = null,
-        ?LocalizationAlias $localization = null
+        Localization $localization
     ) {
         $this->categoryFacade = $categoryFacade;
-        $this->domain = $domain;
         $this->localization = $localization;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setLocalization(Localization $localization): void
-    {
-        $this->setDependency($localization, 'localization');
     }
 
     /**

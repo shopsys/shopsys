@@ -55,3 +55,14 @@ There you can find links to upgrade notes for other versions too.
             +       string $cacheDir
                 )
             ```
+    - `Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter`
+        - property `$domain` was removed
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    CategoryFacade $categoryFacade,
+            -       ?Domain $domain = null,
+            -       ?LocalizationAlias $localization = null
+            +       Localization $localization
+                )
+            ```
