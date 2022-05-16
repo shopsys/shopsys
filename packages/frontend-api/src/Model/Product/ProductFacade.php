@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -57,19 +56,6 @@ class ProductFacade
     }
 
     /**
-     * @return int
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsCountOnCurrentDomain()
-     */
-    public function getProductsCountOnCurrentDomain(): int
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsCountOnCurrentDomain');
-
-        $filterQuery = $this->filterQueryFactory->createListable();
-
-        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
      * @return int
@@ -83,29 +69,6 @@ class ProductFacade
         }
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsOnCurrentDomain()
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsOnCurrentDomain');
-
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
     }
 
     /**
@@ -136,31 +99,6 @@ class ProductFacade
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
-        return $productsResult->getHits();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsByCategory()
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByCategory');
-
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit,
-            $category->getId()
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
     }
 
@@ -200,21 +138,6 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @return int
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsByCategoryCount()
-     */
-    public function getProductsByCategoryCount(Category $category): int
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByCategoryCount');
-
-        $filterQuery = $this->filterQueryFactory->createListable()
-            ->filterByCategory([$category->getId()]);
-
-        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
      * @return int
@@ -232,31 +155,6 @@ class ProductFacade
         }
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsByBrand()
-     */
-    public function getProductsByBrand(Brand $brand, int $limit, int $offset, string $orderingModeId): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByBrand');
-
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit,
-            $brand->getId()
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
     }
 
     /**
@@ -290,21 +188,6 @@ class ProductFacade
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return int
-     * @deprecated This method will be removed in next major release. It has been replaced with getFilteredProductsByBrandCount()
-     */
-    public function getProductsByBrandCount(Brand $brand): int
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByBrandCount');
-
-        $filterQuery = $this->filterQueryFactory->createListable()
-            ->filterByBrands([$brand->getId()]);
-
-        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
 
     /**
