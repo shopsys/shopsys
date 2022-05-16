@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use Doctrine\ORM\Query;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -289,72 +286,5 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup()
         );
-    }
-
-    /**
-     * @return int
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsCountOnCurrentDomain()
-     */
-    public function getProductsCountOnCurrentDomain(): int
-    {
-        $queryBuilder = $this->productRepository->getAllListableQueryBuilder(
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
-        );
-
-        return $queryBuilder
-            ->select('count(p.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
-    {
-        $queryBuilder = $this->productRepository->getAllListableTranslatedAndOrderedQueryBuilder(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $orderingModeId,
-            $this->currentCustomerUser->getPricingGroup()
-        );
-
-        $queryBuilder->setFirstResult($offset)
-            ->setMaxResults($limit);
-        $query = $queryBuilder->getQuery();
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class);
-
-        return $query->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
-    {
-        $queryBuilder = $this->productRepository->getAllListableTranslatedAndOrderedQueryBuilderByCategory(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $orderingModeId,
-            $this->currentCustomerUser->getPricingGroup(),
-            $category
-        );
-
-        $queryBuilder->setFirstResult($offset)
-            ->setMaxResults($limit);
-        $query = $queryBuilder->getQuery();
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class);
-
-        return $query->execute();
     }
 }

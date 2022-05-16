@@ -5,20 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
-use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer;
 
 class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
 {
@@ -53,21 +49,9 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $productFilterCountDataElasticsearchRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
-     * @deprecated this property will be removed in next major version
-     */
-    protected $productFilterDataToQueryTransformer;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
      */
     protected $filterQueryFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     * @deprecated this property will be removed in next major version
-     */
-    protected $indexDefinitionLoader;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -76,9 +60,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -87,9 +69,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         ProductAccessoryRepository $productAccessoryRepository,
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
-        ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         FilterQueryFactory $filterQueryFactory,
-        IndexDefinitionLoader $indexDefinitionLoader
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
@@ -97,9 +77,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $this->productAccessoryRepository = $productAccessoryRepository;
         $this->productElasticsearchRepository = $productElasticsearchRepository;
         $this->productFilterCountDataElasticsearchRepository = $productFilterCountDataElasticsearchRepository;
-        $this->productFilterDataToQueryTransformer = $productFilterDataToQueryTransformer;
         $this->filterQueryFactory = $filterQueryFactory;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
     }
 
     /**
@@ -302,168 +280,5 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             $productFilterData,
             $this->filterQueryFactory->createListableProductsWithPriceAndStockFilter($productFilterData)
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param int $categoryId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsByCategoryId() instead.
-     */
-    protected function createListableProductsInCategoryFilterQuery(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        int $categoryId
-    ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsByCategoryId(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $categoryId
-        );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param int $brandId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsByBrandId() instead.
-     */
-    protected function createListableProductsForBrandFilterQuery(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        int $brandId
-    ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsByBrandId(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $brandId
-        );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param string|null $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsBySearchText() instead.
-     */
-    protected function createListableProductsForSearchTextFilterQuery(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        ?string $searchText
-    ): FilterQuery {
-        $searchText = $searchText ?? '';
-
-        return $this->filterQueryFactory->createListableProductsBySearchText(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit,
-            $searchText
-        );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createWithProductFilterData() instead.
-     */
-    protected function createFilterQueryWithProductFilterData(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit
-    ): FilterQuery {
-        return $this->filterQueryFactory->createWithProductFilterData(
-            $productFilterData,
-            $orderingModeId,
-            $page,
-            $limit
-        );
-    }
-
-    /**
-     * @return string
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::getIndexName() instead.
-     */
-    protected function getIndexName(): string
-    {
-        return $this->filterQueryFactory->getIndexName();
-    }
-
-    /**
-     * @return int
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsCountOnCurrentDomain()
-     */
-    public function getProductsCountOnCurrentDomain(): int
-    {
-        $filterQuery = $this->filterQueryFactory->createListable();
-
-        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
-    }
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = new ProductFilterData();
-        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit,
-            $category->getId()
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
     }
 }
