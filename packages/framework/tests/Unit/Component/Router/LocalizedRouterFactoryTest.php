@@ -5,7 +5,6 @@ namespace Tests\FrameworkBundle\Unit\Component\Router;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFileNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
-use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,13 +15,11 @@ class LocalizedRouterFactoryTest extends TestCase
 
     public function testGetRouterRouterNotResolvedException()
     {
-        $delegatingLoaderMock = $this->createMock(DelegatingLoader::class);
         $containerMock = $this->createMock(ContainerInterface::class);
         $context = new RequestContext();
 
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
-            $delegatingLoaderMock,
             $containerMock,
             __DIR__
         );
@@ -32,7 +29,6 @@ class LocalizedRouterFactoryTest extends TestCase
 
     public function testGetRouter()
     {
-        $delegatingLoaderMock = $this->createMock(DelegatingLoader::class);
         $containerMock = $this->createMock(ContainerInterface::class);
         $context1 = new RequestContext();
         $context1->setHost('host1');
@@ -41,7 +37,6 @@ class LocalizedRouterFactoryTest extends TestCase
 
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
-            $delegatingLoaderMock,
             $containerMock,
             __DIR__
         );

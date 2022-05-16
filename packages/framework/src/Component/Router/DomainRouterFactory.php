@@ -2,24 +2,19 @@
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\Exception\RouterNotResolvedException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RequestContext;
 
 class DomainRouterFactory
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory
      */
@@ -34,12 +29,6 @@ class DomainRouterFactory
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     protected $domain;
-
-    /**
-     * @deprecated This loader is deprecated and will be removed in the next major. Use Symfony\Bundle\FrameworkBundle\Routing\Router instead of Symfony\Component\Routing\Router without this dependency.
-     * @var \Symfony\Component\Config\Loader\LoaderInterface
-     */
-    protected $configLoader;
 
     /**
      * @var string
@@ -57,53 +46,40 @@ class DomainRouterFactory
     protected $requestStack;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface|null
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected ?ContainerInterface $container;
+    protected ContainerInterface $container;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected ?string $cacheDir;
+    protected string $cacheDir;
 
     /**
      * @param mixed $routerConfiguration
-     * @param \Symfony\Component\Config\Loader\LoaderInterface|null $configLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface|null $container
-     * @param string|null $cacheDir
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string $cacheDir
      */
     public function __construct(
         $routerConfiguration,
-        ?LoaderInterface $configLoader,
         LocalizedRouterFactory $localizedRouterFactory,
         FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
         Domain $domain,
         RequestStack $requestStack,
-        ?ContainerInterface $container = null,
-        ?string $cacheDir = null
+        ContainerInterface $container,
+        string $cacheDir
     ) {
         $this->routerConfiguration = $routerConfiguration;
-        $this->configLoader = $configLoader;
         $this->localizedRouterFactory = $localizedRouterFactory;
         $this->domain = $domain;
         $this->friendlyUrlRouterFactory = $friendlyUrlRouterFactory;
         $this->requestStack = $requestStack;
         $this->container = $container;
         $this->cacheDir = $cacheDir;
-    }
-
-    /**
-     * @required
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setContainer(ContainerInterface $container): void
-    {
-        $this->setDependency($container, 'container');
     }
 
     /**
@@ -139,15 +115,6 @@ class DomainRouterFactory
      */
     protected function getBasicRouter(DomainConfig $domainConfig)
     {
-        if ($this->cacheDir === null) {
-            DeprecationHelper::trigger(
-                'The argument "$cacheDir" is not provided by constructor in "%s". In the next major it will be required.',
-                self::class
-            );
-
-            $this->cacheDir = $this->container->getParameter('shopsys.router.domain.cache_dir');
-        }
-
         return new Router(
             $this->container,
             $this->routerConfiguration,

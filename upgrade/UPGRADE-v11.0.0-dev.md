@@ -21,3 +21,37 @@ There you can find links to upgrade notes for other versions too.
     - method `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException::indexAlreadyExists()` was removed, use `ElasticsearchIndexAlreadyExistsException` directly
     - class `Shopsys\FrameworkBundle\Component\DataFixture\AbstractNativeFixture` was removed
     - removed constant `Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting\ENVIRONMENTS_CONSOLE`
+    - `Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory`
+        - property `$configLoader` was removed
+        - property `$container` is no longer nullable
+        - property `$cacheDir`  is no longer nullable
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    $routerConfiguration,
+            -       ?LoaderInterface $configLoader,
+                    LocalizedRouterFactory $localizedRouterFactory,
+                    FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
+                    Domain $domain,
+                    RequestStack $requestStack,
+            -       ?ContainerInterface $container = null,
+            +       ContainerInterface $container,
+            -       ?string $cacheDir = null
+            +       string $cacheDir
+                )
+            ```
+    - `Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory`
+        - property `$configLoader` was removed
+        - property `$container` is no longer nullable
+        - property `$cacheDir`  is no longer nullable
+        - method `__construct`  changed its interface:
+            ```diff
+                public function __construct(
+                    $localeRoutersResourcesFilepathMask,
+            -       ?LoaderInterface $configLoader = null,
+            -       ?ContainerInterface $container = null,
+            +       ContainerInterface $container,
+            -       ?string $cacheDir = null
+            +       string $cacheDir
+                )
+            ```
