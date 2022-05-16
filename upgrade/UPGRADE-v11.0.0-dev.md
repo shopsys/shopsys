@@ -219,3 +219,4 @@ There you can find links to upgrade notes for other versions too.
             +       ProductConnectionFactory $productConnectionFactory
                 )
             ```
+    - method `Shopsys\ReadModelBundle\Image\ImageViewFacade::getForEntityIds()` was removed, use `getMainImagesByEntityIds()` instead

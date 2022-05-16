@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Image;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
@@ -28,19 +27,6 @@ class ImageViewFacade implements ImageViewFacadeInterface
     {
         $this->imageFacade = $imageFacade;
         $this->imageViewFactory = $imageViewFactory;
-    }
-
-    /**
-     * @param string $entityClass
-     * @param int[] $entityIds
-     * @return \Shopsys\ReadModelBundle\Image\ImageView[]|null[]
-     * @deprecated since Shopsys Framework 9.1, use getMainImagesByEntityIds() instead
-     */
-    public function getForEntityIds(string $entityClass, array $entityIds): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getMainImagesByEntityIds()');
-
-        return $this->getMainImagesByEntityIds($entityClass, $entityIds);
     }
 
     /**
