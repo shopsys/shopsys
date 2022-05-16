@@ -2,8 +2,8 @@ parameters:
 
     treatPhpDocTypesAsCertain: false
     symfony:
-        container_xml_path: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        constant_hassers: false
+        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constantHassers: false
 
     ignoreErrors:
         -
@@ -45,3 +45,4 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shopsys/coding-standards/extension.neon

@@ -61,6 +61,7 @@ class CronModuleExecutor
     }
 
     /**
+     * @phpstan-impure
      * @return bool
      */
     public function canRun()

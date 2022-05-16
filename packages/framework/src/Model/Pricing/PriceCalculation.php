@@ -31,7 +31,7 @@ class PriceCalculation
      */
     public function getVatAmountByPriceWithVat(Money $priceWithVat, Vat $vat): Money
     {
-        $divisor = (string)(1 + $vat->getPercent() / 100);
+        $divisor = (string)(1 + (float)$vat->getPercent() / 100);
 
         $priceWithoutVat = $priceWithVat->divide($divisor, static::PRICE_CALCULATION_MAX_SCALE);
 
@@ -45,7 +45,7 @@ class PriceCalculation
      */
     public function applyVatPercent(Money $priceWithoutVat, Vat $vat): Money
     {
-        $multiplier = (string)(1 + $vat->getPercent() / 100);
+        $multiplier = (string)(1 + (float)$vat->getPercent() / 100);
 
         return $priceWithoutVat->multiply($multiplier);
     }

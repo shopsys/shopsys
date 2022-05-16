@@ -167,6 +167,9 @@ All the changes are considered as backwards incompatible.
         +        DocBlockParser $docBlockParser
              ) {
         ```
+- upgrade PhpStan to the latest version ([#2452](https://github.com/shopsys/shopsys/pull/2452))
+    - see #project-base-diff to update your project
+    - run `php phing phpstan` and fix violations in your code
 
 ## Application
 

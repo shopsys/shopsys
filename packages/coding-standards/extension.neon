@@ -1,0 +1,5 @@
+services:
+    -
+        class: Shopsys\CodingStandards\Phpstan\InjectedPropertiesInTestsExtension
+        tags:
+            - phpstan.properties.readWriteExtension

@@ -103,7 +103,15 @@ class RouteCsrfProtector implements EventSubscriberInterface
             return false;
         }
 
-        [$controller, $action] = $event->getController();
+        $eventController = $event->getController();
+
+        if (is_array($eventController)) {
+            [$controller, $action] = $eventController;
+        } else {
+            $controller = $eventController;
+            $action = '__invoke';
+        }
+
         $method = new ReflectionMethod($controller, $action);
         $annotation = $this->annotationReader->getMethodAnnotation($method, CsrfProtection::class);
 

@@ -4,8 +4,8 @@ parameters:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
     symfony:
-        container_xml_path: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        constant_hassers: false
+        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constantHassers: false
 
     ignoreErrors:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
@@ -69,11 +69,7 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/project-base/tests/App/*
-        -
-            # our fork of doctrine-orm (https://github.com/shopsys/doctrine-orm) needs to be updated to resolve the reported issues
-            message: '#^Method Shopsys\\FrameworkBundle\\Component\\EntityExtension\\EntityManagerDecorator::.*\(\) should return T of object\|null but returns object\|null.#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/EntityExtension/EntityManagerDecorator.php
-    excludes_analyse:
+    excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
@@ -85,3 +81,4 @@ includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - %currentWorkingDirectory%/packages/coding-standards/extension.neon
