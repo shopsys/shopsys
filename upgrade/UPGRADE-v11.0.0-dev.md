@@ -180,3 +180,24 @@ There you can find links to upgrade notes for other versions too.
             ```
         - method `resolver` used as resolver with an alias `category` was removed, use `resolveByUuidOrUrlSlug` method and resolver alias instead
     - class `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolver` used as resolver with alias `product` was removed, use `ProductDetailResolver` with alias `productDetail` instead
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap`
+        - method `getProductLink()` was removed, use mapping via appropriate class `DataMapper\Product*FieldMapper` instead
+        - method `getFlagsForData()` was removed, use mapping via appropriate class `DataMapper\Product*FieldMapper` instead
+        - method `getCategoriesForData()`  was removed, use mapping via appropriate class `DataMapper\Product*FieldMapper` instead
+        - property `$domain` was removed
+        - property `$productCollectionFacade` was removed
+        - property `flagFacade` was removed
+        - property `$categoryFacade` was removed
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+            -       Domain $domain,
+            -       ProductCollectionFacade $productCollectionFacade,
+            -       FlagFacade $flagFacade,
+            -       CategoryFacade $categoryFacade,
+            -       ?ProductEntityFieldMapper $productEntityFieldMapper = null,
+            +       ProductEntityFieldMapper $productEntityFieldMapper,
+            -       ?ProductArrayFieldMapper $productArrayFieldMapper = null
+            +       ProductArrayFieldMapper $productArrayFieldMapper
+                )
+            ```

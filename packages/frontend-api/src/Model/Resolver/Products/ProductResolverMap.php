@@ -9,12 +9,6 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\MethodNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper;
@@ -22,84 +16,26 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 
 class ProductResolverMap extends ResolverMap
 {
-    use SetterInjectionTrait;
-
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @deprecated Used only in deprecated method, will be removed in the next major release
+     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper
      */
-    protected $domain;
+    protected ProductEntityFieldMapper $productEntityFieldMapper;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade
-     * @deprecated Used only in deprecated method, will be removed in the next major release
+     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper
      */
-    protected $productCollectionFacade;
+    protected ProductArrayFieldMapper $productArrayFieldMapper;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     * @deprecated Unused, will be removed in the next major release
-     */
-    protected $flagFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     * @deprecated Unused, will be removed in the next major release
-     */
-    protected $categoryFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper|null
-     */
-    protected ?ProductEntityFieldMapper $productEntityFieldMapper;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|null
-     */
-    protected ?ProductArrayFieldMapper $productArrayFieldMapper;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper|null $productEntityFieldMapper
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
      */
     public function __construct(
-        Domain $domain,
-        ProductCollectionFacade $productCollectionFacade,
-        FlagFacade $flagFacade,
-        CategoryFacade $categoryFacade,
-        ?ProductEntityFieldMapper $productEntityFieldMapper = null,
-        ?ProductArrayFieldMapper $productArrayFieldMapper = null
+        ProductEntityFieldMapper $productEntityFieldMapper,
+        ProductArrayFieldMapper $productArrayFieldMapper
     ) {
-        $this->domain = $domain;
-        $this->productCollectionFacade = $productCollectionFacade;
-        $this->flagFacade = $flagFacade;
-        $this->categoryFacade = $categoryFacade;
         $this->productEntityFieldMapper = $productEntityFieldMapper;
         $this->productArrayFieldMapper = $productArrayFieldMapper;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductArrayFieldMapper(ProductArrayFieldMapper $productArrayFieldMapper): void
-    {
-        $this->setDependency($productArrayFieldMapper, 'productArrayFieldMapper');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductEntityFieldMapper(ProductEntityFieldMapper $productEntityFieldMapper): void
-    {
-        $this->setDependency($productEntityFieldMapper, 'productEntityFieldMapper');
     }
 
     /**
@@ -165,59 +101,5 @@ class ProductResolverMap extends ResolverMap
         }
 
         throw new MethodNotFoundException($fieldName, $mapper);
-    }
-
-    /**
-     * @param int $productId
-     * @return string
-     * @deprecated Use appropriate class DataMapper\Product*FieldMapper instead
-     */
-    protected function getProductLink(int $productId): string
-    {
-        DeprecationHelper::trigger(
-            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-            __METHOD__
-        );
-
-        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
-            [$productId],
-            $this->domain->getCurrentDomainConfig()
-        );
-
-        return $absoluteUrlsIndexedByProductId[$productId];
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
-     * @deprecated Use appropriate class DataMapper\Product*FieldMapper instead
-     */
-    protected function getFlagsForData($data): array
-    {
-        DeprecationHelper::trigger(
-            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-            __METHOD__
-        );
-
-        if ($data instanceof Product) {
-            return $data->getFlags();
-        }
-
-        return $this->productArrayFieldMapper->getFlags($data);
-    }
-
-    /**
-     * @param array $data
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated Use appropriate class DataMapper\Product*FieldMapper instead
-     */
-    protected function getCategoriesForData($data): array
-    {
-        DeprecationHelper::trigger(
-            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-            __METHOD__
-        );
-
-        return $this->productArrayFieldMapper->getCategories($data);
     }
 }
