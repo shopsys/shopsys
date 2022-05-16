@@ -54,7 +54,7 @@ class ArticleRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getArticlesByDomainIdQueryBuilder($domainId)
+    public function getArticlesByDomainIdQueryBuilder($domainId)
     {
         return $this->em->createQueryBuilder()
             ->select('a')
@@ -134,7 +134,7 @@ class ArticleRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAllVisibleQueryBuilder()
+    public function getAllVisibleQueryBuilder()
     {
         return $this->em->createQueryBuilder()
             ->select('a')
@@ -158,7 +158,7 @@ class ArticleRepository
      * @param string $placement
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+    public function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
         int $domainId,
         string $placement
     ): QueryBuilder {

@@ -152,3 +152,16 @@ There you can find links to upgrade notes for other versions too.
             +       FrontendApiProductFacade $frontendApiProductFacade
                 )
             ```
+    - method `Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder()` changed its visibility to `public`
+    - method `Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder` changed its visibility to `public`
+    - method `Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getArticlesByDomainIdQueryBuilder` changed its visibility to `public`
+    - `Shopsys\FrontendApiBundle\Model\Article\ArticleRepository`
+        - property `$em` was removed
+        - method `__construct()` changed its interface
+            ```diff
+            -   public function __construct(FrameworkArticleRepository $articleRepository, EntityManagerInterface $em)
+            +   public function __construct(FrameworkArticleRepository $articleRepository)
+            ```
+        - method `getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class
+        - method `getArticlesByDomainIdQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class
+        - method `getAllVisibleQueryBuilder()` was removed, use method with the same name from the `Shopsys\FrameworkBundle\Model\Article\ArticleRepository` class

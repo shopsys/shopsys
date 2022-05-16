@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Article;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository as FrameworkArticleRepository;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
@@ -19,18 +16,11 @@ class ArticleRepository
     protected $articleRepository;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(FrameworkArticleRepository $articleRepository, EntityManagerInterface $em)
+    public function __construct(FrameworkArticleRepository $articleRepository)
     {
         $this->articleRepository = $articleRepository;
-        $this->em = $em;
     }
 
     /**
@@ -46,7 +36,7 @@ class ArticleRepository
         int $limit,
         int $offset
     ): array {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+        $queryBuilder = $this->articleRepository->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
             $domainId,
             $placement
         )
@@ -59,31 +49,11 @@ class ArticleRepository
     /**
      * @param int $domainId
      * @param string $placement
-     * @return \Doctrine\ORM\QueryBuilder
-     * @deprecated This method will be removed in next major version. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder() which will change its visibility to public.
-     */
-    protected function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
-        int $domainId,
-        string $placement
-    ): QueryBuilder {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
-            ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
-            ->orderBy('a.position, a.id');
-    }
-
-    /**
-     * @param int $domainId
-     * @param string $placement
      * @return int
      */
     public function getAllVisibleArticlesCountByDomainIdAndPlacement(int $domainId, string $placement): int
     {
-        $queryBuilder = $this->getArticlesByDomainIdQueryBuilder($domainId)
+        $queryBuilder = $this->articleRepository->getArticlesByDomainIdQueryBuilder($domainId)
             ->select('COUNT(a)')
             ->andWhere('a.hidden = false')
             ->andWhere('a.placement = :placement')
@@ -94,29 +64,11 @@ class ArticleRepository
 
     /**
      * @param int $domainId
-     * @return \Doctrine\ORM\QueryBuilder
-     * @deprecated This method will be removed in next major version. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getArticlesByDomainIdQueryBuilder() which will change its visibility to public.
-     */
-    protected function getArticlesByDomainIdQueryBuilder($domainId)
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getArticlesByDomainIdQueryBuilder() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        return $this->em->createQueryBuilder()
-            ->select('a')
-            ->from(Article::class, 'a')
-            ->where('a.domainId = :domainId')->setParameter('domainId', $domainId);
-    }
-
-    /**
-     * @param int $domainId
      * @return int
      */
     public function getAllVisibleArticlesCountByDomainId($domainId): int
     {
-        $queryBuilder = $this->getArticlesByDomainIdQueryBuilder($domainId)
+        $queryBuilder = $this->articleRepository->getArticlesByDomainIdQueryBuilder($domainId)
             ->select('COUNT(a)')
             ->andWhere('a.hidden = false');
 
@@ -134,7 +86,7 @@ class ArticleRepository
         int $limit,
         int $offset
     ): array {
-        $queryBuilder = $this->getAllVisibleQueryBuilder()
+        $queryBuilder = $this->articleRepository->getAllVisibleQueryBuilder()
             ->andWhere('a.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->orderBy('a.placement')
@@ -146,30 +98,13 @@ class ArticleRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
-     * @deprecated This method will be removed in next major version. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder() which will change its visibility to public.
-     */
-    protected function getAllVisibleQueryBuilder()
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        return $this->em->createQueryBuilder()
-            ->select('a')
-            ->from(Article::class, 'a')
-            ->where('a.hidden = false');
-    }
-
-    /**
      * @param int $domainId
      * @param string $uuid
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
     public function getVisibleByDomainIdAndUuid(int $domainId, string $uuid): Article
     {
-        $article = $this->getAllVisibleQueryBuilder()
+        $article = $this->articleRepository->getAllVisibleQueryBuilder()
             ->andWhere('a.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->andWhere('a.uuid = :uuid')
@@ -190,7 +125,7 @@ class ArticleRepository
      */
     public function getVisibleByDomainIdAndId(int $domainId, int $articleId): Article
     {
-        $article = $this->getAllVisibleQueryBuilder()
+        $article = $this->articleRepository->getAllVisibleQueryBuilder()
             ->andWhere('a.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->andWhere('a.id = :id')
