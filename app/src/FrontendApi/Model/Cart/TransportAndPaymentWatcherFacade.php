@@ -232,6 +232,10 @@ class TransportAndPaymentWatcherFacade
      */
     private function checkTransport(Cart $cart): void
     {
+        if ($cart->isEmpty()) {
+            $this->cartTransportFacade->unsetCartTransport($cart);
+        }
+
         $transport = $cart->getTransport();
         if ($transport === null) {
             if ($cart->getTransportWatchedPrice() !== null) {
@@ -256,6 +260,10 @@ class TransportAndPaymentWatcherFacade
      */
     private function checkPayment(Cart $cart): void
     {
+        if ($cart->isEmpty()) {
+            $this->cartPaymentFacade->unsetCartPayment($cart);
+        }
+
         $payment = $cart->getPayment();
         if ($payment === null) {
             if ($cart->getPaymentWatchedPrice() !== null) {

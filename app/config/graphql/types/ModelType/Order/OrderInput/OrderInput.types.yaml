@@ -7,6 +7,7 @@ OrderInput:
             -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
             -   App\FrontendApi\Model\Component\Constraints\TransportInOrder: ~
             -   App\FrontendApi\Model\Component\Constraints\PaymentInOrder: ~
+            -   App\FrontendApi\Model\Component\Constraints\ProductInOrder: ~
         fields:
             products:
                 type: "[OrderProductInput!]"
