@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
@@ -202,7 +201,7 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getListableForBrandQueryBuilder(
+    public function getListableForBrandQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Brand $brand
@@ -210,26 +209,6 @@ class ProductRepository
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByBrand($queryBuilder, $brand);
         return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Doctrine\ORM\QueryBuilder
-     * @deprecated This method will be removed in next major and methods getListableForBrandQueryBuilder() visibility will be changed to public
-     */
-    public function getListableForBrandQueryBuilderPublic(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Brand $brand
-    ) {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by getListableForBrandQueryBuilder() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        return $this->getListableForBrandQueryBuilder($domainId, $pricingGroup, $brand);
     }
 
     /**
