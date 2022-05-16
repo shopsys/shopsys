@@ -163,26 +163,6 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
-     */
-    public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
-
-        $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
-
-        return $queryBuilder->andWhere('c.lft < :branchLft OR c.rgt > :branchRgt')
-            ->setParameter('branchLft', $categoryBranch->getLft())
-            ->setParameter('branchRgt', $categoryBranch->getRgt())
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -615,25 +595,6 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('categories', $categories);
 
         return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
-     */
-    public function getTranslatedAll(DomainConfig $domainConfig)
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
-            __METHOD__
-        );
-
-        $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
-
-        return $queryBuilder->getQuery()
-            ->getResult();
     }
 
     /**

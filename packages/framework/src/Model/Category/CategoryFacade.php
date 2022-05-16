@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -256,18 +255,6 @@ class CategoryFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
-     */
-    public function getTranslatedAll(DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslated');
-
-        return $this->categoryRepository->getTranslatedAll($domainConfig);
-    }
-
-    /**
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -369,19 +356,6 @@ class CategoryFacade
     public function getAllVisibleChildrenByCategoryAndDomainId(Category $category, $domainId)
     {
         return $this->categoryRepository->getAllVisibleChildrenByCategoryAndDomainId($category, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
-     */
-    public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
-
-        return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
 
     /**
