@@ -278,6 +278,27 @@ class ProductRepository
     }
 
     /**
+     * @return iterable<array{id: int}>
+     */
+    public function iterateAllProductIds(): iterable
+    {
+        return $this->getAllProductsQueryBuilder()
+            ->select('p.id')
+            ->getQuery()
+            ->toIterable();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getAllProductsQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p');
+    }
+
+    /**
      * @param int $id
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup

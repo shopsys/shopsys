@@ -65,16 +65,6 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllProductsQueryBuilder(): QueryBuilder
-    {
-        return $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p');
-    }
-
-    /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $domainId
      */

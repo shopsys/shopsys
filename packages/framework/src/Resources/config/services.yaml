@@ -1049,3 +1049,7 @@ services:
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
         arguments:
             $servicesResetter: '@services_resetter'
+
+    Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.queue'

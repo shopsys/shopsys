@@ -118,7 +118,7 @@ function merge() {
     # Specify consumers configuration with the default configuration in the format:
     # <consumer-name>:<transport-names-separated-by-space>:<number-of-consumers>
     DEFAULT_CONSUMERS=(
-        "example:example_transport:1"
+        "product-recalculation:product_recalculation:1"
         "placed_order:placed_order_transport:1"
     )
 

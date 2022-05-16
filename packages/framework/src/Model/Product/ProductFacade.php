@@ -249,6 +249,14 @@ class ProductFacade
     }
 
     /**
+     * @return iterable<array{id: int}>
+     */
+    public function iterateAllProductIds(): iterable
+    {
+        return $this->productRepository->iterateAllProductIds();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][]
      */

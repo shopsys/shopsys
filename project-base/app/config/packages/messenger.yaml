@@ -6,15 +6,15 @@ framework:
                 middleware:
                     - 'Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayEnvelopeMiddleware'
         transports:
-            example_transport:
+            product_recalculation:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
                     vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
                     exchange:
-                        name: example_exchange
+                        name: product_recalculation
                         type: direct
                     queues:
-                        example_queue: ~
+                        product_recalculation: ~
             placed_order_transport:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
@@ -30,5 +30,6 @@ framework:
                     multiplier: 5
 
         routing:
-            Shopsys\FrameworkBundle\Component\Messenger\ExampleMessage: example_transport
+            Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessage: product_recalculation
+            Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage: product_recalculation
             Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage: placed_order_transport
