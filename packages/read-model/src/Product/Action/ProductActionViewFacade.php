@@ -69,14 +69,4 @@ class ProductActionViewFacade implements ProductActionViewFacadeInterface
     {
         return $this->getForProducts([$product])[$product->getId()];
     }
-
-    /**
-     * @param array $productArray
-     * @return \Shopsys\ReadModelBundle\Product\Action\ProductActionView
-     * @deprecated use ProductActionViewFactory instead
-     */
-    public function getForArray(array $productArray): ProductActionView
-    {
-        return $this->productActionViewFactory->createFromArray($productArray);
-    }
 }
