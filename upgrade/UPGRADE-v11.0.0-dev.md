@@ -526,6 +526,21 @@ There you can find links to upgrade notes for other versions too.
             +       FrontendApiImageFacade $frontendApiImageFacade
                 )
             ```
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver`
+        - property `$priceFacade` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    ProductCachedAttributesFacade $productCachedAttributesFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    PaymentPriceCalculation $paymentPriceCalculation,
+                    Domain $domain,
+                    CurrencyFacade $currencyFacade,
+                    TransportPriceCalculation $transportPriceCalculation,
+            -       ?PriceFacade $priceFacade = null
+            +       PriceFacade $priceFacade
+                )
+            ```
 
 ## Application
 
