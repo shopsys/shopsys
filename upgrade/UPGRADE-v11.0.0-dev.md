@@ -491,6 +491,18 @@ There you can find links to upgrade notes for other versions too.
             +       BrandCachedFacade $brandCachedFacade
                 )
             ```
+    - `Shopsys\FrameworkBundle\Twig\UploadedFileExtension`
+        - property `$uploadedFileLocator` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    Domain $domain,
+                    UploadedFileFacade $uploadedFileFacade,
+                    FileThumbnailExtension $fileThumbnailExtension,
+            -       ?UploadedFileLocator $uploadedFileLocator = null
+            +       UploadedFileLocator $uploadedFileLocator
+                )
+            ```
 
 ## Application
 

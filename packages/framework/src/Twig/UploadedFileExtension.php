@@ -9,15 +9,12 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class UploadedFileExtension extends AbstractExtension
 {
-    use SetterInjectionTrait;
-
     protected const FILE_NOT_FOUND_ICON_TYPE = 'not-found';
 
     /**
@@ -36,36 +33,26 @@ class UploadedFileExtension extends AbstractExtension
     protected $fileThumbnailExtension;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator|null
+     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
      */
-    protected ?UploadedFileLocator $uploadedFileLocator;
+    protected UploadedFileLocator $uploadedFileLocator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension $fileThumbnailExtension
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator|null $uploadedFileLocator
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      */
     public function __construct(
         Domain $domain,
         UploadedFileFacade $uploadedFileFacade,
         FileThumbnailExtension $fileThumbnailExtension,
-        ?UploadedFileLocator $uploadedFileLocator = null
+        UploadedFileLocator $uploadedFileLocator
     ) {
         $this->domain = $domain;
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->fileThumbnailExtension = $fileThumbnailExtension;
         $this->uploadedFileLocator = $uploadedFileLocator;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     */
-    public function setUploadedFileLocator(UploadedFileLocator $uploadedFileLocator)
-    {
-        $this->setDependency($uploadedFileLocator, 'uploadedFileLocator');
     }
 
     /**
