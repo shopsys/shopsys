@@ -514,6 +514,18 @@ There you can find links to upgrade notes for other versions too.
             +       GraphqlConfigurator $graphqlConfigurator
                 )
             ```
+    - `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver`
+        - property `$frontendApiImageFacade` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    ImageFacade $imageFacade,
+                    ImageConfig $imageConfig,
+                    Domain $domain,
+            -       ?FrontendApiImageFacade $frontendApiImageFacade = null
+            +       FrontendApiImageFacade $frontendApiImageFacade
+                )
+            ```
 
 ## Application
 

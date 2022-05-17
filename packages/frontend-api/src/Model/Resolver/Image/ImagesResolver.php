@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -25,8 +24,6 @@ use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFac
 
 class ImagesResolver implements ResolverInterface
 {
-    use SetterInjectionTrait;
-
     protected const IMAGE_ENTITY_PRODUCT = 'product';
     protected const IMAGE_ENTITY_CATEGORY = 'category';
     protected const IMAGE_ENTITY_PAYMENT = 'payment';
@@ -50,7 +47,7 @@ class ImagesResolver implements ResolverInterface
     protected $domain;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null
+     * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade
      */
     protected $frontendApiImageFacade;
 
@@ -58,28 +55,18 @@ class ImagesResolver implements ResolverInterface
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null $frontendApiImageFacade
+     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
      */
     public function __construct(
         ImageFacade $imageFacade,
         ImageConfig $imageConfig,
         Domain $domain,
-        ?FrontendApiImageFacade $frontendApiImageFacade = null
+        FrontendApiImageFacade $frontendApiImageFacade
     ) {
         $this->imageFacade = $imageFacade;
         $this->imageConfig = $imageConfig;
         $this->domain = $domain;
         $this->frontendApiImageFacade = $frontendApiImageFacade;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setFrontendApiImageFacade(FrontendApiImageFacade $frontendApiImageFacade): void
-    {
-        $this->setDependency($frontendApiImageFacade, 'frontendApiImageFacade');
     }
 
     /**
