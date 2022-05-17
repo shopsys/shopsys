@@ -541,6 +541,24 @@ There you can find links to upgrade notes for other versions too.
             +       PriceFacade $priceFacade
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Image\ImageFacade`
+        - property `$logger` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    $imageUrlPrefix,
+                    EntityManagerInterface $em,
+                    ImageConfig $imageConfig,
+                    ImageRepository $imageRepository,
+                    FilesystemInterface $filesystem,
+                    FileUpload $fileUpload,
+                    ImageLocator $imageLocator,
+                    ImageFactoryInterface $imageFactory,
+                    MountManager $mountManager,
+            -       ?LoggerInterface $logger = null
+            +       LoggerInterface $logger
+                )
+            ```
 
 ## Application
 
