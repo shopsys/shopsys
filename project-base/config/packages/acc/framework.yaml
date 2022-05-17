@@ -1,0 +1,5 @@
+framework:
+    test: true
+
+parameters:
+    overwrite_domain_url: '%env(OVERWRITE_DOMAIN_URL)%'

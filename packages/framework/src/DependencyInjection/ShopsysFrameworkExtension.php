@@ -35,6 +35,10 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
             $loader->load('services_test.yaml');
         }
 
+        if ($container->getParameter('kernel.environment') === EnvironmentType::ACCEPTANCE) {
+            $loader->load('services_acc.yaml');
+        }
+
         $this->configureVarDumperTwigExtension($container);
 
         $container->registerForAutoconfiguration(GridInlineEditInterface::class)
