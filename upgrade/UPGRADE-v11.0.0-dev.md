@@ -434,6 +434,20 @@ There you can find links to upgrade notes for other versions too.
             +       Domain $domain
                 )
             ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade`
+        - property `$customerUserRefreshTokenChainFacade` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    CustomerUserRepository $customerUserRepository,
+                    EncoderFactoryInterface $encoderFactory,
+                    ResetPasswordMailFacade $resetPasswordMailFacade,
+                    HashGenerator $hashGenerator,
+            -       ?CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade = null
+            +       CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+                )
+            ```
 
 ## Application
 
