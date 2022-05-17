@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -31,8 +30,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AdminBaseController
 {
-    use SetterInjectionTrait;
-
     protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
 
     /**
@@ -91,9 +88,9 @@ class CustomerController extends AdminBaseController
     protected $customerUserUpdateDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected ?Domain $domain = null;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
@@ -107,7 +104,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -121,7 +118,7 @@ class CustomerController extends AdminBaseController
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        ?Domain $domain = null
+        Domain $domain
     ) {
         $this->customerUserDataFactory = $customerUserDataFactory;
         $this->customerUserListAdminFacade = $customerUserListAdminFacade;
@@ -135,16 +132,6 @@ class CustomerController extends AdminBaseController
         $this->domainRouterFactory = $domainRouterFactory;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->domain = $domain;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setDomain(Domain $domain): void
-    {
-        $this->setDependency($domain, 'domain');
     }
 
     /**

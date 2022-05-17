@@ -414,6 +414,26 @@ There you can find links to upgrade notes for other versions too.
             +       CacheInterface $mainFriendlyUrlSlugCache
                 )
             ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\CustomerController`
+        - property `$domain` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    CustomerUserDataFactoryInterface $customerUserDataFactory,
+                    CustomerUserListAdminFacade $customerUserListAdminFacade,
+                    CustomerUserFacade $customerUserFacade,
+                    BreadcrumbOverrider $breadcrumbOverrider,
+                    AdministratorGridFacade $administratorGridFacade,
+                    GridFactory $gridFactory,
+                    AdminDomainTabsFacade $adminDomainTabsFacade,
+                    OrderFacade $orderFacade,
+                    LoginAsUserFacade $loginAsUserFacade,
+                    DomainRouterFactory $domainRouterFactory,
+                    CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+            -       ?Domain $domain = null
+            +       Domain $domain
+                )
+            ```
 
 ## Application
 
