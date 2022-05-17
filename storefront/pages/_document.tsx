@@ -1,6 +1,15 @@
+import { captureException } from '@sentry/nextjs';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ReactElement } from 'react';
 import { ServerStyleSheet } from 'styled-components';
+
+process.on('unhandledRejection', (err) => {
+    captureException(err);
+});
+
+process.on('uncaughtException', (err) => {
+    captureException(err);
+});
 
 /**
  * @see https://styled-components.com/docs/advanced#nextjs

@@ -14,7 +14,11 @@ import { nextReduxWrapper } from 'redux/main';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { getDomainConfig } from 'utils/Domain/Domain';
 
-function MyApp({ Component, pageProps }: AppProps): ReactElement {
+type AppPropsWithError = AppProps & {
+    err?: any;
+};
+
+function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
     return (
         <>
             <Head>
@@ -29,7 +33,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <ErrorBoundary FallbackComponent={Error500}>
-                    <Component {...pageProps} />
+                    <Component {...pageProps} err={err} />
                 </ErrorBoundary>
             </ShopsysGlobalProvider>
         </>
