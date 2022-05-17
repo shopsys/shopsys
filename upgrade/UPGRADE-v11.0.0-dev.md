@@ -559,6 +559,18 @@ There you can find links to upgrade notes for other versions too.
             +       LoggerInterface $logger
                 )
             ```
+    - `Shopsys\FrameworkBundle\Model\Mail\Mailer`
+        - property `$logger` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    Swift_Mailer $swiftMailer,
+                    Swift_Transport $realSwiftTransport,
+                    MailTemplateFacade $mailTemplateFacade,
+            -       ?LoggerInterface $logger = null
+            +       LoggerInterface $logger
+                )
+            ```
 
 ## Application
 

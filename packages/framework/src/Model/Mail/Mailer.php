@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use BadMethodCallException;
 use League\Flysystem\FileNotFoundException;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException;
@@ -32,54 +31,25 @@ class Mailer
     protected $mailTemplateFacade;
 
     /**
-     * @var \Psr\Log\LoggerInterface|null
+     * @var \Psr\Log\LoggerInterface
      */
-    protected ?LoggerInterface $logger;
+    protected LoggerInterface $logger;
 
     /**
      * @param \Swift_Mailer $swiftMailer
      * @param \Swift_Transport $realSwiftTransport
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         Swift_Mailer $swiftMailer,
         Swift_Transport $realSwiftTransport,
         MailTemplateFacade $mailTemplateFacade,
-        ?LoggerInterface $logger = null
+        LoggerInterface $logger
     ) {
         $this->swiftMailer = $swiftMailer;
         $this->realSwiftTransport = $realSwiftTransport;
         $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->logger = $logger;
-    }
-
-    /**
-     * @required
-     * @param \Psr\Log\LoggerInterface $logger
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setLogger(LoggerInterface $logger): void
-    {
-        if (
-            $this->logger !== null
-            && $this->logger !== $logger
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->logger !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
         $this->logger = $logger;
     }
 
