@@ -57,7 +57,7 @@
         "league/flysystem": "^1.1.4",
         "nyholm/psr7": "^1.5",
         "phing/phing": "dev-oldstable",
-        "presta/sitemap-bundle": "^1.5.3",
+        "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "sensio/framework-extra-bundle": "^5.2",
         "shopsys/form-types-bundle": "9.2.x-dev",
