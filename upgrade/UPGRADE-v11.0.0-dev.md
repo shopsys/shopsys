@@ -282,6 +282,11 @@ There you can find links to upgrade notes for other versions too.
             +       PriceFactory $priceFactory
                 )
             ```
+    - method `Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting::getEnvironment()` changed its interface
+        ```diff
+        -   public function getEnvironment(?bool $console = null): string
+        +   public function getEnvironment(): string
+        ```
 
 ## Application
 
