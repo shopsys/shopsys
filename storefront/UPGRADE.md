@@ -233,3 +233,15 @@
       - these helpers were implemented on all places with conditions like `document !== undefined` etc.
     - tips on how to implement them
       - find all the places where you use the `window` or `document` in the conditions and replace them with adequate helpers
+### Cypress folder structure
+- [FWCC-892](https://shopsys.atlassian.net/browse/FWCC-892)
+- [FWCC-892 - cypress change folder structure](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/572)
+- the reason why this change was introduced
+  - the developer can run a specific scenario without having to skip other screnarios in 1 file
+  - better clarity of tests screnarios
+  - esier test debugging
+- most significant changes
+  - folrder TestScrenaios was renamed to Tests
+  - file CartTests.js was deleted and was replace separate files
+- how to add new tests
+  - create test screnarios in separate files in the appropirate folder
