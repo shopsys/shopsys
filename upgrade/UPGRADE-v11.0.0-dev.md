@@ -503,6 +503,17 @@ There you can find links to upgrade notes for other versions too.
             +       UploadedFileLocator $uploadedFileLocator
                 )
             ```
+    - `Shopsys\FrontendApiBundle\Controller\FrontendApiController`
+        - property `$graphqlConfigurator` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    GraphController $graphController,
+                    EnabledOnDomainChecker $enabledOnDomainChecker,
+            -       ?GraphqlConfigurator $graphqlConfigurator = null
+            +       GraphqlConfigurator $graphqlConfigurator
+                )
+            ```
 
 ## Application
 
