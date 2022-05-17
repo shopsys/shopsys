@@ -251,16 +251,10 @@ class ImageExtension extends AbstractExtension
      */
     protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string
     {
-        $htmlAttributes = $attributes;
-        unset($htmlAttributes['type'], $htmlAttributes['size']);
+        $htmlAttributes = $this->extractHtmlAttributesFromAttributes($attributes);
 
-        $useLazyLoading = array_key_exists('lazy', $attributes) ? (bool)$attributes['lazy'] : $this->isLazyLoadEnabled;
-        unset($htmlAttributes['lazy']);
-
-        if ($useLazyLoading === true) {
-            $htmlAttributes['loading'] = 'lazy';
-            $htmlAttributes['data-src'] = $htmlAttributes['src'];
-            $htmlAttributes['src'] = '';
+        if ($this->isLazyLoadEnabled($attributes) === true) {
+            $htmlAttributes = $this->makeHtmlAttributesLazyLoaded($htmlAttributes);
         }
 
         return $this->twigEnvironment->render('@ShopsysFramework/Common/image.html.twig', [

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Twig;
 
-use App\Twig\ImageExtension;
 use ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -13,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\ReadModelBundle\Image\ImageView;
+use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Sinergi\BrowserDetector\Browser;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -177,7 +177,7 @@ class ImageExtensionTest extends FunctionalTestCase
     }
 
     /**
-     * @param \App\Twig\ImageExtension $imageExtension
+     * @param \Shopsys\ReadModelBundle\Twig\ImageExtension $imageExtension
      */
     private function overrideBrowserPropertyToSafari(ImageExtension $imageExtension): void
     {
@@ -201,7 +201,7 @@ class ImageExtensionTest extends FunctionalTestCase
      * @param string $frontDesignImageUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
      * @param bool $enableLazyLoad
-     * @return \App\Twig\ImageExtension
+     * @return \Shopsys\ReadModelBundle\Twig\ImageExtension
      */
     private function createImageExtension(
         string $frontDesignImageUrlPrefix = '',

@@ -282,3 +282,8 @@ There you can find links to upgrade notes for other versions too.
             +       PriceFactory $priceFactory
                 )
             ```
+
+## Application
+
+- remove unnecessary extended ImageExtension from your project, if you don't have any custom changes in the extension
+    - see #project-base-diff to update your project
