@@ -367,6 +367,18 @@ There you can find links to upgrade notes for other versions too.
             +       EventDispatcherInterface $eventDispatcher
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\FileUpload\FileUpload`
+        - property `$parameterBag` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    FileNamingConvention $fileNamingConvention,
+                    MountManager $mountManager,
+                    FilesystemInterface $filesystem,
+            -       ?ParameterBagInterface $parameterBag = null
+            +       ParameterBagInterface $parameterBag
+                )
+            ```
 
 ## Application
 

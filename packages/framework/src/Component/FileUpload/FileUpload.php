@@ -8,15 +8,12 @@ use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload
 {
-    use SetterInjectionTrait;
-
     protected const TEMPORARY_DIRECTORY = 'fileUploads';
     protected const DELETE_OLD_FILES_SECONDS = 86400;
 
@@ -51,7 +48,7 @@ class FileUpload
     protected $filesystem;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null
+     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
      */
     protected $parameterBag;
 
@@ -62,7 +59,7 @@ class FileUpload
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
     public function __construct(
         $temporaryDir,
@@ -71,7 +68,7 @@ class FileUpload
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
         FilesystemInterface $filesystem,
-        ?ParameterBagInterface $parameterBag = null
+        ParameterBagInterface $parameterBag
     ) {
         $this->temporaryDir = $temporaryDir;
         $this->uploadedFileDir = $uploadedFileDir;
@@ -80,16 +77,6 @@ class FileUpload
         $this->mountManager = $mountManager;
         $this->filesystem = $filesystem;
         $this->parameterBag = $parameterBag;
-    }
-
-    /**
-     * @required
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setEventDispatcher(ParameterBagInterface $parameterBag): void
-    {
-        $this->setDependency($parameterBag, 'parameterBag');
     }
 
     /**
