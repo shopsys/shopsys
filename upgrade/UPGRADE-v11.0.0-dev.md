@@ -389,6 +389,16 @@ There you can find links to upgrade notes for other versions too.
             +       EntityNameResolver $entityNameResolver
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader`
+        - property `$entityNameResolver` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    Filesystem $filesystem,
+            -       ?EntityNameResolver $entityNameResolver = null
+            +       EntityNameResolver $entityNameResolver
+                )
+            ```
 
 ## Application
 
