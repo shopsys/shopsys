@@ -379,6 +379,16 @@ There you can find links to upgrade notes for other versions too.
             +       ParameterBagInterface $parameterBag
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig`
+        - property `$entityNameResolver` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    array $imageEntityConfigsByClass,
+            -       ?EntityNameResolver $entityNameResolver = null
+            +       EntityNameResolver $entityNameResolver
+                )
+            ```
 
 ## Application
 
