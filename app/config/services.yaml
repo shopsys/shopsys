@@ -832,6 +832,8 @@ services:
 
     App\FrontendApi\Error\ErrorCodeSubscriber: ~
 
+    App\FrontendApi\Component\GqlContext\GqlContextInitializer: ~
+
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory
 

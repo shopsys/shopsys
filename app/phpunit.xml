@@ -23,6 +23,7 @@
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/App/Unit</directory>
+            <directory>tests/*Bundle/Unit</directory>
         </testsuite>
         <testsuite name="Functional">
             <directory>tests/App/Functional</directory>
