@@ -275,7 +275,6 @@ class ImageFacade
      * @param string $entityName
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Component\Image\ImageFacade::getImagesByEntityIdAndNameIndexedById()
      */
     public function getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, $type)
     {
