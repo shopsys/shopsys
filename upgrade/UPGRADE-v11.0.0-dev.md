@@ -469,6 +469,28 @@ There you can find links to upgrade notes for other versions too.
             +       AvailabilityFacade $availabilityFacade
                 )
             ```
+    - `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository`
+        - property `$categoryFacade` is no longer nullable
+        - property `$productAccessoryFacade` is no longer nullable
+        - property `$brandCachedFacade` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    ParameterRepository $parameterRepository,
+                    ProductFacade $productFacade,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+                    Domain $domain,
+                    ProductVisibilityRepository $productVisibilityRepository,
+                    FriendlyUrlFacade $friendlyUrlFacade,
+            -       ?CategoryFacade $categoryFacade = null,
+            +       CategoryFacade $categoryFacade,
+            -       ?ProductAccessoryFacade $productAccessoryFacade = null,
+            +       ProductAccessoryFacade $productAccessoryFacade,
+            -       ?BrandCachedFacade $brandCachedFacade = null
+            +       BrandCachedFacade $brandCachedFacade
+                )
+            ```
 
 ## Application
 
