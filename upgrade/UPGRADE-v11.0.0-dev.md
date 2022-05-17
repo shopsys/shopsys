@@ -343,6 +343,17 @@ There you can find links to upgrade notes for other versions too.
         -   ): ?ProductPrice
         +   ): ProductPrice
         ```
+    - `Shopsys\FrameworkBundle\Command\CronCommand`
+        - property `$parameterBag` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    CronFacade $cronFacade,
+                    MutexFactory $mutexFactory,
+            -       ?ParameterBagInterface $parameterBag = null
+            +       ParameterBagInterface $parameterBag
+                )
+            ```
 
 ## Application
 
