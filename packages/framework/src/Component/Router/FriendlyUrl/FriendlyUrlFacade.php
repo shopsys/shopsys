@@ -5,19 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlFacade
 {
-    use SetterInjectionTrait;
-
     protected const MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
 
     /**
@@ -51,14 +47,14 @@ class FriendlyUrlFacade
     protected $friendlyUrlFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider
      */
-    protected ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
+    protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
 
     /**
-     * @var \Symfony\Contracts\Cache\CacheInterface|null
+     * @var \Symfony\Contracts\Cache\CacheInterface
      */
-    protected ?CacheInterface $mainFriendlyUrlSlugCache;
+    protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -67,8 +63,8 @@ class FriendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null $friendlyUrlCacheKeyProvider
-     * @param \Symfony\Contracts\Cache\CacheInterface|null $mainFriendlyUrlSlugCache
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
+     * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -77,16 +73,9 @@ class FriendlyUrlFacade
         FriendlyUrlRepository $friendlyUrlRepository,
         Domain $domain,
         FriendlyUrlFactoryInterface $friendlyUrlFactory,
-        ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
-        ?CacheInterface $mainFriendlyUrlSlugCache = null
+        FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+        CacheInterface $mainFriendlyUrlSlugCache
     ) {
-        if ($mainFriendlyUrlSlugCache === null) {
-            DeprecationHelper::trigger(
-                'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
-                self::class
-            );
-        }
-
         $this->em = $em;
         $this->domainRouterFactory = $domainRouterFactory;
         $this->friendlyUrlUniqueResultFactory = $friendlyUrlUniqueResultFactory;
@@ -296,24 +285,10 @@ class FriendlyUrlFacade
     }
 
     /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
-    {
-        $this->setDependency($friendlyUrlCacheKeyProvider, 'friendlyUrlCacheKeyProvider');
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
      */
     protected function renewMainFriendlyUrlSlugCache(FriendlyUrl $mainFriendlyUrl): void
     {
-        if ($this->mainFriendlyUrlSlugCache === null) {
-            return;
-        }
-
         $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
             $mainFriendlyUrl->getRouteName(),
             $mainFriendlyUrl->getDomainId(),

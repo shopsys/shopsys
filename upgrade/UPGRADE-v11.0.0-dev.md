@@ -287,6 +287,24 @@ There you can find links to upgrade notes for other versions too.
         -   public function getEnvironment(?bool $console = null): string
         +   public function getEnvironment(): string
         ```
+    - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade`
+        - property `$friendlyUrlCacheKeyProvider` is no longer nullable
+        - property `$mainFriendlyUrlSlugCache` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    DomainRouterFactory $domainRouterFactory,
+                    FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+                    Domain $domain,
+                    FriendlyUrlFactoryInterface $friendlyUrlFactory,
+            -       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+            -       ?CacheInterface $mainFriendlyUrlSlugCache = null
+            +       CacheInterface $mainFriendlyUrlSlugCache
+                )
+            ```
 
 ## Application
 
