@@ -1,4 +1,5 @@
 import { createClient } from './createClient';
+import { captureException } from '@sentry/nextjs';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -23,48 +24,53 @@ export async function initServerSideProps(
     client: Client | null = null,
     ssrCache: SSRExchange | null = null,
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
-    const domainConfig = store.getState().domain;
-    let currentClient = client;
-    let currentSsrCache = ssrCache;
+    try {
+        const domainConfig = store.getState().domain;
+        let currentClient = client;
+        let currentSsrCache = ssrCache;
 
-    if (currentSsrCache === null) {
-        currentSsrCache = ssrExchange({ isClient: false });
-    }
+        if (currentSsrCache === null) {
+            currentSsrCache = ssrExchange({ isClient: false });
+        }
 
-    if (currentClient === null) {
-        currentClient = createClient(context, store, currentSsrCache);
-    }
+        if (currentClient === null) {
+            currentClient = createClient(context, store, currentSsrCache);
+        }
 
-    if (currentClient !== null) {
-        prefetchedQueries.push({ query: NotificationBarsDocumentApi });
-        prefetchedQueries.push({ query: NavigationQueryDocumentApi });
-        prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
-        prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
+        if (currentClient !== null) {
+            prefetchedQueries.push({ query: NotificationBarsDocumentApi });
+            prefetchedQueries.push({ query: NavigationQueryDocumentApi });
+            prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
+            prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
 
-        const resolvedQueries = await Promise.all(
-            prefetchedQueries.map((queryObject) =>
-                currentClient!.query(queryObject.query, queryObject.variables).toPromise(),
-            ),
-        );
-        const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
-        const parsedSlug = slugResult?.data.slug.slug;
-        const trimmedUrl = context.resolvedUrl.split('?')[0];
+            const resolvedQueries = await Promise.all(
+                prefetchedQueries.map((queryObject) =>
+                    currentClient!.query(queryObject.query, queryObject.variables).toPromise(),
+                ),
+            );
+            const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
+            const parsedSlug = slugResult?.data.slug.slug;
+            const trimmedUrl = context.resolvedUrl.split('?')[0];
 
-        if (parsedSlug !== undefined && parsedSlug !== trimmedUrl) {
+            if (parsedSlug !== undefined && parsedSlug !== trimmedUrl) {
+                return {
+                    redirect: {
+                        statusCode: 301,
+                        destination: parsedSlug,
+                    },
+                };
+            }
+
             return {
-                redirect: {
-                    statusCode: 301,
-                    destination: parsedSlug,
+                props: {
+                    ...(await loadNamespaces({ locale: domainConfig.defaultLocale, pathname: trimmedUrl })),
+                    urqlState: currentSsrCache.extractData(),
                 },
             };
         }
-
-        return {
-            props: {
-                ...(await loadNamespaces({ locale: domainConfig.defaultLocale, pathname: trimmedUrl })),
-                urqlState: currentSsrCache.extractData(),
-            },
-        };
+        return { props: {} as ServerSidePropsType };
+    } catch (e) {
+        captureException(e);
+        throw e;
     }
-    return { props: {} as ServerSidePropsType };
 }
