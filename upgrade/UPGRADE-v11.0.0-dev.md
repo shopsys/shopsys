@@ -328,6 +328,21 @@ There you can find links to upgrade notes for other versions too.
         +       ?int $lastSeekId = null
             )
         ```
+    - method `Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory::createProductPriceFromArrayByPricingGroup()` changed its return type and now can throw `NoProductPriceForPricingGroupException`
+        ```diff
+            public function createProductPriceFromArrayByPricingGroup(
+                array $pricesArray,
+                PricingGroup $pricingGroup
+        -   ): ?ProductPrice
+        +   ): ProductPrice
+        ```
+    - method `Shopsys\FrontendApiBundle\Model\Price\PriceFacade::createProductPriceFromArrayForCurrentCustomer()` changed its return type and now can throw `NoProductPriceForPricingGroupException`
+        ```diff
+            public function createProductPriceFromArrayForCurrentCustomer(
+                array $pricesArray
+        -   ): ?ProductPrice
+        +   ): ProductPrice
+        ```
 
 ## Application
 

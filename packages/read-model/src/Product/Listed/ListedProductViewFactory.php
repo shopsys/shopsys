@@ -151,9 +151,6 @@ class ListedProductViewFactory
             $productArray['prices'],
             $pricingGroup
         );
-        if ($productPrice === null) {
-            throw new NoProductPriceForPricingGroupException($productArray['id'], $pricingGroup->getId());
-        }
 
         return $this->create(
             $productArray['id'],

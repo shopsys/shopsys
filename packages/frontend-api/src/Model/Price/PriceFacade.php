@@ -34,9 +34,9 @@ class PriceFacade
 
     /**
      * @param array $pricesArray
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ?ProductPrice
+    public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ProductPrice
     {
         return $this->priceFactory->createProductPriceFromArrayByPricingGroup(
             $pricesArray,
