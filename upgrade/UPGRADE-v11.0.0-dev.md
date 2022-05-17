@@ -399,6 +399,21 @@ There you can find links to upgrade notes for other versions too.
             +       EntityNameResolver $entityNameResolver
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory`
+        - property `$friendlyUrlCacheKeyProvider` is no longer nullable
+        - property `$mainFriendlyUrlSlugCache` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    $friendlyUrlRouterResourceFilepath,
+                    LoaderInterface $configLoader,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+            -       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+            -       ?CacheInterface $mainFriendlyUrlSlugCache = null
+            +       CacheInterface $mainFriendlyUrlSlugCache
+                )
+            ```
 
 ## Application
 
