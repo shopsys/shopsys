@@ -354,6 +354,19 @@ There you can find links to upgrade notes for other versions too.
             +       ParameterBagInterface $parameterBag
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportChangedCronModule`
+        - property `$eventDispatcher` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    AbstractIndex $index,
+                    IndexFacade $indexFacade,
+                    IndexDefinitionLoader $indexDefinitionLoader,
+                    Domain $domain,
+            -       ?EventDispatcherInterface $eventDispatcher = null
+            +       EventDispatcherInterface $eventDispatcher
+                )
+            ```
 
 ## Application
 
