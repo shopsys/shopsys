@@ -288,7 +288,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_TV);
@@ -337,7 +337,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -382,7 +382,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -425,7 +425,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_ELECTRONICS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -474,7 +474,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -554,7 +554,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -601,7 +601,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -649,7 +649,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
@@ -700,7 +700,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
@@ -865,7 +865,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -897,7 +897,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = true;
@@ -1158,7 +1158,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -1200,7 +1200,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -1243,7 +1243,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_COFFEE, CategoryDataFixture::CATEGORY_PC]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_JURA);
@@ -1317,7 +1317,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PC);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
@@ -1363,7 +1363,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, null);
@@ -1404,7 +1404,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -1446,7 +1446,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, null);
@@ -1478,7 +1478,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -1527,7 +1527,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
 
         $productData->sellingDenied = false;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
@@ -1647,7 +1647,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_SALE]);
 
         $productData->sellingDenied = false;
@@ -1728,7 +1728,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -1808,7 +1808,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -1855,7 +1855,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -1888,7 +1888,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -1921,7 +1921,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -2007,7 +2007,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -2050,7 +2050,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -2092,7 +2092,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = false;
@@ -2136,7 +2136,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -2210,7 +2210,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
 
         $productData->sellingDenied = true;
@@ -2243,7 +2243,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2276,7 +2276,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -2308,7 +2308,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -2420,7 +2420,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_SALE]);
 
         $productData->sellingDenied = false;
@@ -2465,7 +2465,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -2509,7 +2509,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2543,7 +2543,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = true;
@@ -2587,7 +2587,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = true;
@@ -2631,7 +2631,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2675,7 +2675,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2719,7 +2719,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2752,7 +2752,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2785,7 +2785,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = true;
@@ -2818,7 +2818,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -2863,7 +2863,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -2908,7 +2908,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2941,7 +2941,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -2974,7 +2974,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3007,7 +3007,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -3043,7 +3043,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -3083,7 +3083,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -3115,7 +3115,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_CUBIC_METERS);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_FOOD, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3153,7 +3153,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_BOOKS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3238,7 +3238,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -3283,7 +3283,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;
@@ -3327,7 +3327,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = true;
@@ -3372,7 +3372,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3412,7 +3412,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = true;
@@ -3452,7 +3452,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3497,7 +3497,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3542,7 +3542,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3579,7 +3579,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -3615,7 +3615,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3648,7 +3648,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
@@ -3699,7 +3699,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_BOOKS);
@@ -3750,7 +3750,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3797,7 +3797,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3837,7 +3837,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3884,7 +3884,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -3931,7 +3931,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_DE]);
 
         $productData->sellingDenied = false;
@@ -3978,7 +3978,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHOTO, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4013,7 +4013,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4046,7 +4046,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4079,7 +4079,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4112,7 +4112,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4145,7 +4145,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4176,7 +4176,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4209,7 +4209,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4240,7 +4240,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4271,7 +4271,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4304,7 +4304,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4337,7 +4337,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4370,7 +4370,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4403,7 +4403,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4436,7 +4436,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4469,7 +4469,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4502,7 +4502,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4535,7 +4535,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4568,7 +4568,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4599,7 +4599,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4631,7 +4631,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4662,7 +4662,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4695,7 +4695,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4726,7 +4726,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4757,7 +4757,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4788,7 +4788,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4819,7 +4819,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4852,7 +4852,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4884,7 +4884,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4915,7 +4915,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4946,7 +4946,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -4978,7 +4978,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5009,7 +5009,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5040,7 +5040,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5071,7 +5071,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5103,7 +5103,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5136,7 +5136,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5169,7 +5169,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5202,7 +5202,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5234,7 +5234,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5266,7 +5266,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5298,7 +5298,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5329,7 +5329,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5360,7 +5360,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5391,7 +5391,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5422,7 +5422,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5453,7 +5453,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5484,7 +5484,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5515,7 +5515,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5548,7 +5548,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5581,7 +5581,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_GARDEN_TOOLS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5629,7 +5629,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5677,7 +5677,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5725,7 +5725,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
@@ -5776,7 +5776,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO);
 
@@ -5827,7 +5827,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5875,7 +5875,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, []);
 
         $productData->sellingDenied = false;
@@ -5920,7 +5920,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -5965,7 +5965,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -6010,7 +6010,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -6055,7 +6055,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -6099,7 +6099,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION, FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ]);
 
         $productData->sellingDenied = false;
@@ -6143,7 +6143,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV]);
+        $this->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
         $this->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_ACTION]);
 
         $productData->sellingDenied = false;

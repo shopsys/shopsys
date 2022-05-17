@@ -452,6 +452,20 @@ class ProductImagesTest extends GraphQlTestCase
                     ]
                   }
                 ]
+              }, 
+              {
+                "images": [
+                  {
+                    "sizes": [
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/default/pocitace-prislusenstvi_72.jpg') . '"
+                      },
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/original/pocitace-prislusenstvi_72.jpg') . '"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -498,6 +512,20 @@ class ProductImagesTest extends GraphQlTestCase
                       },
                       {
                         "url": "' . $this->getFullUrlPath('/content-test/images/category/original/televize-audio_69.jpg') . '"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "images": [
+                  {
+                    "sizes": [
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/default/pocitace-prislusenstvi_72.jpg') . '"
+                      },
+                      {
+                        "url": "' . $this->getFullUrlPath('/content-test/images/category/original/pocitace-prislusenstvi_72.jpg') . '"
                       }
                     ]
                   }

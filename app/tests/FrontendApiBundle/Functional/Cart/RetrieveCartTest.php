@@ -383,6 +383,9 @@ class RetrieveCartTest extends GraphQlTestCase
                 [
                     'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
                 ],
+                [
+                    'name' => t('Personal Computers & accessories', [], 'dataFixtures', $firstDomainLocale),
+                ],
             ],
             'flags' => [
                 [
