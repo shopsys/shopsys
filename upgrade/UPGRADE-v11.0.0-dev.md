@@ -319,6 +319,15 @@ There you can find links to upgrade notes for other versions too.
             +       CacheInterface $mainFriendlyUrlSlugCache
                 )
             ```
+    - method `Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory::create()` changed its interface
+        ```diff
+            public function create(
+                FeedInterface $feed,
+                DomainConfig $domainConfig,
+        -       $lastSeekId = null
+        +       ?int $lastSeekId = null
+            )
+        ```
 
 ## Application
 
