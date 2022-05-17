@@ -448,6 +448,27 @@ There you can find links to upgrade notes for other versions too.
             +       CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
                 )
             ```
+    - `Shopsys\FrameworkBundle\Model\Product\ProductDataFactory`
+        - property `$availabilityFacade` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    VatFacade $vatFacade,
+                    ProductInputPriceFacade $productInputPriceFacade,
+                    UnitFacade $unitFacade,
+                    Domain $domain,
+                    ProductRepository $productRepository,
+                    ParameterRepository $parameterRepository,
+                    FriendlyUrlFacade $friendlyUrlFacade,
+                    ProductAccessoryRepository $productAccessoryRepository,
+                    ImageFacade $imageFacade,
+                    PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+                    ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+                    PricingGroupFacade $pricingGroupFacade,
+            -       ?AvailabilityFacade $availabilityFacade = null
+            +       AvailabilityFacade $availabilityFacade
+                )
+            ```
 
 ## Application
 
