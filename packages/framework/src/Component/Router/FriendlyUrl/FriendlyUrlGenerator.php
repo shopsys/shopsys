@@ -2,11 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator as BaseUrlGenerator;
@@ -18,42 +16,33 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
     protected $friendlyUrlRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider
      */
-    protected ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
+    protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
 
     /**
-     * @var \Symfony\Contracts\Cache\CacheInterface|null
+     * @var \Symfony\Contracts\Cache\CacheInterface
      */
-    protected ?CacheInterface $mainFriendlyUrlSlugCache;
+    protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null $friendlyUrlCacheKeyProvider
-     * @param \Symfony\Contracts\Cache\CacheInterface|null $mainFriendlyUrlSlugCache
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
+     * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
      */
     public function __construct(
         RequestContext $context,
         FriendlyUrlRepository $friendlyUrlRepository,
-        ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
-        ?CacheInterface $mainFriendlyUrlSlugCache = null
+        FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+        CacheInterface $mainFriendlyUrlSlugCache
     ) {
-        if ($mainFriendlyUrlSlugCache === null) {
-            DeprecationHelper::trigger(
-                'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
-                self::class
-            );
-        }
-
         parent::__construct(new RouteCollection(), $context, null);
 
         $this->friendlyUrlRepository = $friendlyUrlRepository;
@@ -90,20 +79,16 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
 
         $domainId = $domainConfig->getId();
 
-        if ($this->mainFriendlyUrlSlugCache !== null) {
-            $slug = $this->mainFriendlyUrlSlugCache->get(
-                $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
-                    $routeName,
-                    $domainId,
-                    (int)$entityId
-                ),
-                function () use ($domainId, $routeName, $entityId) {
-                    return $this->getSlug($domainId, $routeName, $entityId);
-                }
-            );
-        } else {
-            $slug = $this->getSlug($domainId, $routeName, $entityId);
-        }
+        $slug = $this->mainFriendlyUrlSlugCache->get(
+            $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
+                $routeName,
+                $domainId,
+                (int)$entityId
+            ),
+            function () use ($domainId, $routeName, $entityId) {
+                return $this->getSlug($domainId, $routeName, $entityId);
+            }
+        );
 
         return $this->getGeneratedUrlBySlug($routeName, $route, $slug, $parameters, $referenceType);
     }
@@ -208,15 +193,5 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
             $message = 'Unable to generate a URL for the named route "' . $routeName . '" as such route does not exist.';
             throw new RouteNotFoundException($message, 0, $e);
         }
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
-    {
-        $this->setDependency($friendlyUrlCacheKeyProvider, 'friendlyUrlCacheKeyProvider');
     }
 }

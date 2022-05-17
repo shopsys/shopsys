@@ -305,6 +305,20 @@ There you can find links to upgrade notes for other versions too.
             +       CacheInterface $mainFriendlyUrlSlugCache
                 )
             ```
+    - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator`
+        - property `$friendlyUrlCacheKeyProvider` is no longer nullable
+        - property `$mainFriendlyUrlSlugCache` is no longer nullable
+        - method `__construct` changed its interface
+            ```diff
+                public function __construct(
+                    RequestContext $context,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+            -       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+            -       ?CacheInterface $mainFriendlyUrlSlugCache = null
+            +       CacheInterface $mainFriendlyUrlSlugCache
+                )
+            ```
 
 ## Application
 
