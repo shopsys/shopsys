@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
 import Heading from 'components/Basic/Heading';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 export const RegistrationStyled = styled.div`
     ${({ theme }) => css`

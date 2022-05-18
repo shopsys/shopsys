@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DomainConfigType } from 'utils/Domain/Domain';
 import { HYDRATE } from 'next-redux-wrapper';
+import { DomainConfigType } from 'utils/Domain/Domain';
 
 const initialState = {
     url: process.env.DOMAIN_HOSTNAME_1,

@@ -1,3 +1,4 @@
+import { getFirstImage } from 'connectors/image/Image';
 import {
     CategoriesByColumnFragmentApi,
     ColumnCategoriesFragmentApi,
@@ -5,14 +6,13 @@ import {
     NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import {
     NavigationCategoriesColumn,
     NavigationCategory,
     NavigationItem,
     NavigationSubCategory,
 } from 'types/navigation';
-import { getFirstImage } from 'connectors/image/Image';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function useNavigationItems(): NavigationItem[] {
     const [{ data, error }] = useNavigationQueryApi();

@@ -1,5 +1,5 @@
-import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
 type NotificationBarsStyledProps = {

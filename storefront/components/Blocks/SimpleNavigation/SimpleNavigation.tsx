@@ -1,12 +1,12 @@
-import { FC, useState } from 'react';
-import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { ListedItemPropType } from 'types/simpleNavigation';
 import ListItem from './ListItem';
+import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
 import Slider from './Slider';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { FC, useState } from 'react';
+import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];

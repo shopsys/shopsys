@@ -1,5 +1,3 @@
-import { FC, useState } from 'react';
-import { initialState, userActions } from 'redux/slices/user';
 import {
     NavigationItemLinkIconStyled,
     NavigationItemLinkStyled,
@@ -7,12 +5,14 @@ import {
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
-import { NavigationItem as NavigationItemType } from 'types/navigation';
 import NavigationLeaf from 'components/Layout/Header/Navigation/NavigationLeaf';
-import NextLink from 'next/link';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
 import { useShopsysDispatch } from 'redux/main';
+import { initialState, userActions } from 'redux/slices/user';
+import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;

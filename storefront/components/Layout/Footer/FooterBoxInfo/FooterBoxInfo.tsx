@@ -9,8 +9,8 @@ import {
     FooterBoxInfoStyled,
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
-import { FC } from 'react';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 
 type FooterBoxInfoProps = {
     orderStep?: boolean;

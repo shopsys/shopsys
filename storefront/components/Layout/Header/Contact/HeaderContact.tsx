@@ -6,11 +6,11 @@ import {
     HeaderContactStyled,
     PhoneNumberStyled,
 } from './HeaderContact.style';
-import { FC, useState } from 'react';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { FC, useState } from 'react';
 
 // TODO PRG
 const dummyData = {

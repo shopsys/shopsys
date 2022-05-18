@@ -8,10 +8,10 @@ import {
     VariantsTableRowStyled,
     VariantsTableStyled,
 } from './ProductVariantsTable.style';
+import Variant from './Variant';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedVariantType } from 'types/product';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Variant from './Variant';
 
 type ProductVariantsTableProps = {
     variants: ListedVariantType[];

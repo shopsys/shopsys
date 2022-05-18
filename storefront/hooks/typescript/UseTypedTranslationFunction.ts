@@ -1,6 +1,6 @@
 import { Translate } from 'next-translate';
-import { useRef } from 'react';
 import useTranslation from 'next-translate/useTranslation';
+import { useRef } from 'react';
 
 export const useTypedTranslationFunction = (): Translate => {
     const { t } = useTranslation('common');

@@ -1,10 +1,10 @@
 import { FooterBlockStyled, FooterBottomStyled, FooterStyled } from './Footer.style';
-import { FC } from 'react';
 import FooterBoxInfo from './FooterBoxInfo';
 import FooterContact from './FooterContact';
 import FooterCopyright from './FooterCopyright';
 import FooterMenu from './FooterMenu';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 
 const Footer: FC = () => {
     const testIdentifier = 'layout-footer';

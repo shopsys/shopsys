@@ -1,8 +1,8 @@
 import { ProductPriceMainStyled, ProductPriceStyled } from './ProductPrice.style';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
-import { ProductPriceType } from 'types/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { ProductPriceType } from 'types/price';
+import { formatPrice } from 'utils/formatting';
 
 const ProductPrice: FC<ProductPriceType> = (props) => {
     const testIdentifier = 'blocks-product-price';

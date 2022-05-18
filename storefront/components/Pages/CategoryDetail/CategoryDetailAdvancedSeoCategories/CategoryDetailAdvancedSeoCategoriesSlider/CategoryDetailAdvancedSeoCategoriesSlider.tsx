@@ -1,10 +1,10 @@
-import 'keen-slider/keen-slider.min.css';
 import { CategoryDetailAdvancedSeoCategoriesItemStyled as AdvancedSeoCategoriesItemStyled } from 'components/Pages/CategoryDetail/CategoryDetailAdvancedSeoCategories/CategoryDetailAdvancedSeoCategories.style';
-import { FC } from 'react';
-import NextLink from 'next/link';
-import { ReadyCategorySeoMixLink } from 'types/category';
 import { theme } from 'components/Theme/main';
+import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import NextLink from 'next/link';
+import { FC } from 'react';
+import { ReadyCategorySeoMixLink } from 'types/category';
 
 type CategoryDetailAdvancedSeoCategoriesSliderProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];

@@ -1,7 +1,7 @@
-import { SimpleProductConnectionFragmentApi, SimpleProductFragmentApi } from 'graphql/generated';
-import { SimpleProductConnectionType, SimpleProductType } from 'types/product';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
+import { SimpleProductConnectionFragmentApi, SimpleProductFragmentApi } from 'graphql/generated';
+import { SimpleProductConnectionType, SimpleProductType } from 'types/product';
 
 export const mapSimpleProductApiData = (
     simpleProductApiData: SimpleProductFragmentApi,

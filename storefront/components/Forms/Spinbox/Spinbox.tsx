@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
-import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { SpinboxButtonStyled, SpinboxInputStyled, SpinboxSmallStyled, SpinboxStyled } from './Spinbox.style';
 import { useForwardedRef } from 'hooks/typescript/UseForwardedRef';
+import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 type SpinboxProps = {
     min: number;

@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import FooterMenuItem from 'components/Layout/Footer/FooterMenuItem';
 import { FooterMenuStyled } from './FooterMenu.style';
+import FooterMenuItem from 'components/Layout/Footer/FooterMenuItem';
+import { FC } from 'react';
 
 // TODO PRG
 const dummyData = {

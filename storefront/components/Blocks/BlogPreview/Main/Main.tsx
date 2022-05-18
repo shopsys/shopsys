@@ -1,4 +1,3 @@
-import { FC, Fragment, useState } from 'react';
 import {
     MainContentStyled,
     MainDescriptionStyled,
@@ -7,13 +6,14 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { ListedBlogArticleType } from 'types/blogArticle';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { FC, Fragment, useState } from 'react';
+import { ListedBlogArticleType } from 'types/blogArticle';
 
 type MainProps = {
     blogMainItems: ListedBlogArticleType[];

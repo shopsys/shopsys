@@ -1,6 +1,6 @@
 import Button from 'components/Forms/Button';
-import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     pageHeight: '350px',

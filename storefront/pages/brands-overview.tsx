@@ -1,11 +1,11 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import CommonLayout from 'components/Layout/CommonLayout';
 import Brands from 'components/Pages/Brands';
 import { BrandsQueryDocumentApi } from 'graphql/generated';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);

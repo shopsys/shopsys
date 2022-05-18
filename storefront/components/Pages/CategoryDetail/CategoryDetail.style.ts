@@ -1,8 +1,8 @@
-import Adverts from 'components/Blocks/Adverts';
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
+import Adverts from 'components/Blocks/Adverts';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     categoryDetailPanelWidth: '304px',

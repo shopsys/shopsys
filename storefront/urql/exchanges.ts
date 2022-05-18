@@ -1,12 +1,12 @@
 import { ClientOptions, dedupExchange, fetchExchange } from '@urql/core';
-import { CombinedError, errorExchange } from 'urql';
-import { authExchange } from '@urql/exchange-auth';
-import cache from 'urql/cacheExchange';
 import { devtoolsExchange } from '@urql/devtools';
-import getAuthExchangeOptions from 'urql/authExchange';
+import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext } from 'next';
-import { removeTokensFromCookies } from 'utils/Auth/TokensFromCookies';
 import { SSRExchange } from 'next-urql';
+import { CombinedError, errorExchange } from 'urql';
+import getAuthExchangeOptions from 'urql/authExchange';
+import cache from 'urql/cacheExchange';
+import { removeTokensFromCookies } from 'utils/Auth/TokensFromCookies';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,

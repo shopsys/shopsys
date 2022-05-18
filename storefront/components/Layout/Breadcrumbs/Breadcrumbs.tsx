@@ -4,11 +4,11 @@ import {
     BreadcrumbsStyled,
     LeftArrowIconStyled,
 } from './Breadcrumbs.style';
+import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import NextLink from 'next/link';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from 'components/Layout/Webline';
 
 type BreadcrumbsProps = {
     breadcrumb: BreadcrumbItemType[];

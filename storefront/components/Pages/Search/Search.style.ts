@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
-import { styled } from 'components/Theme/main';
 import Webline from 'components/Layout/Webline';
+import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     searchResultsPanelWidth: '304px',

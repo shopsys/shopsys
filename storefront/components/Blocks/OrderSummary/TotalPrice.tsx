@@ -5,10 +5,10 @@ import {
     OrderSummaryTotalPriceWrapper,
     PriceWrapper,
 } from './OrderSummary.style';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
-import { PriceType } from 'types/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { PriceType } from 'types/price';
+import { formatPrice } from 'utils/formatting';
 
 type TotalPriceProps = {
     totalPrice: PriceType;

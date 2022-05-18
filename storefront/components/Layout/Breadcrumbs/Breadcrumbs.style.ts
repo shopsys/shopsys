@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 export const BreadcrumbsStyled = styled.div`
     ${({ theme }) => css`

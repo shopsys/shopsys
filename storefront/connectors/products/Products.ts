@@ -1,3 +1,7 @@
+import { mapStoreAvailabilities } from 'connectors/availability/Availability';
+import { getFirstImage } from 'connectors/image/Image';
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ListedProductConnectionFragmentApi,
     ListedProductFragmentApi,
@@ -5,19 +9,15 @@ import {
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
+import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useShopsysSelector } from 'redux/main';
 import {
     ListedProductConnectionType,
     ListedProductType,
     ListedVariantType,
     SliderProductItemType,
 } from 'types/product';
-import { getFirstImage } from 'connectors/image/Image';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
-import { mapProductPriceData } from 'connectors/price/Prices';
-import { mapStoreAvailabilities } from 'connectors/availability/Availability';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
-import { useShopsysSelector } from 'redux/main';
 
 export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
     return {

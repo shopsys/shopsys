@@ -1,5 +1,4 @@
-import 'keen-slider/keen-slider.min.css';
-import { FC, useEffect, useState } from 'react';
+import { ProductDetailGalleryFlagsStyled } from './ProductDetailGallery.style';
 import {
     ImageSliderControlNextStyled,
     ImageSliderControlPreviousStyled,
@@ -8,12 +7,13 @@ import {
     ProductDetailImageSliderStyled,
     SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
-import { ImageType } from 'types/image';
-import { ProductDetailGalleryFlagsStyled } from './ProductDetailGallery.style';
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
-import { SimpleFlagType } from 'types/flag';
 import { theme } from 'components/Theme/main';
+import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { FC, useEffect, useState } from 'react';
+import { SimpleFlagType } from 'types/flag';
+import { ImageType } from 'types/image';
 
 type ProductDetailImageSliderProps = {
     galleryItems: ImageType[];

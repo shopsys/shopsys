@@ -1,5 +1,5 @@
-import { FilterOptionsStateType } from 'types/productFilter';
 import { ProductFilterApi } from 'graphql/generated';
+import { FilterOptionsStateType } from 'types/productFilter';
 
 export const mapParametersFilter = (parametersFilter: FilterOptionsStateType): ProductFilterApi => {
     return {

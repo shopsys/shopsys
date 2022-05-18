@@ -1,8 +1,8 @@
 import { ArticleTextContent, ArticleTitle, ArticleWrapper } from './ArticleDetail.style';
-import { ArticleDetailType } from 'types/article';
-import { FC } from 'react';
 import UserText from 'components/Helpers/UserText';
 import Webline from 'components/Layout/Webline';
+import { FC } from 'react';
+import { ArticleDetailType } from 'types/article';
 
 type ArticleDetailProps = {
     article: ArticleDetailType;

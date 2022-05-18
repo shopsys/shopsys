@@ -1,15 +1,15 @@
 import { ImageWrapperStyled, MessageStyled, MessageWrapperStyled, OrderEmailStyled } from './OrderConfirmation.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import GoPayGateway from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPay';
 import Heading from 'components/Basic/Heading';
 import Link from 'components/Basic/Link';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
-import { userActions } from 'redux/slices/user';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import GoPayGateway from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPay';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { FC } from 'react';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { userActions } from 'redux/slices/user';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const OrderConfirmation: FC = () => {
     const testIdentifier = 'pages-orderconfirmation';

@@ -1,8 +1,8 @@
-import Button from 'components/Forms/Button';
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
-import { styled } from 'components/Theme/main';
+import Button from 'components/Forms/Button';
 import TextInput from 'components/Forms/TextInput';
+import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 type PromoCodeStyledProps = {
     contentElementHeight: number;

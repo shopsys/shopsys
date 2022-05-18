@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { TableStyled } from './Table.style';
+import { FC } from 'react';
 
 /**
  * Wrapping element for html table - it gives table styling.

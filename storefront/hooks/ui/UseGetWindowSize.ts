@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { canUseDom } from 'helpers/canUseDom';
+import { useEffect, useState } from 'react';
 
 export const useGetWindowSize = (): { height: number; width: number } => {
     const [windowSize, setWindowSize] = useState({ height: -1, width: -1 });

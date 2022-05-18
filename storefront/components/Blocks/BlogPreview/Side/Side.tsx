@@ -1,7 +1,7 @@
-import { FC, Fragment } from 'react';
 import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
+import { FC, Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideProps = {

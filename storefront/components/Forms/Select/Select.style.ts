@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
-import SelectReact from 'react-select';
 import { styled } from 'components/Theme/main';
+import SelectReact from 'react-select';
+import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
 type SelectStyledProps = {

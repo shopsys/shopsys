@@ -1,6 +1,6 @@
+import { WeblinePropType } from './propTypes';
 import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
-import { WeblinePropType } from './propTypes';
 
 type WeblineStyledProps = WeblinePropType;
 

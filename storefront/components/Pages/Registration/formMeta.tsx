@@ -1,14 +1,14 @@
-import * as Yup from 'yup';
-import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { CustomerTypeEnum } from 'types/customer';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import Link from 'components/Basic/Link';
-import { SelectOptionType } from 'types/selectOptions';
-import Trans from 'next-translate/Trans';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'components/Basic/Link';
+import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
+import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { CustomerTypeEnum } from 'types/customer';
+import { SelectOptionType } from 'types/selectOptions';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import * as Yup from 'yup';
 
 export type RegistrationFormType = {
     email: string;

@@ -1,10 +1,10 @@
-import 'keen-slider/keen-slider.min.css';
-import { FC } from 'react';
-import { ListedItemPropType } from 'types/simpleNavigation';
 import ListItem from 'components/Blocks/SimpleNavigation/ListItem';
 import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';
+import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { FC } from 'react';
+import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SliderProps = {
     listedItems: ListedItemPropType[];

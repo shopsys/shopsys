@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import Icon from 'components/Basic/Icon';
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
+import Icon from 'components/Basic/Icon';
 import { useRemoveFromCart } from 'hooks/cart/UseRemoveFromCart';
+import { FC } from 'react';
 
 type RemoveCartItemButtonProps = {
     cartItemUuid: string;

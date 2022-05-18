@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-use-before-define
-import React, { FC, useState } from 'react';
 import {
     TabsContentInStyled,
     TabsContentMobileHeadingStyled,
@@ -9,6 +8,7 @@ import {
     TabsListStyled,
     TabsStyled,
 } from './Tabs.style';
+import React, { FC, useState } from 'react';
 
 /**
  * TabsExtended component wrapping tabs and its content

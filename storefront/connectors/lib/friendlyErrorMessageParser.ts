@@ -1,6 +1,6 @@
+import { Translate } from 'next-translate';
 import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
-import { Translate } from 'next-translate';
 
 export enum ApplicationErrors {
     DEFAULT = 'DEFAULT',

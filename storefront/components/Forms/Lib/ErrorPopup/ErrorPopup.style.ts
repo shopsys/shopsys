@@ -1,6 +1,6 @@
-import { css } from 'styled-components';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 export const ErrorPopupStyled = styled(PopupStyled)`
     ${({ theme }) => css`

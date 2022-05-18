@@ -1,5 +1,5 @@
-import { createGlobalStyle, css } from 'styled-components';
 import { Theme } from 'components/Theme/main';
+import { createGlobalStyle, css } from 'styled-components';
 
 const localVariables = {
     infoToastBackground: '#f2f2ff',

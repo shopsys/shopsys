@@ -1,9 +1,9 @@
-import * as Yup from 'yup';
-import { NewPasswordFormType } from 'types/form';
-import { UseFormReturn } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { UseFormReturn } from 'react-hook-form';
+import { NewPasswordFormType } from 'types/form';
+import * as Yup from 'yup';
 
 export const useRecoveryPasswordForm = (): [UseFormReturn<NewPasswordFormType>, NewPasswordFormType] => {
     const t = useTypedTranslationFunction();

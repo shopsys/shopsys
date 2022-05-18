@@ -1,6 +1,6 @@
 import { ImageType } from './image';
-import { PageInfoType } from 'types/pageInfo';
 import { PriceType } from './price';
+import { PageInfoType } from 'types/pageInfo';
 
 export type ListedOrderType = {
     uuid: string;

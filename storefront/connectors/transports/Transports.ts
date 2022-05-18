@@ -1,10 +1,10 @@
-import { TransportWithAvailablePaymentsAndStoresFragmentApi, useTransportsQueryApi } from 'graphql/generated';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapPayment } from 'connectors/payments/Payment';
-import { mapPickupPlacesApiData } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapPriceData } from 'connectors/price/Prices';
-import { TransportType } from 'types/transport';
+import { mapPickupPlacesApiData } from 'connectors/transports/pickupPlace/PickupPlace';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi, useTransportsQueryApi } from 'graphql/generated';
 import { useShopsysSelector } from 'redux/main';
+import { TransportType } from 'types/transport';
 
 export const useTransports = (cartUuid: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);

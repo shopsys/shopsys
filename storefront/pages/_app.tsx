@@ -1,16 +1,16 @@
-import 'react-toastify/dist/ReactToastify.css';
-import { AppProps } from 'next/app';
-import appWithI18n from 'next-translate/appWithI18n';
-import { getDomainConfig } from 'utils/Domain/Domain';
-import { getUrqlExchanges } from 'urql/exchanges';
-import Head from 'next/head';
-import i18nConfig from 'i18n';
-import { nextReduxWrapper } from 'redux/main';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
-import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
-import { ToastContainer } from 'react-toastify';
+import i18nConfig from 'i18n';
+import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import { ReactElement } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { nextReduxWrapper } from 'redux/main';
+import { getUrqlExchanges } from 'urql/exchanges';
+import { getDomainConfig } from 'utils/Domain/Domain';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (

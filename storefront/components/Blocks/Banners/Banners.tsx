@@ -1,6 +1,6 @@
 import BannersSlider from './BannersSlider';
-import { FC } from 'react';
 import { useSliderItems } from 'connectors/sliderItems/SliderItems';
+import { FC } from 'react';
 
 /**
  * A component used for displaying propagation banners on home page

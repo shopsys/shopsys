@@ -1,13 +1,13 @@
-import * as Yup from 'yup';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'components/Basic/Link';
-import { RegistrationAfterOrderFormType } from 'types/form';
+import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { UseFormReturn } from 'react-hook-form';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { RegistrationAfterOrderFormType } from 'types/form';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import * as Yup from 'yup';
 
 export const useRegistrationAfterOrderForm = (): [
     UseFormReturn<RegistrationAfterOrderFormType>,

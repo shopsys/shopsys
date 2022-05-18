@@ -1,10 +1,10 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { FC } from 'react';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { nextReduxWrapper } from 'redux/main';
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { nextReduxWrapper } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
     const [, checkPaymentStatus] = useCheckPaymentStatusMutationApi();

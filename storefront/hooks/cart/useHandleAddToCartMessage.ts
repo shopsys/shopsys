@@ -1,11 +1,11 @@
-import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AddToCartPopupDataType } from 'types/cart';
-import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { UseMutationState } from 'urql';
-import { useShopsysSelector } from 'redux/main';
+import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
+import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { AddToCartPopupDataType } from 'types/cart';
+import { UseMutationState } from 'urql';
 
 // TODO:
 export const useHandleAddToCartMessage = (

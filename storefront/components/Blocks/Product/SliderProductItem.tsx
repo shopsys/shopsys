@@ -1,3 +1,9 @@
+import ProductAction from './Action/ProductAction';
+import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
+import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCount';
+import ProductExposedStoresCount from './Availability/ProductExposedStoresCount';
+import ProductFlags from './Flags/ProductFlags';
+import ProductPrice from './Price/ProductPrice';
 import {
     SliderProductItemFlagsStyled,
     SliderProductItemImageStyled,
@@ -7,15 +13,9 @@ import {
     SliderProductItemStyled,
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
-import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
-import ProductAction from './Action/ProductAction';
-import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
-import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCount';
-import ProductExposedStoresCount from './Availability/ProductExposedStoresCount';
-import ProductFlags from './Flags/ProductFlags';
-import ProductPrice from './Price/ProductPrice';
+import { FC } from 'react';
 import { SliderProductItemType } from 'types/product';
 
 const ProductItem: FC<SliderProductItemType> = (props) => {

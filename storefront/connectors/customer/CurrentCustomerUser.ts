@@ -1,6 +1,6 @@
 import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
-import { ContactInformationFormType } from 'types/form';
 import { CustomerTypeEnum } from 'types/customer';
+import { ContactInformationFormType } from 'types/form';
 
 export function useCurrentCustomerContactInformationQuery(): ContactInformationFormType | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();

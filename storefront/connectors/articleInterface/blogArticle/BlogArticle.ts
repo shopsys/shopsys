@@ -1,3 +1,7 @@
+import { mapConnectionEdges } from 'connectors/connection/Connection';
+import { getFirstImage } from 'connectors/image/Image';
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
+import { mapListedProductType } from 'connectors/products/Products';
 import {
     BlogArticleConnectionFragmentApi,
     BlogArticleDetailFragmentApi,
@@ -5,6 +9,7 @@ import {
     SimpleBlogArticleFragmentApi,
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import {
     BlogArticleConnectionType,
     BlogArticleDetailType,
@@ -12,11 +17,6 @@ import {
     SimpleBlogArticleType,
 } from 'types/blogArticle';
 import { DomainConfigType } from 'utils/Domain/Domain';
-import { getFirstImage } from 'connectors/image/Image';
-import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { mapListedProductType } from 'connectors/products/Products';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const blogPreviewVariables = { first: 6, onlyHomepageArticles: true };
 

@@ -1,7 +1,7 @@
-import { FC, Fragment } from 'react';
-import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
-import { DropdownListProps } from 'types/dropdown';
 import { TertiaryListTitleStyled } from './TertiaryList.style';
+import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
+import { FC, Fragment } from 'react';
+import { DropdownListProps } from 'types/dropdown';
 
 const TertiaryList: FC<DropdownListProps> = (props) => {
     const testIdentifier = 'layout-header-dropdownmenu-tertiarylist-';

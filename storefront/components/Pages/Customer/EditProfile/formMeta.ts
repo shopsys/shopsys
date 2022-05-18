@@ -1,9 +1,9 @@
-import * as Yup from 'yup';
-import { FieldError, UseFormReturn } from 'react-hook-form';
-import { CustomerChangeProfileFormType } from 'types/form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldError, UseFormReturn } from 'react-hook-form';
+import { CustomerChangeProfileFormType } from 'types/form';
+import * as Yup from 'yup';
 
 export const useCustomerChangeProfileForm = (
     defaultValues: CustomerChangeProfileFormType,

@@ -1,5 +1,5 @@
-import { FC, LabelHTMLAttributes, ReactNode } from 'react';
 import { ColorLabelWrapperStyled } from './ColorLabelWrapper.style';
+import { FC, LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;

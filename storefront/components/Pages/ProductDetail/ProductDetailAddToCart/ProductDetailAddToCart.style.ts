@@ -1,6 +1,6 @@
 import { ButtonStyled } from 'components/Forms/Button/Button.style';
-import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     wrapBorderRadius: '6px',

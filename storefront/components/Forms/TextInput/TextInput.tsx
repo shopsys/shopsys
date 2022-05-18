@@ -1,10 +1,10 @@
-import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style';
+import Icon from 'components/Basic/Icon';
+import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
+import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
-import Icon from 'components/Basic/Icon';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

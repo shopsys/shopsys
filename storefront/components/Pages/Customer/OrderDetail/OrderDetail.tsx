@@ -1,17 +1,17 @@
+import { TextCenteredStyled } from './OrderDetail.style';
+import Heading from 'components/Basic/Heading';
+import TableGrid from 'components/Basic/TableGrid';
 import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
+import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
+import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
 import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { OrderDetailType } from 'types/orders';
 import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import Heading from 'components/Basic/Heading';
-import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
-import NextLink from 'next/link';
-import { OrderDetailType } from 'types/orders';
-import TableGrid from 'components/Basic/TableGrid';
-import { TextCenteredStyled } from './OrderDetail.style';
-import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from 'components/Layout/Webline';
 
 type OrderDetailPageProps = {
     order: OrderDetailType;

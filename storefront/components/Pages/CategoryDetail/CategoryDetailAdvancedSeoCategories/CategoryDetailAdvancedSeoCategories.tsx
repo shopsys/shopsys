@@ -1,18 +1,18 @@
-import 'keen-slider/keen-slider.min.css';
 import {
     CategoryDetailAdvancedSeoCategoriesItemStyled as AdvancedSeoCategoriesItemStyled,
     CategoryDetailAdvancedSeoCategoriesWrapperStyled as AdvancedSeoCategoriesWrapperStyled,
 } from './CategoryDetailAdvancedSeoCategories.style';
-import { FC, useState } from 'react';
 import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Heading from 'components/Basic/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import NextLink from 'next/link';
-import { ReadyCategorySeoMixLink } from 'types/category';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import 'keen-slider/keen-slider.min.css';
+import NextLink from 'next/link';
+import { FC, useState } from 'react';
+import { ReadyCategorySeoMixLink } from 'types/category';
 
 type CategoryDetailAdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];

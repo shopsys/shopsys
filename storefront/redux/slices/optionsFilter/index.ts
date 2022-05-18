@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FilterOptionsParameterStateType, FilterOptionsStateType } from 'types/productFilter';
 import { HYDRATE } from 'next-redux-wrapper';
+import { FilterOptionsParameterStateType, FilterOptionsStateType } from 'types/productFilter';
 
 export const initialState = {
     brands: [],

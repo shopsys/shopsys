@@ -1,5 +1,6 @@
-import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
+
 type LabelWrapperStyledProps = {
     inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio' | 'selectbox';
     selectBoxLabelIsFloated?: boolean;

@@ -1,4 +1,3 @@
-import 'keen-slider/keen-slider.min.css';
 import {
     BannersSliderBoxStyled,
     BannersSliderDotControlsStyled,
@@ -6,14 +5,15 @@ import {
     BannersSliderThumbnailControlsIconStyled,
     BannersSliderThumbnailControlsStyled,
 } from './BannersSlider.style';
-import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
+import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import 'keen-slider/keen-slider.min.css';
+import { useKeenSlider } from 'keen-slider/react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { ImageSizeType } from 'types/image';
 import { SliderItemType } from 'types/sliderItem';
-import { theme } from 'components/Theme/main';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useKeenSlider } from 'keen-slider/react';
 
 type BannersSliderProps = {
     sliderItems: SliderItemType[];

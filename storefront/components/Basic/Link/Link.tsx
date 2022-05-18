@@ -1,8 +1,8 @@
-import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
 import { ButtonStyled, LinkStyled } from './Link.style';
 import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import NextLink from 'next/link';
+import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,

@@ -1,4 +1,3 @@
-import { FC, useRef, useState } from 'react';
 import {
     FooterMenuHeadingIconStyled,
     FooterMenuHeadingStyled,
@@ -7,10 +6,11 @@ import {
     FooterMenuListItemStyled,
     FooterMenuListStyled,
 } from './FooterMenuItem.style';
-import { CSSTransition } from 'react-transition-group';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { FC, useRef, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 type FooterMenuItemProps = {
     key: number;

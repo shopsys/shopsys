@@ -1,5 +1,4 @@
-import { FC, Fragment, useEffect, useState } from 'react';
-import { FilterFormType, FilterOptionsType } from 'types/productFilter';
+import Parameters from './Parameters';
 import {
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
@@ -10,12 +9,13 @@ import {
     SelectedParametersStyled,
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { formatPrice } from 'utils/formatting';
 import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
-import Parameters from './Parameters';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, Fragment, useEffect, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { FilterFormType, FilterOptionsType } from 'types/productFilter';
+import { formatPrice } from 'utils/formatting';
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;

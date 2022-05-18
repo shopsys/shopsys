@@ -1,7 +1,7 @@
+import { SimpleArticleInterfaceType } from './articleInterface';
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
 import { ListedCategoryType, SimpleCategoryConnectionType } from 'types/category';
 import { ListedProductConnectionType, SimpleProductConnectionType } from 'types/product';
-import { SimpleArticleInterfaceType } from './articleInterface';
 
 export type AutocompleteSearchType = {
     articlesSearch: SimpleArticleInterfaceType[];

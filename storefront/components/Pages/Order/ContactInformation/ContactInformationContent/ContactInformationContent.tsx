@@ -2,18 +2,18 @@ import {
     ContactInformationContentSectionStyled,
     ContactInformationContentStyled,
 } from './ContactInformationContent.style';
-import { FC, useRef, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
 import ContactInformationAddress from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
 import ContactInformationCompany from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
 import ContactInformationCustomer from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
 import ContactInformationDeliveryAddress from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
-import { ContactInformationFormType } from 'types/form';
 import ContactInformationRegister from 'components/Pages/Order/ContactInformation/ContactInformationRegister';
 import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
-import { CSSTransition } from 'react-transition-group';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { FC, useRef, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { CSSTransition } from 'react-transition-group';
+import { ContactInformationFormType } from 'types/form';
 
 type ContactInformationContentProps = {
     isEmailEntered: boolean;

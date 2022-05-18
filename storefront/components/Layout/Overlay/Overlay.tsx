@@ -1,6 +1,6 @@
 import { OverlayStyled, OverlayWrapperStyled } from './Overlay.style';
-import { CSSTransition } from 'react-transition-group';
 import { FC } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 type OverlayProps = {
     isActive: boolean;

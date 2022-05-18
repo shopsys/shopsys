@@ -1,14 +1,14 @@
-import { Controller, useFormContext } from 'react-hook-form';
-import { FC, useEffect } from 'react';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import Heading from 'components/Basic/Heading';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useEffect } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 const Address: FC = () => {
     const t = useTypedTranslationFunction();

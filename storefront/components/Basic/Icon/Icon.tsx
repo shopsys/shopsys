@@ -1,7 +1,7 @@
+import { IconSvg } from './IconSvg';
+import { IconName } from './IconSvg/IconsSvgMap';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { IconName } from './IconSvg/IconsSvgMap';
-import { IconSvg } from './IconSvg';
 
 /**
  *  Basic icon component unifies displaying icons

@@ -1,10 +1,10 @@
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
+import PersonalDataOverview from 'components/Pages/PersonalData/Overview';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
-import PersonalDataOverview from 'components/Pages/PersonalData/Overview';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const PersonalDataOverviewPage: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);

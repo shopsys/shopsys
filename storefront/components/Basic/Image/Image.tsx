@@ -1,7 +1,7 @@
-import { FC, ImgHTMLAttributes } from 'react';
-import { ImageSizeType, ImageType } from 'types/image';
-import { CSSProperties } from 'styled-components';
 import { Img } from './Image.style';
+import { FC, ImgHTMLAttributes } from 'react';
+import { CSSProperties } from 'styled-components';
+import { ImageSizeType, ImageType } from 'types/image';
 
 type ImageProps = {
     image: ImageType | null;

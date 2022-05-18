@@ -1,23 +1,23 @@
-import * as Yup from 'yup';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import Button from 'components/Forms/Button';
 import { ButtonWrapperStyled } from './Login.style';
-import { FC } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import Button from 'components/Forms/Button';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
-import { Translate } from 'next-translate';
+import SimpleLayout from 'components/Layout/SimpleLayout';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Translate } from 'next-translate';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import * as Yup from 'yup';
 
 const getLoginFormResolver = (t: Translate) => {
     return yupResolver(

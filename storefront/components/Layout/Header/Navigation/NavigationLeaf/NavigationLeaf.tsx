@@ -1,7 +1,7 @@
+import { NavigationLeafColumnStyled } from './NavigationLeaf.style';
+import NavigationColumnCategory from 'components/Layout/Header/Navigation/NavigationColumnCategory';
 import { FC } from 'react';
 import { NavigationCategoriesColumn } from 'types/navigation';
-import NavigationColumnCategory from 'components/Layout/Header/Navigation/NavigationColumnCategory';
-import { NavigationLeafColumnStyled } from './NavigationLeaf.style';
 
 type NavigationLeafProps = {
     columnCategories: NavigationCategoriesColumn[];

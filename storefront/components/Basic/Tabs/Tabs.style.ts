@@ -1,7 +1,7 @@
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { css } from 'styled-components';
 
 type TabsContentStyledProps = {
     isActiveOnMobile?: boolean;

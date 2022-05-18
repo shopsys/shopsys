@@ -1,13 +1,13 @@
-import { createContext, FC, useState } from 'react';
-import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
-import { CSSTransition } from 'react-transition-group';
-import DropdownSlideLeft from './SlideLeft';
 import PrimaryList from './PrimaryList';
 import SecondaryList from './SecondaryList';
+import DropdownSlideLeft from './SlideLeft';
 import SubMenu from './SubMenu';
 import TertiaryList from './TertiaryList';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
+import { createContext, FC, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 
 export const DropdownMenuContext = createContext<{
     slideRight: (props: DropdownItemType) => void;

@@ -1,5 +1,5 @@
-import { FilterOptionsParameterTypeEnum, FilterOptionsType } from 'types/productFilter';
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
+import { FilterOptionsParameterTypeEnum, FilterOptionsType } from 'types/productFilter';
 
 export const mapProductFilterOptions = (
     productFilterOptionsApiData: ProductFilterOptionsFragmentApi,

@@ -1,6 +1,6 @@
 import { IconName, IconsSvgMap } from './IconsSvgMap';
-import { FC } from 'react';
 import { IconSvgStyled } from './IconSvg.style';
+import { FC } from 'react';
 
 type IconSvgProps = {
     icon: IconName;

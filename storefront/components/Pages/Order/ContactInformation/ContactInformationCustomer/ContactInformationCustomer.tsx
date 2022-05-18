@@ -1,13 +1,13 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { ContactInformationFormType } from 'types/form';
-import { CustomerTypeEnum } from 'types/customer';
-import { FC } from 'react';
+import Heading from 'components/Basic/Heading';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
-import Heading from 'components/Basic/Heading';
 import Radiobutton from 'components/Forms/Radiobutton';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { CustomerTypeEnum } from 'types/customer';
+import { ContactInformationFormType } from 'types/form';
 
 const ContactInformationCustomer: FC = () => {
     const t = useTypedTranslationFunction();

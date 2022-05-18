@@ -4,13 +4,13 @@ import {
     OrderSummaryTitle,
     OrderSummaryWrapperStyled,
 } from './OrderSummary.style';
-import Adverts from 'components/Blocks/Adverts';
-import { FC } from 'react';
 import ProductsPreview from './ProductsPreview';
 import TotalPrice from './TotalPrice';
 import TransportAndPayment from './TransportAndPayment';
+import Adverts from 'components/Blocks/Adverts';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 
 const OrderSummary: FC = () => {
     const testIdentifier = 'blocks-ordersummary';

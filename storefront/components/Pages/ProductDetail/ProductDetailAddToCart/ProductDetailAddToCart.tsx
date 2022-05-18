@@ -6,16 +6,16 @@ import {
     AddToCartPriceStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
-import { FC, useRef, useState } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
-import { AddToCartPopupDataType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
-import { mapAddToCartPopupData } from 'connectors/cart/Cart';
-import { ProductDetailType } from 'types/product';
 import Spinbox from 'components/Forms/Spinbox';
+import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useRef, useState } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { AddToCartPopupDataType } from 'types/cart';
+import { ProductDetailType } from 'types/product';
+import { formatPrice } from 'utils/formatting';
 
 type ProductDetailAddToCartProps = {
     product: ProductDetailType;

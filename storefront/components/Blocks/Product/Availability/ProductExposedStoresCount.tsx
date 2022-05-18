@@ -1,6 +1,6 @@
-import { FC } from 'react';
 import { ProductExposedStoreCountStyled } from './ProductExposedStoresCount.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 
 type ProductExposedStoresCountProps = {
     isMainVariant: boolean;

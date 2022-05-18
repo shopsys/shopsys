@@ -1,32 +1,32 @@
-import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import Heading from 'components/Basic/Heading';
+import Button from 'components/Forms/Button';
+import Checkbox from 'components/Forms/Checkbox';
+import Form from 'components/Forms/Form';
+import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import FormColumn from 'components/Forms/Lib/FormColumn';
+import FormLine from 'components/Forms/Lib/FormLine';
+import FormLineError from 'components/Forms/Lib/FormLineError';
+import Select from 'components/Forms/Select';
+import TextInput from 'components/Forms/TextInput';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
+import AddressList from 'components/Pages/Customer/AddressList';
+import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfile.style';
 import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/formMeta';
-import AddressList from 'components/Pages/Customer/AddressList';
-import Button from 'components/Forms/Button';
-import Checkbox from 'components/Forms/Checkbox';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { CombinedError } from 'urql';
-import { CurrentCustomerType } from 'types/customer';
-import { CustomerChangeProfileFormType } from 'types/form';
-import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfile.style';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
-import Form from 'components/Forms/Form';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import Heading from 'components/Basic/Heading';
-import Select from 'components/Forms/Select';
-import TextInput from 'components/Forms/TextInput';
-import { useAuth } from 'hooks/auth/UseAuth';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
+import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { CurrentCustomerType } from 'types/customer';
+import { CustomerChangeProfileFormType } from 'types/form';
+import { CombinedError } from 'urql';
 
 type EditProfilePageProps = {
     currentCustomerUser: CurrentCustomerType;

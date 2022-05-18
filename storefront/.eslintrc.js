@@ -69,7 +69,6 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'react/require-default-props': 'off',
         'require-atomic-updates': 'error',
-        'sort-imports': ['error', { ignoreCase: true }],
         '@typescript-eslint/no-explicit-any': 'off',
         'unused-imports/no-unused-imports': 'error',
         'vars-on-top': 'error',

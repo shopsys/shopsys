@@ -245,3 +245,14 @@
   - file CartTests.js was deleted and was replace separate files
 - how to add new tests
   - create test screnarios in separate files in the appropirate folder
+
+### Sorting of typescript imports
+- [FWCC-941](https://shopsys.atlassian.net/browse/FWCC-941)
+- [FWCC-941 - sort imports with prettier](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/579/diffs)
+    - the reasons these changes were introduced:
+      - developers don't want to care of imports, this should be done automatically
+    - most significant changes
+      - `sort-imports` was removed from eslint
+      - import sorting plugin was added to prettier
+    - tips on how to implement them
+  - run `npm run format` to fix all the imports automatically

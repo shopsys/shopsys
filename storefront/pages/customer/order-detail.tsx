@@ -1,17 +1,17 @@
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
-import OrderDetail from 'components/Pages/Customer/OrderDetail';
-import { OrderDetailQueryDocumentApi } from 'graphql/generated';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import CommonLayout from 'components/Layout/CommonLayout';
+import OrderDetail from 'components/Pages/Customer/OrderDetail';
 import { useOrderDetail } from 'connectors/customer/Orders';
+import { OrderDetailQueryDocumentApi } from 'graphql/generated';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 
 const Index: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);

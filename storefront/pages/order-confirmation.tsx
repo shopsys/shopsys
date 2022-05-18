@@ -1,12 +1,12 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import PageGuard from 'components/Helpers/PageGuard';
+import CommonLayout from 'components/Layout/CommonLayout';
+import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import Registration from 'components/Pages/OrderConfirmation/Registration';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Index: FC<ServerSidePropsType> = () => {
     const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);

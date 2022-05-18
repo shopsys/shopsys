@@ -11,12 +11,12 @@ import {
     StoreDetailContentStyled,
     StoreDetailStyled,
 } from './StoreDetail.style';
-import { FC } from 'react';
 import GoogleMap from 'components/Basic/GoogleMap';
 import Heading from 'components/Basic/Heading';
-import { StoreDetailType } from 'types/store';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { StoreDetailType } from 'types/store';
 
 type StoreDetailProps = {
     store: StoreDetailType;

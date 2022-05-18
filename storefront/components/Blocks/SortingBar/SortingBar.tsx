@@ -1,5 +1,3 @@
-import { FC, useState } from 'react';
-import { initialState, userActions } from 'redux/slices/user';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -13,15 +11,17 @@ import {
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { canUseDom } from 'helpers/canUseDom';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { canUseDom } from 'helpers/canUseDom';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useState } from 'react';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { initialState, userActions } from 'redux/slices/user';
 
 const SortingBar: FC<{ totalCount: number }> = (props) => {
     const testIdentifier = 'blocks-sortingbar';

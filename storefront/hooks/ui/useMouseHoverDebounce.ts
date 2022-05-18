@@ -1,5 +1,5 @@
-import { debounce } from 'lodash';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { debounce } from 'lodash';
 import { useState } from 'react';
 
 export const useMouseHoverDebounce = (onMouseEnter: boolean, onMouseLeave: boolean, delay = 300): boolean => {

@@ -1,11 +1,11 @@
-import * as Yup from 'yup';
-import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { ContactInformationFormType } from 'types/form';
-import { CustomerTypeEnum } from 'types/customer';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
+import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
+import { CustomerTypeEnum } from 'types/customer';
+import { ContactInformationFormType } from 'types/form';
+import * as Yup from 'yup';
 
 export const useContactInformationForm = (): [
     UseFormReturn<ContactInformationFormType>,

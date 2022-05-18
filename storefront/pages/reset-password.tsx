@@ -1,10 +1,10 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import ResetPassword from 'components/Pages/ResetPassword';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import CommonLayout from 'components/Layout/CommonLayout';
+import ResetPassword from 'components/Pages/ResetPassword';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);

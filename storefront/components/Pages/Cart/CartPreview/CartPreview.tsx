@@ -5,11 +5,11 @@ import {
     CartPreviewRowStyled,
     CartPreviewStyled,
 } from './CartPreview.style';
-import { FC } from 'react';
-import { formatPrice } from 'utils/formatting';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { formatPrice } from 'utils/formatting';
 
 const CartPreview: FC = () => {
     const testIdentifier = 'pages-cart-cartpreview';

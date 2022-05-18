@@ -1,9 +1,9 @@
-import { FC, InputHTMLAttributes } from 'react';
 import { CheckboxColorStyled } from './CheckboxColor.style';
 import ColorLabelWrapper from 'components/Forms/Lib/ColorLabelWrapper';
+import { FC, InputHTMLAttributes } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import tinycolor from 'tinycolor2';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

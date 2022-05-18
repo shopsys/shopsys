@@ -4,9 +4,8 @@ import {
     PromoCodeInfoStyled,
     PromoCodeInfoTitleStyled,
 } from './PromoCodeInfo.style';
-
-import { FC } from 'react';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
 
 type PromoCodeInfoProps = {
     promoCode: string;

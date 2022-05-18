@@ -1,7 +1,7 @@
-import { FC } from 'react';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
-import { useBrands } from 'connectors/brands/Brands';
 import Webline from 'components/Layout/Webline';
+import { useBrands } from 'connectors/brands/Brands';
+import { FC } from 'react';
 
 const Brands: FC = () => {
     const brands = useBrands();

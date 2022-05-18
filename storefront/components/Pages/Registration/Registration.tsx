@@ -1,3 +1,7 @@
+import Address from './Address';
+import Company from './Company';
+import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
+import Password from './Password';
 import {
     ButtonWrapperStyled,
     ContentSectionStyled,
@@ -6,30 +10,26 @@ import {
     LoginProfileTextStrongStyled,
     LoginProfileTextStyled,
 } from './Registration.style';
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
-import Address from './Address';
+import User from './User';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import Company from './Company';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
 import Form from 'components/Forms/Form';
+import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import Image from 'next/image';
-import Password from './Password';
-import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import SimpleLayout from 'components/Layout/SimpleLayout';
+import { useRegistrationMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import User from './User';
-import { useRegistrationMutationApi } from 'graphql/generated';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Image from 'next/image';
+import { FC } from 'react';
+import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { useShopsysSelector } from 'redux/main';
+import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Registration: FC = () => {
     const t = useTypedTranslationFunction();

@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import { UserTextStyled } from './UserText.style';
+import { FC } from 'react';
 
 /**
  * Global component that serves as a wrapper

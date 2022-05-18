@@ -1,5 +1,4 @@
-import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { FC, useRef, useState } from 'react';
+import ResultProducts from './ResultProducts';
 import {
     SearchResultsBlockStyled,
     SearchResultsContentStyled,
@@ -8,24 +7,25 @@ import {
     SearchResultsWeblineStyled,
     ShowResultsButtonWrapperStyled,
 } from './Search.style';
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import Button from 'components/Forms/Button';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
-import ResultProducts from './ResultProducts';
-import { SearchType } from 'types/search';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
+import Button from 'components/Forms/Button';
+import Breadcrumbs from 'components/Layout/Breadcrumbs';
+import Webline from 'components/Layout/Webline';
+import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
+import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from 'components/Layout/Webline';
+import { SearchType } from 'types/search';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,

@@ -7,16 +7,16 @@ import {
     ProductItemStyled,
     ProductItemTitleStyled,
 } from './ProductItem.style';
-import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
-import { ListedProductType } from 'types/product';
-import NextLink from 'next/link';
 import ProductAction from 'components/Blocks/Product/Action/ProductAction';
 import { ProductAvailabilityStyled } from 'components/Blocks/Product/Availability/ProductAvailability.style';
 import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
+import NextLink from 'next/link';
+import { FC } from 'react';
+import { ListedProductType } from 'types/product';
 
 const ProductItem: FC<ListedProductType> = (props) => {
     const testIdentifier = 'blocks-product-list-listeditem-' + props.catalogNumber;

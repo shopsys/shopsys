@@ -1,21 +1,21 @@
-import { FC, useEffect } from 'react';
-import { FilterFormType, FilterOptionsType } from 'types/productFilter';
-import { FormProvider, useFieldArray, useWatch } from 'react-hook-form';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { FilterStyled } from './Filter.style';
 import FilterGroup from './FilterGroup';
 import FilterGroupInStock from './FilterGroupInStock';
 import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
-import { FilterStyled } from './Filter.style';
+import SelectedParameters from './SelectedParameters';
 import Form from 'components/Forms/Form';
 import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
-import SelectedParameters from './SelectedParameters';
+import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useEffect } from 'react';
+import { FormProvider, useFieldArray, useWatch } from 'react-hook-form';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { optionsFilterActions } from 'redux/slices/optionsFilter';
+import { FilterFormType, FilterOptionsType } from 'types/productFilter';
 
 type FilterProps = {
     productFilterOptions: FilterOptionsType;

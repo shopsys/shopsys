@@ -1,6 +1,3 @@
-import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { FC, Fragment, useState } from 'react';
 import {
     FilterGroupArrowStyled,
     FilterGroupContentItemStyled,
@@ -9,6 +6,9 @@ import {
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
+import { FC, Fragment, useState } from 'react';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 
 type FilterGroupProps = {
     /**

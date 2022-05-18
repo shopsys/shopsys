@@ -1,17 +1,16 @@
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-
+import PageGuard from 'components/Helpers/PageGuard';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
+import SimpleLayout from 'components/Layout/SimpleLayout';
 import EditProfile from 'components/Pages/Customer/EditProfile';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
-import PageGuard from 'components/Helpers/PageGuard';
-import SimpleLayout from 'components/Layout/SimpleLayout';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const EditProfilePage: FC = () => {
     const t = useTypedTranslationFunction();

@@ -1,17 +1,17 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import CartSummary from 'components/Pages/Cart/CartSummary';
-import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import List from 'components/Pages/Cart/List';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import CommonLayout from 'components/Layout/CommonLayout';
 import Webline from 'components/Layout/Webline';
+import CartSummary from 'components/Pages/Cart/CartSummary';
+import List from 'components/Pages/Cart/List';
+import { useCurrentCart } from 'connectors/cart/Cart';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Cart: FC<ServerSidePropsType> = () => {
     const { cart } = useCurrentCart();

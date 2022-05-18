@@ -4,10 +4,10 @@ import {
     BlogSignpostItemStyled,
     BlogSignpostStyled,
 } from './BlogSignpost.style';
-import { FC, Fragment } from 'react';
 import Children from './Children';
-import { ListedBlogCategoryType } from 'types/blogCategory';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, Fragment } from 'react';
+import { ListedBlogCategoryType } from 'types/blogCategory';
 
 type BlogSingpostProps = {
     blogCategoryItems?: ListedBlogCategoryType[];

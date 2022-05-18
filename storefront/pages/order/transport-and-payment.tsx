@@ -1,28 +1,28 @@
-import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import OrderAction from 'components/Blocks/OrderAction';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import Footer from 'components/Layout/Footer';
+import OrderLayout from 'components/Layout/OrderLayout';
+import Webline from 'components/Layout/Webline';
 import {
     useTransportAndPaymentForm,
     useTransportAndPaymentFormMeta,
 } from 'components/Pages/Order/TransportAndPayment/formMeta';
+import Select from 'components/Pages/Order/TransportAndPayment/Select';
+import { useTransports } from 'connectors/transports/Transports';
 import { createClient } from 'helpers/createClient';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import { FC } from 'react';
-import Footer from 'components/Layout/Footer';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import OrderAction from 'components/Blocks/OrderAction';
-import OrderLayout from 'components/Layout/OrderLayout';
-import Select from 'components/Pages/Order/TransportAndPayment/Select';
-import { ssrExchange } from 'urql';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { TransportAndPaymentFormType } from 'types/form';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useRouter } from 'next/router';
-import { useTransports } from 'connectors/transports/Transports';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from 'components/Layout/Webline';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { TransportAndPaymentFormType } from 'types/form';
+import { ssrExchange } from 'urql';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();

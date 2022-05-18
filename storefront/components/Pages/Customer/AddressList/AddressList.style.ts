@@ -1,7 +1,7 @@
-import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     addressListPadding: '20px',

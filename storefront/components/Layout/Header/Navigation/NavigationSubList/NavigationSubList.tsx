@@ -1,14 +1,14 @@
-import { initialState, userActions } from 'redux/slices/user';
 import {
     NavigationSubListItemLinkStyled,
     NavigationSubListItemStyled,
     NavigationSubListStyled,
 } from './NavigationSubList.style';
-import { FC } from 'react';
-import { NavigationSubCategory } from 'types/navigation';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { FC } from 'react';
 import { useShopsysDispatch } from 'redux/main';
+import { initialState, userActions } from 'redux/slices/user';
+import { NavigationSubCategory } from 'types/navigation';
 
 type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategory[];

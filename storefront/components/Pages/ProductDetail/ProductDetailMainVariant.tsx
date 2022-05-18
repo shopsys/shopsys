@@ -6,14 +6,14 @@ import {
     ProductDetailPrefixStyled,
     ProductDetailStyled,
 } from './ProductDetail.style';
-import { FC } from 'react';
-import { MainVariantDetailType } from 'types/product';
 import ProductDetailAccessories from './ProductDetailAccessories';
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import ProductVariantsTable from './ProductVariantsTable';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { MainVariantDetailType } from 'types/product';
 
 type ProductDetailMainVariantProps = {
     product: MainVariantDetailType;

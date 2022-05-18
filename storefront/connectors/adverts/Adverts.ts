@@ -1,8 +1,8 @@
-import { AdvertsFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
-import { AdvertType } from 'types/advert';
-import { getFirstImage } from 'connectors/image/Image';
 import { mapSimpleCategories } from 'connectors/categories/Categories';
+import { getFirstImage } from 'connectors/image/Image';
+import { AdvertsFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { AdvertType } from 'types/advert';
 
 export const useAdverts = (): AdvertType[] | undefined => {
     const [{ data, error }] = useAdvertsQueryApi();

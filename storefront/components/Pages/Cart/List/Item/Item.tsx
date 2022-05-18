@@ -1,4 +1,3 @@
-import { FC, useRef } from 'react';
 import {
     ImageCellStyled,
     ImageWrapperStyled,
@@ -11,15 +10,16 @@ import {
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './Item.style';
-import { CartItemType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
-import Image from 'components/Basic/Image';
 import ItemInfo from './ItemInfo';
-import NextLink from 'next/link';
-import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
+import Image from 'components/Basic/Image';
 import Spinbox from 'components/Forms/Spinbox';
+import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import NextLink from 'next/link';
+import { FC, useRef } from 'react';
+import { CartItemType } from 'types/cart';
+import { formatPrice } from 'utils/formatting';
 
 type ItemProps = {
     item: CartItemType;

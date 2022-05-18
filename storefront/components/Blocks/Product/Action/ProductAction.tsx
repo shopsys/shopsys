@@ -1,10 +1,10 @@
 import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
 import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import Button from 'components/Forms/Button';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useRouter } from 'next/dist/client/router';
 import { FC } from 'react';
 import { SliderProductItemType } from 'types/product';
-import { useRouter } from 'next/dist/client/router';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
     const testIdentifier = 'blocks-product-action';

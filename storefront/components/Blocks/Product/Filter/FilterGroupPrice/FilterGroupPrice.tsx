@@ -1,11 +1,11 @@
-import { FC, useState } from 'react';
+import RangeSlider from 'components/Basic/RangeSlider';
 import {
     FilterGroupArrowStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import RangeSlider from 'components/Basic/RangeSlider';
+import { FC, useState } from 'react';
 
 type FilterGroupPriceProps = {
     /**

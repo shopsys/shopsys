@@ -1,6 +1,6 @@
+import { useRemoveFromCartMutationApi } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { useRemoveFromCartMutationApi } from 'graphql/generated';
 
 export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const [, removeItemFromCart] = useRemoveFromCartMutationApi();

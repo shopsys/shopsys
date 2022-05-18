@@ -1,6 +1,6 @@
-import { FC } from 'react';
 import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
 import { usePromotedProducts } from 'connectors/products/Products';
+import { FC } from 'react';
 
 const PromotedProducts: FC = () => {
     const promotedProducts = usePromotedProducts();

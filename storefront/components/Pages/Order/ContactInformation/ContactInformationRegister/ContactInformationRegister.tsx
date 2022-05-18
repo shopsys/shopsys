@@ -1,17 +1,17 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import Heading from 'components/Basic/Heading';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { contactInformationActions } from 'redux/slices/contactInformation';
-import { ContactInformationFormType } from 'types/form';
-import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import Heading from 'components/Basic/Heading';
 import TextInput from 'components/Forms/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useShopsysDispatch } from 'redux/main';
+import { contactInformationActions } from 'redux/slices/contactInformation';
+import { ContactInformationFormType } from 'types/form';
 
 const ContactInformationRegister: FC = () => {
     const dispatch = useShopsysDispatch();

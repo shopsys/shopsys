@@ -3,11 +3,11 @@ import {
     NavigationColumnCategoryLinkStyled,
     NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
-import { FC } from 'react';
 import Image from 'components/Basic/Image';
-import { NavigationCategory } from 'types/navigation';
 import NavigationSubList from 'components/Layout/Header/Navigation/NavigationSubList';
 import NextLink from 'next/link';
+import { FC } from 'react';
+import { NavigationCategory } from 'types/navigation';
 
 type NavigationColumnCategoryProps = {
     columnCategory: NavigationCategory;

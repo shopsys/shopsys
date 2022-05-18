@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { FormColumnPropType } from './propTypes';
 import { FormColumnStyled } from './FormColumn.style';
+import { FormColumnPropType } from './propTypes';
+import { FC } from 'react';
 
 type FormColumnProps = FormColumnPropType;
 

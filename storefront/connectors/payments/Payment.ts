@@ -1,7 +1,7 @@
-import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
-import { PaymentInputType, PaymentType } from 'types/payment';
 import { getFirstImage } from 'connectors/image/Image';
+import { mapPriceData, mapPriceInputData } from 'connectors/price/Prices';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
+import { PaymentInputType, PaymentType } from 'types/payment';
 
 export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
     return {

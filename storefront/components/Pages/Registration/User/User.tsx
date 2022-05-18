@@ -1,13 +1,13 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
-import { CustomerTypeEnum } from 'types/customer';
-import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Radiobutton from 'components/Forms/Radiobutton';
 import TextInput from 'components/Forms/TextInput';
+import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { CustomerTypeEnum } from 'types/customer';
 
 const User: FC = () => {
     const t = useTypedTranslationFunction();

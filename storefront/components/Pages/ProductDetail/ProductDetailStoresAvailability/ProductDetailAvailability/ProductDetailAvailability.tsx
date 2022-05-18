@@ -1,13 +1,13 @@
-import * as smoothscroll from 'smoothscroll-polyfill';
 import {
     ProductDetailAvailabilityInfoStyled as AvailabilityInfoStyled,
     ProductDetailAvailabilityLinkStyled as AvailabilityLinkStyled,
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
-import { FC, RefObject, useEffect } from 'react';
 import Icon from 'components/Basic/Icon';
-import { ProductDetailType } from 'types/product';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, RefObject, useEffect } from 'react';
+import * as smoothscroll from 'smoothscroll-polyfill';
+import { ProductDetailType } from 'types/product';
 
 type ProductDetailAvailabilityProps = {
     product: ProductDetailType;
