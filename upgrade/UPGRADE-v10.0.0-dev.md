@@ -133,6 +133,7 @@ All the changes are considered as backwards incompatible.
     - removed dependency on `symplify/easy-coding-standard-tester`, you should change your custom coding standards tests
         - you can find inspiration in https://github.com/shopsys/shopsys/pull/2415/files
     - switch configuration of easy-coding-standard from yaml file to php file
+        <!--- TODO change link to latest version of ecs.php file  --->
         - if you use default Shopsys Framework configuration, you can just use default [`ecs.php`](https://github.com/shopsys/project-base/blob/master/ecs.php)
         - for your custom configuration, you can leverage https://github.com/symplify/config-transformer
     - see [project-base-diff-1](https://github.com/shopsys/project-base/commit/ddf72564195a625a288a4b8ee48559eded3bac58) and [project-base-diff-2](https://github.com/shopsys/project-base/commit/e45f75397880b124ab5fe32498126dfc536fb7d2) to update your project
