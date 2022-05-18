@@ -87,6 +87,27 @@ class ArticleFacade extends BaseArticleFacade
     }
 
     /**
+     * @param int[][] $rowIdsByGridId
+     */
+    public function saveOrdering(array $rowIdsByGridId): void
+    {
+        foreach ($rowIdsByGridId as $gridId => $rowIds) {
+            foreach ($rowIds as $position => $rowId) {
+                /** @var \App\Model\Article\Article $article */
+                $article = $this->articleRepository->findById($rowId);
+
+                if ($article->getPosition() !== $position || $article->getPlacement() !== $gridId) {
+                    $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+                }
+
+                $article->setPosition($position);
+                $article->setPlacement($gridId);
+            }
+        }
+        $this->em->flush();
+    }
+
+    /**
      * @param int $articleId
      */
     public function delete($articleId)
