@@ -294,3 +294,10 @@ All the changes are considered as backwards incompatible.
         - public function __construct(?int $transportId = null, int $domainId, ?Exception $previous = null)
         + public function __construct(int $domainId, ?int $transportId = null, ?Exception $previous = null)
         ```
+- unused translations have been removed ([#2442](https://github.com/shopsys/shopsys/pull/2442))
+    - the following `msgid` entries are no longer available, if you use any of them in your project, you need to dump and fill in the translations at your side:
+        - "Add only to order confirmation page"
+        - "All pages"
+        - "Currencies"
+        - "Delete status of order"
+        - "Each parameter can be used only once"

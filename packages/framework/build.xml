@@ -1271,6 +1271,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="translation:extract"/>
             <arg value="--dir=${path.src}"/>
+            <arg value="--dir=${path.config}"/>
             <arg value="--dir=${path.templates}"/>
             <arg value="--dir=${path.var}/translations/projectBase"/>
             <arg value="--exclude-dir=frontend/plugins"/>

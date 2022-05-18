@@ -310,6 +310,10 @@ services:
         tags:
             - { name: jms_translation.file_visitor }
 
+    Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:
+        tags:
+            - { name: jms_translation.file_visitor }
+
     Shopsys\FrameworkBundle\Component\Translation\PoDumper:
         tags:
             - { name: jms_translation.dumper, format: po }

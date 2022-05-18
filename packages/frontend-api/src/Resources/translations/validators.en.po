@@ -4,10 +4,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "City name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Company name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "First name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "First name of contact person cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Identification number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Last name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Last name of contact person cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "New password must be at least {{ limit }} characters long"
+msgstr ""
+
+msgid "Old password must be at least {{ limit }} characters long"
+msgstr ""
+
+msgid "Password must be at least {{ limit }} characters long"
+msgstr ""
+
 msgid "Payment {{ uuid }} doesn't exist"
 msgstr ""
 
 msgid "Please choose a valid combination of transport and payment"
+msgstr ""
+
+msgid "Please choose country"
+msgstr ""
+
+msgid "Please enter at least one product"
+msgstr ""
+
+msgid "Please enter city"
+msgstr ""
+
+msgid "Please enter company name"
+msgstr ""
+
+msgid "Please enter email"
+msgstr ""
+
+msgid "Please enter first name"
+msgstr ""
+
+msgid "Please enter first name of contact person"
+msgstr ""
+
+msgid "Please enter identification number"
+msgstr ""
+
+msgid "Please enter last name"
+msgstr ""
+
+msgid "Please enter last name of contact person"
+msgstr ""
+
+msgid "Please enter new password"
+msgstr ""
+
+msgid "Please enter old password"
+msgstr ""
+
+msgid "Please enter password"
+msgstr ""
+
+msgid "Please enter street"
+msgstr ""
+
+msgid "Please enter telephone number"
+msgstr ""
+
+msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter your email address"
+msgstr ""
+
+msgid "Please enter zip code"
 msgstr ""
 
 msgid "Price for payment {{ uuid }} has changed"
@@ -25,6 +112,21 @@ msgstr ""
 msgid "Product {{ uuid }} no longer available or doesn't exist"
 msgstr ""
 
+msgid "Street name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Tax number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Telephone number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "This email is already registered"
+msgstr ""
+
 msgid "Transport {{ uuid }} doesn't exist"
+msgstr ""
+
+msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
 

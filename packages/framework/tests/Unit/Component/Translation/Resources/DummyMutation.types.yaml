@@ -1,0 +1,21 @@
+Mutation:
+    type: object
+    config:
+        fields:
+            NewsletterSubscribe:
+                type: Boolean!
+                description: "Subscribe for e-mail newsletter"
+                args:
+                    input:
+                        type: "String!"
+                        validation:
+                            -   NotBlank:
+                                    message: "Please enter email"
+                            -   Email:
+                                    message: "Please enter valid email"
+                            -   Length:
+                                    max: 255
+                                    maxMessage: "Email cannot be longer than {{ limit }} characters"
+                                    min: 0
+                                    minMessage: ~
+                resolve: "@=mutation('newsletter_subscribe', [args, validator])"
