@@ -6,6 +6,7 @@ const staticUrls = {
     [process.env.DOMAIN_HOSTNAME_1]: {
         '/search': '/hledani',
         '/cart': '/kosik',
+        '/contact': '/kontakt',
         '/order/transport-and-payment': '/objednavka/doprava-a-platba',
         '/order/contact-information': '/objednavka/kontaktni-udaje',
         '/reset-password': '/zapomenute-heslo',
@@ -30,6 +31,7 @@ const staticUrls = {
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hladanie',
         '/cart': '/kosik',
+        '/contact': '/kontakt',
         '/order/transport-and-payment': '/objednavka/doprava-a-platba',
         '/order/contact-information': '/objednavka/kontaktne-udaje',
         '/reset-password': '/zapomenute-heslo',
@@ -128,7 +130,7 @@ const moduleExports = nextTranslate({
     },
     // FE build error fix: "ModuleNotFoundError: Module not found: Error: Can't resolve 'net' in '/app/node_modules/@node-redis/client/dist/lib/client'"
     // https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-761853289
-    webpack: config => {
+    webpack: (config) => {
         config.resolve.fallback = {
             child_process: false,
             fs: false,
