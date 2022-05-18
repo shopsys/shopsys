@@ -328,5 +328,13 @@
     "No result found for slug.": "Nebyly nalezeny žádné výsledky.",
     "Store not found.":  "Prodejna nebyla nalezena.",
     "Something went wrong.": "Něco se nepovedlo.",
-    "Please try again later or contact us.": "Zkuste to prosím později, nebo nás kontaktujte."
+    "Please try again later or contact us.": "Zkuste to prosím později, nebo nás kontaktujte.",
+    "Your name": "Vaše jméno",
+    "Please enter your name": "Vyplňte prosím své jméno",
+    "Message": "Zpráva",
+    "Please enter a message": "Vyplňte prosím zprávu",
+    "Send message": "Odeslat zprávu",
+    "The message could not be sent": "Zprávu se nepodařilo odeslat",
+    "ContactFormInfo": "Kliknutím na tlačítko Odeslat zprávu souhlasíte se <lnk1>zpracováním osobních údajů</lnk1>.",
+    "Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.": "Náš tým s radostí zodpoví všechny vaše dotazy. Vyplňte prosím formulář níže a my se vám ozveme co nejdříve."
 }

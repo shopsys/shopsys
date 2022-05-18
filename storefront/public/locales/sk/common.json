@@ -326,5 +326,13 @@
     "No result found for slug.": "No result found for slug.",
     "Store not found.":  "Store not found.",
     "Something went wrong.": "Something went wrong.",
-    "Please try again later or contact us.": "Please try again later or contact us."
+    "Please try again later or contact us.": "Please try again later or contact us.",
+    "Your name": "Your name",
+    "Please enter your name": "Please enter your name",
+    "Message": "Message",
+    "Please enter a message": "Please enter a message",
+    "Send message": "Send message",
+    "The message could not be sent": "The message could not be sent",
+    "ContactFormInfo": "By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>.",
+    "Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.": "Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible."
 }

@@ -1,14 +1,16 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
+import Contact from 'components/Pages/Contact';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import React, { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const Contact: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
-
-    return <CommonLayout></CommonLayout>;
+const ContactPage: FC<ServerSidePropsType> = () => {
+    return (
+        <CommonLayout>
+            <Contact />
+        </CommonLayout>
+    );
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
@@ -16,4 +18,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store);
 });
 
-export default Contact;
+export default ContactPage;
