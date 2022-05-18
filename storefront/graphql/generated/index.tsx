@@ -2559,6 +2559,13 @@ export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; 
 
 export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> }> };
 
+export type ContactMutationVariablesApi = Exact<{
+  input: ContactInputApi;
+}>;
+
+
+export type ContactMutationApi = { __typename?: 'Mutation', Contact: boolean };
+
 export type CountryFragmentApi = { __typename?: 'Country', name: string, code: string };
 
 export type CountriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
@@ -4199,6 +4206,15 @@ export const PromotedCategoriesQueryDocumentApi = gql`
 
 export function usePromotedCategoriesQueryApi(options: Omit<Urql.UseQueryArgs<PromotedCategoriesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PromotedCategoriesQueryApi>({ query: PromotedCategoriesQueryDocumentApi, ...options });
+};
+export const ContactMutationDocumentApi = gql`
+    mutation ContactMutation($input: ContactInput!) {
+  Contact(input: $input)
+}
+    `;
+
+export function useContactMutationApi() {
+  return Urql.useMutation<ContactMutationApi, ContactMutationVariablesApi>(ContactMutationDocumentApi);
 };
 export const CountriesQueryDocumentApi = gql`
     query CountriesQuery {
