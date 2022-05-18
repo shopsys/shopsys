@@ -144,7 +144,7 @@ export const ButtonBottomItemStyled = styled.div`
     `}
 `;
 
-export const ButtonBottomNameStyled = styled.div<ButtonBottomNameStyledProps>`
+export const ButtonBottomNameStyled = styled.a<ButtonBottomNameStyledProps>`
     ${({ theme, type }) => css`
         position: relative;
         flex-grow: 1;

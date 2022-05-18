@@ -10,7 +10,10 @@ import {
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Link from 'next/link';
 import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type FooterBoxInfoProps = {
     orderStep?: boolean;
@@ -26,6 +29,8 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
     const testIdentifier = 'layout-footer-footerboxinfo';
 
     const t = useTypedTranslationFunction();
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
         <FooterBoxInfoStyled orderStep={props.orderStep} data-testid={testIdentifier}>
@@ -44,9 +49,9 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
                         {dummyData.opening}
                     </FooterBoxInfoContactHoursStyled>
                 </FooterBoxInfoContactStyled>
-                <FooterBoxInfoButtonStyled type="button" variant="secondary">
-                    {t('Write Us')}
-                </FooterBoxInfoButtonStyled>
+                <Link href={contactUrl} passHref>
+                    <FooterBoxInfoButtonStyled variant="secondary">{t('Write Us')}</FooterBoxInfoButtonStyled>
+                </Link>
             </FooterBoxInfoContentStyled>
         </FooterBoxInfoStyled>
     );
