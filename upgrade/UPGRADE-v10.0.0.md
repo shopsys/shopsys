@@ -1,6 +1,6 @@
-# [Upgrade from v9.1.2 to v10.0.0-dev](https://github.com/shopsys/shopsys/compare/v9.1.2...master)
+# [Upgrade from v9.1.2 to v10.0.0](https://github.com/shopsys/shopsys/compare/v9.1.2...v10.0.0)
 
-This guide contains instructions to upgrade from version v9.1.2 to v10.0.0-dev.
+This guide contains instructions to upgrade from version v9.1.2 to v10.0.0.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -166,7 +166,7 @@ All the changes are considered as backwards incompatible.
              ) {
         ```
 - upgrade PhpStan to the latest version ([#2452](https://github.com/shopsys/shopsys/pull/2452))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/f8584ac28d0d723d75014860a1778248c52155cf) to update your project
     - run `php phing phpstan` and fix violations in your code
 - upgrade `presta/sitemap-bundle` to version `^3.3` ([#2450](https://github.com/shopsys/shopsys/pull/2450))
     - constructor of `Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory` was changed:
