@@ -110,7 +110,7 @@
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
         "overblog/graphiql-bundle": "^0.2",
         "overblog/graphql-bundle": "^0.13",
-        "phing/phing": "dev-oldstable",
+        "phing/phing": "^2.17.3",
         "phpdocumentor/reflection-docblock": "^5.3.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable": "^3.0",

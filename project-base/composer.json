@@ -56,7 +56,7 @@
         "jms/translation-bundle": "^1.6.2",
         "league/flysystem": "^1.1.4",
         "nyholm/psr7": "^1.5",
-        "phing/phing": "dev-oldstable",
+        "phing/phing": "^2.17.3",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "sensio/framework-extra-bundle": "^5.2",
