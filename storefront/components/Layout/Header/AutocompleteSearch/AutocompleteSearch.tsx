@@ -11,7 +11,7 @@ import {
 import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './formMeta';
 import Icon from 'components/Basic/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
+import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import { canUseDom } from 'helpers/canUseDom';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -147,7 +147,7 @@ const AutocompleteSearch: FC = () => {
                         autocompleteSearchResults={autocompleteSearchResults}
                         isAutocompleteActive={
                             hasAutocompleteSearchFocus &&
-                            autocompleteSearchQueryValue.length > 2 &&
+                            autocompleteSearchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH &&
                             autocompleteSearchResults !== undefined
                         }
                         autocompleteSearchQueryValue={autocompleteSearchQueryValue}

@@ -11,6 +11,8 @@ import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchType } from 'types/search';
 
+export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
+
 export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
     const [result] = useAutocompleteSearchQueryApi({
         variables: {
@@ -18,7 +20,7 @@ export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteS
             maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
             maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
         },
-        pause: autocompleteSearch.length < 3,
+        pause: autocompleteSearch.length < MINIMAL_SEARCH_QUERY_LENGTH,
         requestPolicy: 'network-only',
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -26,7 +28,10 @@ export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteS
     useQueryError(result.error);
 
     return useMemo(
-        () => (autocompleteSearch.length < 3 || !result.data ? undefined : mapSearchResult(result.data, currencyCode)),
+        () =>
+            autocompleteSearch.length < MINIMAL_SEARCH_QUERY_LENGTH || !result.data
+                ? undefined
+                : mapSearchResult(result.data, currencyCode),
         [autocompleteSearch.length, currencyCode, result.data],
     );
 };
