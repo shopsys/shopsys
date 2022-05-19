@@ -15,8 +15,6 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -86,11 +84,6 @@ class ProductFacade extends BaseProductFacade
     private $productFilesUrlPrefix;
 
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    private FriendlyUrlRepository $friendlyUrlRepository;
-
-    /**
      * @var \App\Model\Store\StoreFacade
      */
     private StoreFacade $storeFacade;
@@ -129,7 +122,6 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
         string $productFilesUrlPrefix,
@@ -159,8 +151,7 @@ class ProductFacade extends BaseProductFacade
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
         ProductStoreFacade $productStoreFacade,
-        StoreFacade $storeFacade,
-        FriendlyUrlRepository $friendlyUrlRepository
+        StoreFacade $storeFacade
     ) {
         parent::__construct(
             $em,
@@ -191,7 +182,6 @@ class ProductFacade extends BaseProductFacade
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
         $this->productFilesUrlPrefix = $productFilesUrlPrefix;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->storeFacade = $storeFacade;
         $this->productStoreFacade = $productStoreFacade;
     }
@@ -257,7 +247,6 @@ class ProductFacade extends BaseProductFacade
         $this->em->flush();
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
-        $this->generateOldEshopUrlForProduct($product, $productData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
@@ -282,25 +271,6 @@ class ProductFacade extends BaseProductFacade
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
         return $product;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function generateOldEshopUrlForProduct(BaseProduct $product, ProductData $productData): void
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $path = 'article/' . $product->getCatnum();
-            $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $path);
-
-            if ($friendlyUrl === null) {
-                $productData->urls->newUrls[] = [
-                    UrlListData::FIELD_DOMAIN => $domainConfig->getId(),
-                    UrlListData::FIELD_SLUG => $path,
-                ];
-            }
-        }
     }
 
     /**
@@ -332,7 +302,6 @@ class ProductFacade extends BaseProductFacade
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
 
-        $this->generateOldEshopUrlForProduct($product, $productData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
