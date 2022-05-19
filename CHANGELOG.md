@@ -29,6 +29,79 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [10.0.0](https://github.com/shopsys/shopsys/tree/10.0.0) (2022-05-19)
+
+[Full Changelog](https://github.com/shopsys/shopsys/compare/v9.1.2...10.0.0)
+
+:sparkles: Enhancements and features
+
+- \[project-base\] assets js not need to be executable [\#2403](https://github.com/shopsys/shopsys/pull/2403) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[project-base\] updated links in banner demo data [\#2458](https://github.com/shopsys/shopsys/pull/2458) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] translate constraint messages in yaml files in config directory [\#2442](https://github.com/shopsys/shopsys/pull/2442) ([sspooky13](https://github.com/sspooky13))
+- \[shopsys\] Use getValues\(\) instead of toArray\(\) on Doctrine Collections [\#2439](https://github.com/shopsys/shopsys/pull/2439) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] Enhancement of check / fix method annotations [\#2434](https://github.com/shopsys/shopsys/pull/2434) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[shopsys\] changed used caches from Doctrine cache to Symfony cache [\#2412](https://github.com/shopsys/shopsys/pull/2412) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] replaced <i> tag with twig icon function [\#2274](https://github.com/shopsys/shopsys/pull/2274) ([TomasGottvald](https://github.com/TomasGottvald))
+- \[shopsys\] acceptance tests now use test prefix for css classes [\#2179](https://github.com/shopsys/shopsys/pull/2179) ([TomasLudvik](https://github.com/TomasLudvik))
+
+:bug: Bug Fixes
+
+- \[project-base\] fixed memory limit for phpunit [\#2398](https://github.com/shopsys/shopsys/pull/2398) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] fixed duplicated extra section in composer [\#2394](https://github.com/shopsys/shopsys/pull/2394) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] CronModuleRepository: fix "Warning: array\_pop\(\): Argument \#1 \($array\) must be passed by reference, value given" [\#2459](https://github.com/shopsys/shopsys/pull/2459) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[migrations\] added missing symfony/yaml dependency [\#2453](https://github.com/shopsys/shopsys/pull/2453) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[coding-standards\] remove STRICT setList from configuration [\#2448](https://github.com/shopsys/shopsys/pull/2448) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] added missing nette/utils dependency [\#2444](https://github.com/shopsys/shopsys/pull/2444) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] Fix DocBlock Parser [\#2437](https://github.com/shopsys/shopsys/pull/2437) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] fix delete file action without filename [\#2429](https://github.com/shopsys/shopsys/pull/2429) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] attempt to create jwt configuration without keys now create unsecured signer instead of error [\#2428](https://github.com/shopsys/shopsys/pull/2428) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[migrations\] add psr/log dependency [\#2418](https://github.com/shopsys/shopsys/pull/2418) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[shopsys\] fix builds of split packages [\#2404](https://github.com/shopsys/shopsys/pull/2404) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[framework\] fix special builds [\#2402](https://github.com/shopsys/shopsys/pull/2402) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:book: Documentation
+
+- \[shopsys\] updated year in license files [\#2395](https://github.com/shopsys/shopsys/pull/2395) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] fixed join slack link across codebase [\#2445](https://github.com/shopsys/shopsys/pull/2445) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] improved upgrade notes before new release [\#2443](https://github.com/shopsys/shopsys/pull/2443) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] fixed link to Slack in readme [\#2393](https://github.com/shopsys/shopsys/pull/2393) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:warning: Security
+
+- \[shopsys\] composer updates [\#2397](https://github.com/shopsys/shopsys/pull/2397) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:top: Upgrading
+
+- \[shopsys\] upgraded phing to latest version [\#2457](https://github.com/shopsys/shopsys/pull/2457) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] Refactor ECS config to new syntax [\#2454](https://github.com/shopsys/shopsys/pull/2454) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[shopsys\] upgraded PhpStan to the latest version [\#2452](https://github.com/shopsys/shopsys/pull/2452) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] Upgrade ramsey/uuid to ^4.3 [\#2451](https://github.com/shopsys/shopsys/pull/2451) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] upgrade presta/sitemap-bundle to ^3.3 [\#2450](https://github.com/shopsys/shopsys/pull/2450) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[coding-standards\] \[http-smoke-testing\] dropped PHP 7.4 support [\#2449](https://github.com/shopsys/shopsys/pull/2449) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[project-base\] Update symfony/flex to ^1.17 [\#2447](https://github.com/shopsys/shopsys/pull/2447) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] removed PHP deprecations [\#2446](https://github.com/shopsys/shopsys/pull/2446) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[framework\] fix deprecation Implicit conversion from float to int loses precision [\#2440](https://github.com/shopsys/shopsys/pull/2440) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] Upgrade easy-coding-standard to v10 [\#2435](https://github.com/shopsys/shopsys/pull/2435) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] Use magic methods instead of Serializable interface [\#2431](https://github.com/shopsys/shopsys/pull/2431) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[shopsys\] Upgrade to PHP 8.1 [\#2430](https://github.com/shopsys/shopsys/pull/2430) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] new doctrine/orm version conflicted due to bc break [\#2427](https://github.com/shopsys/shopsys/pull/2427) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] Remove usage of deprecated methods from roave/better-reflection [\#2426](https://github.com/shopsys/shopsys/pull/2426) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[shopsys\] upgraded PhpUnit to version 9 [\#2424](https://github.com/shopsys/shopsys/pull/2424) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] upgraded knplabs/knp-menu-bundle to version 3.2 [\#2423](https://github.com/shopsys/shopsys/pull/2423) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] upgraded jms/metadata and jms/serializer-bundle [\#2421](https://github.com/shopsys/shopsys/pull/2421) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] upgraded jms/translation-bundle to v1.6.2 [\#2420](https://github.com/shopsys/shopsys/pull/2420) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] updated lcobucci/jwt to version 4.1.5  [\#2419](https://github.com/shopsys/shopsys/pull/2419) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] doctrine dependencies upgrade [\#2417](https://github.com/shopsys/shopsys/pull/2417) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[shopsys\] dropped support for unsupported PHP in packages [\#2416](https://github.com/shopsys/shopsys/pull/2416) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] upgraded symplify dependencies [\#2415](https://github.com/shopsys/shopsys/pull/2415) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[migrations\] doctrine/migrations upgrade  [\#2414](https://github.com/shopsys/shopsys/pull/2414) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[shopsys\] replaced fzaninotto/Faker with FakerPHP/Faker [\#2413](https://github.com/shopsys/shopsys/pull/2413) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[project-base\] remove "vasek-purchart/console-errors-bundle" dependency [\#2408](https://github.com/shopsys/shopsys/pull/2408) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[project-base\] replaced deprecated Doctrine\Common\Persistence\ObjectManager namespace [\#2407](https://github.com/shopsys/shopsys/pull/2407) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] changed entity extension subscriber class [\#2405](https://github.com/shopsys/shopsys/pull/2405) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] replaced jakub-onderka/php-parallel-lint with php-parallel-lint [\#2399](https://github.com/shopsys/shopsys/pull/2399) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[backend-api\] backend api is now put under review for future changes [\#2422](https://github.com/shopsys/shopsys/pull/2422) ([grossmannmartin](https://github.com/grossmannmartin))
+
 ## [v9.1.2](https://github.com/shopsys/shopsys/compare/v9.1.1...v9.1.2) (2021-07-01)
 
 :bug: Bug Fixes
@@ -4233,3 +4306,5 @@ That's why is this section formatted differently.
 [#1879]: https://github.com/shopsys/shopsys/pull/1879
 [#1760]: https://github.com/shopsys/shopsys/pull/1760
 [@CarabineSK]: https://github.com/CarabineSK
+
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
