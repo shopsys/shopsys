@@ -1,0 +1,7 @@
+query SettingsQuery {
+    settings {
+        pricing {
+            ...PricingSettingFragment
+        }
+    }
+}

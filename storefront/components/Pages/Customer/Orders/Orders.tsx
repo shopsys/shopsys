@@ -6,12 +6,12 @@ import Pagination from 'components/Blocks/Pagination';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import Webline from 'components/Layout/Webline';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { ListedOrderType } from 'types/orders';
-import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type ListedOrdersProps = { orders: ListedOrderType[] | undefined; totalCount: number | undefined };
@@ -20,7 +20,8 @@ const Orders: FC<ListedOrdersProps> = (props) => {
     const testIdentifier = 'pages-customer-orders-';
 
     const t = useTypedTranslationFunction();
-    const { currencyCode, url } = useShopsysSelector((state) => state.domain);
+    const formatPrice = useFormatPrice();
+    const { url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     const [customerUrl, customerOrdersUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
@@ -90,7 +91,7 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                                     </td>
                                     <td data-testid={testIdentifier + 'payment'}>{order.payment}</td>
                                     <td className="text-right" data-testid={testIdentifier + 'total-price'}>
-                                        {formatPrice(order.totalPrice.priceWithVat, currencyCode, t)}
+                                        {formatPrice(order.totalPrice.priceWithVat)}
                                     </td>
                                     <td data-testid={testIdentifier + 'detail-link'}>
                                         <NextLink

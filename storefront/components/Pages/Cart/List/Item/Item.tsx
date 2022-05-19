@@ -15,11 +15,11 @@ import Image from 'components/Basic/Image';
 import Spinbox from 'components/Forms/Spinbox';
 import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, useRef } from 'react';
 import { CartItemType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
 
 type ItemProps = {
     item: CartItemType;
@@ -32,6 +32,7 @@ const Item: FC<ItemProps> = (props) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const changeCartItemQuantity = useAddToCart();
 
     const onChangeValueHandler = () => {
@@ -77,18 +78,12 @@ const Item: FC<ItemProps> = (props) => {
             </SpinboxCellStyled>
             <ItemPriceCellStyled data-testid={testIdentifier + 'itemprice'}>
                 <ItemPriceStyled>
-                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t) +
-                        '\u00A0/\u00A0' +
-                        t('pc')}
+                    {formatPrice(props.item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
                 </ItemPriceStyled>
             </ItemPriceCellStyled>
             <TotalPriceCellStyled data-testid={testIdentifier + 'totalprice'}>
                 <TotalPriceStyled>
-                    {formatPrice(
-                        props.item.product.price.priceWithVat * props.item.quantity,
-                        props.item.product.price.currencyCode,
-                        t,
-                    )}
+                    {formatPrice(props.item.product.price.priceWithVat * props.item.quantity)}
                 </TotalPriceStyled>
             </TotalPriceCellStyled>
             <RemoveButtonCellStyled>

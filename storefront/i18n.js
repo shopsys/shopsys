@@ -20,17 +20,6 @@ module.exports = {
     loader: false,
     skipInitialProps: true,
     loaderName: 'getServerSideProps',
-    interpolation: {
-        format: (value, format, lng) => {
-            if (format === 'formatPrice') {
-                return Intl.NumberFormat(lng, {
-                    style: 'currency',
-                    currency: value.currencyCode,
-                }).format(value.price);
-            }
-            return value;
-        },
-    },
     loadLocaleFrom: async (locale, namespace) => {
         try {
             if (typeof window === 'undefined') {

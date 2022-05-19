@@ -2915,6 +2915,13 @@ export type SearchQueryVariablesApi = Exact<{
 
 export type SearchQueryApi = { __typename?: 'Query', articlesSearch: Array<{ __typename: 'Article', name: string, slug: string } | { __typename: 'BlogArticle', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> }>, brandSearch: Array<{ __typename?: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> }>, categoriesSearch: { __typename?: 'CategoryConnection', totalCount: number, edges: Array<{ __typename?: 'CategoryEdge', node: { __typename?: 'Category', uuid: string, name: string, slug: string, products: { __typename?: 'ProductConnection', totalCount: number }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> } | null } | null> | null }, productsSearch: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex: string | null }> }> | null }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'ProductEdge', node: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null } | null> | null } };
 
+export type PricingSettingFragmentApi = { __typename?: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number };
+
+export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', pricing: { __typename?: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number } } | null };
+
 export type SliderItemFragmentApi = { __typename?: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, mobileImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> };
 
 export type SliderItemImagesMobileDefaultFragmentApi = { __typename?: 'SliderItem', mobileImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> };
@@ -4010,6 +4017,12 @@ export const SimpleProductConnectionFragmentApi = gql`
   }
 }
     ${SimpleProductFragmentApi}`;
+export const PricingSettingFragmentApi = gql`
+    fragment PricingSettingFragment on PricingSetting {
+  defaultCurrencyCode
+  minimumFractionDigits
+}
+    `;
 export const SliderItemImagesWebDefaultFragmentApi = gql`
     fragment SliderItemImagesWebDefaultFragment on SliderItem {
   webImages: images(type: "web", sizes: "default") {
@@ -4531,6 +4544,19 @@ ${ListedProductConnectionFragmentApi}`;
 
 export function useSearchQueryApi(options: Omit<Urql.UseQueryArgs<SearchQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<SearchQueryApi>({ query: SearchQueryDocumentApi, ...options });
+};
+export const SettingsQueryDocumentApi = gql`
+    query SettingsQuery {
+  settings {
+    pricing {
+      ...PricingSettingFragment
+    }
+  }
+}
+    ${PricingSettingFragmentApi}`;
+
+export function useSettingsQueryApi(options: Omit<Urql.UseQueryArgs<SettingsQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<SettingsQueryApi>({ query: SettingsQueryDocumentApi, ...options });
 };
 export const SliderItemsQueryDocumentApi = gql`
     query SliderItemsQuery {

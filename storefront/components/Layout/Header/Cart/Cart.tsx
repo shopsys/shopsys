@@ -18,13 +18,13 @@ import {
 import ListItem from './ListItem';
 import Button from 'components/Forms/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Cart: FC = () => {
@@ -32,6 +32,7 @@ const Cart: FC = () => {
 
     const router = useRouter();
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const { cart, isCartEmpty } = useCurrentCart();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
@@ -53,7 +54,7 @@ const Cart: FC = () => {
                         </CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled data-testid={testIdentifier + 'totalprice'}>
-                        {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, domainConfig.currencyCode, t, {
+                        {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                             explicitZero: true,
                         })}
                     </CartValueStyled>

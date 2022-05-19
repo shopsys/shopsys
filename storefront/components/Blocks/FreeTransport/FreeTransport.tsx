@@ -1,24 +1,23 @@
 import { FreeTransportStyled } from './FreeTransport.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
-import { formatPrice } from 'utils/formatting';
 
 const FreeTransport: FC = () => {
     const testIdentifier = 'blocks-freetransport';
 
     const { cart, isCartEmpty } = useCurrentCart();
     const t = useTypedTranslationFunction();
-    const domainConfig = useShopsysSelector((state) => state.domain);
+    const formatPrice = useFormatPrice();
     const amount = cart?.remainingAmountWithVatForFreeTransport;
 
     if (isCartEmpty || amount === null || amount === undefined) {
         return null;
     }
 
-    const amountFormatted = formatPrice(amount, domainConfig.currencyCode, t);
+    const amountFormatted = formatPrice(amount);
 
     if (amount > 0) {
         return (

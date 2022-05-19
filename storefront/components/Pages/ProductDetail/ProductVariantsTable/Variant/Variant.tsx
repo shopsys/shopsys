@@ -15,11 +15,9 @@ import ProductExposedStoresCount from 'components/Blocks/Product/Availability/Pr
 import Popup from 'components/Layout/Popup';
 import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC, useState } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { ListedVariantType } from 'types/product';
-import { formatPrice } from 'utils/formatting';
 
 type VariantProps = {
     variant: ListedVariantType;
@@ -29,8 +27,7 @@ type VariantProps = {
 const Variant: FC<VariantProps> = (props) => {
     const testIdentifier = 'pages-productdetail-variant-';
 
-    const t = useTypedTranslationFunction();
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const formatPrice = useFormatPrice();
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
 
     return (
@@ -57,7 +54,7 @@ const Variant: FC<VariantProps> = (props) => {
                     />
                 </VariantAvailabilityCellStyled>
                 <VariantPriceCellStyled data-testid={testIdentifier + 'price'}>
-                    {formatPrice(props.variant.price.priceWithVat, currencyCode, t)}
+                    {formatPrice(props.variant.price.priceWithVat)}
                 </VariantPriceCellStyled>
                 <VariantActionCellStyled>
                     {props.isSellingDenied ? (

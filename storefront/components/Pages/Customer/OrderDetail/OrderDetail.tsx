@@ -5,12 +5,12 @@ import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import Webline from 'components/Layout/Webline';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { OrderDetailType } from 'types/orders';
-import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type OrderDetailPageProps = {
@@ -21,6 +21,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
     const testIdentifier = 'pages-customer-orderdetail-';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
 
@@ -204,11 +205,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                     <tr key={index} data-testid={testIdentifier + 'item-' + index}>
                                         <td data-testid={testIdentifier + 'item-name'}>{item.name}</td>
                                         <td className="text-right" data-testid={testIdentifier + 'item-unitprice'}>
-                                            {formatPrice(
-                                                item.unitPrice.priceWithVat,
-                                                currentDomainConfig.currencyCode,
-                                                t,
-                                            )}
+                                            {formatPrice(item.unitPrice.priceWithVat)}
                                         </td>
                                         <td className="text-right" data-testid={testIdentifier + 'item-quantity'}>
                                             {item.quantity} {item.unit}
@@ -217,18 +214,10 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                             {parseFloat(item.vatRate)} %
                                         </td>
                                         <td className="text-right" data-testid={testIdentifier + 'item-price'}>
-                                            {formatPrice(
-                                                item.totalPrice.priceWithoutVat,
-                                                currentDomainConfig.currencyCode,
-                                                t,
-                                            )}
+                                            {formatPrice(item.totalPrice.priceWithoutVat)}
                                         </td>
                                         <td className="text-right" data-testid={testIdentifier + 'item-pricevat'}>
-                                            {formatPrice(
-                                                item.totalPrice.priceWithVat,
-                                                currentDomainConfig.currencyCode,
-                                                t,
-                                            )}
+                                            {formatPrice(item.totalPrice.priceWithVat)}
                                         </td>
                                     </tr>
                                 );
