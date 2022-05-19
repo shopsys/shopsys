@@ -43,7 +43,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $sliderItemData->domainId = Domain::FIRST_DOMAIN_ID;
 
         $sliderItemData->name = 'Shopsys';
-        $sliderItemData->link = 'http://www.shopsys.cz/';
+        $sliderItemData->link = 'https://www.shopsys.cz';
         $sliderItemData->hidden = false;
 
         $this->sliderItemFacade->create($sliderItemData);
@@ -54,7 +54,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $this->sliderItemFacade->create($sliderItemData);
 
         $sliderItemData->name = 'Pojďte s námi růst';
-        $sliderItemData->link = 'http://www.pojdtesnamirust.cz/';
+        $sliderItemData->link = 'https://jobs.shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
     }
