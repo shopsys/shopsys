@@ -60,7 +60,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
             <ProductSliderStyled ref={sliderRef} className="keen-slider">
                 {props.products.map((productItemData, index) => (
                     <SliderProductItem
-                        key={index}
+                        key={productItemData.uuid}
                         product={productItemData}
                         gtmListName={props.gtmListName}
                         listIndex={index}

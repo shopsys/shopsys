@@ -18,7 +18,7 @@ const ProductsList: FC<ProductsListProps> = (props) => {
         <ProductsListStyled data-testid={testIdentifier}>
             {props.products.map((listedProductItem, index) => (
                 <ProductItem
-                    key={index}
+                    key={listedProductItem.uuid}
                     product={listedProductItem}
                     listIndex={(currentPage - 1) * pageSize + index}
                     gtmListName={props.gtmListName}
