@@ -579,3 +579,5 @@ There you can find links to upgrade notes for other versions too.
 - remove unnecessary `services_acc.yaml` config from your project
     - create `config/packages/acc/framework.yaml` with configuration for acceptance testing
     - see #project-base-diff to update your project
+- move `paths.yml` config file into packages subfolder to allow easy override them for different environments
+    - see #project-base-diff to update your project

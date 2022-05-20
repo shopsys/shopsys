@@ -1,7 +1,6 @@
 imports:
     - { resource: forms.yaml }
     - { resource: services/*.yaml }
-    - { resource: paths.yaml }
     - { resource: parameters_common.yaml }
     - { resource: parameters.yaml }
     - { resource: directories.yaml }
