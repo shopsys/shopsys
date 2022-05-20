@@ -1,9 +1,29 @@
 import { GetServerSidePropsContext } from 'next';
 import { FC } from 'react';
 import { getDomainConfig } from 'utils/Domain/Domain';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const getRobotsTxtContent = (domain: string, domainId: number): string => {
+    const staticUrlsToNoIndex = getInternationalizedStaticUrls(
+        [
+            '/cart',
+            '/new-password',
+            '/order-confirmation',
+            '/order-payment-confirmation',
+            '/personal-data-export',
+            '/personal-data-overview',
+            '/order/contact-information',
+            '/order/transport-and-payment',
+            { url: '/order-detail/:urlHash', param: '*' },
+        ],
+        domain,
+    );
+    const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domain);
+
     return `User-Agent: *
+${staticUrlsToNoIndex.map((page) => `\nDisallow: ${page}`).join('')}
+Disallow: ${customerUrl}/*
+Disallow: /admin
 
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap.xml
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap_image.xml
