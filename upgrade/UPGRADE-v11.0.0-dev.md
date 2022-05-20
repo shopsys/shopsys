@@ -581,3 +581,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - move `paths.yml` config file into packages subfolder to allow easy override them for different environments
     - see #project-base-diff to update your project
+- set overwrite domain url to be taken exclusively from environment variable
+    - see #project-base-diff to update your project

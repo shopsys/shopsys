@@ -47,24 +47,32 @@ class ErrorController extends FrontBaseController
     private $environment;
 
     /**
+     * @var string|null
+     */
+    private ?string $overwriteDomainUrl;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $environment
+     * @param string|null $overwriteDomainUrl
      */
     public function __construct(
         ExceptionController $exceptionController,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
         Domain $domain,
-        string $environment
+        string $environment,
+        ?string $overwriteDomainUrl = null
     ) {
         $this->exceptionController = $exceptionController;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
         $this->environment = $environment;
+        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**
@@ -214,8 +222,7 @@ class ErrorController extends FrontBaseController
         $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
 
         if ($this->environment === EnvironmentType::ACCEPTANCE) {
-            $overwriteDomainUrl = $this->getParameter('overwrite_domain_url');
-            $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $overwriteDomainUrl);
+            $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $this->overwriteDomainUrl);
         }
 
         return new Response($content, Response::HTTP_INTERNAL_SERVER_ERROR);

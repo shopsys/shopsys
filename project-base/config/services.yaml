@@ -130,6 +130,7 @@ services:
     App\Controller\Front\ErrorController:
         arguments:
             $environment: '%kernel.environment%'
+            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
 
     App\Controller\Front\RobotsController:
         arguments:
