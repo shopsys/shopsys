@@ -39,14 +39,14 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "9.2.x-dev"
+        "shopsys/coding-standards": "10.0.0"
     },
     "conflict": {
         "symfony/dependency-injection": "3.4.15|3.4.16"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "9.2.x-dev"
+            "dev-master": "11.0.x-dev"
         }
     },
     "config": {

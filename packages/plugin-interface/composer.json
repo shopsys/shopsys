@@ -20,11 +20,11 @@
         "symfony/monolog-bridge": "^4.4.0"
     },
     "require-dev": {
-        "shopsys/coding-standards": "9.2.x-dev"
+        "shopsys/coding-standards": "10.0.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "9.2.x-dev"
+            "dev-master": "11.0.x-dev"
         }
     },
     "config": {

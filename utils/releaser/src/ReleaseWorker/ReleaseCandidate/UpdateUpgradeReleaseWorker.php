@@ -85,7 +85,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $this->symfonyStyle->note(
             'Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.'
         );
-        $versionString = $version->getVersionString();
+        $versionString = $version->getOriginalString();
         $this->symfonyStyle->note(sprintf(
             'Typically, you need to:
             - check the correctness of the order of Shopsys packages and sections, 
@@ -134,7 +134,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version)
     {
-        $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getVersionString() . '-dev.md';
+        $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '-dev.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
@@ -144,7 +144,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
-        FileSystem::rename($upgradeFilePath, getcwd() . '/upgrade/UPGRADE-' . $version->getVersionString() . '.md');
+        FileSystem::rename($upgradeFilePath, getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '.md');
 
         $this->processRunner->run('git add .');
     }

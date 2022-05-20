@@ -13,7 +13,9 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-## [From v9.1.2 to v9.1.3-dev]
+## [From v10.0.0 to 11.0.0-dev]
+
+## [From v9.1.2 to v10.0.0]
 
 ## [From v9.1.1 to v9.1.2]
 
@@ -204,7 +206,8 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v9.1.2 to v9.1.3-dev]: https://github.com/shopsys/shopsys/compare/v9.1.2...9.1
+[From v10.0.0 to v11.0.0-dev]: https://github.com/shopsys/shopsys/compare/v10.0.0...master
+[From v9.1.2 to v10.0.0]: https://github.com/shopsys/shopsys/compare/v9.1.2...v10.0.0
 [From v9.1.1 to v9.1.2]: https://github.com/shopsys/shopsys/compare/v9.1.1...v9.1.2
 [From v9.1.0 to v9.1.1]: https://github.com/shopsys/shopsys/compare/v9.1.0...v9.1.1
 [From v9.0.4 to v9.1.0]: https://github.com/shopsys/shopsys/compare/v9.0.4...v9.1.0

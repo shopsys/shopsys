@@ -47,7 +47,7 @@ npm publish
             $version->getVersionString(),
             $version->getVersionString()
         ));
-        $this->confirm('Confirm the merging is stopped');
+        $this->confirm('Confirm the new version of NPM package is published and changes are committed');
     }
 
     /**
