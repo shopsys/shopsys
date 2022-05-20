@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import Orders from 'components/Pages/Customer/Orders';
@@ -14,6 +15,7 @@ const Index: FC = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <Orders orders={ordersData?.orders} totalCount={ordersData?.totalCount} />
             </CommonLayout>

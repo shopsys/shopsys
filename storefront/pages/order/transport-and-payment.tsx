@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import OrderAction from 'components/Blocks/OrderAction';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -46,6 +47,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <form onSubmit={formProviderMethods.handleSubmit(onSelectTransportAndPaymentHandler)}>
                 <FormProvider {...formProviderMethods}>
                     <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>

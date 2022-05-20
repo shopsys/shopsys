@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import PageGuard from 'components/Helpers/PageGuard';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
@@ -20,6 +21,7 @@ const Index: FC = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainConfig.url}>
+            <MetaRobots content="noindex" />
             <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
                 <CommonLayout>
                     <OrderDetail order={order!} />

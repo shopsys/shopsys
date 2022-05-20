@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import PageGuard from 'components/Helpers/PageGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
@@ -15,6 +16,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
     return (
         <PageGuard accessCondition={canAccessOrderConfirmation} errorRedirectUrl={cartUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <OrderConfirmation />
                 <Registration />
