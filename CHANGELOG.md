@@ -29,9 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
-## [10.0.0](https://github.com/shopsys/shopsys/tree/10.0.0) (2022-05-19)
-
-[Full Changelog](https://github.com/shopsys/shopsys/compare/v9.1.2...10.0.0)
+## [v10.0.0](https://github.com/shopsys/shopsys/compare/v9.1.2...v10.0.0) (2022-05-20)
 
 :sparkles: Enhancements and features
 
