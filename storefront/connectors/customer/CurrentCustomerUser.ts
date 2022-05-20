@@ -41,43 +41,16 @@ const mapCurrentCustomerContactInformationApiData = (
             value: companyCustomerUser.country.code,
             label: companyCustomerUser.country.name,
         },
-        deliveryFirstName:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].firstName ?? ''
-                : '',
-        deliveryLastName:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].lastName ?? ''
-                : '',
-        deliveryCompanyName:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].companyName ?? ''
-                : '',
-        deliveryTelephone:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].telephone ?? ''
-                : '',
-        deliveryStreet:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].street ?? ''
-                : '',
-        deliveryCity:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].city ?? ''
-                : '',
-        deliveryPostcode:
-            companyCustomerUser.defaultDeliveryAddress !== null
-                ? companyCustomerUser.deliveryAddresses[0].postcode ?? ''
-                : '',
+        deliveryFirstName: companyCustomerUser.defaultDeliveryAddress?.firstName ?? '',
+        deliveryLastName: companyCustomerUser.defaultDeliveryAddress?.lastName ?? '',
+        deliveryCompanyName: companyCustomerUser.defaultDeliveryAddress?.companyName ?? '',
+        deliveryTelephone: companyCustomerUser.defaultDeliveryAddress?.telephone ?? '',
+        deliveryStreet: companyCustomerUser.defaultDeliveryAddress?.street ?? '',
+        deliveryCity: companyCustomerUser.defaultDeliveryAddress?.city ?? '',
+        deliveryPostcode: companyCustomerUser.defaultDeliveryAddress?.postcode ?? '',
         deliveryCountry: {
-            value:
-                companyCustomerUser.defaultDeliveryAddress !== null
-                    ? companyCustomerUser.deliveryAddresses[0].country?.code ?? ''
-                    : '',
-            label:
-                companyCustomerUser.defaultDeliveryAddress !== null
-                    ? companyCustomerUser.deliveryAddresses[0].country?.name ?? ''
-                    : '',
+            value: companyCustomerUser.defaultDeliveryAddress?.country?.code ?? '',
+            label: companyCustomerUser.defaultDeliveryAddress?.country?.name ?? '',
         },
         register: false,
         passwordFirst: '',
