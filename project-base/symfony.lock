@@ -11,6 +11,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.9.3"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {
@@ -62,8 +65,11 @@
     "composer/composer": {
         "version": "1.9.1"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.5"
+    "composer/metadata-minifier": {
+        "version": "1.0.0"
+    },
+    "composer/pcre": {
+        "version": "1.0.1"
     },
     "composer/semver": {
         "version": "1.5.0"
@@ -274,17 +280,11 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.2"
-    },
     "jetbrains/phpstorm-stubs": {
         "version": "v2019.1"
     },
     "jms/metadata": {
         "version": "1.7.0"
-    },
-    "jms/parser-lib": {
-        "version": "1.0.0"
     },
     "jms/serializer": {
         "version": "1.14.0"
@@ -318,6 +318,9 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
+    "lcobucci/clock": {
+        "version": "2.2.0"
+    },
     "lcobucci/jwt": {
         "version": "3.3.2"
     },
@@ -338,12 +341,6 @@
     },
     "myclabs/deep-copy": {
         "version": "1.9.3"
-    },
-    "nette/finder": {
-        "version": "v2.5.1"
-    },
-    "nette/robot-loader": {
-        "version": "v3.1.1"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -416,9 +413,6 @@
     "php-webdriver/webdriver": {
         "version": "1.8.2"
     },
-    "phpcollection/phpcollection": {
-        "version": "0.5.0"
-    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -427,9 +421,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
-    },
-    "phpoption/phpoption": {
-        "version": "1.5.2"
     },
     "phpspec/prophecy": {
         "version": "1.9.0"
@@ -455,14 +446,14 @@
     "phpunit/php-file-iterator": {
         "version": "2.0.2"
     },
+    "phpunit/php-invoker": {
+        "version": "3.1.1"
+    },
     "phpunit/php-text-template": {
         "version": "1.2.1"
     },
     "phpunit/php-timer": {
         "version": "2.1.2"
-    },
-    "phpunit/php-token-stream": {
-        "version": "3.1.1"
     },
     "phpunit/phpunit": {
         "version": "4.7",
@@ -509,11 +500,11 @@
     "psr/log": {
         "version": "1.1.2"
     },
-    "psr/simple-cache": {
-        "version": "1.0.1"
-    },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "ramsey/collection": {
+        "version": "1.2.2"
     },
     "ramsey/uuid": {
         "version": "3.8.0"
@@ -530,11 +521,20 @@
     "roave/signature": {
         "version": "1.0.0"
     },
+    "sebastian/cli-parser": {
+        "version": "1.0.1"
+    },
+    "sebastian/code-unit": {
+        "version": "1.0.8"
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
     "sebastian/comparator": {
         "version": "3.0.2"
+    },
+    "sebastian/complexity": {
+        "version": "2.0.2"
     },
     "sebastian/diff": {
         "version": "3.0.2"
@@ -547,6 +547,9 @@
     },
     "sebastian/global-state": {
         "version": "2.0.0"
+    },
+    "sebastian/lines-of-code": {
+        "version": "1.0.3"
     },
     "sebastian/object-enumerator": {
         "version": "3.0.3"
@@ -652,6 +655,9 @@
     },
     "sspooky13/yaml-standards": {
         "version": "4.2.5"
+    },
+    "stella-maris/clock": {
+        "version": "0.1.4"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
@@ -846,9 +852,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.12.0"
     },
-    "symfony/polyfill-php70": {
-        "version": "v1.12.0"
-    },
     "symfony/polyfill-php72": {
         "version": "v1.12.0"
     },
@@ -1017,29 +1020,8 @@
     "symfony/yaml": {
         "version": "v3.4.33"
     },
-    "symplify/autowire-array-parameter": {
-        "version": "v7.2.2"
-    },
-    "symplify/coding-standard": {
-        "version": "v5.4.16"
-    },
-    "symplify/console-color-diff": {
-        "version": "v7.3.18"
-    },
     "symplify/easy-coding-standard": {
         "version": "v5.4.13"
-    },
-    "symplify/package-builder": {
-        "version": "v5.4.16"
-    },
-    "symplify/set-config-resolver": {
-        "version": "v7.2.3"
-    },
-    "symplify/smart-file-system": {
-        "version": "v7.2.3"
-    },
-    "symplify/symplify-kernel": {
-        "version": "8.3.48"
     },
     "theseer/tokenizer": {
         "version": "1.1.3"
