@@ -589,3 +589,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - set application secret to be taken exclusively from environment variable
     - see #project-base-diff to update your project
+- set doctrine configuration to be taken exclusively from environment variables
+    - see #project-base-diff to update your project
