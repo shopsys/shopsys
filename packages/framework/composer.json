@@ -111,7 +111,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "9.2.x-dev"
+            "dev-master": "11.0.x-dev"
         },
         "symfony": {
             "require": "^4.4.0"

@@ -163,7 +163,7 @@
         "var-dir": "var",
         "public-dir": "web",
         "branch-alias": {
-            "dev-master": "9.2.x-dev"
+            "dev-master": "11.0.x-dev"
         },
         "symfony": {
             "allow-contrib": true,
