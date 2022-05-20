@@ -2,7 +2,7 @@ framework:
     annotations:
         cache: file
         file_cache_dir: '%kernel.cache_dir%/annotations'
-    secret: "%secret%"
+    secret: "%env(APP_SECRET)%"
     router:
         strict_requirements: true
     form: ~
