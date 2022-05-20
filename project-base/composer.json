@@ -124,14 +124,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
-            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
-            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts",
             "@security-check"

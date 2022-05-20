@@ -89,6 +89,10 @@ class Kernel extends BaseKernel
             $loader->load($confDir . '/parameters_version.yaml');
         }
 
+        if (file_exists($confDir . '/parameters.yaml')) {
+            $loader->load($confDir . '/parameters.yaml');
+        }
+
         $this->configureSwiftMailer($container);
     }
 

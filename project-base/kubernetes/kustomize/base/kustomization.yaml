@@ -17,6 +17,3 @@ configMapGenerator:
     -   name: domains-urls
         files:
             - ../../../config/domains_urls.yaml
-    -   name: parameters
-        files:
-            - ../../../config/parameters.yaml

@@ -500,7 +500,7 @@ for changes in all mapped entities and after time it consumes a huge amount of r
     - You should load any entity again after clearing identity map because any attempt to flush the old one will result in an exception.
 - Use streamed input for XML and JSON.
     - So you do not load huge files at once (can lead to memory overflow).
-- Store external source credentials in `config/parameters.yaml`.
+- Store external source credentials in [environment variables](../introduction/setting-environment-variables.md).
     - Storing credentials in local configuration instead of hard-coding them in source code prevents from accidental corrupting of production data.
 - Restrict editing of the transferred fields in administration.
     - At least, mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.

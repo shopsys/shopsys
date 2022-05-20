@@ -37,9 +37,7 @@ if [[ -d "project-base" ]]; then
     echo "You are in monorepo, prefixing paths app paths with ${projectPathPrefix}"
 fi
 
-echo "Creating config files.."
-cp -f "${projectPathPrefix}config/parameters.yaml.dist" "${projectPathPrefix}config/parameters.yaml"
-cp -f "${projectPathPrefix}config/parameters_test.yaml.dist" "${projectPathPrefix}config/parameters_test.yaml"
+echo "Creating domains_urls.yaml file.."
 cp -f "${projectPathPrefix}config/domains_urls.yaml.dist" "${projectPathPrefix}config/domains_urls.yaml"
 
 echo "Creating docker configuration.."
