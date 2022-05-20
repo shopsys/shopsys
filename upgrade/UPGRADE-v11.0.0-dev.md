@@ -583,3 +583,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - set overwrite domain url to be taken exclusively from environment variable
     - see #project-base-diff to update your project
+- set redis host to be taken exclusively from environment variable
+    - see #project-base-diff to update your project

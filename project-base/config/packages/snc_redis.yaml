@@ -3,30 +3,30 @@ snc_redis:
         bestselling_products:
             type: 'phpredis'
             alias: 'bestselling_products'
-            dsn: 'redis://%redis_host%'
+            dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:bestselling_products:'
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
-            dsn: 'redis://%redis_host%'
+            dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:query:'
         # client is used exclusively for cleaning old versions of redis caches and should not be used for anything else
         global:
             type: 'phpredis'
             alias: 'global'
-            dsn: 'redis://%redis_host%'
+            dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%'
         session:
             type: 'phpredis'
             alias: 'session'
-            dsn: 'redis://%redis_host%'
+            dsn: 'redis://%env(REDIS_HOST)%'
         main_friendly_url_slugs:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
-            dsn: 'redis://%redis_host%'
+            dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:main_friendly_url_slugs:'
     session:
