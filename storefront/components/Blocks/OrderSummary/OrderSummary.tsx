@@ -1,10 +1,11 @@
 import {
     OrderSummaryContentStyled,
     OrderSummaryContentWrapperStyled,
-    OrderSummaryTitle,
+    OrderSummaryTitleStyled,
     OrderSummaryWrapperStyled,
 } from './OrderSummary.style';
 import ProductsPreview from './ProductsPreview';
+import PromoCode from './PromoCode';
 import TotalPrice from './TotalPrice';
 import TransportAndPayment from './TransportAndPayment';
 import Adverts from 'components/Blocks/Adverts';
@@ -16,7 +17,7 @@ const OrderSummary: FC = () => {
     const testIdentifier = 'blocks-ordersummary';
 
     const t = useTypedTranslationFunction();
-    const { cart, transport, payment } = useCurrentCart();
+    const { cart, transport, payment, promoCode } = useCurrentCart();
 
     if (cart === null) {
         return null;
@@ -26,11 +27,14 @@ const OrderSummary: FC = () => {
         <>
             <Adverts positionName="cartPreview" withGapBottom />
             <OrderSummaryWrapperStyled data-testid={testIdentifier}>
-                <OrderSummaryTitle>{t('Your order')}</OrderSummaryTitle>
+                <OrderSummaryTitleStyled>{t('Your order')}</OrderSummaryTitleStyled>
                 <OrderSummaryContentWrapperStyled>
                     <OrderSummaryContentStyled>
                         <ProductsPreview cartItems={cart.items} />
-                        <TransportAndPayment transport={transport} payment={payment} />
+                        {(transport !== null || payment !== null) && (
+                            <TransportAndPayment transport={transport} payment={payment} />
+                        )}
+                        {promoCode !== null && <PromoCode promoCode={promoCode} discount={cart.totalDiscountPrice} />}
                         <TotalPrice totalPrice={cart.totalPrice} />
                     </OrderSummaryContentStyled>
                 </OrderSummaryContentWrapperStyled>

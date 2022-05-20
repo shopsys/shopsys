@@ -256,3 +256,11 @@
       - import sorting plugin was added to prettier
     - tips on how to implement them
   - run `npm run format` to fix all the imports automatically
+
+### Adding promo code to OrderSummary
+- [FWCC-838](https://shopsys.atlassian.net/browse/FWCC-838)
+- [FWCC-838 added promo code to order summary](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/546)
+- most significant changes
+  - promo code section was added to the OrderSummary component, so it's now visible in 2nd and 3rd order step
+- other changes
+  - styled components in the OrderSummary folder were renamed to contain the "Styled" suffix
