@@ -75,30 +75,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                     }),
                 );
             }
-            return undefined;
         }
-
-        const timeout = setTimeout(() => {
-            const firstCountrySelectOption = { ...countrySelectOptions[0] };
-
-            setValue(formMeta.fields.deliveryFirstName.name, '');
-            setValue(formMeta.fields.deliveryLastName.name, '');
-            setValue(formMeta.fields.deliveryCompanyName.name, '');
-            setValue(formMeta.fields.deliveryTelephone.name, '');
-            setValue(formMeta.fields.deliveryStreet.name, '');
-            setValue(formMeta.fields.deliveryCity.name, '');
-            setValue(formMeta.fields.deliveryPostcode.name, '');
-            setValue(formMeta.fields.deliveryCountry.name, firstCountrySelectOption);
-            dispatch(
-                contactInformationActions.setDeliveryAddressFromPickupPlace({
-                    city: '',
-                    postcode: '',
-                    street: '',
-                    country: firstCountrySelectOption,
-                }),
-            );
-        }, 500);
-        return () => clearTimeout(timeout);
     }, [
         pickupPlace,
         differentDeliveryAddressValue,

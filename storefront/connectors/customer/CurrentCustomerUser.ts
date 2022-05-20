@@ -59,6 +59,6 @@ const mapCurrentCustomerContactInformationApiData = (
             apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
-        differentDeliveryAddress: companyCustomerUser.defaultDeliveryAddress !== null,
+        differentDeliveryAddress: false,
     };
 };
