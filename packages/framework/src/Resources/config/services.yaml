@@ -921,7 +921,7 @@ services:
     Elasticsearch\ClientBuilder:
         class: Elasticsearch\ClientBuilder
         factory: [Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchClientFactory, create]
-        arguments: ['%env(default:elasticsearch_host:ELASTICSEARCH_HOST)%']
+        arguments: ['%env(ELASTICSEARCH_HOST)%']
         calls:
             -   method: setTracer
                 arguments:
