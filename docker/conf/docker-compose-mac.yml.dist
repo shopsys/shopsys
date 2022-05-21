@@ -1,12 +1,17 @@
 version: "3.4"
 
+x-variables:
+    common_build_args: &common_build_args
+        www_data_uid: 501
+        www_data_gid: 20
+
 services:
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
             - ./project-base/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./project-base/var/postgres-data:/var/lib/postgresql/data:cached
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -34,8 +39,7 @@ services:
             dockerfile: project-base/docker/php-fpm/Dockerfile
             target: development
             args:
-                www_data_uid: 501
-                www_data_gid: 20
+                <<: *common_build_args
                 project_root: project-base
         container_name: shopsys-framework-php-fpm
         volumes:
@@ -50,7 +54,7 @@ services:
         container_name: shopsys-framework-redis
 
     redis-admin:
-        image: erikdubbelboer/phpredisadmin:v1.10.2
+        image: erikdubbelboer/phpredisadmin:latest
         container_name: shopsys-framework-redis-admin
         environment:
             - REDIS_1_HOST=redis
@@ -88,12 +92,12 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./project-base/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
 
     kibana:
-        image: docker.elastic.co/kibana/kibana-oss:7.6.0
+        image: docker.elastic.co/kibana/kibana-oss:7.10.2
         container_name: shopsys-framework-kibana
         depends_on:
             - elasticsearch
@@ -112,3 +116,7 @@ services:
 volumes:
     shopsys-framework-sync:
         external: true
+    elasticsearch-data:
+        driver: local
+    postgres-data:
+        driver: local

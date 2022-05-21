@@ -91,7 +91,7 @@ services:
             - discovery.type=single-node
 
     kibana:
-        image: docker.elastic.co/kibana/kibana-oss:7.6.0
+        image: docker.elastic.co/kibana/kibana-oss:7.10.2
         container_name: shopsys-framework-kibana
         depends_on:
             - elasticsearch
