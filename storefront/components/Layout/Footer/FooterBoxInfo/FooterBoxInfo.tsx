@@ -50,7 +50,7 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
                     </FooterBoxInfoContactHoursStyled>
                 </FooterBoxInfoContactStyled>
                 <Link href={contactUrl} passHref>
-                    <FooterBoxInfoButtonStyled variant="secondary">{t('Write Us')}</FooterBoxInfoButtonStyled>
+                    <FooterBoxInfoButtonStyled variant="secondary">{t('Write to us')}</FooterBoxInfoButtonStyled>
                 </Link>
             </FooterBoxInfoContentStyled>
         </FooterBoxInfoStyled>
