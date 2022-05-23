@@ -304,3 +304,16 @@
     - when you use some custom errors, make sure they implement the `UserErrorWithCodeInterface`
     - extend the `ApplicationErrors` constant in `storefront/helpers/errors/applicationErrors.ts` with codes from your custom errors
     - then extend the `storefront/helpers/errors/errorMessageMapper.ts` to set the correct error message for each error code
+
+### Correct price formatting according to settings
+- [FWCC-850](https://shopsys.atlassian.net/browse/FWCC-850)
+- [FWCC-850 - format currency](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/584/diffs)
+    - the reasons these changes were introduced:
+        - the displayed prices should be formatted correctly according to the settings in the administration
+    - most significant changes
+        - price formatting has been moved from translations directly to the `formatPrice` helper
+        - `formatPrice` helper has been extended to accept `locale` and `minimumFractionDigits`
+        - a new `useFormatPrice` hook has been created, it returns a properly configured helper for price formatting
+    - tips how to implement it
+        - wherever the `formatPrice` method is imported, replace it with getting the method via the `useFormatPrice` hook
+        - `formatPrice` method is now fully configured, so you don't need to pass the currency code and the translation function to it
