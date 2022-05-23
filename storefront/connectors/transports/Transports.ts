@@ -8,7 +8,7 @@ import { TransportType } from 'types/transport';
 
 export const useTransports = (cartUuid: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [result] = useTransportsQueryApi({ variables: { cartUuid } });
+    const [result] = useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'network-only' });
     const transportsApiData = result.data?.transports;
 
     if (transportsApiData !== undefined) {
