@@ -2,3 +2,8 @@ ProductFilterOptions:
     type: object
     inherits:
         - 'ProductFilterOptionsDecorator'
+    config:
+        fields:
+            parameters:
+                type: "[ParameterFilterOptionInterface!]"
+                description: "Parameter filter options"

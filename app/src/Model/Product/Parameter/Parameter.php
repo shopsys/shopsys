@@ -159,4 +159,12 @@ class Parameter extends BaseParameter
     {
         return $this->parameterType;
     }
+
+    /**
+     * @return bool
+     */
+    public function isSlider(): bool
+    {
+        return $this->getParameterType() === self::PARAMETER_TYPE_SLIDER;
+    }
 }

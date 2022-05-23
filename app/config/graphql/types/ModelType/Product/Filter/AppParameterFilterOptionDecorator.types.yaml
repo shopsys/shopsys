@@ -1,0 +1,17 @@
+AppParameterFilterOptionDecorator:
+    type: object
+    decorator: true
+    config:
+        interfaces:
+            - 'ParameterFilterOptionInterface'
+        description: "Parameter filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The parameter UUID"
+            name:
+                type: "String!"
+                description: "The parameter name"
+            unit:
+                type: "Unit"
+                description: "The parameter unit"

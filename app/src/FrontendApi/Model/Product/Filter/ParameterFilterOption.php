@@ -10,7 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption as Base
 
 /**
  * @property \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
- * @method __construct(\App\Model\Product\Parameter\Parameter $parameter, \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values)
  */
 class ParameterFilterOption extends BaseParameterFilterOption
 {
@@ -20,11 +19,30 @@ class ParameterFilterOption extends BaseParameterFilterOption
     public BaseParameter $parameter;
 
     /**
-     * @return string
+     * @var float|null
      */
-    public function getType(): string
+    public ?float $minimalValue = null;
+
+    /**
+     * @var float|null
+     */
+    public ?float $maximalValue = null;
+
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
+     */
+    public function __construct(BaseParameter $parameter, array $values)
     {
-        return $this->parameter->getParameterType();
+        parent::__construct($parameter, $values);
+
+        if (!$parameter->isSlider()) {
+            return;
+        }
+
+        $floatValues = $this->getFloatValuesFromParameterValueFilterOptions($values);
+        $this->minimalValue = min($floatValues);
+        $this->maximalValue = max($floatValues);
     }
 
     /**
@@ -33,5 +51,14 @@ class ParameterFilterOption extends BaseParameterFilterOption
     public function getUnit(): ?Unit
     {
         return $this->parameter->getUnit();
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
+     * @return float[]
+     */
+    private function getFloatValuesFromParameterValueFilterOptions(array $values): array
+    {
+        return array_map(static fn (ParameterValueFilterOption $parameterValueFilterOption) => (float)$parameterValueFilterOption->getText(), $values);
     }
 }

@@ -115,6 +115,7 @@
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
+    * [Float](#float)
     * [Int](#int)
     * [Money](#money)
     * [Password](#password)
@@ -4954,6 +4955,24 @@ Filter options of parameter values
 <td valign="top"><a href="#unit">Unit</a></td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter minimal value (set for parameters with "slider" type only, null for the rest)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>maximalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter maximal value (set for parameters with "slider" type only, null for the rest)
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -8619,6 +8638,10 @@ The `Boolean` scalar type represents `true` or `false`.
 ### DateTime
 
 Represents and encapsulates an ISO-8601 encoded UTC date-time value
+
+### Float
+
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
 
 ### Int
 

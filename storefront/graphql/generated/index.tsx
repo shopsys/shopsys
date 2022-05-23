@@ -1392,6 +1392,10 @@ export type ParameterFilterApi = {
 /** Parameter filter option */
 export type ParameterFilterOptionApi = {
   __typename?: 'ParameterFilterOption';
+  /** The parameter maximal value (set for parameters with "slider" type only, null for the rest) */
+  maximalValue: Maybe<Scalars['Float']>;
+  /** The parameter minimal value (set for parameters with "slider" type only, null for the rest) */
+  minimalValue: Maybe<Scalars['Float']>;
   /** Parameter name */
   name: Scalars['String'];
   type: Scalars['String'];

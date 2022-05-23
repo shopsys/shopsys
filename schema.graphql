@@ -1526,6 +1526,16 @@ type ParameterFilterOption {
   values: [ParameterValueFilterOption!]!
   type: String!
   unit: Unit
+
+  """
+  The parameter minimal value (set for parameters with "slider" type only, null for the rest)
+  """
+  minimalValue: Float
+
+  """
+  The parameter maximal value (set for parameters with "slider" type only, null for the rest)
+  """
+  maximalValue: Float
 }
 
 """Represents a parameter value"""

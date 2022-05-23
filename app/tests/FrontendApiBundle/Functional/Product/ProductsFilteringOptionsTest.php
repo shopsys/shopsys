@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ParameterDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -83,7 +84,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "parameters": [
                         {
                             "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
@@ -94,8 +95,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 },
                                 {
                                     "text": "' . t(
@@ -105,8 +105,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 2,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 },
                                 {
                                     "text": "' . t(
@@ -116,14 +115,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "colorPicker",
+                            "__typename": "ParameterColorFilterOption",
                             "unit": null,
                             "values": [
                                 {
@@ -152,7 +150,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
@@ -163,27 +161,25 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
@@ -194,14 +190,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": {
                                 "name": "in"
                             },
@@ -209,84 +204,76 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                 {
                                     "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 },
                                 {
                                     "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 },
                                 {
                                     "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 },
                                 {
                                     "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 2,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 3,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 3,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "type": "checkbox",
+                            "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
@@ -297,8 +284,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 3,
-                                    "isAbsolute": true,
-                                    "rgbHex": null
+                                    "isAbsolute": true
                                 }
                             ]
                         }
@@ -396,7 +382,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedJson = '[
     {
         "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
@@ -407,8 +393,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             },
             {
                 "text": "' . t(
@@ -418,8 +403,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             },
             {
                 "text": "' . t(
@@ -429,14 +413,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "colorPicker",
+        "__typename": "ParameterColorFilterOption",
         "unit": null,
         "values": [
             {
@@ -465,7 +448,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
@@ -476,27 +459,25 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
                 "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
@@ -507,14 +488,13 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": {
             "name": "in"
         },
@@ -522,84 +502,76 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             {
                 "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             },
             {
                 "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             },
             {
                 "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": false,
-                "rgbHex": null
+                "isAbsolute": false
             },
             {
                 "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": false,
-                "rgbHex": null
+                "isAbsolute": false
             }
         ]
     },
     {
         "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 2,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
                 "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 2,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     },
     {
         "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "type": "checkbox",
+        "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
@@ -610,8 +582,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 2,
-                "isAbsolute": true,
-                "rgbHex": null
+                "isAbsolute": true
             }
         ]
     }
@@ -660,15 +631,24 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             maximalPrice,
                             parameters {
                                 name
-                                type
+                                __typename
                                 unit {
                                     name
                                 }
-                                values {
-                                    text
-                                    count
-                                    isAbsolute
-                                    rgbHex
+                                ... on ParameterCheckboxFilterOption {
+                                    values {
+                                        text
+                                        count
+                                        isAbsolute
+                                    }
+                                }
+                                ... on ParameterColorFilterOption {
+                                    values {
+                                        text
+                                        count
+                                        isAbsolute
+                                        rgbHex
+                                    }
                                 }
                             }
                         }
@@ -763,7 +743,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 }
                 parameters {
                   name
-                  values {text count}
+                  ...on ParameterCheckboxFilterOption {
+                    values {text count}
+                  }
+                  ...on ParameterColorFilterOption {
+                    values {text count}
+                  }               
                 }
               }
             }
@@ -980,5 +965,38 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         }';
 
         $this->assertQueryWithExpectedJson($query, $expectedResult);
+    }
+
+    public function testSliderParameterFilterOptions(): void
+    {
+        /** @var \App\Model\Product\Parameter\Parameter $parameterSliderWarranty */
+        $parameterSliderWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
+
+        $query = 'query {
+          category(urlSlug: "/pocitace-prislusenstvi") {    
+            products {
+              productFilterOptions {
+                parameters {
+                  uuid
+                  ... on ParameterSliderFilterOption {
+                      minimalValue
+                      maximalValue
+                  }
+                }
+              }
+            }
+          }
+        }
+        ';
+
+        $result = $this->getResponseDataForGraphQlType($this->getResponseContentForQuery($query), 'category');
+        $parameters = $result['products']['productFilterOptions']['parameters'];
+        foreach ($parameters as $parameterArray) {
+            if ($parameterArray['uuid'] === $parameterSliderWarrantyUuid) {
+                $this->assertSame(1, $parameterArray['minimalValue']);
+                $this->assertSame(5, $parameterArray['maximalValue']);
+            }
+        }
     }
 }
