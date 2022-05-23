@@ -27,7 +27,7 @@ const EditProfilePage: FC = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <CommonLayout>
+            <CommonLayout title={t('Edit profile')}>
                 <SimpleLayout
                     heading={t('Edit profile')}
                     breadcrumb={[

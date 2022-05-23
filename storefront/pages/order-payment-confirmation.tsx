@@ -6,12 +6,14 @@ import PaymentSuccess from 'components/Pages/Order/PaymentConfirmation/PaymentSu
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
+    const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const router = useRouter();
     const [checkPaymentStatusResult, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
@@ -38,7 +40,7 @@ const Index: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <CommonLayout>
+            <CommonLayout title={t('Order sent')}>
                 {checkPaymentStatusResult.data?.CheckPaymentStatus === true && <PaymentSuccess />}
                 {checkPaymentStatusResult.data?.CheckPaymentStatus === false && <PaymentFail />}
             </CommonLayout>
