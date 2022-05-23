@@ -316,6 +316,7 @@
     "Please enter a message": "Please enter a message",
     "Send message": "Send message",
     "The message could not be sent": "The message could not be sent",
+    "Thank you! Your message was successfully sent.": "Thank you! Your message was successfully sent.",
     "ContactFormInfo": "By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>.",
     "Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.": "Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible."
 }
