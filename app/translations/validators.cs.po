@@ -202,6 +202,9 @@ msgstr "Promo kód ještě není platný. Zkontrolujte jej, prosím."
 msgid "The transport is not allowed in combination with already selected payment"
 msgstr "Doprava není povolena v kombinaci s již vybranou platbou"
 
+msgid "There are no products in the cart"
+msgstr ""
+
 msgid "Transport must be set in cart before sending the order"
 msgstr "Doprava musí být vybrána před odesláním objednávky"
 

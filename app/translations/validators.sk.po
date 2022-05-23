@@ -202,6 +202,9 @@ msgstr ""
 msgid "The transport is not allowed in combination with already selected payment"
 msgstr ""
 
+msgid "There are no products in the cart"
+msgstr ""
+
 msgid "Transport must be set in cart before sending the order"
 msgstr ""
 
