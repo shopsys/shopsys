@@ -1,11 +1,9 @@
+import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { getErrorMessage, hasErrorMessage } from 'helpers/errors/errorMessageMapper';
+import { ApplicationIgnoredErrors } from 'helpers/errors/ignoredErrors';
 import { Translate } from 'next-translate';
 import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
-
-export enum ApplicationErrors {
-    DEFAULT = 'DEFAULT',
-    CART_NOT_FOUND = 'CART_NOT_FOUND',
-}
 
 export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate): ParsedErrors => {
     const errors: ParsedErrors = {};
@@ -29,15 +27,24 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
                 continue;
             }
 
-            if (error.extensions?.code === 'cart-unavailable') {
-                errors.applicationError = { type: ApplicationErrors.CART_NOT_FOUND, message: t('Cart not found') };
-                continue;
+            if (error.extensions !== undefined) {
+                if (ApplicationIgnoredErrors.includes(error.extensions.userCode)) {
+                    continue;
+                }
+
+                if (hasErrorMessage(error.extensions.userCode)) {
+                    errors.applicationError = {
+                        type: error.extensions.userCode,
+                        message: getErrorMessage(error.extensions.userCode, t),
+                    };
+                    continue;
+                }
             }
 
-            errors.applicationError = { type: ApplicationErrors.DEFAULT, message: t('Unknown error.') };
+            errors.applicationError = { type: ApplicationErrors.default, message: t('Unknown error.') };
         }
     } else {
-        errors.applicationError = { type: ApplicationErrors.DEFAULT, message: t('Unknown error.') };
+        errors.applicationError = { type: ApplicationErrors.default, message: t('Unknown error.') };
     }
 
     return errors;

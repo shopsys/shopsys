@@ -1,12 +1,13 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getFirstImage } from 'connectors/image/Image';
-import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapTransport } from 'connectors/transports/Transports';
 import { AddToCartMutationApi, CartFragmentApi, useCartQueryApi } from 'graphql/generated';
+import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
@@ -71,9 +72,9 @@ const handleCartError = (error: CombinedError, t: Translate) => {
     const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
     switch (applicationError?.type) {
-        case ApplicationErrors.CART_NOT_FOUND:
+        case ApplicationErrors['cart-not-found']:
             break;
-        case ApplicationErrors.DEFAULT:
+        case ApplicationErrors.default:
             showErrorMessage(applicationError.message);
             break;
     }

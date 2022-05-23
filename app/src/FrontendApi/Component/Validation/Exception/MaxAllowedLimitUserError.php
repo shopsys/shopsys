@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Cart\Exception;
+namespace App\FrontendApi\Component\Validation\Exception;
 
 use App\FrontendApi\Error\UserErrorWithCodeInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 
-class InvalidCartItemUserError extends UserError implements UserErrorWithCodeInterface
+class MaxAllowedLimitUserError extends UserError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'cart-item-invalid';
+    private const CODE = 'max-allowed-limit';
 
     /**
      * {@inheritDoc}

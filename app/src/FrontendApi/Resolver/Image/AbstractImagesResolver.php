@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Image;
 
 use App\FrontendApi\Model\Image\ImageBatchLoadData;
+use App\FrontendApi\Resolver\Image\Exception\ImageSizeInvalidUserError;
+use App\FrontendApi\Resolver\Image\Exception\ImageTypeInvalidUserError;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
@@ -107,7 +108,7 @@ abstract class AbstractImagesResolver implements ResolverInterface
             try {
                 return $imageConfig->getSizeConfigsByType($type);
             } catch (ImageTypeNotFoundException $e) {
-                throw new UserError(sprintf('Image type "%s" not found for %s', $type, $entityName));
+                throw new ImageTypeInvalidUserError(sprintf('Image type "%s" not found for %s', $type, $entityName));
             }
         }
 
@@ -139,9 +140,9 @@ abstract class AbstractImagesResolver implements ResolverInterface
 
             return $imageConfig->getSizeConfigByType($type, $size);
         } catch (ImageSizeNotFoundException $e) {
-            throw new UserError(sprintf('Image size "%s" not found for %s', $size, $entityName));
+            throw new ImageSizeInvalidUserError(sprintf('Image size "%s" not found for %s', $size, $entityName));
         } catch (ImageTypeNotFoundException $e) {
-            throw new UserError(sprintf('Image type "%s" not found for %s', $type, $entityName));
+            throw new ImageTypeInvalidUserError(sprintf('Image type "%s" not found for %s', $type, $entityName));
         }
     }
 }

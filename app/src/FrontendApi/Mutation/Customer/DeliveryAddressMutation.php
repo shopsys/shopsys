@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Customer;
 
 use App\Model\Customer\DeliveryAddressFacade;
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class DeliveryAddressMutation implements MutationInterface, AliasedInterface
 {
@@ -50,7 +50,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null) {
-            throw new UserError('You need to be logged in.');
+            throw new UnauthorizedHttpException('You need to be logged in.');
         }
 
         $this->deliveryAddressFacade->deleteByUuidAndCustomer($deliveryAddressUuid, $customerUser->getCustomer());

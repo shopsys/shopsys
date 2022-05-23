@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Error;
 
+use Exception;
 use Overblog\GraphQLBundle\Event\ErrorFormattingEvent;
 use Overblog\GraphQLBundle\Event\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -17,23 +18,27 @@ class ErrorCodeSubscriber implements EventSubscriberInterface
     {
         $error = $event->getError();
         $code = null;
+        $userCode = null;
 
         $previousError = $error->getPrevious();
 
-        if ($previousError instanceof UserErrorWithCodeInterface) {
-            $code = $previousError->getUserErrorCode();
+        if ($previousError instanceof Exception && $previousError instanceof UserErrorWithCodeInterface) {
+            $userCode = $previousError->getUserErrorCode();
+            $code = $previousError->getCode();
         }
 
-        if ($error instanceof UserErrorWithCodeInterface) {
-            $code = $error->getUserErrorCode();
+        if ($error instanceof Exception && $error instanceof UserErrorWithCodeInterface) {
+            $userCode = $error->getUserErrorCode();
+            $code = $error->getCode();
         }
 
-        if ($code === null) {
+        if ($userCode === null && $code === null) {
             return;
         }
 
         $formattedError = $event->getFormattedError();
         $extensions = $formattedError->offsetGet('extensions');
+        $extensions['userCode'] = $userCode;
         $extensions['code'] = $code;
         $formattedError->offsetSet('extensions', $extensions);
     }

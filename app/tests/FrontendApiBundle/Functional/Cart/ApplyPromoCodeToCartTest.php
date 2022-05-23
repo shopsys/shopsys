@@ -140,7 +140,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        self::assertEquals('cart-unavailable', $errors[0]['extensions']['code']);
+        self::assertEquals('cart-unavailable', $errors[0]['extensions']['userCode']);
         self::assertEquals(sprintf('Cart "%s" is unavailable.', $invalidCartUuid), $errors[0]['message']);
     }
 
@@ -162,7 +162,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        self::assertEquals('cart-unavailable', $errors[0]['extensions']['code']);
+        self::assertEquals('cart-unavailable', $errors[0]['extensions']['userCode']);
         self::assertEquals('Either cart UUID has to be provided, or the user has to be logged in.', $errors[0]['message']);
     }
 

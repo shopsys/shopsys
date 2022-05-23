@@ -289,3 +289,18 @@
     - tips how to implement it
         - if you want to protect a route, then set `authenticationRequired: true` in the call of `initServerSideProps`
         - you don't need to use the `PageGuard` component anymore to protect routes for unauthenticated users
+
+### API errors translation
+- [FWCC-920](https://shopsys.atlassian.net/browse/FWCC-920)
+- [FWCC-920 - API error handling](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/560/diffs)
+- the reasons these changes were introduced:
+    - we want to know what type of error is returned from the API, and we also want to be able to create different frontend scenarios based on the type of error
+- most significant changes
+    - most of the user errors returned from the API was recreated to use the UserErrorWithCodeInterface
+    - the user error code (string) is returned in the error extension under the `userCode` key
+    - the http error code (int) can be returned in the error extension under the `code` key
+    - a "map" was created on the frontend to translate the error codes to the corresponding error messages
+- tips on how to implement them
+    - when you use some custom errors, make sure they implement the `UserErrorWithCodeInterface`
+    - extend the `ApplicationErrors` constant in `storefront/helpers/errors/applicationErrors.ts` with codes from your custom errors
+    - then extend the `storefront/helpers/errors/errorMessageMapper.ts` to set the correct error message for each error code

@@ -311,5 +311,20 @@
     "Your purchase": "Váš nákup",
     "Zip code cannot be longer than 5 characters": "PSČ nesmí být delší než 5 znaků",
     "Please select your bank": "Zvolte prosím svoji banku",
-    "Promo code": "Slevový kupón"
+    "Promo code": "Slevový kupón",
+    "Max allowed limit reached.": "Byl překročen maximální limit položek na stránku.",
+    "Invalid Packetery address id.": "Neplatné ID adresy Zásilkovny.",
+    "Invalid credentials.":  "Neplatné přihlaovací údaje.",
+    "Invalid refresh token.": "Neplatný refresh token.",
+    "Automatic order emails was not sent.":  "Automatické transakční e-maily nebyly odeslány.",
+    "Cart is empty.": "Košík je prázdný.",
+    "Invalid request type.":  "Neplatný typ požadavku.",
+    "Category not found.": "Kategorie nebyla nalezena.",
+    "Invalid image type.":  "Neplatný typ obrázku.",
+    "Invalid image size.": "Neplatná velikost obrázku.",
+    "Order not found.":  "Objednávka nebyla nalezena.",
+    "Invalid hash.": "Neplatný hash.",
+    "Product price is missing.":  "U produktu chybí cena.",
+    "No result found for slug.": "Nebyly nalezeny žádné výsledky.",
+    "Store not found.":  "Prodejna nebyla nalezena."
 }

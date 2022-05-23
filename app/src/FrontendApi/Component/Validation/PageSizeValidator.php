@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Component\Validation;
 
-use GraphQL\Error\UserError;
+use App\FrontendApi\Component\Validation\Exception\MaxAllowedLimitUserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 
 class PageSizeValidator
@@ -20,7 +20,7 @@ class PageSizeValidator
         if (isset($argument['first']) && $argument['first'] > $maxAllowedItems
             || isset($argument['last']) && $argument['last'] > $maxAllowedItems
         ) {
-            throw new UserError('Required amount of items exceeds maximum allowed limit.');
+            throw new MaxAllowedLimitUserError('Required amount of items exceeds maximum allowed limit.');
         }
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Login;
 
 use App\FrontendApi\Model\Cart\MergeCartFacade;
-use GraphQL\Error\UserError;
+use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
@@ -52,11 +52,11 @@ class LoginMutation extends BaseLoginMutation
             /** @var \App\Model\Customer\User\CustomerUser $user */
             $user = $this->frontendUserProvider->loadUserByUsername($input['email']);
         } catch (UsernameNotFoundException $e) {
-            throw new UserError('Log in failed.');
+            throw new InvalidCredentialsUserError('Log in failed.');
         }
 
         if (!$this->userPasswordEncoder->isPasswordValid($user, $input['password'])) {
-            throw new UserError('Log in failed.');
+            throw new InvalidCredentialsUserError('Log in failed.');
         }
 
         if (array_key_exists('cartUuid', $input) && $input['cartUuid'] !== null) {
