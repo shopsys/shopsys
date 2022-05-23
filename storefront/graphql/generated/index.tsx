@@ -1496,6 +1496,15 @@ export type PriceInterfaceApi = {
   vatAmount: Scalars['Money'];
 };
 
+/** Represents setting of pricing */
+export type PricingSettingApi = {
+  __typename?: 'PricingSetting';
+  /** Code of the default currency used on the current domain */
+  defaultCurrencyCode: Scalars['String'];
+  /** Minimum number of decimal places for the price on the current domain */
+  minimumFractionDigits: Scalars['Int'];
+};
+
 /** Represents a product */
 export type ProductApi = {
   accessories: Array<ProductApi>;
@@ -1760,6 +1769,8 @@ export type QueryApi = {
   promotedCategories: Array<CategoryApi>;
   /** Returns promoted products */
   promotedProducts: Array<ProductApi>;
+  /** Returns current setting */
+  settings: Maybe<SettingsApi>;
   /** Returns a complete list of the slider items */
   sliderItems: Array<SliderItemApi>;
   /** Returns entity by slug */
@@ -2103,6 +2114,13 @@ export type RemovePromoCodeFromCartInputApi = {
   cartUuid: Maybe<Scalars['Uuid']>;
   /** Promo code to be removed */
   promoCode: Scalars['String'];
+};
+
+/** Represents settings of the current domain */
+export type SettingsApi = {
+  __typename?: 'Settings';
+  /** Settings related to pricing */
+  pricing: PricingSettingApi;
 };
 
 export type SliderItemApi = {
