@@ -23,10 +23,10 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { GtmListNameType } from 'types/gtm';
+import { ListedProductType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { ListedProductType, SimpleProductType } from 'types/product';
-import { GtmListNameType } from 'types/gtm';
 import { onClickProductDetailGtmEvent, onClickSuggestResultEvent } from 'utils/Gtm/EventHandlers';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;

@@ -16,11 +16,12 @@ import { CreateOrderMutationApi, useCreateOrderMutationApi } from 'graphql/gener
 import { createClient } from 'helpers/createClient';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { onPurchaseOrder } from 'utils/Gtm/EventHandlers';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -32,8 +33,7 @@ import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
+import { onPurchaseOrder } from 'utils/Gtm/EventHandlers';
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();

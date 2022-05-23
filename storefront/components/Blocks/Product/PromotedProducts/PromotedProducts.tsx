@@ -1,6 +1,6 @@
 import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
-import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { usePromotedProducts } from 'connectors/products/Products';
+import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { FC } from 'react';
 
 const GTM_LIST_NAME = 'homepage promo products' as const;

@@ -1,9 +1,9 @@
 import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
-import { GtmListNameType } from 'types/gtm';
 import SliderProductItem from './SliderProductItem';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 import { FC, useState } from 'react';
+import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
 
 type ProductsSliderProps = {

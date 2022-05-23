@@ -1,4 +1,3 @@
-import { CartItemType, CartType } from 'types/cart';
 import {
     getGtmChangeCartItemEvent,
     getGtmPaymentInfoEvent,
@@ -11,11 +10,12 @@ import { getGtmPurchaseData, gtmSafePushEvent } from './Gtm';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { CartItemType, CartType } from 'types/cart';
 import { GtmCartInfoType, GtmListNameType, GtmSectionType } from 'types/gtm';
+import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
 import { TransportType } from 'types/transport';
-import { PaymentType } from 'types/payment';
 
 export const onClickProductDetailGtmEvent = (
     product: ListedProductType | SimpleProductType,

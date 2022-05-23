@@ -16,8 +16,8 @@ import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { ListedProductType } from 'types/product';
 import { GtmListNameType } from 'types/gtm';
+import { ListedProductType } from 'types/product';
 import { onClickProductDetailGtmEvent } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {

@@ -1,8 +1,8 @@
-import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
 import { useEffect, useRef } from 'react';
 import { GtmListNameType } from 'types/gtm';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 import { ListedProductType } from 'types/product';
+import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
+import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmSliderProductListView = (
     products: ListedProductType[] | undefined,

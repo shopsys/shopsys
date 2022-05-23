@@ -16,8 +16,8 @@ import {
 import Image from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { SliderProductItemType } from 'types/product';
 import { GtmListNameType } from 'types/gtm';
+import { SliderProductItemType } from 'types/product';
 import { onClickProductDetailGtmEvent } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {
