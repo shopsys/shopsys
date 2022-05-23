@@ -12,6 +12,7 @@ import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
 import { AppStore } from 'redux/main';
 import { Client, ssrExchange } from 'urql';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -20,6 +21,7 @@ export type ServerSidePropsType = {
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
     store: AppStore,
+    authenticationRequired = false,
     prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[] = [],
     client: Client | null = null,
     ssrCache: SSRExchange | null = null,
@@ -59,6 +61,20 @@ export async function initServerSideProps(
                         destination: parsedSlug,
                     },
                 };
+            }
+
+            if (authenticationRequired) {
+                const customerResult = resolvedQueries.find((query) => query.data?.currentCustomerUser !== undefined);
+                const isLogged = customerResult?.data.currentCustomerUser !== undefined;
+
+                if (!isLogged) {
+                    return {
+                        redirect: {
+                            statusCode: 302,
+                            destination: getInternationalizedStaticUrls(['/login'], domainConfig.url)[0],
+                        },
+                    };
+                }
             }
 
             return {

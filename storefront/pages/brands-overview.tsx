@@ -21,7 +21,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [{ query: BrandsQueryDocumentApi }]);
+    return initServerSideProps(context, store, false, [{ query: BrandsQueryDocumentApi }]);
 });
 
 export default Index;

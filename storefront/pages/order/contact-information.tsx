@@ -153,7 +153,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const ssrCache = ssrExchange({ isClient: false });
     const client = createClient(context, store, ssrCache);
     const redirect = await handleOrderPagesRedirect(context, store, client);
-    return redirect === false ? initServerSideProps(context, store, [], client, ssrCache) : redirect;
+    return redirect === false ? initServerSideProps(context, store, false, [], client, ssrCache) : redirect;
 });
 
 export default ContactInformation;

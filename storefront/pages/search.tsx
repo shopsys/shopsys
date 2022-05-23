@@ -66,7 +66,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
     );
 
-    return initServerSideProps(context, store, [
+    return initServerSideProps(context, store, false, [
         {
             query: SearchQueryDocumentApi,
             variables: {

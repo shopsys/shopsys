@@ -264,3 +264,28 @@
   - promo code section was added to the OrderSummary component, so it's now visible in 2nd and 3rd order step
 - other changes
   - styled components in the OrderSummary folder were renamed to contain the "Styled" suffix
+
+### Returning 404 error page
+- [FWCC-923](https://shopsys.atlassian.net/browse/FWCC-923)
+- [FWCC-923 - return correct HTTP error codes](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/574/diffs)
+    - the reasons these changes were introduced:
+        - if the resource was not found, we should return a 404 error code for that resource
+    - most significant changes
+        - `[...all.tsx]` now returns correct 404 error code if the resource was not found
+    - important note
+        - we don't use the default NextJS 404 page mechanism, because it doesn't allow us to run the server code on the error page and we're not able to load data and translations correctly
+        - this should be improved in the future
+    - what to do
+        - if you want to return the 404 error code on any page, then set `context.res.statusCode = 404;` in the `getServerSideProps` and render the correct component in the page
+
+### Handle unauthenticated request to protected routes
+- [FWCC-923](https://shopsys.atlassian.net/browse/FWCC-923)
+- [FWCC-923 - return correct HTTP error codes](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/574/diffs)
+    - the reasons these changes were introduced:
+        - the unauthenticated user when trying to access a protected route should be redirected to the login page
+    - most significant changes
+        - the `initServerSideProps` has new prop `authenticationRequired` that can be used to check if the route is protected
+        - when the route is protected and the user is not authenticated, the user is redirected to the login page
+    - tips how to implement it
+        - if you want to protect a route, then set `authenticationRequired: true` in the call of `initServerSideProps`
+        - you don't need to use the `PageGuard` component anymore to protect routes for unauthenticated users

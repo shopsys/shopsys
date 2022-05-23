@@ -38,7 +38,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     }
 
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [
+    return initServerSideProps(context, store, false, [
         { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
     ]);
 });
