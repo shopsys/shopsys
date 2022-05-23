@@ -21,3 +21,4 @@ Query:
         - 'CountryQuery'
         - 'GoPayQuery'
         - 'LanguageConstantQuery'
+        - 'SettingsQuery'
