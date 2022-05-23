@@ -68,7 +68,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
                 fields={formMeta.fields}
             />
             <Webline type="dark">
-                <Footer />
+                <Footer simpleFooter />
             </Webline>
         </StaticUrlGuard>
     );

@@ -137,7 +137,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                 </Form>
             </FormProvider>
             <Webline type={'dark'}>
-                <Footer />
+                <Footer simpleFooter />
             </Webline>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}

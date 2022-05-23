@@ -11,7 +11,7 @@ const ErrorLayout: FC = ({ children }) => {
             </Webline>
             {children}
             <Webline type="dark">
-                <Footer />
+                <Footer simpleFooter />
             </Webline>
         </>
     );
