@@ -3,18 +3,19 @@ import FooterBoxInfo from './FooterBoxInfo';
 import FooterContact from './FooterContact';
 import FooterCopyright from './FooterCopyright';
 import FooterMenu from './FooterMenu';
-import { useRouter } from 'next/router';
 import { FC } from 'react';
 
-const Footer: FC = () => {
+type FooterProps = {
+    simpleFooter?: boolean;
+};
+
+const Footer: FC<FooterProps> = ({ simpleFooter }) => {
     const testIdentifier = 'layout-footer';
 
-    const router = useRouter();
-    const isOrderPageLayoutVisible = router.route.slice(0, 6) === '/order';
     return (
         <FooterStyled data-testid={testIdentifier}>
             <FooterBottomStyled>
-                {isOrderPageLayoutVisible === true ? (
+                {simpleFooter ? (
                     <FooterCopyright />
                 ) : (
                     <>

@@ -14,15 +14,16 @@ import {
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import Overlay from 'components/Layout/Overlay';
-import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 
-const Header: FC = () => {
+type HeaderProps = {
+    simpleHeader?: boolean;
+};
+
+const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     const testIdentifier = 'layout-header';
 
     const [isMenuOpened, setIsMenuOpened] = useState(false);
-    const router = useRouter();
-    const isOrderPageLayoutVisible = router.route.slice(0, 6) === '/order';
 
     const onMenuToggleHandler = () => {
         setIsMenuOpened(!isMenuOpened);
@@ -33,7 +34,7 @@ const Header: FC = () => {
             <HeaderLogoStyled>
                 <Logo />
             </HeaderLogoStyled>
-            {isOrderPageLayoutVisible ? (
+            {simpleHeader ? (
                 <HeaderContact />
             ) : (
                 <>

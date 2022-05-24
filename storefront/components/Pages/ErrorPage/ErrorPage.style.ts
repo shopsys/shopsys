@@ -1,4 +1,4 @@
-import Button from 'components/Forms/Button';
+import { ButtonStyled } from 'components/Basic/Link/Link.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -79,7 +79,7 @@ export const ErrorPageTextMainStyled = styled.div`
     `}
 `;
 
-export const ErrorPageTextButtonStyled = styled(Button)`
+export const ErrorPageButtonLinkStyled = styled(ButtonStyled)`
     ${({ theme }) => css`
         margin-top: 8px;
 

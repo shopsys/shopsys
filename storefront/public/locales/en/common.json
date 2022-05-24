@@ -307,5 +307,7 @@
     "Invalid hash.": "Invalid hash.",
     "Product price is missing.":  "Product price is missing.",
     "No result found for slug.": "No result found for slug.",
-    "Store not found.":  "Store not found."
+    "Store not found.":  "Store not found.",
+    "Something went wrong.": "Something went wrong.",
+    "Please try again later or contact us.": "Please try again later or contact us."
 }

@@ -23,7 +23,7 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
         <>
             <NotificationBars />
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
-                <Header />
+                <Header simpleHeader />
             </Webline>
             <Adverts positionName="header" withGapBottom withWebline />
             <Webline>

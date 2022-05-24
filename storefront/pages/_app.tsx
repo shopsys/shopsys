@@ -1,4 +1,5 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
+import Error500 from 'components/Pages/ErrorPage/500';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
@@ -6,6 +7,7 @@ import { withUrqlClient } from 'next-urql';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ReactElement } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nextReduxWrapper } from 'redux/main';
@@ -26,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <Component {...pageProps} />
+                <ErrorBoundary FallbackComponent={Error500}>
+                    <Component {...pageProps} />
+                </ErrorBoundary>
             </ShopsysGlobalProvider>
         </>
     );

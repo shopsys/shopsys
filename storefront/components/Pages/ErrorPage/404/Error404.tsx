@@ -1,21 +1,21 @@
+import CommonLayout from 'components/Layout/CommonLayout';
+import Webline from 'components/Layout/Webline';
 import {
+    ErrorPageButtonLinkStyled,
     ErrorPageImageStyled,
     ErrorPageStyled,
-    ErrorPageTextButtonStyled,
     ErrorPageTextHeadingStyled,
     ErrorPageTextMainStyled,
     ErrorPageTextStyled,
-} from './Error404.style';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Webline from 'components/Layout/Webline';
+} from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { NextPage } from 'next';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import React from 'react';
 
 const Error404: NextPage = () => {
     const t = useTypedTranslationFunction();
-    const router = useRouter();
+
     return (
         <CommonLayout>
             <Webline>
@@ -28,16 +28,9 @@ const Error404: NextPage = () => {
                             {t('But at other addresses we have a lot for you...')}
                         </ErrorPageTextMainStyled>
 
-                        <ErrorPageTextButtonStyled
-                            type="button"
-                            onClick={() =>
-                                router.push({
-                                    pathname: '/',
-                                })
-                            }
-                        >
-                            {t('Back to shop')}
-                        </ErrorPageTextButtonStyled>
+                        <Link href="/" passHref>
+                            <ErrorPageButtonLinkStyled>{t('Back to shop')}</ErrorPageButtonLinkStyled>
+                        </Link>
                     </ErrorPageTextStyled>
                     <ErrorPageImageStyled>
                         <picture>
