@@ -97,13 +97,12 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param int $customerUserId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \App\Model\Customer\User\CustomerUser|\App\Model\Customer\User\CustomerUser
+     * @return \App\Model\Customer\User\CustomerUser
      */
     public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData, ?DeliveryAddress $deliveryAddress = null)
     {
-
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $customerUser = parent::edit($customerUserId, $customerUserUpdateData);
+        $customerUser = parent::edit($customerUserId, $customerUserUpdateData, $deliveryAddress);
 
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
 

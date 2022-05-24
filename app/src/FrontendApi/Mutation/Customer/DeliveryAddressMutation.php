@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Customer;
 
+use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\DeliveryAddressFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -25,15 +26,23 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
+     * @var \App\Model\Customer\DeliveryAddressDataFactory
+     */
+    private DeliveryAddressDataFactory $deliveryAddressDataFactory;
+
+    /**
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
         DeliveryAddressFacade $deliveryAddressFacade,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        DeliveryAddressDataFactory $deliveryAddressDataFactory
     ) {
         $this->deliveryAddressFacade = $deliveryAddressFacade;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
     /**
@@ -62,12 +71,37 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \App\Model\Customer\DeliveryAddress[]
+     */
+    public function editDeliveryAddress(Argument $argument): array
+    {
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        if ($customerUser === null) {
+            throw new UnauthorizedHttpException('You need to be logged in.');
+        }
+
+        $deliveryAddress = $this->deliveryAddressDataFactory
+            ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+
+        $this->deliveryAddressFacade->editByCustomer($customerUser->getCustomer(), $deliveryAddress);
+
+        /** @var \App\Model\Customer\DeliveryAddress[] $deliveryAddresses */
+        $deliveryAddresses = $customerUser->getCustomer()->getDeliveryAddresses();
+
+        return $deliveryAddresses;
+    }
+
+    /**
      * @return string[]
      */
     public static function getAliases(): array
     {
         return [
             'deleteDeliveryAddress' => 'deleteDeliveryAddress',
+            'editDeliveryAddress' => 'editDeliveryAddress',
         ];
     }
 }

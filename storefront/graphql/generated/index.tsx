@@ -697,6 +697,27 @@ export type DeliveryAddressApi = {
   uuid: Scalars['Uuid'];
 };
 
+export type DeliveryAddressInputApi = {
+  /** Delivery address city name */
+  city: Scalars['String'];
+  /** Delivery address company name */
+  companyName: Maybe<Scalars['String']>;
+  /** Delivery address country */
+  country: Scalars['String'];
+  /** Delivery address first name */
+  firstName: Scalars['String'];
+  /** Delivery address last name */
+  lastName: Scalars['String'];
+  /** Delivery address zip code */
+  postcode: Scalars['String'];
+  /** Delivery address street name */
+  street: Scalars['String'];
+  /** Delivery address telephone */
+  telephone: Maybe<Scalars['String']>;
+  /** UUID */
+  uuid: Maybe<Scalars['Uuid']>;
+};
+
 /** Represents a downloadable file */
 export type FileApi = {
   __typename?: 'File';
@@ -949,6 +970,8 @@ export type MutationApi = {
   CreateOrder: OrderApi;
   /** Delete delivery address by Uuid */
   DeleteDeliveryAddress: Array<DeliveryAddressApi>;
+  /** Edit delivery address by Uuid */
+  EditDeliveryAddress: Array<DeliveryAddressApi>;
   /** Login user and return access and refresh tokens */
   Login: TokenApi;
   /** Logout user */
@@ -1024,6 +1047,11 @@ export type MutationCreateOrderArgsApi = {
 
 export type MutationDeleteDeliveryAddressArgsApi = {
   deliveryAddressUuid: Scalars['Uuid'];
+};
+
+
+export type MutationEditDeliveryAddressArgsApi = {
+  input: DeliveryAddressInputApi;
 };
 
 

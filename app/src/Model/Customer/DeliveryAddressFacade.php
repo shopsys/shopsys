@@ -6,6 +6,7 @@ namespace App\Model\Customer;
 
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade as BaseDeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 
 /**
  * @property \App\Model\Customer\DeliveryAddressRepository $deliveryAddressRepository
@@ -31,5 +32,22 @@ class DeliveryAddressFacade extends BaseDeliveryAddressFacade
 
         $this->em->remove($deliveryAddress);
         $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \App\Model\Customer\DeliveryAddressData $deliveryAddressData
+     */
+    public function editByCustomer(Customer $customer, DeliveryAddressData $deliveryAddressData): void
+    {
+        $deliveryAddress = $this->deliveryAddressRepository->findByUuidAndCustomer($deliveryAddressData->uuid, $customer);
+
+        if ($deliveryAddress === null) {
+            throw new DeliveryAddressNotFoundException(
+                'Delivery address with UUID ' . $deliveryAddressData->uuid . ' not found.'
+            );
+        }
+
+        $this->edit($deliveryAddress->getId(), $deliveryAddressData);
     }
 }

@@ -92,6 +92,7 @@
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
     * [ContactInput](#contactinput)
+    * [DeliveryAddressInput](#deliveryaddressinput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
     * [OrderInput](#orderinput)
@@ -1127,6 +1128,20 @@ Delete delivery address by Uuid
 <tr>
 <td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>EditDeliveryAddress</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+Edit delivery address by Uuid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#deliveryaddressinput">DeliveryAddressInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -7409,6 +7424,101 @@ Email address of the sender
 <td>
 
 Message sent to recipient
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### DeliveryAddressInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address company name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address city name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address telephone
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address country
 
 </td>
 </tr>
