@@ -17,4 +17,5 @@ fragment ListedVariantFragment on Variant {
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }
+    __typename
 }
