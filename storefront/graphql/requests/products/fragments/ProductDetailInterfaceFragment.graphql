@@ -30,4 +30,6 @@ fragment ProductDetailInterfaceFragment on Product {
     availability {
         ...AvailabilityFragment
     }
+    seoTitle
+    seoMetaDescription
 }

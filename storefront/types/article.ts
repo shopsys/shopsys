@@ -8,6 +8,8 @@ export type ArticleDetailType = {
     articleName: string;
     text: string | null;
     breadcrumb: BreadcrumbItemType[];
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };
 
 export type SimpleArticleType = {

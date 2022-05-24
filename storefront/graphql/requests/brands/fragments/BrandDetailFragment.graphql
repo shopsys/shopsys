@@ -9,4 +9,6 @@ fragment BrandDetailFragment on Brand {
         ...ImageSizesFragment
     }
     ...ListedProductsFragment
+    seoTitle
+    seoMetaDescription
 }

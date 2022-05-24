@@ -43,4 +43,6 @@ export type CategoryDetailType = {
     productConnection: ListedProductConnectionType;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     linkedCategories: ListedCategoryType[];
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };

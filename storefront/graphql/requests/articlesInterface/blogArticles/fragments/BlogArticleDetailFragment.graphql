@@ -10,4 +10,6 @@ fragment BlogArticleDetailFragment on BlogArticle {
     blogArticleProducts: products {
         ...ListedProductFragment
     }
+    seoTitle
+    seoMetaDescription
 }

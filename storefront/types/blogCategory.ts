@@ -7,6 +7,8 @@ export type BlogCategoryDetailType = {
     name: string;
     blogArticles: BlogArticleConnectionType | null;
     breadcrumb: BreadcrumbItemType[];
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };
 
 export type ListedBlogCategoryType = SimpleBlogCategoryType & {

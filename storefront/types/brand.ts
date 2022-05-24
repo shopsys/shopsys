@@ -12,6 +12,8 @@ export type BrandDetailType = {
     image: ImageType | null;
     description: string | null;
     productConnection: ListedProductConnectionType;
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };
 
 export type ListedBrandType = {

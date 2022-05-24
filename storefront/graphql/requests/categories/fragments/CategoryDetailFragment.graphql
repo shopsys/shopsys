@@ -16,4 +16,6 @@ fragment CategoryDetailFragment on Category {
         name
         slug
     }
+    seoTitle
+    seoMetaDescription
 }
