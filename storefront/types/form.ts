@@ -41,6 +41,7 @@ export type ContactInformationFormType = {
     deliveryPostcode: string;
     deliveryCountry: SelectOptionType;
     newsletterSubscription: boolean;
+    note: string;
 };
 
 export type PickupPlaceFormType = {

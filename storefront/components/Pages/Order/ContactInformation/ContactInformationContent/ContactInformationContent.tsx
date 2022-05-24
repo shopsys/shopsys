@@ -2,6 +2,9 @@ import {
     ContactInformationContentSectionStyled,
     ContactInformationContentStyled,
 } from './ContactInformationContent.style';
+import Heading from 'components/Basic/Heading';
+import FormLine from 'components/Forms/Lib/FormLine';
+import Textarea from 'components/Forms/Textarea';
 import ContactInformationAddress from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
 import ContactInformationCompany from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
 import ContactInformationCustomer from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
@@ -9,9 +12,10 @@ import ContactInformationDeliveryAddress from 'components/Pages/Order/ContactInf
 import ContactInformationRegister from 'components/Pages/Order/ContactInformation/ContactInformationRegister';
 import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { FC, useRef, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { ContactInformationFormType } from 'types/form';
 
@@ -20,6 +24,7 @@ type ContactInformationContentProps = {
 };
 
 const ContactInformationContent: FC<ContactInformationContentProps> = (props) => {
+    const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
@@ -69,6 +74,24 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationDeliveryAddress />
+
+                        <Heading type="h3">{t('Note')}</Heading>
+                        <FormLine bottomGap={true} lg="65%">
+                            <Controller
+                                name={formMeta.fields.note.name}
+                                render={({ field, fieldState: { isTouched, invalid } }) => (
+                                    <Textarea
+                                        id={formMeta.formName + '-' + formMeta.fields.note.name}
+                                        name={formMeta.fields.note.name}
+                                        label={formMeta.fields.note.label}
+                                        fieldRef={field}
+                                        isTouched={isTouched}
+                                        hasError={invalid}
+                                        rows={3}
+                                    />
+                                )}
+                            />
+                        </FormLine>
                     </div>
                 </div>
             </CSSTransition>

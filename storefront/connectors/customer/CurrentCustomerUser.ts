@@ -60,5 +60,6 @@ const mapCurrentCustomerContactInformationApiData = (
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
         differentDeliveryAddress: false,
+        note: '',
     };
 };
