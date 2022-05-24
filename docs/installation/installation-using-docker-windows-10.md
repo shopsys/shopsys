@@ -64,7 +64,7 @@ cd ~/
 Install project with composer
 
 ```sh
-composer create-project shopsys/project-base --no-install --keep-vcs
+composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
 cd project-base
 ```
 
@@ -74,6 +74,7 @@ cd project-base
 !!! note "Notes"
     - The `--no-install` option disables installation of the vendors - this will be done later in the Docker container
     - The `--keep-vcs` option initializes GIT repository in your project folder that is needed for diff commands of the application build and keeps the GIT history of `shopsys/project-base`
+    - The `--ignore-platform-reqs` option ensures your local PHP setup is not verified (it is not needed, everything is installed in Docker later)
 
 ### 2. Installation
 Now, you have two options:
