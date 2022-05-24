@@ -64,12 +64,14 @@
     * [PersonalData](#personaldata)
     * [PersonalDataPage](#personaldatapage)
     * [Price](#price)
+    * [PricingSetting](#pricingsetting)
     * [ProductConnection](#productconnection)
     * [ProductEdge](#productedge)
     * [ProductFilterOptions](#productfilteroptions)
     * [ProductPrice](#productprice)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
+    * [Settings](#settings)
     * [SliderItem](#slideritem)
     * [Store](#store)
     * [StoreAvailability](#storeavailability)
@@ -858,6 +860,15 @@ List of available banks for GoPay bank transfer payment
 <td>
 
 Return user translated language constants for current domain locale
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>settings</strong></td>
+<td valign="top"><a href="#settings">Settings</a></td>
+<td>
+
+Returns current setting
 
 </td>
 </tr>
@@ -5243,6 +5254,41 @@ Total value of VAT
 </tbody>
 </table>
 
+### PricingSetting
+
+Represents setting of pricing
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>defaultCurrencyCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the default currency used on the current domain
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimumFractionDigits</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Minimum number of decimal places for the price on the current domain
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ProductConnection
 
 A connection to a list of items.
@@ -5908,6 +5954,32 @@ Hierarchy of the current element in relation to the structure
 <td>
 
 List of related products
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### Settings
+
+Represents settings of the current domain
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>pricing</strong></td>
+<td valign="top"><a href="#pricingsetting">PricingSetting</a>!</td>
+<td>
+
+Settings related to pricing
 
 </td>
 </tr>

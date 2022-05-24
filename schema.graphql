@@ -1628,6 +1628,15 @@ interface PriceInterface {
   vatAmount: Money!
 }
 
+"""Represents setting of pricing"""
+type PricingSetting {
+  """Code of the default currency used on the current domain"""
+  defaultCurrencyCode: String!
+
+  """Minimum number of decimal places for the price on the current domain"""
+  minimumFractionDigits: Int!
+}
+
 """Represents a product"""
 interface Product {
   """UUID"""
@@ -1989,6 +1998,9 @@ type Query {
 
   """Return user translated language constants for current domain locale"""
   languageConstants: [LanguageConstant!]!
+
+  """Returns current setting"""
+  settings: Settings
 }
 
 input RecoverPasswordInput {
@@ -2218,6 +2230,12 @@ input RemovePromoCodeFromCartInput {
 
   """Promo code to be removed"""
   promoCode: String!
+}
+
+"""Represents settings of the current domain"""
+type Settings {
+  """Settings related to pricing"""
+  pricing: PricingSetting!
 }
 
 type SliderItem {
