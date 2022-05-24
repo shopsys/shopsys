@@ -193,3 +193,16 @@ msgstr ""
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Please enter your name"
+msgstr ""
+
+msgid "Please enter the message"
+msgstr ""
+
+msgid "Please enter your email address"
+msgstr ""
+
+msgid "Please enter valid email"
+msgstr ""
+
+
