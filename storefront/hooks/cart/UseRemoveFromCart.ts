@@ -3,7 +3,7 @@ import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { CartItemType } from 'types/cart';
 import { GtmListNameType } from 'types/gtm';
-import { onRemoveCartItemGtmEvent } from 'utils/Gtm/EventHandlers';
+import { onRemoveCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const [, removeItemFromCart] = useRemoveFromCartMutationApi();
@@ -23,7 +23,7 @@ export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
             dispatch(userActions.setCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid));
         }
 
-        onRemoveCartItemGtmEvent(cartItem, listIndex, gtmListName);
+        onRemoveCartItemGtmEventHandler(cartItem, listIndex, gtmListName);
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;
     };

@@ -3,7 +3,7 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysSelector } from 'redux/main';
-import { pushGtmPaymentChangeEvent } from 'utils/Gtm/EventHandlers';
+import { onPaymentChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
 import { useGtmCartEventInfo } from 'utils/Gtm/Gtm';
 
 export const useChangePaymentInCart = (): typeof changePaymentHandler => {
@@ -32,7 +32,7 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
             return null;
         }
 
-        pushGtmPaymentChangeEvent(
+        onPaymentChangeGtmEventHandler(
             gtmCartEventInfo.cart,
             changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
             currencyCode,

@@ -18,7 +18,7 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
-import { onClickProductDetailGtmEvent } from 'utils/Gtm/EventHandlers';
+import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {
     product: ListedProductType;
@@ -34,7 +34,7 @@ const ProductItem: FC<ProductItemProps> = (props) => {
         listName: GtmListNameType,
         index: number,
     ) => {
-        await onClickProductDetailGtmEvent(product, listName, index);
+        await onClickProductDetailGtmEventHandler(product, listName, index);
     };
 
     return (

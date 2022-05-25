@@ -4,7 +4,7 @@ import { useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { pushGtmTransportChangeEvent } from 'utils/Gtm/EventHandlers';
+import { onTransportChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
 import { useGtmCartEventInfo } from 'utils/Gtm/Gtm';
 
 export const useChangeTransportInCart = (): typeof changeTransportHandler => {
@@ -37,7 +37,7 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
             return null;
         }
 
-        pushGtmTransportChangeEvent(
+        onTransportChangeGtmEventHandler(
             gtmCartEventInfo.cart,
             changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
             newPickupPlace,

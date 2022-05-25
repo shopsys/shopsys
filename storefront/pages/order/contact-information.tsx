@@ -33,7 +33,7 @@ import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
-import { onPurchaseOrder } from 'utils/Gtm/EventHandlers';
+import { onPurchaseOrderGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -125,7 +125,14 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         });
 
         if (order.data !== undefined && cart !== null && transport !== null && payment !== null) {
-            onPurchaseOrder(cart, transport, pickupPlace, payment, promoCode, order.data.CreateOrder.number);
+            onPurchaseOrderGtmEventHandler(
+                cart,
+                transport,
+                pickupPlace,
+                payment,
+                promoCode,
+                order.data.CreateOrder.number,
+            );
         }
     };
 

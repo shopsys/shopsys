@@ -18,7 +18,7 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
-import { onClickProductDetailGtmEvent } from 'utils/Gtm/EventHandlers';
+import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {
     product: SliderProductItemType;
@@ -37,7 +37,9 @@ const ProductItem: FC<ProductItemProps> = (props) => {
             <SliderProductItemInStyled>
                 <NextLink href={props.product.slug} passHref>
                     <SliderProductItemLinkStyled
-                        onClick={() => onClickProductDetailGtmEvent(props.product, props.gtmListName, props.listIndex)}
+                        onClick={() =>
+                            onClickProductDetailGtmEventHandler(props.product, props.gtmListName, props.listIndex)
+                        }
                     >
                         <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
                             <Image image={props.product.image} type="list" alt={props.product.fullName} />

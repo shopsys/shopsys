@@ -5,7 +5,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { GtmListNameType } from 'types/gtm';
-import { onChangeCartItemGtmEvent } from 'utils/Gtm/EventHandlers';
+import { onChangeCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const useAddToCart = (): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();
@@ -57,7 +57,7 @@ export const useAddToCart = (): typeof addToCartAction => {
             );
         }
 
-        onChangeCartItemGtmEvent(
+        onChangeCartItemGtmEventHandler(
             mapCartItem(cartItem, currencyCode),
             listIndex,
             addToCartResult.addProductResult.addedQuantity - initialQuantity,

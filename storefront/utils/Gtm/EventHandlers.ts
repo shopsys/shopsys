@@ -17,7 +17,7 @@ import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
 import { TransportType } from 'types/transport';
 
-export const onClickProductDetailGtmEvent = (
+export const onClickProductDetailGtmEventHandler = (
     product: ListedProductType | SimpleProductType,
     listName: GtmListNameType,
     index: number,
@@ -27,7 +27,7 @@ export const onClickProductDetailGtmEvent = (
     gtmSafePushEvent(event);
 };
 
-export const onRemoveCartItemGtmEvent = (
+export const onRemoveCartItemGtmEventHandler = (
     removedCartItem: CartItemType,
     listIndex: number,
     listName: GtmListNameType,
@@ -37,7 +37,7 @@ export const onRemoveCartItemGtmEvent = (
     gtmSafePushEvent(event);
 };
 
-export const onChangeCartItemGtmEvent = (
+export const onChangeCartItemGtmEventHandler = (
     addedCartItem: CartItemType,
     listIndex: number,
     quantityDifference: number,
@@ -52,7 +52,7 @@ export const onChangeCartItemGtmEvent = (
     gtmSafePushEvent(event);
 };
 
-export const pushGtmTransportChangeEvent = (
+export const onTransportChangeGtmEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
     updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
     updatedPickupPlace: PickupPlaceType | null,
@@ -67,7 +67,7 @@ export const pushGtmTransportChangeEvent = (
     }
 };
 
-export const pushGtmPaymentChangeEvent = (
+export const onPaymentChangeGtmEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
     updatedPayment: SimplePaymentFragmentApi | null,
     currencyCode: string,
@@ -80,7 +80,7 @@ export const pushGtmPaymentChangeEvent = (
     }
 };
 
-export const onPurchaseOrder = (
+export const onPurchaseOrderGtmEventHandler = (
     cart: CartType,
     transport: TransportType,
     pickupPlace: PickupPlaceType | null,
@@ -93,7 +93,11 @@ export const onPurchaseOrder = (
     gtmSafePushEvent(event);
 };
 
-export const onClickSuggestResultEvent = (keyword: string, section: GtmSectionType, itemName: string): void => {
+export const onClickSuggestResultGtmEventHandler = (
+    keyword: string,
+    section: GtmSectionType,
+    itemName: string,
+): void => {
     const event = getGtmSearchClickEvent(keyword, section, itemName);
     gtmSafePushEvent(event);
 };
