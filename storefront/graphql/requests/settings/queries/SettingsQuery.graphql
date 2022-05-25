@@ -3,5 +3,8 @@ query SettingsQuery {
         pricing {
             ...PricingSettingFragment
         }
+        seo {
+            ...SeoSettingFragment
+        }
     }
 }

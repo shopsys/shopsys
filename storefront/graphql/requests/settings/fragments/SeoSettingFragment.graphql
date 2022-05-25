@@ -1,0 +1,5 @@
+fragment SeoSettingFragment on SeoSetting {
+    title
+    titleAddOn
+    metaDescription
+}
