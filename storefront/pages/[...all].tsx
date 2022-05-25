@@ -21,6 +21,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
@@ -60,6 +61,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
     useGtmCategoryProductListView(data, slug);
     useGtmProductDetailView(data, slug);
+    useGtmBrandProductListView(data, slug);
 
     return renderContent(data);
 };
