@@ -15,6 +15,7 @@ import { ListedVariantType } from 'types/product';
 
 type ProductVariantsTableProps = {
     variants: ListedVariantType[];
+    isSellingDenied: boolean;
 };
 
 const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
@@ -34,7 +35,7 @@ const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
                 </VariantsTableHeaderStyled>
                 <VariantsTableBodyStyled>
                     {props.variants.map((variant) => (
-                        <Variant key={variant.uuid} variant={variant} />
+                        <Variant key={variant.uuid} variant={variant} isSellingDenied={props.isSellingDenied} />
                     ))}
                 </VariantsTableBodyStyled>
             </VariantsTableStyled>

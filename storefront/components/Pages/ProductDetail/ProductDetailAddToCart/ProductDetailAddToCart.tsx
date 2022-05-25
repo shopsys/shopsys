@@ -4,6 +4,7 @@ import {
     AddToCartButtonWrapperStyled,
     AddToCartFormStyled,
     AddToCartPriceStyled,
+    AddToCartUnavailableTextStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
@@ -46,20 +47,32 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
                 <AddToCartPriceStyled data-testid={testIdentifier + '-price'}>
                     {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
                 </AddToCartPriceStyled>
-                <AddToCartFormStyled>
-                    <AddToCartButtonsWrapperStyled>
-                        <Spinbox min={1} step={1} defaultValue={1} max={props.product.stockQuantity} ref={spinboxRef} />
-                        <AddToCartButtonWrapperStyled>
-                            <AddToCartButtonStyled
-                                onClick={onAddToCartHandler}
-                                variant="primary"
-                                data-testid={testIdentifier + '-button'}
-                            >
-                                {t('Add to cart')}
-                            </AddToCartButtonStyled>
-                        </AddToCartButtonWrapperStyled>
-                    </AddToCartButtonsWrapperStyled>
-                </AddToCartFormStyled>
+                {props.product.isSellingDenied ? (
+                    <AddToCartUnavailableTextStyled>
+                        {t('This item can no longer be purchased')}
+                    </AddToCartUnavailableTextStyled>
+                ) : (
+                    <AddToCartFormStyled>
+                        <AddToCartButtonsWrapperStyled>
+                            <Spinbox
+                                min={1}
+                                step={1}
+                                defaultValue={1}
+                                max={props.product.stockQuantity}
+                                ref={spinboxRef}
+                            />
+                            <AddToCartButtonWrapperStyled>
+                                <AddToCartButtonStyled
+                                    onClick={onAddToCartHandler}
+                                    variant="primary"
+                                    data-testid={testIdentifier + '-button'}
+                                >
+                                    {t('Add to cart')}
+                                </AddToCartButtonStyled>
+                            </AddToCartButtonWrapperStyled>
+                        </AddToCartButtonsWrapperStyled>
+                    </AddToCartFormStyled>
+                )}
             </AddToCartWrapperStyled>
             {popupData !== null && (
                 <AddToCartPopup isVisible={true} onCloseCallback={() => setPopupData(null)} product={popupData} />

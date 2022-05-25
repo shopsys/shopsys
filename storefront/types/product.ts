@@ -64,6 +64,7 @@ export type ProductDetailInterfaceType = {
     stockQuantity: number;
     accessories: SliderProductItemType[];
     flags: SimpleFlagType[];
+    isSellingDenied: boolean;
 };
 
 export type ProductDetailType = ProductDetailInterfaceType & {

@@ -52,7 +52,10 @@ const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = (props) => {
                 </ProductDetailStyled>
             </Webline>
             <Webline data-testid={testIdentifier + 'variants'}>
-                <ProductVariantsTable variants={props.product.variants} />
+                <ProductVariantsTable
+                    variants={props.product.variants}
+                    isSellingDenied={props.product.isSellingDenied}
+                />
             </Webline>
             <Webline data-testid={testIdentifier + 'description'}>
                 <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />

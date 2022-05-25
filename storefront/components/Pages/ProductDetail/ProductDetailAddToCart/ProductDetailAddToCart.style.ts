@@ -61,3 +61,7 @@ export const AddToCartButtonStyled = styled(ButtonStyled)`
         border-radius: ${theme.radius.big};
     `}
 `;
+
+export const AddToCartUnavailableTextStyled = styled.p`
+    font-size: 16px;
+`;

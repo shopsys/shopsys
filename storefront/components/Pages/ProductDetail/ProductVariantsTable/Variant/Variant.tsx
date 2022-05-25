@@ -23,6 +23,7 @@ import { formatPrice } from 'utils/formatting';
 
 type VariantProps = {
     variant: ListedVariantType;
+    isSellingDenied: boolean;
 };
 
 const Variant: FC<VariantProps> = (props) => {
@@ -59,14 +60,18 @@ const Variant: FC<VariantProps> = (props) => {
                     {formatPrice(props.variant.price.priceWithVat, currencyCode, t)}
                 </VariantPriceCellStyled>
                 <VariantActionCellStyled>
-                    <VariantActionStyled>
-                        <AddToCart
-                            productUuid={props.variant.uuid}
-                            productName={props.variant.name}
-                            minQuantity={1}
-                            maxQuantity={props.variant.stockQuantity}
-                        />
-                    </VariantActionStyled>
+                    {props.isSellingDenied ? (
+                        <>{t('This item can no longer be purchased')}</>
+                    ) : (
+                        <VariantActionStyled>
+                            <AddToCart
+                                productUuid={props.variant.uuid}
+                                productName={props.variant.name}
+                                minQuantity={1}
+                                maxQuantity={props.variant.stockQuantity}
+                            />
+                        </VariantActionStyled>
+                    )}
                 </VariantActionCellStyled>
             </VariantsTableRowStyled>
             {isAvailabilityPopupVisible && (
