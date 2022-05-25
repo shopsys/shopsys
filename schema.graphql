@@ -1967,6 +1967,9 @@ type Query {
   """Returns a flag by uuid or url slug"""
   flag(uuid: Uuid, urlSlug: String): Flag
 
+  """Returns last order of the user or null if no order was placed yet"""
+  lastOrder: Order
+
   """Return personal data page content and URL"""
   personalDataPage: PersonalDataPage
 

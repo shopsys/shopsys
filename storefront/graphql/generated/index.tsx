@@ -1745,6 +1745,8 @@ export type QueryApi = {
   flags: Maybe<Array<FlagApi>>;
   /** Return user translated language constants for current domain locale */
   languageConstants: Array<LanguageConstantApi>;
+  /** Returns last order of the user or null if no order was placed yet */
+  lastOrder: Maybe<OrderApi>;
   /** Returns complete navigation menu */
   navigation: Array<NavigationItemApi>;
   /** Returns a list of notifications supposed to be displayed on all pages */
