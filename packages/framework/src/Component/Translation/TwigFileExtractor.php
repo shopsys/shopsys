@@ -7,7 +7,7 @@ use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor as Origin
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use ReflectionObject;
 use SplFileInfo;
-use Twig_Node;
+use Twig\Node\Node;
 
 class TwigFileExtractor implements FileVisitorInterface
 {
@@ -60,7 +60,7 @@ class TwigFileExtractor implements FileVisitorInterface
     /**
      * {@inheritdoc}
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
     {
         $this->originalTwigFileExtractor->visitTwigFile($file, $catalogue, $ast);
     }

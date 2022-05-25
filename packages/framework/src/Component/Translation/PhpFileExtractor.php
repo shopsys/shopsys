@@ -17,7 +17,7 @@ use PhpParser\NodeVisitor;
 use Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException;
 use Shopsys\FrameworkBundle\Component\Translation\Exception\MessageIdArgumentNotPresent;
 use SplFileInfo;
-use Twig_Node;
+use Twig\Node\Node as TwigNode;
 
 class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 {
@@ -273,11 +273,9 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \SplFileInfo $file
-     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param \Twig_Node $ast
+     * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {
         return null;
     }

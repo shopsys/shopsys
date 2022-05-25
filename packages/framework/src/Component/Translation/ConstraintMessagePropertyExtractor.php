@@ -15,7 +15,7 @@ use PhpParser\NodeVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use SplFileInfo;
 use Symfony\Component\Validator\Constraint;
-use Twig_Node;
+use Twig\Node\Node as TwigNode;
 
 /**
  * Extracts messages from public properties (with names ending "message") of custom constraints for translation.
@@ -159,7 +159,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Twig_Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {
         return null;
     }
