@@ -34,13 +34,7 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
 
         color: ${theme.color.red};
 
-        ${inputType === 'textarea' &&
-        css`
-            top: 2px;
-            right: 0;
-        `}
-
-        ${inputType === 'text-input' &&
+        ${(inputType === 'text-input' || inputType === 'textarea') &&
         css`
             transform: translateY(-50%);
             top: ${textInputSize === 'small'
@@ -48,7 +42,7 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
                 : localVariables.defaultTextInputErrorIconTopOffset};
             right: 19px;
         `}
-        
+
         ${inputType === 'text-input-password' &&
         css`
             transform: translateY(-50%);

@@ -93,3 +93,9 @@ export type CustomerChangeProfileFormType = {
     country: SelectOptionType;
     newsletterSubscription: boolean;
 };
+
+export type ContactFormType = {
+    email: string;
+    name: string;
+    message: string;
+};

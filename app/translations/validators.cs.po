@@ -244,3 +244,15 @@ msgstr ""
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 
+msgid "Please enter your name"
+msgstr "Vyplňte prosím své jméno"
+
+msgid "Please enter the message"
+msgstr "Vyplňte prosím zprávu"
+
+msgid "Please enter your email address"
+msgstr "Vyplňte prosím e-mail"
+
+msgid "Please enter valid email"
+msgstr ""
+

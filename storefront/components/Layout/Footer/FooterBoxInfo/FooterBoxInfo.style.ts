@@ -1,5 +1,5 @@
 import Icon from 'components/Basic/Icon';
-import Button from 'components/Forms/Button';
+import { ButtonStyled } from 'components/Basic/Link/Link.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -196,7 +196,7 @@ export const FooterBoxInfoContactHoursStyled = styled.p<FooterBoxInfoStyledProps
     `}
 `;
 
-export const FooterBoxInfoButtonStyled = styled(Button)`
+export const FooterBoxInfoButtonStyled = styled(ButtonStyled)`
     ${({ theme }) => css`
         z-index: ${theme.zIndex.above};
     `}

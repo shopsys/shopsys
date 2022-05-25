@@ -15,8 +15,11 @@ import GoogleMap from 'components/Basic/GoogleMap';
 import Heading from 'components/Basic/Heading';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Link from 'next/link';
 import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
 import { StoreDetailType } from 'types/store';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type StoreDetailProps = {
     store: StoreDetailType;
@@ -29,6 +32,8 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
     const storeCoordinates = [
         { locationLatitude: props.store.locationLatitude, locationLongitude: props.store.locationLongitude },
     ];
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
         <Webline data-testid={testIdentifier}>
@@ -85,7 +90,9 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomIconStyled iconType="icon" icon="Chat" />
-                            <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
+                            <Link href={contactUrl} passHref>
+                                <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
+                            </Link>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
