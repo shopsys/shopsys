@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Price;
 
+use App\FrontendApi\Component\GqlContext\GqlContextHelper;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Resolver\Price\Exception\ProductPriceMissingUserError;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Product;
+use ArrayObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -76,10 +78,13 @@ class PriceResolver extends BasePriceResolver
     /**
      * @param \App\Model\Transport\Transport $transport
      * @param string|null $cartUuid
+     * @param ?\ArrayObject $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function resolveByTransport(Transport $transport, ?string $cartUuid = null): Price
+    public function resolveByTransport(Transport $transport, ?string $cartUuid = null, ?ArrayObject $context = null): Price
     {
+        $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
+
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null && $cartUuid === null) {
@@ -113,10 +118,13 @@ class PriceResolver extends BasePriceResolver
     /**
      * @param \App\Model\Payment\Payment $payment
      * @param string|null $cartUuid
+     * @param ?\ArrayObject $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function resolveByPayment(Payment $payment, ?string $cartUuid = null): Price
+    public function resolveByPayment(Payment $payment, ?string $cartUuid = null, ?ArrayObject $context = null): Price
     {
+        $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
+
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null && $cartUuid === null) {
