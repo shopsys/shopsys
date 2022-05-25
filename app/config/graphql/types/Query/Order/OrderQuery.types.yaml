@@ -19,3 +19,7 @@ OrderQuery:
                     orderNumber:
                         type: "String"
                 description: "Returns order filtered using UUID, orderNumber, or urlHash"
+            lastOrder:
+                type: 'Order'
+                resolve: "@=resolver('lastOrder')"
+                description: "Returns last order of the user or null if no order was placed yet"
