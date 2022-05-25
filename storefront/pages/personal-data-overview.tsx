@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import PersonalDataOverview from 'components/Pages/PersonalData/Overview';
@@ -10,6 +11,7 @@ const PersonalDataOverviewPage: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <PersonalDataOverview />
             </CommonLayout>

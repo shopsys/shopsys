@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import NewPassword from 'components/Pages/NewPassword';
@@ -33,6 +34,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <NewPassword hash={hashParam} email={emailParam} />
             </CommonLayout>

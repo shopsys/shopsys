@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import Customer from 'components/Pages/Customer';
@@ -11,6 +12,7 @@ const CustomerPage: FC = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <Customer />
             </CommonLayout>

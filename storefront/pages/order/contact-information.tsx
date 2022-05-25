@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import OrderAction from 'components/Blocks/OrderAction';
 import Form from 'components/Forms/Form';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
@@ -120,6 +121,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>

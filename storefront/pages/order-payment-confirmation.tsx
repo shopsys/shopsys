@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import PaymentFail from 'components/Pages/Order/PaymentConfirmation/PaymentFail';
@@ -36,6 +37,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 {checkPaymentStatusResult.data?.CheckPaymentStatus === true && <PaymentSuccess />}
                 {checkPaymentStatusResult.data?.CheckPaymentStatus === false && <PaymentFail />}

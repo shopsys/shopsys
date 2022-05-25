@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -21,6 +22,7 @@ const Cart: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <OrderSteps activeStep={1} domainUrl={domainUrl} />
                 <List items={cart?.items} />

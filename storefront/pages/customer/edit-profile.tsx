@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import SimpleLayout from 'components/Layout/SimpleLayout';
@@ -21,6 +22,7 @@ const EditProfilePage: FC = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex" />
             <CommonLayout>
                 <SimpleLayout
                     heading={t('Edit profile')}
