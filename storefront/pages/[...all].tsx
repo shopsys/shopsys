@@ -23,6 +23,7 @@ import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
+import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useRouter } from 'next/router';
@@ -62,6 +63,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     useGtmCategoryProductListView(data, slug);
     useGtmProductDetailView(data, slug);
     useGtmBrandProductListView(data, slug);
+    useGtmFlagProductListView(data, slug);
 
     return renderContent(data);
 };
