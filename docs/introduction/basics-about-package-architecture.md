@@ -46,7 +46,7 @@ Other candidates for extraction into modules are for example payment methods gat
 ### Create new project from Shopsys Framework sources
 Install [`shopsys/project-base`](https://github.com/shopsys/project-base) using composer to get your own private copy.
 ```sh
-composer create-project shopsys/project-base --no-install --keep-vcs
+composer create-project shopsys/project-base --no-install --keep-vcs --ignore-platform-reqs
 ```
 For more detailed instructions, follow [Installation Using Docker](../installation/installation-guide.md#installation-using-docker).
 #### Why not clone or fork?
