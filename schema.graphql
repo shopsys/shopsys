@@ -1502,40 +1502,91 @@ type Parameter {
   unit: Unit
 }
 
+"""Parameter filter option"""
+type ParameterCheckboxFilterOption implements ParameterFilterOptionInterface {
+  """The parameter UUID"""
+  uuid: Uuid!
+
+  """The parameter name"""
+  name: String!
+
+  """Is the parameter visible for customers"""
+  visible: Boolean!
+
+  """The parameter unit"""
+  unit: Unit
+
+  """Filter options of parameter values"""
+  values: [ParameterValueFilterOption!]!
+}
+
+"""Parameter filter option"""
+type ParameterColorFilterOption implements ParameterFilterOptionInterface {
+  """The parameter UUID"""
+  uuid: Uuid!
+
+  """The parameter name"""
+  name: String!
+
+  """Is the parameter visible for customers"""
+  visible: Boolean!
+
+  """The parameter unit"""
+  unit: Unit
+
+  """Filter options of parameter values"""
+  values: [ParameterValueColorFilterOption!]!
+}
+
 """Represents a parameter filter"""
 input ParameterFilter {
   """Uuid of filtered parameter"""
   parameter: Uuid!
 
-  """Array of uuids filtered parameter values"""
-  values: [Uuid!]!
+  """Array of uuids representing parameter values to be filtered by"""
+  values: [Uuid!] = []
+
+  """The parameter minimal value (for parameters with "slider" type)"""
+  minimalValue: Float = null
+
+  """The parameter maximal value (for parameters with "slider" type)"""
+  maximalValue: Float = null
+}
+
+"""Represents parameter filter option"""
+interface ParameterFilterOptionInterface {
+  """The parameter UUID"""
+  uuid: Uuid!
+
+  """The parameter name"""
+  name: String!
+
+  """Is the parameter visible for customers"""
+  visible: Boolean!
+
+  """The parameter unit"""
+  unit: Unit
 }
 
 """Parameter filter option"""
-type ParameterFilterOption {
-  """UUID"""
+type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
+  """The parameter UUID"""
   uuid: Uuid!
 
-  """Parameter name"""
+  """The parameter name"""
   name: String!
 
-  """Is parameter visible for customers"""
+  """Is the parameter visible for customers"""
   visible: Boolean!
 
-  """Filter options of parameter values"""
-  values: [ParameterValueFilterOption!]!
-  type: String!
+  """The parameter unit"""
   unit: Unit
 
-  """
-  The parameter minimal value (set for parameters with "slider" type only, null for the rest)
-  """
-  minimalValue: Float
+  """The parameter minimal value"""
+  minimalValue: Float!
 
-  """
-  The parameter maximal value (set for parameters with "slider" type only, null for the rest)
-  """
-  maximalValue: Float
+  """The parameter maximal value"""
+  maximalValue: Float!
 }
 
 """Represents a parameter value"""
@@ -1545,6 +1596,30 @@ type ParameterValue {
 
   """Parameter value"""
   text: String!
+}
+
+"""Parameter value filter option"""
+type ParameterValueColorFilterOption {
+  """UUID"""
+  uuid: Uuid!
+
+  """Parameter value"""
+  text: String!
+
+  """
+  Count of products that will be filtered if this filter option is applied.
+  """
+  count: Int!
+
+  """
+  If true than count parameter is number of products that will be displayed if
+  this filter option is applied, if false count parameter is number of products
+  that will be added to current products result.
+  """
+  isAbsolute: Boolean!
+
+  """RGB hex of color parameter"""
+  rgbHex: String
 }
 
 """Parameter value filter option"""
@@ -1566,9 +1641,6 @@ type ParameterValueFilterOption {
   that will be added to current products result.
   """
   isAbsolute: Boolean!
-
-  """RGB hex of color parameter"""
-  rgbHex: String
 }
 
 """Represents and encapsulates a string for password"""
@@ -1876,7 +1948,7 @@ type ProductFilterOptions {
   inStock: Int!
 
   """Parameter filter options"""
-  parameters: [ParameterFilterOption!]
+  parameters: [ParameterFilterOptionInterface!]
 }
 
 """Paginated and ordered products"""
@@ -2071,6 +2143,9 @@ type Query {
     """Hash to securely recognize access"""
     hash: String!
   ): PersonalData!
+  ParameterSliderFilterOption: ParameterSliderFilterOption
+  ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
+  ParameterColorFilterOption: ParameterColorFilterOption
 
   """Returns list of searched brands"""
   brandSearch(search: String!): [Brand!]!
