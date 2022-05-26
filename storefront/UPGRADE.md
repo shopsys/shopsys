@@ -402,3 +402,15 @@
             }, [data, slug, currentPage, pageSize]);
         };
         ```
+
+### Implement title and description meta tags
+- [FWCC-655](https://shopsys.atlassian.net/browse/FWCC-655)
+- [FWCC-655 - seo meta tage](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/591/diffs)
+- the reasons these changes were introduced:
+    - basic meta tags should be set up for SEO
+- most significant changes
+    - new `SeoMeta` component was created
+    - the layout component now accepts `title` and `description` props that it passes down to the new component
+        - if they are not provided, the default values from API are used
+- tips on how to implement them
+    - if you have some custom pages, make sure you pass the new props to the layout component
