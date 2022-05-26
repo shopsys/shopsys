@@ -92,7 +92,12 @@ const Filter: FC<FilterProps> = (props) => {
                 continue;
             }
 
-            parameters.push({ parameter: parameter.parameterUuid, values: checkedValues });
+            parameters.push({
+                parameter: parameter.parameterUuid,
+                values: checkedValues,
+                minimalValue: null,
+                maximalValue: null,
+            });
         }
 
         dispatch(optionsFilterActions.setParametersFilter(parameters));

@@ -1,8 +1,8 @@
 import { SimpleFlagType } from 'types/flag';
 
 export enum FilterOptionsParameterTypeEnum {
-    Checkbox = 'checkbox',
-    ColorPicker = 'colorPicker',
+    Checkbox = 'ParameterCheckboxFilterOption',
+    ColorPicker = 'ParameterColorFilterOption',
 }
 
 export type ParametersValuesType = {
@@ -80,6 +80,8 @@ export type FilterFormType = {
 export type FilterOptionsParameterStateType = {
     parameter: string;
     values: string[];
+    minimalValue: number | null;
+    maximalValue: number | null;
 };
 
 export type FilterOptionsStateType = {

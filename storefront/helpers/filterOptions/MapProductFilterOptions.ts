@@ -14,7 +14,7 @@ export const mapProductFilterOptions = (
         parameters: productFilterOptionsApiData.parameters?.map((item) => ({
             ...item,
             type:
-                item.type === FilterOptionsParameterTypeEnum.ColorPicker
+                item.__typename === FilterOptionsParameterTypeEnum.ColorPicker
                     ? FilterOptionsParameterTypeEnum.ColorPicker
                     : FilterOptionsParameterTypeEnum.Checkbox,
             values: item.values.map((value) => ({
