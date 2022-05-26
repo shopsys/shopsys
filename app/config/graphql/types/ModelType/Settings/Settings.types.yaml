@@ -7,3 +7,7 @@ Settings:
                 type: "PricingSetting!"
                 resolve: "@=resolver('pricingSettings')"
                 description: "Settings related to pricing"
+            seo:
+                type: "SeoSetting!"
+                resolve: "@=resolver('seoSettings')"
+                description: "Settings related to SEO"

@@ -71,6 +71,7 @@
     * [ProductPrice](#productprice)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
+    * [SeoSetting](#seosetting)
     * [Settings](#settings)
     * [SliderItem](#slideritem)
     * [Store](#store)
@@ -5960,6 +5961,50 @@ List of related products
 </tbody>
 </table>
 
+### SeoSetting
+
+Represents setting of SEO
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>title</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Document's title that is shown in a browser's title
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>titleAddOn</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Complement to title
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>metaDescription</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Description of the content of a web page
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Settings
 
 Represents settings of the current domain
@@ -5980,6 +6025,15 @@ Represents settings of the current domain
 <td>
 
 Settings related to pricing
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seo</strong></td>
+<td valign="top"><a href="#seosetting">SeoSetting</a>!</td>
+<td>
+
+Settings related to SEO
 
 </td>
 </tr>

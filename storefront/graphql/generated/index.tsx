@@ -2116,11 +2116,24 @@ export type RemovePromoCodeFromCartInputApi = {
   promoCode: Scalars['String'];
 };
 
+/** Represents setting of SEO */
+export type SeoSettingApi = {
+  __typename?: 'SeoSetting';
+  /** Description of the content of a web page */
+  metaDescription: Scalars['String'];
+  /** Document's title that is shown in a browser's title */
+  title: Scalars['String'];
+  /** Complement to title */
+  titleAddOn: Scalars['String'];
+};
+
 /** Represents settings of the current domain */
 export type SettingsApi = {
   __typename?: 'Settings';
   /** Settings related to pricing */
   pricing: PricingSettingApi;
+  /** Settings related to SEO */
+  seo: SeoSettingApi;
 };
 
 export type SliderItemApi = {

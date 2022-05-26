@@ -2232,10 +2232,25 @@ input RemovePromoCodeFromCartInput {
   promoCode: String!
 }
 
+"""Represents setting of SEO"""
+type SeoSetting {
+  """Document's title that is shown in a browser's title"""
+  title: String!
+
+  """Complement to title"""
+  titleAddOn: String!
+
+  """Description of the content of a web page"""
+  metaDescription: String!
+}
+
 """Represents settings of the current domain"""
 type Settings {
   """Settings related to pricing"""
   pricing: PricingSetting!
+
+  """Settings related to SEO"""
+  seo: SeoSetting!
 }
 
 type SliderItem {
