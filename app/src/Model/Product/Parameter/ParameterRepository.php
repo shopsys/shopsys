@@ -316,6 +316,7 @@ class ParameterRepository extends BaseParameterRepository
             ->select(
                 'p.id as parameter_id,
                 p.orderingPriority as ordering_priority,
+                p.parameterType as parameter_type,
                 pv.id as parameter_value_id,
                 p.uuid as parameter_uuid,
                 pt.name as parameter_name,

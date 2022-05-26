@@ -358,4 +358,47 @@ class FilterQuery extends BaseFilterQuery
 
         return $query;
     }
+
+    /**
+     * @param \App\Model\Product\Filter\ParameterFilterData[] $sliderParametersData
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function filterBySliderParameters(array $sliderParametersData): self
+    {
+        $clone = clone $this;
+
+        foreach ($sliderParametersData as $sliderParameterData) {
+            $parameterRange = [
+                'gte' => $sliderParameterData->minimalValue,
+                'lte' => $sliderParameterData->maximalValue,
+            ];
+
+            $clone->filters[] = [
+                'nested' => [
+                    'path' => 'parameters',
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                'match_all' => new stdClass(),
+                            ],
+                            'filter' => [
+                                [
+                                    'term' => [
+                                        'parameters.parameter_id' => $sliderParameterData->parameter->getId(),
+                                    ],
+                                ],
+                                [
+                                    'range' => [
+                                        'parameters.parameter_value_for_slider_filter' => $parameterRange,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+        }
+
+        return $clone;
+    }
 }

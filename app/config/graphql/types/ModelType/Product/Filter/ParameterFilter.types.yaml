@@ -2,3 +2,19 @@ ParameterFilter:
     type: input-object
     inherits:
         - 'ParameterFilterDecorator'
+    config:
+        fields:
+            values:
+                type: "[Uuid!]"
+                description: "Array of uuids representing parameter values to be filtered by"
+                defaultValue: []
+                validation:
+                    -   NotNull: ~
+            minimalValue:
+                type: "Float"
+                description: "The parameter minimal value (for parameters with \"slider\" type)"
+                defaultValue: null
+            maximalValue:
+                type: "Float"
+                description: "The parameter maximal value (for parameters with \"slider\" type)"
+                defaultValue: null

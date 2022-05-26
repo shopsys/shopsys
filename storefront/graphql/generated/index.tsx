@@ -1383,10 +1383,14 @@ export type ParameterApi = {
 
 /** Represents a parameter filter */
 export type ParameterFilterApi = {
+  /** The parameter maximal value (for parameters with "slider" type) */
+  maximalValue: Maybe<Scalars['Float']>;
+  /** The parameter minimal value (for parameters with "slider" type) */
+  minimalValue: Maybe<Scalars['Float']>;
   /** Uuid of filtered parameter */
   parameter: Scalars['Uuid'];
-  /** Array of uuids filtered parameter values */
-  values: Array<Scalars['Uuid']>;
+  /** Array of uuids representing parameter values to be filtered by */
+  values: Maybe<Array<Scalars['Uuid']>>;
 };
 
 /** Parameter filter option */

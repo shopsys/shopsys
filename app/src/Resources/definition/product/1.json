@@ -291,6 +291,9 @@
           },
           "parameter_is_dimensional": {
             "type": "boolean"
+          },
+          "parameter_value_for_slider_filter": {
+            "type": "float"
           }
         }
       },

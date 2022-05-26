@@ -7974,10 +7974,28 @@ Uuid of filtered parameter
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>values</strong></td>
-<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]</td>
 <td>
 
-Array of uuids filtered parameter values
+Array of uuids representing parameter values to be filtered by
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter minimal value (for parameters with "slider" type)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>maximalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter maximal value (for parameters with "slider" type)
 
 </td>
 </tr>
