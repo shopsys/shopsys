@@ -3,6 +3,8 @@ ParameterFilter:
     inherits:
         - 'ParameterFilterDecorator'
     config:
+        validation:
+            -   App\FrontendApi\Model\Component\Constraints\ParameterFilter: ~
         fields:
             values:
                 type: "[Uuid!]"
