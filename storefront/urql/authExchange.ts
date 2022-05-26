@@ -102,10 +102,10 @@ const createGetAuth = (context?: GetServerSidePropsContext) => {
             context?: Partial<OperationContext>,
         ) => Promise<OperationResult<Data>>;
     }): Promise<TokenType | null> => {
+        const { accessToken, refreshToken } = getTokensFromCookies(context);
+
         if (!params.authState) {
             try {
-                const { accessToken, refreshToken } = getTokensFromCookies(context);
-
                 if (refreshToken === undefined) {
                     return null;
                 }
@@ -121,6 +121,10 @@ const createGetAuth = (context?: GetServerSidePropsContext) => {
             }
 
             return null;
+        }
+
+        if (refreshToken !== undefined && params.authState.refreshToken !== refreshToken) {
+            return doTryRefreshToken(refreshToken, params.mutate, context);
         }
 
         return doTryRefreshToken(params.authState.refreshToken, params.mutate, context);
