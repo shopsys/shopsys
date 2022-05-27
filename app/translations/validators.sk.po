@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid "An array of values is not supported as an input for \"slider\" type parameter. Use \"minimalValue\" and \"maximalValue\" instead."
+msgstr ""
+
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -47,6 +50,9 @@ msgid "Image can be only in JPG or PNG format"
 msgstr ""
 
 msgid "Image can be only in JPG, GIF or PNG format"
+msgstr ""
+
+msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr ""
 
 msgid "Name cannot be longer than {{ limit }} characters"
@@ -243,17 +249,4 @@ msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie než {{ limit }} znakov"
-
-msgid "Please enter your name"
-msgstr ""
-
-msgid "Please enter the message"
-msgstr ""
-
-msgid "Please enter your email address"
-msgstr ""
-
-msgid "Please enter valid email"
-msgstr ""
-
 
