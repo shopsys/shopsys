@@ -6,12 +6,16 @@ namespace App\FrontendApi\Mutation\Customer;
 
 use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\DeliveryAddressFacade;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
+use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class DeliveryAddressMutation implements MutationInterface, AliasedInterface
 {
@@ -31,18 +35,34 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
     private DeliveryAddressDataFactory $deliveryAddressDataFactory;
 
     /**
+     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
+     */
+    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
+
+    /**
+     * @var \App\Model\Customer\User\CustomerUserFacade
+     */
+    private CustomerUserFacade $customerUserFacade;
+
+    /**
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         DeliveryAddressFacade $deliveryAddressFacade,
         CurrentCustomerUser $currentCustomerUser,
-        DeliveryAddressDataFactory $deliveryAddressDataFactory
+        DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->deliveryAddressFacade = $deliveryAddressFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
+        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
@@ -59,7 +79,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null) {
-            throw new UnauthorizedHttpException('You need to be logged in.');
+            throw new UserError('You need to be logged in.');
         }
 
         $this->deliveryAddressFacade->deleteByUuidAndCustomer($deliveryAddressUuid, $customerUser->getCustomer());
@@ -80,7 +100,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         if ($customerUser === null) {
-            throw new UnauthorizedHttpException('You need to be logged in.');
+            throw new UserError('You need to be logged in.');
         }
 
         $deliveryAddress = $this->deliveryAddressDataFactory
@@ -95,6 +115,35 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
     }
 
     /**
+     * @param string $deliveryAddressUuid
+     * @return \App\Model\Customer\User\CustomerUser
+     */
+    public function setDefaultDeliveryAddress(string $deliveryAddressUuid): CustomerUser
+    {
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        if ($customerUser === null) {
+            throw new UserError('You need to be logged in.');
+        }
+
+        try {
+            $deliveryAddress = $this->deliveryAddressFacade->getByUuidAndCustomer(
+                $deliveryAddressUuid,
+                $customerUser->getCustomer()
+            );
+        } catch (DeliveryAddressNotFoundException $exception) {
+            throw new UserError($exception->getMessage());
+        }
+
+        $customerData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+
+        $this->customerUserFacade->edit($customerUser->getId(), $customerData, $deliveryAddress);
+
+        return $customerUser;
+    }
+
+    /**
      * @return string[]
      */
     public static function getAliases(): array
@@ -102,6 +151,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         return [
             'deleteDeliveryAddress' => 'deleteDeliveryAddress',
             'editDeliveryAddress' => 'editDeliveryAddress',
+            'setDefaultDeliveryAddress' => 'setDefaultDeliveryAddress',
         ];
     }
 }

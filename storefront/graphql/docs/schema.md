@@ -1145,6 +1145,20 @@ Edit delivery address by Uuid
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>SetDefaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+Set default delivery address by Uuid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>Contact</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>

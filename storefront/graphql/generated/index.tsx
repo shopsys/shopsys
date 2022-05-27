@@ -997,6 +997,8 @@ export type MutationApi = {
   RequestPasswordRecovery: Scalars['String'];
   /** Request access to personal data */
   RequestPersonalDataAccess: PersonalDataPageApi;
+  /** Set default delivery address by Uuid */
+  SetDefaultDeliveryAddress: CustomerUserApi;
 };
 
 
@@ -1102,6 +1104,11 @@ export type MutationRequestPasswordRecoveryArgsApi = {
 
 export type MutationRequestPersonalDataAccessArgsApi = {
   input: PersonalDataAccessRequestInputApi;
+};
+
+
+export type MutationSetDefaultDeliveryAddressArgsApi = {
+  deliveryAddressUuid: Scalars['Uuid'];
 };
 
 /** Represents a navigation structure item */

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Customer;
 
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade as BaseDeliveryAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 
 /**
  * @property \App\Model\Customer\DeliveryAddressRepository $deliveryAddressRepository
@@ -40,14 +40,32 @@ class DeliveryAddressFacade extends BaseDeliveryAddressFacade
      */
     public function editByCustomer(Customer $customer, DeliveryAddressData $deliveryAddressData): void
     {
-        $deliveryAddress = $this->deliveryAddressRepository->findByUuidAndCustomer($deliveryAddressData->uuid, $customer);
-
-        if ($deliveryAddress === null) {
-            throw new DeliveryAddressNotFoundException(
-                'Delivery address with UUID ' . $deliveryAddressData->uuid . ' not found.'
-            );
+        if ($deliveryAddressData->uuid === null) {
+            throw new InvalidArgumentException('UUID is missing in DeliveryAddressData');
         }
 
+        $deliveryAddress = $this->getByUuidAndCustomer($deliveryAddressData->uuid, $customer);
+
         $this->edit($deliveryAddress->getId(), $deliveryAddressData);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \App\Model\Customer\DeliveryAddress
+     */
+    public function getByUuidAndCustomer(string $uuid, Customer $customer): DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->getByUuidAndCustomer($uuid, $customer);
+    }
+
+    /**
+     * @param string $uuid
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \App\Model\Customer\DeliveryAddress|null
+     */
+    public function findByUuidAndCustomer(string $uuid, Customer $customer): ?DeliveryAddress
+    {
+        return $this->deliveryAddressRepository->findByUuidAndCustomer($uuid, $customer);
     }
 }

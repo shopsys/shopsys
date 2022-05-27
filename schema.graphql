@@ -1108,6 +1108,9 @@ type Mutation {
   """Edit delivery address by Uuid"""
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
 
+  """Set default delivery address by Uuid"""
+  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
+
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
 
