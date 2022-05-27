@@ -35,4 +35,19 @@ class OrderFacade extends BaseOrderFacade
     {
         return $this->orderRepository->getByUuid($uuid);
     }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @return \App\Model\Order\Order|null
+     */
+    public function findLastOrderByCustomerUser(CustomerUser $customerUser): ?Order
+    {
+        $orderList = $this->orderRepository->getCustomerUserOrderLimitedList($customerUser, 1, 0);
+
+        if ($orderList === []) {
+            return null;
+        }
+
+        return $orderList[0];
+    }
 }

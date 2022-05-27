@@ -755,6 +755,15 @@ Returns a flag by uuid or url slug
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>lastOrder</strong></td>
+<td valign="top"><a href="#order">Order</a></td>
+<td>
+
+Returns last order of the user or null if no order was placed yet
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>personalDataPage</strong></td>
 <td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
 <td>
