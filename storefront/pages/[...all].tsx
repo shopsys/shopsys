@@ -117,7 +117,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     );
 
     const exchange = ssrExchange({ isClient: false });
-    const client = createClient(context, store, exchange);
+    const client = await createClient(context, store, exchange);
 
     const slugQueryVariables = {
         slug: getUrlWithoutGetParameters(context.resolvedUrl),

@@ -37,7 +37,8 @@ export async function initServerSideProps(
         }
 
         if (currentClient === null) {
-            currentClient = createClient(context, store, currentSsrCache);
+            // eslint-disable-next-line require-atomic-updates
+            currentClient = await createClient(context, store, currentSsrCache);
         }
 
         if (currentClient !== null) {

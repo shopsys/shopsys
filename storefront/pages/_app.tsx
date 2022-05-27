@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nextReduxWrapper } from 'redux/main';
 import { getUrqlExchanges } from 'urql/exchanges';
+import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 
 type AppPropsWithError = AppProps & {
@@ -57,6 +58,7 @@ export default nextReduxWrapper.withRedux(
         (ssrExchange) => ({
             url: getApiUrl(),
             exchanges: getUrqlExchanges(ssrExchange),
+            fetch: fetcher(null),
         }),
         { ssr: false },
     )(
