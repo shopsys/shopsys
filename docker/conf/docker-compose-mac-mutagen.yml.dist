@@ -181,4 +181,5 @@ x-mutagen:
             configurationBeta:
                 permissions:
                     defaultOwner: "id:1000"
+                    defaultGroup: "id:1000"
                     defaultDirectoryMode: 0777
