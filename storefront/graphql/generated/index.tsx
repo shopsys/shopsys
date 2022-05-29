@@ -2667,6 +2667,13 @@ export type DeleteDeliveryAddressMutationVariablesApi = Exact<{
 
 export type DeleteDeliveryAddressMutationApi = { __typename?: 'Mutation', DeleteDeliveryAddress: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null }> };
 
+export type SetDefaultDeliveryAddressMutationVariablesApi = Exact<{
+  deliveryAddressUuid: Scalars['Uuid'];
+}>;
+
+
+export type SetDefaultDeliveryAddressMutationApi = { __typename?: 'Mutation', SetDefaultDeliveryAddress: { __typename?: 'CompanyCustomerUser', uuid: string, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null } | null } | { __typename?: 'RegularCustomerUser', uuid: string, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null } | null } };
+
 export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
@@ -4407,6 +4414,20 @@ export const DeleteDeliveryAddressMutationDocumentApi = gql`
 
 export function useDeleteDeliveryAddressMutationApi() {
   return Urql.useMutation<DeleteDeliveryAddressMutationApi, DeleteDeliveryAddressMutationVariablesApi>(DeleteDeliveryAddressMutationDocumentApi);
+};
+export const SetDefaultDeliveryAddressMutationDocumentApi = gql`
+    mutation SetDefaultDeliveryAddressMutation($deliveryAddressUuid: Uuid!) {
+  SetDefaultDeliveryAddress(deliveryAddressUuid: $deliveryAddressUuid) {
+    uuid
+    defaultDeliveryAddress {
+      ...DeliveryAddressFragment
+    }
+  }
+}
+    ${DeliveryAddressFragmentApi}`;
+
+export function useSetDefaultDeliveryAddressMutationApi() {
+  return Urql.useMutation<SetDefaultDeliveryAddressMutationApi, SetDefaultDeliveryAddressMutationVariablesApi>(SetDefaultDeliveryAddressMutationDocumentApi);
 };
 export const CurrentCustomerUserQueryDocumentApi = gql`
     query CurrentCustomerUserQuery {

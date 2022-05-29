@@ -341,5 +341,7 @@
     "This item can no longer be purchased": "Tuto položku již nelze zakoupit",
     "Note": "Poznámka",
     "Your note": "Vaše poznámka",
-    "Order": "Objednávka"
+    "Order": "Objednávka",
+    "There was an error while setting your delivery address as the default one": "Při nastavování výchozí dodací adresy došlo k chybě",
+    "Your delivery address has been set as default": "Dodací adresa byla nastavena jako výchozí"
 }
