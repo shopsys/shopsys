@@ -450,3 +450,12 @@
 - tips on how to implement them
     - make sure that on all places where URQl client is created, the new fetcher is set in options
     - see `docs/redis-graphql-cache.md`
+
+### Default transport and payment from the last order
+- [FWCC-868](https://shopsys.atlassian.net/browse/FWCC-868)
+- [FWCC-868 - set default transport and payment from last oder](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/607/diffs)
+- the reasons these changes were introduced:
+    - the logged-in user should have pre-selected transport and payment from the last order
+- most significant changes
+    - default values for transport and payment in the order form are set from the new LastOrder query if the user is logged in and has not selected different options
+    - most of the transport and payment form logic was moved to the separate component

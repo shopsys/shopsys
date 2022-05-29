@@ -1281,6 +1281,9 @@ type Order {
 
   """The order tracking link"""
   trackingUrl: String
+
+  """Selected pickup place identifier"""
+  pickupPlaceIdentifier: String
 }
 
 """A connection to a list of items."""

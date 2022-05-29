@@ -4597,6 +4597,15 @@ The order tracking link
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected pickup place identifier
+
+</td>
+</tr>
 </tbody>
 </table>
 

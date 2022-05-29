@@ -25,3 +25,6 @@ Order:
             deliveryCountry:
                 type: "Country"
                 description: "Country for delivery"
+            pickupPlaceIdentifier:
+                type: "String"
+                description: "Selected pickup place identifier"

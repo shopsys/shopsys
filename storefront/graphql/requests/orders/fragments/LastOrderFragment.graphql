@@ -1,0 +1,9 @@
+fragment LastOrderFragment on Order {
+    transport {
+        ...SimpleTransportFragment
+    }
+    payment {
+        ...SimplePaymentFragment
+    }
+    pickupPlaceIdentifier
+}

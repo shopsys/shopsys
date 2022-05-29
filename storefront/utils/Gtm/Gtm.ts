@@ -2,6 +2,7 @@ import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { canUseDom } from 'helpers/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { CartItemType, CartType } from 'types/cart';
 import { CategoryDetailType } from 'types/category';
@@ -31,33 +32,35 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     const { isUserLoggedIn } = useCurrentUserData();
     const { domain } = useShopsysSelector((state) => state);
 
-    if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-        return { cart: null, isLoaded };
-    }
+    return useMemo(() => {
+        if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
+            return { cart: null, isLoaded };
+        }
 
-    const [urlCart] = getInternationalizedStaticUrls(['/cart'], domain.url);
+        const [urlCart] = getInternationalizedStaticUrls(['/cart'], domain.url);
 
-    let products: GtmCartItemType[] | undefined = undefined;
-    if (cart.items.length > 0) {
-        products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index));
-    }
+        let products: GtmCartItemType[] | undefined = undefined;
+        if (cart.items.length > 0) {
+            products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index));
+        }
 
-    const coupons: string[] = [];
-    if (promoCode !== null) {
-        coupons.push(promoCode);
-    }
+        const coupons: string[] = [];
+        if (promoCode !== null) {
+            coupons.push(promoCode);
+        }
 
-    return {
-        cart: {
-            urlCart,
-            currency: domain.currencyCode,
-            value: cart.totalPrice.priceWithoutVat,
-            valueWithTax: cart.totalPrice.priceWithVat,
-            products,
-            coupons,
-        },
-        isLoaded,
-    };
+        return {
+            cart: {
+                urlCart,
+                currency: domain.currencyCode,
+                value: cart.totalPrice.priceWithoutVat,
+                valueWithTax: cart.totalPrice.priceWithVat,
+                products,
+                coupons,
+            },
+            isLoaded,
+        };
+    }, [cart, cartUuid, domain.currencyCode, domain.url, isLoaded, isUserLoggedIn, promoCode]);
 };
 
 export const getGtmPageInfoForFriendlyUrl = (

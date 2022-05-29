@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { LastOrderFragmentApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { UseFormReturn } from 'react-hook-form';
 import { TransportAndPaymentFormType } from 'types/form';
 import * as Yup from 'yup';
 
-export const useTransportAndPaymentForm = (): [
-    UseFormReturn<TransportAndPaymentFormType>,
-    TransportAndPaymentFormType,
-] => {
+export const useTransportAndPaymentForm = (
+    lastOrder?: LastOrderFragmentApi | null,
+): [UseFormReturn<TransportAndPaymentFormType>, TransportAndPaymentFormType] => {
     const t = useTypedTranslationFunction();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
 
@@ -36,11 +36,12 @@ export const useTransportAndPaymentForm = (): [
         }),
     );
     const defaultValues = {
-        transport: transport?.uuid ?? null,
-        payment: payment?.uuid ?? null,
+        transport: transport?.uuid ?? lastOrder?.transport.uuid ?? null,
+        payment: payment?.uuid ?? lastOrder?.payment.uuid ?? null,
         goPaySwift: paymentGoPayBankSwift,
+        pickupPlaceIdentifier: lastOrder?.pickupPlaceIdentifier ?? null,
     };
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useShopsysForm<TransportAndPaymentFormType>(resolver, defaultValues), defaultValues];
 };
 
 type TransportAndPaymentFormMetaType = {

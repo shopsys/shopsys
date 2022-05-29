@@ -2,6 +2,7 @@ import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { onTransportChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
@@ -14,39 +15,42 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
 
-    const changeTransportHandler = async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
-        const changeTransportResult = await changeTransportInCart({
-            input: {
-                transportUuid: newTransportUuid,
-                pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
-                cartUuid,
-            },
-        });
+    const changeTransportHandler = useCallback(
+        async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
+            const changeTransportResult = await changeTransportInCart({
+                input: {
+                    transportUuid: newTransportUuid,
+                    pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                    cartUuid,
+                },
+            });
 
-        // EXTEND TRANSPORT MODIFICATIONS HERE
+            // EXTEND TRANSPORT MODIFICATIONS HERE
 
-        if (changeTransportResult.error !== undefined) {
-            const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
-            if (userError?.validation?.transport !== undefined) {
-                showErrorMessage(userError.validation.transport.message);
+            if (changeTransportResult.error !== undefined) {
+                const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
+                if (userError?.validation?.transport !== undefined) {
+                    showErrorMessage(userError.validation.transport.message);
+                }
+                if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
+                    showErrorMessage(userError.validation.pickupPlaceIdentifier.message);
+                }
+
+                return null;
             }
-            if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
-                showErrorMessage(userError.validation.pickupPlaceIdentifier.message);
-            }
 
-            return null;
-        }
+            onTransportChangeGtmEventHandler(
+                gtmCartEventInfo.cart,
+                changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
+                newPickupPlace,
+                changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+                currencyCode,
+            );
 
-        onTransportChangeGtmEventHandler(
-            gtmCartEventInfo.cart,
-            changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
-            newPickupPlace,
-            changeTransportResult.data?.ChangeTransportInCart.payment?.name,
-            currencyCode,
-        );
-
-        return changeTransportResult.data?.ChangeTransportInCart;
-    };
+            return changeTransportResult.data?.ChangeTransportInCart;
+        },
+        [cartUuid, changeTransportInCart, currencyCode, gtmCartEventInfo.cart, t],
+    );
 
     return changeTransportHandler;
 };

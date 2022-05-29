@@ -14,7 +14,8 @@ import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/UseChangeTransportInCart';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, useState } from 'react';
+import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { TransportAndPaymentFormType } from 'types/form';
@@ -24,6 +25,7 @@ import { TransportType } from 'types/transport';
 
 type SelectProps = {
     transports: TransportType[];
+    preselectedPickupPlace: PickupPlaceType | null;
 };
 
 const Select: FC<SelectProps> = (props) => {
@@ -45,7 +47,51 @@ const Select: FC<SelectProps> = (props) => {
         variables: { currencyCode: currencyCode },
     });
 
-    useComponentUpdate(async () => {
+    const isPickupPlaceSelected = pickupPlace !== null;
+
+    const onSelectPacketeryPickupPlaceCallback = useCallback(
+        (packeteryPoint: PacketeryExtendedPoint | null, packeteryTransport: TransportType) => {
+            if (packeteryPoint !== null) {
+                const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
+                setPacketeryCookie(mappedPacketeryPoint);
+                changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
+            }
+        },
+        [changeTransportInCart],
+    );
+
+    const openPacketeryPopup = useCallback(
+        (newTransport: TransportType) => {
+            if (!isPickupPlaceSelected) {
+                const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
+                if (packeteryApiKey !== undefined) {
+                    packeteryPick(
+                        packeteryApiKey,
+                        (point) => {
+                            onSelectPacketeryPickupPlaceCallback(point, newTransport);
+                        },
+                        { language: defaultLocale },
+                    );
+                }
+            }
+        },
+        [defaultLocale, isPickupPlaceSelected, onSelectPacketeryPickupPlaceCallback],
+    );
+
+    const openPersonalPickupPopup = useCallback(
+        (newTransport: TransportType) => {
+            if (newTransport.transportType.code === 'packetery') {
+                openPacketeryPopup(newTransport);
+                return;
+            }
+
+            removePacketeryCookie();
+            setPreselectedTransport(newTransport);
+        },
+        [openPacketeryPopup],
+    );
+
+    useComponentUpdate(() => {
         const potentialNewTransport = props.transports.find((transport) => transport.uuid === transportValue);
 
         if (potentialNewTransport === undefined) {
@@ -61,36 +107,13 @@ const Select: FC<SelectProps> = (props) => {
         changeTransportInCart(transportValue, null);
     }, [transportValue]);
 
-    useComponentUpdate(() => {
+    useEffectOnce(() => {
+        changeTransportInCart(transportValue, props.preselectedPickupPlace);
+    });
+
+    useEffect(() => {
         changePaymentInCart(paymentValue, goPaySwiftValue);
-    }, [paymentValue, goPaySwiftValue]);
-
-    const isPickupPlaceSelected = pickupPlace !== null;
-
-    const openPersonalPickupPopup = (newTransport: TransportType) => {
-        if (newTransport.transportType.code === 'packetery') {
-            openPacketeryPopup(newTransport);
-            return;
-        }
-
-        removePacketeryCookie();
-        setPreselectedTransport(newTransport);
-    };
-
-    const openPacketeryPopup = (newTransport: TransportType) => {
-        if (!isPickupPlaceSelected) {
-            const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
-            if (packeteryApiKey !== undefined) {
-                packeteryPick(
-                    packeteryApiKey,
-                    (point) => {
-                        onSelectPacketeryPickupPlaceCallback(point, newTransport);
-                    },
-                    { language: defaultLocale },
-                );
-            }
-        }
-    };
+    }, [paymentValue, goPaySwiftValue, changePaymentInCart]);
 
     const resetTransportAndPayment = () => {
         formProviderMethods.setValue(formMeta.fields.transport.name, null);
@@ -112,17 +135,6 @@ const Select: FC<SelectProps> = (props) => {
     const onClosePickupPlacePopupHandler = () => {
         removePacketeryCookie();
         setPreselectedTransport(null);
-    };
-
-    const onSelectPacketeryPickupPlaceCallback = (
-        packeteryPoint: PacketeryExtendedPoint | null,
-        packeteryTransport: TransportType,
-    ) => {
-        if (packeteryPoint !== null) {
-            const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-            setPacketeryCookie(mappedPacketeryPoint);
-            changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
-        }
     };
 
     const getPickupPlaceDetail = (transportItem: TransportType) => {

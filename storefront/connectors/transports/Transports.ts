@@ -3,18 +3,21 @@ import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData } from 'connectors/price/Prices';
 import { mapPickupPlacesApiData } from 'connectors/transports/pickupPlace/PickupPlace';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi, useTransportsQueryApi } from 'graphql/generated';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { TransportType } from 'types/transport';
 
 export const useTransports = (cartUuid: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [result] = useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'network-only' });
+    const [result] = useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'cache-and-network' });
     const transportsApiData = result.data?.transports;
 
-    if (transportsApiData !== undefined) {
-        return mapTransports(transportsApiData, currencyCode);
-    }
-    return [];
+    return useMemo(() => {
+        if (transportsApiData !== undefined) {
+            return mapTransports(transportsApiData, currencyCode);
+        }
+        return [];
+    }, [currencyCode, transportsApiData]);
 };
 
 export const mapTransport = (
