@@ -25,3 +25,7 @@ OrderInput:
                 type: "PaymentInput"
                 description: "Deprecated, this field is not used, the payment is taken from the server cart instead."
                 validation: ~
+            deliveryAddressUuid:
+                type: "Uuid"
+                description: "Delivery address identifier"
+                defaultValue: null

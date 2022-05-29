@@ -24,7 +24,7 @@ class RequiredFieldsTest extends AbstractOrderTestCase
             12 => 'Field OrderInput.products of required type [OrderProductInput!]! was not provided.',
         ];
 
-        $orderMutation = $this->getOrderMutation(__DIR__ . '/Resources/requiredFields.graphql');
+        $orderMutation = $this->getOrderMutation(__DIR__ . '/graphql/requiredFields.graphql');
 
         $response = $this->getResponseContentForQuery($orderMutation);
         $this->assertResponseContainsArrayOfErrors($response);

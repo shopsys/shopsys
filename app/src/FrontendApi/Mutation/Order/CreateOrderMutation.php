@@ -9,6 +9,9 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\FrontendApi\Mutation\Order\Exception\OrderEmailsNotSentUserError;
 use App\FrontendApi\Mutation\Order\Exception\OrderEmptyCartUserError;
+use App\Model\Customer\DeliveryAddress;
+use App\Model\Customer\DeliveryAddressFacade;
+use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -46,12 +49,18 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     private CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
+     * @var \App\Model\Customer\DeliveryAddressFacade
+     */
+    private DeliveryAddressFacade $deliveryAddressFacade;
+
+    /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      */
     public function __construct(
         OrderDataFactory $orderDataFactory,
@@ -59,13 +68,15 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         OrderMailFacade $orderMailFacade,
         CartFacade $cartFacade,
         CurrentCustomerUser $currentCustomerUser,
-        CurrentPromoCodeFacade $currentPromoCodeFacade
+        CurrentPromoCodeFacade $currentPromoCodeFacade,
+        DeliveryAddressFacade $deliveryAddressFacade
     ) {
         parent::__construct($orderDataFactory, $placeOrderFacade, $orderMailFacade);
 
         $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
+        $this->deliveryAddressFacade = $deliveryAddressFacade;
     }
 
     /**
@@ -102,7 +113,11 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             }
         }
 
-        $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode);
+        /** @var string|null $deliveryAddressUuid */
+        $deliveryAddressUuid = $input['deliveryAddressUuid'];
+        $deliveryAddress = $this->resolveDeliveryAddress($deliveryAddressUuid, $customerUser);
+
+        $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode, $deliveryAddress);
         $this->cartFacade->deleteCart($cart);
 
         try {
@@ -112,6 +127,23 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         }
 
         return $order;
+    }
+
+    /**
+     * @param string|null $deliveryAddressUuid
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @return \App\Model\Customer\DeliveryAddress|null
+     */
+    private function resolveDeliveryAddress(?string $deliveryAddressUuid, ?CustomerUser $customerUser): ?DeliveryAddress
+    {
+        if ($deliveryAddressUuid === null || $customerUser === null) {
+            return null;
+        }
+
+        return $this->deliveryAddressFacade->findByUuidAndCustomer(
+            $deliveryAddressUuid,
+            $customerUser->getCustomer()
+        );
     }
 
     /**

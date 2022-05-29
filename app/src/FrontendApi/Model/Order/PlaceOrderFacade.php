@@ -70,7 +70,16 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         DeliveryAddressDataFactory $deliveryAddressDataFactory,
         DeliveryAddressFactory $deliveryAddressFactory
     ) {
-        parent::__construct($orderFacade, $orderProductFacade, $orderStatusRepository, $orderPreviewFactory, $currencyFacade, $domain, $currentCustomerUser, $customerUserFacade);
+        parent::__construct(
+            $orderFacade,
+            $orderProductFacade,
+            $orderStatusRepository,
+            $orderPreviewFactory,
+            $currencyFacade,
+            $domain,
+            $currentCustomerUser,
+            $customerUserFacade
+        );
 
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
@@ -81,10 +90,15 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
+     * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \App\Model\Order\Order
      */
-    public function placeOrder(OrderData $orderData, array $quantifiedProducts, ?PromoCode $promoCode = null): Order
-    {
+    public function placeOrder(
+        OrderData $orderData,
+        array $quantifiedProducts,
+        ?PromoCode $promoCode = null,
+        ?DeliveryAddress $deliveryAddress = null
+    ): Order {
         /** @var \App\Model\Order\Status\OrderStatus $defaultOrderStatus */
         $defaultOrderStatus = $this->orderStatusRepository->getDefault();
         $orderData->status = $defaultOrderStatus;
@@ -107,7 +121,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         if ($customerUser instanceof CustomerUser) {
-            $deliveryAddress = $this->createDeliveryAddressForAmendingCustomerUserData($order);
+            $deliveryAddress = $deliveryAddress ?? $this->createDeliveryAddressForAmendingCustomerUserData($order);
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
         }
 
