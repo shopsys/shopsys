@@ -76,7 +76,7 @@ class Stock implements OrderableEntityInterface
     public function __construct(StockData $stockData)
     {
         $this->domains = new ArrayCollection();
-        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+        $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
         $this->createDomains($stockData);
         $this->setData($stockData);
     }

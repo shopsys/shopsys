@@ -79,7 +79,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
         if ($argument->offsetExists('first') === false
             && $argument->offsetExists('last') === false
         ) {
-            $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
+            $argument->offsetSet('first', self::DEFAULT_FIRST_LIMIT);
         }
     }
 
