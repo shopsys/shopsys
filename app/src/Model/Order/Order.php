@@ -203,7 +203,7 @@ class Order extends BaseOrder
      */
     public function getPaymentTransactions(): array
     {
-        return $this->paymentTransactions->toArray();
+        return $this->paymentTransactions->getValues();
     }
 
     /**

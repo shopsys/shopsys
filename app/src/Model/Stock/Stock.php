@@ -222,6 +222,6 @@ class Stock implements OrderableEntityInterface
      */
     public function getStores(): array
     {
-        return $this->stores->toArray();
+        return $this->stores->getValues();
     }
 }

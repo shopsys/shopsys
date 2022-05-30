@@ -222,7 +222,7 @@ class ProductDomain extends BaseProductDomain
      */
     public function getFlags(): array
     {
-        return $this->flags->toArray();
+        return $this->flags->getValues();
     }
 
     /**

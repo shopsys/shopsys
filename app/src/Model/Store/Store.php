@@ -345,7 +345,7 @@ class Store implements OrderableEntityInterface
      */
     public function getEnabledDomains(): array
     {
-        return array_filter($this->domains->toArray(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
+        return array_filter($this->domains->getValues(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
     }
 
     /**
