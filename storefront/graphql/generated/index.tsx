@@ -2180,6 +2180,8 @@ export type SeoSettingApi = {
 /** Represents settings of the current domain */
 export type SettingsApi = {
   __typename?: 'Settings';
+  /** Main text for contact form */
+  contactFormMainText: Scalars['String'];
   /** Settings related to pricing */
   pricing: PricingSettingApi;
   /** Settings related to SEO */
