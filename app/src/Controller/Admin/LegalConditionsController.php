@@ -37,7 +37,7 @@ class LegalConditionsController extends BaseLegalConditionsController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $this->legalConditionsFacade->setTermsAndConditions($formData['termsAndConditionsArticle'], $domainId);
+            $this->legalConditionsFacade->setTermsAndConditions($domainId, $formData['termsAndConditionsArticle']);
 
             $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
             return $this->redirectToRoute('admin_legalconditions_termsandconditions');
@@ -74,7 +74,7 @@ class LegalConditionsController extends BaseLegalConditionsController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
-            $this->legalConditionsFacade->setPrivacyPolicy($formData['privacyPolicyArticle'], $domainId);
+            $this->legalConditionsFacade->setPrivacyPolicy($domainId, $formData['privacyPolicyArticle']);
 
             $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
             return $this->redirectToRoute('admin_legalconditions_privacypolicy');
