@@ -18,8 +18,14 @@ class StocksDataFixture extends AbstractReferenceFixture
     private const ATTR_NOTE = 'note';
     private const ATTR_ENABLED_BY_DOMAIN = 'enabled';
     private const ATTR_EXTERNAL = 'externalId';
-    private const ENABLED_FIRST_DOMAIN = [1 => true, 2 => false];
-    private const ENABLED_SECOND_DOMAIN = [1 => false, 2 => true];
+    private const ENABLED_FIRST_DOMAIN = [
+        1 => true,
+        2 => false,
+    ];
+    private const ENABLED_SECOND_DOMAIN = [
+        1 => false,
+        2 => true,
+    ];
     public const STOCK_PREFIX = 'stock_';
 
     /**

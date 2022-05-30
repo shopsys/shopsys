@@ -52,7 +52,9 @@ class TransferIssueSearchFormType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'attr' => ['novalidate' => 'novalidate'],
+                'attr' => [
+                    'novalidate' => 'novalidate',
+                ],
                 'method' => 'GET',
             ]);
     }

@@ -66,7 +66,9 @@ class PaymentTransactionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PaymentTransactionRefundData::class,
-            'attr' => ['novalidate' => 'novalidate'],
+            'attr' => [
+                'novalidate' => 'novalidate',
+            ],
             'constraints' => [
                 new Constraints\Callback([
                     'callback' => [$this, 'maximalRefundAmountValidation'],

@@ -129,7 +129,10 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         $grid->addColumn('redirectTo', 'fu.redirectTo', t('Redirect target'));
         $grid->addColumn('redirectCode', 'fu.redirectCode', t('Redirect type'), true);
         $grid->addColumn('lastModification', 'fu.lastModification', t('Last modification'), true);
-        $grid->addDeleteActionColumn('admin_unused_friendly_url_delete', ['domainId' => 'fu.domainId', 'slug' => 'fu.slug'])
+        $grid->addDeleteActionColumn('admin_unused_friendly_url_delete', [
+            'domainId' => 'fu.domainId',
+            'slug' => 'fu.slug',
+        ])
             ->setConfirmMessage(t('Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance.'));
 
         return $grid;

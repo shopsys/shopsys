@@ -57,7 +57,11 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureDashboardMenu(ConfigureMenuEvent $event)
     {
         $dashboardMenu = $event->getMenu();
-        $dashboardMenu->addChild('transferList', ['route' => 'admin_transfer_list', 'display' => false, 'label' => t('Přehled problémů v přenosech')]);
+        $dashboardMenu->addChild('transferList', [
+            'route' => 'admin_transfer_list',
+            'display' => false,
+            'label' => t('Přehled problémů v přenosech'),
+        ]);
     }
 
     /**
@@ -71,14 +75,39 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         unset($customersExtras['routes']);
         $customersMenu->setExtras($customersExtras);
 
-        $customersMenu->addChild('customers_overview', ['route' => 'admin_customer_list', 'label' => t('Customers overview')]);
-        $customersMenu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
+        $customersMenu->addChild('customers_overview', [
+            'route' => 'admin_customer_list',
+            'label' => t('Customers overview'),
+        ]);
+        $customersMenu->addChild('newsletter', [
+            'route' => 'admin_newsletter_list',
+            'label' => t('Email newsletter'),
+        ]);
 
-        $promoCodeMenu = $customersMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
-        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', ['route' => 'admin_promocode_listmassgeneratebatch', 'display' => true, 'label' => t('Vygenerované dávky')]);
-        $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
-        $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
-        $promoCodeMenu->addChild('promo_codes_newmassgenerate', ['route' => 'admin_promocode_newmassgenerate', 'label' => t('Hromadné vytvoření slevových kupónů'), 'display' => false]);
+        $promoCodeMenu = $customersMenu->addChild('promo_codes', [
+            'route' => 'admin_promocode_list',
+            'label' => t('Slevové kupóny'),
+        ]);
+        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', [
+            'route' => 'admin_promocode_listmassgeneratebatch',
+            'display' => true,
+            'label' => t('Vygenerované dávky'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_new', [
+            'route' => 'admin_promocode_new',
+            'display' => false,
+            'label' => t('Nový slevový kupóny'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_edit', [
+            'route' => 'admin_promocode_edit',
+            'display' => false,
+            'label' => t('Editace slevového kupónu'),
+        ]);
+        $promoCodeMenu->addChild('promo_codes_newmassgenerate', [
+            'route' => 'admin_promocode_newmassgenerate',
+            'label' => t('Hromadné vytvoření slevových kupónů'),
+            'display' => false,
+        ]);
     }
 
     /**
