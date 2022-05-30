@@ -385,16 +385,16 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         if ($product->isMainVariant()) {
             $variantCatnums = [];
-            $variantCatnums[] = $product->getCatnum() ?? '';
+            $variantCatnums[] = $product->getCatnum();
             $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
 
             foreach ($variants as $variant) {
-                $variantCatnums[] = $variant->getCatnum() ?? '';
+                $variantCatnums[] = $variant->getCatnum();
             }
 
             return trim(implode(' ', array_unique($variantCatnums)));
         }
-        return $product->getCatnum() ?? '';
+        return $product->getCatnum();
     }
 
     /**

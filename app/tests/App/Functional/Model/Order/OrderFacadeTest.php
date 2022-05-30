@@ -68,6 +68,7 @@ class OrderFacadeTest extends FunctionalTestCase
     /**
      * @var \App\Model\Order\OrderDataFactory
      * @inject
+     * @phpstan-ignore-next-line Test is skipped
      */
     private OrderDataFactory $orderDataFactory;
 

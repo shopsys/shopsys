@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Category\Category[][] $categoriesByDomainId
  * @property \App\Model\Product\Brand\Brand|null $brand
  * @property \App\Model\Product\Product[] $variants
- * @property \App\Model\Product\Flag\Flag[][] $flags
  * @property \App\Model\Product\Product[] $accessories
  * @property \App\Model\Product\Unit\Unit|null $unit
  */
@@ -108,6 +107,7 @@ class ProductData extends BaseProductData
 
     /**
      * @var \App\Model\Product\Flag\Flag[][]|null[][]
+     * @phpstan-ignore-next-line Overridden property type
      */
     public $flags;
 

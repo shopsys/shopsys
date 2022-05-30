@@ -43,6 +43,7 @@ final class OrderFacadeEditTest extends FunctionalTestCase
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
      * @inject
+     * @phpstan-ignore-next-line Tests are skipped
      */
     private OrderItemDataFactoryInterface $orderItemDataFactory;
 
@@ -247,6 +248,7 @@ final class OrderFacadeEditTest extends FunctionalTestCase
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
+     * @phpstan-ignore-next-line Tests are skipped
      */
     private function getOrderItemByName(Order $order, string $name): OrderItem
     {

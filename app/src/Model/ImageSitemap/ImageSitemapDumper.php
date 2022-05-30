@@ -11,7 +11,7 @@ class ImageSitemapDumper extends SitemapDumper
     /**
      * @param string|null $section
      */
-    protected function populate(string $section = null): void
+    protected function populate(?string $section = null): void
     {
         $event = new ImageSitemapPopulateEvent($this, $section);
 

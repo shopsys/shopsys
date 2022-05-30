@@ -45,7 +45,7 @@ class BlogCategory extends AbstractTranslatableEntity
     private $parent;
 
     /**
-     * @var \App\Model\Blog\Category\BlogCategory[]
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Blog\Category\BlogCategory[]
      * @ORM\OneToMany(targetEntity="App\Model\Blog\Category\BlogCategory", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
@@ -92,6 +92,7 @@ class BlogCategory extends AbstractTranslatableEntity
         $this->setParent($blogCategoryData->parent);
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->children = new ArrayCollection();
 
         $this->setTranslations($blogCategoryData);
         $this->uuid = $blogCategoryData->uuid ?: Uuid::uuid4()->toString();
@@ -176,7 +177,7 @@ class BlogCategory extends AbstractTranslatableEntity
      */
     public function getChildren()
     {
-        return $this->children;
+        return $this->children->getValues();
     }
 
     /**

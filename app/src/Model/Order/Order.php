@@ -47,24 +47,28 @@ class Order extends BaseOrder
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @phpstan-ignore-next-line Overridden property type
      */
     protected $firstName;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @phpstan-ignore-next-line Overridden property type
      */
     protected $lastName;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @phpstan-ignore-next-line Overridden property type
      */
     protected $deliveryFirstName;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @phpstan-ignore-next-line Overridden property type
      */
     protected $deliveryLastName;
 

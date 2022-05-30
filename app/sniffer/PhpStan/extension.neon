@@ -1,0 +1,5 @@
+services:
+    -
+        class: Sniffer\PhpStan\GedmoExtension
+        tags:
+            - phpstan.properties.readWriteExtension

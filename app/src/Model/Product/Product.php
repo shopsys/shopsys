@@ -109,6 +109,7 @@ class Product extends BaseProduct
      * @var null
      * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     * @phpstan-ignore-next-line Removed property
      */
     protected $calculatedAvailability;
 

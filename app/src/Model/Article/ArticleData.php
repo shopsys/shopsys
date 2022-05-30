@@ -27,7 +27,7 @@ class ArticleData extends BaseArticleData
     /**
      * @var string
      */
-    public $url;
+    public string $url = '';
 
     public function __construct()
     {
