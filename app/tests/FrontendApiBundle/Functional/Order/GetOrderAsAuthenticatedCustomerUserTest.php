@@ -56,7 +56,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     public function testGetOrderByUuidReturnsError(): void
     {
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
-        $expectedErrorMessage = 'Order not found';
+        $expectedErrorMessage = "Order with UUID 'e4002d79-0dba-4899-a51a-0a8feec3c2ce' not found.";
 
         $response = $this->getResponseContentForQuery($this->getOrderQueryByUuid($order->getUuid()));
         $this->assertResponseContainsArrayOfErrors($response);
@@ -70,7 +70,6 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     public function testGetOrderByOrderNumberReturnsError(): void
     {
         $order = $this->getOrderOfNotCurrentlyLoggedCustomerUser();
-        $expectedErrorMessage = 'Order not found';
 
         $response = $this->getResponseContentForQuery($this->getOrderQueryByOrderNumber($order->getNumber()));
         $this->assertResponseContainsArrayOfErrors($response);
@@ -78,7 +77,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
         $this->assertArrayHasKey(0, $errors);
         $this->assertArrayHasKey('message', $errors[0]);
-        $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+        $this->assertRegExp("/Order with order number '\d+' not found./", $errors[0]['message']);
     }
 
     /**

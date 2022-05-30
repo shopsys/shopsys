@@ -23,3 +23,10 @@ OrderQuery:
                 type: 'Order'
                 resolve: "@=resolver('lastOrder')"
                 description: "Returns last order of the user or null if no order was placed yet"
+            orderSentPageContent:
+                type: "String!"
+                resolve: "@=resolver('orderSentPageContent', [args['orderUuid']])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order sent page."

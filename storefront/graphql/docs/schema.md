@@ -764,6 +764,20 @@ Returns last order of the user or null if no order was placed yet
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderSentPageContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order sent page.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>personalDataPage</strong></td>
 <td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
 <td>

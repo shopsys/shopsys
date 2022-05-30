@@ -1757,6 +1757,8 @@ export type QueryApi = {
   notificationBars: Maybe<Array<NotificationBarApi>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<OrderApi>;
+  /** Returns HTML content for order sent page. */
+  orderSentPageContent: Scalars['String'];
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
   orders: Maybe<OrderConnectionApi>;
   /** Returns payment filtered using UUID */
@@ -1891,6 +1893,11 @@ export type QueryOrderArgsApi = {
   orderNumber: Maybe<Scalars['String']>;
   urlHash: Maybe<Scalars['String']>;
   uuid: Maybe<Scalars['Uuid']>;
+};
+
+
+export type QueryOrderSentPageContentArgsApi = {
+  orderUuid: Scalars['Uuid'];
 };
 
 
