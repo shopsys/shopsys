@@ -21,6 +21,8 @@ import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandle
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -30,6 +32,8 @@ import { contactInformationActions } from 'redux/slices/contactInformation';
 import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
+import { onPurchaseOrderGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -40,12 +44,15 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace } = useCurrentCart();
+    const { pickupPlace, transport, payment, promoCode, cart } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step3');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
+    useGtmShippingDataView(transport, pickupPlace, payment?.name, gtmStaticPageViewEvent);
 
     const onSuccessfullyCreatedOrderHandler = (createOrderResultData: CreateOrderMutationApi | undefined) => {
         dispatch(userActions.setCartUuid(null));
@@ -109,13 +116,24 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             };
         }
 
-        await createOrder({
+        const order = await createOrder({
             cartUuid,
             ...formValues,
             ...deliveryInfo,
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
         });
+
+        if (order.data !== undefined && cart !== null && transport !== null && payment !== null) {
+            onPurchaseOrderGtmEventHandler(
+                cart,
+                transport,
+                pickupPlace,
+                payment,
+                promoCode,
+                order.data.CreateOrder.number,
+            );
+        }
     };
 
     return (

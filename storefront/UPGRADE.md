@@ -233,6 +233,7 @@
       - these helpers were implemented on all places with conditions like `document !== undefined` etc.
     - tips on how to implement them
       - find all the places where you use the `window` or `document` in the conditions and replace them with adequate helpers
+
 ### Cypress folder structure
 - [FWCC-892](https://shopsys.atlassian.net/browse/FWCC-892)
 - [FWCC-892 - cypress change folder structure](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/572)
@@ -317,3 +318,87 @@
     - tips how to implement it
         - wherever the `formatPrice` method is imported, replace it with getting the method via the `useFormatPrice` hook
         - `formatPrice` method is now fully configured, so you don't need to pass the currency code and the translation function to it
+
+### GTM data layer
+- [FWCC-799](https://shopsys.atlassian.net/browse/FWCC-799)
+- [FWCC-799 - added basic GTM layer](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/525)
+  - the reasons these changes were introduced
+    - by introducing the GTM data layer we are now able to push the most essential GTM events to GA
+    - additionally it also serves as a foundation for any further GTM extensions we would need
+  - most significant changes
+    - hooks for the most necessary events have been introduced
+      - `useGtmCartView` = user has viewed the cart page (1st order step)
+      - `useGtmFriendlyPageView` = user has viewed a friendly URL page (general hook for all friendly URL pages)
+      - `useGtmCategoryProductListView` = user has viewed the category page with products (extra hook if the friendly URL page is a category page as well)
+      - `useGtmProductDetailView` = user has viewed a product detail page (extra hook if the friendly URL page is a product detail page as well)
+      - `useGtmPaymentShippingView` = user has viewed the shipping & payment page (2nd order step)
+      - `useGtmSearchResultView` = user has viewed the search results page
+      - `useGtmShippingDataView` = user has viewed the contact information page (3rd order step) 
+      - `useGtmSliderProductListView` = user has viewed the product slider on homepage
+      - `useGtmStaticPageView` = user has viewed a static page
+    - event handlers for some other scenarios where hooks were not suitable have been introduced
+      - `onClickProductDetailGtmEvent` = used when the user clicks on a product that takes him to the product detail page (autocomplete, slider, category)
+      - `onChangeCartItemGtmEvent` = used when the cart item quantity changes (increases, decreases)
+      - `onRemoveCartItemGtmEvent`= used when the cart item is completely removed from the cart
+      - `onPurchaseOrder` = used when the user creates and order
+      - `onClickSuggestResultEvent` = used when the user clicks on a search result in autocomplete
+      - `pushGtmTransportChangeEvent` = used when a new transport method is selected
+      - `pushGtmPaymentChangeEvent` = used when a new payment method is selected
+  - other changes
+      - cart was extended to also contain a `isLoaded` flag which can be used to see if the cart has been already loaded2
+      - new `FriendlyUrlPageType` type was introduced, it contains all entity types that can be used wherever we work with these entities as an aggregate (for example in `[...all].tsx`)
+      - working with friendly URL page content rendering has changed, as it now uses 2 helper methods
+        - `renderContent(data: Maybe<FriendlyUrlPageType>)` that takes care of the decision about the right friendly URL page type
+        - `wrapContent(content: JSX.Element, data: FriendlyUrlPageType)` that takes care of wrapping the previously chosen friendly URL page in the common layout 
+  - tips on how to implement them
+      - if you have a new static page that requires the static page view event to be pushed, you have to use the `useGtmStaticPageView` hook, to which you must send the previously obtained `event` object
+        - either send a special page type `
+        ```ts
+          const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('my special page type');
+          useGtmStaticPageView(gtmStaticPageViewEvent);
+        ```
+        - or the default 'other' type
+        ```ts
+          const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+          useGtmStaticPageView(gtmStaticPageViewEvent);
+        ```
+      - if you have a new special event that needs to be called asynchronously when the page is loaded/viewed, you will have to write the hook yourself, but can take inspiration from:
+        - `useGtmSliderProductListView` if it is a view event that depends on custom data to be loaded (products in this case)
+        - `useGtmStaticPageView` if it is a view event that depends on the cart to be loaded
+      - if you have a new special event that needs to be called after a user action is taken, you will have to implement it yourself, but you can inspire yourself by looking at:
+        - `onClickSuggestResultEvent` if the event is a click event (like clicking on a button or a link)
+        - `onChangeCartItemGtmEvent` if the event can have multiple GTM types but is the same on the application level
+      - if you have a list of products which should trigger a list view event when displayed, you will have to take care of pagination and how it should trigger page rerendering
+        - a good example of this behaviour is the `useGtmCategoryProductListView` hook
+        - in the code below you can see how we are:
+          - indexing the products relatively to the current page 
+          - remembering the previous page start cursor and comparing it to the new one to see if the page changed and the data has loaded
+        ```ts
+        export const useGtmCategoryProductListView = (data: Maybe<FriendlyUrlPageType> | undefined, slug: string): void => {
+            const lastViewedCategorySlug = useRef<string | undefined>(undefined);
+            const lastViewedCategoryPageStartCursor = useRef<string | undefined>(undefined);
+            const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+
+            useEffect(() => {
+                if (
+                    data !== null &&
+                    data !== undefined &&
+                    data.__typename === 'Category' &&
+                    (lastViewedCategorySlug.current !== slug ||
+                        lastViewedCategoryPageStartCursor.current !== data.productConnection.pageInfo.startCursor)
+                ) {
+                    lastViewedCategorySlug.current = slug;
+                    lastViewedCategoryPageStartCursor.current = data.productConnection.pageInfo.startCursor;
+                    const event = getNewGtmEcommerceEvent('ec.products_list', true);
+
+                    event.ecommerce = getGtmProductsListEvent(
+                        data.productConnection.products,
+                        getCategoryOrSeoCategoryGtmListName(data, slug),
+                        currentPage,
+                        pageSize,
+                    );
+                    gtmSafePushEvent(event);
+                }
+            }, [data, slug, currentPage, pageSize]);
+        };
+        ```

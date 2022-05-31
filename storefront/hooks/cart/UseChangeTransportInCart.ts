@@ -3,15 +3,24 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysSelector } from 'redux/main';
+import { PickupPlaceType } from 'types/pickupPlace';
+import { onTransportChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
+import { useGtmCartEventInfo } from 'utils/Gtm/Gtm';
 
 export const useChangeTransportInCart = (): typeof changeTransportHandler => {
     const [, changeTransportInCart] = useChangeTransportInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
+    const gtmCartEventInfo = useGtmCartEventInfo();
 
-    const changeTransportHandler = async (newTransportUuid: string | null, newPickupPlaceIdentifier: string | null) => {
+    const changeTransportHandler = async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
         const changeTransportResult = await changeTransportInCart({
-            input: { transportUuid: newTransportUuid, pickupPlaceIdentifier: newPickupPlaceIdentifier, cartUuid },
+            input: {
+                transportUuid: newTransportUuid,
+                pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                cartUuid,
+            },
         });
 
         // EXTEND TRANSPORT MODIFICATIONS HERE
@@ -27,6 +36,14 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
 
             return null;
         }
+
+        onTransportChangeGtmEventHandler(
+            gtmCartEventInfo.cart,
+            changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
+            newPickupPlace,
+            changeTransportResult.data?.ChangeTransportInCart.payment?.name,
+            currencyCode,
+        );
 
         return changeTransportResult.data?.ChangeTransportInCart;
     };

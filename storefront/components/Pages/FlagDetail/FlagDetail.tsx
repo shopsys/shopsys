@@ -22,7 +22,7 @@ const FlagDetail: FC<FlagDetailProps> = (props) => {
                 <div ref={containerWrapRef}>
                     <SortingBar totalCount={props.flag.productConnection.totalCount} />
                     {props.flag.productConnection.products.length !== 0 && (
-                        <ProductsList products={props.flag.productConnection.products} />
+                        <ProductsList products={props.flag.productConnection.products} gtmListName="flag" />
                     )}
                     <Pagination
                         totalCount={props.flag.productConnection.totalCount}

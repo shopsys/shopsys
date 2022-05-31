@@ -10,12 +10,15 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import { useGtmSearchResultsListView } from 'hooks/gtm/useGtmSearchResultsListView';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { initialState, userActions } from 'redux/slices/user';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
@@ -26,12 +29,12 @@ const Search: FC<ServerSidePropsType> = () => {
     const searchProductsSort = useShopsysSelector((state) => state.user.sort);
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
-    const searchResults = useSearch(
-        getStringFromUrlQuery(router.query.q),
-        searchProductsSort,
-        paginationCursor,
-        optionsFilter,
-    );
+    const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
+    const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, optionsFilter);
+
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
+    useGtmSearchResultsListView(searchResults, searchQuery);
 
     useEffect(() => {
         dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));

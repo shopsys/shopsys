@@ -12,7 +12,7 @@ import ProductDetailPage from 'components/Pages/ProductDetail';
 import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
-import { SlugQueryDocumentApi } from 'graphql/generated';
+import { Maybe, SlugQueryDocumentApi } from 'graphql/generated';
 import { createClient } from 'helpers/createClient';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -21,20 +21,21 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
+import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
+import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
+import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
+import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { initialState, userActions } from 'redux/slices/user';
-import { ArticleDetailType } from 'types/article';
-import { BlogArticleDetailType } from 'types/blogArticle';
-import { BlogCategoryDetailType } from 'types/blogCategory';
-import { BrandDetailType } from 'types/brand';
-import { CategoryDetailType } from 'types/category';
-import { FlagDetailType } from 'types/flag';
+import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
-import { StoreDetailType } from 'types/store';
 import { ssrExchange } from 'urql';
+import { useGtmPageViewEvent } from 'utils/Gtm/EventFactories';
+import { getGtmPageInfoForFriendlyUrl } from 'utils/Gtm/Gtm';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
@@ -54,56 +55,53 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
         );
     }, [dispatch, router.query.page]);
 
-    const data = useFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
+    const slug = getUrlWithoutGetParameters(router.asPath);
+    const data = useFriendlyUrlResolvedData(slug);
 
-    if (data === null || data === undefined) {
-        return <Error404 />;
-    }
+    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug));
+    useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
+    useGtmCategoryProductListView(data, slug);
+    useGtmProductDetailView(data, slug);
+    useGtmBrandProductListView(data, slug);
+    useGtmFlagProductListView(data, slug);
 
-    return (
-        <CommonLayout>
-            <Webline>
-                <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
-            </Webline>
-            {renderContent(data)}
-        </CommonLayout>
-    );
+    return renderContent(data);
 };
 
-function renderContent(
-    data:
-        | ProductDetailType
-        | MainVariantDetailType
-        | CategoryDetailType
-        | StoreDetailType
-        | ArticleDetailType
-        | BlogArticleDetailType
-        | BlogCategoryDetailType
-        | BrandDetailType
-        | FlagDetailType,
-) {
-    if (data.__typename === 'RegularProduct' || data.__typename === 'Variant') {
-        return <ProductDetailPage product={data as ProductDetailType} />;
-    } else if (data.__typename === 'MainVariant') {
-        return <ProductDetailMainVariantPage product={data as MainVariantDetailType} />;
-    } else if (data.__typename === 'Category') {
-        return <CategoryDetailPage category={data as CategoryDetailType} />;
-    } else if (data.__typename === 'Store') {
-        return <StoreDetailPage store={data as StoreDetailType} />;
-    } else if (data.__typename === 'Article') {
-        return <ArticleDetailPage article={data as ArticleDetailType} />;
-    } else if (data.__typename === 'BlogArticle') {
-        return <BlogArticlePage blogArticle={data as BlogArticleDetailType} />;
-    } else if (data.__typename === 'Brand') {
-        return <BrandDetailPage brand={data as BrandDetailType} />;
-    } else if (data.__typename === 'Flag') {
-        return <FlagDetailPage flag={data as FlagDetailType} />;
-    } else if (data.__typename === 'BlogCategory') {
-        return <BlogCategoryPage blogCategory={data as BlogCategoryDetailType} />;
+const renderContent = (data: Maybe<FriendlyUrlPageType>) => {
+    switch (data?.__typename) {
+        case 'RegularProduct':
+        case 'Variant':
+            return wrapContent(<ProductDetailPage product={data as ProductDetailType} />, data);
+        case 'MainVariant':
+            return wrapContent(<ProductDetailMainVariantPage product={data as MainVariantDetailType} />, data);
+        case 'Category':
+            return wrapContent(<CategoryDetailPage category={data} />, data);
+        case 'Store':
+            return wrapContent(<StoreDetailPage store={data} />, data);
+        case 'Article':
+            return wrapContent(<ArticleDetailPage article={data} />, data);
+        case 'BlogArticle':
+            return wrapContent(<BlogArticlePage blogArticle={data} />, data);
+        case 'Brand':
+            return wrapContent(<BrandDetailPage brand={data} />, data);
+        case 'Flag':
+            return wrapContent(<FlagDetailPage flag={data} />, data);
+        case 'BlogCategory':
+            return wrapContent(<BlogCategoryPage blogCategory={data} />, data);
+        default:
+            return <Error404 />;
     }
+};
 
-    return <Error404 />;
-}
+const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
+    <CommonLayout>
+        <Webline>
+            <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
+        </Webline>
+        {content}
+    </CommonLayout>
+);
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);

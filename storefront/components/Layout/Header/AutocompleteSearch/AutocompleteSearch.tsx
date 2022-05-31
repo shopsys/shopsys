@@ -11,8 +11,9 @@ import {
 import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './formMeta';
 import Icon from 'components/Basic/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
+import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import { canUseDom } from 'helpers/canUseDom';
+import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
@@ -56,6 +57,8 @@ const AutocompleteSearch: FC = () => {
             setAutocompleteSearchResults(undefined);
         }
     }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
+
+    useGtmSearchResultView(autocompleteSearchApiResults, autocompleteSearchQueryValue);
 
     useEffectOnce(() => {
         if (!canUseDom()) {
@@ -144,7 +147,7 @@ const AutocompleteSearch: FC = () => {
                         autocompleteSearchResults={autocompleteSearchResults}
                         isAutocompleteActive={
                             hasAutocompleteSearchFocus &&
-                            autocompleteSearchQueryValue.length > 2 &&
+                            autocompleteSearchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH &&
                             autocompleteSearchResults !== undefined
                         }
                         autocompleteSearchQueryValue={autocompleteSearchQueryValue}

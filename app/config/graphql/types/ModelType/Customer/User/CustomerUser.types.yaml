@@ -28,3 +28,6 @@ CustomerUser:
             deliveryAddresses:
                 type: "[DeliveryAddress!]!"
                 description: "List of delivery addresses"
+            pricingGroup:
+                type: "String!"
+                description: "The name of the customer pricing group"

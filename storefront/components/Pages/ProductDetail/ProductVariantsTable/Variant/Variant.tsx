@@ -18,11 +18,14 @@ import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVa
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useState } from 'react';
+import { GtmListNameType } from 'types/gtm';
 import { ListedVariantType } from 'types/product';
 
 type VariantProps = {
     variant: ListedVariantType;
     isSellingDenied: boolean;
+    gtmListName: GtmListNameType;
+    listIndex: number;
 };
 
 const Variant: FC<VariantProps> = (props) => {
@@ -37,15 +40,15 @@ const Variant: FC<VariantProps> = (props) => {
             <VariantsTableRowStyled key={props.variant.uuid} data-testid={testIdentifier + props.variant.catalogNumber}>
                 <VariantImageCellStyled>
                     <VariantImageWrapperStyled>
-                        <Image alt={props.variant.name} type="default" image={props.variant.image} />
+                        <Image alt={props.variant.fullName} type="default" image={props.variant.image} />
                     </VariantImageWrapperStyled>
                 </VariantImageCellStyled>
-                <VariantCellStyled data-testid={testIdentifier + 'name'}>{props.variant.name}</VariantCellStyled>
+                <VariantCellStyled data-testid={testIdentifier + 'name'}>{props.variant.fullName}</VariantCellStyled>
                 <VariantAvailabilityCellStyled
                     onClick={() => setAvailabilityPopupVisibility(true)}
                     data-testid={testIdentifier + 'availability'}
                 >
-                    {props.variant.availability}
+                    {props.variant.availability.name}
                     <ProductAvailableStoresCount
                         isMainVariant={false}
                         availableStoresCount={props.variant.availableStoresCount}
@@ -65,9 +68,11 @@ const Variant: FC<VariantProps> = (props) => {
                         <VariantActionStyled>
                             <AddToCart
                                 productUuid={props.variant.uuid}
-                                productName={props.variant.name}
+                                productName={props.variant.fullName}
                                 minQuantity={1}
                                 maxQuantity={props.variant.stockQuantity}
+                                gtmListName={props.gtmListName}
+                                listIndex={props.listIndex}
                             />
                         </VariantActionStyled>
                     )}

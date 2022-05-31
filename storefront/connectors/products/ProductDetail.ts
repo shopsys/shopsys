@@ -23,6 +23,8 @@ const mapProductDetailInterface = (
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
         images: mapImageSizesTypeApiData(productDetailApiData.images),
+        categoryNames: productDetailApiData.categories.map((category) => category.name),
+        availability: mapAvailabilityData(productDetailApiData.availability),
     };
 };
 
@@ -34,7 +36,6 @@ export const mapProductDetailApiData = (
         ...productDetailApiData,
         ...mapProductDetailInterface(productDetailApiData, currencyCode),
         __typename: productDetailApiData.__typename !== undefined ? productDetailApiData.__typename : 'RegularProduct',
-        availability: mapAvailabilityData(productDetailApiData.availability),
         storeAvailabilities: mapStoreAvailabilities(productDetailApiData.storeAvailabilities),
         shortDescription: productDetailApiData.shortDescription !== null ? productDetailApiData.shortDescription : '',
     };

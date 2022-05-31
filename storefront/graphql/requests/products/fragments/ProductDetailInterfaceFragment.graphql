@@ -1,6 +1,7 @@
 fragment ProductDetailInterfaceFragment on Product {
     uuid
     slug
+    fullName
     name
     namePrefix
     nameSuffix
@@ -16,8 +17,17 @@ fragment ProductDetailInterfaceFragment on Product {
     accessories {
         ...SliderProductFragment
     }
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
     flags {
         ...SimpleFlagFragment
     }
     isSellingDenied
+    availability {
+        ...AvailabilityFragment
+    }
 }

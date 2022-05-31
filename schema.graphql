@@ -663,6 +663,9 @@ type CompanyCustomerUser implements CustomerUser {
   """List of delivery addresses"""
   deliveryAddresses: [DeliveryAddress!]!
 
+  """The name of the customer pricing group"""
+  pricingGroup: String!
+
   """The customer’s company name (only when customer is a company)"""
   companyName: String
 
@@ -732,6 +735,9 @@ interface CustomerUser {
 
   """List of delivery addresses"""
   deliveryAddresses: [DeliveryAddress!]!
+
+  """The name of the customer pricing group"""
+  pricingGroup: String!
 }
 
 """Represents and encapsulates an ISO-8601 encoded UTC date-time value"""
@@ -2115,6 +2121,9 @@ type RegularCustomerUser implements CustomerUser {
 
   """List of delivery addresses"""
   deliveryAddresses: [DeliveryAddress!]!
+
+  """The name of the customer pricing group"""
+  pricingGroup: String!
 }
 
 """Represents a product"""

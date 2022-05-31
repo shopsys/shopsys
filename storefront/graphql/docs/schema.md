@@ -3041,6 +3041,15 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5631,6 +5640,15 @@ Default customer delivery addresses
 <td>
 
 List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
 
 </td>
 </tr>
@@ -8735,6 +8753,15 @@ Default customer delivery addresses
 <td>
 
 List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
 
 </td>
 </tr>

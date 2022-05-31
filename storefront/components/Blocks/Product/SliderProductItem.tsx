@@ -16,42 +16,57 @@ import {
 import Image from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
+import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
+import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
-const ProductItem: FC<SliderProductItemType> = (props) => {
+type ProductItemProps = {
+    product: SliderProductItemType;
+    gtmListName: GtmListNameType;
+    listIndex: number;
+};
+
+const ProductItem: FC<ProductItemProps> = (props) => {
     const testIdentifier = 'blocks-product-sliderproductitem-';
 
     return (
-        <SliderProductItemStyled className="keen-slider__slide" data-testid={testIdentifier + props.catalogNumber}>
+        <SliderProductItemStyled
+            className="keen-slider__slide"
+            data-testid={testIdentifier + props.product.catalogNumber}
+        >
             <SliderProductItemInStyled>
-                <NextLink href={props.slug} passHref>
-                    <SliderProductItemLinkStyled>
+                <NextLink href={props.product.slug} passHref>
+                    <SliderProductItemLinkStyled
+                        onClick={() =>
+                            onClickProductDetailGtmEventHandler(props.product, props.gtmListName, props.listIndex)
+                        }
+                    >
                         <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
-                            <Image image={props.image} type="list" alt={props.name} />
+                            <Image image={props.product.image} type="list" alt={props.product.fullName} />
                             <SliderProductItemFlagsStyled>
-                                <ProductFlags flags={props.flags} />
+                                <ProductFlags flags={props.product.flags} />
                             </SliderProductItemFlagsStyled>
                         </SliderProductItemImageStyled>
                         <SliderProductItemInfoStyled>
                             <SliderProductItemTitleStyled data-testid={testIdentifier + 'name'}>
-                                {props.name}
+                                {props.product.fullName}
                             </SliderProductItemTitleStyled>
-                            <ProductPrice {...props.price} />
+                            <ProductPrice {...props.product.price} />
                             <ProductAvailabilityStyled>
-                                {props.availability}
+                                {props.product.availability.name}
                                 <ProductAvailableStoresCount
-                                    isMainVariant={props.isMainVariant}
-                                    availableStoresCount={props.availableStoresCount}
+                                    isMainVariant={props.product.isMainVariant}
+                                    availableStoresCount={props.product.availableStoresCount}
                                 />
                                 <ProductExposedStoresCount
-                                    isMainVariant={props.isMainVariant}
-                                    exposedStoresCount={props.exposedStoresCount}
+                                    isMainVariant={props.product.isMainVariant}
+                                    exposedStoresCount={props.product.exposedStoresCount}
                                 />
                             </ProductAvailabilityStyled>
                         </SliderProductItemInfoStyled>
                     </SliderProductItemLinkStyled>
                 </NextLink>
-                <ProductAction {...props} />
+                <ProductAction product={props.product} gtmListName={props.gtmListName} listIndex={props.listIndex} />
             </SliderProductItemInStyled>
         </SliderProductItemStyled>
     );

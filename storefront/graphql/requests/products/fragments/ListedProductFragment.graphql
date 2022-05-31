@@ -1,7 +1,8 @@
 fragment ListedProductFragment on Product {
+    __typename
     uuid
     slug
-    name
+    fullName
     stockQuantity
     flags {
         ...SimpleFlagFragment
@@ -14,5 +15,10 @@ fragment ListedProductFragment on Product {
     availableStoresCount
     exposedStoresCount
     catalogNumber
-    __typename
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
 }

@@ -7,15 +7,19 @@ import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const OrderDetailByHash: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const router = useRouter();
     const order = useOrderDetailByHash(getStringFromUrlQuery(router.query.urlHash), domainConfig);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainConfig.url}>

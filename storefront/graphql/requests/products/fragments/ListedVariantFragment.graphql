@@ -1,7 +1,9 @@
 fragment ListedVariantFragment on Variant {
+    __typename
     uuid
     slug
     name
+    fullName
     stockQuantity
     flags {
         ...SimpleFlagFragment
@@ -17,5 +19,10 @@ fragment ListedVariantFragment on Variant {
     storeAvailabilities {
         ...StoreAvailabilityFragment
     }
-    __typename
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
 }

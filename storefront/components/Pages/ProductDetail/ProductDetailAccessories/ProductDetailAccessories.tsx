@@ -18,7 +18,7 @@ const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = (props) => {
     return (
         <>
             <ShopsysHeading type="h2">{t('You can also buy')}</ShopsysHeading>
-            <ProductsSlider products={props.accessories} />
+            <ProductsSlider products={props.accessories} gtmListName="accessory" />
         </>
     );
 };

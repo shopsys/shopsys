@@ -1,4 +1,5 @@
 import { mapStoreAvailabilities } from 'connectors/availability/Availability';
+import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductPriceData } from 'connectors/price/Prices';
@@ -23,9 +24,10 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        availability: apiData.availability.name,
+        availability: mapAvailabilityData(apiData.availability),
         price: mapProductPriceData(apiData.price, currencyCode),
         image: getFirstImage(apiData.images),
+        categoryNames: apiData.categories.map((category) => category.name),
     };
 };
 
@@ -62,9 +64,10 @@ const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCod
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        availability: apiData.availability.name,
+        availability: mapAvailabilityData(apiData.availability),
         price: mapProductPriceData(apiData.price, currencyCode),
         image: getFirstImage(apiData.images),
+        categoryNames: apiData.categories.map((category) => category.name),
     };
 };
 

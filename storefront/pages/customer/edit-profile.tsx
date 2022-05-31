@@ -6,10 +6,12 @@ import EditProfile from 'components/Pages/Customer/EditProfile';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const EditProfilePage: FC = () => {
     const t = useTypedTranslationFunction();
@@ -19,6 +21,8 @@ const EditProfilePage: FC = () => {
         domainUrl,
     );
     const currentCustomerUserData = useCurrentCustomerData();
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>

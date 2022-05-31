@@ -20,5 +20,11 @@ fragment CartItemFragment on CartItem {
         unit {
             name
         }
+        brand {
+            ...SimpleBrandFragment
+        }
+        categories {
+            name
+        }
     }
 }

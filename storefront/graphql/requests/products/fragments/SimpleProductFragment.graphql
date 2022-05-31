@@ -1,9 +1,23 @@
 fragment SimpleProductFragment on Product {
+    uuid
+    catalogNumber
     fullName
     slug
     ...ProductPriceFragment
     ...ProductImagesListFragment
     unit {
         name
+    }
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
+    flags {
+        ...SimpleFlagFragment
+    }
+    availability {
+        ...AvailabilityFragment
     }
 }

@@ -1,8 +1,0 @@
-fragment SimpleProductConnectionFragment on ProductConnection {
-    totalCount
-    edges {
-        node {
-            ...SimpleProductFragment
-        }
-    }
-}

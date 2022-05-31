@@ -23,8 +23,11 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { GtmListNameType } from 'types/gtm';
+import { ListedProductType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -45,6 +48,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainConfig.url);
+
+    const onProductDetailRedirectHandler = (
+        product: SimpleProductType | ListedProductType,
+        listName: GtmListNameType,
+        index: number,
+    ) => {
+        onClickProductDetailGtmEventHandler(product, listName, index);
+        onClickSuggestResultGtmEventHandler(props.autocompleteSearchQueryValue, 'product', product.fullName);
+    };
 
     return (
         <AutocompleteStyled isActive={props.isAutocompleteActive} data-testid={testIdentifier}>
@@ -83,7 +95,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         data-testid={testIdentifier + '-products-' + index}
                                                     >
                                                         <NextLink href={product.slug}>
-                                                            <ProductSearchResultLinkStyled>
+                                                            <ProductSearchResultLinkStyled
+                                                                onClick={() =>
+                                                                    onProductDetailRedirectHandler(
+                                                                        product,
+                                                                        'autocomplete',
+                                                                        index,
+                                                                    )
+                                                                }
+                                                            >
                                                                 <ProductSearchResultImageWrapperStyled>
                                                                     <Image
                                                                         image={product.image}
@@ -119,7 +139,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         data-testid={testIdentifier + '-brands-' + index}
                                                     >
                                                         <NextLink href={brand.slug}>
-                                                            <SearchResultLinkStyled>
+                                                            <SearchResultLinkStyled
+                                                                onClick={() =>
+                                                                    onClickSuggestResultGtmEventHandler(
+                                                                        props.autocompleteSearchQueryValue,
+                                                                        'brand',
+                                                                        brand.name,
+                                                                    )
+                                                                }
+                                                            >
                                                                 {brand.name}
                                                             </SearchResultLinkStyled>
                                                         </NextLink>
@@ -145,7 +173,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         data-testid={testIdentifier + '-categories-' + index}
                                                     >
                                                         <NextLink href={category.slug}>
-                                                            <SearchResultLinkStyled>
+                                                            <SearchResultLinkStyled
+                                                                onClick={() =>
+                                                                    onClickSuggestResultGtmEventHandler(
+                                                                        props.autocompleteSearchQueryValue,
+                                                                        'category',
+                                                                        category.name,
+                                                                    )
+                                                                }
+                                                            >
                                                                 {category.name}
                                                             </SearchResultLinkStyled>
                                                         </NextLink>
@@ -169,7 +205,15 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         data-testid={testIdentifier + '-articles-' + index}
                                                     >
                                                         <NextLink href={article.slug}>
-                                                            <SearchResultLinkStyled>
+                                                            <SearchResultLinkStyled
+                                                                onClick={() =>
+                                                                    onClickSuggestResultGtmEventHandler(
+                                                                        props.autocompleteSearchQueryValue,
+                                                                        'article',
+                                                                        article.name,
+                                                                    )
+                                                                }
+                                                            >
                                                                 {article.name}
                                                             </SearchResultLinkStyled>
                                                         </NextLink>

@@ -15,6 +15,7 @@ import { CartItemType } from 'types/cart';
 
 type ListItemProps = {
     cartItem: CartItemType;
+    listIndex: number;
 };
 
 const ListItem: FC<ListItemProps> = (props) => {
@@ -38,7 +39,7 @@ const ListItem: FC<ListItemProps> = (props) => {
                     {formatPrice(props.cartItem.product.price.priceWithVat * props.cartItem.quantity)}
                 </ListItemPriceStyled>
             </ListItemDetailStyled>
-            <RemoveCartItemButton cartItemUuid={props.cartItem.uuid} />
+            <RemoveCartItemButton cartItem={props.cartItem} listIndex={props.listIndex} />
         </ListItemStyled>
     );
 };

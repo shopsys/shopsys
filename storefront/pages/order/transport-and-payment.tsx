@@ -16,6 +16,8 @@ import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
+import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
+import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -24,6 +26,7 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { TransportAndPaymentFormType } from 'types/form';
 import { ssrExchange } from 'urql';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -39,6 +42,10 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const [formProviderMethods] = useTransportAndPaymentForm();
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step2');
+    useGtmStaticPageView(gtmStaticPageViewEvent);
+    useGtmPaymentShippingView(gtmStaticPageViewEvent);
 
     const onSelectTransportAndPaymentHandler: SubmitHandler<TransportAndPaymentFormType> = () => {
         event?.preventDefault();

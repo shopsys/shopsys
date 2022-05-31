@@ -33,6 +33,9 @@ class CustomerUserResolverMap extends ResolverMap
             'deliveryAddresses' => function (CustomerUser $customerUser) {
                 return $customerUser->getCustomer()->getDeliveryAddresses();
             },
+            'pricingGroup' => function (CustomerUser $customerUser) {
+                return $customerUser->getPricingGroup()->getName();
+            },
         ];
 
         return [
