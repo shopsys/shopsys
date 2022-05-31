@@ -17,7 +17,6 @@ use stdClass;
  * @method \App\Model\Product\Search\FilterQuery filterByBrands(int[] $brandIds)
  * @method \App\Model\Product\Search\FilterQuery filterByFlags(int[] $flagIds)
  * @method \App\Model\Product\Search\FilterQuery filterOnlyInStock()
- * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
  * @method \App\Model\Product\Search\FilterQuery filterOnlyVisible(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Search\FilterQuery setPage(int $page)
  * @method \App\Model\Product\Search\FilterQuery setLimit(int $limit)
@@ -148,6 +147,29 @@ class FilterQuery extends BaseFilterQuery
                         ],
                     ],
                 ],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function filterOnlySellable(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'term' => [
+                'calculated_selling_denied' => false,
+            ],
+        ];
+
+        // exclusion on current domain
+        $clone->filters[] = [
+            'term' => [
+                'is_sale_exclusion' => false,
             ],
         ];
 

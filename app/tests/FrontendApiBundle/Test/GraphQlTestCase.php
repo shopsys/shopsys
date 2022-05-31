@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Test;
 
 use Nette\Utils\Json;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
@@ -147,6 +148,10 @@ abstract class GraphQlTestCase extends ApplicationTestCase
                 'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
             ],
         );
+
+        if (self::$currentClient->getResponse()->getStatusCode() === 500) {
+            throw new RuntimeException(self::$currentClient->getResponse()->getContent());
+        }
 
         return json_decode(self::$currentClient->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
     }
