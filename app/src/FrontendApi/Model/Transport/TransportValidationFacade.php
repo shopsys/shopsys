@@ -16,7 +16,6 @@ use App\Model\Transport\Transport;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class TransportValidationFacade
 {
@@ -41,11 +40,6 @@ class TransportValidationFacade
     private OrderPreviewFactory $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    private TransportPriceCalculation $transportPriceCalculation;
-
-    /**
      * @var \App\Model\Store\StoreFacade
      */
     private StoreFacade $storeFacade;
@@ -60,7 +54,6 @@ class TransportValidationFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
@@ -69,7 +62,6 @@ class TransportValidationFacade
         Domain $domain,
         CurrencyFacade $currencyFacade,
         OrderPreviewFactory $orderPreviewFactory,
-        TransportPriceCalculation $transportPriceCalculation,
         CurrentCustomerUser $currentCustomerUser,
         CartFacade $cartFacade
     ) {
@@ -77,7 +69,6 @@ class TransportValidationFacade
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->transportPriceCalculation = $transportPriceCalculation;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->cartFacade = $cartFacade;
     }
@@ -131,15 +122,10 @@ class TransportValidationFacade
             $cart->getFirstAppliedPromoCode()
         );
 
-        $calculatedTransportPrice = $this->transportPriceCalculation->calculatePrice(
-            $transport,
-            $currency,
-            $orderPreview->getProductsPrice(),
-            $domainId
-        );
+        $calculatedTransportPrice = $orderPreview->getTransportPrice();
 
         $transportWatchedPrice = $cart->getTransportWatchedPrice();
-        if ($transportWatchedPrice === null || !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice)) {
+        if ($transportWatchedPrice === null || ($calculatedTransportPrice !== null && !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice))) {
             throw new TransportPriceChangedException($calculatedTransportPrice);
         }
     }
