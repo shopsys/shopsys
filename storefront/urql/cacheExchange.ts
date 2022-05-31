@@ -7,10 +7,12 @@ const keyCart = () => 'cart';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
+const keyUrl = (data: Data) => data.url as string | null;
 
 const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
     keys: {
+        AdditionalSize: keyUrl,
         Advert: keyUuid,
         AdvertCode: keyUuid,
         AdvertImage: keyUuid,
@@ -37,7 +39,7 @@ const cache = cacheExchange({
         FlagFilterOption: keyNull,
         GoPayPaymentMethod: (data) => data.identifier as string | null,
         Image: keyNull,
-        ImageSize: keyNull,
+        ImageSize: keyUrl,
         Link: keyNull,
         MainVariant: keyUuid,
         NavigationItem: keyNull,
@@ -54,11 +56,14 @@ const cache = cacheExchange({
         PersonalData: keyNull,
         PersonalDataPage: keyNull,
         Price: keyNull,
+        PricingSetting: keyNull,
         Product: keyUuid,
         ProductFilterOptions: keyNull,
         ProductPrice: keyNull,
         RegularCustomerUser: keyUuid,
         RegularProduct: keyUuid,
+        SeoSetting: keyNull,
+        Settings: keyNull,
         SliderItem: keyUuid,
         Store: keyUuid,
         StoreAvailability: keyNull,
