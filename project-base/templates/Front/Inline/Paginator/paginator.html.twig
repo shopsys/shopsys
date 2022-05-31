@@ -36,7 +36,7 @@
                     <span class="in-paging__control__item in-paging__control__item--separate">...</span>
                 {% endif %}
 
-                {% for page in (paginationResult.page - pagerExpand)..(paginationResult.page) if page > 1 and page < paginationResult.page %}
+                {% for page in ((paginationResult.page - pagerExpand)..(paginationResult.page))|filter(page => page > 1 and page < paginationResult.page) %}
                     {% set routeParams = routeParams|merge({(pageQueryParameter): page}) %}
                     {% if page == (paginationResult.page - 1) %}
                         <a class='in-paging__control__item in-paging__control__item--num' href="{{ path(route, routeParams) }}" rel="prev">{{ page }}</a>
@@ -47,7 +47,7 @@
 
                 <span class="in-paging__control__item in-paging__control__item--num in-paging__control__item in-paging__control__item--num--active">{{ paginationResult.page }}</span>
 
-                {% for page in (paginationResult.page + 1)..(paginationResult.page + pagerExpand) if page > paginationResult.page and page < pageCount %}
+                {% for page in ((paginationResult.page + 1)..(paginationResult.page + pagerExpand))|filter(page => page > paginationResult.page and page < pageCount) %}
                     {% set routeParams = routeParams|merge({(pageQueryParameter): page}) %}
                     {% if page == (paginationResult.page + 1) %}
                         <a class="in-paging__control__item in-paging__control__item--num" href="{{ path(route, routeParams) }}" rel="next">{{ page }}</a>

@@ -622,3 +622,7 @@ There you can find links to upgrade notes for other versions too.
         - `JsFileExtractor`
         - `PhpFileExtractor`
         - `TwigFileExtractor`
+- resolve Symfony 4.4 deprecations ([#2468](https://github.com/shopsys/shopsys/pull/2468))
+    - remove Twig deprecation - an "if" condition on a "for" tag
+        - see the last bullet point in https://twig.symfony.com/doc/2.x/deprecated.html#tags
+        - see #project-base-diff

@@ -1,7 +1,7 @@
 {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
 {% block grid_value_cell_id_names %}
-    {%- for i in 0..row.d.level if i > 0 -%}
+    {%- for i in (0..row.d.level)|filter(i => i > 0) -%}
         &nbsp;&nbsp;&nbsp;&nbsp;
     {%- endfor -%}
     {{ value }}

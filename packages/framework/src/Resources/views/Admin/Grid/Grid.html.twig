@@ -258,7 +258,7 @@
 
             {% endif %}
 
-            {% for page in (grid.page - pagerExpand)..(grid.page) if page > 1 and page < grid.page %}
+            {% for page in ((grid.page - pagerExpand)..(grid.page))|filter(page => page > 1 and page < grid.page) %}
                 <li class="in-paging__item">
                     <a href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
                 </li>
@@ -267,7 +267,7 @@
                 <strong>{{ grid.page }}</strong>
             </li>
 
-            {% for page in (grid.page + 1)..(grid.page + pagerExpand) if page > grid.page and page < grid.pageCount %}
+            {% for page in ((grid.page + 1)..(grid.page + pagerExpand))|filter(page => page > grid.page and page < grid.pageCount) %}
                 <li class="in-paging__item">
                     <a href="{{ gridView.url({'page': page}) }}">{{ page }}</a>
                 </li>
