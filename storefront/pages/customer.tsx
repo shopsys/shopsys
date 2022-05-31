@@ -5,11 +5,13 @@ import Customer from 'components/Pages/Customer';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const CustomerPage: FC = () => {
+    const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
     useGtmStaticPageView(gtmStaticPageViewEvent);
@@ -17,7 +19,7 @@ const CustomerPage: FC = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <CommonLayout>
+            <CommonLayout title={t('Customer')}>
                 <Customer />
             </CommonLayout>
         </StaticUrlGuard>

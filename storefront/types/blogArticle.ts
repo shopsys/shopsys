@@ -15,6 +15,8 @@ export type BlogArticleDetailType = {
     text: string | null;
     publishDate: string;
     blogArticleProducts: SliderProductItemType[];
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };
 
 export type BlogArticleConnectionType = {

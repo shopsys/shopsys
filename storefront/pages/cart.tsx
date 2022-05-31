@@ -29,7 +29,7 @@ const Cart: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <CommonLayout>
+            <CommonLayout title={t('Cart')}>
                 <OrderSteps activeStep={1} domainUrl={domainUrl} />
                 <List items={cart?.items} />
                 <CartSummary />

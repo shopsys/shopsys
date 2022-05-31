@@ -79,6 +79,8 @@ export type ProductDetailInterfaceType = {
     flags: SimpleFlagType[];
     isSellingDenied: boolean;
     availability: AvailabilityType;
+    seoTitle: string | null;
+    seoMetaDescription: string | null;
 };
 
 export type ProductDetailType = ProductDetailInterfaceType & {

@@ -6,11 +6,13 @@ import { useOrders } from 'connectors/customer/Orders';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC = () => {
+    const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const ordersData = useOrders(currentDomainConfig);
@@ -20,7 +22,7 @@ const Index: FC = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <CommonLayout>
+            <CommonLayout title={t('My orders')}>
                 <Orders orders={ordersData?.orders} totalCount={ordersData?.totalCount} />
             </CommonLayout>
         </StaticUrlGuard>

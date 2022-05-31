@@ -5,4 +5,6 @@ fragment ArticleDetailFragment on Article {
     articleName: name
     text
     ...BreadcrumbFragment
+    seoTitle
+    seoMetaDescription
 }

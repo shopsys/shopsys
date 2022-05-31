@@ -19,6 +19,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
@@ -95,7 +96,7 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>) => {
 };
 
 const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
-    <CommonLayout>
+    <CommonLayout {...getSeoTitleAndDescriptionForFriendlyUrlPage(data)}>
         <Webline>
             <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
         </Webline>

@@ -8,6 +8,7 @@ import { OrderDetailQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
@@ -16,6 +17,7 @@ import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC = () => {
+    const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
@@ -27,7 +29,7 @@ const Index: FC = () => {
         <StaticUrlGuard domainUrl={domainConfig.url}>
             <MetaRobots content="noindex" />
             <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
-                <CommonLayout>
+                <CommonLayout title={`${t('Order number')} ${order?.number}`}>
                     <OrderDetail order={order!} />
                 </CommonLayout>
             </PageGuard>

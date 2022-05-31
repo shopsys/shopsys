@@ -12,6 +12,7 @@ import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useGtmSearchResultsListView } from 'hooks/gtm/useGtmSearchResultsListView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -23,6 +24,7 @@ import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
 const Search: FC<ServerSidePropsType> = () => {
+    const t = useTypedTranslationFunction();
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -50,7 +52,7 @@ const Search: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout>
+            <CommonLayout title={t('Search')}>
                 <SearchPage searchResults={searchResults} />
             </CommonLayout>
         </StaticUrlGuard>

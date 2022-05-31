@@ -4,15 +4,19 @@ import Header from './Header';
 import Navigation from './Header/Navigation';
 import NotificationBars from './NotificationBars';
 import Webline from './Webline';
+import SeoMeta from 'components/Basic/Head/SeoMeta';
 import Adverts from 'components/Blocks/Adverts';
 import { FC } from 'react';
+
+type LayoutProps = { title?: string | null; description?: string | null };
 
 /**
  * Basic page layout for common pages
  */
-const CommonLayout: FC = (props) => {
+const CommonLayout: FC<LayoutProps> = (props) => {
     return (
         <>
+            <SeoMeta title={props.title} description={props.description} />
             <NotificationBars />
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
                 <Header />
