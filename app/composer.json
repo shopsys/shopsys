@@ -67,7 +67,7 @@
         "fzaninotto/faker": "^1.7.1",
         "gopay/payments-sdk-php": "^1.4",
         "gordalina/cachetool": "~4.0",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/guzzle": "^6.5.6",
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
         "heureka/overeno-zakazniky": "^2.0.6",
         "http-interop/http-factory-guzzle": "^1.0",
