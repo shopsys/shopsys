@@ -13,15 +13,16 @@ class UploadedFileConfigDefinition implements ConfigurationInterface
     public const CONFIG_TYPES = 'types';
     public const CONFIG_TYPE_NAME = 'name';
     public const CONFIG_TYPE_MULTIPLE = 'multiple';
+    protected const CONFIG_ENTITY_FILES = 'entity_files';
 
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder(static::CONFIG_ENTITY_FILES);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root('entity_files');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->buildItemsNode($rootNode->arrayPrototype())->end();
 
