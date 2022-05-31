@@ -1510,9 +1510,6 @@ type ParameterCheckboxFilterOption implements ParameterFilterOptionInterface {
   """The parameter name"""
   name: String!
 
-  """Is the parameter visible for customers"""
-  visible: Boolean!
-
   """The parameter unit"""
   unit: Unit
 
@@ -1527,9 +1524,6 @@ type ParameterColorFilterOption implements ParameterFilterOptionInterface {
 
   """The parameter name"""
   name: String!
-
-  """Is the parameter visible for customers"""
-  visible: Boolean!
 
   """The parameter unit"""
   unit: Unit
@@ -1561,9 +1555,6 @@ interface ParameterFilterOptionInterface {
   """The parameter name"""
   name: String!
 
-  """Is the parameter visible for customers"""
-  visible: Boolean!
-
   """The parameter unit"""
   unit: Unit
 }
@@ -1575,9 +1566,6 @@ type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
 
   """The parameter name"""
   name: String!
-
-  """Is the parameter visible for customers"""
-  visible: Boolean!
 
   """The parameter unit"""
   unit: Unit
