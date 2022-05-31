@@ -115,7 +115,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             ...deliveryInfo,
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
-            note: null,
         });
     };
 

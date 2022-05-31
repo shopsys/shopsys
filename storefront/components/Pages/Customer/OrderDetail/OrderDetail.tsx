@@ -66,6 +66,16 @@ const OrderDetailPage: FC<OrderDetailPageProps> = (props) => {
                                 </tr>
                             </TableGridColumnStyled>
                         )}
+                        {!!props.order.note && (
+                            <TableGridColumnStyled>
+                                <tr>
+                                    <th colSpan={2}>{t('Your note')}</th>
+                                </tr>
+                                <tr>
+                                    <td data-testid={testIdentifier + 'note'}>{props.order.note}</td>
+                                </tr>
+                            </TableGridColumnStyled>
+                        )}
                     </TableGridColumnsStyled>
                 </TableGrid>
                 <TableGrid>

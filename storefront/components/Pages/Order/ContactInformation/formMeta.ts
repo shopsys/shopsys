@@ -331,6 +331,11 @@ export const useContactInformationFormMeta = (
                 label: t('I want to subscribe to the newsletter'),
                 errorMessage: isEmailValid ? errors.newsletterSubscription?.message : undefined,
             },
+            note: {
+                name: 'note' as const,
+                label: t('Note'),
+                errorMessage: undefined,
+            },
         },
     };
 };
