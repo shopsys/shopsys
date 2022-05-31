@@ -12,7 +12,6 @@ use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PaymentValidationFacade
@@ -21,11 +20,6 @@ class PaymentValidationFacade
      * @var \App\FrontendApi\Model\Cart\CartFacade
      */
     private CartFacade $cartFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    private PaymentPriceCalculation $paymentPriceCalculation;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
@@ -52,7 +46,6 @@ class PaymentValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
@@ -60,14 +53,12 @@ class PaymentValidationFacade
         CurrencyFacade $currencyFacade,
         OrderPreviewFactory $orderPreviewFactory,
         CurrentCustomerUser $currentCustomerUser,
-        PaymentPriceCalculation $paymentPriceCalculation,
         CartFacade $cartFacade
     ) {
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->cartFacade = $cartFacade;
     }
 
@@ -93,15 +84,10 @@ class PaymentValidationFacade
             $cart->getFirstAppliedPromoCode()
         );
 
-        $calculatedPaymentPrice = $this->paymentPriceCalculation->calculatePrice(
-            $payment,
-            $currency,
-            $orderPreview->getProductsPrice(),
-            $domainId
-        );
+        $calculatedPaymentPrice = $orderPreview->getPaymentPrice();
 
         $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
-        if ($paymentWatchedPrice === null || !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice)) {
+        if ($paymentWatchedPrice === null || ($calculatedPaymentPrice !== null && !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice))) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
         }
     }
