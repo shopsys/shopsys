@@ -28,3 +28,8 @@ export const ProductActionStyled = styled.div<ProductActionStyledProps>`
         `}
     `}
 `;
+
+export const AddToCartUnavailableTextStyled = styled.p`
+    padding: 5px;
+    font-size: 16px;
+`;

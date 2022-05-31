@@ -5,6 +5,7 @@ fragment SliderProductFragment on Product {
     fullName
     name
     stockQuantity
+    isSellingDenied
     flags {
         ...SimpleFlagFragment
     }
