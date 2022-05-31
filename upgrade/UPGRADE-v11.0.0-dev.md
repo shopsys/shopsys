@@ -626,3 +626,5 @@ There you can find links to upgrade notes for other versions too.
     - remove Twig deprecation - an "if" condition on a "for" tag
         - see the last bullet point in https://twig.symfony.com/doc/2.x/deprecated.html#tags
         - see #project-base-diff
+    - remove deprecated "bundle:controller:action" syntax from twig templates
+        - see https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md#frameworkbundle

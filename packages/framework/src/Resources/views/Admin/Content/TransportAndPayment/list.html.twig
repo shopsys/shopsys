@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Transport:list')) }}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Payment:list')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\TransportController:listAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\PaymentController:listAction')) }}
 
     {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
         {% block fixed_bar_content %}

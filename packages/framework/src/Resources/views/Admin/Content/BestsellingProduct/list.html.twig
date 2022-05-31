@@ -7,7 +7,7 @@
 {% block main_content %}
     {% import _self as self %}
 
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {% macro categoryTreeItem(categoriesWithPreloadedChildren, selectedDomainId, bestsellingProductsInCategories) %}
         {% import _self as self %}

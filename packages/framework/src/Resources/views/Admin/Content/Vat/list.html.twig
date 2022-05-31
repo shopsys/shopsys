@@ -4,10 +4,10 @@
 {% block h1 %}{{ 'VAT'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     <div class="wrap-divider wrap-divider--bottom">
-        {{ render(controller('ShopsysFrameworkBundle:Admin/Vat:settings')) }}
+        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\VatController:settingsAction')) }}
     </div>
 
     {{ gridView.render() }}

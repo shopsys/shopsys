@@ -4,7 +4,7 @@
 {% block h1 %}{{ 'Heureka - Verified by Customer'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {% if form is not null %}
         {{ form_start(form) }}

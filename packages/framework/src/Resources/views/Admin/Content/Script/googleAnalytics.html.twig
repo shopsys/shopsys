@@ -4,7 +4,7 @@
 {% block h1 %}{{ 'Google analytics'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {{ form_start(form) }}
         {{ form_errors(form) }}

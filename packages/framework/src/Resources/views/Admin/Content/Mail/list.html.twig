@@ -4,7 +4,7 @@
 {% block h1 %}{{ 'Email templates settings'|trans }}{% endblock %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {{ gridView.render() }}
 {% endblock %}
