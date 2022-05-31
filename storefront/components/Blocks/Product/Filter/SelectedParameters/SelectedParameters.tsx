@@ -10,12 +10,12 @@ import {
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
 import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, Fragment, useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { FilterFormType, FilterOptionsType } from 'types/productFilter';
-import { formatPrice } from 'utils/formatting';
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
@@ -25,6 +25,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     const testIdentifier = 'blocks-product-filter-selectedparameters';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const formProviderMethods = useFormContext<FilterFormType>();
     const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
     const isOnlyInStock = parametersFilterState.onlyInStock;
@@ -127,11 +128,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                     <>
                                         <span>{t('from')}&nbsp;</span>
                                         {parametersFilterState.minimalPrice !== null &&
-                                            formatPrice(
-                                                parametersFilterState.minimalPrice,
-                                                props.productFilterOptions.currencyCode,
-                                                t,
-                                            )}
+                                            formatPrice(parametersFilterState.minimalPrice)}
                                         &nbsp;
                                     </>
                                 )}
@@ -139,11 +136,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                     <>
                                         <span>{t('to')}&nbsp;</span>
                                         {parametersFilterState.maximalPrice !== null &&
-                                            formatPrice(
-                                                parametersFilterState.maximalPrice,
-                                                props.productFilterOptions.currencyCode,
-                                                t,
-                                            )}
+                                            formatPrice(parametersFilterState.maximalPrice)}
                                         &nbsp;
                                     </>
                                 )}

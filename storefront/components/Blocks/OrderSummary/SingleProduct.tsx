@@ -6,10 +6,9 @@ import {
     ListItemStyled,
 } from './OrderSummary.style';
 import Image from 'components/Basic/Image/Image';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
 
 type SingleProductProps = {
     item: CartItemType;
@@ -18,7 +17,7 @@ type SingleProductProps = {
 const SingleProduct: FC<SingleProductProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-singleproduct-';
 
-    const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
 
     return (
         <ListItemStyled>
@@ -33,11 +32,7 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
                     <span data-testid={testIdentifier + 'name'}>{props.item.product.fullName}</span>
                 </ListItemInfoStyled>
                 <ListItemPriceStyled data-testid={testIdentifier + 'price'}>
-                    {formatPrice(
-                        props.item.product.price.priceWithVat * props.item.quantity,
-                        props.item.product.price.currencyCode,
-                        t,
-                    )}{' '}
+                    {formatPrice(props.item.product.price.priceWithVat * props.item.quantity)}{' '}
                 </ListItemPriceStyled>
             </ListItemInfoWrapperStyled>
         </ListItemStyled>

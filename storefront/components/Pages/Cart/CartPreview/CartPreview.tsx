@@ -6,17 +6,16 @@ import {
     CartPreviewStyled,
 } from './CartPreview.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
-import { formatPrice } from 'utils/formatting';
 
 const CartPreview: FC = () => {
     const testIdentifier = 'pages-cart-cartpreview';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const { cart, isCartEmpty } = useCurrentCart();
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     if (cart === null || isCartEmpty) {
         return null;
@@ -30,7 +29,7 @@ const CartPreview: FC = () => {
                         <CartPreviewCellStyled>{t('The amount of discounts')}</CartPreviewCellStyled>
                         <CartPreviewCellStyled textAlign="right">
                             <CartPreviewCellBasicPrice>
-                                {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat, currencyCode, t)}
+                                {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
                             </CartPreviewCellBasicPrice>
                         </CartPreviewCellStyled>
                     </CartPreviewRowStyled>
@@ -39,7 +38,7 @@ const CartPreview: FC = () => {
                     <CartPreviewCellStyled>{t('You pay')}</CartPreviewCellStyled>
                     <CartPreviewCellStyled textAlign="right">
                         <CartPreviewCellTotalPrice>
-                            {formatPrice(cart.totalItemsPrice.priceWithVat, currencyCode, t)}
+                            {formatPrice(cart.totalItemsPrice.priceWithVat)}
                         </CartPreviewCellTotalPrice>
                     </CartPreviewCellStyled>
                 </CartPreviewRowStyled>

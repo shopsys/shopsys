@@ -6,6 +6,7 @@ import {
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
+    SettingsQueryDocumentApi,
 } from 'graphql/generated';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
@@ -44,6 +45,7 @@ export async function initServerSideProps(
             prefetchedQueries.push({ query: NavigationQueryDocumentApi });
             prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
             prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
+            prefetchedQueries.push({ query: SettingsQueryDocumentApi });
 
             const resolvedQueries = await Promise.all(
                 prefetchedQueries.map((queryObject) =>

@@ -11,12 +11,12 @@ import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import Spinbox from 'components/Forms/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
 import { ProductDetailType } from 'types/product';
-import { formatPrice } from 'utils/formatting';
 
 type ProductDetailAddToCartProps = {
     product: ProductDetailType;
@@ -27,6 +27,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const changeCartItemQuantity = useAddToCart();
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -45,7 +46,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
         <>
             <AddToCartWrapperStyled data-testid={testIdentifier}>
                 <AddToCartPriceStyled data-testid={testIdentifier + '-price'}>
-                    {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
+                    {formatPrice(props.product.price.priceWithVat)}
                 </AddToCartPriceStyled>
                 {props.product.isSellingDenied ? (
                     <AddToCartUnavailableTextStyled>

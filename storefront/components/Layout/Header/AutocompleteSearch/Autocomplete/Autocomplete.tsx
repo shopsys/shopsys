@@ -17,13 +17,13 @@ import {
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import Button from 'components/Forms/Button';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchType } from 'types/search';
-import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
@@ -42,6 +42,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
 
     const router = useRouter();
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainConfig.url);
 
@@ -94,11 +95,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                                     {product.fullName}
                                                                 </ProductSearchResultNameStyled>
                                                                 <ProductSearchResultPriceStyled>
-                                                                    {formatPrice(
-                                                                        product.price.priceWithVat,
-                                                                        domainConfig.currencyCode,
-                                                                        t,
-                                                                    )}
+                                                                    {formatPrice(product.price.priceWithVat)}
                                                                 </ProductSearchResultPriceStyled>
                                                             </ProductSearchResultLinkStyled>
                                                         </NextLink>

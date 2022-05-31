@@ -6,12 +6,11 @@ import {
     SelectItemLabelStyled,
     TransportDaysUntilDeliveryStyled,
 } from './SelectItemLabel.style';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { formatPrice } from 'utils/formatting';
 
 type SelectItemLabelProps = {
     name: string;
@@ -26,7 +25,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
     const testIdentifier = 'pages-order-selectitem-label';
 
     const t = useTypedTranslationFunction();
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const formatPrice = useFormatPrice();
 
     return (
         <SelectItemLabelStyled data-testid={testIdentifier}>
@@ -58,7 +57,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
             )}
             {props.price !== undefined && (
                 <PriceStyled data-testid={testIdentifier + '-price'}>
-                    {formatPrice(props.price.priceWithVat, currencyCode, t)}
+                    {formatPrice(props.price.priceWithVat)}
                 </PriceStyled>
             )}
         </SelectItemLabelStyled>

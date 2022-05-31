@@ -5,10 +5,10 @@ import {
     OrderSummaryRowWrapperStyled,
     OrderSummaryTextAndImageStyled,
 } from './OrderSummary.style';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { PriceType } from 'types/price';
-import { formatPrice } from 'utils/formatting';
 
 type PromoCodeProps = {
     promoCode: string;
@@ -19,6 +19,7 @@ const PromoCode: FC<PromoCodeProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-promocode';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
 
     return (
         <OrderSummaryRowWrapperStyled data-testid={testIdentifier}>
@@ -28,7 +29,7 @@ const PromoCode: FC<PromoCodeProps> = (props) => {
                         {`${t('Promo code')}: ${props.promoCode}`}
                     </OrderSummaryTextAndImageStyled>
                     <OrderSummaryPriceStyled data-testid={testIdentifier + '-promocode-discount'}>
-                        <strong>-{formatPrice(props.discount.priceWithVat, props.discount.currencyCode, t)}</strong>
+                        <strong>-{formatPrice(props.discount.priceWithVat)}</strong>
                     </OrderSummaryPriceStyled>
                 </OrderSummaryRowStyled>
             </OrderSummaryContentStyled>

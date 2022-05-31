@@ -8,12 +8,10 @@ import {
 } from './ListItem.style';
 import Image from 'components/Basic/Image';
 import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { CartItemType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
 
 type ListItemProps = {
     cartItem: CartItemType;
@@ -22,8 +20,7 @@ type ListItemProps = {
 const ListItem: FC<ListItemProps> = (props) => {
     const testIdentifier = 'layout-header-cart-listitem';
 
-    const t = useTypedTranslationFunction();
-    const domainConfig = useShopsysSelector((state) => state.domain);
+    const formatPrice = useFormatPrice();
 
     return (
         <ListItemStyled key={props.cartItem.uuid} data-testid={testIdentifier}>
@@ -38,11 +35,7 @@ const ListItem: FC<ListItemProps> = (props) => {
                     {props.cartItem.quantity + props.cartItem.product.unit.name}
                 </ListItemQuantityStyled>
                 <ListItemPriceStyled>
-                    {formatPrice(
-                        props.cartItem.product.price.priceWithVat * props.cartItem.quantity,
-                        domainConfig.currencyCode,
-                        t,
-                    )}
+                    {formatPrice(props.cartItem.product.price.priceWithVat * props.cartItem.quantity)}
                 </ListItemPriceStyled>
             </ListItemDetailStyled>
             <RemoveCartItemButton cartItemUuid={props.cartItem.uuid} />

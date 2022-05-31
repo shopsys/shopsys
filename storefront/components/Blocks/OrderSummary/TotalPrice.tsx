@@ -5,10 +5,10 @@ import {
     OrderSummaryTotalPriceWrapperStyled,
     PriceWrapperStyled,
 } from './OrderSummary.style';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { PriceType } from 'types/price';
-import { formatPrice } from 'utils/formatting';
 
 type TotalPriceProps = {
     totalPrice: PriceType;
@@ -18,6 +18,7 @@ const TotalPrice: FC<TotalPriceProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-totalprice';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
 
     return (
         <OrderSummaryTotalPriceWrapperStyled data-testid={testIdentifier}>
@@ -25,7 +26,7 @@ const TotalPrice: FC<TotalPriceProps> = (props) => {
                 <PriceWrapperStyled>
                     <OrderSummaryTotalPriceTextStyled>{t('Total price')}</OrderSummaryTotalPriceTextStyled>
                     <OrderSummaryTotalPriceAmountStyled data-testid={testIdentifier + '-amount'}>
-                        {formatPrice(props.totalPrice.priceWithVat, props.totalPrice.currencyCode, t)}
+                        {formatPrice(props.totalPrice.priceWithVat)}
                     </OrderSummaryTotalPriceAmountStyled>
                 </PriceWrapperStyled>
             </OrderSummaryContentStyled>

@@ -7,11 +7,10 @@ import {
     TransportAndPaymentImageWrapperStyled,
 } from './OrderSummary.style';
 import Image from 'components/Basic/Image';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC } from 'react';
 import { PaymentType } from 'types/payment';
 import { TransportType } from 'types/transport';
-import { formatPrice } from 'utils/formatting';
 
 type TransportAndPaymentProps = {
     transport: TransportType | null;
@@ -21,7 +20,7 @@ type TransportAndPaymentProps = {
 const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary';
 
-    const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
 
     return (
         <OrderSummaryRowWrapperStyled data-testid={testIdentifier}>
@@ -35,9 +34,7 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                             </TransportAndPaymentImageWrapperStyled>
                         </OrderSummaryTextAndImageStyled>
                         <OrderSummaryPriceStyled data-testid={testIdentifier + '-transport-price'}>
-                            <strong>
-                                {formatPrice(props.transport.price.priceWithVat, props.transport.price.currencyCode, t)}
-                            </strong>
+                            <strong>{formatPrice(props.transport.price.priceWithVat)}</strong>
                         </OrderSummaryPriceStyled>
                     </OrderSummaryRowStyled>
                 )}
@@ -50,9 +47,7 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                             </TransportAndPaymentImageWrapperStyled>
                         </OrderSummaryTextAndImageStyled>
                         <OrderSummaryPriceStyled data-testid={testIdentifier + '-payment-price'}>
-                            <strong>
-                                {formatPrice(props.payment.price.priceWithVat, props.payment.price.currencyCode, t)}
-                            </strong>
+                            <strong>{formatPrice(props.payment.price.priceWithVat)}</strong>
                         </OrderSummaryPriceStyled>
                     </OrderSummaryRowStyled>
                 )}

@@ -1,0 +1,4 @@
+fragment PricingSettingFragment on PricingSetting {
+    defaultCurrencyCode
+    minimumFractionDigits
+}

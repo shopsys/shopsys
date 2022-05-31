@@ -14,12 +14,12 @@ import {
 } from './AddToCartPopup.style';
 import Image from 'components/Basic/Image';
 import Popup from 'components/Layout/Popup';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
-import { formatPrice } from 'utils/formatting';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type AddToCartPopupProps = {
@@ -32,6 +32,7 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
     const testIdentifier = 'blocks-product-addtocartpopup-product';
 
     const t = useTypedTranslationFunction();
+    const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
@@ -60,8 +61,6 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
                         <PriceStyled data-testid={testIdentifier + '-price'}>
                             {`${props.product.quantity} ${props.product.unitName}, ${formatPrice(
                                 props.product.quantity * props.product.price.priceWithVat,
-                                props.product.price.currencyCode,
-                                t,
                             )}`}
                         </PriceStyled>
                     </PriceInfoStyled>
