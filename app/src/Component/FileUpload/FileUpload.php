@@ -46,7 +46,7 @@ class FileUpload extends BaseFileUpload
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      */
@@ -57,7 +57,7 @@ class FileUpload extends BaseFileUpload
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
         FilesystemInterface $filesystem,
-        ?ParameterBagInterface $parameterBag = null,
+        ParameterBagInterface $parameterBag,
         ImageRepository $imageRepository,
         UploadedFileRepository $uploadedFileRepository
     ) {

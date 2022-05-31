@@ -360,7 +360,7 @@ class Store implements OrderableEntityInterface
             }
         }
 
-        throw new StoreDomainNotFoundException($this->id, $domainId);
+        throw new StoreDomainNotFoundException($domainId, $this->id);
     }
 
     /**
