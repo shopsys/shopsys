@@ -16,6 +16,7 @@ import Popup from 'components/Layout/Popup';
 import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { ListedVariantType } from 'types/product';
 
@@ -29,6 +30,7 @@ const Variant: FC<VariantProps> = (props) => {
 
     const formatPrice = useFormatPrice();
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
+    const t = useTypedTranslationFunction();
 
     return (
         <>
