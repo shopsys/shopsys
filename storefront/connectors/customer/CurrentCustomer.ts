@@ -4,17 +4,20 @@ import {
     useCurrentCustomerUserQueryApi,
 } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export function useCurrentCustomerData(): CurrentCustomerType | undefined {
     const [{ data, error }] = useCurrentCustomerUserQueryApi();
     useQueryError(error);
 
-    if (data?.currentCustomerUser === undefined) {
-        return undefined;
-    }
+    return useMemo(() => {
+        if (data?.currentCustomerUser === undefined) {
+            return undefined;
+        }
 
-    return mapCurrentCustomerApiData(data.currentCustomerUser);
+        return mapCurrentCustomerApiData(data.currentCustomerUser);
+    }, [data?.currentCustomerUser]);
 }
 
 const mapCurrentCustomerApiData = (

@@ -551,3 +551,12 @@
   - `docker-compose down`, `docker-sync stop`, `docker-sync clean` followed by `docker volume prune`
 - if you use mutagen, maybe you will need to shut down the containers and clean volumes
   - `mutagen-compose down` followed by `docker volume prune`
+
+### Allow selecting delivery address from existing ones
+- [FWCC-876](https://shopsys.atlassian.net/browse/FWCC-876)
+- [FWCC-876 - allow selecting delivery address from existing ones](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/614/diffs)
+- the reasons these changes were introduced:
+    - logged-in user can select from existing delivery addresses in order form, it improves UX and prevents address duplication
+- most significant changes
+    - create order mutation now accepts nullable field `deliveryAddressUuid`
+    - in order form, there is now possibility to choose delivery address from address list (for logged-in user) or create new one

@@ -29,6 +29,7 @@ export const initialState = {
     deliveryCity: '',
     deliveryPostcode: '',
     deliveryCountry: { value: '', label: '' },
+    deliveryAddressUuid: null,
     newsletterSubscription: false,
 } as ContactInformationFormType;
 

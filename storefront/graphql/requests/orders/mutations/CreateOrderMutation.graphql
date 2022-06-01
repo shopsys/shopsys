@@ -20,6 +20,7 @@ mutation CreateOrderMutation(
     $deliveryCity: String
     $deliveryPostcode: String
     $deliveryCountry: String
+    $deliveryAddressUuid: Uuid
     $note: String
     $cartUuid: Uuid
 ) {
@@ -46,6 +47,7 @@ mutation CreateOrderMutation(
             deliveryCity: $deliveryCity
             deliveryPostcode: $deliveryPostcode
             deliveryCountry: $deliveryCountry
+            deliveryAddressUuid: $deliveryAddressUuid
             note: $note
             cartUuid: $cartUuid
         }

@@ -2850,6 +2850,7 @@ export type CreateOrderMutationVariablesApi = Exact<{
   deliveryCity: Maybe<Scalars['String']>;
   deliveryPostcode: Maybe<Scalars['String']>;
   deliveryCountry: Maybe<Scalars['String']>;
+  deliveryAddressUuid: Maybe<Scalars['Uuid']>;
   note: Maybe<Scalars['String']>;
   cartUuid: Maybe<Scalars['Uuid']>;
 }>;
@@ -4679,9 +4680,9 @@ export function useCheckPaymentStatusMutationApi() {
   return Urql.useMutation<CheckPaymentStatusMutationApi, CheckPaymentStatusMutationVariablesApi>(CheckPaymentStatusMutationDocumentApi);
 };
 export const CreateOrderMutationDocumentApi = gql`
-    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $note: String, $cartUuid: Uuid) {
+    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid) {
   CreateOrder(
-    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, note: $note, cartUuid: $cartUuid}
+    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, deliveryAddressUuid: $deliveryAddressUuid, note: $note, cartUuid: $cartUuid}
   ) {
     number
     uuid

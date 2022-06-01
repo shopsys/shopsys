@@ -34,3 +34,28 @@ export const ContactInformationDeliveryAddressStyled = styled.div<ContactInforma
 export const ContactInformationDeliveryAddressContentStyled = styled.div`
     padding-bottom: 40px;
 `;
+
+export const ListStyled = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`;
+
+export const ListItemStyled = styled.div(
+    ({ theme }) => css`
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 16px;
+        padding: 20px;
+
+        border-radius: ${theme.radius.big};
+        border: 2px solid ${theme.color.border};
+
+        strong {
+            margin-right: 5px;
+        }
+    `,
+);

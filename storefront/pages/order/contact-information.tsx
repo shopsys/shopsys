@@ -25,7 +25,7 @@ import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -121,6 +121,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             cartUuid,
             ...formValues,
             ...deliveryInfo,
+            deliveryAddressUuid: formValues.deliveryAddressUuid !== '' ? formValues.deliveryAddressUuid : null,
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
         });

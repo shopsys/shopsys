@@ -337,6 +337,7 @@
     "Note": "Note",
     "Your note": "Your note",
     "Order": "Order",
+    "Different delivery address": "Different delivery address",
     "There was an error while setting your delivery address as the default one": "There was an error while setting your delivery address as the default one",
     "Your delivery address has been set as default": "Your delivery address has been set as default",
     "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>": "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>",

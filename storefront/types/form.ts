@@ -40,6 +40,7 @@ export type ContactInformationFormType = {
     deliveryCity: string;
     deliveryPostcode: string;
     deliveryCountry: SelectOptionType;
+    deliveryAddressUuid: string | null;
     newsletterSubscription: boolean;
     note: string;
 };

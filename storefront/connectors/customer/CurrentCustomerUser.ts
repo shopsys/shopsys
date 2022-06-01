@@ -52,6 +52,7 @@ const mapCurrentCustomerContactInformationApiData = (
             value: companyCustomerUser.defaultDeliveryAddress?.country?.code ?? '',
             label: companyCustomerUser.defaultDeliveryAddress?.country?.name ?? '',
         },
+        deliveryAddressUuid: companyCustomerUser.defaultDeliveryAddress?.uuid ?? null,
         register: false,
         passwordFirst: '',
         passwordSecond: '',

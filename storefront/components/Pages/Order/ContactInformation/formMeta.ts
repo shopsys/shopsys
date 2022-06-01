@@ -326,6 +326,11 @@ export const useContactInformationFormMeta = (
                     ? (errors.deliveryCountry as FieldError | undefined)?.message
                     : undefined,
             },
+            deliveryAddressUuid: {
+                name: 'deliveryAddressUuid' as const,
+                label: t('Delivery address'),
+                errorMessage: undefined,
+            },
             newsletterSubscription: {
                 name: 'newsletterSubscription' as const,
                 label: t('I want to subscribe to the newsletter'),
