@@ -65,7 +65,6 @@ case "$operatingSystem" in
         cp -f ./docker/conf/docker-compose-mac-mutagen.yml.dist docker-compose.yml
 
         sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
-        sed -i '' -E "s#id:[0-9]+#id:$(id -u)#" ./docker-compose.yml
         sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
 
         if [[ $1 != --skip-aliasing ]]; then
