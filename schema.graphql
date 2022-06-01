@@ -1976,6 +1976,9 @@ type Query {
   """Returns last order of the user or null if no order was placed yet"""
   lastOrder: Order
 
+  """Returns HTML content for order sent page."""
+  orderSentPageContent(orderUuid: Uuid!): String!
+
   """Return personal data page content and URL"""
   personalDataPage: PersonalDataPage
 

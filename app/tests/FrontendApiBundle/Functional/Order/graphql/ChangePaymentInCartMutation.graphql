@@ -1,0 +1,24 @@
+mutation ChangePaymentInCart(
+    $cartUuid: Uuid
+    $paymentUuid: Uuid
+    $paymentGoPayBankSwift: String
+) {
+    ChangePaymentInCart(input: {
+        cartUuid: $cartUuid
+        paymentUuid: $paymentUuid
+        paymentGoPayBankSwift: $paymentGoPayBankSwift
+    }) {
+        uuid
+        payment {
+            uuid
+            name
+            type
+            price {
+                priceWithoutVat
+                priceWithVat
+                vatAmount
+            }
+        }
+        selectedPickupPlaceIdentifier
+    }
+}

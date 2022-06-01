@@ -131,6 +131,27 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     }
 
     /**
+     * @param string $pathToFile
+     * @param array<string, mixed> $variables
+     * @return array<string, mixed>
+     */
+    protected function getResponseContentForGql(string $pathToFile, array $variables = []): array
+    {
+        $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
+
+        self::$currentClient->request(
+            'GET',
+            $path,
+            [
+                'query' => file_get_contents($pathToFile),
+                'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
+            ],
+        );
+
+        return json_decode(self::$currentClient->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    /**
      * @return string
      */
     protected function getLocaleForFirstDomain(): string
