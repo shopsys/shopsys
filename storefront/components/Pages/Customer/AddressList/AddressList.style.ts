@@ -35,11 +35,14 @@ export const ListItemStyled = styled.div<ListItemStyledProps>`
             margin-right: 5px;
         }
 
-        ${isActive &&
-        css`
-            background: ${theme.color.greyVeryLight};
-            border: 1px solid ${theme.color.primary};
-        `}
+        ${isActive
+            ? css`
+                  background: ${theme.color.greyVeryLight};
+                  border: 1px solid ${theme.color.primary};
+              `
+            : css`
+                  cursor: pointer;
+              `}
     `}
 `;
 

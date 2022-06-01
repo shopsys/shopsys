@@ -202,7 +202,9 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         }
 
         if ($response['data'][$graphQlType] === null) {
-            $this->fail('Query returned null. If it\' an expected state, don\' use `getResponseDataForGraphQlType` method for parsing response');
+            $this->fail(
+                "Query returned null. If it's an expected state, don't use `getResponseDataForGraphQlType` method for parsing response"
+            );
         }
 
         return $response['data'][$graphQlType];
@@ -287,6 +289,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         int $quantity = 1
     ): array {
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
+
         return [
             'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()),
             'priceWithoutVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()),
@@ -306,6 +309,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         int $quantity = 1
     ): string {
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
+
         return '{
             priceWithVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()) . '",
             priceWithoutVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()) . '",

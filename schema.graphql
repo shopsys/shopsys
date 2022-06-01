@@ -772,6 +772,35 @@ type DeliveryAddress {
   lastName: String
 }
 
+input DeliveryAddressInput {
+  """UUID"""
+  uuid: Uuid = null
+
+  """Delivery address first name"""
+  firstName: String!
+
+  """Delivery address last name"""
+  lastName: String!
+
+  """Delivery address company name"""
+  companyName: String = null
+
+  """Delivery address street name"""
+  street: String!
+
+  """Delivery address city name"""
+  city: String!
+
+  """Delivery address zip code"""
+  postcode: String!
+
+  """Delivery address telephone"""
+  telephone: String = null
+
+  """Delivery address country"""
+  country: String!
+}
+
 """Represents a downloadable file"""
 type File {
   """Clickable text for a hyperlink"""
@@ -1075,6 +1104,12 @@ type Mutation {
 
   """Delete delivery address by Uuid"""
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
+
+  """Edit delivery address by Uuid"""
+  EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
+
+  """Set default delivery address by Uuid"""
+  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
 
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!

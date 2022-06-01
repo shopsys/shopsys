@@ -12,3 +12,21 @@ CustomerMutation:
                             -   NotBlank:
                                     message: "Please enter valid delivery address UUID"
                 resolve: "@=mutation('deleteDeliveryAddress', [args, validator])"
+            EditDeliveryAddress:
+                type: "[DeliveryAddress!]!"
+                description: "Edit delivery address by Uuid"
+                args:
+                    input:
+                        type: DeliveryAddressInput!
+                        validation: cascade
+                resolve: "@=mutation('editDeliveryAddress', [args])"
+            SetDefaultDeliveryAddress:
+                type: "CustomerUser!"
+                description: "Set default delivery address by Uuid"
+                args:
+                    deliveryAddressUuid:
+                        type: Uuid!
+                        validation:
+                            -   NotBlank:
+                                    message: "Please enter valid delivery address UUID"
+                resolve: "@=mutation('setDefaultDeliveryAddress', [args['deliveryAddressUuid']])"

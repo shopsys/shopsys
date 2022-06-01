@@ -697,6 +697,27 @@ export type DeliveryAddressApi = {
   uuid: Scalars['Uuid'];
 };
 
+export type DeliveryAddressInputApi = {
+  /** Delivery address city name */
+  city: Scalars['String'];
+  /** Delivery address company name */
+  companyName: Maybe<Scalars['String']>;
+  /** Delivery address country */
+  country: Scalars['String'];
+  /** Delivery address first name */
+  firstName: Scalars['String'];
+  /** Delivery address last name */
+  lastName: Scalars['String'];
+  /** Delivery address zip code */
+  postcode: Scalars['String'];
+  /** Delivery address street name */
+  street: Scalars['String'];
+  /** Delivery address telephone */
+  telephone: Maybe<Scalars['String']>;
+  /** UUID */
+  uuid: Maybe<Scalars['Uuid']>;
+};
+
 /** Represents a downloadable file */
 export type FileApi = {
   __typename?: 'File';
@@ -949,6 +970,8 @@ export type MutationApi = {
   CreateOrder: OrderApi;
   /** Delete delivery address by Uuid */
   DeleteDeliveryAddress: Array<DeliveryAddressApi>;
+  /** Edit delivery address by Uuid */
+  EditDeliveryAddress: Array<DeliveryAddressApi>;
   /** Login user and return access and refresh tokens */
   Login: TokenApi;
   /** Logout user */
@@ -974,6 +997,8 @@ export type MutationApi = {
   RequestPasswordRecovery: Scalars['String'];
   /** Request access to personal data */
   RequestPersonalDataAccess: PersonalDataPageApi;
+  /** Set default delivery address by Uuid */
+  SetDefaultDeliveryAddress: CustomerUserApi;
 };
 
 
@@ -1027,6 +1052,11 @@ export type MutationDeleteDeliveryAddressArgsApi = {
 };
 
 
+export type MutationEditDeliveryAddressArgsApi = {
+  input: DeliveryAddressInputApi;
+};
+
+
 export type MutationLoginArgsApi = {
   input: LoginInputApi;
 };
@@ -1074,6 +1104,11 @@ export type MutationRequestPasswordRecoveryArgsApi = {
 
 export type MutationRequestPersonalDataAccessArgsApi = {
   input: PersonalDataAccessRequestInputApi;
+};
+
+
+export type MutationSetDefaultDeliveryAddressArgsApi = {
+  deliveryAddressUuid: Scalars['Uuid'];
 };
 
 /** Represents a navigation structure item */
@@ -2631,6 +2666,13 @@ export type DeleteDeliveryAddressMutationVariablesApi = Exact<{
 
 
 export type DeleteDeliveryAddressMutationApi = { __typename?: 'Mutation', DeleteDeliveryAddress: Array<{ __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null }> };
+
+export type SetDefaultDeliveryAddressMutationVariablesApi = Exact<{
+  deliveryAddressUuid: Scalars['Uuid'];
+}>;
+
+
+export type SetDefaultDeliveryAddressMutationApi = { __typename?: 'Mutation', SetDefaultDeliveryAddress: { __typename?: 'CompanyCustomerUser', uuid: string, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null } | null } | { __typename?: 'RegularCustomerUser', uuid: string, defaultDeliveryAddress: { __typename?: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename?: 'Country', name: string, code: string } | null } | null } };
 
 export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -4372,6 +4414,20 @@ export const DeleteDeliveryAddressMutationDocumentApi = gql`
 
 export function useDeleteDeliveryAddressMutationApi() {
   return Urql.useMutation<DeleteDeliveryAddressMutationApi, DeleteDeliveryAddressMutationVariablesApi>(DeleteDeliveryAddressMutationDocumentApi);
+};
+export const SetDefaultDeliveryAddressMutationDocumentApi = gql`
+    mutation SetDefaultDeliveryAddressMutation($deliveryAddressUuid: Uuid!) {
+  SetDefaultDeliveryAddress(deliveryAddressUuid: $deliveryAddressUuid) {
+    uuid
+    defaultDeliveryAddress {
+      ...DeliveryAddressFragment
+    }
+  }
+}
+    ${DeliveryAddressFragmentApi}`;
+
+export function useSetDefaultDeliveryAddressMutationApi() {
+  return Urql.useMutation<SetDefaultDeliveryAddressMutationApi, SetDefaultDeliveryAddressMutationVariablesApi>(SetDefaultDeliveryAddressMutationDocumentApi);
 };
 export const CurrentCustomerUserQueryDocumentApi = gql`
     query CurrentCustomerUserQuery {

@@ -322,5 +322,7 @@
     "This item can no longer be purchased": "This item can no longer be purchased",
     "Note": "Note",
     "Your note": "Your note",
-    "Order": "Order"
+    "Order": "Order",
+    "There was an error while setting your delivery address as the default one": "There was an error while setting your delivery address as the default one",
+    "Your delivery address has been set as default": "Your delivery address has been set as default"
 }
