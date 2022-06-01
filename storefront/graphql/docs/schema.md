@@ -6107,6 +6107,15 @@ Settings related to SEO
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>contactFormMainText</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Main text for contact form
+
+</td>
+</tr>
 </tbody>
 </table>
 

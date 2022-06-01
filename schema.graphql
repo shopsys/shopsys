@@ -2301,6 +2301,9 @@ type Settings {
 
   """Settings related to SEO"""
   seo: SeoSetting!
+
+  """Main text for contact form"""
+  contactFormMainText: String!
 }
 
 type SliderItem {

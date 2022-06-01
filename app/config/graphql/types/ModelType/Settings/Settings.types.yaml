@@ -11,3 +11,7 @@ Settings:
                 type: "SeoSetting!"
                 resolve: "@=resolver('seoSettings')"
                 description: "Settings related to SEO"
+            contactFormMainText:
+                type: String!
+                resolve: "@=resolver('contactFormMainText')"
+                description: "Main text for contact form"
