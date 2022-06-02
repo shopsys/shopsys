@@ -9,6 +9,7 @@ use App\Model\Security\Roles;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
+use Ramsey\Uuid\Uuid;
 use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface as EmailTwoFactorInterface;
 use Scheb\TwoFactorBundle\Model\Google\TwoFactorInterface as GoogleTwoFactorInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator as BaseAdministrator;
@@ -32,6 +33,12 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         self::TWO_FACTOR_AUTHENTICATION_TYPE_EMAIL,
         self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH,
     ];
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    private string $uuid;
 
     /**
      * @var \DateTime
@@ -70,6 +77,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     {
         parent::__construct($administratorData);
 
+        $this->uuid = Uuid::uuid4()->toString();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
     }
 
@@ -89,6 +97,14 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         parent::setData($administratorData);
 
         $this->roleGroup = $administratorData->roleGroup;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

@@ -391,6 +391,9 @@ msgstr ""
 msgid "Custom"
 msgstr "Vlastní"
 
+msgid "Customer not found."
+msgstr "Zákazník nenalezen."
+
 msgid "Customers - full"
 msgstr "Zákazníci - vše"
 

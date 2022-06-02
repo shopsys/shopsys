@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Customer\User;
 
 use App\Component\String\HashGenerator;
+use App\Model\Administrator\Administrator;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
@@ -14,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as BaseCustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
@@ -25,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 /**
  * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @method \App\Model\Customer\User\CustomerUser getByUuid(string $uuid)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
@@ -115,6 +119,33 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         }
 
         return $customerUser;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param string $refreshTokenChain
+     * @param string $deviceId
+     * @param \DateTime $tokenExpiration
+     * @param \App\Model\Administrator\Administrator|null $administrator
+     */
+    public function addRefreshTokenChain(
+        BaseCustomerUser $customerUser,
+        string $refreshTokenChain,
+        string $deviceId,
+        DateTime $tokenExpiration,
+        ?Administrator $administrator = null
+    ): void {
+        $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
+            $customerUser,
+            $refreshTokenChain,
+            $deviceId,
+            $tokenExpiration,
+            $administrator
+        );
+
+        $customerUser->addRefreshTokenChain($refreshTokenChain);
+
+        $this->em->flush();
     }
 
     /**
