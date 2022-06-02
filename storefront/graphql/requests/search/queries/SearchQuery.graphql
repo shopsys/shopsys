@@ -1,4 +1,4 @@
-query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter) {
+query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter, $first: Int) {
     articlesSearch(search: $search) {
         ...SimpleArticleInterfaceFragment
     }
@@ -8,7 +8,7 @@ query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $aft
     categoriesSearch(search: $search) {
         ...ListedCategoryConnectionFragment
     }
-    productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after, filter: $filter) {
+    productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after, filter: $filter, first: $first) {
        ...ListedProductConnectionFragment
     }
 }

@@ -2965,6 +2965,7 @@ export type SearchQueryVariablesApi = Exact<{
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   after: Maybe<Scalars['String']>;
   filter: Maybe<ProductFilterApi>;
+  first: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -4654,7 +4655,7 @@ export function useAutocompleteSearchQueryApi(options: Omit<Urql.UseQueryArgs<Au
   return Urql.useQuery<AutocompleteSearchQueryApi>({ query: AutocompleteSearchQueryDocumentApi, ...options });
 };
 export const SearchQueryDocumentApi = gql`
-    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter) {
+    query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String, $filter: ProductFilter, $first: Int) {
   articlesSearch(search: $search) {
     ...SimpleArticleInterfaceFragment
   }
@@ -4669,6 +4670,7 @@ export const SearchQueryDocumentApi = gql`
     orderingMode: $orderingMode
     after: $after
     filter: $filter
+    first: $first
   ) {
     ...ListedProductConnectionFragment
   }

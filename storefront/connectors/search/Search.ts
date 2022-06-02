@@ -8,7 +8,7 @@ import { isServer } from 'helpers/isServer';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { PaginationType } from 'redux/slices/user';
+import { initialState, PaginationType } from 'redux/slices/user';
 import { FilterOptionsStateType } from 'types/productFilter';
 import { SearchType } from 'types/search';
 
@@ -24,6 +24,7 @@ export const useSearch = (
             orderingMode: searchProductsSort,
             after: searchProductsPagination,
             filter: mapParametersFilter(optionsFilter),
+            first: initialState.pagination.pageSize,
         },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);

@@ -79,6 +79,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 orderingMode: store.getState().user.sort,
                 after: store.getState().user.pagination.paginationCursor,
                 filter: mapParametersFilter(store.getState().optionsFilter),
+                first: initialState.pagination.pageSize,
             },
         },
     ]);
