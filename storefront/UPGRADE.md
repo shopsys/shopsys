@@ -414,3 +414,16 @@
         - if they are not provided, the default values from API are used
 - tips on how to implement them
     - if you have some custom pages, make sure you pass the new props to the layout component
+
+### Upgrade Cypress to version 9.7.0
+- [FWCC-974](https://shopsys.atlassian.net/browse/FWCC-974)
+- [FWCC-974 - upgrade cypress to v9.7.0](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/609)
+- the reasons these changes were introduced:
+  - regular update new version of Cypress
+  - bug fixes 
+- most significant changes
+  - The Electron version and shipped Chromium browser version has been updated
+- how to upgrade Cypress locally
+  - to upgrade your local Cypress installation, you need to run `npm ci` in `storefront/cypress` folder
+  - documentation how to install Cypress, upgrade, and more information can be found here(https://shopsys.atlassian.net/wiki/spaces/PRG/pages/1078263829/Cypress)
+  
