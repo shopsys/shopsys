@@ -3,8 +3,8 @@ import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { OptionalTokenType } from 'urql/types';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext): void => {
-    destroyCookie(context, 'accessToken');
-    destroyCookie(context, 'refreshToken');
+    destroyCookie(context, 'accessToken', { path: '/' });
+    destroyCookie(context, 'refreshToken', { path: '/' });
 };
 
 export const setTokensToCookie = (
