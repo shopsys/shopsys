@@ -628,3 +628,21 @@ There you can find links to upgrade notes for other versions too.
         - see #project-base-diff
     - remove deprecated "bundle:controller:action" syntax from twig templates
         - see https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md#frameworkbundle
+    - `Shopsys\FrameworkBundle\Component\Error\ExceptionListener` class:
+        - property `$lastException` is renamed to `$lastThrowable`, its type is changed to `\Throwable|null`, and is strictly typed now
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```
+        - method `getLastException` changed its interface and was renamed to `getLastThrowable`:
+        ```diff
+        - public function getLastException()
+        + public function getLastThrowable(): ?Throwable
+        ```
+    - `Shopsys\FrontendApiBundle\Model\ErrorErrorHandlerListener` class:
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```

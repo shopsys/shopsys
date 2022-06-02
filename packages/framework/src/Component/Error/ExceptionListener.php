@@ -2,21 +2,22 @@
 
 namespace Shopsys\FrameworkBundle\Component\Error;
 
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 use Twig\Error\RuntimeError;
 
 class ExceptionListener
 {
     /**
-     * @var \Exception|null
+     * @var \Throwable|null
      */
-    protected $lastException;
+    protected ?Throwable $lastThrowable;
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         $throwable = $event->getThrowable();
 
@@ -25,14 +26,14 @@ class ExceptionListener
             $event->setThrowable($throwable->getPrevious());
         }
 
-        $this->lastException = $event->getException();
+        $this->lastThrowable = $event->getThrowable();
     }
 
     /**
-     * @return \Exception|null
+     * @return \Throwable|null
      */
-    public function getLastException()
+    public function getLastThrowable(): ?Throwable
     {
-        return $this->lastException;
+        return $this->lastThrowable;
     }
 }
