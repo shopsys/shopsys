@@ -78,6 +78,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
         $productData->accessories = [
             $product2,
             $product3,
+            $productMainVariant,
             $product4,
             $product5,
             $product6,
@@ -89,7 +90,6 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
             $product13,
             $productExcludedFromSale,
             $productVariant,
-            $productMainVariant,
             $productSoldOut,
         ];
         $this->productFacade->edit($product->getId(), $productData);

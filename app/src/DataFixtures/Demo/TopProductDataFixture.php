@@ -40,6 +40,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
         $defaultTopProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
             ProductDataFixture::PRODUCT_PREFIX . '2',
+            ProductDataFixture::PRODUCT_PREFIX . '69', // main variant
             ProductDataFixture::PRODUCT_PREFIX . '3',
             ProductDataFixture::PRODUCT_PREFIX . '4',
             ProductDataFixture::PRODUCT_PREFIX . '5',
@@ -49,7 +50,6 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
             ProductDataFixture::PRODUCT_PREFIX . '9',
             ProductDataFixture::PRODUCT_PREFIX . '10', // sold out
             ProductDataFixture::PRODUCT_PREFIX . '17',
-            ProductDataFixture::PRODUCT_PREFIX . '69', // main variant
             ProductDataFixture::PRODUCT_PREFIX . '76', // excluded from sale
             ProductDataFixture::PRODUCT_PREFIX . '148', // variant
         ];

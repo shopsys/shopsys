@@ -405,6 +405,9 @@ class RetrieveCartTest extends GraphQlTestCase
                     'name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $firstDomainLocale),
                 ],
                 [
+                    'name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
+                ],
+                [
                     'name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $firstDomainLocale),
                 ],
                 [
@@ -435,9 +438,6 @@ class RetrieveCartTest extends GraphQlTestCase
                 ],
                 [
                     'name' => t('24" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
-                ],
-                [
-                    'name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
                 ],
             ],
             'isSellingDenied' => false,

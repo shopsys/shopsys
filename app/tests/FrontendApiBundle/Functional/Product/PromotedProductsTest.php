@@ -22,6 +22,7 @@ class PromotedProductsTest extends GraphQlTestCase
         $productsExpected = [
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $firstDomainLocale)],
@@ -29,7 +30,6 @@ class PromotedProductsTest extends GraphQlTestCase
             ['name' => t('Canon EOS 700D', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Canon MG3550', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Genius repro SP-M120 black', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('24" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
         ];
 
