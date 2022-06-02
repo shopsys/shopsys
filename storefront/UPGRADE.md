@@ -424,5 +424,5 @@
 - most significant changes
   - The Electron version and shipped Chromium browser version has been updated
 - how to upgrade Cypress locally
-  - to upgrade your local Cypress instsallation, you need to run `npm ci` above storefront/cypress folder
+  - to upgrade your local Cypress installation, you need to run `npm ci` in `storefront/cypress` folder
   - documentation how to install Cypress, upgrade, and more information can be found here(https://shopsys.atlassian.net/wiki/spaces/PRG/pages/1078263829/Cypress)
