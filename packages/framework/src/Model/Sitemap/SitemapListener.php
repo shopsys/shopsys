@@ -105,7 +105,7 @@ class SitemapListener implements EventSubscriberInterface
      * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $section
-     * @param int $elementPriority
+     * @param float|string|int|null $elementPriority
      */
     protected function addUrlsBySitemapItems(
         array $sitemapItems,
@@ -125,7 +125,7 @@ class SitemapListener implements EventSubscriberInterface
      * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $section
-     * @param int $elementPriority
+     * @param float|string|int|null  $elementPriority
      */
     protected function addHomepageUrl(
         AbstractGenerator $generator,
