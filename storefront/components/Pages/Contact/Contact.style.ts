@@ -5,7 +5,7 @@ export const ContactWrapper = styled.div`
     margin-bottom: 32px;
 `;
 
-export const ContactTextStyled = styled.p`
+export const ContactTextStyled = styled.div`
     ${({ theme }) => css`
         margin-bottom: 16px;
 

@@ -13,7 +13,7 @@ import TextInput from 'components/Forms/TextInput';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import Webline from 'components/Layout/Webline';
-import { useContactMutationApi } from 'graphql/generated';
+import { useContactMutationApi, useSettingsQueryApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -29,6 +29,8 @@ const Contact: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
+
+    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
 
     const { url } = useShopsysSelector((state) => state.domain);
     const [gdprUrl] = getInternationalizedStaticUrls(['/gdpr'], url);
@@ -55,11 +57,9 @@ const Contact: FC = () => {
             <ContactWrapper>
                 <Webline>
                     <Heading1Styled>{t('Write to us')}</Heading1Styled>
-                    <ContactTextStyled>
-                        {t(
-                            'Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.',
-                        )}
-                    </ContactTextStyled>
+                    {data?.settings?.contactFormMainText !== undefined && (
+                        <ContactTextStyled dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
+                    )}
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
                             <FormColumn lg="65%">

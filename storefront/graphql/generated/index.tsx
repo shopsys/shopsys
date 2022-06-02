@@ -2987,7 +2987,7 @@ export type SeoSettingFragmentApi = { __typename?: 'SeoSetting', title: string, 
 export type SettingsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', pricing: { __typename?: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename?: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
+export type SettingsQueryApi = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, pricing: { __typename?: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename?: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string } } | null };
 
 export type SliderItemFragmentApi = { __typename?: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, mobileImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename?: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> };
 
@@ -4733,6 +4733,7 @@ export const SettingsQueryDocumentApi = gql`
     seo {
       ...SeoSettingFragment
     }
+    contactFormMainText
   }
 }
     ${PricingSettingFragmentApi}
