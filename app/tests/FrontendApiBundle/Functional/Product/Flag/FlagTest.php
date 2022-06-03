@@ -76,6 +76,9 @@ class FlagTest extends GraphQlTestCase
             "categories": [
                 {
                     "name": "' . t('Cameras & Photo', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                },
+                {
+                    "name": "' . t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
                 }
             ]
         }
@@ -166,6 +169,9 @@ class FlagTest extends GraphQlTestCase
                     },
                     "categories": [
                         {
+                            "name": "' . t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                        },
+                        {
                             "name": "' . t('TV, audio', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
                         },
                         {
@@ -176,9 +182,6 @@ class FlagTest extends GraphQlTestCase
                         },
                         {
                             "name": "' . t('Books', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
-                        },
-                        {
-                            "name": "' . t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
                         },
                         {
                             "name": "' . t('Mobile Phones', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"

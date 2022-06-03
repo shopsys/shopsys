@@ -158,6 +158,9 @@ class ProductsTest extends ProductsGraphQlTestCase
                     [
                         'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
                     ],
+                    [
+                        'name' => t('Personal Computers & accessories', [], 'dataFixtures', $firstDomainLocale),
+                    ],
                 ],
                 'flags' => [],
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999', $vatHigh),

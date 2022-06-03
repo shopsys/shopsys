@@ -65,6 +65,11 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     private PromoCodeFlagFactory $promoCodeFlagFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
@@ -72,6 +77,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
@@ -80,7 +86,8 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         PromoCodeCategoryFactory $promoCodeCategoryFactory,
         PromoCodeLimitFactory $promoCodeLimitFactory,
         PromoCodeFlagFactory $promoCodeFlagFactory,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        Domain $domain
     ) {
         $this->promoCodeFacade = $promoCodeFacade;
         $this->promoCodeDataFactory = $promoCodeDataFactory;
@@ -89,6 +96,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $this->promoCodeLimitFactory = $promoCodeLimitFactory;
         $this->promoCodeFlagFactory = $promoCodeFlagFactory;
         $this->em = $em;
+        $this->domain = $domain;
     }
 
     /**
@@ -176,6 +184,23 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
         $this->addReferenceForDomain(self::PROMO_CODE_FOR_NEW_PRODUCT, $promoCode, Domain::FIRST_DOMAIN_ID);
+
+        $this->loadForOtherDomains();
+    }
+
+    private function loadForOtherDomains(): void
+    {
+        foreach ($this->domain->getAllIds() as $domainId) {
+            if ($domainId === Domain::FIRST_DOMAIN_ID) {
+                continue;
+            }
+            $promoCodeData = $this->promoCodeDataFactory->create();
+            $promoCodeData->code = 'test';
+            $promoCodeData->domainId = $domainId;
+            $promoCodeData->identifier = 'test' . $domainId;
+            $promoCode = $this->promoCodeFacade->create($promoCodeData);
+            $this->setDefaultLimit($promoCode);
+        }
     }
 
     /**
