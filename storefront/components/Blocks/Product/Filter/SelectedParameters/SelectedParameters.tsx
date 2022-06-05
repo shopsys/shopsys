@@ -21,9 +21,9 @@ type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
 };
 
-const SelectedParameters: FC<SelectedParametersProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-selectedparameters';
+const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
+const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const formProviderMethods = useFormContext<FilterFormType>();
@@ -70,11 +70,13 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     const onResetAllParameters = () => {
         flagsValue.forEach((_, index) => formProviderMethods.setValue(`flags.${index}.checked`, false));
         brandsValue.forEach((_, index) => formProviderMethods.setValue(`brands.${index}.checked`, false));
-        parametersValue.forEach((parameterItem, parameterIndex) =>
+        parametersValue.forEach((parameterItem, parameterIndex) => {
+            formProviderMethods.setValue(`parameters.${parameterIndex}.minimalValue`, undefined);
+            formProviderMethods.setValue(`parameters.${parameterIndex}.maximalValue`, undefined);
             parameterItem.values.forEach((_, itemIndex) =>
                 formProviderMethods.setValue(`parameters.${parameterIndex}.values.${itemIndex}.checked`, false),
-            ),
-        );
+            );
+        });
         formProviderMethods.setValue(`onlyInStock`, false);
         onResetPrices();
     };
@@ -82,7 +84,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
     return (
         <>
             {!isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions) && (
-                <SelectedParametersStyled data-testid={testIdentifier}>
+                <SelectedParametersStyled data-testid={TEST_IDENTIFIER}>
                     <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
                     <SelectedParametersListStyled>
                         {parametersFilterState.brands.map((brandUuid) => (
@@ -107,9 +109,9 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                             </SelectedParametersListItemStyled>
                         ))}
 
-                        <Parameters />
+                        <Parameters filterOptions={props.productFilterOptions} />
 
-                        {isOnlyInStock !== false && (
+                        {isOnlyInStock && (
                             <SelectedParametersListItemStyled>
                                 {t('Only goods in stock')}
                                 <SelectedParametersListItemRemoveStyled
