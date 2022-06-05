@@ -56,8 +56,11 @@
     * [OrderItem](#orderitem)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
-    * [ParameterFilterOption](#parameterfilteroption)
+    * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
+    * [ParameterColorFilterOption](#parametercolorfilteroption)
+    * [ParameterSliderFilterOption](#parametersliderfilteroption)
     * [ParameterValue](#parametervalue)
+    * [ParameterValueColorFilterOption](#parametervaluecolorfilteroption)
     * [ParameterValueFilterOption](#parametervaluefilteroption)
     * [Payment](#payment)
     * [PaymentSetupCreationData](#paymentsetupcreationdata)
@@ -127,6 +130,7 @@
     * [Breadcrumb](#breadcrumb)
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
+    * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
     * [PriceInterface](#priceinterface)
     * [Product](#product)
     * [ProductListable](#productlistable)
@@ -824,6 +828,21 @@ Access personal data using hash received in email from personal data access requ
 Hash to securely recognize access
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterSliderFilterOption</strong></td>
+<td valign="top"><a href="#parametersliderfilteroption">ParameterSliderFilterOption</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterCheckboxFilterOption</strong></td>
+<td valign="top"><a href="#parametercheckboxfilteroption">ParameterCheckboxFilterOption</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterColorFilterOption</strong></td>
+<td valign="top"><a href="#parametercolorfilteroption">ParameterColorFilterOption</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>brandSearch</strong></td>
@@ -4895,7 +4914,7 @@ Unit of the parameter
 </tbody>
 </table>
 
-### ParameterFilterOption
+### ParameterCheckboxFilterOption
 
 Parameter filter option
 
@@ -4914,7 +4933,7 @@ Parameter filter option
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-UUID
+The parameter UUID
 
 </td>
 </tr>
@@ -4923,16 +4942,16 @@ UUID
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Parameter name
+The parameter name
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>visible</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
-Is parameter visible for customers
+The parameter unit
 
 </td>
 </tr>
@@ -4945,31 +4964,118 @@ Filter options of parameter values
 
 </td>
 </tr>
+</tbody>
+</table>
+
+### ParameterColorFilterOption
+
+Parameter filter option
+
+<table>
+<thead>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
-<td></td>
+<td>
+
+The parameter name
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
-<td></td>
+<td>
+
+The parameter unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>values</strong></td>
+<td valign="top">[<a href="#parametervaluecolorfilteroption">ParameterValueColorFilterOption</a>!]!</td>
+<td>
+
+Filter options of parameter values
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ParameterSliderFilterOption
+
+Parameter filter option
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The parameter name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a></td>
+<td>
+
+The parameter unit
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>minimalValue</strong></td>
-<td valign="top"><a href="#float">Float</a></td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
-The parameter minimal value (set for parameters with "slider" type only, null for the rest)
+The parameter minimal value
 
 </td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>maximalValue</strong></td>
-<td valign="top"><a href="#float">Float</a></td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
-The parameter maximal value (set for parameters with "slider" type only, null for the rest)
+The parameter maximal value
 
 </td>
 </tr>
@@ -5011,7 +5117,7 @@ Parameter value
 </tbody>
 </table>
 
-### ParameterValueFilterOption
+### ParameterValueColorFilterOption
 
 Parameter value filter option
 
@@ -5069,6 +5175,61 @@ that will be added to current products result.
 <td>
 
 RGB hex of color parameter
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ParameterValueFilterOption
+
+Parameter value filter option
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Parameter value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>count</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of products that will be filtered if this filter option is applied.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isAbsolute</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+If true than count parameter is number of products that will be displayed if
+this filter option is applied, if false count parameter is number of products
+that will be added to current products result.
 
 </td>
 </tr>
@@ -5548,7 +5709,7 @@ Number of products in stock that will be filtered
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameterfilteroption">ParameterFilterOption</a>!]</td>
+<td valign="top">[<a href="#parameterfilteroptioninterface">ParameterFilterOptionInterface</a>!]</td>
 <td>
 
 Parameter filter options
@@ -9039,6 +9200,50 @@ List of delivery addresses
 <td>
 
 The name of the customer pricing group
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ParameterFilterOptionInterface
+
+Represents parameter filter option
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The parameter name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a></td>
+<td>
+
+The parameter unit
 
 </td>
 </tr>

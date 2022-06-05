@@ -1,5 +1,5 @@
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
-import { FilterOptionsParameterTypeEnum, FilterOptionsType } from 'types/productFilter';
+import { FilterOptionsType } from 'types/productFilter';
 
 export const mapProductFilterOptions = (
     productFilterOptionsApiData: ProductFilterOptionsFragmentApi,
@@ -11,17 +11,7 @@ export const mapProductFilterOptions = (
         maximalPrice: Math.round((parseFloat(productFilterOptionsApiData.maximalPrice) + Number.EPSILON) * 100) / 100,
         brands: productFilterOptionsApiData.brands !== null ? productFilterOptionsApiData.brands : [],
         flags: productFilterOptionsApiData.flags !== null ? productFilterOptionsApiData.flags : [],
-        parameters: productFilterOptionsApiData.parameters?.map((item) => ({
-            ...item,
-            type:
-                item.__typename === FilterOptionsParameterTypeEnum.ColorPicker
-                    ? FilterOptionsParameterTypeEnum.ColorPicker
-                    : FilterOptionsParameterTypeEnum.Checkbox,
-            values: item.values.map((value) => ({
-                ...value,
-                rgbHex: value.rgbHex !== null ? value.rgbHex : undefined,
-            })),
-        })),
+        parameters: productFilterOptionsApiData.parameters ?? undefined,
         currencyCode,
     };
 };

@@ -11,5 +11,6 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
     parameters {
         ...ProductFilterOptionsParametersCheckboxFragment
         ...ProductFilterOptionsParametersColorFragment
+        ...ProductFilterOptionsParametersSliderFragment
     }
 }
