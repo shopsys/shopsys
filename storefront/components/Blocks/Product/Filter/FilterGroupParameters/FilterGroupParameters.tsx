@@ -1,4 +1,5 @@
 import ColorPicker from './ColorPicker';
+import SliderFilter from './SliderFilter';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,
@@ -10,7 +11,7 @@ import {
 import Checkbox from 'components/Forms/Checkbox';
 import { FC, useState } from 'react';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'types/productFilter';
+import { FilterFormType, ParametersCheckboxType, ParametersColorType, ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     /**
@@ -29,10 +30,6 @@ type FilterGroupParametersProps = {
      * parameterParentIndex of parameters
      */
     parameterParentIndex: number;
-    /**
-     * Changes filter items to its elements
-     */
-    type: FilterOptionsParameterTypeEnum;
     /**
      * Parameters data of product filter
      */
@@ -59,7 +56,7 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                {props.type === FilterOptionsParameterTypeEnum.Checkbox &&
+                {props.data?.__typename === 'ParameterCheckboxFilterOption' &&
                     fields.map((dataItem, index) => (
                         <Controller
                             key={dataItem.id}
@@ -67,7 +64,7 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                             render={({ field }) => (
                                 <FilterGroupContentItemStyled
                                     key={dataItem.uuid}
-                                    isDisabled={props.data?.values[index]?.count === 0}
+                                    isDisabled={(props.data as ParametersCheckboxType).values[index]?.count === 0}
                                     isActive={field.value}
                                     data-testid={testIdentifier + '-' + index}
                                 >
@@ -76,13 +73,13 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                                         id={field.name}
                                         label={dataItem.text}
                                         fieldRef={field}
-                                        count={props.data?.values[index]?.count}
+                                        count={(props.data as ParametersCheckboxType).values[index]?.count}
                                     />
                                 </FilterGroupContentItemStyled>
                             )}
                         />
                     ))}
-                {props.type === FilterOptionsParameterTypeEnum.ColorPicker && (
+                {props.data?.__typename === 'ParameterColorFilterOption' && (
                     <FilterGroupColorStyled>
                         {fields.map((dataItem, index) => (
                             <ColorPicker
@@ -91,10 +88,17 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                                 parameterParentUuid={props.parameterParentUuid}
                                 dataItem={dataItem}
                                 index={index}
-                                isDisabled={props.data?.values[index]?.count === 0}
+                                isDisabled={(props.data as ParametersColorType).values[index]?.count === 0}
                             />
                         ))}
                     </FilterGroupColorStyled>
+                )}
+                {props.data?.__typename === 'ParameterSliderFilterOption' && (
+                    <SliderFilter
+                        parameterParentIndex={props.parameterParentIndex}
+                        min={props.data.minimalValue}
+                        max={props.data.maximalValue}
+                    />
                 )}
             </FilterGroupContentStyled>
         </FilterGroupStyled>

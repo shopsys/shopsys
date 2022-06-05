@@ -39,8 +39,8 @@ const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex })
             max={max}
             minValue={minimalValue ?? min}
             maxValue={maximalValue ?? max}
-            setMinValue={setMinimalPrice}
-            setMaxValue={setMaximalPrice}
+            setMinValueCallback={setMinimalPrice}
+            setMaxValueCallback={setMaximalPrice}
         />
     );
 };
