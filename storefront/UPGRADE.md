@@ -427,3 +427,13 @@
   - to upgrade your local Cypress installation, you need to run `npm ci` in `storefront/cypress` folder
   - documentation how to install Cypress, upgrade, and more information can be found here(https://shopsys.atlassian.net/wiki/spaces/PRG/pages/1078263829/Cypress)
   
+### Improved debugging in development environment
+- [FWCC-979](https://shopsys.atlassian.net/browse/FWCC-979)
+- [FWCC-979 - added error logging in development environment](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/620)
+- the reasons these changes were introduced
+  - debugging in local environment was very hard as some exceptions were just gracefully swallowed by the application
+  - because of that, the developer could never find out there is an exception
+- most significant changes
+  - in places where we logged exceptions to Sentry with the `captureException` method, we now call the `logException` method which not only sends the error to Sentry, but also logs it to console in development environment
+- tips on how to implement them
+  - everywhere, where you call the `captureException` from Sentry and want to log exceptions to console, change it to `logException`
