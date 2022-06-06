@@ -483,17 +483,25 @@
 ### Filtering by slider parameters
 - [FWCC-853](https://shopsys.atlassian.net/browse/FWCC-853)
 - [FWCC-853 - filtering by slider parameters](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/592/diffs)
-- The API for parameters input in the product filter has changed (`ParameterFilter.types.yaml`, i.e. the input you sent to API to filter the products you want to receive):
-  - you can provide `minimalValue` and `maximalValue` instead of the array of values for the slider parameters
-- The API for parameters choices in product filter has changed (`productFilterOptions`, i.e. the output you get from API to display the filter):
-  - `ParameterFilterOption.types.yaml` was removed
-  - new `ParameterFilterOptionInterface.types.yaml` and new `AppParameterFilterOptionDecorator.types.yaml` implementing the interface were created
-  - there are three implementations extending the decorator:
-    - `ParameterCheckboxFilterOption.types.yaml` with an array of values
-    - `ParameterColorFilterOption.types.yaml` with an array of values that contain `rgbHex` color information
-    - `ParameterSliderFilterOption.types.yaml` with the minimal and maximal float values
-    - thanks to that, there is no need for the `ParameterFilterOption.type` field as the type can be recognized using generic `__typename`
-  - if there are any custom changes in `ParameterFilterOption.types.yaml` in your project, you need to transfer them into the new structure:
-    - common fields for all parameters belong to the interface and decorator
-    - color/slider/checkbox specific fields belong to the particular implementation
-  - if there are any custom changes in `ParameterValueFilterOption.types.yaml` in your project that are related to the color parameters, you should move them into `ParameterValueColorFilterOption.types.yaml`
+- Backend:
+  - The API for parameters input in the product filter has changed (`ParameterFilter.types.yaml`, i.e. the input you sent to API to filter the products you want to receive):
+    - you can provide `minimalValue` and `maximalValue` instead of the array of values for the slider parameters
+  - The API for parameters choices in product filter has changed (`productFilterOptions`, i.e. the output you get from API to display the filter):
+    - `ParameterFilterOption.types.yaml` was removed
+    - new `ParameterFilterOptionInterface.types.yaml` and new `AppParameterFilterOptionDecorator.types.yaml` implementing the interface were created
+    - there are three implementations extending the decorator:
+      - `ParameterCheckboxFilterOption.types.yaml` with an array of values
+      - `ParameterColorFilterOption.types.yaml` with an array of values that contain `rgbHex` color information
+      - `ParameterSliderFilterOption.types.yaml` with the minimal and maximal float values
+      - thanks to that, there is no need for the `ParameterFilterOption.type` field as the type can be recognized using generic `__typename`
+    - if there are any custom changes in `ParameterFilterOption.types.yaml` in your project, you need to transfer them into the new structure:
+      - common fields for all parameters belong to the interface and decorator
+      - color/slider/checkbox specific fields belong to the particular implementation
+    - if there are any custom changes in `ParameterValueFilterOption.types.yaml` in your project that are related to the color parameters, you should move them into `ParameterValueColorFilterOption.types.yaml`
+- Frontend:
+  - the `ParametersType` was split to 3 independent types
+  - the `FilterOptionsParameterTypeEnum` enum was removed, `__typename` is now used to differentiate between parameter types
+  - the `RangeSlider` component was refactored to be more generic and reusable
+  - new `SliderFilter` component was added and implemented to the `Filter` component
+  - the form types and form handlers was extended to work with `minimalValue` and `maximalValue`
+  - the `SelectedParameters` and the `Parameters` components was adapted for the new parameter type
