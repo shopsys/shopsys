@@ -27,8 +27,8 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         $expectedOrderItems
                     ),
                     'items' => $expectedOrderItems,
-                    'firstName' => null,
-                    'lastName' => null,
+                    'firstName' => 'firstName',
+                    'lastName' => 'lastName',
                     'email' => 'user@example.com',
                     'telephone' => '+53 123456789',
                     'companyName' => 'Airlocks s.r.o.',

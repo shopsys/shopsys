@@ -122,15 +122,14 @@ class Order extends BaseOrder
             $this->companyName = $orderData->companyName;
             $this->companyNumber = $orderData->companyNumber;
             $this->companyTaxNumber = $orderData->companyTaxNumber;
-            $this->firstName = null;
-            $this->lastName = null;
         } else {
             $this->companyName = null;
             $this->companyNumber = null;
             $this->companyTaxNumber = null;
-            $this->firstName = $orderData->firstName;
-            $this->lastName = $orderData->lastName;
         }
+
+        $this->firstName = $orderData->firstName;
+        $this->lastName = $orderData->lastName;
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->isOverLimit = $orderData->isOverLimit;
         $this->trackingNumber = $orderData->trackingNumber;
