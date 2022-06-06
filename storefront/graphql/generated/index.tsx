@@ -1784,6 +1784,8 @@ export type QueryApi = {
   flag: Maybe<FlagApi>;
   /** Returns a complete list of the flags */
   flags: Maybe<Array<FlagApi>>;
+  /** Check if email is registered */
+  isCustomerUserRegistered: Scalars['Boolean'];
   /** Return user translated language constants for current domain locale */
   languageConstants: Array<LanguageConstantApi>;
   /** Returns last order of the user or null if no order was placed yet */
@@ -1923,6 +1925,11 @@ export type QueryCategoryArgsApi = {
 export type QueryFlagArgsApi = {
   urlSlug: Maybe<Scalars['String']>;
   uuid: Maybe<Scalars['Uuid']>;
+};
+
+
+export type QueryIsCustomerUserRegisteredArgsApi = {
+  email: Scalars['String'];
 };
 
 

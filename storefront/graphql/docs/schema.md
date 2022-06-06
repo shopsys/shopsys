@@ -567,6 +567,20 @@ Returns complete navigation menu
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isCustomerUserRegistered</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Check if email is registered
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">email</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>promotedCategories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>

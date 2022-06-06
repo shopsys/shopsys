@@ -1974,6 +1974,9 @@ type Query {
   CompanyCustomerUser: CompanyCustomerUser
   RegularCustomerUser: RegularCustomerUser
 
+  """Check if email is registered"""
+  isCustomerUserRegistered(email: String!): Boolean!
+
   """Returns promoted categories"""
   promotedCategories: [Category!]!
 
