@@ -1,7 +1,7 @@
-import { captureException } from '@sentry/nextjs';
 import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { logException } from 'helpers/errors/logException';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffect } from 'react';
 
@@ -14,7 +14,7 @@ export const useQueryError = (error: CombinedError | undefined): void => {
 
         const parsedErrors = getUserFriendlyErrors(error, t);
 
-        captureException(error);
+        logException(error);
 
         if (parsedErrors.applicationError === undefined) {
             return;

@@ -1,5 +1,5 @@
 import { createClient } from './createClient';
-import { captureException } from '@sentry/nextjs';
+import { logException } from './errors/logException';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -88,7 +88,7 @@ export async function initServerSideProps(
         }
         return { props: {} as ServerSidePropsType };
     } catch (e) {
-        captureException(e);
+        logException(e);
         throw e;
     }
 }

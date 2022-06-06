@@ -1,5 +1,6 @@
-import { captureException, flush } from '@sentry/nextjs';
+import { flush } from '@sentry/nextjs';
 import Error500 from 'components/Pages/ErrorPage/500';
+import { logException } from 'helpers/errors/logException';
 import { ServerResponse } from 'http';
 import NextErrorComponent from 'next/error';
 import { ReactElement } from 'react';
@@ -9,7 +10,7 @@ const ErrorPage = ({ hasGetInitialPropsRun, err }: { hasGetInitialPropsRun: bool
         // getInitialProps is not called in case of
         // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
         // err via _app.js so it can be captured
-        captureException(err);
+        logException(err);
         // Flushing is not required in this case as it only happens on the client
     }
 
@@ -37,7 +38,7 @@ ErrorPage.getInitialProps = async ({ res, err, asPath }: { res: ServerResponse; 
     //    Boundaries: https://reactjs.org/docs/error-boundaries.html
 
     if (err !== undefined && err !== null) {
-        captureException(err);
+        logException(err);
 
         // Flushing before returning is necessary if deploying to Vercel, see
         // https://vercel.com/docs/platform/limits#streaming-responses
@@ -49,7 +50,7 @@ ErrorPage.getInitialProps = async ({ res, err, asPath }: { res: ServerResponse; 
     // If this point is reached, getInitialProps was called without any
     // information about what the error might be. This is unexpected and may
     // indicate a bug introduced in Next.js, so record it in Sentry
-    captureException(new Error(`_error.js getInitialProps missing data at path: ${asPath}`));
+    logException(new Error(`_error.js getInitialProps missing data at path: ${asPath}`));
     await flush(2000);
 
     return errorInitialProps;
