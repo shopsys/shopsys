@@ -610,3 +610,7 @@ There you can find links to upgrade notes for other versions too.
         - `from most expensive`
         - `from the cheapest`
         - `relevance`
+- `parameter(_test).yaml.dist` and auto-creation of `parameter(_test).yaml` files was removed
+    - see #project-base-diff to update your project
+    - you can create `parameters.yaml` manually to locally override some settings (for testing purposes for example)
+    - your custom parameters should be in environment variable (if the value is environment-specific), or in different config file (if the value is project-specific)
