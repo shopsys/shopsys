@@ -591,3 +591,22 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - set doctrine configuration to be taken exclusively from environment variables
     - see #project-base-diff to update your project
+- unused translations have been removed
+    - the following `msgid` entries are no longer available in framework, they should be already added into your project directly
+        - `Contact`
+        - `Edit data`
+        - `Forgotten password`
+        - `Oops! Error occurred`
+        - `Page not found`
+        - `Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.`
+        - `Product you had in cart is no longer in available. Please check your order.`
+        - `Registration`
+        - `Search [noun]`
+        - `TOP`
+        - `Terms-and-conditions.html`
+        - `The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.`
+        - `alphabetically A -> Z`
+        - `alphabetically Z -> A`
+        - `from most expensive`
+        - `from the cheapest`
+        - `relevance`

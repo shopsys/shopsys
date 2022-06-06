@@ -421,9 +421,6 @@ msgstr ""
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr ""
 
-msgid "Contact"
-msgstr ""
-
 msgid "Contact form"
 msgstr ""
 
@@ -826,9 +823,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-msgid "Edit data"
-msgstr ""
-
 msgid "Edit domain icon"
 msgstr ""
 
@@ -1082,9 +1076,6 @@ msgid "For deleting unit \"%name%\" you have to choose other one to be set every
 msgstr ""
 
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
-msgstr ""
-
-msgid "Forgotten password"
 msgstr ""
 
 msgid "Forgotten password sending"
@@ -1573,9 +1564,6 @@ msgstr ""
 msgid "Only checked products"
 msgstr ""
 
-msgid "Oops! Error occurred"
-msgstr ""
-
 msgid "Open in a new tab"
 msgstr ""
 
@@ -1643,9 +1631,6 @@ msgid "Origin"
 msgstr ""
 
 msgid "Page <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Page not found"
 msgstr ""
 
 msgid "Page title"
@@ -1795,9 +1780,6 @@ msgstr ""
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
-msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
-msgstr ""
-
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr ""
 
@@ -1832,9 +1814,6 @@ msgid "Product saved in order"
 msgstr ""
 
 msgid "Product settings on the main page successfully changed"
-msgstr ""
-
-msgid "Product you had in cart is no longer in available. Please check your order."
 msgstr ""
 
 msgid "Products"
@@ -1874,9 +1853,6 @@ msgid "Rate can't be modified. It is necessary to create new rate, remove existi
 msgstr ""
 
 msgid "Registered cust."
-msgstr ""
-
-msgid "Registration"
 msgstr ""
 
 msgid "Registration confirmation"
@@ -1950,9 +1926,6 @@ msgstr ""
 
 msgid "Scripts overview"
 msgstr ""
-
-msgid "Search [noun]"
-msgstr "Search"
 
 msgid "Search [verb]"
 msgstr "Search"
@@ -2185,9 +2158,6 @@ msgstr ""
 msgid "System data"
 msgstr ""
 
-msgid "TOP"
-msgstr ""
-
 msgid "Tax number"
 msgstr ""
 
@@ -2200,16 +2170,10 @@ msgstr ""
 msgid "Terms and conditions"
 msgstr ""
 
-msgid "Terms-and-conditions.html"
-msgstr ""
-
 msgid "The change will be applied to products in 10 minutes"
 msgstr ""
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
-msgstr ""
-
-msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr ""
 
 msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
@@ -2482,12 +2446,6 @@ msgstr ""
 msgid "after"
 msgstr ""
 
-msgid "alphabetically A -> Z"
-msgstr ""
-
-msgid "alphabetically Z -> A"
-msgstr ""
-
 msgid "articles"
 msgstr ""
 
@@ -2525,12 +2483,6 @@ msgid "flags"
 msgstr ""
 
 msgid "from"
-msgstr ""
-
-msgid "from most expensive"
-msgstr ""
-
-msgid "from the cheapest"
 msgstr ""
 
 msgid "higher or equal"
@@ -2594,9 +2546,6 @@ msgid "promo codes"
 msgstr ""
 
 msgid "records"
-msgstr ""
-
-msgid "relevance"
 msgstr ""
 
 msgid "subscribers"
