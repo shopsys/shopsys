@@ -61,14 +61,14 @@ class ArticleElasticsearchRepository
     }
 
     /**
-     * @param string|null $placement
+     * @param string[] $placements
      * @return int
      */
-    public function getAllArticlesTotalCount(?string $placement = null): int
+    public function getAllArticlesTotalCount(array $placements): int
     {
         $filterQuery = $this->filterQueryFactory->create();
-        if ($placement !== null) {
-            $filterQuery = $filterQuery->filterByPlacement($placement);
+        if (count($placements) > 0) {
+            $filterQuery = $filterQuery->filterByPlacements($placements);
         }
 
         return $this->articleElasticsearchDataFetcher->getTotalCount($filterQuery);
@@ -77,14 +77,14 @@ class ArticleElasticsearchRepository
     /**
      * @param int $offset
      * @param int $limit
-     * @param string|null $placement
+     * @param string[] $placements
      * @return array
      */
-    public function getAllArticles(int $offset, int $limit, ?string $placement = null): array
+    public function getAllArticles(int $offset, int $limit, array $placements): array
     {
         $filterQuery = $this->filterQueryFactory->create($offset, $limit);
-        if ($placement !== null) {
-            $filterQuery = $filterQuery->filterByPlacement($placement);
+        if (count($placements) > 0) {
+            $filterQuery = $filterQuery->filterByPlacements($placements);
         }
 
         return $this->articleElasticsearchDataFetcher->getAllResults($filterQuery);

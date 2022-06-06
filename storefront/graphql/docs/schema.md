@@ -109,6 +109,7 @@
     * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
     * [TransportInput](#transportinput)
   * [Enums](#enums)
+    * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
   * [Scalars](#scalars)
@@ -428,8 +429,12 @@ and `after` keywords and filtered by `placement`
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">placement</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
+<td valign="top">[<a href="#articleplacementtypeenum">ArticlePlacementTypeEnum</a>!]</td>
+<td>
+
+An array of the required articles placements
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>article</strong></td>
@@ -8453,6 +8458,67 @@ Price for transport
 </table>
 
 ## Enums
+
+### ArticlePlacementTypeEnum
+
+Possible placements of an article (used as an input for 'articles' query)
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>footer1</strong></td>
+<td>
+
+Articles in 1st footer column
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>footer2</strong></td>
+<td>
+
+Articles in 2nd footer column
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>footer3</strong></td>
+<td>
+
+Articles in 3rd footer column
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>footer4</strong></td>
+<td>
+
+Articles in 4th footer column
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>topMenu</strong></td>
+<td>
+
+Articles in top menu
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>none</strong></td>
+<td>
+
+Articles without specific placement
+
+</td>
+</tr>
+</tbody>
+</table>
 
 ### PersonalDataAccessRequestTypeEnum
 

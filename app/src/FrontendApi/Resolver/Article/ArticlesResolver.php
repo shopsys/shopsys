@@ -33,19 +33,19 @@ class ArticlesResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param string|null $placement
+     * @param string[] $placements
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument, ?string $placement)
+    public function resolve(Argument $argument, array $placements)
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($placement) {
-            return $this->articleElasticsearchFacade->getAllArticles($offset, $limit, $placement);
+        $paginator = new Paginator(function ($offset, $limit) use ($placements) {
+            return $this->articleElasticsearchFacade->getAllArticles($offset, $limit, $placements);
         });
 
-        return $paginator->auto($argument, $this->articleElasticsearchFacade->getAllArticlesTotalCount($placement));
+        return $paginator->auto($argument, $this->articleElasticsearchFacade->getAllArticlesTotalCount($placements));
     }
 
     /**

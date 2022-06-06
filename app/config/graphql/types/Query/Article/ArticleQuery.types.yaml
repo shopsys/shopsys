@@ -9,7 +9,11 @@ ArticleQuery:
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     placement:
-                        type: "String"
+                        type: "[ArticlePlacementTypeEnum!]"
+                        defaultValue: []
+                        validation:
+                            -   NotNull: ~
+                        description: "An array of the required articles placements"
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
             articlesSearch:
                 type: "[ArticleInterface!]!"

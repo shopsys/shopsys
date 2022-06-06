@@ -190,6 +190,29 @@ interface ArticleInterface {
   breadcrumb: [Link!]!
 }
 
+"""
+Possible placements of an article (used as an input for 'articles' query)
+"""
+enum ArticlePlacementTypeEnum {
+  """Articles in 1st footer column"""
+  footer1
+
+  """Articles in 2nd footer column"""
+  footer2
+
+  """Articles in 3rd footer column"""
+  footer3
+
+  """Articles in 4th footer column"""
+  footer4
+
+  """Articles in top menu"""
+  topMenu
+
+  """Articles without specific placement"""
+  none
+}
+
 """Represents an availability"""
 type Availability {
   """Localized availability name (domain dependent)"""
@@ -1938,7 +1961,15 @@ type Query {
   Returns list of articles that can be paginated using `first`, `last`, `before`
   and `after` keywords and filtered by `placement`
   """
-  articles(after: String, first: Int, before: String, last: Int, placement: String): ArticleConnection!
+  articles(
+    after: String
+    first: Int
+    before: String
+    last: Int
+
+    """An array of the required articles placements"""
+    placement: [ArticlePlacementTypeEnum!] = []
+  ): ArticleConnection!
 
   """Returns article filtered using UUID or URL slug"""
   article(uuid: Uuid, urlSlug: String): Article
