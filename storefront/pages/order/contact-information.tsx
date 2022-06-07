@@ -170,7 +170,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const ssrCache = ssrExchange({ isClient: false });
-    const client = createClient(context, store, ssrCache);
+    const client = await createClient(context, store, ssrCache);
     const redirect = await handleOrderPagesRedirect(context, store, client);
     return redirect === false ? initServerSideProps(context, store, false, [], client, ssrCache) : redirect;
 });

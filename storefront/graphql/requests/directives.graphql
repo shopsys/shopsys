@@ -1,0 +1,2 @@
+# directive to cache the query server side in Redis, ttl is set in seconds
+directive @redisCache(ttl: Int) on QUERY

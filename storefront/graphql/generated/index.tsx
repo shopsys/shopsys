@@ -4444,7 +4444,7 @@ export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<C
   return Urql.useQuery<CurrentCustomerUserQueryApi>({ query: CurrentCustomerUserQueryDocumentApi, ...options });
 };
 export const NavigationQueryDocumentApi = gql`
-    query NavigationQuery {
+    query NavigationQuery @redisCache(ttl: 3600) {
   navigation {
     name
     link

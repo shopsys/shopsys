@@ -437,3 +437,16 @@
   - in places where we logged exceptions to Sentry with the `captureException` method, we now call the `logException` method which not only sends the error to Sentry, but also logs it to console in development environment
 - tips on how to implement them
   - everywhere, where you call the `captureException` from Sentry and want to log exceptions to console, change it to `logException`
+
+### Cache server side queries to Redis
+- [FWCC-968](https://shopsys.atlassian.net/browse/FWCC-968)
+- [FWCC-968 - graphql redis cache](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/604/diffs)
+- the reasons these changes were introduced:
+    - to improve FE performance, we want to cache selected queries in Redis
+- most significant changes
+    - new GraphQl directive `@redisCache` was created
+    - new URQl `fetcher` was created
+    - `NavigationQuery` is cached to 1 hour by default
+- tips on how to implement them
+    - make sure that on all places where URQl client is created, the new fetcher is set in options
+    - see `docs/redis-graphql-cache.md`
