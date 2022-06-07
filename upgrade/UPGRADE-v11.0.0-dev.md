@@ -7,7 +7,7 @@ There you can find links to upgrade notes for other versions too.
 
 ## Removed deprecations
 
-- check that your code don't use any removed code ([#](https://github.com/shopsys/shopsys/pull/))
+- check that your code don't use any removed code ([#2455](https://github.com/shopsys/shopsys/pull/2455))
     - Phing property `path.env.test` was removed
     - function `getCategoriesOrderingData()` from `@shopsys/framework/assets/js/admin/components/CategoryTreeSorting.js` was removed, use `getNestedSetData()` instead
     - method `Shopsys\FrameworkBundle\Controller\Admin\CategoryController::saveOrderAction()` was removed, use `applySortingAction()` instead
@@ -614,3 +614,11 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - you can create `parameters.yaml` manually to locally override some settings (for testing purposes for example)
     - your custom parameters should be in environment variable (if the value is environment-specific), or in different config file (if the value is project-specific)
+- fix implementations of FileVisitorInterface::visitTwigFile ([#2465](https://github.com/shopsys/shopsys/pull/2465))
+    - in the following classes, an interface of `visitTwigFile` was fixed to comply with `FileVisitorInterface`
+        - `ConstraintMessageExtractor`
+        - `ConstraintMessagePropertyExtractor`
+        - `ConstraintViolationExtractor`
+        - `JsFileExtractor`
+        - `PhpFileExtractor`
+        - `TwigFileExtractor`
