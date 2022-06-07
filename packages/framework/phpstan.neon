@@ -27,9 +27,6 @@ parameters:
             message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
             path: %currentWorkingDirectory%/src/*
         -
-            message: '#Call to an undefined method \(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Stringable\)|\(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Symfony\\Component\\Security\\Core\\User\\UserInterface\)::getUuid\(\)\.#'
-            path: %currentWorkingDirectory%/src/Model/Customer/User/CurrentCustomerUser.php*
-        -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
     excludePaths:
