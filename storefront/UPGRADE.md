@@ -459,3 +459,11 @@
 - most significant changes
     - default values for transport and payment in the order form are set from the new LastOrder query if the user is logged in and has not selected different options
     - most of the transport and payment form logic was moved to the separate component
+
+### Check command
+- [FWCC-1007](https://shopsys.atlassian.net/browse/FWCC-1007)
+- [FWCC-1007 - storefront check command](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/629)
+- the reasons these changes were introduced
+  - to simplify the execution of standards in local development
+- most significant changes
+  - new `npm run check` command was added to `package.json`, it runs all the available standards

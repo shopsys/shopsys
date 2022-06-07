@@ -18,7 +18,8 @@
         "gql:codegen": "graphql-codegen --config codegen.yml",
         "gql:docs": "graphql-markdown schema.graphql > graphql/docs/schema.md",
         "tests-jest": "jest",
-        "stylelint": "stylelint \"./**/*.(js|ts|tsx)\""
+        "stylelint": "stylelint \"./**/*.(js|ts|tsx)\"",
+        "check": "npm run typecheck && npm run lint && npm run stylelint"
     },
     "dependencies": {
         "@graphql-codegen/cli": "^2.1.1",
