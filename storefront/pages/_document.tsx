@@ -1,4 +1,4 @@
-import { captureException } from '@sentry/nextjs';
+import { logException } from 'helpers/errors/logException';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ReactElement } from 'react';
 import { ServerStyleSheet } from 'styled-components';
@@ -6,11 +6,11 @@ import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
 import { GTM_ID } from 'utils/Gtm/Helpers';
 
 process.on('unhandledRejection', (err) => {
-    captureException(err);
+    logException(err);
 });
 
 process.on('uncaughtException', (err) => {
-    captureException(err);
+    logException(err);
 });
 
 /**

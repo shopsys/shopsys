@@ -1,10 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const Sentry = require('@sentry/nextjs');
+const { captureException } = require('@sentry/nextjs');
 
 const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
 const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:translates:`;
 const REDIS_UPDATE_JOB_TIMEOUT = 5; // seconds (default: 30)
 const REDIS_IS_CACHED_TIMEOUT = 30; // seconds (default: 5 * 60)
+
+const logException = (e) => {
+    if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.error(e);
+    }
+
+    captureException(e);
+};
 
 module.exports = {
     pages: {
@@ -66,7 +75,7 @@ module.exports = {
                     };
 
                     cacheToRedis().catch((reject) => {
-                        Sentry.captureException(reject);
+                        logException(reject);
                     });
                 }
 
@@ -75,7 +84,7 @@ module.exports = {
                 }
             }
         } catch (error) {
-            Sentry.captureException(error);
+            logException(error);
         }
 
         return (await import('./i18n-translator')).getLocalTranslates(locale, namespace);
