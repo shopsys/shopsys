@@ -182,14 +182,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "cp -n project-base/config/parameters.yaml.dist project-base/config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
-            "cp -n project-base/config/parameters_test.yaml.dist project-base/config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "cp -n project-base/config/parameters.yaml.dist project-base/config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
-            "cp -n project-base/config/parameters_test.yaml.dist project-base/config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],

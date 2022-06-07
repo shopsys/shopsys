@@ -13,8 +13,6 @@
     <property name="path.codeception.executable" value="${path.bin}/codecept"/>
     <property name="path.composer.executable" value="composer"/>
     <property name="path.config" value="${path.root}/config"/>
-    <!-- @deprecated property path.env.test is no longer in use and will be removed in next major -->
-    <property name="path.env.test" value="${path.root}/TEST"/>
     <property name="path.env.acc" value="${path.root}/ACCEPTANCE"/>
     <property name="path.eslint.executable" value="${path.node_modules.bin}/eslint"/>
     <property name="path.framework" value="${project.basedir}"/>

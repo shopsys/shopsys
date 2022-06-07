@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Component\Environment;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
-
 class EnvironmentFileSetting
 {
     protected const FILE_NAMES_BY_ENVIRONMENT = [
@@ -13,15 +11,6 @@ class EnvironmentFileSetting
         EnvironmentType::ACCEPTANCE => 'ACCEPTANCE',
     ];
 
-    /**
-     * @deprecated constant ENVIRONMENTS_CONSOLE is deprecated and will be removed in next major version
-     */
-    protected const ENVIRONMENTS_CONSOLE = [
-        EnvironmentType::ACCEPTANCE,
-        EnvironmentType::TEST,
-        EnvironmentType::DEVELOPMENT,
-        EnvironmentType::PRODUCTION,
-    ];
     protected const ENVIRONMENTS_DEFAULT = [
         EnvironmentType::ACCEPTANCE,
         EnvironmentType::TEST,
@@ -43,18 +32,10 @@ class EnvironmentFileSetting
     }
 
     /**
-     * @param bool|null $console
      * @return string
      */
-    public function getEnvironment(?bool $console = null): string
+    public function getEnvironment(): string
     {
-        if ($console !== null) {
-            DeprecationHelper::trigger(
-                'The $console parameter of %s() method is deprecated and will be removed in the next major.',
-                __METHOD__
-            );
-        }
-
         $environments = static::ENVIRONMENTS_DEFAULT;
         foreach ($environments as $environment) {
             if (is_file($this->getEnvironmentFilePath($environment))) {

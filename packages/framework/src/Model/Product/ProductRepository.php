@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
@@ -202,7 +201,7 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getListableForBrandQueryBuilder(
+    public function getListableForBrandQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
         Brand $brand
@@ -210,26 +209,6 @@ class ProductRepository
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByBrand($queryBuilder, $brand);
         return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @return \Doctrine\ORM\QueryBuilder
-     * @deprecated This method will be removed in next major and methods getListableForBrandQueryBuilder() visibility will be changed to public
-     */
-    public function getListableForBrandQueryBuilderPublic(
-        int $domainId,
-        PricingGroup $pricingGroup,
-        Brand $brand
-    ) {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by getListableForBrandQueryBuilder() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        return $this->getListableForBrandQueryBuilder($domainId, $pricingGroup, $brand);
     }
 
     /**
@@ -660,33 +639,6 @@ class ProductRepository
 
         if ($product === null) {
             throw new ProductNotFoundException();
-        }
-
-        return $product;
-    }
-
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid()
-     */
-    public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid().',
-            __METHOD__
-        );
-
-        $qb = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
-        $qb->andWhere('p.uuid = :uuid');
-        $qb->setParameter('uuid', $uuid);
-
-        $product = $qb->getQuery()->getOneOrNullResult();
-
-        if ($product === null) {
-            throw new ProductNotFoundException(sprintf('Product with ID "%s" does not exist.', $uuid));
         }
 
         return $product;

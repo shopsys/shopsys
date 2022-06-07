@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -22,8 +21,6 @@ use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 
 class PriceResolver implements ResolverInterface, AliasedInterface
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
      */
@@ -55,9 +52,9 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     protected $transportPriceCalculation;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Price\PriceFacade|null
+     * @var \Shopsys\FrontendApiBundle\Model\Price\PriceFacade
      */
-    protected ?PriceFacade $priceFacade;
+    protected PriceFacade $priceFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
@@ -66,7 +63,7 @@ class PriceResolver implements ResolverInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade|null $priceFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
      */
     public function __construct(
         ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -75,7 +72,7 @@ class PriceResolver implements ResolverInterface, AliasedInterface
         Domain $domain,
         CurrencyFacade $currencyFacade,
         TransportPriceCalculation $transportPriceCalculation,
-        ?PriceFacade $priceFacade = null
+        PriceFacade $priceFacade
     ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
@@ -84,16 +81,6 @@ class PriceResolver implements ResolverInterface, AliasedInterface
         $this->currencyFacade = $currencyFacade;
         $this->transportPriceCalculation = $transportPriceCalculation;
         $this->priceFacade = $priceFacade;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setPriceFacade(PriceFacade $priceFacade): void
-    {
-        $this->setDependency($priceFacade, 'priceFacade');
     }
 
     /**

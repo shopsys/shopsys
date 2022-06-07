@@ -6,15 +6,3 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
-
-    # @deprecated Service definition will be used on temporarily until next major, where it will be moved to framework
-    App\Twig\ImageExtension:
-        arguments:
-            $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
-            $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
-
-    Shopsys\ReadModelBundle\Twig\ImageExtension:
-        alias: App\Twig\ImageExtension
-
-    Shopsys\FrameworkBundle\Twig\ImageExtension:
-        alias: App\Twig\ImageExtension

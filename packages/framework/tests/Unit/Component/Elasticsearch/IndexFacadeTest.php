@@ -71,15 +71,6 @@ class IndexFacadeTest extends TestCase
         );
     }
 
-    public function testCreateCreatesIndexAndAlias(): void
-    {
-        $this->indexRepositoryMock->expects($this->once())->method('createIndex');
-        $this->indexRepositoryMock->expects($this->once())->method('createAlias');
-
-        $indexFacade = $this->createIndexFacadeInstance();
-        $indexFacade->create($this->getIndexDefinitionMockReturningDomainId(), new NullOutput());
-    }
-
     public function testMigrateWhenMigrationIsNecessary(): void
     {
         $oldIndexName = 'index_old';

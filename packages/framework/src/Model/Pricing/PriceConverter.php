@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PriceConverter
 {
-    use SetterInjectionTrait;
-
     protected const DEFAULT_SCALE = 2;
 
     /**
@@ -28,60 +24,20 @@ class PriceConverter
     protected $rounding;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting|null
+     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      */
-    protected ?Setting $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting|null $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(CurrencyFacade $currencyFacade, Rounding $rounding, ?Setting $setting = null)
+    public function __construct(CurrencyFacade $currencyFacade, Rounding $rounding, Setting $setting)
     {
         $this->currencyFacade = $currencyFacade;
         $this->rounding = $rounding;
         $this->setting = $setting;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setSetting(Setting $setting): void
-    {
-        $this->setDependency($setting, 'setting');
-    }
-
-    /**
-     * @deprecated use convertPriceWithoutVatToDomainDefaultCurrencyPrice() instead
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money $price, int $domainId): Money
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'convertPriceWithoutVatToDomainDefaultCurrencyPrice');
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $price = $price->divide($currency->getExchangeRate(), static::DEFAULT_SCALE);
-
-        return $this->rounding->roundPriceWithoutVat($price);
-    }
-
-    /**
-     * @deprecated use convertPriceWithVatToDomainDefaultCurrencyPrice() instead
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function convertPriceWithVatToPriceInDomainDefaultCurrency(Money $price, int $domainId): Money
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'convertPriceWithVatToDomainDefaultCurrencyPrice');
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $price = $price->divide($currency->getExchangeRate(), static::DEFAULT_SCALE);
-
-        return $this->rounding->roundPriceWithVatByCurrency($price, $currency);
     }
 
     /**

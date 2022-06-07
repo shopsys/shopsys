@@ -8,30 +8,16 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
-    use SetterInjectionTrait;
-
     protected const DEFAULT_FIRST_LIMIT = 10;
-    /**
-     * @deprecated This will be removed in next major release
-     */
-    protected const EDGE_COUNT = 2;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     * @deprecated This property will be removed in next major version
-     */
-    protected $productOnCurrentDomainFacade;
 
     /**
      * @var \Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder
@@ -39,67 +25,34 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     protected $connectionBuilder;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null
+     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade
      */
     protected $productFacade;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null
+     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade
      */
-    protected ?ProductFilterFacade $productFilterFacade;
+    protected ProductFilterFacade $productFilterFacade;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory|null
+     * @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory
      */
-    protected ?ProductConnectionFactory $productConnectionFactory;
+    protected ProductConnectionFactory $productConnectionFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null $productFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory|null $productConnectionFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      */
     public function __construct(
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ?ProductFacade $productFacade = null,
-        ?ProductFilterFacade $productFilterFacade = null,
-        ?ProductConnectionFactory $productConnectionFactory = null
+        ProductFacade $productFacade,
+        ProductFilterFacade $productFilterFacade,
+        ProductConnectionFactory $productConnectionFactory
     ) {
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
         $this->productFacade = $productFacade;
         $this->productFilterFacade = $productFilterFacade;
         $this->productConnectionFactory = $productConnectionFactory;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductFacade(ProductFacade $productFacade): void
-    {
-        $this->setDependency($productFacade, 'productFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductFilterFacade(ProductFilterFacade $productFilterFacade): void
-    {
-        $this->setDependency($productFilterFacade, 'productFilterFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductConnectionFactory(ProductConnectionFactory $productConnectionFactory): void
-    {
-        $this->setDependency($productConnectionFactory, 'productConnectionFactory');
     }
 
     /**

@@ -34,7 +34,8 @@ Replace `database_user`, `database_host` and `target_database_name` with the cor
 The command will prompt you for the user's password.
 
 ## Importing database into a new database
-First, edit your `config/parameters.yaml` and set the new database name.
+First, set new database name in `./env.local` file.
+You can copy the environment variable name from `./env` file.
 
 !!! note
     If you are not in the DEVELOPMENT environment you will have to clear the cache via `php phing clean` for the changes to take effect.

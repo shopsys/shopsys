@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Console\Output\NullOutput;
@@ -13,8 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterface
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
@@ -45,14 +42,14 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface|null $eventDispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         AbstractIndex $index,
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         Domain $domain,
-        ?EventDispatcherInterface $eventDispatcher = null
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->index = $index;
         $this->indexFacade = $indexFacade;
@@ -66,16 +63,6 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
      */
     public function setLogger(Logger $logger)
     {
-    }
-
-    /**
-     * @required
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->setDependency($eventDispatcher, 'eventDispatcher');
     }
 
     public function run()

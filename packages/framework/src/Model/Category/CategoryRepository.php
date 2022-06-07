@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
@@ -163,26 +162,6 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
-     */
-    public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
-
-        $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
-
-        return $queryBuilder->andWhere('c.lft < :branchLft OR c.rgt > :branchRgt')
-            ->setParameter('branchLft', $categoryBranch->getLft())
-            ->setParameter('branchRgt', $categoryBranch->getRgt())
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $categoryBranch
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
@@ -317,27 +296,12 @@ class CategoryRepository extends NestedTreeRepository
      * @param \Doctrine\ORM\QueryBuilder $categoriesQueryBuilder
      * @param string $locale
      */
-    protected function addTranslation(QueryBuilder $categoriesQueryBuilder, $locale)
+    public function addTranslation(QueryBuilder $categoriesQueryBuilder, $locale)
     {
         $categoriesQueryBuilder
             ->addSelect('ct')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $locale);
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $locale
-     * @deprecated This method will be removed in next major and methods addTranslation() visibility will be changed to public
-     */
-    public function addTranslationPublic(QueryBuilder $queryBuilder, string $locale): void
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by addTranslation() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        $this->addTranslation($queryBuilder, $locale);
     }
 
     /**
@@ -474,27 +438,12 @@ class CategoryRepository extends NestedTreeRepository
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $searchText
      */
-    protected function filterBySearchText(QueryBuilder $queryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $queryBuilder, $searchText)
     {
         $queryBuilder->andWhere(
             'NORMALIZE(ct.name) LIKE NORMALIZE(:searchText)'
         );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $searchText
-     * @deprecated This method will be removed in next major and methods filterBySearchText() visibility will be changed to public
-     */
-    public function filterBySearchTextPublic(QueryBuilder $queryBuilder, string $searchText): void
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It will be replaced by filterBySearchText() which will change its visibility to public.',
-            __METHOD__
-        );
-
-        $this->filterBySearchText($queryBuilder, $searchText);
     }
 
     /**
@@ -615,25 +564,6 @@ class CategoryRepository extends NestedTreeRepository
             ->setParameter('categories', $categories);
 
         return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
-     */
-    public function getTranslatedAll(DomainConfig $domainConfig)
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
-            __METHOD__
-        );
-
-        $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
-
-        return $queryBuilder->getQuery()
-            ->getResult();
     }
 
     /**

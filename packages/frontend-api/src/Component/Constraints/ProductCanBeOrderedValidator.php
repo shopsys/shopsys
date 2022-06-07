@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade as FrontendApiProductFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -17,14 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductCanBeOrderedValidator extends ConstraintValidator
 {
-    use SetterInjectionTrait;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     * @deprecated This property will be removed in next major version as it is no longer in use
-     */
-    protected $productFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
      */
@@ -41,39 +31,26 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
     protected $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null
+     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade
      */
     protected $frontendApiProductFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null $frontendApiProductFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $frontendApiProductFacade
      */
     public function __construct(
-        ProductFacade $productFacade,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
-        ?FrontendApiProductFacade $frontendApiProductFacade = null
+        FrontendApiProductFacade $frontendApiProductFacade
     ) {
-        $this->productFacade = $productFacade;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->frontendApiProductFacade = $frontendApiProductFacade;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $frontendApiProductFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setFrontendApiProductFacade(FrontendApiProductFacade $frontendApiProductFacade): void
-    {
-        $this->setDependency($frontendApiProductFacade, 'frontendApiProductFacade');
     }
 
     /**

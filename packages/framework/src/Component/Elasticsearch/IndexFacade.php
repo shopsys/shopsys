@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
@@ -54,22 +53,11 @@ class IndexFacade
     }
 
     /**
-     * @deprecated Visibility of this method will be reduced to "protected" in next major version. For public access use method "migrate()" instead
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function create(IndexDefinition $indexDefinition, OutputInterface $output): void
+    protected function create(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        if (
-            !isset(debug_backtrace()[1]['object'])
-            || !(debug_backtrace()[1]['object'] instanceof self)
-        ) {
-            DeprecationHelper::trigger(
-                'Method "%s()" will change its visibility from "public" to "protected" in next major version. Use method "migrate()" from same class instead.',
-                __METHOD__
-            );
-        }
-
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
@@ -328,15 +316,9 @@ class IndexFacade
      */
     protected function resolveExistingIndexName(IndexDefinition $indexDefinition): string
     {
-        try {
-            return $this->indexRepository->findCurrentIndexNameForAlias(
-                $indexDefinition->getIndexAlias()
-            );
-        } catch (ElasticsearchNoAliasException $exception) {
-            return $this->indexRepository->findCurrentIndexNameForAlias(
-                $indexDefinition->getLegacyIndexAlias()
-            );
-        }
+        return $this->indexRepository->findCurrentIndexNameForAlias(
+            $indexDefinition->getIndexAlias()
+        );
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 
 class IndexDefinition
@@ -110,17 +109,6 @@ class IndexDefinition
             return sprintf('%s_%s', $this->getIndexName(), $this->getDomainId());
         }
         return sprintf('%s_%s_%s', $this->indexPrefix, $this->getIndexName(), $this->getDomainId());
-    }
-
-    /**
-     * @return string
-     * @deprecated This method exists due to backward compatibility and will be removed in next major version
-     */
-    public function getLegacyIndexAlias(): string
-    {
-        DeprecationHelper::triggerMethod(__METHOD__);
-
-        return $this->indexPrefix . $this->getIndexName() . $this->getDomainId();
     }
 
     /**

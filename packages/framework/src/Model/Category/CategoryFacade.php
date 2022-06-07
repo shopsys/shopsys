@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -219,43 +218,6 @@ class CategoryFacade
     }
 
     /**
-     * @deprecated this method is slow for the large number of categories. Use reorderByNestedSetValues() instead
-     * @see https://docs.shopsys.com/en/9.1/model/how-to-sort-categories/
-     * @param int[]|null[] $parentIdByCategoryId
-     */
-    public function editOrdering($parentIdByCategoryId)
-    {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use reorderByNestedSetValues() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-
-        // eager-load all categories into identity map
-        $this->categoryRepository->getAll();
-
-        $rootCategory = $this->getRootCategory();
-        foreach ($parentIdByCategoryId as $categoryId => $parentId) {
-            if ($parentId === null) {
-                $parent = $rootCategory;
-            } else {
-                $parent = $this->categoryRepository->getById($parentId);
-            }
-
-            $category = $this->categoryRepository->getById($categoryId);
-            $category->setParent($parent);
-            // Category must be flushed after parent change before calling moveDown for correct calculation of lft and rgt
-            $this->em->flush();
-
-            $this->categoryRepository->moveDown($category, CategoryRepository::MOVE_DOWN_TO_BOTTOM);
-        }
-
-        $this->em->flush();
-    }
-
-    /**
      * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $categoriesOrderingData
      */
     public function reorderByNestedSetValues(array $categoriesOrderingData): void
@@ -290,18 +252,6 @@ class CategoryFacade
         $this->em->flush();
 
         return $errors !== true;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
-     */
-    public function getTranslatedAll(DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslated');
-
-        return $this->categoryRepository->getTranslatedAll($domainConfig);
     }
 
     /**
@@ -406,19 +356,6 @@ class CategoryFacade
     public function getAllVisibleChildrenByCategoryAndDomainId(Category $category, $domainId)
     {
         return $this->categoryRepository->getAllVisibleChildrenByCategoryAndDomainId($category, $domainId);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
-     * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslatedWithoutBranch
-     */
-    public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
-
-        return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }
 
     /**

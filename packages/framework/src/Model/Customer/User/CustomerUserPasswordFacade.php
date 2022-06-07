@@ -6,15 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerUserPasswordFacade
 {
-    use SetterInjectionTrait;
-
     public const RESET_PASSWORD_HASH_LENGTH = 50;
     public const MINIMUM_PASSWORD_LENGTH = 6;
 
@@ -62,7 +59,7 @@ class CustomerUserPasswordFacade
         EncoderFactoryInterface $encoderFactory,
         ResetPasswordMailFacade $resetPasswordMailFacade,
         HashGenerator $hashGenerator,
-        ?CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade = null
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
         $this->em = $em;
         $this->customerUserRepository = $customerUserRepository;
@@ -70,17 +67,6 @@ class CustomerUserPasswordFacade
         $this->resetPasswordMailFacade = $resetPasswordMailFacade;
         $this->hashGenerator = $hashGenerator;
         $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setCustomerUserRefreshTokenChainFacade(
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-    ): void {
-        $this->setDependency($customerUserRefreshTokenChainFacade, 'customerUserRefreshTokenChainFacade');
     }
 
     /**

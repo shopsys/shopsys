@@ -74,29 +74,6 @@ export default class CategoryTreeSorting {
         );
     }
 
-    /**
-     * @deprecated use getNestedSetData() instead
-     */
-    getCategoriesOrderingData () {
-        const data = this.$rootTree.nestedSortable(
-            'toArray',
-            {
-                excludeRoot: true,
-                expression: /(js-category-tree-)(\d+)/
-            }
-        );
-
-        const categoriesOrderingData = [];
-        $.each(data, function (key, value) {
-            categoriesOrderingData.push({
-                categoryId: value.id,
-                parentId: value.parent_id
-            });
-        });
-
-        return categoriesOrderingData;
-    }
-
     static init ($container) {
         const $rootTree = $container.filterAllNodes('#js-category-tree-sorting > .js-category-tree-items');
         const $saveButton = $container.filterAllNodes('#js-category-tree-sorting-save-button');

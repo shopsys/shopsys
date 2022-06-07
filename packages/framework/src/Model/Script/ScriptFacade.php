@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Script;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Twig\MoneyExtension;
@@ -124,17 +123,6 @@ class ScriptFacade
 
         $this->em->remove($script);
         $this->em->flush();
-    }
-
-    /**
-     * @return string[]
-     * @deprecated use getAllPagesBeforeContentScriptCodes() instead
-     */
-    public function getAllPagesScriptCodes()
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'getAllPagesBeforeContentScriptCodes');
-
-        return $this->getAllPagesBeforeContentScriptCodes();
     }
 
     /**

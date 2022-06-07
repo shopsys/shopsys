@@ -273,14 +273,6 @@ sed -i "s/container_name:\s*\b/container_name: $JOB_NAME-/" $WORKSPACE/docker-co
 ### Setting application for build
 This section shows configuration of jenkins, which will allow build of application without interaction with user.
 
-#### Create parameters.yaml
-Our `parameters.yaml.dist` is already set for running application in docker as default so we just need to create `parameters.yaml` file from dist file:
-
-```sh
-cp $WORKSPACE/project-base/config/parameters.yaml.dist $WORKSPACE/project-base/config/parameters.yaml
-cp $WORKSPACE/project-base/config/parameters_test.yaml.dist $WORKSPACE/project-base/config/parameters_test.yaml
-```
-
 #### Set domains
 Now we just create domain file, in this case, we use branch name for domain name, and we add domain number into beginning of URL,
 that way domain names are related with the git branches, this makes jenkins more organized.

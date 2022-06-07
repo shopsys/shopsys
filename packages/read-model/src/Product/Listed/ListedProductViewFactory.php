@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -62,20 +61,20 @@ class ListedProductViewFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface|null $imageViewFacade
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface|null $productActionViewFacade
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory|null $priceFactory
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ?ImageViewFacadeInterface $imageViewFacade = null,
-        ?ProductActionViewFacadeInterface $productActionViewFacade = null,
-        ?ProductActionViewFactory $productActionViewFactory = null,
-        ?CurrentCustomerUser $currentCustomerUser = null,
-        ?PriceFactory $priceFactory = null
+        ImageViewFacadeInterface $imageViewFacade,
+        ProductActionViewFacadeInterface $productActionViewFacade,
+        ProductActionViewFactory $productActionViewFactory,
+        CurrentCustomerUser $currentCustomerUser,
+        PriceFactory $priceFactory
     ) {
         $this->domain = $domain;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
@@ -152,9 +151,6 @@ class ListedProductViewFactory
             $productArray['prices'],
             $pricingGroup
         );
-        if ($productPrice === null) {
-            throw new NoProductPriceForPricingGroupException($productArray['id'], $pricingGroup->getId());
-        }
 
         return $this->create(
             $productArray['id'],
@@ -234,21 +230,6 @@ class ListedProductViewFactory
     }
 
     /**
-     * @param array $pricesArray
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
-     * @deprecated This method will be removed in next major. Use PriceFactory::createProductPriceFromArrayByPricingGroup() instead.
-     */
-    protected function getProductPriceFromArrayByPricingGroup(
-        array $pricesArray,
-        PricingGroup $pricingGroup
-    ): ?ProductPrice {
-        DeprecationHelper::triggerMethod(__METHOD__, 'PriceFactory::createProductPriceFromArrayByPricingGroup');
-
-        return $this->priceFactory->createProductPriceFromArrayByPricingGroup($pricesArray, $pricingGroup);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return int[]
      */
@@ -260,55 +241,5 @@ class ListedProductViewFactory
         }
 
         return $flagIds;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setImageViewFacade(ImageViewFacadeInterface $imageViewFacade): void
-    {
-        $this->setDependency($imageViewFacade, 'imageViewFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductActionViewFacade(ProductActionViewFacadeInterface $productActionViewFacade): void
-    {
-        $this->setDependency($productActionViewFacade, 'productActionViewFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
-    {
-        $this->setDependency($productActionViewFactory, 'productActionViewFactory');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setCurrentCustomerUser(CurrentCustomerUser $currentCustomerUser): void
-    {
-        $this->setDependency($currentCustomerUser, 'currentCustomerUser');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setPriceFactory(PriceFactory $priceFactory): void
-    {
-        $this->setDependency($priceFactory, 'priceFactory');
     }
 }

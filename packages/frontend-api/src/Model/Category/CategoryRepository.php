@@ -63,8 +63,8 @@ class CategoryRepository
     {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
 
-        $this->categoryRepository->addTranslationPublic($queryBuilder, $locale);
-        $this->categoryRepository->filterBySearchTextPublic($queryBuilder, $searchText);
+        $this->categoryRepository->addTranslation($queryBuilder, $locale);
+        $this->categoryRepository->filterBySearchText($queryBuilder, $searchText);
 
         return $queryBuilder;
     }

@@ -3,4 +3,3 @@ parameters:
     shopsys.framework.javascript_sources_dir: "%shopsys.framework.resources_dir%/scripts"
     shopsys.router.domain.cache_dir: "%kernel.cache_dir%/routing/base"
     shopsys.router.localized.cache_dir: "%kernel.cache_dir%/routing/localized"
-    shopsys.var_dir: "/var" # @deprecated This has been added to be backward compatible and will be removed in next major version

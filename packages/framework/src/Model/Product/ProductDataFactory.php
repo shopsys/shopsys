@@ -6,7 +6,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -19,8 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 class ProductDataFactory implements ProductDataFactoryInterface
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      */
@@ -99,7 +96,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade|null $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -114,7 +111,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
-        ?AvailabilityFacade $availabilityFacade = null
+        AvailabilityFacade $availabilityFacade
     ) {
         $this->vatFacade = $vatFacade;
         $this->productInputPriceFacade = $productInputPriceFacade;
@@ -129,16 +126,6 @@ class ProductDataFactory implements ProductDataFactoryInterface
         $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->pricingGroupFacade = $pricingGroupFacade;
         $this->availabilityFacade = $availabilityFacade;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
-     */
-    public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade)
-    {
-        $this->setDependency($availabilityFacade, 'availabilityFacade');
     }
 
     /**

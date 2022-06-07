@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
@@ -24,8 +23,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class ProductExportRepository
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -84,9 +81,9 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade|null $productAccessoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade|null $brandCachedFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -96,9 +93,9 @@ class ProductExportRepository
         Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ?CategoryFacade $categoryFacade = null,
-        ?ProductAccessoryFacade $productAccessoryFacade = null,
-        ?BrandCachedFacade $brandCachedFacade = null
+        CategoryFacade $categoryFacade,
+        ProductAccessoryFacade $productAccessoryFacade,
+        BrandCachedFacade $brandCachedFacade
     ) {
         $this->parameterRepository = $parameterRepository;
         $this->productFacade = $productFacade;
@@ -110,36 +107,6 @@ class ProductExportRepository
         $this->categoryFacade = $categoryFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
         $this->brandCachedFacade = $brandCachedFacade;
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setCategoryFacade(CategoryFacade $categoryFacade): void
-    {
-        $this->setDependency($categoryFacade, 'categoryFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductAccessoryFacade(ProductAccessoryFacade $productAccessoryFacade): void
-    {
-        $this->setDependency($productAccessoryFacade, 'productAccessoryFacade');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setBrandCachedFacade(BrandCachedFacade $brandCachedFacade): void
-    {
-        $this->setDependency($brandCachedFacade, 'brandCachedFacade');
     }
 
     /**

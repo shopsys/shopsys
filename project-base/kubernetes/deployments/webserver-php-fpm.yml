@@ -33,9 +33,6 @@ spec:
                 -   name: domains-urls
                     configMap:
                         name: domains-urls
-                -   name: parameters
-                    configMap:
-                        name: parameters
                 -   name: nginx-configuration
                     configMap:
                         name: nginx-configuration
@@ -54,9 +51,6 @@ spec:
                         -   name: domains-urls
                             mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yaml"
                             subPath: domains_urls.yaml
-                        -   name: parameters
-                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yaml"
-                            subPath: parameters.yaml
                 -   name: initialize
                     image: "{{DOCKER_PHP_FPM_IMAGE}}"
                     securityContext:
@@ -68,9 +62,6 @@ spec:
                         -   name: domains-urls
                             mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yaml"
                             subPath: domains_urls.yaml
-                        -   name: parameters
-                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yaml"
-                            subPath: parameters.yaml
                     env:
                         -   name: GOOGLE_CLOUD_STORAGE_BUCKET_NAME
                             value: "{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}"
@@ -90,9 +81,6 @@ spec:
                         -   name: domains-urls
                             mountPath: "{{PATH_CONFIG_DIRECTORY}}/domains_urls.yaml"
                             subPath: domains_urls.yaml
-                        -   name: parameters
-                            mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yaml"
-                            subPath: parameters.yaml
                     env:
                         -   name: GOOGLE_CLOUD_STORAGE_BUCKET_NAME
                             value: "{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}"

@@ -190,36 +190,6 @@ class CategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/category/save-order/", methods={"post"})
-     * @deprecated method saveOrderAction is deprecated. Use applySortingAction() instead.
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function saveOrderAction(Request $request)
-    {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use applySortingAction() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-
-        $categoriesOrderingData = $request->get('categoriesOrderingData');
-
-        $parentIdByCategoryId = [];
-        foreach ($categoriesOrderingData as $categoryOrderingData) {
-            $categoryId = (int)$categoryOrderingData['categoryId'];
-            $parentId = $categoryOrderingData['parentId'] === '' ? null : (int)$categoryOrderingData['parentId'];
-            $parentIdByCategoryId[$categoryId] = $parentId;
-        }
-
-        $this->categoryFacade->editOrdering($parentIdByCategoryId);
-
-        return new Response('OK - dummy');
-    }
-
-    /**
      * @Route("/category/apply-sorting/", methods={"post"})
      * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
@@ -18,13 +16,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
-use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      */
@@ -66,12 +61,6 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     protected $imageViewFacade;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade
-     * @deprecated use ProductActionViewFactory instead
-     */
-    protected $productActionViewFacade;
-
-    /**
      * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
      */
     protected $productActionViewFactory;
@@ -89,10 +78,9 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade $topProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider|null $productElasticsearchProvider
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -102,10 +90,9 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         TopProductFacade $topProductFacade,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ListedProductViewFactory $listedProductViewFactory,
-        ProductActionViewFacade $productActionViewFacade,
         ImageViewFacadeInterface $imageViewFacade,
-        ?ProductActionViewFactory $productActionViewFactory = null,
-        ?ProductElasticsearchProvider $productElasticsearchProvider = null
+        ProductActionViewFactory $productActionViewFactory,
+        ProductElasticsearchProvider $productElasticsearchProvider
     ) {
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
@@ -114,7 +101,6 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $this->topProductFacade = $topProductFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->listedProductViewFactory = $listedProductViewFactory;
-        $this->productActionViewFacade = $productActionViewFacade;
         $this->imageViewFacade = $imageViewFacade;
         $this->productActionViewFactory = $productActionViewFactory;
         $this->productElasticsearchProvider = $productElasticsearchProvider;
@@ -133,7 +119,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 
         $topProducts = array_slice($topProducts, 0, $limit);
 
-        return $this->createFromProducts($topProducts);
+        return $this->listedProductViewFactory->createFromProducts($topProducts);
     }
 
     /**
@@ -146,7 +132,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $this->currentCustomerUser->getPricingGroup()
         );
 
-        return $this->createFromProducts($topProducts);
+        return $this->listedProductViewFactory->createFromProducts($topProducts);
     }
 
     /**
@@ -286,53 +272,5 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         }
 
         return $listedProductViews;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
-     * @deprecated since Shopsys Framework 9.1
-     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
-     */
-    protected function createFromProducts(array $products): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::createFromProducts');
-
-        return $this->listedProductViewFactory->createFromProducts($products);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
-     * @return int[]
-     * @deprecated since Shopsys Framework 9.1
-     * @see \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory class instead
-     */
-    protected function getIdsForProducts(array $products): array
-    {
-        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::getIdsForProducts');
-
-        return array_map(static function (Product $product): int {
-            return $product->getId();
-        }, $products);
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
-    {
-        $this->setDependency($productActionViewFactory, 'productActionViewFactory');
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setProductElasticsearchProvider(ProductElasticsearchProvider $productElasticsearchProvider): void
-    {
-        $this->setDependency($productElasticsearchProvider, 'productElasticsearchProvider');
     }
 }

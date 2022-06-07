@@ -37,7 +37,6 @@ sed -i "s/{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}/${GOOGLE_CLOUD_STORAGE_BUCKET_NAM
 
 # Create real parameters files to be modified and applied to the cluster as configmaps
 cp config/domains_urls.yaml.dist config/domains_urls.yaml
-cp config/parameters.yaml.dist config/parameters.yaml
 
 DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}

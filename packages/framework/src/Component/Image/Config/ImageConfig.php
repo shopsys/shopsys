@@ -5,12 +5,9 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 
 class ImageConfig
 {
-    use SetterInjectionTrait;
-
     public const ORIGINAL_SIZE_NAME = 'original';
     public const DEFAULT_SIZE_NAME = 'default';
 
@@ -28,14 +25,10 @@ class ImageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(array $imageEntityConfigsByClass, ?EntityNameResolver $entityNameResolver = null)
+    public function __construct(array $imageEntityConfigsByClass, EntityNameResolver $entityNameResolver)
     {
         $this->entityNameResolver = $entityNameResolver;
-        if ($entityNameResolver !== null) {
-            $this->setUpImageEntityConfigsByClass($imageEntityConfigsByClass);
-        } else {
-            $this->imageEntityConfigsByClass = $imageEntityConfigsByClass;
-        }
+        $this->setUpImageEntityConfigsByClass($imageEntityConfigsByClass);
     }
 
     /**
@@ -50,17 +43,6 @@ class ImageConfig
         }
 
         $this->imageEntityConfigsByClass = $imageEntityConfigsByNormalizedClass;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
-    public function setEntityNameResolver(EntityNameResolver $entityNameResolver): void
-    {
-        $this->setDependency($entityNameResolver, 'entityNameResolver');
-        $this->setUpImageEntityConfigsByClass($this->imageEntityConfigsByClass);
     }
 
     /**

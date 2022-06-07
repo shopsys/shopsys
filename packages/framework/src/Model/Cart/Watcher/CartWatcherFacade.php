@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -11,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Twig\Environment;
 
-/**
- * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
- */
-class CartWatcherFacade
+abstract class CartWatcherFacade
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -55,10 +51,6 @@ class CartWatcherFacade
         CurrentCustomerUser $currentCustomerUser,
         Environment $twigEnvironment
     ) {
-        if (static::class === self::class) {
-            DeprecationHelper::triggerAbstractClass(self::class);
-        }
-
         $this->flashBag = $flashBag;
         $this->em = $em;
         $this->cartWatcher = $cartWatcher;
@@ -130,35 +122,17 @@ class CartWatcherFacade
     }
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    protected function getMessageForNoLongerAvailableExistingProduct(): string
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.');
-    }
+    abstract protected function getMessageForNoLongerAvailableExistingProduct(): string;
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    protected function getMessageForNoLongerAvailableProduct(): string
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('Product you had in cart is no longer in available. Please check your order.');
-    }
+    abstract protected function getMessageForNoLongerAvailableProduct(): string;
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    protected function getMessageForChangedProduct(): string
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.');
-    }
+    abstract protected function getMessageForChangedProduct(): string;
 }

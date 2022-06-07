@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseExceptio
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -19,8 +18,6 @@ use Symfony\Component\Yaml\Parser;
 
 class ImageConfigLoader
 {
-    use SetterInjectionTrait;
-
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
@@ -45,20 +42,10 @@ class ImageConfigLoader
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(Filesystem $filesystem, ?EntityNameResolver $entityNameResolver = null)
+    public function __construct(Filesystem $filesystem, EntityNameResolver $entityNameResolver)
     {
         $this->filesystem = $filesystem;
         $this->entityNameResolver = $entityNameResolver;
-    }
-
-    /**
-     * @required
-     * @internal This function will be replaced by constructor injection in next major
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
-    public function setEntityNameResolver(EntityNameResolver $entityNameResolver): void
-    {
-        $this->setDependency($entityNameResolver, 'entityNameResolver');
     }
 
     /**

@@ -421,9 +421,6 @@ msgstr "Doplněk k titulku"
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr "Doplněk k názvu bude nastaven jako přípona ke všem titulkům, např. pokud je doplněk nastaven jako “ | Můj obchod“ a název produktu je “iPhone 7”, výsledným názvem pro tuto stránku produktu bude “iPhone 7 | Můj obchod”."
 
-msgid "Contact"
-msgstr "Kontakt"
-
 msgid "Contact form"
 msgstr "Kontaktní formulář"
 
@@ -826,9 +823,6 @@ msgstr "EAN"
 msgid "Edit"
 msgstr "Upravit"
 
-msgid "Edit data"
-msgstr "Upravit údaje"
-
 msgid "Edit domain icon"
 msgstr "Změnit ikonu domény"
 
@@ -1083,9 +1077,6 @@ msgstr "Pro odstranění jednotky \"%name% musíte zvolit, která se má všude,
 
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr "Pro odstranění cenové skupiny \"%name%\" musíte zvolit, která se má všude, kde je aktuálně používaná, nastavit. Jakou cenovou skupinu místo ní chcete nastavit?"
-
-msgid "Forgotten password"
-msgstr "Zapomenuté heslo"
 
 msgid "Forgotten password sending"
 msgstr "Zaslání zapomenutého hesla"
@@ -1573,9 +1564,6 @@ msgstr "Po každém spuštění (obvykle každých 5 minut)"
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
 
-msgid "Oops! Error occurred"
-msgstr "Jejda! Nastala chyba"
-
 msgid "Open in a new tab"
 msgstr "Otevřít v novém panelu"
 
@@ -1644,9 +1632,6 @@ msgstr "Původ"
 
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
-
-msgid "Page not found"
-msgstr "Stránka nenalezena"
 
 msgid "Page title"
 msgstr "Titulek stránky"
@@ -1795,9 +1780,6 @@ msgstr "Bylo vytvořeno zboží <strong><a href=\"{{ url }}\">{{ product|product
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr "Bylo upraveno zboží <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong>"
 
-msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
-msgstr "Zboží <strong>{{ name }}</strong>, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
-
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr "Produkt <strong>{{ product|productDisplayName }}</strong> byl smazán"
 
@@ -1833,9 +1815,6 @@ msgstr "Zboží bylo uloženo do objednávky"
 
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
-
-msgid "Product you had in cart is no longer in available. Please check your order."
-msgstr "Zboží, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
 
 msgid "Products"
 msgstr "Zboží"
@@ -1875,9 +1854,6 @@ msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou ods
 
 msgid "Registered cust."
 msgstr "Registrovaní zák."
-
-msgid "Registration"
-msgstr "Registrace"
 
 msgid "Registration confirmation"
 msgstr "Potvrzení registrace"
@@ -1950,9 +1926,6 @@ msgstr "Skript bude vložen na začátek stránky, za tag <body>."
 
 msgid "Scripts overview"
 msgstr "Přehled skriptů"
-
-msgid "Search [noun]"
-msgstr "Hledání"
 
 msgid "Search [verb]"
 msgstr "Vyhledat"
@@ -2185,9 +2158,6 @@ msgstr "Superadmin - URL adresy"
 msgid "System data"
 msgstr "Systémové údaje"
 
-msgid "TOP"
-msgstr "TOP"
-
 msgid "Tax number"
 msgstr "DIČ"
 
@@ -2200,17 +2170,11 @@ msgstr "Tel. číslo"
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
 
-msgid "Terms-and-conditions.html"
-msgstr "Obchodní-podmínky.html"
-
 msgid "The change will be applied to products in 10 minutes"
 msgstr "Změna se u zboží projeví do 10 minut"
 
 msgid "The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically."
 msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. Státy se stejnou prioritou budou seřazeny abecedně."
-
-msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
-msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
 msgid "There was an error during logout attempt. If you really want to sign out, please try it again."
 msgstr "Během odhlašování došlo k chybě. Pokud se chcete opravdu odhlásit, zkuste to prosím znovu."
@@ -2482,12 +2446,6 @@ msgstr "reklam"
 msgid "after"
 msgstr "po"
 
-msgid "alphabetically A -> Z"
-msgstr "abecedně A -> Z"
-
-msgid "alphabetically Z -> A"
-msgstr "abecedně Z -> A"
-
 msgid "articles"
 msgstr "článků"
 
@@ -2526,12 +2484,6 @@ msgstr "příznaky"
 
 msgid "from"
 msgstr "z"
-
-msgid "from most expensive"
-msgstr "od nejdražšího"
-
-msgid "from the cheapest"
-msgstr "od nejlevnějšího"
 
 msgid "higher or equal"
 msgstr "větší nebo rovno"
@@ -2595,9 +2547,6 @@ msgstr "slevové kupóny"
 
 msgid "records"
 msgstr "záznamů"
-
-msgid "relevance"
-msgstr "relevance"
 
 msgid "subscribers"
 msgstr "odběratelé newsletteru"

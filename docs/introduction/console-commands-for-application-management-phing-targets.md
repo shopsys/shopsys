@@ -132,7 +132,7 @@ Executes [database migrations](database-migrations.md) and checks schema.
 #### db-create
 Creates database with required db extensions and collations (that are operating system specific, unfortunately).
 
-The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `config/parameters.yaml`.
+The target interactively asks for DB superuser credentials in order to perform all the actions so it is not needed to put superuser credentials into `./env.local`.
 
 When a locale is not supported by the operating system the command explains the situation and links to the documentation.
 
@@ -227,7 +227,7 @@ Runs performance tests on a newly built test database with performance data.
 It may take a few hours as the generation of performance data is very time-consuming. Should be executed on CI server only.
 
 The size of performance data to be generated and asserted limits can be configured via parameters defined in [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters_common.yaml).
-You can easily override the default values in your `parameters.yaml` or `parameters_test.yaml` configuration files.
+You can easily override the default values in your `parameters.yaml` configuration file.
 
 ### Other
 

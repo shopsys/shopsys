@@ -2,13 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
- */
-class ProductListOrderingModeForListFacade
+abstract class ProductListOrderingModeForListFacade
 {
     protected const COOKIE_NAME = 'productListOrderingMode';
 
@@ -22,10 +18,6 @@ class ProductListOrderingModeForListFacade
      */
     public function __construct(RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
     {
-        if (static::class === self::class) {
-            DeprecationHelper::triggerAbstractClass(self::class);
-        }
-
         $this->requestToOrderingModeIdConverter = $requestToOrderingModeIdConverter;
     }
 
@@ -54,21 +46,9 @@ class ProductListOrderingModeForListFacade
     }
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return array<string, string>
      */
-    protected function getSupportedOrderingModesNamesById(): array
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return [
-            ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
-            ProductListOrderingConfig::ORDER_BY_NAME_ASC => t('alphabetically A -> Z'),
-            ProductListOrderingConfig::ORDER_BY_NAME_DESC => t('alphabetically Z -> A'),
-            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
-            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
-        ];
-    }
+    abstract protected function getSupportedOrderingModesNamesById(): array;
 
     /**
      * @return string

@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,8 +18,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CronCommand extends Command
 {
-    use SetterInjectionTrait;
-
     private const OPTION_MODULE = 'module';
     private const OPTION_LIST = 'list';
     private const OPTION_INSTANCE_NAME = 'instance-name';
@@ -41,35 +38,25 @@ class CronCommand extends Command
     private $mutexFactory;
 
     /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null
+     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
      */
     private $parameterBag;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
     public function __construct(
         CronFacade $cronFacade,
         MutexFactory $mutexFactory,
-        ?ParameterBagInterface $parameterBag = null
+        ParameterBagInterface $parameterBag
     ) {
         $this->cronFacade = $cronFacade;
         $this->mutexFactory = $mutexFactory;
         $this->parameterBag = $parameterBag;
 
         parent::__construct();
-    }
-
-    /**
-     * @required
-     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setParameterBag(ParameterBagInterface $parameterBag): void
-    {
-        $this->setDependency($parameterBag, 'parameterBag');
     }
 
     protected function configure()

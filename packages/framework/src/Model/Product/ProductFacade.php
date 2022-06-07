@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
@@ -508,23 +506,6 @@ class ProductFacade
     public function getByUuid(string $uuid): Product
     {
         return $this->productRepository->getOneByUuid($uuid);
-    }
-
-    /**
-     * @param string $uuid
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid()
-     */
-    public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
-    {
-        DeprecationHelper::trigger(
-            'The %s() method is deprecated and will be removed in the next major. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getSellableByUuid().',
-            __METHOD__
-        );
-
-        return $this->productRepository->getSellableByUuid($uuid, $domainId, $pricingGroup);
     }
 
     /**

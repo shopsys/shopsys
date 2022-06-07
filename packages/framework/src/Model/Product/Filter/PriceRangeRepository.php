@@ -60,7 +60,7 @@ class PriceRangeRepository
      */
     public function getPriceRangeForBrand(int $domainId, PricingGroup $pricingGroup, Brand $brand): PriceRange
     {
-        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilderPublic(
+        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
             $brand

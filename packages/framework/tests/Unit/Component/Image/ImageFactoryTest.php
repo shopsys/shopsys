@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageExcepti
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class ImageFactoryTest extends TestCase
 {
@@ -87,6 +88,8 @@ class ImageFactoryTest extends TestCase
         $fileNamingConvention = new FileNamingConvention();
         $mountManager = new MountManager();
         $abstractFilesystem = $this->createMock(FilesystemInterface::class);
+        $parameterBag = new ParameterBag();
+        $parameterBag->set('kernel.root_dir', sys_get_temp_dir());
 
         return new FileUpload(
             'temporaryDir',
@@ -94,7 +97,8 @@ class ImageFactoryTest extends TestCase
             'imageDir',
             $fileNamingConvention,
             $mountManager,
-            $abstractFilesystem
+            $abstractFilesystem,
+            $parameterBag
         );
     }
 }

@@ -55,7 +55,7 @@ class FlagFilterChoiceRepository
      */
     public function getFlagFilterChoicesForBrand(int $domainId, PricingGroup $pricingGroup, string $locale, Brand $brand): array
     {
-        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilderPublic(
+        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
             $brand

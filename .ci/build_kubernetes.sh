@@ -9,10 +9,8 @@ echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-
 FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
-# Set parameters.yaml file and domains_urls
+# Set domains_urls
 cp project-base/config/domains_urls.yaml.dist project-base/config/domains_urls.yaml
-cp project-base/config/parameters_test.yaml.dist project-base/config/parameters_test.yaml
-cp project-base/config/parameters.yaml.dist project-base/config/parameters.yaml
 yq write --inplace project-base/config/domains_urls.yaml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 yq write --inplace project-base/config/domains_urls.yaml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 

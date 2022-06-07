@@ -4,20 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Breadcrumb;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
-/**
- * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
- */
-class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterface
+abstract class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    public function __construct()
-    {
-        if (static::class === self::class) {
-            DeprecationHelper::triggerAbstractClass(self::class);
-        }
-    }
-
     /**
      * @param string $routeName
      * @param array $routeParameters
@@ -45,24 +34,12 @@ class ErrorPageBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    protected function getTranslatedBreadcrumbForNotFoundPage(): string
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('Page not found');
-    }
+    abstract protected function getTranslatedBreadcrumbForNotFoundPage(): string;
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
-    protected function getTranslatedBreadcrumbForErrorPage(): string
-    {
-        DeprecationHelper::triggerAbstractMethod(__METHOD__);
-
-        return t('Oops! Error occurred');
-    }
+    abstract protected function getTranslatedBreadcrumbForErrorPage(): string;
 }

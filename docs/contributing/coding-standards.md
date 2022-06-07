@@ -25,9 +25,9 @@ Besides the rules that are checked by automatic tools, we have few rules for whi
     <div class="js-bestselling-products list-products-line">
     ```
 
-- Names in configuration files (eg. [`parameters.yaml.dist`](https://github.com/shopsys/project-base/blob/master/config/parameters.yaml.dist)) are underscored
+- Names in configuration files (eg. [`parameters_common.yaml`](https://github.com/shopsys/project-base/blob/master/config/parameters_common.yaml)) are underscored
     ```
-    shopsys.doctrine.cache_driver.query_cache
+    shopsys.image.enable_lazy_load
     ```
 
 - Methods for data retrieving are prefixed with "get". If the method can return `null`, it is prefixed with "find" instead.

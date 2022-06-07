@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -106,29 +105,4 @@ interface ProductOnCurrentDomainFacadeInterface
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData
     ): ProductFilterCountData;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsByCategory()
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array;
-
-    /**
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsOnCurrentDomain()
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array;
-
-    /**
-     * @return int
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductFacade::getProductsCountOnCurrentDomain()
-     */
-    public function getProductsCountOnCurrentDomain(): int;
 }
