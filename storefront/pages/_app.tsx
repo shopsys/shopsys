@@ -6,7 +6,10 @@ import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ReactElement } from 'react';
+import { useRouter } from 'next/router';
+import Nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { ReactElement, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +23,33 @@ type AppPropsWithError = AppProps & {
 };
 
 function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
+    const router = useRouter();
+
+    useEffect(() => {
+        Nprogress.configure({ showSpinner: false, minimum: 0.2 });
+
+        const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+            if (!shallow) {
+                Nprogress.start();
+            }
+        };
+        const onRouteChangeStop = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+            if (!shallow) {
+                Nprogress.done();
+            }
+        };
+
+        router.events.on('routeChangeStart', onRouteChangeStart);
+        router.events.on('routeChangeComplete', onRouteChangeStop);
+        router.events.on('routeChangeError', onRouteChangeStop);
+
+        return () => {
+            router.events.off('routeChangeStart', onRouteChangeStart);
+            router.events.off('routeChangeComplete', onRouteChangeStop);
+            router.events.off('routeChangeError', onRouteChangeStop);
+        };
+    }, [router.events]);
+
     return (
         <>
             <Head>
