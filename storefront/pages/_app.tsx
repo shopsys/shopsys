@@ -6,11 +6,15 @@ import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ReactElement } from 'react';
+import { useRouter } from 'next/router';
+import Nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { ReactElement, useCallback, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { nextReduxWrapper } from 'redux/main';
+import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
+import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
@@ -20,6 +24,51 @@ type AppPropsWithError = AppProps & {
 };
 
 function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
+    const router = useRouter();
+    const dispatch = useShopsysDispatch();
+
+    const handleRouteChangeStart = useCallback(
+        (targetUrl: string) => {
+            if (targetUrl.split(/(\?|#)/)[0] !== router.asPath.split(/(\?|#)/)[0]) {
+                dispatch(optionsFilterActions.resetOptionsFilter());
+            }
+        },
+        [router.asPath, dispatch],
+    );
+
+    useEffect(() => {
+        router.events.on('routeChangeComplete', handleRouteChangeStart);
+
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChangeStart);
+        };
+    }, [router.events, handleRouteChangeStart]);
+
+    useEffect(() => {
+        Nprogress.configure({ showSpinner: false, minimum: 0.2 });
+
+        const onRouteChangeStart = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+            if (!shallow) {
+                Nprogress.start();
+            }
+        };
+        const onRouteChangeStop = (_targetUrl: string, { shallow }: { shallow: boolean }) => {
+            if (!shallow) {
+                Nprogress.done();
+            }
+        };
+
+        router.events.on('routeChangeStart', onRouteChangeStart);
+        router.events.on('routeChangeComplete', onRouteChangeStop);
+        router.events.on('routeChangeError', onRouteChangeStop);
+
+        return () => {
+            router.events.off('routeChangeStart', onRouteChangeStart);
+            router.events.off('routeChangeComplete', onRouteChangeStop);
+            router.events.off('routeChangeError', onRouteChangeStop);
+        };
+    }, [router.events]);
+
     return (
         <>
             <Head>
