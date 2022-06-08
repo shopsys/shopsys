@@ -5,26 +5,26 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Error;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ErrorHandlerListener
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getException();
+        $throwable = $event->getThrowable();
         $routeParam = $event->getRequest()->attributes->get('_route');
 
-        if (!($exception instanceof BadRequestHttpException) || !$this->isGraphQlRoute($routeParam)) {
+        if (!($throwable instanceof BadRequestHttpException) || !$this->isGraphQlRoute($routeParam)) {
             return;
         }
 
         $errors = [
             'errors' => [
-                ['message' => $exception->getMessage()],
+                ['message' => $throwable->getMessage()],
             ],
         ];
 

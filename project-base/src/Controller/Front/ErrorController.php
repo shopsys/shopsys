@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -12,10 +11,11 @@ use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
 use Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionController;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+use Throwable;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
 
@@ -88,8 +88,9 @@ class ErrorController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
+     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface|null $logger
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(
         Request $request,
@@ -112,7 +113,7 @@ class ErrorController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -165,25 +166,25 @@ class ErrorController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger)
     {
-        $lastException = $this->exceptionListener->getLastException();
-        if ($lastException !== null) {
-            return $this->getPrettyExceptionResponse($lastException);
+        $lastThrowable = $this->exceptionListener->getLastThrowable();
+        if ($lastThrowable !== null) {
+            return $this->getPrettyExceptionResponse($lastThrowable);
         }
 
         return $this->exceptionController->showAction($request, $exception, $logger);
     }
 
     /**
-     * @param \Exception $exception
+     * @param \Throwable $throwable
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getPrettyExceptionResponse(Exception $exception)
+    private function getPrettyExceptionResponse(Throwable $throwable)
     {
         Debugger::$time = time();
         $blueScreen = new BlueScreen();
@@ -192,7 +193,7 @@ class ErrorController extends FrontBaseController
         ];
 
         ob_start();
-        $blueScreen->render($exception);
+        $blueScreen->render($throwable);
         $blueScreenHtml = ob_get_contents();
         ob_end_clean();
 
@@ -200,7 +201,7 @@ class ErrorController extends FrontBaseController
     }
 
     /**
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      * @return bool
      */
     private function isUnableToResolveDomainInNotDebug(FlattenException $exception): bool

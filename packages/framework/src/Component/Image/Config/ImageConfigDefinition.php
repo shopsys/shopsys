@@ -21,15 +21,16 @@ class ImageConfigDefinition implements ConfigurationInterface
     public const CONFIG_SIZE_OCCURRENCE = 'occurrence';
     public const CONFIG_SIZE_ADDITIONAL_SIZES = 'additionalSizes';
     public const CONFIG_SIZE_ADDITIONAL_SIZE_MEDIA = 'media';
+    protected const CONFIG_IMAGES = 'images';
 
     /**
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder(static::CONFIG_IMAGES);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root('images');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->buildItemsNode($rootNode->arrayPrototype());
 
@@ -67,9 +68,9 @@ class ImageConfigDefinition implements ConfigurationInterface
      */
     protected function createSizesNode()
     {
-        $treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder(self::CONFIG_SIZES);
         /** @var \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $rootNode */
-        $rootNode = $treeBuilder->root(self::CONFIG_SIZES);
+        $rootNode = $treeBuilder->getRootNode();
 
         return $rootNode
             ->defaultValue([])

@@ -12,11 +12,11 @@
 
         <div class="web__content">
             {% block breadcrumb %}
-                {{ render(controller('ShopsysFrameworkBundle:Admin/Breadcrumb:index')) }}
+                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\BreadcrumbController:indexAction')) }}
             {% endblock %}
 
             <div>
-                {{ render(controller('ShopsysFrameworkBundle:Admin/FlashMessage:index')) }}
+                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\FlashMessageController:indexAction')) }}
             </div>
 
             {% if showHeading is not defined or showHeading %}

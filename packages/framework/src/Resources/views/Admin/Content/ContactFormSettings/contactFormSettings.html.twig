@@ -5,7 +5,7 @@
 
 {% block main_content %}
 
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {{ form_start(form) }}
         <div class="wrap-divider">
