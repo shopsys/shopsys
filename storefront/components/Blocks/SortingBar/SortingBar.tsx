@@ -89,7 +89,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
                                         <SortingBarSelectedValue data-testid={testIdentifier + '-selected-value'}>
-                                            {t(value.displayValue.toString())}
+                                            {value.displayValue}
                                         </SortingBarSelectedValue>
                                     </SortingBarSeletedSortWrapStyled>
                                 </SortingBarSelectedSortStyled>
@@ -111,7 +111,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                             }}
                                             data-testid={testIdentifier + '-' + index}
                                         >
-                                            {t(value.displayValue.toString())}
+                                            {value.displayValue}
                                         </SortingBarItemLinkStyled>
                                     </SortingBarItemStyled>
                                 );
@@ -133,7 +133,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
                                         <SortingBarItemLinkWrapStyled>
-                                            {t(value.displayValue.toString())}
+                                            {value.displayValue}
                                         </SortingBarItemLinkWrapStyled>
                                     </SortingBarItemLinkStyled>
                                 </SortingBarItemStyled>
