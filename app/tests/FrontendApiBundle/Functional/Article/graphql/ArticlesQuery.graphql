@@ -1,0 +1,34 @@
+query ArticlesQuery(
+    $first: Int
+    $last: Int
+    $before: String
+    $after: String
+    $placement: [ArticlePlacementTypeEnum!]
+) {
+    articles(first: $first, last: $last, before: $before, after: $after, placement: $placement) {
+        edges {
+            node {
+                uuid
+                name
+                placement
+                text
+                seoH1
+                seoTitle
+                seoMetaDescription
+                slug
+                text
+                breadcrumb {
+                    slug
+                    name
+                }
+            }
+        }
+        totalCount
+        pageInfo {
+            startCursor
+            endCursor
+            hasPreviousPage
+            hasNextPage
+        }
+    }
+}

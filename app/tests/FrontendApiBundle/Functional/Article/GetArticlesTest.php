@@ -10,13 +10,15 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticlesTest extends GraphQlTestCase
 {
+    private const ARTICLES_TOTAL_COUNT = 21;
+    private const QUERY_PATH = __DIR__ . '/graphql/ArticlesQuery.graphql';
+
     public function testGetArticles(): void
     {
         foreach ($this->getArticlesDataProvider() as $dataSet) {
-            [$query, $expectedArticlesData] = $dataSet;
+            [$response, $expectedArticlesData] = $dataSet;
 
             $graphQlType = 'articles';
-            $response = $this->getResponseContentForQuery($query);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
@@ -65,136 +67,71 @@ class GetArticlesTest extends GraphQlTestCase
     {
         return [
             [
-                $this->getAllArticlesQuery(),
+                $this->getFirstArticlesCountResponse(),
                 $this->getExpectedArticles(),
             ],
             [
-                $this->getFirstArticlesQuery(2),
+                $this->getFirstArticlesCountResponse(2),
                 array_slice($this->getExpectedArticles(), 0, 2),
             ],
             [
-                $this->getFirstArticlesQuery(1),
+                $this->getFirstArticlesCountResponse(1),
                 array_slice($this->getExpectedArticles(), 0, 1),
             ],
             [
-                $this->getLastArticlesQuery(1),
+                $this->getLastCountOfArticlesResponse(1),
                 array_slice($this->getExpectedArticles(), 20, 1),
             ],
             [
-                $this->getLastArticlesQuery(2),
+                $this->getLastCountOfArticlesResponse(2),
                 array_slice($this->getExpectedArticles(), 19, 2),
             ],
             [
-                $this->getFirstArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
+                $this->getFirstArticlesCountResponse(1, [Article::PLACEMENT_TOP_MENU]),
                 array_slice($this->getExpectedArticles(), 19, 1),
             ],
             [
-                $this->getLastArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
+                $this->getLastCountOfArticlesResponse(1, [Article::PLACEMENT_TOP_MENU]),
                 array_slice($this->getExpectedArticles(), 20, 1),
             ],
             [
-                $this->getAllArticlesQuery(Article::PLACEMENT_TOP_MENU),
+                $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_TOP_MENU]),
                 array_slice($this->getExpectedArticles(), 19, 2),
             ],
             [
-                $this->getAllArticlesQuery('non-existing-placement'),
-                [],
+                $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_FOOTER_1, Article::PLACEMENT_TOP_MENU]),
+                [
+                    ...array_slice($this->getExpectedArticles(), 0, 5),
+                    ...array_slice($this->getExpectedArticles(), 19, 2),
+                ],
             ],
         ];
     }
 
     /**
-     * @param string|null $placement
-     * @return string
+     * @param int $articlesCount
+     * @param string[] $placements
+     * @return array
      */
-    private function getAllArticlesQuery(?string $placement = null): string
+    private function getFirstArticlesCountResponse(int $articlesCount = self::ARTICLES_TOTAL_COUNT, array $placements = []): array
     {
-        if ($placement !== null) {
-            $graphQlTypeWithFilters = 'articles (first:21, placement:"' . $placement . '")';
-        } else {
-            $graphQlTypeWithFilters = 'articles (first:21)';
-        }
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            placement
-                            text
-                            seoH1
-                            seoTitle
-                            seoMetaDescription
-                        }
-                    }
-                }
-            }
-        ';
+        return $this->getResponseContentForGql(self::QUERY_PATH, [
+            'first' => $articlesCount,
+            'placement' => $placements,
+        ]);
     }
 
     /**
-     * @param int $numberOfArticles
-     * @param string|null $placement
-     * @return string
+     * @param int $articlesCount
+     * @param string[] $placements
+     * @return array
      */
-    private function getFirstArticlesQuery(int $numberOfArticles, ?string $placement = null): string
+    private function getLastCountOfArticlesResponse(int $articlesCount, array $placements = []): array
     {
-        if ($placement !== null) {
-            $graphQlTypeWithFilters = 'articles (first:' . $numberOfArticles . ', placement: "' . $placement . '")';
-        } else {
-            $graphQlTypeWithFilters = 'articles (first:' . $numberOfArticles . ')';
-        }
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            placement
-                            text
-                            seoH1
-                            seoTitle
-                            seoMetaDescription
-                        }
-                    }
-                }
-            }
-        ';
-    }
-
-    /**
-     * @param int $numberOfArticles
-     * @param string|null $placement
-     * @return string
-     */
-    private function getLastArticlesQuery(int $numberOfArticles, ?string $placement = null): string
-    {
-        if ($placement !== null) {
-            $graphQlTypeWithFilters = 'articles (last:' . $numberOfArticles . ', placement: "' . $placement . '")';
-        } else {
-            $graphQlTypeWithFilters = 'articles (last:' . $numberOfArticles . ')';
-        }
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            placement
-                            text
-                            seoH1
-                            seoTitle
-                            seoMetaDescription
-                        }
-                    }
-                }
-            }
-        ';
+        return $this->getResponseContentForGql(self::QUERY_PATH, [
+            'last' => $articlesCount,
+            'placement' => $placements,
+        ]);
     }
 
     /**

@@ -188,6 +188,22 @@ export type ArticleInterfaceApi = {
   uuid: Scalars['Uuid'];
 };
 
+/** Possible placements of an article (used as an input for 'articles' query) */
+export enum ArticlePlacementTypeEnumApi {
+  /** Articles in 1st footer column */
+  Footer1Api = 'footer1',
+  /** Articles in 2nd footer column */
+  Footer2Api = 'footer2',
+  /** Articles in 3rd footer column */
+  Footer3Api = 'footer3',
+  /** Articles in 4th footer column */
+  Footer4Api = 'footer4',
+  /** Articles without specific placement */
+  NoneApi = 'none',
+  /** Articles in top menu */
+  TopMenuApi = 'topMenu'
+}
+
 /** Represents an availability */
 export type AvailabilityApi = {
   __typename?: 'Availability';
@@ -1861,7 +1877,7 @@ export type QueryArticlesArgsApi = {
   before: Maybe<Scalars['String']>;
   first: Maybe<Scalars['Int']>;
   last: Maybe<Scalars['Int']>;
-  placement: Maybe<Scalars['String']>;
+  placement?: Maybe<Array<ArticlePlacementTypeEnumApi>>;
 };
 
 

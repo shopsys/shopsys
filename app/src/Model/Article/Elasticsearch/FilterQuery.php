@@ -54,15 +54,15 @@ class FilterQuery extends AbstractFilterQuery
     }
 
     /**
-     * @param string $placement
+     * @param string[] $placements
      * @return $this
      */
-    public function filterByPlacement(string $placement): self
+    public function filterByPlacements(array $placements): self
     {
         $clone = clone $this;
         $clone->filters[] = [
-            'term' => [
-                'placement' => $placement,
+            'terms' => [
+                'placement' => $placements,
             ],
         ];
 

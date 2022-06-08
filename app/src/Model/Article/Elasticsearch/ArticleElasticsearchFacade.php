@@ -40,21 +40,21 @@ class ArticleElasticsearchFacade
     /**
      * @param int $offset
      * @param int $limit
-     * @param string|null $placement
+     * @param string[] $placements
      * @return array
      */
-    public function getAllArticles(int $offset, int $limit, ?string $placement = null): array
+    public function getAllArticles(int $offset, int $limit, array $placements): array
     {
-        return $this->articleElasticsearchRepository->getAllArticles($offset, $limit, $placement);
+        return $this->articleElasticsearchRepository->getAllArticles($offset, $limit, $placements);
     }
 
     /**
-     * @param string|null $placement
+     * @param string[] $placements
      * @return int
      */
-    public function getAllArticlesTotalCount(?string $placement = null): int
+    public function getAllArticlesTotalCount(array $placements): int
     {
-        return $this->articleElasticsearchRepository->getAllArticlesTotalCount($placement);
+        return $this->articleElasticsearchRepository->getAllArticlesTotalCount($placements);
     }
 
     /**
