@@ -152,7 +152,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 });
 
 const getUrlWithoutGetParameters = (originalUrl: string) => {
-    return originalUrl.split('?')[0];
+    return originalUrl.split(/(\?|#)/)[0];
 };
 
 export default FriendlyUrlPage;
