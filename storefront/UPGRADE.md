@@ -505,3 +505,12 @@
   - new `SliderFilter` component was added and implemented to the `Filter` component
   - the form types and form handlers was extended to work with `minimalValue` and `maximalValue`
   - the `SelectedParameters` and the `Parameters` components was adapted for the new parameter type
+
+### Default opened/closed filter parameters
+- [FWCC-953](https://shopsys.atlassian.net/browse/FWCC-953)
+- [FWCC-953 - default opened/closed filter parameters](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/630/diffs)
+- the reasons these changes were introduced:
+    - as an administrator, I want so set which filter parameters in category should be closed by default
+- most significant changes
+    - new `isCollapsed` parameter was added to the parameters GraphQl fragments
+    - the `isOpen` param for parameters was renamed to `isDefaultCollapsed` and it is now based on the value from API and the state of filtered parameters

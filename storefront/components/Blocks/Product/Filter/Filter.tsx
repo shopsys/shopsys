@@ -71,6 +71,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
             parameterName: parameter.name,
             parameterUuid: parameter.uuid,
             values: getValues(parameter),
+            isCollapsed: parameter.isCollapsed,
             minimalValue: 'minimalValue' in parameter ? parameter.minimalValue : undefined,
             maximalValue: 'maximalValue' in parameter ? parameter.maximalValue : undefined,
             unit: 'unit' in parameter ? parameter.unit : undefined,
@@ -207,6 +208,19 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
         formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, true);
     };
 
+    const getIsNotFilteredByParameter = useCallback(
+        (parameterUuid: string) => {
+            const parameter = parametersValue[getIndexOfParameter(parametersValue, parameterUuid)];
+
+            return (
+                parameter.values.filter((v) => v.checked).length === 0 &&
+                parameter.minimalValue === undefined &&
+                parameter.maximalValue === undefined
+            );
+        },
+        [parametersValue],
+    );
+
     // this useEffect triggered only on the first render
     useEffectOnce(() => {
         parametersFilterState.brands.forEach((brandUuid) => onBrandCheck(brandUuid));
@@ -279,7 +293,10 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
                                 parameterParentIndex={index}
                                 title={parametersItem.parameterName}
                                 data={productFilterOptions.parameters?.[index]}
-                                isOpen={true}
+                                isDefaultCollapsed={
+                                    parametersItem.isCollapsed &&
+                                    getIsNotFilteredByParameter(parametersItem.parameterUuid)
+                                }
                             />
                         ))}
                 </Form>

@@ -7,4 +7,5 @@ fragment ProductFilterOptionsParametersCheckboxFragment on ParameterCheckboxFilt
         text
         count
     }
+    isCollapsed
 }

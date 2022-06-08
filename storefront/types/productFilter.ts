@@ -16,6 +16,7 @@ export type ParametersColorValuesType = {
 export type ParametersCheckboxType = {
     name: string;
     uuid: string;
+    isCollapsed: boolean;
     values: ParametersCheckboxValuesType[];
     __typename: 'ParameterCheckboxFilterOption';
 };
@@ -23,6 +24,7 @@ export type ParametersCheckboxType = {
 export type ParametersColorType = {
     name: string;
     uuid: string;
+    isCollapsed: boolean;
     values: ParametersColorValuesType[];
     __typename: 'ParameterColorFilterOption';
 };
@@ -30,6 +32,7 @@ export type ParametersColorType = {
 export type ParametersSliderType = {
     name: string;
     uuid: string;
+    isCollapsed: boolean;
     minimalValue: number;
     maximalValue: number;
     unit: { name: string } | null;
@@ -75,6 +78,7 @@ export type FilterFormParameterType = {
     minimalValue?: number;
     maximalValue?: number;
     unit?: { name: string } | null;
+    isCollapsed: boolean;
 };
 
 export type FilterFormBrandType = {

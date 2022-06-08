@@ -21,7 +21,7 @@ type FilterGroupParametersProps = {
     /**
      * Sets if group is default open
      */
-    isOpen: boolean;
+    isDefaultCollapsed: boolean;
     /**
      * parameterParentUuid of parameters
      */
@@ -39,23 +39,23 @@ type FilterGroupParametersProps = {
 const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
     const testIdentifier = 'blocks-product-filter-filtergroup-parameters-' + props.parameterParentIndex;
 
-    const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
+    const [isGroupCollapsed, setIsGroupCollapsed] = useState(props.isDefaultCollapsed);
     const formProviderMethods = useFormContext<FilterFormType>();
     const { fields } = useFieldArray({
         control: formProviderMethods.control,
         name: `parameters.${props.parameterParentIndex}.values`,
     });
     const handleGroupClick = () => {
-        setIsGroupOpen(!isGroupOpen);
+        setIsGroupCollapsed(!isGroupCollapsed);
     };
 
     return (
         <FilterGroupStyled data-testid={testIdentifier}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {props.title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={isGroupOpen}>
+            <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {props.data?.__typename === 'ParameterCheckboxFilterOption' &&
                     fields.map((dataItem, index) => (
                         <Controller

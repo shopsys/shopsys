@@ -7,4 +7,5 @@ fragment ProductFilterOptionsParametersSliderFragment on ParameterSliderFilterOp
     unit {
         name
     }
+    isCollapsed
 }
