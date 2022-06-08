@@ -128,15 +128,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return bool
-     */
-    public function hasSaleExclusion(array $data): bool
-    {
-        return $data['is_sale_exclusion'];
-    }
-
-    /**
-     * @param array $data
      * @return string|null
      */
     public function getNamePrefix(array $data): ?string

@@ -159,7 +159,6 @@ fragment TestProductFragment on Product {
     ean
     usps
     hasPreorder
-    hasSaleExclusion
     files {
         anchorText
         url
@@ -236,7 +235,6 @@ fragment TestMainVariantFragment on MainVariant {
     ean
     usps
     hasPreorder
-    hasSaleExclusion
     files {
         anchorText
         url

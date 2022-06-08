@@ -55,7 +55,6 @@ query Product($uuid: Uuid) {
         ean
         usps
         hasPreorder
-        hasSaleExclusion
         files {
             anchorText
             url

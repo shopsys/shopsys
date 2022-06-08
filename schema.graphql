@@ -1053,9 +1053,6 @@ type MainVariant implements Product & Breadcrumb & Slug {
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
 
-  """Distinguishes if the product can be bought"""
-  hasSaleExclusion: Boolean!
-
   """List of downloadable files"""
   files: [File!]!
 
@@ -1872,9 +1869,6 @@ interface Product {
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
 
-  """Distinguishes if the product can be bought"""
-  hasSaleExclusion: Boolean!
-
   """List of downloadable files"""
   files: [File!]!
 
@@ -2372,9 +2366,6 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
 
-  """Distinguishes if the product can be bought"""
-  hasSaleExclusion: Boolean!
-
   """List of downloadable files"""
   files: [File!]!
 
@@ -2697,9 +2688,6 @@ type Variant implements Product & Breadcrumb & Slug {
 
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
-
-  """Distinguishes if the product can be bought"""
-  hasSaleExclusion: Boolean!
 
   """List of downloadable files"""
   files: [File!]!

@@ -912,8 +912,6 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   fullName: Scalars['String'];
   /** Distinguishes if the product can be pre-ordered */
   hasPreorder: Scalars['Boolean'];
-  /** Distinguishes if the product can be bought */
-  hasSaleExclusion: Scalars['Boolean'];
   /** Product images */
   images: Array<ImageApi>;
   isSellingDenied: Scalars['Boolean'];
@@ -1654,8 +1652,6 @@ export type ProductApi = {
   fullName: Scalars['String'];
   /** Distinguishes if the product can be pre-ordered */
   hasPreorder: Scalars['Boolean'];
-  /** Distinguishes if the product can be bought */
-  hasSaleExclusion: Scalars['Boolean'];
   /** Product images */
   images: Array<ImageApi>;
   isSellingDenied: Scalars['Boolean'];
@@ -2194,8 +2190,6 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   fullName: Scalars['String'];
   /** Distinguishes if the product can be pre-ordered */
   hasPreorder: Scalars['Boolean'];
-  /** Distinguishes if the product can be bought */
-  hasSaleExclusion: Scalars['Boolean'];
   /** Product images */
   images: Array<ImageApi>;
   isSellingDenied: Scalars['Boolean'];
@@ -2481,8 +2475,6 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   fullName: Scalars['String'];
   /** Distinguishes if the product can be pre-ordered */
   hasPreorder: Scalars['Boolean'];
-  /** Distinguishes if the product can be bought */
-  hasSaleExclusion: Scalars['Boolean'];
   /** Product images */
   images: Array<ImageApi>;
   isSellingDenied: Scalars['Boolean'];

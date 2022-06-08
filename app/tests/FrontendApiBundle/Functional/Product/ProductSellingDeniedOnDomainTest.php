@@ -10,6 +10,7 @@ use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+use function Safe\sleep;
 
 class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 {
@@ -52,7 +53,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
         $this->productExportSubscriber->exportScheduledRows();
 
         // wait for elastic to reindex
-        \Safe\sleep(1);
+        sleep(1);
 
         self::assertTrue($product->getSaleExclusion($this->domain->getId()));
 
