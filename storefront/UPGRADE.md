@@ -467,3 +467,15 @@
   - to simplify the execution of standards in local development
 - most significant changes
   - new `npm run check` command was added to `package.json`, it runs all the available standards
+
+### Random 404 and blank page fix
+- [FWCC-839](https://shopsys.atlassian.net/browse/FWCC-839)
+- [FWCC-839 - random 404 and blank page fix](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/631)
+- the reasons these changes were introduced
+  - because of the way our friendly URLs work (products, categories, and others are all one page) we sometimes had issues with 404 and blank pages appearing briefly because of parameter filters
+  - with these changes this should not happen anymore
+- most significant changes
+  - filters are removed on URL change (if it is not the same URL only differing by query params)
+  - loading progress bar was added to improve UX
+  - each category page now only does SSR once on every visit of the page (before it did 2x because of a bug)
+  - issue with "there are now products for your filters" screen appearing is now resolved
