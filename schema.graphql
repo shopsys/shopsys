@@ -1507,6 +1507,11 @@ type ParameterCheckboxFilterOption implements ParameterFilterOptionInterface {
   """The parameter UUID"""
   uuid: Uuid!
 
+  """
+  Indicator whether the parameter should be collapsed based on the current category setting
+  """
+  isCollapsed: Boolean!
+
   """The parameter name"""
   name: String!
 
@@ -1521,6 +1526,11 @@ type ParameterCheckboxFilterOption implements ParameterFilterOptionInterface {
 type ParameterColorFilterOption implements ParameterFilterOptionInterface {
   """The parameter UUID"""
   uuid: Uuid!
+
+  """
+  Indicator whether the parameter should be collapsed based on the current category setting
+  """
+  isCollapsed: Boolean!
 
   """The parameter name"""
   name: String!
@@ -1552,6 +1562,11 @@ interface ParameterFilterOptionInterface {
   """The parameter UUID"""
   uuid: Uuid!
 
+  """
+  Indicator whether the parameter should be collapsed based on the current category setting
+  """
+  isCollapsed: Boolean!
+
   """The parameter name"""
   name: String!
 
@@ -1563,6 +1578,11 @@ interface ParameterFilterOptionInterface {
 type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
   """The parameter UUID"""
   uuid: Uuid!
+
+  """
+  Indicator whether the parameter should be collapsed based on the current category setting
+  """
+  isCollapsed: Boolean!
 
   """The parameter name"""
   name: String!

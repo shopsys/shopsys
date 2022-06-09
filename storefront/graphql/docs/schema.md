@@ -4938,6 +4938,15 @@ The parameter UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the parameter should be collapsed based on the current category setting
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -4991,6 +5000,15 @@ The parameter UUID
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the parameter should be collapsed based on the current category setting
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -5040,6 +5058,15 @@ Parameter filter option
 <td>
 
 The parameter UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the parameter should be collapsed based on the current category setting
 
 </td>
 </tr>
@@ -9226,6 +9253,15 @@ Represents parameter filter option
 <td>
 
 The parameter UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the parameter should be collapsed based on the current category setting
 
 </td>
 </tr>

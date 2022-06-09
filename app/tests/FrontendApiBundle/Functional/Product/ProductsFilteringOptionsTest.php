@@ -83,6 +83,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "maximalPrice": "' . $maximalPrice . '",
                     "parameters": [
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -120,6 +121,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterColorFilterOption",
                             "unit": null,
@@ -149,6 +151,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -166,6 +169,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -178,6 +182,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -195,6 +200,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": true,
                             "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": {
@@ -219,6 +225,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": true,
                             "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -236,6 +243,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -248,6 +256,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,                        
                             "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -260,6 +269,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -272,6 +282,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
+                            "isCollapsed": false,
                             "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
@@ -381,6 +392,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $expectedJson = '[
     {
+        "isCollapsed": false,
         "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -418,6 +430,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,    
         "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterColorFilterOption",
         "unit": null,
@@ -447,6 +460,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -464,6 +478,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -476,6 +491,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -493,6 +509,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": true,
         "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": {
@@ -517,6 +534,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": true,
         "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -534,6 +552,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -546,6 +565,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -558,6 +578,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -570,6 +591,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
+        "isCollapsed": false,
         "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
@@ -630,6 +652,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             minimalPrice,
                             maximalPrice,
                             parameters {
+                                isCollapsed
                                 name
                                 __typename
                                 unit {
@@ -742,6 +765,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                   }
                 }
                 parameters {
+                  isCollapsed
                   name
                   ...on ParameterCheckboxFilterOption {
                     values {text count}
@@ -777,6 +801,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                   ],
                   "parameters": [
                     {
+                      "isCollapsed": false,
                       "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -786,6 +811,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('Barva', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -795,6 +821,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -804,6 +831,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('Rozlišení', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -817,6 +845,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('Úhlopříčka', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -830,6 +859,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
@@ -839,6 +869,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       ]
                     },
                     {
+                      "isCollapsed": false,
                       "name": "' . t('Technologie', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {

@@ -1384,6 +1384,8 @@ export type ParameterApi = {
 /** Parameter filter option */
 export type ParameterCheckboxFilterOptionApi = ParameterFilterOptionInterfaceApi & {
   __typename?: 'ParameterCheckboxFilterOption';
+  /** Indicator whether the parameter should be collapsed based on the current category setting */
+  isCollapsed: Scalars['Boolean'];
   /** The parameter name */
   name: Scalars['String'];
   /** The parameter unit */
@@ -1397,6 +1399,8 @@ export type ParameterCheckboxFilterOptionApi = ParameterFilterOptionInterfaceApi
 /** Parameter filter option */
 export type ParameterColorFilterOptionApi = ParameterFilterOptionInterfaceApi & {
   __typename?: 'ParameterColorFilterOption';
+  /** Indicator whether the parameter should be collapsed based on the current category setting */
+  isCollapsed: Scalars['Boolean'];
   /** The parameter name */
   name: Scalars['String'];
   /** The parameter unit */
@@ -1421,6 +1425,8 @@ export type ParameterFilterApi = {
 
 /** Represents parameter filter option */
 export type ParameterFilterOptionInterfaceApi = {
+  /** Indicator whether the parameter should be collapsed based on the current category setting */
+  isCollapsed: Scalars['Boolean'];
   /** The parameter name */
   name: Scalars['String'];
   /** The parameter unit */
@@ -1432,6 +1438,8 @@ export type ParameterFilterOptionInterfaceApi = {
 /** Parameter filter option */
 export type ParameterSliderFilterOptionApi = ParameterFilterOptionInterfaceApi & {
   __typename?: 'ParameterSliderFilterOption';
+  /** Indicator whether the parameter should be collapsed based on the current category setting */
+  isCollapsed: Scalars['Boolean'];
   /** The parameter maximal value */
   maximalValue: Scalars['Float'];
   /** The parameter minimal value */
