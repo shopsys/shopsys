@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Product\Filter;
 
+use App\Model\Category\Category;
+use App\Model\Category\CategoryParameterFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Model\Category\Category;
+use App\Model\Product\ProductOnCurrentDomainElasticFacade;
+use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
+use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
@@ -18,19 +24,37 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory a
 
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
- * @method __construct(\Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade, \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption createFlagFilterOption(\App\Model\Product\Flag\Flag $flag, int $count, bool $isAbsolute)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\BrandFilterOption createBrandFilterOption(\App\Model\Product\Brand\Brand $brand, int $count, bool $isAbsolute)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptions(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillFlags(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillBrands(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method fillParameters(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method bool isParameterFiltered(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method bool isParameterValueFiltered(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue $parameterValue, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method int getParameterValueCount(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue $parameterValue, \App\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData)
  */
 class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
 {
+    /**
+     * @var \App\Model\Category\CategoryParameterFacade
+     */
+    private CategoryParameterFacade $categoryParameterFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+     * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     */
+    public function __construct(
+        ModuleFacade $moduleFacade,
+        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
+        CategoryParameterFacade $categoryParameterFacade
+    ) {
+        parent::__construct($moduleFacade, $productOnCurrentDomainFacade);
+
+        $this->categoryParameterFacade = $categoryParameterFacade;
+    }
+
     /**
      * @param \App\Model\Product\Parameter\ParameterValue $brand
      * @param int $count
@@ -45,11 +69,12 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions
+     * @param bool $collapsed
      * @return \App\FrontendApi\Model\Product\Filter\ParameterFilterOption
      */
-    protected function createParameterFilterOption(BaseParameter $parameter, array $parameterValueFilterOptions): ParameterFilterOption
+    protected function createParameterFilterOption(BaseParameter $parameter, array $parameterValueFilterOptions, bool $collapsed = false): ParameterFilterOption
     {
-        return new ParameterFilterOption($parameter, $parameterValueFilterOptions);
+        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed);
     }
 
     /**
@@ -135,7 +160,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForCategory(
-        Category $category,
+        BaseCategory $category,
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
         string $searchText = ''
@@ -166,7 +191,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
+            $category
         );
 
         return $productFilterOptions;
@@ -200,5 +226,53 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterCountData,
             $productFilterData
         );
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Category\Category|null $category
+     */
+    protected function fillParameters(
+        ProductFilterOptions $productFilterOptions,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        BaseProductFilterData $productFilterData,
+        ?Category $category = null
+    ): void {
+        if ($category === null) {
+            throw new InvalidArgumentException('$category parameter must be provided');
+        }
+        $collapsedParameters = $this->categoryParameterFacade->getParametersCollapsedByCategory($category);
+        foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            $parameter = $parameterFilterChoice->getParameter();
+            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
+
+            $parameterValueFilterOptions = [];
+
+            foreach ($parameterFilterChoice->getValues() as $parameterValue) {
+                /** @var \App\Model\Product\Parameter\ParameterValue $parameterValue */
+                $parameterValueCount = $this->getParameterValueCount(
+                    $parameter,
+                    $parameterValue,
+                    $productFilterData,
+                    $productFilterCountData
+                );
+                $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
+                    $parameterValue,
+                    $parameterValueCount,
+                    $isAbsolute
+                );
+            }
+
+            $productFilterOptions->parameters[] = $this->createParameterFilterOption(
+                $parameter,
+                $parameterValueFilterOptions,
+                in_array($parameter, $collapsedParameters, true)
+            );
+        }
     }
 }

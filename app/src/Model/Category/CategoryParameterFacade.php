@@ -91,4 +91,13 @@ class CategoryParameterFacade
             $this->em->flush();
         }
     }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersCollapsedByCategory(Category $category): array
+    {
+        return $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
+    }
 }

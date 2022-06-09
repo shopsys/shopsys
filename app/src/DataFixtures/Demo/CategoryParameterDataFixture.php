@@ -15,6 +15,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @var \App\Model\Category\CategoryParameterFacade
      */
     private $categoryParameterFacade;
@@ -27,13 +32,16 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     /**
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CategoryParameterFacade $categoryParameterFacade,
-        ParameterRepository $parameterRepository
+        ParameterRepository $parameterRepository,
+        Domain $domain
     ) {
         $this->categoryParameterFacade = $categoryParameterFacade;
         $this->parameterRepository = $parameterRepository;
+        $this->domain = $domain;
     }
 
     /**
@@ -41,6 +49,9 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \App\Model\Category\Category $categoryElectronics */
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
             /** @var \App\Model\Category\Category $category */
@@ -50,7 +61,14 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
             foreach ($parameters as $parameter) {
                 $parametersId[] = $parameter->getId();
             }
-            $this->categoryParameterFacade->saveRelation($category, $parametersId, []);
+            $parametersCollapsed = [];
+            if ($category === $categoryElectronics) {
+                $parametersCollapsed = [
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], 'dataFixtures', $firstDomainLocale)),
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Screen size', [], 'dataFixtures', $firstDomainLocale)),
+                ];
+            }
+            $this->categoryParameterFacade->saveRelation($category, $parametersId, $parametersCollapsed);
         }
     }
 
