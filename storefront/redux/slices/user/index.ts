@@ -19,6 +19,7 @@ type InitialState = {
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     lastOrderUuid: string;
+    lastOrderPaymentType: string;
     urlHash: string | undefined;
     cartUuid: string | null;
 };
@@ -50,6 +51,9 @@ export const userSlice = createSlice({
         },
         setLastOrderUuid(state, action: PayloadAction<string>) {
             state.lastOrderUuid = action.payload;
+        },
+        setLastOrderPaymentType(state, action: PayloadAction<string>) {
+            state.lastOrderPaymentType = action.payload;
         },
         setOrderUrlHash(state, action: PayloadAction<string | undefined>) {
             state.urlHash = action.payload;

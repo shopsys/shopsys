@@ -53,5 +53,8 @@ mutation CreateOrderMutation(
         number
         uuid
         urlHash
+        payment {
+            type
+        }
     }
 }

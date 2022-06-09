@@ -1,29 +1,19 @@
-import { ImageWrapperStyled, MessageStyled, MessageWrapperStyled, OrderEmailStyled } from './OrderConfirmation.style';
-import Heading from 'components/Basic/Heading';
-import Link from 'components/Basic/Link';
+import { ImageWrapperStyled, MessageStyled, MessageTextStyled, MessageWrapperStyled } from './OrderConfirmation.style';
 import Webline from 'components/Layout/Webline';
 import GoPayGateway from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPay';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
-import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { FC } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { PaymentTypeEnum } from 'types/payment';
+
+const TEST_IDENTIFIER = 'pages-orderconfirmation';
 
 const OrderConfirmation: FC = () => {
-    const testIdentifier = 'pages-orderconfirmation';
-
     const dispatch = useShopsysDispatch();
-    const t = useTypedTranslationFunction();
-    const { email } = useCurrentUserContactInformation();
-    const { urlHash } = useShopsysSelector((state) => state.user);
-    const { lastOrderUuid } = useShopsysSelector((state) => state.user);
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [orderDetailUrl] = getInternationalizedStaticUrls(
-        [{ url: '/order-detail/:urlHash', param: urlHash }],
-        domainUrl,
-    );
+    const { lastOrderUuid, lastOrderPaymentType } = useShopsysSelector((state) => state.user);
+    const [{ data }] = useOrderSentPageContentApi({ variables: { orderUuid: lastOrderUuid } });
 
     useEffectOnce(() => {
         return () => {
@@ -33,18 +23,15 @@ const OrderConfirmation: FC = () => {
 
     return (
         <Webline>
-            <MessageWrapperStyled data-testid={testIdentifier}>
+            <MessageWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <ImageWrapperStyled>
                     <img alt="Objednávka odeslána" src="/public/frontend/images/sent-cart.svg" />
                 </ImageWrapperStyled>
                 <MessageStyled>
-                    <Heading type="h1">{t('Thank you for your order')}</Heading>
-                    <p>{t('We have also sent a summary to your email')}</p>
-                    <OrderEmailStyled>{email}</OrderEmailStyled>
-                    <Link isButton href={orderDetailUrl}>
-                        {t('Go to order detail')}
-                    </Link>
-                    <GoPayGateway orderUuid={lastOrderUuid} />
+                    {data !== undefined && (
+                        <MessageTextStyled dangerouslySetInnerHTML={{ __html: data.orderSentPageContent }} />
+                    )}
+                    {lastOrderPaymentType === PaymentTypeEnum.GoPay && <GoPayGateway orderUuid={lastOrderUuid} />}
                 </MessageStyled>
             </MessageWrapperStyled>
         </Webline>

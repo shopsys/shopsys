@@ -1,3 +1,4 @@
+import Button from 'components/Forms/Button';
 import { PayOrderMutationApi, usePayOrderMutationApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -58,9 +59,9 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
             method="post"
             id="gopay-payment-button"
         >
-            <button name="pay" type="submit">
+            <Button name="pay" type="submit">
                 {t('Pay with GoPay')}
-            </button>
+            </Button>
         </form>
     );
 };

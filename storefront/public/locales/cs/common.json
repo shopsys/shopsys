@@ -106,7 +106,6 @@
     "From": "Od",
     "GdprAgreementCheckbox": "Souhlasím se <lnk1>zpracováním osobních údajů</lnk1>.",
     "Go to cart": "Přejít do košíku",
-    "Go to order detail": "Jít na detail objednávky",
     "Great choice! We have added your item to the cart": "Skvělá volba! Vaše zboží jsme přidali do košíku",
     "Hide results": "Skrýt výsledky",
     "Home page": "Úvodní strana",
@@ -274,7 +273,6 @@
     "VAT": "DPH",
     "View all": "Zobrazit všechny",
     "View all results": "Zobrazit všechny výsledky",
-    "We have also sent a summary to your email": "Rekapitulaci jsme vám zaslali také na váš e-mail",
     "We have nothing to show you at this url.": "Na této url adrese nemáme nic, co bychom Vám ukázali.",
     "We have sent a recap of your order to your email": "Odeslali jsme na váš e-mail rekapitulaci objednávky",
     "We sent an email with further steps to your address": "Na vaši adresu jsme odeslali e-mail s dalšími kroky",
@@ -346,5 +344,6 @@
     "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>" : "Pozor! Jste přihlášn/á za zákazníka s emailem {{ email }} <button>Odhlásit</button>",
     "About Commerce Cloud":  "O Commerce Cloudu",
     "About shopping": "O nákupu",
-    "E-shop": "E-shop"
+    "E-shop": "E-shop",
+    "We are sorry, but your payment was not successful. Please contact us.": "Mrzí nás to, ale platba nebyla úspěšně dokončena. Prosím, kontaktujte nás."
 }

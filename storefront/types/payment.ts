@@ -2,6 +2,10 @@ import { PriceFragmentApi } from 'graphql/generated';
 import { ImageType } from 'types/image';
 import { PriceType } from 'types/price';
 
+export const PaymentTypeEnum = {
+    GoPay: 'goPay',
+} as const;
+
 export type PaymentInputType = {
     uuid: string;
     price: PriceFragmentApi;

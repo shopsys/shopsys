@@ -102,7 +102,6 @@
     "From": "From",
     "GdprAgreementCheckbox": "I agree with <lnk1>processing of privacy policy</lnk1>.",
     "Go to cart": "Go to cart",
-    "Go to order detail": "Go to order detail",
     "Great choice! We have added your item to the cart": "Great choice! We have added your item to the cart",
     "Hide results": "Hide results",
     "Home page": "Home page",
@@ -257,7 +256,6 @@
     "VAT": "VAT",
     "View all": "View all",
     "View all results": "View all results",
-    "We have also sent a summary to your email": "We've also sent a summary to your email",
     "We have nothing to show you at this url.": "We have nothing to show you at this url.",
     "We have sent a recap of your order to your email": "We have sent a recap of your order to your email",
     "We sent an email with further steps to your address": "We sent an email with further steps to your address",
@@ -327,5 +325,6 @@
     "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>": "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>",
     "About Commerce Cloud":  "About Commerce Cloud",
     "About shopping": "About shopping",
-    "E-shop": "E-shop"
+    "E-shop": "E-shop",
+    "We are sorry, but your payment was not successful. Please contact us.": "We are sorry, but your payment was not successful. Please contact us."
 }

@@ -25,7 +25,7 @@ const PaymentFail: FC = () => {
                 <PaymentWrapperStyled>
                     <MessageStyled>
                         <Heading type="h1">{t('Your payment was unsuccessful')}</Heading>
-                        <p>{t('Try it again')}</p>
+                        <p>{t('We are sorry, but your payment was not successful. Please contact us.')}</p>
                     </MessageStyled>
                 </PaymentWrapperStyled>
             </MessageWrapperStyled>

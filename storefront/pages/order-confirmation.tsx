@@ -3,6 +3,7 @@ import PageGuard from 'components/Helpers/PageGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import Registration from 'components/Pages/OrderConfirmation/Registration';
+import { OrderSentPageContentDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -35,7 +36,9 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store);
+    return initServerSideProps(context, store, false, [
+        { query: OrderSentPageContentDocumentApi, variables: { orderUuid: store.getState().user.lastOrderUuid } },
+    ]);
 });
 
 export default Index;

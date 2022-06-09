@@ -59,6 +59,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         dispatch(userActions.setOrderConfirmationAccess(true));
         dispatch(userActions.setOrderUrlHash(createOrderResultData?.CreateOrder.urlHash));
         dispatch(userActions.setLastOrderUuid(createOrderResultData?.CreateOrder.uuid ?? ''));
+        dispatch(userActions.setLastOrderPaymentType(createOrderResultData?.CreateOrder.payment.type ?? ''));
         router.push(orderConfirmationUrl);
     };
 
