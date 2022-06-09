@@ -2,6 +2,7 @@ import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { onPaymentChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
@@ -13,6 +14,8 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
+
+    const gtmCart = useLatest(gtmCartEventInfo.cart);
 
     const changePaymentHandler = useCallback(
         async (newPaymentUuid: string | null, newGoPayBankSwift: string | null) => {
@@ -35,14 +38,14 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
             }
 
             onPaymentChangeGtmEventHandler(
-                gtmCartEventInfo.cart,
+                gtmCart.current,
                 changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
                 currencyCode,
             );
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },
-        [cartUuid, changePaymentInCart, currencyCode, gtmCartEventInfo.cart, t],
+        [cartUuid, changePaymentInCart, currencyCode, gtmCart, t],
     );
 
     return changePaymentHandler;
