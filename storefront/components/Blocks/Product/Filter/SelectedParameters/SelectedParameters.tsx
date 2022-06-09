@@ -1,8 +1,10 @@
 import Parameters from './Parameters';
 import {
+    SelectedParametersBlockStyled,
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
     SelectedParametersListStyled,
+    SelectedParametersNameStyled,
     SelectedParametersResetRemoveStyled,
     SelectedParametersResetStyled,
     SelectedParametersResetTextStyled,
@@ -12,7 +14,7 @@ import {
 import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { FilterFormType, FilterOptionsType } from 'types/productFilter';
@@ -86,70 +88,85 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
             {!isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions) && (
                 <SelectedParametersStyled data-testid={TEST_IDENTIFIER}>
                     <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
-                    <SelectedParametersListStyled>
-                        {parametersFilterState.brands.map((brandUuid) => (
-                            <SelectedParametersListItemStyled key={brandUuid}>
-                                {brandsValue.find((value) => value.uuid === brandUuid)?.name}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
-                                    onClick={() => onUncheckBrand(brandUuid)}
-                                />
-                            </SelectedParametersListItemStyled>
-                        ))}
+                    <SelectedParametersBlockStyled>
+                        {parametersFilterState.brands.length > 0 && (
+                            <SelectedParametersListStyled>
+                                <SelectedParametersNameStyled>{t('Brands')}:</SelectedParametersNameStyled>
+                                {parametersFilterState.brands.map((brandUuid) => (
+                                    <SelectedParametersListItemStyled key={brandUuid}>
+                                        {brandsValue.find((value) => value.uuid === brandUuid)?.name}
+                                        <SelectedParametersListItemRemoveStyled
+                                            iconType="icon"
+                                            icon="RemoveThin"
+                                            onClick={() => onUncheckBrand(brandUuid)}
+                                        />
+                                    </SelectedParametersListItemStyled>
+                                ))}
+                            </SelectedParametersListStyled>
+                        )}
 
-                        {parametersFilterState.flags.map((flagUuid) => (
-                            <SelectedParametersListItemStyled key={flagUuid}>
-                                {flagsValue.find((value) => value.uuid === flagUuid)?.name}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
-                                    onClick={() => onUncheckFlag(flagUuid)}
-                                />
-                            </SelectedParametersListItemStyled>
-                        ))}
+                        {parametersFilterState.flags.length > 0 && (
+                            <SelectedParametersListStyled>
+                                <SelectedParametersNameStyled>{t('Flags')}:</SelectedParametersNameStyled>
+                                {parametersFilterState.flags.map((flagUuid) => (
+                                    <SelectedParametersListItemStyled key={flagUuid}>
+                                        {flagsValue.find((value) => value.uuid === flagUuid)?.name}
+                                        <SelectedParametersListItemRemoveStyled
+                                            iconType="icon"
+                                            icon="RemoveThin"
+                                            onClick={() => onUncheckFlag(flagUuid)}
+                                        />
+                                    </SelectedParametersListItemStyled>
+                                ))}
+                            </SelectedParametersListStyled>
+                        )}
 
                         <Parameters filterOptions={props.productFilterOptions} />
 
                         {isOnlyInStock && (
-                            <SelectedParametersListItemStyled>
-                                {t('Only goods in stock')}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
-                                    onClick={() => {
-                                        formProviderMethods.setValue('onlyInStock', false);
-                                    }}
-                                />
-                            </SelectedParametersListItemStyled>
+                            <SelectedParametersListStyled>
+                                <SelectedParametersNameStyled>{t('Availability')}:</SelectedParametersNameStyled>
+                                <SelectedParametersListItemStyled>
+                                    {t('Only goods in stock')}
+                                    <SelectedParametersListItemRemoveStyled
+                                        iconType="icon"
+                                        icon="RemoveThin"
+                                        onClick={() => {
+                                            formProviderMethods.setValue('onlyInStock', false);
+                                        }}
+                                    />
+                                </SelectedParametersListItemStyled>
+                            </SelectedParametersListStyled>
                         )}
 
                         {(isMinimalPriceVisible || isMaximalPriceVisible) && (
-                            <SelectedParametersListItemStyled>
-                                {isMinimalPriceVisible && (
-                                    <>
-                                        <span>{t('from')}&nbsp;</span>
-                                        {parametersFilterState.minimalPrice !== null &&
-                                            formatPrice(parametersFilterState.minimalPrice)}
-                                        &nbsp;
-                                    </>
-                                )}
-                                {isMaximalPriceVisible && (
-                                    <>
-                                        <span>{t('to')}&nbsp;</span>
-                                        {parametersFilterState.maximalPrice !== null &&
-                                            formatPrice(parametersFilterState.maximalPrice)}
-                                        &nbsp;
-                                    </>
-                                )}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
-                                    onClick={() => onResetPrices()}
-                                />
-                            </SelectedParametersListItemStyled>
+                            <SelectedParametersListStyled>
+                                <SelectedParametersNameStyled>{t('Price')}:</SelectedParametersNameStyled>
+                                <SelectedParametersListItemStyled>
+                                    {isMinimalPriceVisible && (
+                                        <>
+                                            <span>{t('from')}&nbsp;</span>
+                                            {parametersFilterState.minimalPrice !== null &&
+                                                formatPrice(parametersFilterState.minimalPrice)}
+                                            {isMaximalPriceVisible ? ' ' : ''}
+                                        </>
+                                    )}
+                                    {isMaximalPriceVisible && (
+                                        <>
+                                            <span>{t('to')}&nbsp;</span>
+                                            {parametersFilterState.maximalPrice !== null &&
+                                                formatPrice(parametersFilterState.maximalPrice)}
+                                        </>
+                                    )}
+                                    <SelectedParametersListItemRemoveStyled
+                                        iconType="icon"
+                                        icon="RemoveThin"
+                                        onClick={() => onResetPrices()}
+                                    />
+                                </SelectedParametersListItemStyled>
+                            </SelectedParametersListStyled>
                         )}
-                    </SelectedParametersListStyled>
+                    </SelectedParametersBlockStyled>
                     <SelectedParametersResetStyled onClick={onResetAllParameters}>
                         <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
                         <SelectedParametersResetRemoveStyled iconType="icon" icon="Remove" />

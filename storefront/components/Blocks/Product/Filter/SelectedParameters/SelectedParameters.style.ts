@@ -27,17 +27,18 @@ export const SelectedParametersTitleStyled = styled(Heading)`
     text-transform: uppercase;
 `;
 
+export const SelectedParametersBlockStyled = styled.div`
+    margin: 0 0 14px -${localVariables.SelectedParametersListItemGap};
+`;
+
 export const SelectedParametersListStyled = styled.ul`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 0 0 14px -${localVariables.SelectedParametersListItemGap};
 `;
 
 export const SelectedParametersListItemStyled = styled.li`
     ${({ theme }) => css`
-        display: flex;
-        align-items: center;
         margin-bottom: ${localVariables.SelectedParametersListItemGap};
         margin-left: ${localVariables.SelectedParametersListItemGap};
         padding: 6px 10px;
@@ -53,6 +54,7 @@ export const SelectedParametersListItemRemoveStyled = styled(Icon)`
     width: 13px;
     height: 13px;
     margin-left: 10px;
+    transform: translateY(2px);
 
     cursor: pointer;
 `;
@@ -80,5 +82,15 @@ export const SelectedParametersResetRemoveStyled = styled(Icon)`
 
         cursor: pointer;
         color: ${theme.color.greyLight};
+    `}
+`;
+
+export const SelectedParametersNameStyled = styled.p`
+    ${({ theme }) => css`
+        margin-bottom: ${localVariables.SelectedParametersListItemGap};
+        margin-left: ${localVariables.SelectedParametersListItemGap};
+        padding: 6px 0;
+
+        font-size: ${theme.fontSize.small};
     `}
 `;
