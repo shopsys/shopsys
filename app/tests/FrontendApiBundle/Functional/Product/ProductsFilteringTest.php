@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ParameterDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductsFilteringTest extends ProductsGraphQlTestCase
@@ -200,6 +201,45 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
                 'dataFixtures',
                 $this->firstDomainLocale
             )],
+        ];
+
+        $this->assertProducts($query, 'category', $productsExpected);
+    }
+
+    public function testFilterBySliderParameter(): void
+    {
+        /** @var \App\Model\Category\Category $category */
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        /** @var \App\Model\Product\Parameter\Parameter $parameterSlider */
+        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+
+        $query = '
+            query {
+                category (uuid: "' . $category->getUuid() . '") {
+                    products (
+                        filter: {
+                            parameters: [
+                                {
+                                    parameter: "' . $parameterSlider->getUuid() . '",
+                                    minimalValue: 3
+                                    maximalValue: 4
+                                }
+                            ]
+                        }
+                    ) {
+                        edges {
+                            node {
+                                name
+                            }
+                        }
+                    },
+                }
+            }
+        ';
+
+        $productsExpected = [
+            ['name' => t('Genius NetScroll 310 silver', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('Genius SlimStar i820', [], 'dataFixtures', $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'category', $productsExpected);

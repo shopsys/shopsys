@@ -40,9 +40,6 @@ class ProductFilterDataMapper extends BaseProductFilterDataMapper
     }
 
     /**
-     * This method is identical as in Base class, but only change here is using ParameterFilterData from App namespace
-     *
-     * @see https://github.com/shopsys/shopsys/issues/1625 issue on Github for more info
      * @param array $parameterAndValueUuids
      * @return \App\Model\Product\Filter\ParameterFilterData[]
      */
@@ -76,6 +73,8 @@ class ProductFilterDataMapper extends BaseProductFilterDataMapper
             $parameterFilterData = new ParameterFilterData();
             $parameterFilterData->parameter = $parameter;
             $parameterFilterData->values = $parameterValues;
+            $parameterFilterData->minimalValue = $parameterAndValueUuid['minimalValue'];
+            $parameterFilterData->maximalValue = $parameterAndValueUuid['maximalValue'];
 
             $parametersFilterData[] = $parameterFilterData;
         }

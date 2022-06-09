@@ -1,0 +1,10 @@
+fragment ProductFilterOptionsParametersSliderFragment on ParameterSliderFilterOption {
+    name
+    uuid
+    __typename
+    minimalValue
+    maximalValue
+    unit {
+        name
+    }
+}

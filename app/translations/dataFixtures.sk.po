@@ -1825,6 +1825,9 @@ msgstr ""
 msgid "Způsob připojení"
 msgstr ""
 
+msgid "Warranty (in years)"
+msgstr ""
+
 msgid "battery"
 msgstr ""
 

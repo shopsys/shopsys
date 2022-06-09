@@ -14,6 +14,7 @@ use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
@@ -21,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PARAMETER_PREFIX = 'parameter_';
+    public const PARAMETER_SLIDER_WARRANTY = 'parameter_slider_warranty';
 
     /**
      * @var string[]
@@ -121,12 +123,18 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     private EntityManagerDecorator $entityManager;
 
     /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      */
     public function __construct(
         ParameterDataFactory $parameterDataFactory,
@@ -134,7 +142,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         ParameterValueDataFactory $parameterValueDataFactory,
         ParameterRepository $parameterRepository,
         ProductParameterValueFactory $productParameterValueFactory,
-        EntityManagerDecorator $entityManager
+        EntityManagerDecorator $entityManager,
+        Domain $domain
     ) {
         $this->parameterDataFactory = $parameterDataFactory;
         $this->parameterFacade = $parameterFacade;
@@ -142,6 +151,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $this->parameterRepository = $parameterRepository;
         $this->productParameterValueFactory = $productParameterValueFactory;
         $this->entityManager = $entityManager;
+        $this->domain = $domain;
     }
 
     /**
@@ -211,6 +221,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRedSk);
         $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodCs);
         $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodSk);
+
+        $this->createSliderParameterWithValuesAndAssignThemToProducts();
     }
 
     /**
@@ -281,6 +293,35 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->entityManager->persist($productParameterValue);
         $this->entityManager->flush($productParameterValue);
+    }
+
+    private function createSliderParameterWithValuesAndAssignThemToProducts(): void
+    {
+        $parameterNamesByLocale = [];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterNamesByLocale[$locale] = t('Warranty (in years)', [], 'dataFixtures', $locale);
+        }
+        $parameter = $this->createParameter($parameterNamesByLocale, [$this->getReference(CategoryDataFixture::CATEGORY_PC)], Parameter::PARAMETER_TYPE_SLIDER, null);
+        $this->addReference(self::PARAMETER_SLIDER_WARRANTY, $parameter);
+
+        /** @var \App\Model\Product\Product $product4 */
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
+        /** @var \App\Model\Product\Product $product11 */
+        $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 11);
+        /** @var \App\Model\Product\Product $product16 */
+        $product16 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 16);
+        /** @var \App\Model\Product\Product $product18 */
+        $product18 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 18);
+        /** @var \App\Model\Product\Product $product52 */
+        $product52 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 52);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $this->addParameterValueToProduct($product4, $parameter, $this->getParameterValue($locale, '1'));
+            $this->addParameterValueToProduct($product11, $parameter, $this->getParameterValue($locale, '2'));
+            $this->addParameterValueToProduct($product16, $parameter, $this->getParameterValue($locale, '3'));
+            $this->addParameterValueToProduct($product18, $parameter, $this->getParameterValue($locale, '4'));
+            $this->addParameterValueToProduct($product52, $parameter, $this->getParameterValue($locale, '5'));
+        }
     }
 
     /**

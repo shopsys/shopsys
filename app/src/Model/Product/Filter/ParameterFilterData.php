@@ -13,7 +13,12 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData as BasePara
 class ParameterFilterData extends BaseParameterFilterData
 {
     /**
-     * @var bool
+     * @var float|null
      */
-    public $parameterFilteredBySlider = false;
+    public ?float $minimalValue = null;
+
+    /**
+     * @var float|null
+     */
+    public ?float $maximalValue = null;
 }

@@ -7,6 +7,7 @@ namespace App\Model\Product\Elasticsearch;
 use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -546,7 +547,15 @@ class ProductExportRepository extends BaseProductExportRepository
         }
         $products[] = $product;
 
-        return $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
+        $parameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
+
+        foreach ($parameterValuesData as $key => $parameterValueData) {
+            if ($parameterValueData['parameter_type'] === Parameter::PARAMETER_TYPE_SLIDER) {
+                $parameterValuesData[$key]['parameter_value_for_slider_filter'] = (float)$parameterValueData['parameter_value_text'];
+            }
+        }
+
+        return $parameterValuesData;
     }
 
     /**

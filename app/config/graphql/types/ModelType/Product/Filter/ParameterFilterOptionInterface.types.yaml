@@ -1,0 +1,14 @@
+ParameterFilterOptionInterface:
+    type: interface
+    config:
+        description: "Represents parameter filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The parameter UUID"
+            name:
+                type: "String!"
+                description: "The parameter name"
+            unit:
+                type: "Unit"
+                description: "The parameter unit"

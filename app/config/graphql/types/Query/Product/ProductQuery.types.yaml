@@ -11,3 +11,9 @@ ProductQuery:
                 resolve: "@=resolver('products', [args])"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
+            ParameterSliderFilterOption:
+                type: "ParameterSliderFilterOption"
+            ParameterCheckboxFilterOption:
+                type: "ParameterCheckboxFilterOption"
+            ParameterColorFilterOption:
+                type: "ParameterColorFilterOption"

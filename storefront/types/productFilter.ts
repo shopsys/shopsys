@@ -1,23 +1,42 @@
 import { SimpleFlagType } from 'types/flag';
 
-export enum FilterOptionsParameterTypeEnum {
-    Checkbox = 'checkbox',
-    ColorPicker = 'colorPicker',
-}
-
-export type ParametersValuesType = {
+export type ParametersCheckboxValuesType = {
     uuid: string;
     text: string;
     count: number;
-    rgbHex?: string;
 };
 
-export type ParametersType = {
-    name: string;
-    type: FilterOptionsParameterTypeEnum;
+export type ParametersColorValuesType = {
     uuid: string;
-    values: ParametersValuesType[];
+    text: string;
+    count: number;
+    rgbHex: string | null;
 };
+
+export type ParametersCheckboxType = {
+    name: string;
+    uuid: string;
+    values: ParametersCheckboxValuesType[];
+    __typename: 'ParameterCheckboxFilterOption';
+};
+
+export type ParametersColorType = {
+    name: string;
+    uuid: string;
+    values: ParametersColorValuesType[];
+    __typename: 'ParameterColorFilterOption';
+};
+
+export type ParametersSliderType = {
+    name: string;
+    uuid: string;
+    minimalValue: number;
+    maximalValue: number;
+    unit: { name: string } | null;
+    __typename: 'ParameterSliderFilterOption';
+};
+
+export type ParametersType = ParametersCheckboxType | ParametersColorType | ParametersSliderType;
 
 export type FilterOptionFlagsType = {
     count: number;
@@ -46,14 +65,16 @@ export type FilterFormParameterValuesType = {
     checked: boolean;
     uuid: string;
     text: string;
-    rgbHex?: string;
+    rgbHex?: string | null;
 };
 
 export type FilterFormParameterType = {
     parameterName: string;
     parameterUuid: string;
-    type: FilterOptionsParameterTypeEnum;
     values: FilterFormParameterValuesType[];
+    minimalValue?: number;
+    maximalValue?: number;
+    unit?: { name: string } | null;
 };
 
 export type FilterFormBrandType = {
@@ -80,6 +101,8 @@ export type FilterFormType = {
 export type FilterOptionsParameterStateType = {
     parameter: string;
     values: string[];
+    minimalValue: number | null;
+    maximalValue: number | null;
 };
 
 export type FilterOptionsStateType = {

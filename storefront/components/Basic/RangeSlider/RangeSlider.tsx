@@ -1,21 +1,26 @@
 import {
     RangeSliderContainerStyled,
-    RangeSliderLeftThumbStyled,
     RangeSliderLeftValueStyled,
     RangeSliderRangeStyled,
-    RangeSliderRightThumbStyled,
     RangeSliderRightValueStyled,
     RangeSliderStyled,
+    RangeSliderThumbStyled,
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
 import TextInput from 'components/Forms/TextInput';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { ChangeEvent, FC, FocusEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
-import { FilterFormType } from 'types/productFilter';
+import {
+    ChangeEvent,
+    ChangeEventHandler,
+    FC,
+    FocusEventHandler,
+    KeyboardEventHandler,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 /*
  * Shopsys slider component inspired by
@@ -24,131 +29,141 @@ import { FilterFormType } from 'types/productFilter';
 type RangeSliderProps = {
     min: number;
     max: number;
-    delay: number;
+    delay?: number;
+    minValue: number;
+    maxValue: number;
+    setMinValueCallback: (value: number) => void;
+    setMaxValueCallback: (value: number) => void;
+    dispatchMinValue?: () => void;
+    dispatchMaxValue?: () => void;
 };
 
-const RangeSlider: FC<RangeSliderProps> = (props) => {
-    const testIdentifier = 'basic-rangeslider';
+const TEST_IDENTIFIER = 'basic-rangeslider';
 
+const RangeSlider: FC<RangeSliderProps> = ({
+    min,
+    max,
+    delay = 300,
+    minValue,
+    maxValue,
+    setMinValueCallback,
+    setMaxValueCallback,
+    dispatchMinValue,
+    dispatchMaxValue,
+}) => {
     const t = useTypedTranslationFunction();
-    const { control, setValue } = useFormContext<FilterFormType>();
-    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
-    const [minimalPriceValue, maximalPriceValue] = useWatch({
-        name: ['minimalPrice', 'maximalPrice'],
-        control,
-    });
-    const dispatch = useShopsysDispatch();
 
-    const [minValueInput, setMinValueInput] = useState(props.min);
-    const [minValueThumb, setMinValueThumb] = useState(props.min);
-    const debouncedMinValue = useDebounce(minValueThumb, props.delay);
+    const [minValueInput, setMinValueInput] = useState(min);
+    const [minValueThumb, setMinValueThumb] = useState(min);
+    const debouncedMinValue = useDebounce(minValueThumb, delay);
 
-    const [maxValueInput, setMaxValueInput] = useState(props.max);
-    const [maxValueThumb, setMaxValueThumb] = useState(props.max);
-    const debouncedMaxValue = useDebounce(maxValueThumb, props.delay);
+    const [maxValueInput, setMaxValueInput] = useState(max);
+    const [maxValueThumb, setMaxValueThumb] = useState(max);
+    const debouncedMaxValue = useDebounce(maxValueThumb, delay);
 
     const range = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (minValueThumb !== minimalPriceValue) {
-            setValue('minimalPrice', minValueThumb);
+        if (debouncedMinValue !== minValue) {
+            setMinValueCallback(debouncedMinValue);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedMinValue, setValue]);
+    }, [debouncedMinValue, minValue, setMinValueCallback]);
 
     useEffect(() => {
-        if (maxValueThumb !== maximalPriceValue) {
-            setValue('maximalPrice', maxValueThumb);
+        if (debouncedMaxValue !== maxValue) {
+            setMaxValueCallback(debouncedMaxValue);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedMaxValue, setValue]);
+    }, [debouncedMaxValue, maxValue, setMaxValueCallback]);
 
     useEffect(() => {
-        if (minimalPriceValue < props.min) {
-            setMinValueThumb(props.min);
-            setMinValueInput(props.min);
-            setValue('minimalPrice', props.min);
-        } else if (minimalPriceValue > maximalPriceValue) {
-            setMinValueThumb(maximalPriceValue - 1);
-            setMinValueInput(maximalPriceValue - 1);
-            setValue('minimalPrice', maximalPriceValue - 1);
+        if (minValue < min) {
+            setMinValueThumb(min);
+            setMinValueInput(min);
+            setMinValueCallback(min);
+        } else if (minValue > maxValue) {
+            setMinValueThumb(maxValue);
+            setMinValueInput(maxValue);
+            setMinValueCallback(maxValue);
         } else {
-            setMinValueThumb(minimalPriceValue);
-            setMinValueInput(minimalPriceValue);
-            setValue('minimalPrice', minimalPriceValue);
+            setMinValueThumb(minValue);
+            setMinValueInput(minValue);
+            setMinValueCallback(minValue);
         }
-    }, [maximalPriceValue, minimalPriceValue, props.min, setValue]);
+    }, [maxValue, minValue, min, setMinValueCallback]);
 
     useEffect(() => {
-        if (maximalPriceValue > props.max) {
-            setMaxValueThumb(props.max);
-            setMaxValueInput(props.max);
-            setValue('maximalPrice', props.max);
-        } else if (maximalPriceValue < minimalPriceValue) {
-            setMaxValueThumb(minimalPriceValue + 1);
-            setMaxValueInput(minimalPriceValue + 1);
-            setValue('maximalPrice', minimalPriceValue + 1);
+        if (maxValue > max) {
+            setMaxValueThumb(max);
+            setMaxValueInput(max);
+            setMaxValueCallback(max);
+        } else if (maxValue < minValue) {
+            setMaxValueThumb(minValue);
+            setMaxValueInput(minValue);
+            setMaxValueCallback(minValue);
         } else {
-            setMaxValueThumb(maximalPriceValue);
-            setMaxValueInput(maximalPriceValue);
-            setValue('maximalPrice', maximalPriceValue);
+            setMaxValueThumb(maxValue);
+            setMaxValueInput(maxValue);
+            setMaxValueCallback(maxValue);
         }
-    }, [maximalPriceValue, minimalPriceValue, props.max, setValue]);
+    }, [maxValue, minValue, max, setMaxValueCallback]);
 
-    // Convert to percentage
-    const getPercent = useCallback(
-        (value: number) => Math.round(((value - props.min) / (props.max - props.min)) * 100),
-        [props.min, props.max],
+    const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+
+    const onBlurMinHandler = useCallback<FocusEventHandler<HTMLInputElement>>(
+        (event) => {
+            const value = parseFloat(event.currentTarget.value);
+            if (value < min || Number.isNaN(value)) {
+                if (dispatchMinValue) {
+                    dispatchMinValue();
+                }
+                setMinValueThumb(min);
+                setMinValueInput(min);
+            } else {
+                setMinValueCallback(value);
+            }
+        },
+        [dispatchMinValue, min, setMinValueCallback],
     );
 
-    const onBlurMinHandler = (value: number) => {
-        if (
-            (parametersFilterState.minimalPrice === null || parametersFilterState.minimalPrice === props.min) &&
-            (value < props.min || Number.isNaN(value))
-        ) {
-            setMinValueThumb(props.min);
-            setMinValueInput(props.min);
-        } else if (
-            parametersFilterState.minimalPrice !== null &&
-            parametersFilterState.minimalPrice > props.min &&
-            (value < props.min || Number.isNaN(value))
-        ) {
-            dispatch(optionsFilterActions.setMinimalPriceFilter(props.min));
-            setMinValueThumb(props.min);
-            setMinValueInput(props.min);
-        } else {
-            setValue('minimalPrice', value);
-        }
-    };
+    const onBlurMaxHandler = useCallback<FocusEventHandler<HTMLInputElement>>(
+        (event) => {
+            const value = parseFloat(event.currentTarget.value);
+            if (value > max || Number.isNaN(value)) {
+                if (dispatchMaxValue) {
+                    dispatchMaxValue();
+                }
+                setMaxValueThumb(max);
+                setMaxValueInput(max);
+            } else {
+                setMaxValueCallback(value);
+            }
+        },
+        [dispatchMaxValue, max, setMaxValueCallback],
+    );
 
-    const onBlurMaxHandler = (value: number) => {
-        if (
-            (parametersFilterState.maximalPrice === null || parametersFilterState.maximalPrice === props.max) &&
-            (value > props.max || Number.isNaN(value))
-        ) {
-            setMaxValueThumb(props.max);
-            setMaxValueInput(props.max);
-        } else if (
-            parametersFilterState.maximalPrice !== null &&
-            parametersFilterState.maximalPrice < props.max &&
-            (value > props.max || Number.isNaN(value))
-        ) {
-            dispatch(optionsFilterActions.setMaximalPriceFilter(props.max));
-            setMaxValueThumb(props.max);
-            setMaxValueInput(props.max);
-        } else {
-            setValue('maximalPrice', value);
-        }
-    };
+    const onChangeMaxInputHandler = useCallback<ChangeEventHandler<HTMLInputElement>>(
+        (event) => setMaxValueInput(parseFloat(event.currentTarget.value)),
+        [],
+    );
+
+    const onChangeMinInputHandler = useCallback<ChangeEventHandler<HTMLInputElement>>(
+        (event) => setMinValueInput(parseFloat(event.currentTarget.value)),
+        [],
+    );
+
+    const onKeyPressHandler = useCallback<KeyboardEventHandler<HTMLInputElement>>(
+        (event) => event.key === 'Enter' && event.currentTarget.blur(),
+        [],
+    );
 
     const onChangeMinHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = Math.min(Number(event.target.value), maxValueThumb - 1);
+        const value = Math.min(Number(event.target.value), maxValueThumb);
         setMinValueThumb(value);
         setMinValueInput(value);
     };
 
     const onChangeMaxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = Math.max(Number(event.target.value), minValueThumb + 1);
+        const value = Math.max(Number(event.target.value), minValueThumb);
         setMaxValueThumb(value);
         setMaxValueInput(value);
     };
@@ -175,68 +190,48 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     }, [getPercent, maxValueThumb, minValueThumb]);
 
     return (
-        <RangeSliderContainerStyled data-testid={testIdentifier}>
-            <RangeSliderLeftThumbStyled
+        <RangeSliderContainerStyled data-testid={TEST_IDENTIFIER}>
+            <RangeSliderThumbStyled
+                active={minValueThumb !== min}
                 type="range"
-                min={props.min}
-                max={props.max}
+                min={min}
+                max={max}
                 value={minValueThumb}
                 onChange={onChangeMinHandler}
-                data-testid={testIdentifier + '-left-thumb'}
+                data-testid={TEST_IDENTIFIER + '-left-thumb'}
             />
-            <RangeSliderRightThumbStyled
+            <RangeSliderThumbStyled
+                active={maxValueThumb !== max}
                 type="range"
-                min={props.min}
-                max={props.max}
+                min={min}
+                max={max}
                 value={maxValueThumb}
                 onChange={onChangeMaxHandler}
-                data-testid={testIdentifier + '-right-thumb'}
+                data-testid={TEST_IDENTIFIER + '-right-thumb'}
             />
             <RangeSliderStyled>
                 <RangeSliderTrackStyled />
                 <RangeSliderRangeStyled ref={range} />
-                <RangeSliderLeftValueStyled data-testid={testIdentifier + '-left-value'}>
-                    <Controller
-                        name="minimalPrice"
-                        render={({ field }) => (
-                            <TextInput
-                                name={field.name}
-                                label={t('from')}
-                                type="number"
-                                inputSize={'small'}
-                                fieldRef={field}
-                                value={minValueInput}
-                                onChange={(e: FocusEvent<HTMLInputElement>) =>
-                                    setMinValueInput(parseFloat(e.currentTarget.value))
-                                }
-                                onBlurCapture={(event) => onBlurMinHandler(parseFloat(event.currentTarget.value))}
-                                onKeyPress={(event: KeyboardEvent<HTMLInputElement>) =>
-                                    event.key === 'Enter' && event.currentTarget.blur()
-                                }
-                            />
-                        )}
+                <RangeSliderLeftValueStyled data-testid={TEST_IDENTIFIER + '-left-value'}>
+                    <TextInput
+                        label={t('from')}
+                        type="number"
+                        inputSize="small"
+                        value={minValueInput}
+                        onChange={onChangeMinInputHandler}
+                        onBlurCapture={onBlurMinHandler}
+                        onKeyPress={onKeyPressHandler}
                     />
                 </RangeSliderLeftValueStyled>
-                <RangeSliderRightValueStyled data-testid={testIdentifier + '-right-value'}>
-                    <Controller
-                        name="maximalPrice"
-                        render={({ field }) => (
-                            <TextInput
-                                name={field.name}
-                                label={t('to')}
-                                type="number"
-                                inputSize={'small'}
-                                fieldRef={field}
-                                value={maxValueInput}
-                                onChange={(e: FocusEvent<HTMLInputElement>) =>
-                                    setMaxValueInput(parseFloat(e.currentTarget.value))
-                                }
-                                onBlurCapture={(event) => onBlurMaxHandler(parseFloat(event.currentTarget.value))}
-                                onKeyPress={(event: KeyboardEvent<HTMLInputElement>) =>
-                                    event.key === 'Enter' && event.currentTarget.blur()
-                                }
-                            />
-                        )}
+                <RangeSliderRightValueStyled data-testid={TEST_IDENTIFIER + '-right-value'}>
+                    <TextInput
+                        label={t('to')}
+                        type="number"
+                        inputSize="small"
+                        value={maxValueInput}
+                        onChange={onChangeMaxInputHandler}
+                        onBlurCapture={onBlurMaxHandler}
+                        onKeyPress={onKeyPressHandler}
                     />
                 </RangeSliderRightValueStyled>
             </RangeSliderStyled>

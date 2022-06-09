@@ -9,6 +9,8 @@ fragment ProductFilterOptionsFragment on ProductFilterOptions {
         ...ProductFilterOptionsFlagsFragment
     }
     parameters {
-        ...ProductFilterOptionsParametersFragment
+        ...ProductFilterOptionsParametersCheckboxFragment
+        ...ProductFilterOptionsParametersColorFragment
+        ...ProductFilterOptionsParametersSliderFragment
     }
 }
