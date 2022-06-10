@@ -26,5 +26,3 @@ yarn-error.log
 
 /web/assets/frontend/files
 /.phpunit.result.cache
-
-/schema.graphql

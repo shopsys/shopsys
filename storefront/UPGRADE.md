@@ -531,3 +531,23 @@
 - most significant changes
     - the ArticlesQuery now accepts array of placements instead of just one placement for one query call
     - data for footer menu are now queried from the API
+
+### Changed way of generating GraphQL schema
+- [FWCC-978](https://shopsys.atlassian.net/browse/FWCC-978)
+- [FWCC-978 - changed way of generating graphql schema](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/640/diffs)
+- the reasons these changes were introduced
+  - to improve DX of the generating GraphQL schema files
+  - make generating of schema files more reliable
+  - to decrease confusion linked with the same file copied to the multiple locations
+- most significant changes
+  - regenerate graphql schema is now possible just with `make generate-schema` command in the root folder
+    - if you're interested about what's happening, feel free to examine the `Makefile` in the root folder
+  - it's no longer possible to properly generate schema in the containers with phing target and npm script
+    - `schema.graphql` file is no longer shared between containers with volumes, but copied on demand during generating files
+    - to avoid confusion about multiple schema.graphql files existing in the source code
+  - committed `schema.graphql` file is now located in the `app/` subfolder
+- don't forget to copy new docker-compose file from the `docker/conf` folder (or just install the app with the `scripts/install.sh` script)
+- if you use docker-sync, maybe you will need to shut down the containers and clean volumes
+  - `docker-compose down`, `docker-sync stop`, `docker-sync clean` followed by `docker volume prune`
+- if you use mutagen, maybe you will need to shut down the containers and clean volumes
+  - `mutagen-compose down` followed by `docker volume prune`

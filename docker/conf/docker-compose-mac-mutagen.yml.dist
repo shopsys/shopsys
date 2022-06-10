@@ -43,7 +43,6 @@ services:
         container_name: shopsys-framework-storefront
         volumes:
             - storefront:/home/node/app
-            - ./schema.graphql:/home/node/app/schema.graphql
         ports:
             - "3000:3000"
 
@@ -81,7 +80,6 @@ services:
         volumes:
             - source-code:/var/www/html
             - ./.npm-global:/var/www/html/.npm-global
-            - ./schema.graphql:/var/www/html/schema.graphql
         ports:
             - "35729:35729"
 
