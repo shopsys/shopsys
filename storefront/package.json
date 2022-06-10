@@ -19,7 +19,8 @@
         "gql:docs": "graphql-markdown schema.graphql > graphql/docs/schema.md",
         "tests-jest": "jest",
         "stylelint": "stylelint \"./**/*.(js|ts|tsx)\"",
-        "check": "concurrently \"npm run typecheck\" \"npm run lint\" \"npm run stylelint\""
+        "check": "concurrently \"npm run typecheck\" \"npm run lint\" \"npm run stylelint\"",
+        "check--fix": "concurrently \"npm run typecheck\" \"npm run stylelint\" \"npm run lint--fix\""
     },
     "dependencies": {
         "@graphql-codegen/cli": "^2.1.1",

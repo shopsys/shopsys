@@ -514,3 +514,11 @@
 - most significant changes
     - new `isCollapsed` parameter was added to the parameters GraphQl fragments
     - the `isOpen` param for parameters was renamed to `isDefaultCollapsed` and it is now based on the value from API and the state of filtered parameters
+
+### Fix command
+- [FWCC-1023](https://shopsys.atlassian.net/browse/FWCC-1023)
+- [FWCC-1023 - storefront standards fixer command](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/639)
+- the reasons these changes were introduced
+    - to simplify the execution of standards fixer in local development
+- most significant changes
+    - new `npm run check--fix` command was added to `package.json`, it runs all the available standards fixers
