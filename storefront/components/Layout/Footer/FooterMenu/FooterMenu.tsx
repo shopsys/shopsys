@@ -1,50 +1,64 @@
 import { FooterMenuStyled } from './FooterMenu.style';
 import FooterMenuItem from 'components/Layout/Footer/FooterMenuItem';
-import { FC } from 'react';
+import { ArticlePlacementTypeEnumApi, SimpleArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { FC, useMemo } from 'react';
 
-// TODO PRG
-const dummyData = {
-    items: [
-        {
-            title: 'O Commerce Cloudu',
-            items: [
-                { title: 'O nás' },
-                { title: 'Práce v Shopsysu' },
-                { title: 'Spolupráce' },
-                { title: 'Pro média' },
-                { title: 'Kontakty' },
-            ],
-        },
-        {
-            title: 'O Nákupu',
-            items: [{ title: 'Péče o nábytek' }, { title: 'Nákup na splátky' }, { title: 'Reklamace' }],
-        },
-        {
-            title: 'E-shop',
-            items: [
-                { title: 'Nejčastější dotazy FAQ' },
-                { title: 'Doprava a platba' },
-                { title: 'Obchodní podmínky e-shopu' },
-            ],
-        },
-        {
-            title: 'Prodejny',
-            items: [
-                { title: 'Kde nás najdete' },
-                { title: 'Služby obchodních domů' },
-                { title: 'Obchodní podmínky OD' },
-            ],
-        },
-    ],
-};
+const TEST_IDENTIFIER = 'layout-footer-footermenu';
+
+const filterArticlesByPlacement = (
+    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
+    placement: ArticlePlacementTypeEnumApi,
+): SimpleArticleFragmentApi[] =>
+    array?.reduce(
+        (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
+        [] as SimpleArticleFragmentApi[],
+    ) ?? [];
 
 const FooterMenu: FC = () => {
-    const testIdentifier = 'layout-footer-footermenu';
+    const t = useTypedTranslationFunction();
+    const [{ data }] = useArticlesQueryApi({
+        variables: {
+            placement: [
+                ArticlePlacementTypeEnumApi.Footer1Api,
+                ArticlePlacementTypeEnumApi.Footer2Api,
+                ArticlePlacementTypeEnumApi.Footer3Api,
+                ArticlePlacementTypeEnumApi.Footer4Api,
+            ],
+            first: 100,
+        },
+    });
+
+    const items = useMemo(
+        () => [
+            {
+                key: 'about-cc',
+                title: t('About Commerce Cloud'),
+                items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer1Api),
+            },
+            {
+                key: 'about-shopping',
+                title: t('About shopping'),
+                items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer2Api),
+            },
+            {
+                key: 'e-shop',
+                title: t('E-shop'),
+                items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer3Api),
+            },
+            {
+                key: 'stores',
+                title: t('Stores'),
+                items: filterArticlesByPlacement(data?.articles.edges, ArticlePlacementTypeEnumApi.Footer4Api),
+            },
+        ],
+        [data?.articles.edges, t],
+    );
 
     return (
-        <FooterMenuStyled data-testid={testIdentifier}>
-            {dummyData.items.map((item, index) => (
-                <FooterMenuItem key={index} title={item.title} items={item.items} />
+        <FooterMenuStyled data-testid={TEST_IDENTIFIER}>
+            {items.map((item) => (
+                <FooterMenuItem key={item.key} title={item.title} items={item.items} />
             ))}
         </FooterMenuStyled>
     );

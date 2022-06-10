@@ -1684,6 +1684,15 @@ Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>external</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+If the the article should be open in a new tab
+
+</td>
+</tr>
 </tbody>
 </table>
 

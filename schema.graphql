@@ -155,6 +155,9 @@ type Article implements Breadcrumb & Slug & ArticleInterface {
 
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
+
+  """If the the article should be open in a new tab"""
+  external: Boolean!
 }
 
 """A connection to a list of items."""

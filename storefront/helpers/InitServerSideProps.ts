@@ -3,6 +3,8 @@ import { logException } from './errors/logException';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
+    ArticlePlacementTypeEnumApi,
+    ArticlesQueryDocumentApi,
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
@@ -44,6 +46,18 @@ export async function initServerSideProps(
         if (currentClient !== null) {
             prefetchedQueries.push({ query: NotificationBarsDocumentApi });
             prefetchedQueries.push({ query: NavigationQueryDocumentApi });
+            prefetchedQueries.push({
+                query: ArticlesQueryDocumentApi,
+                variables: {
+                    placement: [
+                        ArticlePlacementTypeEnumApi.Footer1Api,
+                        ArticlePlacementTypeEnumApi.Footer2Api,
+                        ArticlePlacementTypeEnumApi.Footer3Api,
+                        ArticlePlacementTypeEnumApi.Footer4Api,
+                    ],
+                    first: 100,
+                },
+            });
             prefetchedQueries.push({ query: AdvertsQueryDocumentApi });
             prefetchedQueries.push({ query: CurrentCustomerUserQueryDocumentApi });
             prefetchedQueries.push({ query: SettingsQueryDocumentApi });

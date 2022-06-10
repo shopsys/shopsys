@@ -343,5 +343,8 @@
     "Order": "Objednávka",
     "There was an error while setting your delivery address as the default one": "Při nastavování výchozí dodací adresy došlo k chybě",
     "Your delivery address has been set as default": "Dodací adresa byla nastavena jako výchozí",
-    "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>" : "Pozor! Jste přihlášn/á za zákazníka s emailem {{ email }} <button>Odhlásit</button>"
+    "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>" : "Pozor! Jste přihlášn/á za zákazníka s emailem {{ email }} <button>Odhlásit</button>",
+    "About Commerce Cloud":  "O Commerce Cloudu",
+    "About shopping": "O nákupu",
+    "E-shop": "E-shop"
 }

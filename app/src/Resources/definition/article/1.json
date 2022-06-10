@@ -175,6 +175,9 @@
       "position": {
         "type": "keyword"
       },
+      "external": {
+        "type": "boolean"
+      },
       "breadcrumb": {
         "properties": {
           "name": {

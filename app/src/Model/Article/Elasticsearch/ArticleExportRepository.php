@@ -112,6 +112,7 @@ class ArticleExportRepository
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'position' => $article->getPosition(),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
+            'external' => $article->isExternal(),
         ];
     }
 }

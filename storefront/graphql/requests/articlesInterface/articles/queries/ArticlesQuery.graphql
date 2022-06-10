@@ -1,0 +1,12 @@
+query ArticlesQuery(
+    $placement: [ArticlePlacementTypeEnum!],
+    $first: Int
+) {
+    articles(placement: $placement, first: $first) {
+        edges {
+            node {
+               ...SimpleArticleFragment
+            }
+        }
+    }
+}

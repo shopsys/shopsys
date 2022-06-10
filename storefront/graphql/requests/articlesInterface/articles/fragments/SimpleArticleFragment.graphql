@@ -1,4 +1,7 @@
 fragment SimpleArticleFragment on Article {
+    uuid
     name
     slug
+    placement
+    external
 }

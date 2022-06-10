@@ -7,33 +7,32 @@ import {
     FooterMenuListStyled,
 } from './FooterMenuItem.style';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { SimpleArticleFragmentApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { FC, useRef, useState } from 'react';
+import NextLink from 'next/link';
+import { FC, useCallback, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 type FooterMenuItemProps = {
-    key: number;
     title: string;
-    items: { title: string }[];
-    isContentVisible?: boolean;
-    contentElementHeight?: number;
+    items: SimpleArticleFragmentApi[];
 };
 
-const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
-    const testIdentifier = 'layout-footer-footermenuitem';
+const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
 
+const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLUListElement>(null);
     const wrapperElement = useRef<HTMLDivElement>(null);
     const { width } = useGetWindowSize();
 
-    const calcHeight = () => {
+    const calcHeight = useCallback(() => {
         if (contentElement.current) {
             setContentElementHeight(contentElement.current.clientHeight);
         }
-    };
+    }, []);
 
     useResizeWidthEffect(
         width,
@@ -44,13 +43,13 @@ const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
     );
 
     return (
-        <FooterMenuItemStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
+        <FooterMenuItemStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
             <FooterMenuHeadingStyled
                 type="h4"
                 onClick={() => setIsContentVisible(!isContentVisible)}
                 isContentVisible={isContentVisible}
             >
-                {props.title}
+                {title}
                 <FooterMenuHeadingIconStyled iconType="icon" icon="Arrow" />
             </FooterMenuHeadingStyled>
             <CSSTransition
@@ -64,9 +63,16 @@ const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
             >
                 <div ref={wrapperElement}>
                     <FooterMenuListStyled ref={contentElement}>
-                        {props.items.map((item, index) => (
-                            <FooterMenuListItemStyled key={index}>
-                                <FooterMenuListItemLinkStyled href="#">{item.title}</FooterMenuListItemLinkStyled>
+                        {items.map((item) => (
+                            <FooterMenuListItemStyled key={item.uuid}>
+                                <NextLink href={item.slug} passHref>
+                                    <FooterMenuListItemLinkStyled
+                                        target={item.external ? '_blank' : undefined}
+                                        rel={item.external ? 'nofollow noreferrer noopener' : undefined}
+                                    >
+                                        {item.name}
+                                    </FooterMenuListItemLinkStyled>
+                                </NextLink>
                             </FooterMenuListItemStyled>
                         ))}
                     </FooterMenuListStyled>

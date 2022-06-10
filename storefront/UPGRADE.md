@@ -522,3 +522,12 @@
     - to simplify the execution of standards fixer in local development
 - most significant changes
     - new `npm run check--fix` command was added to `package.json`, it runs all the available standards fixers
+
+### API data in footer menu
+- [FWCC-792](https://shopsys.atlassian.net/browse/FWCC-792)
+- [FWCC-792 - data from API in footer menu](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/637/diffs)
+- the reasons these changes were introduced
+    - administrator can select articles to show in footer menu, storefront has to reflect this setting and show the correct footer menu
+- most significant changes
+    - the ArticlesQuery now accepts array of placements instead of just one placement for one query call
+    - data for footer menu are now queried from the API

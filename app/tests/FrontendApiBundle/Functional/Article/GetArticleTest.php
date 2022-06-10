@@ -13,7 +13,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class GetArticleTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
+     * @var \App\Model\Article\ArticleFacade
      * @inject
      */
     private $articleFacade;
@@ -39,6 +39,9 @@ class GetArticleTest extends GraphQlTestCase
 
             $this->assertArrayHasKey('placement', $responseData);
             $this->assertSame($expectedArticleData['placement'], $responseData['placement']);
+
+            $this->assertArrayHasKey('external', $responseData);
+            $this->assertSame($expectedArticleData['external'], $responseData['external']);
         }
     }
 
@@ -112,6 +115,7 @@ class GetArticleTest extends GraphQlTestCase
                 [
                     'name' => $article->getName(),
                     'placement' => $article->getPlacement(),
+                    'external' => $article->isExternal(),
                 ],
             ];
         }
@@ -215,6 +219,7 @@ class GetArticleTest extends GraphQlTestCase
                 article (uuid:"' . $uuid . '") {
                     name
                     placement
+                    external
                 }
             }
         ';
