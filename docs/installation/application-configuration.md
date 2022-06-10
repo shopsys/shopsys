@@ -22,33 +22,26 @@ You may want to set some settings in a different way (such as production, test, 
 
 ### Application
 
-!!! note
-    To propagate the change of `MAILER_DELIVERY_WHITELIST`, `MAILER_DISABLE_DELIVERY` and `MAILER_MASTER_EMAIL_ADDRESS` cache must be cleaned. 
-
-| Name                                   | Default                              | Description                                                                          |
-| -------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------ |
-| `DATABASE_HOST`                        | `'postgres'`                         | access data of your PostgreSQL database                                              |
-| `DATABASE_PORT`                        | `null`                               | ...                                                                                  |
-| `DATABASE_NAME`                        | `'shopsys'`                          | ...                                                                                  |
-| `DATABASE_USER`                        | `'root'`                             | ...                                                                                  |
-| `DATABASE_PASSWORD`                    | `'root'`                             | ...                                                                                  |
-| `ELASTICSEARCH_HOST`                   | `'elasticsearch:9200'`               | host of your Elasticsearch, you can use multiple hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'` |
-| `REDIS_HOST`                           | `'redis'`                            | host of your Redis storage (credentials are not supported right now)                 |
-| `REDIS_PREFIX`                         | `''`                                 | separates more projects that use the same redis service                              |
-| `MAILER_TRANSPORT`                     | `'smtp'`                             | access data of your mail server                                                      |
-| `MAILER_HOST`                          | `'smtp-server'`                      | ...                                                                                  |
-| `MAILER_USER`                          | `null`                               | ...                                                                                  |
-| `MAILER_PASSWORD`                      | `null`                               | ...                                                                                  |
-| `MAILER_DELIVERY_WHITELIST`            | `'/@shopsys\.com$/'`                 | regex text items if you want to have master email but allow sending to specific addresses (set as text separated by comma for multiple values) |
-| `MAILER_DISABLE_DELIVERY`              | `false`                              | set to `true` if you don't want to send any emails                                   |
-| `MAILER_MASTER_EMAIL_ADDRESS`          | `'no-reply@shopsys.com'`             | set if you want to send all emails to one address (useful for development)           |
-| `APP_SECRET`                           | `'ThisTokenIsNotSoSecretChangeIt'`   | randomly generated secret token                                                      |
-| `ELASTIC_SEARCH_INDEX_PREFIX`          | `''`                                 | separates more projects that use the same elasticsearch service                      |
-| `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK`  | `'0'`                                | set to `true` if you want to allow administrators to log in with default credentials |
-| `OVERWRITE_DOMAIN_URL`                 | `'http://webserver:8080'`            | overwrites URL of all domains for acceptance testing (set to `~` to disable)         |
-| `SELENIUM_SERVER_HOST`                 | `'selenium-server'`                  | with native installation the selenium server is on `localhost`                       |
-| `SHOPSYS_CONTENT_DIR_NAME`             | `'content-test'`                     | web/content-test/ directory is used instead of web/content/ during the tests         |
-| `TRUSTED_PROXIES`                      | `'127.0.0.1'`                        | proxies that are trusted to pass traffic, used mainly for production (set as text separated by comma for multiple values) |
+| Name                                  | Default                              | Description                                                                                                                                    |
+|---------------------------------------| ------------------------------------ |------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DATABASE_HOST`                       | `'postgres'`                         | access data of your PostgreSQL database                                                                                                        |
+| `DATABASE_PORT`                       | `null`                               | ...                                                                                                                                            |
+| `DATABASE_NAME`                       | `'shopsys'`                          | ...                                                                                                                                            |
+| `DATABASE_USER`                       | `'root'`                             | ...                                                                                                                                            |
+| `DATABASE_PASSWORD`                   | `'root'`                             | ...                                                                                                                                            |
+| `ELASTICSEARCH_HOST`                  | `'elasticsearch:9200'`               | host of your Elasticsearch, you can use multiple hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'`                                  |
+| `REDIS_HOST`                          | `'redis'`                            | host of your Redis storage (credentials are not supported right now)                                                                           |
+| `REDIS_PREFIX`                        | `''`                                 | separates more projects that use the same redis service                                                                                        |
+| `MAILER_DELIVERY_WHITELIST`           | `'/@shopsys\.com$/'`                 | regex text items if you want to have master email but allow sending to specific addresses (set as text separated by comma for multiple values) |
+| `MAILER_DSN`                          | `smtp://smtp-server:25`              | set to `null://null` if you don't want to send any emails, see https://symfony.com/doc/current/mailer.html#disabling-delivery                  |
+| `MAILER_MASTER_EMAIL_ADDRESS`         | `'no-reply@shopsys.com'`             | set if you want to send all emails to one address (useful for development)                                                                     |
+| `APP_SECRET`                          | `'ThisTokenIsNotSoSecretChangeIt'`   | randomly generated secret token                                                                                                                |
+| `ELASTIC_SEARCH_INDEX_PREFIX`         | `''`                                 | separates more projects that use the same elasticsearch service                                                                                |
+| `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK` | `'0'`                                | set to `true` if you want to allow administrators to log in with default credentials                                                           |
+| `OVERWRITE_DOMAIN_URL`                | `'http://webserver:8080'`            | overwrites URL of all domains for acceptance testing (set to `~` to disable)                                                                   |
+| `SELENIUM_SERVER_HOST`                | `'selenium-server'`                  | with native installation the selenium server is on `localhost`                                                                                 |
+| `SHOPSYS_CONTENT_DIR_NAME`            | `'content-test'`                     | web/content-test/ directory is used instead of web/content/ during the tests                                                                   |
+| `TRUSTED_PROXIES`                     | `'127.0.0.1'`                        | proxies that are trusted to pass traffic, used mainly for production (set as text separated by comma for multiple values)                      |
 
 
 ### Google Cloud Bundle

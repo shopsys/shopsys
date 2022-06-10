@@ -30,3 +30,9 @@ services:
 
     Shopsys\FrameworkBundle\Twig\VarDumperExtension:
         autoconfigure: false
+
+    Shopsys\FrameworkBundle\Twig\MailerSettingExtension:
+        arguments:
+            - '%env(MAILER_DELIVERY_WHITELIST)%'
+            - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
+            - '%env(MAILER_DSN)%'

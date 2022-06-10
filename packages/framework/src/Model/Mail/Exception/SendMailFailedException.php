@@ -3,31 +3,15 @@
 namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use Exception;
-use Shopsys\FrameworkBundle\Component\Utils\Debug;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class SendMailFailedException extends Exception implements MailException
 {
     /**
-     * @var array
+     * @param \Symfony\Component\Mailer\Exception\TransportExceptionInterface $previous
      */
-    protected $failedRecipients;
-
-    /**
-     * @param array $failedRecipients
-     * @param \Exception|null $previous
-     */
-    public function __construct(array $failedRecipients, ?Exception $previous = null)
+    public function __construct(TransportExceptionInterface $previous)
     {
-        $this->failedRecipients = $failedRecipients;
-
-        parent::__construct('Order mail was not send to ' . Debug::export($failedRecipients), 0, $previous);
-    }
-
-    /**
-     * @return array
-     */
-    public function getFailedRecipients()
-    {
-        return $this->failedRecipients;
+        parent::__construct('There was a failure while sending emails', 0, $previous);
     }
 }

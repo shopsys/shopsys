@@ -408,8 +408,7 @@ services:
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
-    Shopsys\FrameworkBundle\Model\Mail\Mailer:
-        arguments: ['@mailer', '@swiftmailer.transport.real']
+    Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting: ~
 

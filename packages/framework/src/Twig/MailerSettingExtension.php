@@ -2,18 +2,13 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class MailerSettingExtension extends AbstractExtension
 {
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-
     /**
      * @var bool
      */
@@ -35,16 +30,20 @@ class MailerSettingExtension extends AbstractExtension
     protected $twigEnvironment;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param string $mailerWhitelist
+     * @param string $mailerMasterEmailAddress
+     * @param string $mailerDsn
      * @param \Twig\Environment $twigEnvironment
      */
-    public function __construct(ContainerInterface $container, Environment $twigEnvironment)
-    {
-        $this->container = $container;
-
-        $this->mailerWhitelistExpressions = $this->container->getParameter('mailer_delivery_whitelist');
-        $this->isDeliveryDisabled = $this->container->getParameter('mailer_disable_delivery');
-        $this->mailerMasterEmailAddress = $this->container->getParameter('mailer_master_email_address');
+    public function __construct(
+        string $mailerWhitelist,
+        string $mailerMasterEmailAddress,
+        string $mailerDsn,
+        Environment $twigEnvironment
+    ) {
+        $this->mailerWhitelistExpressions = $mailerWhitelist !== '' ? explode(',', $mailerWhitelist) : [];
+        $this->mailerMasterEmailAddress = $mailerMasterEmailAddress;
+        $this->isDeliveryDisabled = $mailerDsn === Mailer::DISABLED_MAILER_DSN;
 
         $this->twigEnvironment = $twigEnvironment;
     }

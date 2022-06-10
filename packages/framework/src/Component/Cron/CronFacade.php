@@ -5,8 +5,6 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
-use Shopsys\FrameworkBundle\Model\Mail\Mailer;
-use Swift_TransportException;
 use Symfony\Bridge\Monolog\Logger;
 use Throwable;
 
@@ -28,11 +26,6 @@ class CronFacade
     protected $cronModuleFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
-     */
-    protected $mailer;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor
      */
     protected $cronModuleExecutor;
@@ -41,20 +34,17 @@ class CronFacade
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
      */
     public function __construct(
         Logger $logger,
         CronConfig $cronConfig,
         CronModuleFacade $cronModuleFacade,
-        Mailer $mailer,
         CronModuleExecutor $cronModuleExecutor
     ) {
         $this->logger = $logger;
         $this->cronConfig = $cronConfig;
         $this->cronModuleFacade = $cronModuleFacade;
-        $this->mailer = $mailer;
         $this->cronModuleExecutor = $cronModuleExecutor;
     }
 
@@ -134,15 +124,6 @@ class CronFacade
         }
 
         $this->cronModuleFacade->markCronAsEnded($cronModuleConfig);
-
-        try {
-            $this->mailer->flushSpoolQueue();
-        } catch (Swift_TransportException $exception) {
-            $this->logger->addError(
-                'An exception occurred while flushing email queue. Message: "{message}"',
-                ['exception' => $exception, 'message' => $exception->getMessage()]
-            );
-        }
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
