@@ -73,8 +73,7 @@ test:storefront-standards-with-jest-and-codegen:
         - npm ci
     script:
         - ./check-code-gen.sh
-        - npm run lint
-        - npm run stylelint
+        - npm run check
         - npm run tests-jest
     interruptible: true
 

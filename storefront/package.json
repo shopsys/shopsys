@@ -19,7 +19,7 @@
         "gql:docs": "graphql-markdown schema.graphql > graphql/docs/schema.md",
         "tests-jest": "jest",
         "stylelint": "stylelint \"./**/*.(js|ts|tsx)\"",
-        "check": "npm run typecheck && npm run lint && npm run stylelint"
+        "check": "concurrently \"npm run typecheck\" \"npm run lint\" \"npm run stylelint\""
     },
     "dependencies": {
         "@graphql-codegen/cli": "^2.1.1",
@@ -93,6 +93,7 @@
         "@urql/devtools": "^2.0.3",
         "babel-loader": "^8.2.2",
         "babel-plugin-styled-components": "<1.10.2",
+        "concurrently": "^7.2.1",
         "eslint": "^7.31.0",
         "eslint-config-next": "^11.0.0",
         "eslint-plugin-react": "^7.24.0",
