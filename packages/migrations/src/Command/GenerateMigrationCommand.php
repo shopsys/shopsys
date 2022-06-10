@@ -145,7 +145,7 @@ class GenerateMigrationCommand extends Command
             return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$chosenNamespace], $chosenNamespace);
         }
 
-        $firstNamespace = array_key_first($migrationDirectoriesIndexedByNamespace);
+        $firstNamespace = reset($availableNamespaces);
 
         return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$firstNamespace], $firstNamespace);
     }
