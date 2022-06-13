@@ -3,6 +3,8 @@ import { getIndexOfParameterValue } from 'components/Blocks/Product/Filter/helpe
 import {
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
+    SelectedParametersListStyled,
+    SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useEffect, useState } from 'react';
@@ -42,17 +44,18 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
         );
     };
 
-    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => {
+    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => () => {
         const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
         const indexOfValue = getIndexOfParameterValue(parametersValue, indexOfParameter, parameterValueUuid);
 
         formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, false);
     };
 
-    const onUncheckSliderParameter = (parameterUuid: string, type: 'minimalValue' | 'maximalValue') => {
+    const onUncheckSliderParameter = (parameterUuid: string) => () => {
         const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
 
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.${type}`, undefined);
+        formProviderMethods.setValue(`parameters.${indexOfParameter}.minimalValue`, undefined);
+        formProviderMethods.setValue(`parameters.${indexOfParameter}.maximalValue`, undefined);
     };
 
     useEffect(() => {
@@ -75,48 +78,66 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
         <>
             {filteredParameters.map((filteredParameter) => (
                 <>
-                    {isMinMaxValueVisible(filteredParameter, 'minimalValue') && (
-                        <SelectedParametersListItemStyled data-testid={TEST_IDENTIFIER + 'from'}>
-                            {t('from')} {filteredParameter.minimalValue} {filteredParameter.unit?.name}
-                            <SelectedParametersListItemRemoveStyled
-                                iconType="icon"
-                                icon="RemoveThin"
-                                onClick={() =>
-                                    onUncheckSliderParameter(filteredParameter.parameterUuid, 'minimalValue')
-                                }
-                                data-testid={TEST_IDENTIFIER + 'remove-from'}
-                            />
-                        </SelectedParametersListItemStyled>
+                    {(isMinMaxValueVisible(filteredParameter, 'minimalValue') ||
+                        isMinMaxValueVisible(filteredParameter, 'maximalValue')) && (
+                        <SelectedParametersListStyled>
+                            <SelectedParametersNameStyled>
+                                {filteredParameter.parameterName}:
+                            </SelectedParametersNameStyled>
+                            <SelectedParametersListItemStyled>
+                                {isMinMaxValueVisible(filteredParameter, 'minimalValue') && (
+                                    <>
+                                        <span>{t('from')}&nbsp;</span>
+                                        {filteredParameter.minimalValue}
+                                        {filteredParameter.unit?.name !== undefined
+                                            ? `\xa0${filteredParameter.unit.name}`
+                                            : ''}
+                                        {isMinMaxValueVisible(filteredParameter, 'maximalValue') ? ' ' : ''}
+                                    </>
+                                )}
+                                {isMinMaxValueVisible(filteredParameter, 'maximalValue') && (
+                                    <>
+                                        <span>{t('to')}&nbsp;</span>
+                                        {filteredParameter.maximalValue}
+                                        {filteredParameter.unit?.name !== undefined
+                                            ? `\xa0${filteredParameter.unit.name}`
+                                            : ''}
+                                    </>
+                                )}
+                                <SelectedParametersListItemRemoveStyled
+                                    iconType="icon"
+                                    icon="RemoveThin"
+                                    onClick={onUncheckSliderParameter(filteredParameter.parameterUuid)}
+                                />
+                            </SelectedParametersListItemStyled>
+                        </SelectedParametersListStyled>
                     )}
-                    {isMinMaxValueVisible(filteredParameter, 'maximalValue') && (
-                        <SelectedParametersListItemStyled data-testid={TEST_IDENTIFIER + 'from'}>
-                            {t('to')} {filteredParameter.maximalValue} {filteredParameter.unit?.name}
-                            <SelectedParametersListItemRemoveStyled
-                                iconType="icon"
-                                icon="RemoveThin"
-                                onClick={() =>
-                                    onUncheckSliderParameter(filteredParameter.parameterUuid, 'maximalValue')
-                                }
-                                data-testid={TEST_IDENTIFIER + 'remove-from'}
-                            />
-                        </SelectedParametersListItemStyled>
-                    )}
-                    {filteredParameter.values.map(
-                        (value, index) =>
-                            value.checked && (
-                                <SelectedParametersListItemStyled
-                                    key={value.uuid}
-                                    data-testid={TEST_IDENTIFIER + index}
-                                >
-                                    {value.text}
-                                    <SelectedParametersListItemRemoveStyled
-                                        iconType="icon"
-                                        icon="RemoveThin"
-                                        onClick={() => onUncheckParameter(filteredParameter.parameterUuid, value.uuid)}
-                                        data-testid={TEST_IDENTIFIER + 'remove-' + index}
-                                    />
-                                </SelectedParametersListItemStyled>
-                            ),
+                    {filteredParameter.values.length > 0 && (
+                        <SelectedParametersListStyled>
+                            <SelectedParametersNameStyled>
+                                {filteredParameter.parameterName}:
+                            </SelectedParametersNameStyled>
+                            {filteredParameter.values.map(
+                                (value, index) =>
+                                    value.checked && (
+                                        <SelectedParametersListItemStyled
+                                            key={value.uuid}
+                                            data-testid={TEST_IDENTIFIER + index}
+                                        >
+                                            {value.text}
+                                            <SelectedParametersListItemRemoveStyled
+                                                iconType="icon"
+                                                icon="RemoveThin"
+                                                onClick={onUncheckParameter(
+                                                    filteredParameter.parameterUuid,
+                                                    value.uuid,
+                                                )}
+                                                data-testid={TEST_IDENTIFIER + 'remove-' + index}
+                                            />
+                                        </SelectedParametersListItemStyled>
+                                    ),
+                            )}
+                        </SelectedParametersListStyled>
                     )}
                 </>
             ))}
