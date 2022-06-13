@@ -520,3 +520,17 @@ App\Migrations\Version20220510090948:
     skip: false
 App\Migrations\Version20220506130850:
     skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610143026:
+    skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610143337:
+    skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610143828:
+    skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610143952:
+    skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610144040:
+    skip: false
+Shopsys\FrameworkBundle\Migrations\Version20220610144218:
+    skip: false
+App\Migrations\Version20220610144637:
+    skip: false

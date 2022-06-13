@@ -43,7 +43,7 @@ class Article extends BaseArticle
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
@@ -101,9 +101,9 @@ class Article extends BaseArticle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }

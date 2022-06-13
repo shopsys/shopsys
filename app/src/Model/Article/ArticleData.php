@@ -25,9 +25,9 @@ class ArticleData extends BaseArticleData
     public $type = Article::TYPE_SITE;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public string $url = '';
+    public ?string $url = null;
 
     public function __construct()
     {
