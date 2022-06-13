@@ -30,7 +30,7 @@ class UnitFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         yield UnitFormType::class;
     }
