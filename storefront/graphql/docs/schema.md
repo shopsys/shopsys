@@ -4091,15 +4091,6 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasSaleExclusion</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be bought
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
@@ -6201,15 +6192,6 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasSaleExclusion</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be bought
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
@@ -7220,15 +7202,6 @@ The full name of the product, which consists of a prefix, name, and a suffix
 <td>
 
 Distinguishes if the product can be pre-ordered
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>hasSaleExclusion</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be bought
 
 </td>
 </tr>
@@ -9594,15 +9567,6 @@ The full name of the product, which consists of a prefix, name, and a suffix
 <td>
 
 Distinguishes if the product can be pre-ordered
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>hasSaleExclusion</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Distinguishes if the product can be bought
 
 </td>
 </tr>

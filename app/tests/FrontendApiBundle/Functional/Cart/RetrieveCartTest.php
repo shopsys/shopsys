@@ -531,7 +531,6 @@ class RetrieveCartTest extends GraphQlTestCase
             'ean' => '8845781245930',
             'usps' => [],
             'hasPreorder' => false,
-            'hasSaleExclusion' => false,
             'files' => [],
             'storeAvailabilities' => [
                 [
@@ -630,7 +629,6 @@ class RetrieveCartTest extends GraphQlTestCase
             ean
             usps
             hasPreorder
-            hasSaleExclusion
             files {
                 anchorText
                 url

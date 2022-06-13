@@ -5,6 +5,7 @@ fragment ListedVariantFragment on Variant {
     name
     fullName
     stockQuantity
+    isSellingDenied
     flags {
         ...SimpleFlagFragment
     }

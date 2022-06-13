@@ -265,4 +265,19 @@ class ProductRepository extends BaseProductRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllSellableQueryBuilder($domainId, PricingGroup $pricingGroup): QueryBuilder
+    {
+        return $this->getAllOfferedQueryBuilder($domainId, $pricingGroup)
+            ->join(ProductDomain::class, 'pd', Join::WITH, 'pd.product = p AND pd.domainId = :domainId')
+            ->andWhere('p.variantType != :variantTypeMain')
+            ->andWhere('pd.saleExclusion = false')
+            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
+            ->setParameter('domainId', $domainId);
+    }
 }

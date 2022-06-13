@@ -1,4 +1,4 @@
-import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
+import { AddToCartUnavailableTextStyled, ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
 import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import Button from 'components/Forms/Button';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -31,6 +31,18 @@ const ProductAction: FC<ProductActionProps> = (props) => {
                     {t('Choose variant')}
                 </Button>
             </ProductActionStyled>
+        );
+    }
+
+    if (props.product.isSellingDenied) {
+        return (
+            <ProductActionWrapperStyled data-testid={testIdentifier}>
+                <ProductActionStyled isButtonFullWidth={false}>
+                    <AddToCartUnavailableTextStyled>
+                        {t('This item can no longer be purchased')}
+                    </AddToCartUnavailableTextStyled>
+                </ProductActionStyled>
+            </ProductActionWrapperStyled>
         );
     }
 

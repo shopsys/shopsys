@@ -34,9 +34,6 @@ Product:
             hasPreorder:
                 type: "Boolean!"
                 description: "Distinguishes if the product can be pre-ordered"
-            hasSaleExclusion:
-                type: "Boolean!"
-                description: "Distinguishes if the product can be bought"
             files:
                 type: "[File!]!"
                 description: "List of downloadable files"

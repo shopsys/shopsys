@@ -30,7 +30,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method string|null getShortDescription(\App\Model\Product\Product $product)
  * @method string getLink(\App\Model\Product\Product $product)
  * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
- * @method bool isSellingDenied(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getAccessories(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
@@ -156,9 +155,9 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return bool
      */
-    public function hasSaleExclusion(Product $product): bool
+    public function isSellingDenied(BaseProduct $product): bool
     {
-        return $product->getSaleExclusion($this->domain->getId());
+        return $product->isSellingDenied() === true || $product->getSaleExclusion($this->domain->getId()) === true;
     }
 
     /**

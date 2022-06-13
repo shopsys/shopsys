@@ -51,6 +51,7 @@ export type ListedProductType = {
     catalogNumber: string;
     brand: SimpleBrandType | null;
     categoryNames: string[];
+    isSellingDenied: boolean;
 };
 
 export type ListedVariantType = ListedProductType & {
