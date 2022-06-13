@@ -31,3 +31,38 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
     ...
 }
 ```
+
+### Handlers with parameters as double arrow functions
+
+- code clarity, useCallback can be used to memoize the function
+
+bad way:
+```tsx
+// no useCallback
+const mySuperHandler = (id: number) => {
+    // do something
+};
+
+// with useCallback
+const mySuperHandler = useCallback((id: number) => {
+    // do something
+}, []);
+
+<a onClick={() => mySuperHandler(1)}>Click me</a>
+```
+
+good way:
+```tsx
+// no useCallback
+const mySuperHandler = (id: number) => () => {
+    // do something
+};
+
+// with useCallback
+const mySuperHandler = useCallback((id: number) => () => {
+    // do something
+}, []);
+
+<a onClick={mySuperHandler(1)}>Click me</a>
+```
+

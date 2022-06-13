@@ -44,14 +44,14 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
         );
     };
 
-    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => {
+    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => () => {
         const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
         const indexOfValue = getIndexOfParameterValue(parametersValue, indexOfParameter, parameterValueUuid);
 
         formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, false);
     };
 
-    const onUncheckSliderParameter = (parameterUuid: string) => {
+    const onUncheckSliderParameter = (parameterUuid: string) => () => {
         const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
 
         formProviderMethods.setValue(`parameters.${indexOfParameter}.minimalValue`, undefined);
@@ -107,7 +107,7 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
                                 <SelectedParametersListItemRemoveStyled
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={() => onUncheckSliderParameter(filteredParameter.parameterUuid)}
+                                    onClick={onUncheckSliderParameter(filteredParameter.parameterUuid)}
                                 />
                             </SelectedParametersListItemStyled>
                         </SelectedParametersListStyled>
@@ -128,9 +128,10 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
                                             <SelectedParametersListItemRemoveStyled
                                                 iconType="icon"
                                                 icon="RemoveThin"
-                                                onClick={() =>
-                                                    onUncheckParameter(filteredParameter.parameterUuid, value.uuid)
-                                                }
+                                                onClick={onUncheckParameter(
+                                                    filteredParameter.parameterUuid,
+                                                    value.uuid,
+                                                )}
                                                 data-testid={TEST_IDENTIFIER + 'remove-' + index}
                                             />
                                         </SelectedParametersListItemStyled>

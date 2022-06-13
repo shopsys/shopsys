@@ -52,13 +52,13 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
         );
     }, [parametersFilterState.maximalPrice, props.productFilterOptions.maximalPrice]);
 
-    const onUncheckFlag = (uuid: string) => {
+    const onUncheckFlag = (uuid: string) => () => {
         const indexOfValue = flagsValue.findIndex((item) => item.uuid === uuid);
 
         formProviderMethods.setValue(`flags.${indexOfValue}.checked`, false);
     };
 
-    const onUncheckBrand = (uuid: string) => {
+    const onUncheckBrand = (uuid: string) => () => {
         const indexOfValue = brandsValue.findIndex((item) => item.uuid === uuid);
 
         formProviderMethods.setValue(`brands.${indexOfValue}.checked`, false);
@@ -98,7 +98,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                         <SelectedParametersListItemRemoveStyled
                                             iconType="icon"
                                             icon="RemoveThin"
-                                            onClick={() => onUncheckBrand(brandUuid)}
+                                            onClick={onUncheckBrand(brandUuid)}
                                         />
                                     </SelectedParametersListItemStyled>
                                 ))}
@@ -114,7 +114,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                         <SelectedParametersListItemRemoveStyled
                                             iconType="icon"
                                             icon="RemoveThin"
-                                            onClick={() => onUncheckFlag(flagUuid)}
+                                            onClick={onUncheckFlag(flagUuid)}
                                         />
                                     </SelectedParametersListItemStyled>
                                 ))}
@@ -161,7 +161,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                     <SelectedParametersListItemRemoveStyled
                                         iconType="icon"
                                         icon="RemoveThin"
-                                        onClick={() => onResetPrices()}
+                                        onClick={onResetPrices}
                                     />
                                 </SelectedParametersListItemStyled>
                             </SelectedParametersListStyled>
