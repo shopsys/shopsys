@@ -51,7 +51,7 @@ const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     <HeaderCartStyled>
                         <Cart />
                     </HeaderCartStyled>
-                    <Overlay isActive={isMenuOpened} />
+                    <Overlay isActive={isMenuOpened} onCloseHandler={onMenuToggleHandler} />
                 </>
             )}
         </HeaderStyled>

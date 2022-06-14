@@ -4,15 +4,16 @@ import { CSSTransition } from 'react-transition-group';
 
 type OverlayProps = {
     isActive: boolean;
+    onCloseHandler: () => void;
 };
 
 const TEST_IDENTIFIER = 'layout-overlay';
 
-const Overlay: FC<OverlayProps> = ({ isActive }) => {
+const Overlay: FC<OverlayProps> = ({ isActive, onCloseHandler }) => {
     return (
         <OverlayWrapperStyled data-testid={TEST_IDENTIFIER}>
             <CSSTransition in={isActive} timeout={500} classNames="overlay" unmountOnExit>
-                <OverlayStyled />
+                <OverlayStyled onClick={onCloseHandler} />
             </CSSTransition>
         </OverlayWrapperStyled>
     );
