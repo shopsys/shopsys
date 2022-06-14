@@ -1,5 +1,5 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
-import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//DropdownMenu';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
 import Link from 'next/link';
 import { FC, useContext, useEffect, useState } from 'react';

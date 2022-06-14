@@ -1,21 +1,14 @@
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
+import { DropdownMenuContext } from './DropdownMenuContext';
 import PrimaryList from './PrimaryList';
 import SecondaryList from './SecondaryList';
 import DropdownSlideLeft from './SlideLeft';
 import SubMenu from './SubMenu';
 import TertiaryList from './TertiaryList';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
-import { createContext, FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
-
-export const DropdownMenuContext = createContext<{
-    slideRight: (props: DropdownItemType) => void;
-    onMenuToggleHandler: () => void;
-}>({
-    slideRight: () => undefined,
-    onMenuToggleHandler: () => undefined,
-});
 
 type DropdownMenuProps = {
     isMenuOpened: boolean;

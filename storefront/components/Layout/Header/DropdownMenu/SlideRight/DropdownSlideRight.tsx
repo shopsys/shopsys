@@ -1,5 +1,5 @@
 import { DropdownSlideRightIconStyled, DropdownSlideRightStyled } from './DropdownSlideRight.style';
-import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenu';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { FC, useContext } from 'react';
 import { DropdownItemType } from 'types/dropdown';
 
