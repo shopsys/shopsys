@@ -18,8 +18,8 @@ export const OverlayWrapperStyled = styled.div`
     }
 `;
 
-export const OverlayStyled = styled.div`
-    ${({ theme }) => css`
+export const OverlayStyled = styled.div(
+    ({ theme }) => css`
         bottom: 0;
         left: 0;
         position: fixed;
@@ -28,5 +28,5 @@ export const OverlayStyled = styled.div`
         z-index: ${theme.zIndex.overlay};
 
         background-color: rgba(0, 0, 0, 0.6);
-    `}
-`;
+    `,
+);

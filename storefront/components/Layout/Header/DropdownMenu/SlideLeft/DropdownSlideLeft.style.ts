@@ -2,8 +2,8 @@ import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const DropdownSlideLeftStyled = styled.span`
-    ${({ theme }) => css`
+export const DropdownSlideLeftStyled = styled.span(
+    ({ theme }) => css`
         align-items: center;
         cursor: pointer;
         display: inline-flex;
@@ -15,8 +15,8 @@ export const DropdownSlideLeftStyled = styled.span`
 
         color: ${theme.color.base};
         font-size: 10px;
-    `}
-`;
+    `,
+);
 
 export const DropdownSlideLeftIconStyled = styled(Icon)`
     transform: rotate(90deg);

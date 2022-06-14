@@ -22,9 +22,9 @@ type DropdownMenuProps = {
     onMenuToggleHandler: () => void;
 };
 
-const DropdownMenu: FC<DropdownMenuProps> = (props) => {
-    const testIdentifier = 'layout-header-dropdownmenu';
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu';
 
+const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const navigationItems = useNavigationItems();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
@@ -59,17 +59,9 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     };
 
     return (
-        <DropdownMenuWrapperStyled data-testid={testIdentifier}>
-            <CSSTransition
-                in={props.isMenuOpened}
-                timeout={500}
-                classNames="dropdown"
-                onEntering={calcHeight}
-                unmountOnExit
-            >
-                <DropdownMenuContext.Provider
-                    value={{ slideRight: slideRight, onMenuToggleHandler: props.onMenuToggleHandler }}
-                >
+        <DropdownMenuWrapperStyled data-testid={TEST_IDENTIFIER}>
+            <CSSTransition in={isMenuOpened} timeout={500} classNames="dropdown" onEntering={calcHeight} unmountOnExit>
+                <DropdownMenuContext.Provider value={{ slideRight, onMenuToggleHandler }}>
                     <DropdownMenuStyled slideDirection={slideDirection} style={{ height: menuHeight }}>
                         <CSSTransition
                             in={menuLevel === 'primary'}

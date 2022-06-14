@@ -8,21 +8,17 @@ type HamburgerMenuProps = {
     onMenuToggleHandler: MouseEventHandler<HTMLDivElement>;
 };
 
-const HamburgerMenu: FC<HamburgerMenuProps> = (props) => {
-    const testIdentifier = 'layout-header-hamburgermenu';
+const TEST_IDENTIFIER = 'layout-header-hamburgermenu';
 
+const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <HamburgerMenuStyled
-            onClick={props.onMenuToggleHandler}
-            isOpen={props.isMenuOpened}
-            data-testid={testIdentifier}
-        >
+        <HamburgerMenuStyled onClick={onMenuToggleHandler} isOpen={isMenuOpened} data-testid={TEST_IDENTIFIER}>
             <HamburgerMenuImageStyled>
-                <HamburgerIcon isMenuOpened={props.isMenuOpened} />
+                <HamburgerIcon isMenuOpened={isMenuOpened} />
             </HamburgerMenuImageStyled>
-            <HamburgerMenuTextStyled>{props.isMenuOpened ? t('Close') : t('Menu')}</HamburgerMenuTextStyled>
+            <HamburgerMenuTextStyled>{isMenuOpened ? t('Close') : t('Menu')}</HamburgerMenuTextStyled>
         </HamburgerMenuStyled>
     );
 };

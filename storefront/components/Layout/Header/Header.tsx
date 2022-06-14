@@ -14,23 +14,23 @@ import {
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import Overlay from 'components/Layout/Overlay';
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 
 type HeaderProps = {
     simpleHeader?: boolean;
 };
 
-const Header: FC<HeaderProps> = ({ simpleHeader }) => {
-    const testIdentifier = 'layout-header';
+const TEST_IDENTIFIER = 'layout-header';
 
+const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
-    const onMenuToggleHandler = () => {
-        setIsMenuOpened(!isMenuOpened);
-    };
+    const onMenuToggleHandler = useCallback(() => {
+        setIsMenuOpened((prev) => !prev);
+    }, []);
 
     return (
-        <HeaderStyled data-testid={testIdentifier}>
+        <HeaderStyled data-testid={TEST_IDENTIFIER}>
             <HeaderLogoStyled>
                 <Logo />
             </HeaderLogoStyled>

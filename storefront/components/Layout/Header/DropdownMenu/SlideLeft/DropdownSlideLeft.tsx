@@ -8,13 +8,13 @@ type DropdownSlideLeftProps = {
     goToMenu: DropdownListLevels;
 };
 
-const DropdownSlideLeft: FC<DropdownSlideLeftProps> = (props) => {
-    const testIdentifier = 'layout-header-dropdownmenu-slideleft';
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideleft';
 
+const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent }) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <DropdownSlideLeftStyled onClick={() => props.onClickEvent(props)} data-testid={testIdentifier}>
+        <DropdownSlideLeftStyled onClick={() => onClickEvent({ goToMenu })} data-testid={TEST_IDENTIFIER}>
             <DropdownSlideLeftIconStyled iconType="icon" icon="Arrow" />
             {t('Back')}
         </DropdownSlideLeftStyled>

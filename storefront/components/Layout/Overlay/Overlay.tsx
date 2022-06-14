@@ -6,12 +6,12 @@ type OverlayProps = {
     isActive: boolean;
 };
 
-const Overlay: FC<OverlayProps> = (props) => {
-    const testIdentifier = 'layout-overlay';
+const TEST_IDENTIFIER = 'layout-overlay';
 
+const Overlay: FC<OverlayProps> = ({ isActive }) => {
     return (
-        <OverlayWrapperStyled data-testid={testIdentifier}>
-            <CSSTransition in={props.isActive} timeout={500} classNames="overlay" unmountOnExit>
+        <OverlayWrapperStyled data-testid={TEST_IDENTIFIER}>
+            <CSSTransition in={isActive} timeout={500} classNames="overlay" unmountOnExit>
                 <OverlayStyled />
             </CSSTransition>
         </OverlayWrapperStyled>
