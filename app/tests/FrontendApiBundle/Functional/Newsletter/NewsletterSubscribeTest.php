@@ -6,14 +6,16 @@ namespace Tests\FrontendApiBundle\Functional\Newsletter;
 
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class NewsletterTest extends GraphQlTestCase
+class NewsletterSubscribeTest extends GraphQlTestCase
 {
     private const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
 
     public function testNewsletterSubscribeRegister(): void
     {
         $graphQlType = 'NewsletterSubscribe';
-        $response = $this->getResponseContentForQuery($this->getNewsletterSubscribeQuery());
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/NewsletterSubscribeMutation.graphql', [
+            'email' => self::DEFAULT_USER_EMAIL,
+        ]);
 
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey($graphQlType, $response['data']);
@@ -23,7 +25,9 @@ class NewsletterTest extends GraphQlTestCase
 
     public function testNewsletterSubscribeWithInvalidEmailRegister(): void
     {
-        $response = $this->getResponseContentForQuery($this->getNewsletterSubscribeQuery('no-replyshopsys.com'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/NewsletterSubscribeMutation.graphql', [
+            'email' => 'no-replyshopsys.com',
+        ]);
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
@@ -37,19 +41,5 @@ class NewsletterTest extends GraphQlTestCase
 
         $this->assertArrayHasKey('message', $emailError);
         $this->assertEquals($expectedViolationMessage, $emailError['message']);
-    }
-
-    /**
-     * @param string $email
-     * @return string
-     */
-    private function getNewsletterSubscribeQuery(string $email = self::DEFAULT_USER_EMAIL): string
-    {
-        return
-            'mutation {
-                NewsletterSubscribe(input: {
-                    email: "' . $email . '"
-                })
-            }';
     }
 }

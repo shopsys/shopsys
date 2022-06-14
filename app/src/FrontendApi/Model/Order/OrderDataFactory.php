@@ -71,6 +71,7 @@ class OrderDataFactory extends BaseOrderDataFactory
 
         $input = $argument['input'];
         $orderData->isCompanyCustomer = $input['onCompanyBehalf'];
+        $orderData->newsletterSubscription = $input['newsletterSubscription'];
 
         return $orderData;
     }

@@ -95,7 +95,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Customer\User\RegistrationData $registrationData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function mapRegistrationDataToCustomerUserUpdateData(
         CustomerUser $customerUser,

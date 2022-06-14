@@ -23,6 +23,7 @@ mutation CreateOrder(
     $deliveryPostcode: String
     $deliveryCountry: String
     $note: String
+    $newsletterSubscription: Boolean
 ) {
     CreateOrder(
         input: {
@@ -50,6 +51,7 @@ mutation CreateOrder(
             deliveryCountry: $deliveryCountry
             deliveryPostcode: $deliveryPostcode
             note: $note
+            newsletterSubscription: $newsletterSubscription
         }
     ) {
         uuid

@@ -8,6 +8,10 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData as BaseBillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory as BaseBillingAddressDataFactory;
 
+/**
+ * @method \App\Model\Customer\BillingAddressData createFromBillingAddress(\App\Model\Customer\BillingAddress $billingAddress)
+ * @method \App\Model\Customer\BillingAddressData createInstance()
+ */
 class BillingAddressDataFactory extends BaseBillingAddressDataFactory
 {
     /**

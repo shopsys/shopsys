@@ -63,6 +63,11 @@ class OrderData extends BaseOrderData
      */
     public array $paymentTransactionRefunds;
 
+    /**
+     * @var bool|null
+     */
+    public ?bool $newsletterSubscription = null;
+
     public function __construct()
     {
         parent::__construct();

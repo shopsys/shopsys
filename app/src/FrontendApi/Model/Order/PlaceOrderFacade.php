@@ -6,6 +6,7 @@ namespace App\FrontendApi\Model\Order;
 
 use App\Model\Customer\DeliveryAddress;
 use App\Model\Customer\DeliveryAddressDataFactory;
+use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
@@ -45,6 +47,16 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
     private DeliveryAddressFactory $deliveryAddressFactory;
 
     /**
+     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
+     */
+    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     */
+    private NewsletterFacade $newsletterFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
@@ -56,6 +68,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
+     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -68,7 +82,9 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         CustomerUserFacade $customerUserFacade,
         PromoCodeLimitResolver $promoCodeLimitResolver,
         DeliveryAddressDataFactory $deliveryAddressDataFactory,
-        DeliveryAddressFactory $deliveryAddressFactory
+        DeliveryAddressFactory $deliveryAddressFactory,
+        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        NewsletterFacade $newsletterFacade
     ) {
         parent::__construct(
             $orderFacade,
@@ -84,6 +100,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
         $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
         $this->deliveryAddressFactory = $deliveryAddressFactory;
+        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
+        $this->newsletterFacade = $newsletterFacade;
     }
 
     /**
@@ -121,8 +139,20 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         if ($customerUser instanceof CustomerUser) {
+            $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+            $customerUserUpdateData->customerUserData->newsletterSubscription = $orderData->newsletterSubscription;
+            $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
             $deliveryAddress = $deliveryAddress ?? $this->createDeliveryAddressForAmendingCustomerUserData($order);
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
+        } elseif ($orderData->newsletterSubscription) {
+            $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
+                $orderData->email,
+                $this->domain->getId()
+            );
+
+            if ($newsletterSubscriber === null) {
+                $this->newsletterFacade->addSubscribedEmail($orderData->email, $this->domain->getId());
+            }
         }
 
         return $order;
