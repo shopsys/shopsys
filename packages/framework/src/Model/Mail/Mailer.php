@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use League\Flysystem\FileNotFoundException;
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
@@ -54,14 +52,12 @@ class Mailer
     {
         $message = $this->getMessageWithReplacedVariables($messageData);
 
-        if ($messageData->body === null || $messageData->subject === null) {
-            throw new EmptyMailException();
-        }
-
         try {
             $this->symfonyMailer->send($message);
         } catch (TransportExceptionInterface $exception) {
-            throw new SendMailFailedException($exception);
+            $this->logger->error('There was a failure while sending emails', [
+                'exception' => $exception,
+            ]);
         }
     }
 

@@ -67,6 +67,7 @@ class OrderMailTest extends FunctionalTestCase
             OrderItemPriceCalculation::class
         )->disableOriginalConstructor()->getMock();
         $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
+        $settingMock->expects($this->any())->method('getForDomain')->willReturn('no-reply@shopsys.com');
         $priceExtensionMock = $this->getMockBuilder(PriceExtension::class)->disableOriginalConstructor()->getMock();
         $dateTimeFormatterExtensionMock = $this->getMockBuilder(
             DateTimeFormatterExtension::class

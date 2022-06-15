@@ -193,9 +193,6 @@ msgstr "Zadejte e-mail"
 msgid "Error occurred"
 msgstr "Nastala chyba"
 
-msgid "Error occurred when sending email."
-msgstr "Nastala chyba při odesílání e-mailu."
-
 msgid "Finish the order"
 msgstr "Dokončit objednávku"
 
@@ -654,9 +651,6 @@ msgstr "Nepodařilo se odstranit položku z košíku. Nejspíš je již odstran�
 
 msgid "Unable to remove item from cart. The link for removing it probably expired, try it again."
 msgstr "Nepodařilo se odstranit položku z košíku. Zřejmě vypršela platnost odkazu pro jeho smazání, proto to vyzkoušejte ještě jednou."
-
-msgid "Unable to send some emails, please contact us for order verification."
-msgstr "Nepodařilo se odeslat některé e-maily, pro ověření objednávky nás prosím kontaktujte."
 
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"

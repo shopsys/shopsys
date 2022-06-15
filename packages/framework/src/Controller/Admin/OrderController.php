@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
@@ -133,8 +132,6 @@ class OrderController extends AdminBaseController
                 $this->addErrorFlash(
                     t('Entered customer not found, please check entered data.')
                 );
-            } catch (MailException $e) {
-                $this->addErrorFlash(t('Unable to send updating email'));
             }
         }
 

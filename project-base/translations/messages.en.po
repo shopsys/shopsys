@@ -193,9 +193,6 @@ msgstr ""
 msgid "Error occurred"
 msgstr ""
 
-msgid "Error occurred when sending email."
-msgstr ""
-
 msgid "Finish the order"
 msgstr ""
 
@@ -653,9 +650,6 @@ msgid "Unable to remove item from cart. The item is probably already removed."
 msgstr ""
 
 msgid "Unable to remove item from cart. The link for removing it probably expired, try it again."
-msgstr ""
-
-msgid "Unable to send some emails, please contact us for order verification."
 msgstr ""
 
 msgid "Unit price including VAT"

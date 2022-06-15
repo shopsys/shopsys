@@ -2260,9 +2260,6 @@ msgstr ""
 msgid "Unable to add product"
 msgstr ""
 
-msgid "Unable to send updating email"
-msgstr ""
-
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr ""
 
