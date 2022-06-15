@@ -1435,6 +1435,9 @@ input OrderInput {
 
   """Cart identifier used for getting carts of not logged customers"""
   cartUuid: Uuid = null
+
+  """Delivery address identifier"""
+  deliveryAddressUuid: Uuid = null
 }
 
 """Represent one item in the order"""

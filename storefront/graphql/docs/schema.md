@@ -8074,6 +8074,15 @@ Cart identifier used for getting carts of not logged customers
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Delivery address identifier
+
+</td>
+</tr>
 </tbody>
 </table>
 

@@ -1284,6 +1284,8 @@ export type OrderInputApi = {
   companyTaxNumber: Maybe<Scalars['String']>;
   /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
   country: Scalars['String'];
+  /** Delivery address identifier */
+  deliveryAddressUuid: Maybe<Scalars['Uuid']>;
   /** City name for delivery (required when differentDeliveryAddress is true) */
   deliveryCity: Maybe<Scalars['String']>;
   /** Company name for delivery */
