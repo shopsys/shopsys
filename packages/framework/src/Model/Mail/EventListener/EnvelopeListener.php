@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail\EventListener;
 
+use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mime\Address;
@@ -13,23 +14,16 @@ use Symfony\Component\Mime\Message;
 class EnvelopeListener implements EventSubscriberInterface
 {
     /**
-     * @var string
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider
      */
-    protected string $masterEmail;
+    protected MailerSettingProvider $mailerSettingProvider;
 
     /**
-     * @var string[]
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      */
-    protected array $deliveryWhitelist;
-
-    /**
-     * @param string $masterEmail
-     * @param string $deliveryWhitelist
-     */
-    public function __construct(string $masterEmail, string $deliveryWhitelist)
+    public function __construct(MailerSettingProvider $mailerSettingProvider)
     {
-        $this->masterEmail = $masterEmail;
-        $this->deliveryWhitelist = $deliveryWhitelist !== '' ? explode(',', $deliveryWhitelist) : [];
+        $this->mailerSettingProvider = $mailerSettingProvider;
     }
 
     /**
@@ -37,7 +31,7 @@ class EnvelopeListener implements EventSubscriberInterface
      */
     public function onMessage(MessageEvent $event): void
     {
-        if ($this->masterEmail === '') {
+        if ($this->mailerSettingProvider->isMailerMasterEmailSet() === false) {
             return;
         }
 
@@ -77,9 +71,9 @@ class EnvelopeListener implements EventSubscriberInterface
      */
     protected function getAllowedRecipients(array $originalRecipients): array
     {
-        $allowedRecipients = [new Address($this->masterEmail)];
+        $allowedRecipients = [new Address($this->mailerSettingProvider->getMailerMasterEmailAddress())];
         foreach ($originalRecipients as $originalRecipient) {
-            foreach ($this->deliveryWhitelist as $whitelistedPattern) {
+            foreach ($this->mailerSettingProvider->getMailerWhitelistExpressions() as $whitelistedPattern) {
                 if (preg_match($whitelistedPattern, $originalRecipient->getAddress())) {
                     $allowedRecipients[] = $originalRecipient;
                 }

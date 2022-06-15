@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Twig;
 
-use Shopsys\FrameworkBundle\Model\Mail\Mailer;
+use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -10,41 +12,24 @@ use Twig\TwigFunction;
 class MailerSettingExtension extends AbstractExtension
 {
     /**
-     * @var bool
-     */
-    protected $isDeliveryDisabled;
-
-    /**
-     * @var string
-     */
-    protected $mailerMasterEmailAddress;
-
-    /**
-     * @var string[]
-     */
-    protected $mailerWhitelistExpressions;
-
-    /**
      * @var \Twig\Environment
      */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
     /**
-     * @param string $mailerWhitelist
-     * @param string $mailerMasterEmailAddress
-     * @param string $mailerDsn
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider
+     */
+    protected MailerSettingProvider $mailerSettingProvider;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        string $mailerWhitelist,
-        string $mailerMasterEmailAddress,
-        string $mailerDsn,
+        MailerSettingProvider $mailerSettingProvider,
         Environment $twigEnvironment
     ) {
-        $this->mailerWhitelistExpressions = $mailerWhitelist !== '' ? explode(',', $mailerWhitelist) : [];
-        $this->mailerMasterEmailAddress = $mailerMasterEmailAddress;
-        $this->isDeliveryDisabled = $mailerDsn === Mailer::DISABLED_MAILER_DSN;
-
+        $this->mailerSettingProvider = $mailerSettingProvider;
         $this->twigEnvironment = $twigEnvironment;
     }
 
@@ -64,7 +49,7 @@ class MailerSettingExtension extends AbstractExtension
      */
     public function isMailerSettingUnusual()
     {
-        return $this->isDeliveryDisabled || ($this->isDeliveryDisabled === false && $this->mailerMasterEmailAddress !== null);
+        return $this->mailerSettingProvider->isDeliveryDisabled() || $this->mailerSettingProvider->isMailerMasterEmailSet();
     }
 
     /**
@@ -73,9 +58,9 @@ class MailerSettingExtension extends AbstractExtension
     public function getMailerSettingInfo()
     {
         return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
-            'isDeliveryDisabled' => $this->isDeliveryDisabled,
-            'mailerMasterEmailAddress' => $this->mailerMasterEmailAddress,
-            'mailerWhitelistExpressions' => $this->mailerWhitelistExpressions,
+            'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
+            'mailerMasterEmailAddress' => $this->mailerSettingProvider->isMailerMasterEmailSet() ? $this->mailerSettingProvider->getMailerMasterEmailAddress() : null,
+            'mailerWhitelistExpressions' => $this->mailerSettingProvider->getMailerWhitelistExpressions(),
         ]);
     }
 

@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Mail;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Mail\EventListener\EnvelopeListener;
+use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mime\Address;
@@ -32,7 +33,12 @@ class EnvelopeListenerTest extends TestCase
         ?Address $mailBcc,
         array $expectedRecipients
     ): void {
-        $envelopeListener = new EnvelopeListener($masterMail !== null ? $masterMail->getAddress() : '', $deliveryWhitelist);
+        $mailerSettingProvider = new MailerSettingProvider(
+            $deliveryWhitelist,
+            $masterMail !== null ? $masterMail->getAddress() : '',
+            'dsn'
+        );
+        $envelopeListener = new EnvelopeListener($mailerSettingProvider);
         $messageEvent = $this->getMessageEvent($mailsTo, $mailCc, $mailBcc);
 
         $envelopeListener->onMessage($messageEvent);
