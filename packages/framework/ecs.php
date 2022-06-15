@@ -65,6 +65,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
             __DIR__ . '/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php',
             __DIR__ . '/src/Form/Constraints/FileAbstractFilesystemValidator.php',
+            __DIR__ . '/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
         ],
         PropertyPerClassLimitSniff::class => [
             __DIR__ . '/src/Model/Order/Order.php',

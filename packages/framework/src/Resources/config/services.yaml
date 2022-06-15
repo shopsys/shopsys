@@ -984,3 +984,8 @@ services:
             - '%env(DATABASE_NAME)%'
             - '%env(DATABASE_USER)%'
             - '%env(DATABASE_PASSWORD)%'
+
+    Shopsys\FrameworkBundle\Model\Mail\EventListener\EnvelopeListener:
+        arguments:
+            - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
+            - '%env(MAILER_DELIVERY_WHITELIST)%'
