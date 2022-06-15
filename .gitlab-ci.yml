@@ -29,7 +29,6 @@ build:
         - build
     script:
         - cp -R ./docker/nginx/ ./app/docker/nginx/
-        - cp ./schema.graphql ./app/schema.graphql
         - cd ./app/
         - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
         - docker push ${TAG}
@@ -41,7 +40,7 @@ build-storefront:
     tags:
         - build
     script:
-        - cp ./schema.graphql ./storefront/schema.graphql
+        - cp ./app/schema.graphql ./storefront/schema.graphql
         - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} ./storefront
         - docker push ${STOREFRONT_TAG}
     interruptible: true
@@ -68,7 +67,7 @@ test:storefront-standards-with-jest-and-codegen:
     needs:
         - build-storefront
     before_script:
-        - cp ./schema.graphql ./storefront/schema.graphql
+        - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
         - npm ci
     script:
