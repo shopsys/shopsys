@@ -20,7 +20,6 @@ For more detailed information about the Shopsys Framework, please see [Shopsys F
 - [Why are you using entity data instead of entities for Symfony forms?](#why-are-you-using-entity-data-instead-of-entities-for-symfony-forms)
 - [What is the configuration file `services_test.yaml` good for?](#what-is-the-configuration-file-services_testyaml-good-for)
 - [How to change the behavior of the product search on the front-end?](#how-to-change-the-behavior-of-the-product-search-on-the-front-end)
-- [Why are emails not sent immediately but at the end of the script](#why-are-emails-sent-before-end-of-the-script-and-not-immediately)
 - [Where does the business logic belong?](#where-does-the-business-logic-belong)
 - [How can I create a friendly URL for my entity?](#how-can-i-create-a-friendly-url-for-my-entity)
 - [How can I create Front-end Breadcrumb navigation?](#how-can-i-create-front-end-breadcrumb-navigation)
@@ -116,12 +115,6 @@ E.g., by default, all our services are defined as private. However, in tests, we
 Full-text product search on the front-end is handled via Elasticsearch.
 If you want to change its behavior (e.g. make the EAN not as important or change the way the search string is handled - whether to use an n-gram or not) please see [Product Searching](../model/front-end-product-searching.md).
 
-## Why are emails sent before end of the script and not immediately
-Project uses `SwiftMailer` package for sending emails and defaultly it has set `spool queue` that stores all mails into `memory` until the script execution is at the end.
-This spooling method helps the user not to wait for the next page to load while the email is sending.
-However, based on implementations of many projects, project gained functionality that releases spool after the `*cronModule` run is ended in case of `cron` phing target that runs all cron modules at once.
-It is also possible to turn the spool off by removing it from [swiftmailer.yaml](https://github.com/shopsys/shopsys/blob/master/project-base/config/packages/swiftmailer.yaml) or changing the behavior of storing emails based on [symfony docs](https://symfony.com/doc/3.4/email/spool.html) or [snc_redis docs](https://github.com/snc/SncRedisBundle/blob/master/Resources/doc/index.md#swiftmailer-spooling).
-
 ## Where does the business logic belong?
 The business logic should be implemented directly in an entity every time when there is no need for external services.
 Otherwise, the logic is in facades (resp. the facades are used as delegates to other services, e.g. another *Facade*, *Repository*, *Calculation*, etc.). You can read more about the model architecture in [Introduction to model architecture](../model/introduction-to-model-architecture.md).
@@ -133,21 +126,29 @@ See [Friendly URL](./friendly-url.md) article.
 See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) article.
 
 ## Do you have any tips how to debug emails during development in Docker?
-Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarrelly/MailDev) library that provides you web UI where you can see the emails including their headers:
-1. In your `docker-compose.yml`, change the `smtp-server` service:
-    ```diff
-     smtp-server:
-   -        image: namshi/smtp:latest
-   +        image: djfarrelly/maildev
-             container_name: shopsys-framework-smtp-server
-   +        ports:
-   +            - "8025:80"
-    ```
-1. Run `docker-compose up -d`
-1. Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
+Yes we have, you can easily use [`maildev/maildev`](https://github.com/maildev/maildev) library that provides you web UI where you can see the emails including their headers:
+
+* In your `docker-compose.yml`, change the `smtp-server` service:
+```diff
+smtp-server:
+-        image: namshi/smtp:latest
++        image: maildev/maildev
+         container_name: shopsys-framework-smtp-server
++        ports:
++            - "8025:80"
+```
+* Run `docker-compose up -d`
+* add `?verify_peer=false` at the end of the `MAILER_DSN` environment variable value:
+```diff
+- MAILER_DSN=smtp://smtp-server:25
++ MAILER_DSN=smtp://smtp-server:25?verify_peer=false
+```
+* Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
 
 *Note: Beware, by using this setting, no emails are delivered to their original recipients.
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information.*
+
+*Note: You can also view the outgoing emails in the Symfony profiler.*
 
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
 Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
