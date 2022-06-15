@@ -6,10 +6,10 @@ type PrimaryListProps = {
     navigationItems: NavigationItemType[];
 };
 
-const PrimaryList: FC<PrimaryListProps> = (props) => {
+const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
     return (
         <>
-            {props.navigationItems.map((navigationItem, index) => (
+            {navigationItems.map((navigationItem, index) => (
                 <DropdownItem key={index} navigationItem={navigationItem} index={index} goToMenu="secondary" />
             ))}
         </>

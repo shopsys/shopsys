@@ -7,8 +7,8 @@ export const SubMenuStyled = styled.div`
     margin-top: 20px;
 `;
 
-export const SubMenuItemStyled = styled.a`
-    ${({ theme }) => css`
+export const SubMenuItemStyled = styled.a(
+    ({ theme }) => css`
         line-height: 18px;
         padding: 0 30px;
         margin-bottom: 20px;
@@ -16,5 +16,5 @@ export const SubMenuItemStyled = styled.a`
         text-decoration: none;
         font-size: ${theme.fontSize.small};
         color: ${theme.color.base};
-    `}
-`;
+    `,
+);

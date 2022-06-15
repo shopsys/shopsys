@@ -1,7 +1,8 @@
 import { styled } from 'components/Theme/main';
+import { HTMLAttributes } from 'react';
 import { css } from 'styled-components';
 
-type DropdownMenuStyledProps = {
+type DropdownMenuStyledProps = HTMLAttributes<HTMLDivElement> & {
     slideDirection: 'left' | 'right';
 };
 
@@ -22,8 +23,8 @@ export const DropdownMenuWrapperStyled = styled.div`
     }
 `;
 
-export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>`
-    ${({ theme, slideDirection }) => css`
+export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>(
+    ({ theme, slideDirection }) => css`
         position: absolute;
         left: 10px;
         right: 10px;
@@ -125,8 +126,8 @@ export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>`
             transform: translateX(110%);
             transition: all 0.3s ease;
         }
-    `}
-`;
+    `,
+);
 
 export const DropdownMenuListStyled = styled.div`
     width: 100%;

@@ -3,22 +3,22 @@ import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
 import { FC, Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
-const SecondaryList: FC<DropdownListProps> = (props) => {
-    const testIdentifier = 'layout-header-dropdownmenu-secondarylist-';
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu-secondarylist-';
 
+const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
     return (
         <>
-            {props.navigationItems
+            {navigationItems
                 .map((navigationItem, index) => (
                     <Fragment key={index}>
-                        <SecondaryListTitleStyled data-testid={testIdentifier + index}>
+                        <SecondaryListTitleStyled data-testid={TEST_IDENTIFIER + index}>
                             {navigationItem.name}
                         </SecondaryListTitleStyled>
                         {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
-                            <Fragment key={columnIndex}>
+                            <Fragment key={`${index}-${columnIndex}`}>
                                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                                     <DropdownItem
-                                        key={columnCategoryIndex}
+                                        key={`${index}-${columnIndex}-${columnCategoryIndex}`}
                                         columnCategory={columnCategory}
                                         goToMenu="tertiary"
                                         index={columnCategories.columnNumber + '-' + columnCategoryIndex}
@@ -29,7 +29,7 @@ const SecondaryList: FC<DropdownListProps> = (props) => {
                         ))}
                     </Fragment>
                 ))
-                .filter((_, index) => index === props.historyOfIndexes[0])}
+                .filter((_, index) => index === historyOfIndexes[0])}
         </>
     );
 };

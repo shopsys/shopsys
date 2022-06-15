@@ -3,12 +3,12 @@ import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
 import { FC, Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
-const TertiaryList: FC<DropdownListProps> = (props) => {
-    const testIdentifier = 'layout-header-dropdownmenu-tertiarylist-';
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu-tertiarylist-';
 
+const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
     return (
         <>
-            {props.navigationItems
+            {navigationItems
                 .map((navigationItem, index) => (
                     <Fragment key={index}>
                         {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
@@ -17,7 +17,7 @@ const TertiaryList: FC<DropdownListProps> = (props) => {
                                     .map((columnCategory, columnCategoryIndex) => (
                                         <Fragment key={columnCategoryIndex}>
                                             <TertiaryListTitleStyled
-                                                data-testid={testIdentifier + '-' + index + '-' + columnCategoryIndex}
+                                                data-testid={TEST_IDENTIFIER + '-' + index + '-' + columnCategoryIndex}
                                             >
                                                 {columnCategory.name}
                                             </TertiaryListTitleStyled>
@@ -33,13 +33,13 @@ const TertiaryList: FC<DropdownListProps> = (props) => {
                                     .filter(
                                         (_, columnCategoryIndex) =>
                                             columnCategories.columnNumber + '-' + columnCategoryIndex ===
-                                            props.historyOfIndexes[1],
+                                            historyOfIndexes[1],
                                     )}
                             </Fragment>
                         ))}
                     </Fragment>
                 ))
-                .filter((_, index) => index === props.historyOfIndexes[0])}
+                .filter((_, index) => index === historyOfIndexes[0])}
         </>
     );
 };

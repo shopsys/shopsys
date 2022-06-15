@@ -1,5 +1,5 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
-import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//DropdownMenu';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
 import Link from 'next/link';
 import { FC, useContext, useEffect, useState } from 'react';
@@ -18,9 +18,16 @@ type DropdownItemProps = DropdownItemType & {
     columnCategoryChild?: NavigationSubCategoryType;
 };
 
-const DropdownItem: FC<DropdownItemProps> = (props) => {
-    const testIdentifier = 'layout-header-dropdownmenu-item';
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu-item';
 
+const DropdownItem: FC<DropdownItemProps> = ({
+    navigationItem,
+    variant,
+    columnCategory,
+    columnCategoryChild,
+    index,
+    goToMenu,
+}) => {
     const context = useContext(DropdownMenuContext);
     const [hasChildren, setHasChildren] = useState(false);
     const [itemLink, setItemLink] = useState('');
@@ -35,28 +42,28 @@ const DropdownItem: FC<DropdownItemProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.navigationItem !== undefined) {
-            setHasChildren(props.navigationItem.categoriesByColumns.length > 0);
-            setItemLink(props.navigationItem.link);
-            setItemName(props.navigationItem.name);
-        } else if (props.columnCategory !== undefined) {
-            setHasChildren(props.columnCategory.children.length > 0);
-            setItemLink(props.columnCategory.slug);
-            setItemName(props.columnCategory.name);
-        } else if (props.columnCategoryChild !== undefined) {
-            setItemLink(props.columnCategoryChild.slug);
-            setItemName(props.columnCategoryChild.name);
+        if (navigationItem !== undefined) {
+            setHasChildren(navigationItem.categoriesByColumns.length > 0);
+            setItemLink(navigationItem.link);
+            setItemName(navigationItem.name);
+        } else if (columnCategory !== undefined) {
+            setHasChildren(columnCategory.children.length > 0);
+            setItemLink(columnCategory.slug);
+            setItemName(columnCategory.name);
+        } else if (columnCategoryChild !== undefined) {
+            setItemLink(columnCategoryChild.slug);
+            setItemName(columnCategoryChild.name);
         }
-    }, [hasChildren, itemLink, itemName, props.columnCategory, props.columnCategoryChild, props.navigationItem]);
+    }, [hasChildren, itemLink, itemName, columnCategory, columnCategoryChild, navigationItem]);
 
     return (
-        <DropdownItemStyled variant={props.variant} onClick={scrollToTop} data-testid={testIdentifier}>
+        <DropdownItemStyled variant={variant} onClick={scrollToTop} data-testid={TEST_IDENTIFIER}>
             <Link href={itemLink} passHref>
-                <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={props.variant}>
+                <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={variant}>
                     {itemName}
                 </DropdownItemLinkStyled>
             </Link>
-            {hasChildren && <DropdownSlideRight goToMenu={props.goToMenu} index={props.index} />}
+            {hasChildren && <DropdownSlideRight goToMenu={goToMenu} index={index} />}
         </DropdownItemStyled>
     );
 };

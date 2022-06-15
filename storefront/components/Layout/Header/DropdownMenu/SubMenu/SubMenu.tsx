@@ -7,32 +7,29 @@ import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
+const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
+
 const SubMenu: FC = () => {
-    const testIdentifier = 'layout-header-dropdownmenu-submenu';
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const { isUserLoggedIn } = useCurrentUserData();
     const [storesUrl, loginUrl] = getInternationalizedStaticUrls(['/stores', '/login'], domainConfig.url);
     const [, [, logout]] = useAuth();
 
-    const logoutHandler = () => {
-        logout();
-    };
-
     return (
-        <SubMenuStyled data-testid={testIdentifier}>
+        <SubMenuStyled data-testid={TEST_IDENTIFIER}>
             <Link href="/" passHref>
-                <SubMenuItemStyled data-testid={testIdentifier + '-0'}>{t('Customer service')}</SubMenuItemStyled>
+                <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItemStyled>
             </Link>
             <Link href={storesUrl} passHref>
-                <SubMenuItemStyled data-testid={testIdentifier + '-1'}>{t('Stores')}</SubMenuItemStyled>
+                <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItemStyled>
             </Link>
 
             {isUserLoggedIn ? (
-                <SubMenuItemStyled onClick={logoutHandler}>{t('Logout')}</SubMenuItemStyled>
+                <SubMenuItemStyled onClick={logout}>{t('Logout')}</SubMenuItemStyled>
             ) : (
                 <Link href={loginUrl} passHref>
-                    <SubMenuItemStyled data-testid={testIdentifier + '-2'}>{t('Sign in')}</SubMenuItemStyled>
+                    <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItemStyled>
                 </Link>
             )}
         </SubMenuStyled>

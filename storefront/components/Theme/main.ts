@@ -67,9 +67,9 @@ export const theme = {
     zIndex: {
         hidden: -1000,
         above: 1,
-        menu: 501,
-        aboveMenu: 750,
         overlay: 1000,
+        menu: 1010,
+        aboveMenu: 10020,
         cart: 6000,
         aboveOverlay: 10001,
         maximum: 10100,
