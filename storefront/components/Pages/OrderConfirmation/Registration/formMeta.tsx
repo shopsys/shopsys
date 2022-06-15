@@ -1,12 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'components/Basic/Link';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { UseFormReturn } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import * as Yup from 'yup';
 
 export const useRegistrationAfterOrderForm = (): [
@@ -47,8 +46,7 @@ export const useRegistrationAfterOrderFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
 ): RegistrationAfterOrderFormMetaType => {
     const t = useTypedTranslationFunction();
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [TermsAndConditionUrl] = getInternationalizedStaticUrls(['/terms-and-conditions'], url);
+    const termsAndConditionUrl = useGetTermsAndConditionsUrl();
 
     const formMeta = {
         formName: 'registration-after-order-form',
@@ -65,7 +63,7 @@ export const useRegistrationAfterOrderFormMeta = (
                         i18nKey="I agree with terms and conditions and privacy policy"
                         defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
                         components={{
-                            lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
+                            lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
                         }}
                     />
                 ),

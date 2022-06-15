@@ -111,7 +111,7 @@
     "I agree to receive the newsletter": "Súhlasím so zasielaním newsletter",
     "I agree with terms and conditions and privacy policy": "Súhlasím s <lnk1>obchodnými podmienkami</lnk1> a spracovaním osobných údajov",
     "I have a discount coupon": "Mám zľavový kupón",
-    "I take note of the processing of personal data": "Musíte súhlasiť so spracovaním osobných údajov",
+    "PrivacyPolicyCheckbox": "Súhlasím so <lnk1>spracovaním osobných údajov</lnk1>.",
     "I want to register with an order": "Chcem sa registrovať s objednávkou",
     "I want to subscribe to the newsletter": "Chcem sa prihlásiť k odberu newsletteru",
     "In stock": "Skladom",

@@ -17,13 +17,13 @@ import { useContactMutationApi, useSettingsQueryApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import React, { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { ContactFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const Contact: FC = () => {
     const t = useTypedTranslationFunction();
@@ -33,7 +33,7 @@ const Contact: FC = () => {
     const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
 
     const { url } = useShopsysSelector((state) => state.domain);
-    const [gdprUrl] = getInternationalizedStaticUrls(['/gdpr'], url);
+    const gdprUrl = useGetPrivacyPolicyUrl();
 
     const [contactResult, contactMutation] = useContactMutationApi();
     useHandleFormSuccessfulSubmit(

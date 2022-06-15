@@ -2540,6 +2540,21 @@ export type AdvertsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type AdvertsQueryApi = { __typename?: 'Query', adverts: Array<{ __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', name: string, slug: string }> } | { __typename: 'AdvertImage', link: string | null, uuid: string, name: string, positionName: string, type: string, image: Array<{ __typename: 'Image', position: number | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, imageMobile: Array<{ __typename: 'Image', position: number | null, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, categories: Array<{ __typename: 'Category', name: string, slug: string }> }> };
 
+export type CookiesArticleUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type CookiesArticleUrlQueryApi = { __typename?: 'Query', cookiesArticle: { __typename?: 'Article', slug: string } | null };
+
+export type PrivacyPolicyArticleUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type PrivacyPolicyArticleUrlQueryApi = { __typename?: 'Query', privacyPolicyArticle: { __typename?: 'Article', slug: string } | null };
+
+export type TermsAndConditionsArticleUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type TermsAndConditionsArticleUrlQueryApi = { __typename?: 'Query', termsAndConditionsArticle: { __typename?: 'Article', slug: string } | null };
+
 export type ArticleDetailFragmentApi = { __typename: 'Article', uuid: string, slug: string, placement: string, text: string | null, seoTitle: string | null, seoMetaDescription: string | null, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> };
 
 export type SimpleArticleFragmentApi = { __typename: 'Article', uuid: string, name: string, slug: string, placement: string, external: boolean };
@@ -4450,6 +4465,39 @@ export const AdvertsQueryDocumentApi = gql`
 
 export function useAdvertsQueryApi(options: Omit<Urql.UseQueryArgs<AdvertsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<AdvertsQueryApi>({ query: AdvertsQueryDocumentApi, ...options });
+};
+export const CookiesArticleUrlQueryDocumentApi = gql`
+    query CookiesArticleUrlQuery {
+  cookiesArticle {
+    slug
+  }
+}
+    `;
+
+export function useCookiesArticleUrlQueryApi(options: Omit<Urql.UseQueryArgs<CookiesArticleUrlQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<CookiesArticleUrlQueryApi>({ query: CookiesArticleUrlQueryDocumentApi, ...options });
+};
+export const PrivacyPolicyArticleUrlQueryDocumentApi = gql`
+    query PrivacyPolicyArticleUrlQuery {
+  privacyPolicyArticle {
+    slug
+  }
+}
+    `;
+
+export function usePrivacyPolicyArticleUrlQueryApi(options: Omit<Urql.UseQueryArgs<PrivacyPolicyArticleUrlQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<PrivacyPolicyArticleUrlQueryApi>({ query: PrivacyPolicyArticleUrlQueryDocumentApi, ...options });
+};
+export const TermsAndConditionsArticleUrlQueryDocumentApi = gql`
+    query TermsAndConditionsArticleUrlQuery {
+  termsAndConditionsArticle {
+    slug
+  }
+}
+    `;
+
+export function useTermsAndConditionsArticleUrlQueryApi(options: Omit<Urql.UseQueryArgs<TermsAndConditionsArticleUrlQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<TermsAndConditionsArticleUrlQueryApi>({ query: TermsAndConditionsArticleUrlQueryDocumentApi, ...options });
 };
 export const ArticlesQueryDocumentApi = gql`
     query ArticlesQuery($placement: [ArticlePlacementTypeEnum!], $first: Int) {

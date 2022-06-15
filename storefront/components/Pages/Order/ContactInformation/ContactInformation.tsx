@@ -7,14 +7,15 @@ import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';
+import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
+import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import Trans from 'next-translate/Trans';
 import { FC, useEffect, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -23,8 +24,8 @@ const ContactInformation: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [TermsAndConditionUrl, GdprUrl] = getInternationalizedStaticUrls(['/terms-and-conditions', '/gdpr'], url);
+    const termsAndConditionUrl = useGetTermsAndConditionsUrl();
+    const gdprUrl = useGetPrivacyPolicyUrl();
     const { isUserLoggedIn } = useCurrentUserData();
 
     useEffect(() => {
@@ -75,8 +76,8 @@ const ContactInformation: FC = () => {
                         i18nKey="ContactInformationInfo"
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                         components={{
-                            lnk1: <Link href={TermsAndConditionUrl} linkType="external" target="_blank" />,
-                            lnk2: <Link href={GdprUrl} linkType="external" target="_blank" />,
+                            lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
+                            lnk2: <Link href={gdprUrl} linkType="external" target="_blank" />,
                         }}
                     />
                 </ContactInformationTextStyled>

@@ -1,6 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import Link from 'components/Basic/Link';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -27,7 +30,7 @@ type NewsletterFormMetaType = {
     fields: {
         [key in keyof NewsletterFormType]: {
             name: key;
-            label: string;
+            label: string | JSX.Element;
             errorMessage: string | undefined;
         };
     };
@@ -37,6 +40,7 @@ export const useNewsletterFormMeta = (
     formProviderMethods: UseFormReturn<NewsletterFormType>,
 ): NewsletterFormMetaType => {
     const t = useTypedTranslationFunction();
+    const gdprUrl = useGetPrivacyPolicyUrl();
 
     const formMeta = {
         formName: 'newsletter-form',
@@ -52,7 +56,15 @@ export const useNewsletterFormMeta = (
             },
             privacyPolicy: {
                 name: 'privacyPolicy' as const,
-                label: t('I take note of the processing of personal data'),
+                label: (
+                    <Trans
+                        i18nKey="PrivacyPolicyCheckbox"
+                        defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
+                        components={{
+                            lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                        }}
+                    />
+                ),
                 errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
             },
         },

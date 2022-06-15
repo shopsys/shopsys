@@ -585,3 +585,14 @@
     - all GraphQL fragments now have `__typename` field
 - tips on how to implement them
     - add `__typename` to your custom fragments to ensure that this field is always presented in the data
+
+### Links to special pages
+- [FWCC-511](https://shopsys.atlassian.net/browse/FWCC-511)
+- [FWCC-511 - links to special pages](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/646/diffs)
+- the reasons these changes were introduced:
+    - links to the special pages have to match the settings in the administration
+- most significant changes
+    - GDPR and "terms and conditions" pages were removed from the `getInternationalizedStaticUrls` helper
+    - url for the "terms and conditions" page can be obtained from the `useGetTermsAndConditionsArticleUrl` hook
+    - url for the "privacy policy" page can be obtained from the `useGetPrivacyPolicyArticleUrl` hook
+    - url for the "cookies" page can be obtained from the `useGetCookiesArticleUrl` hook

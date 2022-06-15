@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Link from 'components/Basic/Link';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
 import { CustomerTypeEnum } from 'types/customer';
 import { SelectOptionType } from 'types/selectOptions';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import * as Yup from 'yup';
 
 export type RegistrationFormType = {
@@ -151,8 +150,7 @@ export const useRegistrationFormMeta = (
 ): RegistrationFormMetaType => {
     const t = useTypedTranslationFunction();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [GdprUrl] = getInternationalizedStaticUrls(['/gdpr'], url);
+    const gdprUrl = useGetPrivacyPolicyUrl();
 
     const customerFieldName = 'customer' as const;
 
@@ -251,7 +249,7 @@ export const useRegistrationFormMeta = (
                         i18nKey="GdprAgreementCheckbox"
                         defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
                         components={{
-                            lnk1: <Link href={GdprUrl} linkType="external" target="_blank" />,
+                            lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
                         }}
                     />
                 ),
