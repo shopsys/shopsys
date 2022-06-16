@@ -1,4 +1,5 @@
 fragment ListedStoreFragment on Store {
+    __typename
     slug
     uuid
     name

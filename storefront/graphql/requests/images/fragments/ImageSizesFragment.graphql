@@ -1,4 +1,5 @@
 fragment ImageSizesFragment on Image {
+    __typename
     sizes {
         ...ImageSizeFragment
     }

@@ -1,9 +1,11 @@
 fragment CategoryPreviewFragment on Category {
+    __typename
     uuid
     name
     slug
     ...CategoryImagesDefaultFragment
-    products{
+    products {
+        __typename
         totalCount
     }
 }

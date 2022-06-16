@@ -35,7 +35,7 @@ export const mapProductDetailApiData = (
     return {
         ...productDetailApiData,
         ...mapProductDetailInterface(productDetailApiData, currencyCode),
-        __typename: productDetailApiData.__typename !== undefined ? productDetailApiData.__typename : 'RegularProduct',
+        __typename: productDetailApiData.__typename,
         storeAvailabilities: mapStoreAvailabilities(productDetailApiData.storeAvailabilities),
         shortDescription: productDetailApiData.shortDescription !== null ? productDetailApiData.shortDescription : '',
     };

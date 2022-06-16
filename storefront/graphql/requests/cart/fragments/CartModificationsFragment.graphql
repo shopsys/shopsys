@@ -1,6 +1,9 @@
 fragment CartModificationsFragment on CartInterface {
+    __typename
     modifications{
+        __typename
         itemModifications {
+            __typename
             noLongerListableCartItems {
                 ...CartItemFragment
             }
@@ -15,11 +18,13 @@ fragment CartModificationsFragment on CartInterface {
             }
         }
         transportModifications {
+            __typename
             transportPriceChanged
             transportUnavailable
             transportWeightLimitExceeded
         }
         paymentModifications {
+            __typename
             paymentPriceChanged
             paymentUnavailable
         }

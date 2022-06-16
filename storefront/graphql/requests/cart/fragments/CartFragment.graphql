@@ -1,4 +1,5 @@
 fragment CartFragment on CartInterface {
+    __typename
     uuid
     items {
         ...CartItemFragment

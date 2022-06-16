@@ -575,3 +575,13 @@
       - `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` -> `GTM_ID`
       - `NEXT_PUBLIC_PACKETERY_API_KEY` -> `PACKETERY_API_KEY`
       - internally `NEXT_PUBLIC_SENTRY_DSN` and `NEXT_PUBLIC_SENTRY_ENVIRONMENT` were renamed, but no action is necessary from your side, if you didn't modify sentry behavior
+
+### Add typename to the GraphQL fragments
+- [FWCC-1050](https://shopsys.atlassian.net/browse/FWCC-1050)
+- [FWCC-1050 - add typename to fragments](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/647/diffs)
+- the reasons these changes were introduced:
+    - there is a bug (or behavior) in the URQl package that causes that the __typename is not presented in fragments when read from the cache (if the __typename is not hardcoded in the fragment definition)
+- most significant changes
+    - all GraphQL fragments now have `__typename` field
+- tips on how to implement them
+    - add `__typename` to your custom fragments to ensure that this field is always presented in the data

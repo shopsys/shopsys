@@ -1,4 +1,5 @@
 fragment ListedProductConnectionFragment on ProductConnection {
+    __typename
     totalCount
     productFilterOptions {
         ...ProductFilterOptionsFragment

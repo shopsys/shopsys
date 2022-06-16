@@ -1,4 +1,5 @@
 fragment SimplePaymentFragment on Payment {
+    __typename
     uuid
     name
     description
@@ -11,6 +12,7 @@ fragment SimplePaymentFragment on Payment {
     }
     type
     goPayPaymentMethod {
+        __typename
         identifier
         name
         paymentGroup

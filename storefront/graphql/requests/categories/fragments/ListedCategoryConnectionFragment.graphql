@@ -1,4 +1,5 @@
 fragment ListedCategoryConnectionFragment on CategoryConnection {
+    __typename
     totalCount
     edges {
         node {

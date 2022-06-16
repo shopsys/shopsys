@@ -1,5 +1,6 @@
 fragment BreadcrumbFragment on Breadcrumb {
     breadcrumb {
+        __typename
         name
         slug
     }

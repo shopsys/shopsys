@@ -1,13 +1,17 @@
 fragment NotificationBarsFragment on NotificationBar {
+    __typename
     text
     rgbColor
     images {
+        __typename
         sizes {
+            __typename
             size
             url
             width
             height
             additionalSizes {
+                __typename
                 media
                 url
                 width

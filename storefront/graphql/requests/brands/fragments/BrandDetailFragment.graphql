@@ -1,4 +1,5 @@
 fragment BrandDetailFragment on Brand {
+    __typename
     uuid
     slug
     ...BreadcrumbFragment

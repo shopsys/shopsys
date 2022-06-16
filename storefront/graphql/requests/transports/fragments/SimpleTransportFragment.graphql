@@ -1,4 +1,5 @@
 fragment SimpleTransportFragment on Transport {
+    __typename
     uuid
     name
     description

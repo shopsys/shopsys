@@ -1,4 +1,5 @@
 fragment OrderListFragment on OrderConnection {
+    __typename
     totalCount
     pageInfo {
         ...PageInfoFragment

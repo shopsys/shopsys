@@ -1,4 +1,5 @@
 fragment PriceFragment on Price {
+    __typename
     priceWithVat
     priceWithoutVat
     vatAmount

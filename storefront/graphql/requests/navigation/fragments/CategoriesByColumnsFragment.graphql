@@ -1,5 +1,7 @@
 fragment CategoriesByColumnFragment on NavigationItem {
-    categoriesByColumns{
+    __typename
+    categoriesByColumns {
+        __typename
         columnNumber
         ...ColumnCategoriesFragment
     }

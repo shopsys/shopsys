@@ -1,4 +1,5 @@
 fragment ListedStoreConnectionFragment on StoreConnection {
+    __typename
     edges {
         node {
             ...ListedStoreFragment

@@ -1,4 +1,5 @@
 fragment ListedBlogArticleFragment on BlogArticle {
+    __typename
     uuid
     name
     link

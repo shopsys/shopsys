@@ -3,6 +3,7 @@ fragment ProductFilterOptionsParametersCheckboxFragment on ParameterCheckboxFilt
     uuid
     __typename
     values {
+        __typename
         uuid
         text
         count

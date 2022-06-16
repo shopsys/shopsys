@@ -1,4 +1,5 @@
 fragment ProductDetailInterfaceFragment on Product {
+    __typename
     uuid
     slug
     fullName

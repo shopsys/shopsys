@@ -1,4 +1,5 @@
 fragment SimpleProductFragment on Product {
+    __typename
     uuid
     catalogNumber
     fullName

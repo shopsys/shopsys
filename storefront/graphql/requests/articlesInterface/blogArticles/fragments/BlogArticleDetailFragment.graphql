@@ -1,4 +1,5 @@
 fragment BlogArticleDetailFragment on BlogArticle {
+    __typename
     uuid
     name
     slug

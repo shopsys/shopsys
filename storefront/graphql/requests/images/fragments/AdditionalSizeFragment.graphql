@@ -1,4 +1,5 @@
 fragment AdditionalSizeFragment on AdditionalSize {
+    __typename
     height
     media
     url

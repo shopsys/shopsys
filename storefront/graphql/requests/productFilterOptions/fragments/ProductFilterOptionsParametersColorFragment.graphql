@@ -3,6 +3,7 @@ fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOpti
     uuid
     __typename
     values {
+        __typename
         uuid
         text
         count

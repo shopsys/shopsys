@@ -1,4 +1,5 @@
 fragment SimpleBlogArticleFragment on BlogArticle {
+    __typename
     name
     slug
     ...BlogArticleImageListFragment

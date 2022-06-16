@@ -5,6 +5,7 @@ fragment ProductFilterOptionsParametersSliderFragment on ParameterSliderFilterOp
     minimalValue
     maximalValue
     unit {
+        __typename
         name
     }
     isCollapsed

@@ -24,6 +24,7 @@ fragment ListedVariantFragment on Variant {
         ...SimpleBrandFragment
     }
     categories {
+        __typename
         name
     }
 }

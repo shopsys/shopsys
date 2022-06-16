@@ -1,4 +1,5 @@
 fragment ProductFilterOptionsFragment on ProductFilterOptions {
+    __typename
     minimalPrice
     maximalPrice
     brands {

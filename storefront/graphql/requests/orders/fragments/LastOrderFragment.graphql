@@ -1,4 +1,5 @@
 fragment LastOrderFragment on Order {
+    __typename
     transport {
         ...SimpleTransportFragment
     }

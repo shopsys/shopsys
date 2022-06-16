@@ -20,6 +20,7 @@ fragment ListedProductFragment on Product {
         ...SimpleBrandFragment
     }
     categories {
+        __typename
         name
     }
 }

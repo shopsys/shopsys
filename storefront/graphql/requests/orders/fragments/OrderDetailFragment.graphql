@@ -1,4 +1,5 @@
 fragment OrderDetailFragment on Order {
+    __typename
     uuid
     number
     creationDate
@@ -6,9 +7,11 @@ fragment OrderDetailFragment on Order {
         ...OrderDetailItemFragment
     }
     transport {
+        __typename
         name
     }
     payment {
+        __typename
         name
     }
     status
@@ -23,6 +26,7 @@ fragment OrderDetailFragment on Order {
     city
     postcode
     country {
+        __typename
         name
     }
     differentDeliveryAddress
@@ -34,6 +38,7 @@ fragment OrderDetailFragment on Order {
     deliveryCity
     deliveryPostcode
     deliveryCountry {
+        __typename
         name
     }
     note

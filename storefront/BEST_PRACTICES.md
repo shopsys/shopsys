@@ -66,3 +66,8 @@ const mySuperHandler = useCallback((id: number) => () => {
 <a onClick={mySuperHandler(1)}>Click me</a>
 ```
 
+### __typename in the GraphQL fragments
+
+- we use the `__typename` for business logic a lot in our codebase
+- there is a bug (or a behavior) in the URQl package that causes the `__typename` to be missing when it is read from the cache
+- to ensure that the `__typename` is always available, we add it to the fragments

@@ -1,4 +1,5 @@
 fragment BlogArticleConnectionFragment on BlogArticleConnection {
+    __typename
     totalCount
     pageInfo {
         ...PageInfoFragment

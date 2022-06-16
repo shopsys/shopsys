@@ -1,4 +1,5 @@
 fragment ArticleDetailFragment on Article {
+    __typename
     uuid
     slug
     placement

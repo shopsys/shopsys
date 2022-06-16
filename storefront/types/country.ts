@@ -1,3 +1,1 @@
-import { CountryFragmentApi } from 'graphql/generated';
-
-export type CountryType = CountryFragmentApi;
+export type CountryType = { name: string; code: string };

@@ -1,4 +1,5 @@
 fragment OrderDetailItemFragment on OrderItem {
+    __typename
     name
     unitPrice {
         ...PriceFragment

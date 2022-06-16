@@ -1,4 +1,5 @@
 fragment CategoryDetailFragment on Category {
+    __typename
     uuid
     slug
     originalCategorySlug
@@ -13,6 +14,7 @@ fragment CategoryDetailFragment on Category {
     }
     ...ListedProductsFragment
     readyCategorySeoMixLinks {
+        __typename
         name
         slug
     }

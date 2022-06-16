@@ -1,4 +1,5 @@
 fragment SeoSettingFragment on SeoSetting {
+    __typename
     title
     titleAddOn
     metaDescription
