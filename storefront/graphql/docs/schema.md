@@ -5124,6 +5124,15 @@ The parameter maximal value
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>selectedValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The pre-selected value (used for "ready category seo mixes")
+
+</td>
+</tr>
 </tbody>
 </table>
 

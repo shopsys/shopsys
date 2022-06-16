@@ -12,6 +12,9 @@ query ReadyCategorySeoMix($slug: String!) {
                                 isSelected
                             }
                         }
+                        ...on ParameterSliderFilterOption {
+                            selectedValue
+                        }
                     }
                     flags {
                         flag {

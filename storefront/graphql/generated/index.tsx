@@ -1452,6 +1452,8 @@ export type ParameterSliderFilterOptionApi = ParameterFilterOptionInterfaceApi &
   minimalValue: Scalars['Float'];
   /** The parameter name */
   name: Scalars['String'];
+  /** The pre-selected value (used for "ready category seo mixes") */
+  selectedValue: Maybe<Scalars['Float']>;
   /** The parameter unit */
   unit: Maybe<UnitApi>;
   /** The parameter UUID */

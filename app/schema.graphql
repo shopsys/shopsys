@@ -1606,6 +1606,9 @@ type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
 
   """The parameter maximal value"""
   maximalValue: Float!
+
+  """The pre-selected value (used for "ready category seo mixes")"""
+  selectedValue: Float
 }
 
 """Represents a parameter value"""

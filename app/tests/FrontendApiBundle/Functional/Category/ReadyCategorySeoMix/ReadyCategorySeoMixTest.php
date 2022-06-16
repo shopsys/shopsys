@@ -214,6 +214,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
         $this->assertSelectedFlags($data['products']['productFilterOptions']['flags']);
         $this->assertSelectedParameterCheckboxFilterOptions($data['products']['productFilterOptions']['parameters']);
+        $this->assertSelectedParameterSliderFilterOptions($data['products']['productFilterOptions']['parameters']);
     }
 
     /**
@@ -255,6 +256,23 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 foreach ($parameterData['values'] as $valueData) {
                     $this->assertFalse($valueData['isSelected']);
                 }
+            }
+        }
+    }
+
+    /**
+     * @param array $parameters
+     */
+    private function assertSelectedParameterSliderFilterOptions(array $parameters): void
+    {
+        $firstDomainLocale = $this->getFirstDomainLocale();
+        /** @var \App\Model\Product\Parameter\Parameter $warrantyParameter */
+        $warrantyParameter = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $fourValue = t('4', [], 'dataFixtures', $firstDomainLocale);
+
+        foreach ($parameters as $parameterData) {
+            if ($parameterData['uuid'] === $warrantyParameter->getUuid()) {
+                $this->assertSame($fourValue, (string)$parameterData['selectedValue']);
             }
         }
     }

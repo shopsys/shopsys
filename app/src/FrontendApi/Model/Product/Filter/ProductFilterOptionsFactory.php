@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
@@ -73,11 +74,16 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions
      * @param bool $collapsed
+     * @param float|null $selectedValue
      * @return \App\FrontendApi\Model\Product\Filter\ParameterFilterOption
      */
-    protected function createParameterFilterOption(BaseParameter $parameter, array $parameterValueFilterOptions, bool $collapsed = false): ParameterFilterOption
-    {
-        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed);
+    protected function createParameterFilterOption(
+        BaseParameter $parameter,
+        array $parameterValueFilterOptions,
+        bool $collapsed = false,
+        ?float $selectedValue = null
+    ): ParameterFilterOption {
+        return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed, $selectedValue);
     }
 
     /**
@@ -281,7 +287,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterOptions->parameters[] = $this->createParameterFilterOption(
                 $parameter,
                 $parameterValueFilterOptions,
-                in_array($parameter, $collapsedParameters, true)
+                in_array($parameter, $collapsedParameters, true),
+                $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice)
             );
         }
     }
@@ -368,5 +375,28 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         }
 
         return false;
+    }
+
+    /**
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterFilterChoice
+     * @return float|null
+     */
+    private function getParameterSelectedValue(?ReadyCategorySeoMix $readyCategorySeoMix, ParameterFilterChoice $parameterFilterChoice): ?float
+    {
+        if ($readyCategorySeoMix === null) {
+            return null;
+        }
+
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $categorySeoMixParameterParameterValue) {
+            if ($categorySeoMixParameterParameterValue->getParameter()->isSlider()
+                && $categorySeoMixParameterParameterValue->getParameter() === $parameterFilterChoice->getParameter()
+                && in_array($categorySeoMixParameterParameterValue->getParameterValue(), $parameterFilterChoice->getValues(), true)
+            ) {
+                return (float)$categorySeoMixParameterParameterValue->getParameterValue()->getText();
+            }
+        }
+
+        return null;
     }
 }
