@@ -69,6 +69,7 @@ const moduleExports = nextTranslate({
     },
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
+        gtmId: process.env.GTM_ID,
         sentryEnvironment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || '',
         sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
         domains: [
