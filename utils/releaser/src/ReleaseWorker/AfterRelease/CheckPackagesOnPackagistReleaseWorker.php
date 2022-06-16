@@ -50,7 +50,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
         $packagesWithVersions = $this->packageProvider->getPackagesWithVersionsByOrganization('shopsys');
 
         $packageWithoutVersion = [];
-        $versionsAsString = $version->getVersionString();
+        $versionsAsString = $version->getOriginalString();
         foreach ($packagesWithVersions as $package => $packageVersions) {
             if (in_array($versionsAsString, $packageVersions, true)) {
                 continue;

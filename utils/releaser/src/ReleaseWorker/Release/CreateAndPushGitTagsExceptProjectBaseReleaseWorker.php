@@ -26,6 +26,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         'shopsys/phpstorm-inspect',
         'shopsys/changelog-linker',
         'shopsys/monorepo-builder',
+        'shopsys/backend-api',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
@@ -68,7 +69,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $packages = $this->packageProvider->getPackagesByOrganization('shopsys', self::EXCLUDED_PACKAGES);
         $packageNames = str_replace('shopsys/', '', $packages);
 
-        $versionString = $version->getVersionString();
+        $versionString = $version->getOriginalString();
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
