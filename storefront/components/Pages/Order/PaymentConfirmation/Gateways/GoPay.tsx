@@ -3,6 +3,7 @@ import { PayOrderMutationApi, usePayOrderMutationApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 
 type GoPayGatewayProps = {
@@ -11,6 +12,7 @@ type GoPayGatewayProps = {
 
 const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
     const t = useTypedTranslationFunction();
+    const { push } = useRouter();
     const [payOrderResult, payOrder] = usePayOrderMutationApi();
 
     const getGatewayVariables = async (orderUuid: string) => {
@@ -50,8 +52,11 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
     useEffect(() => {
         {
             goPayInit(payOrderResult.data?.PayOrder.goPayCreatePaymentSetup ?? null);
+            if (payOrderResult.data?.PayOrder.goPayCreatePaymentSetup?.gatewayUrl !== undefined) {
+                push(payOrderResult.data.PayOrder.goPayCreatePaymentSetup.gatewayUrl);
+            }
         }
-    }, [payOrderResult]);
+    }, [payOrderResult, push]);
 
     return (
         <form
