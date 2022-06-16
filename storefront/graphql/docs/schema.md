@@ -3508,6 +3508,15 @@ that will be added to current products result.
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the option is already selected (used for "ready category seo mixes")
+
+</td>
+</tr>
 </tbody>
 </table>
 

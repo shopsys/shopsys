@@ -1,0 +1,16 @@
+query ReadyCategorySeoMix($slug: String!) {
+    slug(slug: $slug) {
+        ... on Category {
+            products {
+                productFilterOptions {
+                    flags {
+                        flag {
+                            uuid
+                        }
+                        isSelected
+                    }
+                }
+            }
+        }
+    }
+}

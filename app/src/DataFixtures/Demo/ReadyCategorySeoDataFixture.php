@@ -21,6 +21,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     public const READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
     public const READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
     public const READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
+    public const READY_CATEGORY_SEO_PC_NEW_WITH_USB = 'ready_category_seo_pc_new_with_usb';
 
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
@@ -213,6 +214,30 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ['televize-audio-plasma-s-hdmi'],
             1,
             self::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI
+        );
+
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        /** @var \App\Model\Product\Flag\Flag $newFlag */
+        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        /** @var \App\Model\Product\Parameter\Parameter $usbParameter */
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
+        $choseCategorySeoMixCombinationArray = [
+            'domainId' => 1,
+            'categoryId' => $categoryPc->getId(),
+            'flagId' => $newFlag->getId(),
+            'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_DESC,
+            'parameterValueIdsByParameterIds' => [
+                $usbParameter->getId() => $this->getParameterValueId(t('Yes', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
+            ],
+        ];
+        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('New computers with USB', [], 'dataFixtures', $firstDomainLocale),
+            ['nove-pc-s-usb'],
+            1,
+            self::READY_CATEGORY_SEO_PC_NEW_WITH_USB
         );
     }
 

@@ -6,6 +6,7 @@ namespace App\FrontendApi\Model\Product\Filter;
 
 use App\Model\Category\Category;
 use App\Model\Category\CategoryParameterFacade;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
@@ -17,17 +18,16 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag as BaseFlag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption as BaseFlagFilterOption;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory as BaseProductFilterOptionsFactory;
 
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
- * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption createFlagFilterOption(\App\Model\Product\Flag\Flag $flag, int $count, bool $isAbsolute)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\BrandFilterOption createBrandFilterOption(\App\Model\Product\Brand\Brand $brand, int $count, bool $isAbsolute)
- * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptions(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method fillFlags(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method fillBrands(\Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method bool isParameterFiltered(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method bool isParameterValueFiltered(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue $parameterValue, \App\Model\Product\Filter\ProductFilterData $productFilterData)
@@ -157,13 +157,15 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $searchText
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForCategory(
         BaseCategory $category,
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -179,7 +181,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
+            $readyCategorySeoMix
         );
         $this->fillBrands(
             $productFilterOptions,
@@ -274,5 +277,68 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 in_array($parameter, $collapsedParameters, true)
             );
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
+     */
+    protected function createProductFilterOptions(
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        BaseProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+    ): ProductFilterOptions {
+        $productFilterOptions = $this->createProductFilterOptionsInstance();
+        $productFilterOptions->minimalPrice = $productFilterConfig->getPriceRange()->getMinimalPrice();
+        $productFilterOptions->maximalPrice = $productFilterConfig->getPriceRange()->getMaximalPrice();
+
+        $productFilterOptions->inStock = $productFilterCountData->countInStock ?? 0;
+
+        $this->fillFlags($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData, $readyCategorySeoMix);
+
+        return $productFilterOptions;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     */
+    protected function fillFlags(
+        ProductFilterOptions $productFilterOptions,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        BaseProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+    ): void {
+        $isAbsolute = count($productFilterData->flags) === 0;
+
+        /** @var \App\Model\Product\Flag\Flag $flag */
+        foreach ($productFilterConfig->getFlagChoices() as $flag) {
+            $productFilterOptions->flags[] = $this->createFlagFilterOption(
+                $flag,
+                $productFilterCountData->countByFlagId[$flag->getId()] ?? 0,
+                $isAbsolute,
+                $readyCategorySeoMix !== null && $readyCategorySeoMix->getFlag() === $flag
+            );
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag $flag
+     * @param int $count
+     * @param bool $isAbsolute
+     * @param bool $isSelected
+     * @return \App\FrontendApi\Model\Product\Filter\FlagFilterOption
+     */
+    protected function createFlagFilterOption(BaseFlag $flag, int $count, bool $isAbsolute, bool $isSelected = false): BaseFlagFilterOption
+    {
+        return new FlagFilterOption($flag, $count, $isAbsolute, $isSelected);
     }
 }

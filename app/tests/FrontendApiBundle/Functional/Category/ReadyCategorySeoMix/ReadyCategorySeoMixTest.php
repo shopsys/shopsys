@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category\ReadyCategorySeoMix;
 
+use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -197,5 +198,27 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 }
             }
         ';
+    }
+
+    public function testReadyCategorySeoMixReturnsSelectedFilterOptions(): void
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
+        $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
+        /** @var \App\Model\Product\Flag\Flag $newFlag */
+        $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+            'slug' => $urlSlug,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'slug');
+
+        foreach ($data['products']['productFilterOptions']['flags'] as $flagData) {
+            if ($flagData['flag']['uuid'] === $newFlag->getUuid()) {
+                $this->assertTrue($flagData['isSelected']);
+            } else {
+                $this->assertFalse($flagData['isSelected']);
+            }
+        }
     }
 }

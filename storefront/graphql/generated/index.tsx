@@ -797,6 +797,8 @@ export type FlagFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
 };
 
 export type GoPayBankSwiftApi = {
