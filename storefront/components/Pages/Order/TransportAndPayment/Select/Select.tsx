@@ -8,6 +8,7 @@ import { useTransportAndPaymentFormMeta } from 'components/Pages/Order/Transport
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGoPaySwiftsQueryApi } from 'graphql/generated';
+import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
@@ -15,6 +16,7 @@ import { useChangeTransportInCart } from 'hooks/cart/UseChangeTransportInCart';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
+import getConfig from 'next/config';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
@@ -22,6 +24,8 @@ import { TransportAndPaymentFormType } from 'types/form';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
+
+const { publicRuntimeConfig } = getConfig();
 
 type SelectProps = {
     transports: TransportType[];
@@ -63,16 +67,19 @@ const Select: FC<SelectProps> = (props) => {
     const openPacketeryPopup = useCallback(
         (newTransport: TransportType) => {
             if (!isPickupPlaceSelected) {
-                const packeteryApiKey = process.env.NEXT_PUBLIC_PACKETERY_API_KEY;
-                if (packeteryApiKey !== undefined) {
-                    packeteryPick(
-                        packeteryApiKey,
-                        (point) => {
-                            onSelectPacketeryPickupPlaceCallback(point, newTransport);
-                        },
-                        { language: defaultLocale },
-                    );
+                const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
+                if (packeteryApiKey === undefined || packeteryApiKey.length === 0) {
+                    logException(new Error(`Packeta API key was not set`));
+                    return;
                 }
+
+                packeteryPick(
+                    packeteryApiKey,
+                    (point) => {
+                        onSelectPacketeryPickupPlaceCallback(point, newTransport);
+                    },
+                    { language: defaultLocale },
+                );
             }
         },
         [defaultLocale, isPickupPlaceSelected, onSelectPacketeryPickupPlaceCallback],

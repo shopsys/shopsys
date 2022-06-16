@@ -81,6 +81,7 @@ function deploy() {
         ["GTM_ID"]=${GTM_ID}
         ["SENTRY_DSN"]=${SENTRY_DSN}
         ["SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
+        ["PACKETERY_API_KEY"]=${PACKETERY_API_KEY}
         ["REDIS_PREFIX"]=${PROJECT_NAME}
     )
 
