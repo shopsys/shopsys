@@ -1478,6 +1478,8 @@ export type ParameterValueColorFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
   /** RGB hex of color parameter */
   rgbHex: Maybe<Scalars['String']>;
   /** Parameter value */
@@ -1497,6 +1499,8 @@ export type ParameterValueFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
   /** Parameter value */
   text: Scalars['String'];
   /** UUID */

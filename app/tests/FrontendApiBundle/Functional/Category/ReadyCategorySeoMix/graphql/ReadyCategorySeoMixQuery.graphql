@@ -3,6 +3,16 @@ query ReadyCategorySeoMix($slug: String!) {
         ... on Category {
             products {
                 productFilterOptions {
+                    parameters {
+                        uuid
+                        __typename
+                        ...on ParameterCheckboxFilterOption {
+                            values {
+                                text
+                                isSelected
+                            }
+                        }
+                    }
                     flags {
                         flag {
                             uuid

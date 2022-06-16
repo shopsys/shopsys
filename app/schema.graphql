@@ -1637,6 +1637,11 @@ type ParameterValueColorFilterOption {
   """
   isAbsolute: Boolean!
 
+  """
+  Indicator whether the option is already selected (used for "ready category seo mixes")
+  """
+  isSelected: Boolean!
+
   """RGB hex of color parameter"""
   rgbHex: String
 }
@@ -1660,6 +1665,11 @@ type ParameterValueFilterOption {
   that will be added to current products result.
   """
   isAbsolute: Boolean!
+
+  """
+  Indicator whether the option is already selected (used for "ready category seo mixes")
+  """
+  isSelected: Boolean!
 }
 
 """Represents and encapsulates a string for password"""

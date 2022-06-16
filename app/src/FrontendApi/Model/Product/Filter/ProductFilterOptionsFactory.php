@@ -9,6 +9,8 @@ use App\Model\Category\CategoryParameterFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
+use App\Model\Product\Parameter\Parameter;
+use App\Model\Product\Parameter\ParameterValue;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
@@ -59,11 +61,12 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\Product\Parameter\ParameterValue $brand
      * @param int $count
      * @param bool $isAbsolute
+     * @param bool $isSelected
      * @return \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption
      */
-    protected function createParameterValueFilterOption(BaseParameterValue $brand, int $count, bool $isAbsolute): ParameterValueFilterOption
+    protected function createParameterValueFilterOption(BaseParameterValue $brand, int $count, bool $isAbsolute, bool $isSelected = false): ParameterValueFilterOption
     {
-        return new ParameterValueFilterOption($brand, $count, $isAbsolute);
+        return new ParameterValueFilterOption($brand, $count, $isAbsolute, $isSelected);
     }
 
     /**
@@ -195,7 +198,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData,
-            $category
+            $category,
+            $readyCategorySeoMix
         );
 
         return $productFilterOptions;
@@ -237,13 +241,15 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \App\Model\Category\Category|null $category
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      */
     protected function fillParameters(
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         BaseProductFilterData $productFilterData,
-        ?Category $category = null
+        ?Category $category = null,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null
     ): void {
         if ($category === null) {
             throw new InvalidArgumentException('$category parameter must be provided');
@@ -267,7 +273,8 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
-                    $isAbsolute
+                    $isAbsolute,
+                    $this->isParameterValueSelected($readyCategorySeoMix, $parameter, $parameterValue)
                 );
             }
 
@@ -340,5 +347,26 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     protected function createFlagFilterOption(BaseFlag $flag, int $count, bool $isAbsolute, bool $isSelected = false): BaseFlagFilterOption
     {
         return new FlagFilterOption($flag, $count, $isAbsolute, $isSelected);
+    }
+
+    /**
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
+     * @return bool
+     */
+    private function isParameterValueSelected(?ReadyCategorySeoMix $readyCategorySeoMix, Parameter $parameter, ParameterValue $parameterValue): bool
+    {
+        if ($readyCategorySeoMix === null) {
+            return false;
+        }
+
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $categorySeoMixParameterParameterValue) {
+            if ($categorySeoMixParameterParameterValue->getParameter() === $parameter && $categorySeoMixParameterParameterValue->getParameterValue() === $parameterValue) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
