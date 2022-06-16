@@ -26,6 +26,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         'shopsys/phpstorm-inspect',
         'shopsys/changelog-linker',
         'shopsys/monorepo-builder',
+        'shopsys/backend-api',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
