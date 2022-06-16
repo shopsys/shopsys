@@ -29,6 +29,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [v10.0.1](https://github.com/shopsys/shopsys/compare/v10.0.0...v10.0.1) (2022-06-16)
+
+:bug: Bug Fixes
+
+- \[migrations\] fixed namespace selection when only one is available [\#2469](https://github.com/shopsys/shopsys/pull/2469) ([grossmannmartin](https://github.com/grossmannmartin))
+
 ## [v10.0.0](https://github.com/shopsys/shopsys/compare/v9.1.2...v10.0.0) (2022-05-20)
 
 :sparkles: Enhancements and features
