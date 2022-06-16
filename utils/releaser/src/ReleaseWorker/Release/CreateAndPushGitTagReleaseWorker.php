@@ -24,7 +24,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
      */
     public function work(Version $version): void
     {
-        $versionString = $version->getVersionString();
+        $versionString = $version->getOriginalString();
         $this->processRunner->run('git tag ' . $versionString);
         $this->symfonyStyle->note(
             sprintf('You need to push tag manually using "git push origin %s" command.', $versionString)
