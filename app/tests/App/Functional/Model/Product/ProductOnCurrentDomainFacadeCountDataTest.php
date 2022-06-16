@@ -176,6 +176,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
                 $this->getParameterValueIdForFirstDomain('Yes') => 5,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
+            64 => [
+                $this->getParameterValueIdForFirstDomain('4') => 2,
+            ],
         ];
 
         return [
@@ -232,6 +235,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             33 => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 1,
                 $this->getParameterValueIdForFirstDomain('No') => 1,
+            ],
+            64 => [
+                $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
 
@@ -300,6 +306,9 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             33 => [
                 $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
+            ],
+            64 => [
+                $this->getParameterValueIdForFirstDomain('4') => 2,
             ],
         ];
 

@@ -222,6 +222,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         /** @var \App\Model\Product\Parameter\Parameter $usbParameter */
         $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
+        /** @var \App\Model\Product\Parameter\Parameter $warrantyParameter */
+        $warrantyParameter = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $choseCategorySeoMixCombinationArray = [
             'domainId' => 1,
             'categoryId' => $categoryPc->getId(),
@@ -229,6 +231,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_DESC,
             'parameterValueIdsByParameterIds' => [
                 $usbParameter->getId() => $this->getParameterValueId(t('Yes', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
+                $warrantyParameter->getId() => $this->getParameterValueId(t('4', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
             ],
         ];
         $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
