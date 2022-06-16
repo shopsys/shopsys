@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 import { FilterOptionsParameterStateType, FilterOptionsStateType } from 'types/productFilter';
 
 export const initialState = {
@@ -42,6 +43,17 @@ export const optionsFilterSlice = createSlice({
         },
         setMaximalPriceFilter(state, action: PayloadAction<number | null>) {
             state.maximalPrice = action.payload;
+        },
+    },
+    extraReducers: {
+        /**
+         * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
+         */
+        [HYDRATE]: (state, action) => {
+            return {
+                ...state,
+                ...action.payload.optionsFilter,
+            };
         },
     },
 });
