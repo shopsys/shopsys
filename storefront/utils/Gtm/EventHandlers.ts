@@ -11,7 +11,7 @@ import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { CartItemType, CartType } from 'types/cart';
-import { GtmCartInfoType, GtmListNameType, GtmSectionType } from 'types/gtm';
+import { GtmCartInfoType, GtmConsentInfoType, GtmConsentUpdateType, GtmListNameType, GtmSectionType } from 'types/gtm';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
@@ -99,5 +99,13 @@ export const onClickSuggestResultGtmEventHandler = (
     itemName: string,
 ): void => {
     const event = getGtmSearchClickEvent(keyword, section, itemName);
+    gtmSafePushEvent(event);
+};
+
+export const onConsentUpdateGtmEventHandler = (updatedConsent: GtmConsentInfoType): void => {
+    const event: GtmConsentUpdateType = {
+        event: 'consent.update',
+        consent: updatedConsent,
+    };
     gtmSafePushEvent(event);
 };

@@ -1,6 +1,7 @@
 import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { canUseDom } from 'helpers/canUseDom';
+import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
@@ -170,14 +171,18 @@ const getGtmReviewConsents = (): GtmReviewConsentsType => ({
     heureka: true,
 });
 
-export const getGtmConsentInfo = (): GtmConsentInfoType => ({
-    functional: 'granted',
-    marketing: 'granted',
-    targeting: 'granted',
-    statistics: 'granted',
-    performance: 'granted',
-    preferences: 'granted',
-});
+export const getGtmConsentInfo = (): GtmConsentInfoType => {
+    const userConsentCookie = getUserConsentCookie();
+
+    return {
+        functional: userConsentCookie?.functional ? 'granted' : 'denied',
+        marketing: userConsentCookie?.marketing ? 'granted' : 'denied',
+        targeting: userConsentCookie?.targeting ? 'granted' : 'denied',
+        statistics: userConsentCookie?.statistics ? 'granted' : 'denied',
+        performance: userConsentCookie?.performance ? 'granted' : 'denied',
+        preferences: userConsentCookie?.preferences ? 'granted' : 'denied',
+    };
+};
 
 export const getGtmUserInfo = (
     currentCustomer: CurrentCustomerType | undefined,
