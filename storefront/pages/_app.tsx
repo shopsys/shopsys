@@ -1,15 +1,17 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import Error500 from 'components/Pages/ErrorPage/500';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
+import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { ReactElement, useCallback, useEffect } from 'react';
+import { PropsWithChildren, ReactElement, useCallback, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,6 +28,7 @@ type AppPropsWithError = AppProps & {
 function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
+    const userConsentCookie = getUserConsentCookie();
 
     const handleRouteChangeStart = useCallback(
         (targetUrl: string) => {
@@ -69,6 +72,16 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
         };
     }, [router.events]);
 
+    const UserConsentContainer = dynamic<PropsWithChildren<Record<string, unknown>>>(
+        () =>
+            import('components/Blocks/UserConsent/UserConsentContainer/UserConsentContainer').then(
+                (component) => component.UserConsentContainer,
+            ),
+        {
+            ssr: false,
+        },
+    );
+
     return (
         <>
             <Head>
@@ -83,6 +96,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <ErrorBoundary FallbackComponent={Error500}>
+                    {userConsentCookie === null && <UserConsentContainer />}
                     <Component {...pageProps} err={err} />
                 </ErrorBoundary>
             </ShopsysGlobalProvider>
