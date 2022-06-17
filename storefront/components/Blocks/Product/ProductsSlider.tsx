@@ -32,7 +32,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
                 slidesPerView: 2,
                 controls: props.products.length > 2,
             },
-            [theme.mediaQueries.queryMobileXs]: {
+            [theme.mediaQueries.queryMobile]: {
                 loop: props.products.length > 1,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 1,

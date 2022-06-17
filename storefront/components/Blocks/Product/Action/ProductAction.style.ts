@@ -11,7 +11,7 @@ export const ProductActionWrapperStyled = styled.div`
 
 export const ProductActionStyled = styled.div<ProductActionStyledProps>`
     ${({ theme, isButtonFullWidth }) => css`
-        padding: 10px;
+        padding: 8px;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;

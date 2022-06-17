@@ -12,20 +12,11 @@ const localVariables = {
 
 export const ProductItemStyled = styled.div`
     ${({ theme }) => css`
-        width: calc(100% / 2);
         padding-left: 8px;
         padding-top: 24px;
 
-        @media ${theme.mediaQueries.queryLg} {
-            width: calc(100% / 3);
-        }
-
         @media ${theme.mediaQueries.queryVl} {
             border-top: 1px solid ${theme.color.greyLighter};
-        }
-
-        @media ${theme.mediaQueries.queryXl} {
-            width: calc(100% / 3);
         }
     `}
 `;

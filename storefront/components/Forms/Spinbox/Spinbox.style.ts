@@ -4,9 +4,9 @@ import { css } from 'styled-components';
 const localVariables = {
     spinboxHeight: '48px',
     spinboxHeightSmall: '30px',
-    spinboxButtonWidth: '32px',
+    spinboxButtonWidth: '24px',
     spinboxWidth: '120px',
-    spinboxWidthSmall: '100px',
+    spinboxWidthSmall: '80px',
 };
 
 export const SpinboxStyled = styled.div`
