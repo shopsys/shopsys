@@ -20,16 +20,21 @@ const ContactInformationAddress: FC = () => {
     const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
-    const [streetValue, cityValue, postcodeValue] = useWatch({
-        name: [formMeta.fields.street.name, formMeta.fields.city.name, formMeta.fields.postcode.name],
+    const [streetValue, cityValue, postcodeValue, countryValue] = useWatch({
+        name: [
+            formMeta.fields.street.name,
+            formMeta.fields.city.name,
+            formMeta.fields.postcode.name,
+            formMeta.fields.country.name,
+        ],
         control: formProviderMethods.control,
     });
 
     useEffect(() => {
-        if (countrySelectOptions.length > 0) {
+        if (countrySelectOptions.length > 0 && countryValue.value === '') {
             setValue(formMeta.fields.country.name, countrySelectOptions[0]);
         }
-    }, [countrySelectOptions, formMeta.fields.country.name, setValue]);
+    }, [countrySelectOptions, countryValue, formMeta.fields.country.name, setValue]);
 
     if (countrySelectOptions.length === 0) {
         return null;

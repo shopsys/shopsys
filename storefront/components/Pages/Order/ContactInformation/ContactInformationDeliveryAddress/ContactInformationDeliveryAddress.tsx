@@ -103,9 +103,9 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     useEffect(() => {
         const deliveryAddress = user?.deliveryAddresses.find((address) => address.uuid === deliveryAddressUuidValue);
-        const selectedCountryOption = countrySelectOptions.find((option) => {
-            return option.value === deliveryAddress?.country;
-        });
+        const selectedCountryOption =
+            countrySelectOptions.find((option) => option.value === deliveryAddress?.country) ??
+            countrySelectOptions.find((option) => option.value === user?.country.code);
 
         if (selectedCountryOption !== undefined || countrySelectOptions.length > 0) {
             setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress?.firstName ?? '');
@@ -132,6 +132,7 @@ const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryTelephone.name,
         pickupPlace,
         setValue,
+        user?.country.code,
         user?.deliveryAddresses,
     ]);
 
