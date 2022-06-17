@@ -227,7 +227,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         );
     }
 
-    public function testInvalidCartProvided(): void
+    public function testInvalidCartUuidCreatesNewCart(): void
     {
         $unknownUuid = '6c42d01c-b597-4afa-b58f-f792ff00b783';
 
@@ -244,12 +244,8 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-        self::assertArrayHasKey('errors', $response);
 
-        self::assertEquals(
-            sprintf('Cart "%s" is unavailable.', $unknownUuid),
-            $response['errors'][0]['message']
-        );
+        self::assertEquals($unknownUuid, $response['data']['AddToCart']['cart']['uuid']);
     }
 
     /**

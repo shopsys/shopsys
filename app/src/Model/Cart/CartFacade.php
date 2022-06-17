@@ -10,7 +10,7 @@ use App\Model\Product\Product;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\Cart;
+use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade as BaseCartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
@@ -128,7 +128,7 @@ class CartFacade extends BaseCartFacade
      * @param bool $isAbsoluteQuantity
      * @return \App\Model\Cart\AddProductResult
      */
-    public function addProductToExistingCart(Product $product, $quantity, Cart $cart, bool $isAbsoluteQuantity = false): AddProductResult
+    public function addProductToExistingCart(Product $product, $quantity, BaseCart $cart, bool $isAbsoluteQuantity = false): AddProductResult
     {
         $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
         $notOnStockQuantity = 0;
@@ -189,7 +189,7 @@ class CartFacade extends BaseCartFacade
      * @param \App\Model\Cart\Cart $cart
      * @return \App\Model\Cart\Cart
      */
-    public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
+    public function removeItemFromExistingCartByUuid(string $cartItemUuid, BaseCart $cart): BaseCart
     {
         $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);
 
@@ -205,7 +205,7 @@ class CartFacade extends BaseCartFacade
      * @param string $cartIdentifier
      * @return \App\Model\Cart\Cart|null
      */
-    public function findCartByCartIdentifier(string $cartIdentifier): ?Cart
+    public function findCartByCartIdentifier(string $cartIdentifier): ?BaseCart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier($cartIdentifier);
 
@@ -219,7 +219,7 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \App\Model\Cart\Cart|null
      */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Cart
+    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?BaseCart
     {
         /** @var \App\Model\Cart\Cart $cart */
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
@@ -231,7 +231,7 @@ class CartFacade extends BaseCartFacade
      * @param int $cartItemId
      * @param \App\Model\Cart\Cart|null $cart
      */
-    public function deleteCartItem($cartItemId, ?Cart $cart = null)
+    public function deleteCartItem($cartItemId, ?BaseCart $cart = null)
     {
         if (!$cart) {
             $cart = $this->findCartOfCurrentCustomerUser();
@@ -268,7 +268,7 @@ class CartFacade extends BaseCartFacade
     /**
      * @param \App\Model\Cart\Cart $cart
      */
-    public function deleteCart(Cart $cart)
+    public function deleteCart(BaseCart $cart)
     {
         foreach ($cart->getItems() as $item) {
             $this->em->remove($item);
@@ -279,5 +279,19 @@ class CartFacade extends BaseCartFacade
         $this->em->flush();
 
         $this->cleanAdditionalData();
+    }
+
+    /**
+     * @param string $cartUuid
+     * @return \App\Model\Cart\Cart
+     */
+    public function createCart(string $cartUuid): Cart
+    {
+        $cart = new Cart($cartUuid, null);
+
+        $this->em->persist($cart);
+        $this->em->flush($cart);
+
+        return $cart;
     }
 }

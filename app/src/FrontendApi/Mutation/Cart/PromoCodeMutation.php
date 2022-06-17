@@ -80,7 +80,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
         $this->cartPromoCodeFacade->applyPromoCodeByCode($cart, $promoCodeCode);
 
@@ -104,7 +104,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($promoCodeCode);
         if ($promoCode !== null) {

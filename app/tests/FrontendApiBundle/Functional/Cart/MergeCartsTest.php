@@ -6,8 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\FrontendApi\Model\Cart\CartFacade as FrontendApiCartFacade;
-use App\FrontendApi\Model\Cart\Exception\UnavailableCartUserError;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -23,12 +21,6 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
      * @inject
      */
     private CartFacade $cartFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     * @inject
-     */
-    private FrontendApiCartFacade $frontendApiCartFacade;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
@@ -94,8 +86,8 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         self::assertEquals($firstProduct->getFullname(), $cartItems[2]->getName(), 'Third product name mismatch');
         self::assertEquals(2, $cartItems[2]->getQuantity(), 'Third product quantity mismatch');
 
-        $this->expectException(UnavailableCartUserError::class);
-        $this->frontendApiCartFacade->getCart(null, $testCartUuid);
+        $oldCart = $this->cartFacade->findCartByCartIdentifier($testCartUuid);
+        self::assertNull($oldCart);
     }
 
     public function testCartIsMergedAfterRegister(): void
@@ -144,8 +136,8 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         self::assertEquals($firstProduct->getFullname(), $cartItems[1]->getName(), 'Third product name mismatch');
         self::assertEquals(2, $cartItems[1]->getQuantity(), 'Third product quantity mismatch');
 
-        $this->expectException(UnavailableCartUserError::class);
-        $this->frontendApiCartFacade->getCart(null, $testCartUuid);
+        $oldCart = $this->cartFacade->findCartByCartIdentifier($testCartUuid);
+        self::assertNull($oldCart);
     }
 
     /**

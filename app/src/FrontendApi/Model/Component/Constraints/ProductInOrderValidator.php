@@ -46,7 +46,7 @@ class ProductInOrderValidator extends ConstraintValidator
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $value->cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $value->cartUuid);
 
         if ($cart->isEmpty()) {
             $this->context->buildViolation($constraint->noProductInOrderMessage)

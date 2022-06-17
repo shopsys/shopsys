@@ -67,7 +67,7 @@ class PaymentInOrderValidator extends ConstraintValidator
         $cartUuid = $value->cartUuid;
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $paymentInCart = $cart->getPayment();
         if ($paymentInCart === null) {
             $this->context->buildViolation($constraint->paymentNotSetMessage)

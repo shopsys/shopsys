@@ -124,22 +124,6 @@ class CartFacade
     /**
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $cartUuid
-     * @return \App\Model\Cart\Cart
-     */
-    public function getCart(?CustomerUser $customerUser, ?string $cartUuid): Cart
-    {
-        $cart = $this->findCart($customerUser, $cartUuid);
-
-        if ($cart === null) {
-            throw new UnavailableCartUserError('Cart is unavailable.');
-        }
-
-        return $cart;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $cartUuid
      * @return \App\Model\Cart\Cart|null
      */
     public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
@@ -162,7 +146,7 @@ class CartFacade
     {
         $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
         if ($cart === null) {
-            throw new UnavailableCartUserError(sprintf('Cart "%s" is unavailable.', $cartUuid));
+            $cart = $this->cartFacade->createCart($cartUuid);
         }
 
         return $cart;

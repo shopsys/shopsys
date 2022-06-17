@@ -70,7 +70,7 @@ class TransportInOrderValidator extends ConstraintValidator
         $cartUuid = $value->cartUuid;
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $transportInCart = $cart->getTransport();
         if ($transportInCart === null) {
             $this->context->buildViolation($constraint->transportNotSetMessage)

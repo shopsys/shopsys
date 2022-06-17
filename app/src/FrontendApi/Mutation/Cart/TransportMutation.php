@@ -66,7 +66,7 @@ class TransportMutation implements MutationInterface, AliasedInterface
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $this->cartTransportFacade->updateTransportInCart($cart, $transportUuid, $pickupPlaceIdentifier);
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);

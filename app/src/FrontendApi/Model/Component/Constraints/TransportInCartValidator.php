@@ -139,7 +139,7 @@ class TransportInCartValidator extends ConstraintValidator
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         try {
             $this->transportValidationFacade->checkTransportWeightLimit($transport, $cart);
         } catch (TransportWeightLimitExceededException $exception) {

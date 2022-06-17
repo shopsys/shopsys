@@ -96,7 +96,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         $cartUuid = $input['cartUuid'];
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $this->orderDataFactory->updateOrderDataFromCart($orderData, $cart);
 
         $quantifiedProducts = $cart->getQuantifiedProducts();

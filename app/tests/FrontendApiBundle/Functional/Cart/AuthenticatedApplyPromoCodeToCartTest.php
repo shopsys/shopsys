@@ -168,8 +168,8 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
-        self::assertEquals('cart-unavailable', $errors[0]['extensions']['userCode']);
-        self::assertEquals('Cart is unavailable.', $errors[0]['message']);
+        self::assertEquals('validation', $errors[0]['message']);
+        self::assertEquals(t('The promo code is not applicable to any of the products in your cart. Check it, please.', [], 'validators', $this->getFirstDomainLocale()), $errors[0]['extensions']['validation']['input.promoCode'][0]['message']);
     }
 
     public function testModificationAfterProductIsRemoved(): void
