@@ -21,6 +21,7 @@ import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';
 import { useAuth } from 'hooks/auth/UseAuth';
+import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -58,6 +59,7 @@ const Login: FC = () => {
     useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' }, undefined, {
         blur: true,
     });
+    useHandleFormErrors(loginResult.error, formProviderMethods);
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = (data, event) => {
         event?.preventDefault();

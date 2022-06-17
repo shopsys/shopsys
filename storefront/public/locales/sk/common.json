@@ -283,7 +283,6 @@
     "You can check this item in {{ count }} stores_few": "Můžete si prohlédnout na {{ count }} predajniach",
     "You can check this item in {{ count }} stores_many": "Můžete si prohlédnout na {{ count }} predajniach",
     "You can check this item in {{ count }} stores_other": "Můžete si prohlédnout na {{ count }} predajniach",
-    "You have entered an incorrect email or password.": "Vložili ste zlý email alebo heslo",
     "You have no orders": "Nemáte žiadne objednávky",
     "You have successfully subscribed to our newsletter": "Boli ste úspešně prihlásený k odberu nášho newsletteru.",
     "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "V košíku máte maximálne dostupné množstvo, nemožno pridať ďalšie (celkom už {{ quantity }} {{ unitName }})",

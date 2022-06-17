@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
 import {
     LoginApi,
     LoginVariablesApi,
@@ -29,8 +29,7 @@ export const useAuth = (): [
     const loginHandler = async (variables: LoginVariablesApi) => {
         const loginResult = await login(variables);
 
-        if (loginUseMutationResponse.error !== undefined) {
-            showErrorMessage(t('You have entered an incorrect email or password.'));
+        if (loginResult.error !== undefined) {
             return;
         }
 
