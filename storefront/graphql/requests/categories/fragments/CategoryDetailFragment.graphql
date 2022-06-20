@@ -4,6 +4,7 @@ fragment CategoryDetailFragment on Category {
     slug
     originalCategorySlug
     name
+    description
     seoH1
     ...BreadcrumbFragment
     children {

@@ -36,6 +36,7 @@ export type CategoryDetailType = {
     __typename: 'Category';
     uuid: string;
     name: string;
+    description: string | null;
     slug: string;
     originalCategorySlug: string | null;
     seoH1: string | null;

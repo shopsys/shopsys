@@ -114,6 +114,8 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $category->getUuid();
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
+            case 'description':
+                return $category->getDescription($this->domain->getId());
             case 'children':
                 return $this->categoryChildrenBatchLoader->load($category);
             case 'parent':

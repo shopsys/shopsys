@@ -63,6 +63,11 @@ export const CategoryDetailContentStyled = styled.div`
     `}
 `;
 
+export const CategoryDetailDescriptionStyled = styled.div`
+    font-size: 16px;
+    margin-bottom: 16px;
+`;
+
 export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>`
     ${({ theme, isOpen }) => css`
         position: relative;

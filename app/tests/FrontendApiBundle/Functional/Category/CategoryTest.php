@@ -34,6 +34,7 @@ class CategoryTest extends GraphQlTestCase
             query {
                 category(uuid: "' . $this->category->getUuid() . '") {
                     name
+                    description
                     slug
                     seoH1
                     seoTitle
@@ -60,6 +61,7 @@ class CategoryTest extends GraphQlTestCase
             'data' => [
                 'category' => [
                     'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                    'description' => t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                     'slug' => '/elektro',
                     'seoH1' => t('Electronic devices', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                     'seoTitle' => t('Electronic stuff', [], 'dataFixtures', $this->getLocaleForFirstDomain()),

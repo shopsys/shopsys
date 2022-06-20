@@ -11,6 +11,9 @@ Category:
             name:
                 type: "String!"
                 description: "Localized category name (domain dependent)"
+            description:
+                type: "String"
+                description: "Localized category description (domain dependent)"
             children:
                 type: "[Category!]!"
                 description: "Descendant categories"

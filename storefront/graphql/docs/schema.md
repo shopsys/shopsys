@@ -2873,6 +2873,15 @@ Seo meta description of category
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized category description (domain dependent)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>bestsellers</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>

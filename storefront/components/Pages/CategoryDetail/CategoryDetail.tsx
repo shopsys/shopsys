@@ -2,6 +2,7 @@ import {
     CategoryDetailAdvertsStyled,
     CategoryDetailContentMessageStyled,
     CategoryDetailContentStyled,
+    CategoryDetailDescriptionStyled,
     CategoryDetailPanelIconStyled,
     CategoryDetailPanelOpenerStyled,
     CategoryDetailPanelStyled,
@@ -77,6 +78,11 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     <Heading type={'h1'}>
                         {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
                     </Heading>
+                    {props.category.description !== null && props.category.description !== '' && (
+                        <CategoryDetailDescriptionStyled
+                            dangerouslySetInnerHTML={{ __html: props.category.description }}
+                        ></CategoryDetailDescriptionStyled>
+                    )}
                     <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={props.category} />
                     <SubcategoriesSimpleNavigationStyled
                         listedItems={[...props.category.children, ...props.category.linkedCategories]}
