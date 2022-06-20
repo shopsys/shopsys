@@ -1,5 +1,15 @@
 import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
+import {
+    CartQueryApi,
+    CartQueryDocumentApi,
+    CartQueryVariablesApi,
+    ChangeTransportInCartInputApi,
+    ChangeTransportInCartMutationApi,
+    TransportsQueryApi,
+    TransportsQueryDocumentApi,
+    TransportsQueryVariablesApi,
+} from 'graphql/generated';
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
@@ -90,6 +100,29 @@ const cache = cacheExchange({
             },
         },
     },
+    optimistic: {
+        ChangeTransportInCart: ({ input }: { input: ChangeTransportInCartInputApi }, cache) => {
+            const cartQueryResult: CartQueryApi | null = cache.readQuery<CartQueryApi>({
+                query: CartQueryDocumentApi,
+                variables: {
+                    cartUuid: input.cartUuid ?? null,
+                } as CartQueryVariablesApi,
+            });
+
+            const transportsQueryResult = cache.readQuery<TransportsQueryApi>({
+                query: TransportsQueryDocumentApi,
+                variables: {
+                    cartUuid: input.cartUuid ?? null,
+                } as TransportsQueryVariablesApi,
+            });
+
+            if (cartQueryResult === null) {
+                return null;
+            }
+
+            return getOptimisticChangeTransportInCartResult(cartQueryResult, transportsQueryResult, input);
+        },
+    },
 });
 
 const invalidateFields = (cache: Cache, fields: string[]): void => {
@@ -100,5 +133,27 @@ const invalidateFields = (cache: Cache, fields: string[]): void => {
         }
     }
 };
+
+const getOptimisticChangeTransportInCartResult = (
+    cartQueryResult: CartQueryApi,
+    transportsQueryResult: TransportsQueryApi | null,
+    input: ChangeTransportInCartInputApi,
+) =>
+    ({
+        __typename: 'Cart',
+        items: cartQueryResult.cart?.items ?? null,
+        modifications: cartQueryResult.cart?.modifications ?? null,
+        payment: cartQueryResult.cart?.payment ?? null,
+        paymentGoPayBankSwift: cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
+        promoCode: cartQueryResult.cart?.promoCode ?? null,
+        remainingAmountWithVatForFreeTransport: cartQueryResult.cart?.remainingAmountWithVatForFreeTransport ?? null,
+        selectedPickupPlaceIdentifier: input.pickupPlaceIdentifier ?? null,
+        totalDiscountPrice: cartQueryResult.cart?.totalDiscountPrice ?? null,
+        totalItemsPrice: cartQueryResult.cart?.totalItemsPrice ?? null,
+        totalPrice: cartQueryResult.cart?.totalPrice ?? null,
+        uuid: cartQueryResult.cart?.uuid ?? null,
+        transport:
+            transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
+    } as ChangeTransportInCartMutationApi['ChangeTransportInCart']);
 
 export default cache;
