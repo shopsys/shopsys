@@ -19,7 +19,7 @@ export const HamburgerMenuStyled = styled.div<HamburgerMenuProps>`
 
         ${isOpen === true &&
         css`
-            z-index: ${theme.zIndex.aboveMenu};
+            z-index: ${theme.zIndex.aboveMobileMenu};
         `}
     `}
 `;
