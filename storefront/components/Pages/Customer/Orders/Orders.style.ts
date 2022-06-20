@@ -1,19 +1,15 @@
 import { styled } from 'components/Theme/main';
 
-const localVariables = {
-    transportImageMaxHeight: '20px',
-    transportImageMaxWidth: '35px',
-} as const;
-
 export const TransportImageWrapperStyled = styled.div`
     position: relative;
-    display: inline;
+    display: inline-flex;
+    justify-content: center;
     top: 4px;
-    margin-right: 5px;
-    max-width: ${localVariables.transportImageMaxWidth};
+    margin-right: 4px;
+    width: 40px;
 
     img {
-        max-width: ${localVariables.transportImageMaxWidth};
-        max-height: ${localVariables.transportImageMaxHeight};
+        max-width: 36px;
+        max-height: 20px;
     }
 `;
