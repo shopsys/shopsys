@@ -256,7 +256,7 @@
     "This item is available immediately in {{ count }} stores_many": "Můžete mít ihned na {{ count }} prodejnách",
     "This item is available immediately in {{ count }} stores_other": "Můžete mít ihned na {{ count }} prodejnách",
     "This value is not a valid email": "Tato hodnota není platný e-mail",
-    "This value must be exactly 8 characters": "Táto hodnota musí mít přesně 8 znaků",
+    "This value must be exactly 8 characters": "Tato hodnota musí mít přesně 8 znaků",
     "to": "do",
     "To cart": "Do košíku",
     "To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.": "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte.",
