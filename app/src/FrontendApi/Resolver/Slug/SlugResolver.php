@@ -17,10 +17,12 @@ use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use App\Model\Store\Store;
+use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -30,6 +32,11 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver;
 
 class SlugResolver implements ResolverInterface, AliasedInterface
 {
+    /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -97,6 +104,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
      * @param \App\FrontendApi\Resolver\Store\StoreResolver $storeResolver
      * @param \App\FrontendApi\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver $readyCategorySeoMixResolver
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagResolver $flagResolver
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
         FriendlyUrlRepository $friendlyUrlRepository,
@@ -109,7 +117,8 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         ProductDetailResolver $productDetailResolver,
         StoreResolver $storeResolver,
         ReadyCategorySeoMixResolver $readyCategorySeoMixResolver,
-        FlagResolver $flagResolver
+        FlagResolver $flagResolver,
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
     ) {
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->domain = $domain;
@@ -122,13 +131,15 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         $this->storeResolver = $storeResolver;
         $this->readyCategorySeoMixResolver = $readyCategorySeoMixResolver;
         $this->flagResolver = $flagResolver;
+        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
     }
 
     /**
      * @param string $slug
+     * @param \GraphQL\Type\Definition\ResolveInfo $info
      * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
-    public function resolve(string $slug)
+    public function resolve(string $slug, ResolveInfo $info)
     {
         $slugWithoutSlash = ltrim($slug, '/');
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($this->domain->getId(), $slugWithoutSlash);
@@ -161,8 +172,9 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             case Category::class:
                 /** @var \App\Model\Category\Category $category */
                 $category = $this->categoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                $matchingReadyCategorySeoMix = $this->findMatchingReadyCategorySeoMix($info, $category);
 
-                return $category;
+                return $matchingReadyCategorySeoMix ?? $category;
             case Flag::class:
                 return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
             case Product::class:
@@ -187,5 +199,22 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         return [
             'resolve' => 'slugResolver',
         ];
+    }
+
+    /**
+     * @param \GraphQL\Type\Definition\ResolveInfo $info
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
+     */
+    private function findMatchingReadyCategorySeoMix(ResolveInfo $info, Category $category): ?ReadyCategorySeoMix
+    {
+        $variableValues = $info->variableValues;
+
+        return $this->readyCategorySeoMixFacade->findReadyCategorySeoMixByQueryInputData(
+            $category->getId(),
+            $variableValues['filter']['parameters'] ?? [],
+            $variableValues['filter']['flags'] ?? [],
+            $variableValues['sortingMode'] ?? null
+        );
     }
 }

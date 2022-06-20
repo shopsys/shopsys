@@ -656,10 +656,6 @@ services:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
 
-    App\Component\Router\CategorySeoMix\CategorySeoMixFriendlyUrlListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
-
     App\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
 
     Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter:

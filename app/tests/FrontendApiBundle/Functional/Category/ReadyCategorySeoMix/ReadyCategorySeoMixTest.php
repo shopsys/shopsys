@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category\ReadyCategorySeoMix;
 
+use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
+use App\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,6 +19,12 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
      * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     * @inject
+     */
+    private ParameterFacade $parameterFacade;
 
     public function testGetReadyCategorySeoMixDataBySlug()
     {
@@ -203,18 +211,19 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     public function testReadyCategorySeoMixReturnsSelectedFilterOptions(): void
     {
-        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
-        $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
-        $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
-
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
-            'slug' => $urlSlug,
-        ]);
-        $data = $this->getResponseDataForGraphQlType($response, 'slug');
+        $data = $this->getDataForCategorySeoMix(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql');
 
         $this->assertSelectedFlags($data['products']['productFilterOptions']['flags']);
         $this->assertSelectedParameterCheckboxFilterOptions($data['products']['productFilterOptions']['parameters']);
         $this->assertSelectedParameterSliderFilterOptions($data['products']['productFilterOptions']['parameters']);
+    }
+
+    public function testReadyCategorySeoMixDataAreReturnedWhenMatchedFromCategory(): void
+    {
+        $dataForCategorySeoMix = $this->getDataForCategorySeoMix(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql');
+        $dataForCategory = $this->getDataForCategoryWithFiltersMatchingSeoMix();
+
+        $this->assertSame($dataForCategorySeoMix, $dataForCategory);
     }
 
     /**
@@ -275,5 +284,64 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 $this->assertSame($fourValue, (string)$parameterData['selectedValue']);
             }
         }
+    }
+
+    /**
+     * @param string $graphQlFilePath
+     * @return array
+     */
+    private function getDataForCategorySeoMix(string $graphQlFilePath): array
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
+        $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
+        $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
+        $responseForSeoMix = $this->getResponseContentForGql($graphQlFilePath, [
+            'slug' => $seoMixUrlSlug,
+        ]);
+
+        return $this->getResponseDataForGraphQlType($responseForSeoMix, 'slug');
+    }
+
+    /**
+     * @return array
+     */
+    private function getDataForCategoryWithFiltersMatchingSeoMix(): array
+    {
+        $firstDomainLocale = $this->getFirstDomainLocale();
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        /** @var \App\Model\Product\Flag\Flag $flagNew */
+        $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        /** @var \App\Model\Product\Parameter\Parameter $parameterUsb */
+        $parameterUsb = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
+        /** @var \App\Model\Product\Parameter\Parameter $parameterWarranty */
+        $parameterWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+        $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
+        $valueFour = t('4', [], 'dataFixtures', $firstDomainLocale);
+        $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
+            t('Yes', [], 'dataFixtures', $firstDomainLocale),
+            $firstDomainLocale
+        );
+        $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql', [
+            'slug' => $categorySlug,
+            'sortingMode' => 'PRICE_DESC',
+            'filter' => [
+                'flags' => [$flagNew->getUuid()],
+                'parameters' => [
+                    [
+                        'parameter' => $parameterWarranty->getUuid(),
+                        'minimalValue' => $valueFour,
+                        'maximalValue' => $valueFour,
+                    ], [
+                        'parameter' => $parameterUsb->getUuid(),
+                        'values' => [
+                            $parameterValueYes->getUuid(),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        return  $this->getResponseDataForGraphQlType($responseForCategory, 'slug');
     }
 }
