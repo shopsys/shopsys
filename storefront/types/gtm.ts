@@ -20,7 +20,8 @@ export type GtmPageType =
     | 'purchase success'
     | 'about'
     | '404'
-    | 'other'; // fallback for new/unknown pages.
+    | 'other' // fallback for new/unknown pages.
+    | 'cookie consent';
 
 export type GtmListNameType =
     | 'blog article'
