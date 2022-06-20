@@ -39,7 +39,7 @@ export const useTransportAndPaymentForm = (
         transport: transport?.uuid ?? lastOrder?.transport.uuid ?? null,
         payment: payment?.uuid ?? lastOrder?.payment.uuid ?? null,
         goPaySwift: paymentGoPayBankSwift,
-        pickupPlaceIdentifier: lastOrder?.pickupPlaceIdentifier ?? null,
+        pickupPlaceIdentifier: pickupPlace?.identifier ?? lastOrder?.pickupPlaceIdentifier ?? null,
     };
     return [useShopsysForm<TransportAndPaymentFormType>(resolver, defaultValues), defaultValues];
 };

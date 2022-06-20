@@ -111,16 +111,22 @@ const Select: FC<SelectProps> = (props) => {
             return;
         }
 
-        changeTransportInCart(transportValue, null);
+        if (transportValue !== transport?.uuid) {
+            changeTransportInCart(transportValue, null);
+        }
     }, [transportValue]);
 
     useEffectOnce(() => {
-        changeTransportInCart(transportValue, props.preselectedPickupPlace);
+        if (transportValue !== transport?.uuid) {
+            changeTransportInCart(transportValue, props.preselectedPickupPlace);
+        }
     });
 
     useEffect(() => {
-        changePaymentInCart(paymentValue, goPaySwiftValue);
-    }, [paymentValue, goPaySwiftValue, changePaymentInCart]);
+        if (paymentValue !== payment?.uuid) {
+            changePaymentInCart(paymentValue, goPaySwiftValue);
+        }
+    }, [paymentValue, goPaySwiftValue, changePaymentInCart, payment?.uuid]);
 
     const resetTransportAndPayment = () => {
         formProviderMethods.setValue(formMeta.fields.transport.name, null);
