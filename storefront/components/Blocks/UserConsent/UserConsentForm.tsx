@@ -5,7 +5,9 @@ import Button from 'components/Forms/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
+import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Trans from 'next-translate/Trans';
 import { FC, useCallback } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
@@ -20,6 +22,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
+    const cookiePolicyUrl = useGetCookiesUrl();
 
     const saveCookieChoices = useCallback(() => {
         const formValues = formProviderMethods.getValues();
@@ -50,6 +53,15 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
     return (
         <FormProvider {...formProviderMethods}>
             <Heading type="h2">{t('Cookie consent')}</Heading>
+            <p>
+                <Trans
+                    i18nKey="cookiePolicyLink"
+                    defaultTrans="To learn more, you can read our <link>cookie policy</link>"
+                    components={{
+                        link: <a href={cookiePolicyUrl} target="_blank" rel="noreferrer"></a>,
+                    }}
+                />
+            </p>
             <ConsentRowStyled>
                 <ConsentNameStyled>{t('Functional')}</ConsentNameStyled>
                 <Controller
