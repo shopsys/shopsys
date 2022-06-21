@@ -91,7 +91,7 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/cdn": "dev-php-81-support",
+        "shopsys/cdn": "2.0.0",
         "shopsys/form-types-bundle": "10.0.1",
         "shopsys/framework": "10.0.1",
         "shopsys/frontend-api": "10.0.1",
