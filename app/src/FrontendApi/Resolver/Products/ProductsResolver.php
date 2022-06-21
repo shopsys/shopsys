@@ -282,4 +282,19 @@ class ProductsResolver extends BaseProductsResolver
             $readyCategorySeoMix
         );
     }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string
+     */
+    protected function getOrderingModeFromArgument(Argument $argument): string
+    {
+        $orderingMode = $this->getDefaultOrderingMode($argument);
+
+        if ($argument->offsetExists('orderingMode') && $argument->offsetGet('orderingMode') !== null) {
+            $orderingMode = $argument->offsetGet('orderingMode');
+        }
+
+        return $orderingMode;
+    }
 }
