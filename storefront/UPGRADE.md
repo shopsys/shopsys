@@ -560,3 +560,18 @@
 - most significant changes
     - create order mutation now accepts nullable field `deliveryAddressUuid`
     - in order form, there is now possibility to choose delivery address from address list (for logged-in user) or create new one
+
+### Stop using NEXT_PUBLIC_ variables
+- [FWCC-1025](https://shopsys.atlassian.net/browse/FWCC-1025)
+- [FWCC-1025 - stop using NEXT_PUBLIC_* variables](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/643/diffs)
+- the reasons these changes were introduced:
+    - NEXT_PUBLIC_* variables are inlined during build and their value cannot be set when the application is starting
+    - as a result of this behavior, values of these variables set in gitlab are not taken into account in prod/devel environment
+- most significant changes
+    - instead of NEXT_PUBLIC_* variables, the `publicRuntimeConfig` in `next.config.js` should be used
+    - see example of usage in `storefront/components/Basic/GoogleMap/GoogleMap.tsx` (search for `publicRuntimeConfig.googleMapApiKey`)
+    - following environment variables were renamed and have to be renamed in Gitlab
+      - `NEXT_PUBLIC_REDIS_CACHE` -> `GRAPHQL_REDIS_CACHE`
+      - `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` -> `GTM_ID`
+      - `NEXT_PUBLIC_PACKETERY_API_KEY` -> `PACKETERY_API_KEY`
+      - internally `NEXT_PUBLIC_SENTRY_DSN` and `NEXT_PUBLIC_SENTRY_ENVIRONMENT` were renamed, but no action is necessary from your side, if you didn't modify sentry behavior

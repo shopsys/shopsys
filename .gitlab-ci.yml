@@ -71,6 +71,7 @@ test:storefront-standards-with-jest-and-codegen:
         - cd ./storefront
         - npm ci
     script:
+        - ./check-next-public-variable.sh
         - ./check-code-gen.sh
         - npm run check
         - npm run tests-jest
