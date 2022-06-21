@@ -42,7 +42,7 @@ export const useCurrentCart = (): CurrentCartType => {
         }
 
         if (result.data === undefined) {
-            return getEmptyCart();
+            return getEmptyCart(!result.fetching);
         }
 
         if (result.data.cart === null) {
@@ -65,7 +65,7 @@ export const useCurrentCart = (): CurrentCartType => {
             promoCode: result.data.cart.promoCode,
             isLoaded: true,
         };
-    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn]);
+    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, result.fetching]);
 };
 
 const getEmptyCart = (isLoaded = true): CurrentCartType => ({

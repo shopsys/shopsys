@@ -32,7 +32,7 @@ type SelectProps = {
     preselectedPickupPlace: PickupPlaceType | null;
 };
 
-const Select: FC<SelectProps> = (props) => {
+const Select: FC<SelectProps> = ({ transports, preselectedPickupPlace }) => {
     const testIdentifier = 'pages-order-';
 
     const t = useTypedTranslationFunction();
@@ -99,7 +99,7 @@ const Select: FC<SelectProps> = (props) => {
     );
 
     useComponentUpdate(() => {
-        const potentialNewTransport = props.transports.find((transport) => transport.uuid === transportValue);
+        const potentialNewTransport = transports.find((transport) => transport.uuid === transportValue);
 
         if (potentialNewTransport === undefined) {
             changeTransportInCart(null, null);
@@ -118,7 +118,7 @@ const Select: FC<SelectProps> = (props) => {
 
     useEffectOnce(() => {
         if (transportValue !== transport?.uuid) {
-            changeTransportInCart(transportValue, props.preselectedPickupPlace);
+            changeTransportInCart(transportValue, preselectedPickupPlace);
         }
     });
 
@@ -139,6 +139,7 @@ const Select: FC<SelectProps> = (props) => {
         if (selectedPickupPlace !== null) {
             changeTransportInCart(transportValue, selectedPickupPlace);
         } else {
+            formProviderMethods.setValue(formMeta.fields.transport.name, null);
             removePacketeryCookie();
         }
 
@@ -236,7 +237,7 @@ const Select: FC<SelectProps> = (props) => {
                             <ul>
                                 {transport !== null
                                     ? renderTransportListItem(transport, true, field)
-                                    : props.transports.map((transportItem) =>
+                                    : transports.map((transportItem) =>
                                           renderTransportListItem(transportItem, false, field),
                                       )}
                             </ul>
