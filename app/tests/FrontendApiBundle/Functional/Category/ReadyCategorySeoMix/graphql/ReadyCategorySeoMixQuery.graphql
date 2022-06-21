@@ -1,7 +1,10 @@
-query ReadyCategorySeoMix($slug: String!) {
+query ReadyCategorySeoMix($slug: String!, $sortingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
     slug(slug: $slug) {
         ... on Category {
-            products {
+            slug
+            originalCategorySlug
+            products(orderingMode: $sortingMode, filter: $filter) {
+                totalCount
                 productFilterOptions {
                     parameters {
                         uuid

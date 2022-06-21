@@ -185,7 +185,12 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             case Store::class:
                 return $this->storeResolver->resolver(null, $slugWithoutSlash);
             case ReadyCategorySeoMix::class:
-                return $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
+                $readyCategorySeoMix = $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
+                if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
+                    return $readyCategorySeoMix->getCategory();
+                }
+
+                return $readyCategorySeoMix;
         }
 
         throw new NoResultFoundForSlugUserError('No result found for request.');
@@ -216,5 +221,39 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             $variableValues['filter']['flags'] ?? [],
             $variableValues['sortingMode'] ?? null
         );
+    }
+
+    /**
+     * @param \GraphQL\Type\Definition\ResolveInfo $resolveInfo
+     * @return bool
+     */
+    private function isFilterSet(ResolveInfo $resolveInfo): bool
+    {
+        $variableValues = $resolveInfo->variableValues;
+        $onlyInStock = $variableValues['filter']['onlyInStock'] ?? false;
+        $minimalPrice = $variableValues['filter']['minimalPrice'] ?? null;
+        $maximalPrice = $variableValues['filter']['maximalPrice'] ?? null;
+        $parameters = $variableValues['filter']['parameters'] ?? [];
+        $flags = $variableValues['filter']['flags'] ?? [];
+        $brands = $variableValues['filter']['brands'] ?? [];
+
+        return $onlyInStock || $minimalPrice !== null || $maximalPrice !== null || count($parameters) > 0 || count($flags) > 0 || count($brands) > 0;
+    }
+
+    /**
+     * @param \GraphQL\Type\Definition\ResolveInfo $resolveInfo
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
+     * @return bool
+     */
+    private function isSortingDifferentFromReadyCategorySeoMix(ResolveInfo $resolveInfo, ReadyCategorySeoMix $readyCategorySeoMix): bool
+    {
+        $variableValues = $resolveInfo->variableValues;
+        $sorting = $variableValues['sortingMode'] ?? null;
+
+        if ($sorting === null) {
+            return false;
+        }
+
+        return strtolower($sorting) !== strtolower($readyCategorySeoMix->getOrdering());
     }
 }

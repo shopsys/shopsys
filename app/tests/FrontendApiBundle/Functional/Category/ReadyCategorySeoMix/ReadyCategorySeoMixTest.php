@@ -211,7 +211,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     public function testReadyCategorySeoMixReturnsSelectedFilterOptions(): void
     {
-        $data = $this->getDataForCategorySeoMix(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql');
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql');
 
         $this->assertSelectedFlags($data['products']['productFilterOptions']['flags']);
         $this->assertSelectedParameterCheckboxFilterOptions($data['products']['productFilterOptions']['parameters']);
@@ -220,10 +220,70 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     public function testReadyCategorySeoMixDataAreReturnedWhenMatchedFromCategory(): void
     {
-        $dataForCategorySeoMix = $this->getDataForCategorySeoMix(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql');
+        $dataForCategorySeoMix = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql');
         $dataForCategory = $this->getDataForCategoryWithFiltersMatchingSeoMix();
 
         $this->assertSame($dataForCategorySeoMix, $dataForCategory);
+    }
+
+    public function testReadyCategorySeoMixDataAreReturnedWhenSortingIsNull(): void
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
+        $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
+        $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+            'sortingMode' => null,
+        ]);
+
+        $this->assertSame($categoryPcSlug, $data['originalCategorySlug']);
+        $this->assertSame($seoMixUrlSlug, $data['slug']);
+    }
+
+    public function testReadyCategorySeoMixDataAreReturnedWhenSameSortingIsQueried(): void
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
+        $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
+        $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+            'sortingMode' => strtoupper($readyCategorySeoPcNewWithUsb->getOrdering()),
+        ]);
+
+        $this->assertSame($categoryPcSlug, $data['originalCategorySlug']);
+        $this->assertSame($seoMixUrlSlug, $data['slug']);
+    }
+
+    public function testCategoryDataAreReturnedWhenSeoCategoryWithSortingIsQueried(): void
+    {
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+            'sortingMode' => 'PRIORITY',
+        ]);
+
+        $this->assertNull($data['originalCategorySlug']);
+        $this->assertSame($categoryPcSlug, $data['slug']);
+    }
+
+    public function testCategoryDataAreReturnedWhenSeoCategoryWithFilterIsQueried(): void
+    {
+        /** @var \App\Model\Product\Flag\Flag $flagSale */
+        $flagSale = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE);
+        /** @var \App\Model\Category\Category $categoryPc */
+        $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+            'filter' => ['flags' => [$flagSale->getUuid()]],
+        ]);
+
+        $this->assertNull($data['originalCategorySlug']);
+        $this->assertSame($categoryPcSlug, $data['slug']);
     }
 
     /**
@@ -288,16 +348,16 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     /**
      * @param string $graphQlFilePath
+     * @param array $additionalVariables
      * @return array
      */
-    private function getDataForCategorySeoMix(string $graphQlFilePath): array
+    private function getDataForCategorySeoMixPcNewWithUsb(string $graphQlFilePath, array $additionalVariables = []): array
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
         $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
         $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
-        $responseForSeoMix = $this->getResponseContentForGql($graphQlFilePath, [
-            'slug' => $seoMixUrlSlug,
-        ]);
+        $variables = array_merge($additionalVariables, ['slug' => $seoMixUrlSlug]);
+        $responseForSeoMix = $this->getResponseContentForGql($graphQlFilePath, $variables);
 
         return $this->getResponseDataForGraphQlType($responseForSeoMix, 'slug');
     }
