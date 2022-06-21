@@ -205,7 +205,10 @@ const Search: FC<SearchProps> = (props) => {
                     <SearchResultsContentStyled
                         isPanelActive={props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
                     >
-                        <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
+                        <SortingBar
+                            sorting={props.searchResults.productsSearch.orderingMode}
+                            totalCount={props.searchResults.productsSearch.totalCount}
+                        />
                         <ResultProducts
                             products={props.searchResults.productsSearch.products}
                             areProductsShowed={props.searchResults.productsSearch.totalCount > 0}

@@ -1,6 +1,7 @@
 import { SimpleBrandType } from './brand';
 import { ProductCartItemType } from './cart';
 import { FilterOptionsType } from './productFilter';
+import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
@@ -34,6 +35,7 @@ export type ListedProductConnectionType = {
     productFilterOptions: FilterOptionsType | null;
     totalCount: number;
     pageInfo: PageInfoType;
+    orderingMode: ProductOrderingModeEnumApi | null;
 };
 
 export type ListedProductType = {

@@ -99,7 +99,10 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
                         {t('Filter')}
                     </CategoryDetailPanelOpenerStyled>
-                    <SortingBar totalCount={props.category.productConnection.totalCount} />
+                    <SortingBar
+                        sorting={props.category.productConnection.orderingMode}
+                        totalCount={props.category.productConnection.totalCount}
+                    />
                     {props.category.productConnection.products.length !== 0 ? (
                         <ProductsList products={props.category.productConnection.products} gtmListName={gtmListName} />
                     ) : (

@@ -8,6 +8,7 @@ fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOpti
         text
         count
         rgbHex
+        isSelected
     }
     isCollapsed
 }

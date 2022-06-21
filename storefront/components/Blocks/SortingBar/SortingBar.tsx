@@ -15,19 +15,28 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
+import { getProductListSort } from 'helpers/sorting/GetProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { FC, useState } from 'react';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { useRouter } from 'next/router';
+import { FC, useEffect, useState } from 'react';
+import { useShopsysDispatch } from 'redux/main';
 import { initialState, userActions } from 'redux/slices/user';
 
-const SortingBar: FC<{ totalCount: number }> = (props) => {
+type SortingBarProps = { totalCount: number; sorting: ProductOrderingModeEnumApi | null };
+
+const SortingBar: FC<SortingBarProps> = (props) => {
     const testIdentifier = 'blocks-sortingbar';
 
+    const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
+    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+    const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(
+        props.sorting ?? sortingFromQuery ?? ProductOrderingModeEnumApi.PriorityApi,
+    );
     const { width } = useGetWindowSize();
     const { totalCount } = props;
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
@@ -38,7 +47,6 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         () => setMobileSortBarVisible(true),
         () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
-    const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
     const sortValues = [
         { stateValue: ProductOrderingModeEnumApi.PriorityApi, displayValue: t('priority') },
@@ -46,26 +54,21 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
 
-    useEffectOnce(() => {
-        updateUrlWithCurrentSort(selectedSort);
-    });
+    useEffect(() => {
+        setSelectedSort(props.sorting);
+    }, [props.sorting]);
 
     const updateUrlWithCurrentSort = (sort: string) => {
         if (!canUseDom()) {
             return;
         }
 
-        const queryParams = new URLSearchParams(window.location.search);
-        if (sort === initialState.sort) {
-            queryParams.delete('sort');
-        } else {
-            queryParams.set('sort', sort);
-        }
-        let newState = document.location.pathname;
-        if (queryParams.toString().length > 0) {
-            newState = '?' + queryParams.toString();
-        }
-        history.replaceState(history.state, document.title, newState);
+        const pathname = router.asPath.split('?')[0];
+        const queryParams = router.query;
+        delete queryParams.all;
+        queryParams.sort = sort;
+
+        router.replace({ pathname, query: queryParams }, undefined, { shallow: true, scroll: false });
     };
 
     return (
@@ -81,7 +84,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     onClick={() => {
                                         setToggleSortMenu(!toggleSortMenu);
                                         updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort(value.stateValue));
+                                        setSelectedSort(value.stateValue);
                                     }}
                                     data-testid={testIdentifier + '-selected'}
                                 >
@@ -106,7 +109,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                             onClick={() => {
                                                 setToggleSortMenu(!toggleSortMenu);
                                                 updateUrlWithCurrentSort(value.stateValue);
-                                                dispatch(userActions.setSort(value.stateValue));
+                                                setSelectedSort(value.stateValue);
                                                 dispatch(userActions.setPagination({ ...initialState.pagination }));
                                             }}
                                             data-testid={testIdentifier + '-' + index}
@@ -126,7 +129,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     key={value.stateValue}
                                     onClick={() => {
                                         updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort(value.stateValue));
+                                        setSelectedSort(value.stateValue);
                                         dispatch(userActions.setPagination({ ...initialState.pagination }));
                                     }}
                                     data-testid={testIdentifier + '-' + index}

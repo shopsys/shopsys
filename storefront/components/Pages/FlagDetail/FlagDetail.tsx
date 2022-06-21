@@ -20,7 +20,10 @@ const FlagDetail: FC<FlagDetailProps> = (props) => {
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar totalCount={props.flag.productConnection.totalCount} />
+                    <SortingBar
+                        sorting={props.flag.productConnection.orderingMode}
+                        totalCount={props.flag.productConnection.totalCount}
+                    />
                     {props.flag.productConnection.products.length !== 0 && (
                         <ProductsList products={props.flag.productConnection.products} gtmListName="flag" />
                     )}

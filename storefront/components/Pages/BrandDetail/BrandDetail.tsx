@@ -37,7 +37,10 @@ const BrandDetail: FC<BrandDetailProps> = (props) => {
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar totalCount={props.brand.productConnection.totalCount} />
+                    <SortingBar
+                        sorting={props.brand.productConnection.orderingMode}
+                        totalCount={props.brand.productConnection.totalCount}
+                    />
                     {props.brand.productConnection.products.length !== 0 && (
                         <ProductsList products={props.brand.productConnection.products} gtmListName="brand" />
                     )}

@@ -7,6 +7,7 @@ fragment ProductFilterOptionsParametersCheckboxFragment on ParameterCheckboxFilt
         uuid
         text
         count
+        isSelected
     }
     isCollapsed
 }

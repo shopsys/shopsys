@@ -1,6 +1,6 @@
 query SlugQuery(
     $slug: String!
-    $sortingMode: ProductOrderingModeEnum
+    $orderingMode: ProductOrderingModeEnum
     $endCursorForPagination: String
     $pageSize: Int
     $filter: ProductFilter
