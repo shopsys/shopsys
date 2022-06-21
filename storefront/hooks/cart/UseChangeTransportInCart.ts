@@ -17,13 +17,16 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
 
     const changeTransportHandler = useCallback(
         async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
-            const changeTransportResult = await changeTransportInCart({
-                input: {
-                    transportUuid: newTransportUuid,
-                    pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
-                    cartUuid,
+            const changeTransportResult = await changeTransportInCart(
+                {
+                    input: {
+                        transportUuid: newTransportUuid,
+                        pickupPlaceIdentifier: newPickupPlace?.identifier ?? null,
+                        cartUuid,
+                    },
                 },
-            });
+                { additionalTypenames: ['dedup'] },
+            );
 
             // EXTEND TRANSPORT MODIFICATIONS HERE
 

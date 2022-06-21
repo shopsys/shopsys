@@ -1,4 +1,5 @@
-import { ClientOptions, dedupExchange, fetchExchange } from '@urql/core';
+import { dedupExchange } from './dedupExchange';
+import { ClientOptions, fetchExchange } from '@urql/core';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext } from 'next';

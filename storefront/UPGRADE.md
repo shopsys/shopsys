@@ -626,4 +626,16 @@
     ```
     - your optimistic mutation has to return an object corresponding to the actual object that the mutation would return (same fragment, `null`)
 - other changes
-  - resetting of transport and payment on navigation or refresh when pickup place is selected has been fixed by setting the initial value of the `pickupPlaceIdentifier` to the value from API 
+  - resetting of transport and payment on navigation or refresh when pickup place is selected has been fixed by setting the initial value of the `pickupPlaceIdentifier` to the value from API
+  - custom dedup exchange was introduced to allow custom deduplication logic
+    - it allows for mutation deduplication, which is disallowed by default
+    - to deduplicate your mutation, add a `additionalTypenames` config with `['dedup']` as a value
+    ```ts
+    const changePaymentResult = await changePaymentInCart(
+        {
+            input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
+        },
+        { additionalTypenames: ['dedup'] },
+    );
+    ```
+    - you will probably not need to deduplicate your mutations, it is only required for optimistic mutations, where changes may glitch if they are not deduplicated
