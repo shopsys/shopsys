@@ -290,7 +290,7 @@ class CartFacade extends BaseCartFacade
         $cart = new Cart($cartUuid, null);
 
         $this->em->persist($cart);
-        $this->em->flush($cart);
+        $this->em->flush();
 
         return $cart;
     }
