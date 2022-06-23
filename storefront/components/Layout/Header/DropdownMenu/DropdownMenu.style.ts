@@ -29,7 +29,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>(
         left: 10px;
         right: 10px;
         top: 0;
-        z-index: ${theme.zIndex.menu};
+        z-index: ${theme.zIndex.mobileMenu};
         overflow: hidden;
         cursor: auto;
 
