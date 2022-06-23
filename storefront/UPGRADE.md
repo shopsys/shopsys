@@ -639,3 +639,7 @@
     );
     ```
     - you will probably not need to deduplicate your mutations, it is only required for optimistic mutations, where changes may glitch if they are not deduplicated
+    - cart can now be taken from cache, just use the `fromCache` option on the `useCurrentCart` hook
+    ```ts
+    const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
+    ```
