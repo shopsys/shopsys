@@ -26,7 +26,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const { isUserLoggedIn } = useCurrentUserData();
     const transports = useTransports(cartUuid);
     const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
-    const { isLoaded: IsCartLoaded } = useCurrentCart();
+    const currentCart = useCurrentCart();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step2');
@@ -41,7 +41,13 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
-                {IsCartLoaded && <TransportAndPayment transports={transports} lastOrder={data?.lastOrder ?? null} />}
+                {currentCart.isInitiallyLoaded && (
+                    <TransportAndPayment
+                        transports={transports}
+                        lastOrder={data?.lastOrder ?? null}
+                        currentCart={currentCart}
+                    />
+                )}
             </OrderLayout>
             <Webline type="dark">
                 <Footer simpleFooter />

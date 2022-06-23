@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { FC, useMemo } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
+import { CurrentCartType } from 'types/cart';
 import { TransportAndPaymentFormType } from 'types/form';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
@@ -20,9 +21,10 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 type TransportAndPaymentProps = {
     transports: TransportType[];
     lastOrder: LastOrderFragmentApi | null;
+    currentCart: CurrentCartType;
 };
 
-export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, lastOrder }) => {
+export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, lastOrder, currentCart }) => {
     const router = useRouter();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
@@ -31,7 +33,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, 
     );
 
     const t = useTypedTranslationFunction();
-    const [formProviderMethods] = useTransportAndPaymentForm(lastOrder);
+    const [formProviderMethods] = useTransportAndPaymentForm(currentCart, lastOrder);
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
@@ -63,7 +65,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, 
         <>
             <form onSubmit={formProviderMethods.handleSubmit(onSelectTransportAndPaymentHandler)}>
                 <FormProvider {...formProviderMethods}>
-                    {transports.length > 0 && <Select transports={transports} preselectedPickupPlace={pickupPlace} />}
+                    {transports.length > 0 && <Select transports={transports} lastOrderPickupPlace={pickupPlace} />}
                     <OrderAction
                         activeStep={2}
                         buttonBack={t('Back')}

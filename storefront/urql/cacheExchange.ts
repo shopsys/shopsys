@@ -173,13 +173,15 @@ const getOptimisticChangeTransportInCartResult = (
             transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
     } as ChangeTransportInCartMutationApi['ChangeTransportInCart']);
 
-const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQueryApi, input: ChangePaymentInCartInputApi) =>
-    ({
+const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQueryApi, input: ChangePaymentInCartInputApi) => {
+    const optimisticPayment = getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid);
+
+    return {
         __typename: 'Cart',
         items: cartQueryResult.cart?.items ?? null,
         modifications: cartQueryResult.cart?.modifications ?? null,
-        payment: getPaymentFromTransport(cartQueryResult.cart?.transport, input.paymentUuid),
-        paymentGoPayBankSwift: cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
+        payment: optimisticPayment,
+        paymentGoPayBankSwift: optimisticPayment === null ? null : cartQueryResult.cart?.paymentGoPayBankSwift ?? null,
         promoCode: cartQueryResult.cart?.promoCode ?? null,
         remainingAmountWithVatForFreeTransport: cartQueryResult.cart?.remainingAmountWithVatForFreeTransport ?? null,
         selectedPickupPlaceIdentifier: cartQueryResult.cart?.selectedPickupPlaceIdentifier ?? null,
@@ -188,7 +190,8 @@ const getOptimisticChangePaymentInCartResult = (cartQueryResult: CartQueryApi, i
         totalPrice: cartQueryResult.cart?.totalPrice ?? null,
         uuid: cartQueryResult.cart?.uuid ?? null,
         transport: cartQueryResult.cart?.transport,
-    } as ChangePaymentInCartMutationApi['ChangePaymentInCart']);
+    } as ChangePaymentInCartMutationApi['ChangePaymentInCart'];
+};
 
 const getPaymentFromTransport = (
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null | undefined,

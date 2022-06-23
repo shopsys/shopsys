@@ -12,12 +12,13 @@ import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
 import { CombinedError } from 'urql';
 
 export const useCurrentCart = (): CurrentCartType => {
+    const isInitiallyLoaded = useRef(false);
     const { isUserLoggedIn } = useCurrentUserData();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -30,24 +31,28 @@ export const useCurrentCart = (): CurrentCartType => {
     });
 
     return useMemo(() => {
+        if (result.data === undefined) {
+            return getEmptyCart(isInitiallyLoaded.current, false);
+        }
+
+        if (isInitiallyLoaded.current !== true) {
+            isInitiallyLoaded.current = true;
+        }
+
         if (cartUuid === null && !isUserLoggedIn) {
-            return getEmptyCart();
+            return getEmptyCart(isInitiallyLoaded.current, true);
         }
 
         if (result.error !== undefined) {
             // EXTEND CART ERRORS HERE
             handleCartError(result.error, t);
 
-            return getEmptyCart();
-        }
-
-        if (result.data === undefined) {
-            return getEmptyCart(!result.fetching);
+            return getEmptyCart(isInitiallyLoaded.current, true);
         }
 
         if (result.data.cart === null) {
             // EXTEND EMPTY CART HERE
-            return getEmptyCart();
+            return getEmptyCart(isInitiallyLoaded.current, true);
         }
 
         // EXTEND CART UPDATE HERE
@@ -64,11 +69,12 @@ export const useCurrentCart = (): CurrentCartType => {
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
             promoCode: result.data.cart.promoCode,
             isLoaded: true,
+            isInitiallyLoaded: isInitiallyLoaded.current,
         };
-    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, result.fetching]);
+    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded]);
 };
 
-const getEmptyCart = (isLoaded = true): CurrentCartType => ({
+const getEmptyCart = (isInitiallyLoaded: boolean, isLoaded = true): CurrentCartType => ({
     cart: null,
     isCartEmpty: true,
     transport: null,
@@ -77,6 +83,7 @@ const getEmptyCart = (isLoaded = true): CurrentCartType => ({
     paymentGoPayBankSwift: null,
     promoCode: null,
     isLoaded,
+    isInitiallyLoaded,
 });
 
 const handleCartError = (error: CombinedError, t: Translate) => {

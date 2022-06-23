@@ -1,17 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCurrentCart } from 'connectors/cart/Cart';
 import { LastOrderFragmentApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { UseFormReturn } from 'react-hook-form';
+import { CurrentCartType } from 'types/cart';
 import { TransportAndPaymentFormType } from 'types/form';
 import * as Yup from 'yup';
 
 export const useTransportAndPaymentForm = (
+    { transport, pickupPlace, payment, paymentGoPayBankSwift }: CurrentCartType,
     lastOrder?: LastOrderFragmentApi | null,
 ): [UseFormReturn<TransportAndPaymentFormType>, TransportAndPaymentFormType] => {
     const t = useTypedTranslationFunction();
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -35,12 +35,14 @@ export const useTransportAndPaymentForm = (
                 ),
         }),
     );
+
     const defaultValues = {
         transport: transport?.uuid ?? lastOrder?.transport.uuid ?? null,
         payment: payment?.uuid ?? lastOrder?.payment.uuid ?? null,
         goPaySwift: paymentGoPayBankSwift,
         pickupPlaceIdentifier: pickupPlace?.identifier ?? lastOrder?.pickupPlaceIdentifier ?? null,
     };
+
     return [useShopsysForm<TransportAndPaymentFormType>(resolver, defaultValues), defaultValues];
 };
 
