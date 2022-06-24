@@ -26,7 +26,7 @@ import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
 import { CombinedError } from 'urql';
 
-export const useCurrentCart = (fromCache = false): CurrentCartType => {
+export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isInitiallyLoaded = useRef(false);
     const { isUserLoggedIn } = useCurrentUserData();
     const { cartUuid } = useShopsysSelector((state) => state.user);

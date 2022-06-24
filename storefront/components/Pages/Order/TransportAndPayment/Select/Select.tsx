@@ -43,7 +43,7 @@ const Select: FC<SelectProps> = ({ transports, lastOrderPickupPlace }) => {
     });
     const [preSelectedTransport, setPreselectedTransport] = useState<TransportType | null>(null);
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<PickupPlaceType | null>(lastOrderPickupPlace);
-    const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
+    const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart();
 
     const changeTransportInCart = useChangeTransportInCart();
     const changePaymentInCart = useChangePaymentInCart();

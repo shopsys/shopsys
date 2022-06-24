@@ -2,6 +2,7 @@ import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import Error500 from 'components/Pages/ErrorPage/500';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { useReloadCart } from 'hooks/cart/UseReloadCart';
 import i18nConfig from 'i18n';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const userConsentCookie = getUserConsentCookie();
+    useReloadCart();
 
     const handleRouteChangeStart = useCallback(
         (targetUrl: string) => {
