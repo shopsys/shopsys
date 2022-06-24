@@ -40,7 +40,7 @@ const Link: FC<LinkProps> = (props) => {
 
     if (props.isButton === true) {
         return (
-            <NextLink {...props}>
+            <NextLink {...props} passHref>
                 <ButtonStyled {...props} data-testid={testIdentifier}>
                     {props.children}
                 </ButtonStyled>

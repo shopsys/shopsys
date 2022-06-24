@@ -94,7 +94,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         key={product.slug}
                                                         data-testid={testIdentifier + '-products-' + index}
                                                     >
-                                                        <NextLink href={product.slug}>
+                                                        <NextLink href={product.slug} passHref>
                                                             <ProductSearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onProductDetailRedirectHandler(
@@ -138,7 +138,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         key={brand.slug}
                                                         data-testid={testIdentifier + '-brands-' + index}
                                                     >
-                                                        <NextLink href={brand.slug}>
+                                                        <NextLink href={brand.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
@@ -172,7 +172,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         key={category.slug}
                                                         data-testid={testIdentifier + '-categories-' + index}
                                                     >
-                                                        <NextLink href={category.slug}>
+                                                        <NextLink href={category.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
@@ -204,7 +204,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                         key={article.slug}
                                                         data-testid={testIdentifier + '-articles-' + index}
                                                     >
-                                                        <NextLink href={article.slug}>
+                                                        <NextLink href={article.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
