@@ -35,7 +35,7 @@ const EditProfilePage: FC = () => {
                         { name: t('Edit profile'), slug: customerEditProfileUrl },
                     ]}
                 >
-                    {currentCustomerUserData !== undefined && (
+                    {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
                         <EditProfile currentCustomerUser={currentCustomerUserData} />
                     )}
                 </SimpleLayout>

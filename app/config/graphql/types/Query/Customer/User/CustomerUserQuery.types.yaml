@@ -7,7 +7,7 @@ CustomerUserQuery:
             RegularCustomerUser:
                 type: 'RegularCustomerUser'
             currentCustomerUser:
-                type: 'CustomerUser!'
+                type: 'CustomerUser'
                 resolve: "@=resolver('currentCustomerUser')"
                 description: "Returns currently logged in customer user"
             isCustomerUserRegistered:

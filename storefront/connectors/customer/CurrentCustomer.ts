@@ -7,7 +7,7 @@ import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
-export function useCurrentCustomerData(): CurrentCustomerType | undefined {
+export function useCurrentCustomerData(): CurrentCustomerType | null | undefined {
     const [{ data, error }] = useCurrentCustomerUserQueryApi();
     useQueryError(error);
 
@@ -22,7 +22,11 @@ export function useCurrentCustomerData(): CurrentCustomerType | undefined {
 
 const mapCurrentCustomerApiData = (
     apiCurrentCustomerData: CurrentCustomerUserQueryApi['currentCustomerUser'],
-): CurrentCustomerType => {
+): CurrentCustomerType | null => {
+    if (apiCurrentCustomerData === null) {
+        return null;
+    }
+
     return {
         ...apiCurrentCustomerData,
         companyCustomer: apiCurrentCustomerData.__typename === 'CompanyCustomerUser',
