@@ -1,18 +1,15 @@
-fragment CartModificationsFragment on CartInterface {
+fragment CartModificationsFragment on CartModificationsResult {
     __typename
-    modifications {
-        __typename
-        itemModifications {
-            ...CartItemModificationsFragment
-        }
-        transportModifications {
-            ...CartTransportModificationsFragment
-        }
-        paymentModifications {
-            ...CartPaymentModificationsFragment
-        }
-        promoCodeModifications {
-            ...CartPromoCodeModificationsFragment
-        }
+    itemModifications {
+        ...CartItemModificationsFragment
+    }
+    transportModifications {
+        ...CartTransportModificationsFragment
+    }
+    paymentModifications {
+        ...CartPaymentModificationsFragment
+    }
+    promoCodeModifications {
+        ...CartPromoCodeModificationsFragment
     }
 }

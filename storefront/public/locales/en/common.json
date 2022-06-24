@@ -346,5 +346,6 @@
     "The price of item {{ itemName }} has changed.": "The price of item {{ itemName }} has changed.",
     "Item {{ itemName }} has been sold out.": "Item {{ itemName }} has been sold out.",
     "Item {{ itemName }} can no longer be bought.": "Item {{ itemName }} can no longer be bought.",
-    "The promo code {{ promoCode }} is no longer applicable.": "The promo code {{ promoCode }} is no longer applicable."
+    "The promo code {{ promoCode }} is no longer applicable.": "The promo code {{ promoCode }} is no longer applicable.",
+    "Your payment selection has been removed.": "Your payment selection has been removed."
 }

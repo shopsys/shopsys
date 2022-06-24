@@ -13,7 +13,9 @@ fragment CartFragment on CartInterface {
     totalDiscountPrice {
         ...PriceFragment
     }
-    ...CartModificationsFragment
+    modifications {
+        ...CartModificationsFragment
+    }
     remainingAmountWithVatForFreeTransport
     transport {
         ...TransportWithAvailablePaymentsAndStoresFragment

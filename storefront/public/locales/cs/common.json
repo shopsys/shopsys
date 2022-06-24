@@ -365,5 +365,6 @@
     "The price of item {{ itemName }} has changed.": "Cena položky {{ itemName }} se změnila.",
     "Item {{ itemName }} has been sold out.": "Položka {{ itemName }} byla vyprodána.",
     "Item {{ itemName }} can no longer be bought.": "Položku {{ itemName }} již nelze zakoupit.",
-    "The promo code {{ promoCode }} is no longer applicable.": "Slevový kupón {{ promoCode }} již nelze uplatnit."
+    "The promo code {{ promoCode }} is no longer applicable.": "Slevový kupón {{ promoCode }} již nelze uplatnit.",
+    "Your payment selection has been removed.": "Vaše volba dopravy byla zrušena."
 }

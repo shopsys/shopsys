@@ -12,12 +12,14 @@ import {
     CartFragmentApi,
     CartItemFragmentApi,
     CartItemModificationsFragmentApi,
+    CartModificationsFragmentApi,
     CartPaymentModificationsFragmentApi,
     CartPromoCodeModificationsFragmentApi,
     CartTransportModificationsFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
@@ -63,9 +65,6 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             // EXTEND EMPTY CART HERE
             return getEmptyCart(isInitiallyLoaded.current, true);
         }
-
-        handleCartModifications(result.data.cart, t);
-
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart, currencyCode);
 
@@ -81,6 +80,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             promoCode: result.data.cart.promoCode,
             isLoaded: true,
             isInitiallyLoaded: isInitiallyLoaded.current,
+            modifications: result.data.cart.modifications,
         };
     }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded]);
 };
@@ -95,6 +95,7 @@ const getEmptyCart = (isInitiallyLoaded: boolean, isLoaded = true): CurrentCartT
     promoCode: null,
     isLoaded,
     isInitiallyLoaded,
+    modifications: null,
 });
 
 const handleCartError = (error: CombinedError, t: Translate) => {
@@ -158,25 +159,34 @@ export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string):
     };
 };
 
-const handleCartModifications = (cart: CartFragmentApi, t: Translate): void => {
-    handleCartTransportModifications(cart.modifications.transportModifications, t);
-    handleCartPaymentModifications(cart.modifications.paymentModifications, t);
-    handleCartItemModifications(cart.modifications.itemModifications, t);
-    handleCartPromoCodeModifications(cart.modifications.promoCodeModifications, t);
+export const handleCartModifications = (
+    cartModifications: CartModificationsFragmentApi,
+    t: Translate,
+    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
+): void => {
+    handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
+    handleCartPaymentModifications(cartModifications.paymentModifications, t);
+    handleCartItemModifications(cartModifications.itemModifications, t);
+    handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t);
 };
 
 const handleCartTransportModifications = (
     transportModifications: CartTransportModificationsFragmentApi,
     t: Translate,
+    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
 ): void => {
     if (transportModifications.transportPriceChanged) {
         showInfoMessage(t('The price of the transport you selected has changed.'));
     }
     if (transportModifications.transportUnavailable) {
+        changePaymentInCart(null, null);
         showInfoMessage(t('The transport you selected is no longer available.'));
+        showInfoMessage(t('Your payment selection has been removed.'));
     }
     if (transportModifications.transportWeightLimitExceeded) {
+        changePaymentInCart(null, null);
         showInfoMessage(t('You have exceeded the weight limit of the selected transport.'));
+        showInfoMessage(t('Your payment selection has been removed.'));
     }
 };
 
