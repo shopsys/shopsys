@@ -15,11 +15,12 @@ import { PropsWithChildren, ReactElement, useCallback, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type AppPropsWithError = AppProps & {
     err?: any;
@@ -28,6 +29,7 @@ type AppPropsWithError = AppProps & {
 function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const userConsentCookie = getUserConsentCookie();
 
     const handleRouteChangeStart = useCallback(
@@ -82,6 +84,9 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
         },
     );
 
+    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], domainUrl);
+    const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
+
     return (
         <>
             <Head>
@@ -96,7 +101,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <ErrorBoundary FallbackComponent={Error500}>
-                    {userConsentCookie === null && <UserConsentContainer />}
+                    {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
                     <Component {...pageProps} err={err} />
                 </ErrorBoundary>
             </ShopsysGlobalProvider>
