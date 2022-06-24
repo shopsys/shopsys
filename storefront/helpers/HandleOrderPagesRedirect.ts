@@ -1,4 +1,4 @@
-import { CartQueryApi, CartQueryDocumentApi, CartQueryVariablesApi } from 'graphql/generated';
+import { MinimalCartQueryApi, MinimalCartQueryDocumentApi, MinimalCartQueryVariablesApi } from 'graphql/generated';
 import { GetServerSidePropsContext, Redirect } from 'next';
 import { AppStore } from 'redux/main';
 import { Client } from 'urql';
@@ -26,13 +26,14 @@ export const handleOrderPagesRedirect = async (
         };
     }
 
-    const cartQueryResult = await client
-        .query<CartQueryApi, CartQueryVariablesApi>(CartQueryDocumentApi, { cartUuid })
+    const minimalCartQueryResult = await client
+        .query<MinimalCartQueryApi, MinimalCartQueryVariablesApi>(MinimalCartQueryDocumentApi, { cartUuid })
         .toPromise();
 
-    const isCartEmpty = cartQueryResult.data?.cart?.items === undefined || cartQueryResult.data.cart.items.length === 0;
-    const transport = cartQueryResult.data?.cart?.transport ?? null;
-    const payment = cartQueryResult.data?.cart?.payment ?? null;
+    const isCartEmpty =
+        minimalCartQueryResult.data?.cart?.items === undefined || minimalCartQueryResult.data.cart.items.length === 0;
+    const transport = minimalCartQueryResult.data?.cart?.transport ?? null;
+    const payment = minimalCartQueryResult.data?.cart?.payment ?? null;
 
     if (isCartEmpty && context.resolvedUrl !== '/cart') {
         return {

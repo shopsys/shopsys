@@ -1,0 +1,13 @@
+query MinimalCartQuery($cartUuid: Uuid) {
+    cart(cartInput: { cartUuid: $cartUuid }) {
+        items {
+            uuid
+        }
+        transport {
+            uuid
+        }
+        payment {
+            uuid
+        }
+    }
+}
