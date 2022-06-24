@@ -1,7 +1,7 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { FC, useContext, useEffect, useState } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { DropdownItemType } from 'types/dropdown';
@@ -58,11 +58,11 @@ const DropdownItem: FC<DropdownItemProps> = ({
 
     return (
         <DropdownItemStyled variant={variant} onClick={scrollToTop} data-testid={TEST_IDENTIFIER}>
-            <Link href={itemLink} passHref>
+            <NextLink href={itemLink} passHref>
                 <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={variant}>
                     {itemName}
                 </DropdownItemLinkStyled>
-            </Link>
+            </NextLink>
             {hasChildren && <DropdownSlideRight goToMenu={goToMenu} index={index} />}
         </DropdownItemStyled>
     );

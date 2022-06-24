@@ -10,7 +10,7 @@ import {
 } from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import React from 'react';
 
 const Error404: NextPage = () => {
@@ -28,9 +28,9 @@ const Error404: NextPage = () => {
                             {t('But at other addresses we have a lot for you...')}
                         </ErrorPageTextMainStyled>
 
-                        <Link href="/" passHref>
+                        <NextLink href="/" passHref>
                             <ErrorPageButtonLinkStyled>{t('Back to shop')}</ErrorPageButtonLinkStyled>
-                        </Link>
+                        </NextLink>
                     </ErrorPageTextStyled>
                     <ErrorPageImageStyled>
                         <picture>

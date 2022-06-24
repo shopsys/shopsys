@@ -10,7 +10,7 @@ import {
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
@@ -49,9 +49,9 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
                         {dummyData.opening}
                     </FooterBoxInfoContactHoursStyled>
                 </FooterBoxInfoContactStyled>
-                <Link href={contactUrl} passHref>
+                <NextLink href={contactUrl} passHref>
                     <FooterBoxInfoButtonStyled variant="secondary">{t('Write to us')}</FooterBoxInfoButtonStyled>
-                </Link>
+                </NextLink>
             </FooterBoxInfoContentStyled>
         </FooterBoxInfoStyled>
     );

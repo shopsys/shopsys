@@ -2,7 +2,7 @@ import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
@@ -18,19 +18,19 @@ const SubMenu: FC = () => {
 
     return (
         <SubMenuStyled data-testid={TEST_IDENTIFIER}>
-            <Link href="/" passHref>
+            <NextLink href="/" passHref>
                 <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItemStyled>
-            </Link>
-            <Link href={storesUrl} passHref>
+            </NextLink>
+            <NextLink href={storesUrl} passHref>
                 <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItemStyled>
-            </Link>
+            </NextLink>
 
             {isUserLoggedIn ? (
                 <SubMenuItemStyled onClick={logout}>{t('Logout')}</SubMenuItemStyled>
             ) : (
-                <Link href={loginUrl} passHref>
+                <NextLink href={loginUrl} passHref>
                     <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItemStyled>
-                </Link>
+                </NextLink>
             )}
         </SubMenuStyled>
     );

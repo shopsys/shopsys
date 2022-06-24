@@ -15,7 +15,7 @@ import GoogleMap from 'components/Basic/GoogleMap';
 import Heading from 'components/Basic/Heading';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { StoreDetailType } from 'types/store';
@@ -90,9 +90,9 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomIconStyled iconType="icon" icon="Chat" />
-                            <Link href={contactUrl} passHref>
+                            <NextLink href={contactUrl} passHref>
                                 <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
-                            </Link>
+                            </NextLink>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>

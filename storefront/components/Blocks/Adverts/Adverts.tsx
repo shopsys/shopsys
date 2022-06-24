@@ -6,7 +6,7 @@ import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { FC, Fragment, HTMLAttributes, useState } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { AdvertType } from 'types/advert';
@@ -54,7 +54,7 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
                         (item.__typename === 'AdvertImage' ? (
                             <Fragment key={index}>
                                 {item.link !== undefined ? (
-                                    <Link href={item.link} passHref>
+                                    <NextLink href={item.link} passHref>
                                         <a target="_blank">
                                             {isMobile ? (
                                                 <Image
@@ -66,7 +66,7 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
                                                 <Image image={item.image} type={item.positionName} alt={item.name} />
                                             )}
                                         </a>
-                                    </Link>
+                                    </NextLink>
                                 ) : (
                                     <>
                                         {isMobile ? (
