@@ -17,6 +17,7 @@ import SimpleLayout from 'components/Layout/SimpleLayout';
 import { useStores } from 'connectors/stores/Stores';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Image from 'next/image';
+import NextLink from 'next/link';
 import { FC, useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
@@ -69,17 +70,19 @@ const Stores: FC = () => {
             </StoresStyled>
             <StoresList>
                 {stores.length !== 0 &&
-                    stores.map((store, index) => (
-                        <ButtonBottomStyled key={index} href={store.slug}>
-                            <ButtonBottomItemStyled>
-                                <ButtonBottomIconStyled iconType="icon" icon="Marker" />
-                                <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
-                            </ButtonBottomItemStyled>
-                            <ButtonBottomItemStyled>
-                                <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
-                                <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
-                            </ButtonBottomItemStyled>
-                        </ButtonBottomStyled>
+                    stores.map((store) => (
+                        <NextLink key={store.slug} href={store.slug} passHref>
+                            <ButtonBottomStyled>
+                                <ButtonBottomItemStyled>
+                                    <ButtonBottomIconStyled iconType="icon" icon="Marker" />
+                                    <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
+                                </ButtonBottomItemStyled>
+                                <ButtonBottomItemStyled>
+                                    <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
+                                    <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
+                                </ButtonBottomItemStyled>
+                            </ButtonBottomStyled>
+                        </NextLink>
                     ))}
             </StoresList>
         </SimpleLayout>

@@ -1,5 +1,6 @@
 import { BlogSignpostItemIconStyled, BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
-import { FC } from 'react';
+import NextLink from 'next/link';
+import { FC, Fragment } from 'react';
 import { ListedBlogCategoryType } from 'types/blogCategory';
 
 type ChildrenProps = {
@@ -8,27 +9,27 @@ type ChildrenProps = {
     itemLevel: number;
 };
 
-const Children: FC<ChildrenProps> = (props) => {
-    const testIdentifier = 'blocks-blogsignpost-children-';
+const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
 
+const Children: FC<ChildrenProps> = (props) => {
     return (
         <>
             {props.blogCategory.children.map((blogCategoryChild, index) => (
-                <>
-                    <BlogSignpostItemStyled
-                        key={blogCategoryChild.uuid}
-                        href={blogCategoryChild.link}
-                        isActive={props.activeItem === blogCategoryChild.uuid}
-                        itemLevel={props.itemLevel}
-                        data-testid={testIdentifier + index}
-                    >
-                        <BlogSignpostItemIconStyled
-                            iconType="icon"
-                            icon="Arrow"
+                <Fragment key={blogCategoryChild.uuid}>
+                    <NextLink href={blogCategoryChild.link} passHref>
+                        <BlogSignpostItemStyled
                             isActive={props.activeItem === blogCategoryChild.uuid}
-                        />
-                        {blogCategoryChild.name}
-                    </BlogSignpostItemStyled>
+                            itemLevel={props.itemLevel}
+                            data-testid={TEST_IDENTIFIER + index}
+                        >
+                            <BlogSignpostItemIconStyled
+                                iconType="icon"
+                                icon="Arrow"
+                                isActive={props.activeItem === blogCategoryChild.uuid}
+                            />
+                            {blogCategoryChild.name}
+                        </BlogSignpostItemStyled>
+                    </NextLink>
                     {blogCategoryChild.children.length > 0 && (
                         <Children
                             blogCategory={blogCategoryChild}
@@ -36,7 +37,7 @@ const Children: FC<ChildrenProps> = (props) => {
                             itemLevel={props.itemLevel + 1}
                         />
                     )}
-                </>
+                </Fragment>
             ))}
         </>
     );

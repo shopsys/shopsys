@@ -10,6 +10,7 @@ import {
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
+import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BlogArticleConnectionType } from 'types/blogArticle';
@@ -28,9 +29,11 @@ const List: FC<ListProps> = (props) => {
             {props.blogArticles.edges.map((blogArticle, blogArticleIndex) => (
                 <ListItemStyled key={blogArticle.uuid} data-testid={testIdentifier + blogArticleIndex}>
                     <ListItemImageStyled data-testid={testIdentifier + blogArticleIndex + '-image'}>
-                        <a href={blogArticle.link}>
-                            <Image image={blogArticle.image} type="list" alt={blogArticle.name} />
-                        </a>
+                        <NextLink href={blogArticle.link} passHref>
+                            <a>
+                                <Image image={blogArticle.image} type="list" alt={blogArticle.name} />
+                            </a>
+                        </NextLink>
                     </ListItemImageStyled>
                     <ListItemContentStyled>
                         <div>
@@ -53,12 +56,11 @@ const List: FC<ListProps> = (props) => {
                                 </Fragment>
                             ))}
                         </div>
-                        <ListItemTitleStyled
-                            href={blogArticle.link}
-                            data-testid={testIdentifier + blogArticleIndex + '-title'}
-                        >
-                            <Heading type="h2">{blogArticle.name}</Heading>
-                        </ListItemTitleStyled>
+                        <NextLink href={blogArticle.link} passHref>
+                            <ListItemTitleStyled data-testid={testIdentifier + blogArticleIndex + '-title'}>
+                                <Heading type="h2">{blogArticle.name}</Heading>
+                            </ListItemTitleStyled>
+                        </NextLink>
                         {blogArticle.perex !== null && (
                             <ListItemContentTextStyled data-testid={testIdentifier + blogArticleIndex + '-perex'}>
                                 {blogArticle.perex}
