@@ -6,6 +6,7 @@ namespace App\FrontendApi\Model\Product\Connection;
 
 use App\FrontendApi\Model\Product\ProductsBatchLoader;
 use App\Model\Category\Category;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
@@ -32,6 +33,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
      * @param string $batchLoadDataId
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function createConnectionPromiseForCategory(
@@ -40,15 +42,17 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         ProductFilterData $productFilterData,
         string $orderingMode,
-        string $batchLoadDataId
+        string $batchLoadDataId,
+        ?ReadyCategorySeoMix $readyCategorySeoMix
     ): Promise {
         $searchText = $argument['search'] ?? '';
-        $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText) {
+        $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText, $readyCategorySeoMix) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
                 $category,
                 $this->productFilterFacade->getProductFilterConfigForCategory($category, $searchText),
                 $productFilterData,
-                $searchText
+                $searchText,
+                $readyCategorySeoMix
             );
         };
 

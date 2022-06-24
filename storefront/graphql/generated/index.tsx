@@ -797,6 +797,8 @@ export type FlagFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
 };
 
 export type GoPayBankSwiftApi = {
@@ -1450,6 +1452,8 @@ export type ParameterSliderFilterOptionApi = ParameterFilterOptionInterfaceApi &
   minimalValue: Scalars['Float'];
   /** The parameter name */
   name: Scalars['String'];
+  /** The pre-selected value (used for "ready category seo mixes") */
+  selectedValue: Maybe<Scalars['Float']>;
   /** The parameter unit */
   unit: Maybe<UnitApi>;
   /** The parameter UUID */
@@ -1476,6 +1480,8 @@ export type ParameterValueColorFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
   /** RGB hex of color parameter */
   rgbHex: Maybe<Scalars['String']>;
   /** Parameter value */
@@ -1495,6 +1501,8 @@ export type ParameterValueFilterOptionApi = {
    * that will be added to current products result.
    */
   isAbsolute: Scalars['Boolean'];
+  /** Indicator whether the option is already selected (used for "ready category seo mixes") */
+  isSelected: Scalars['Boolean'];
   /** Parameter value */
   text: Scalars['String'];
   /** UUID */

@@ -238,8 +238,10 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
+            ['name' => t('Canon MG3550', [], 'dataFixtures', $this->firstDomainLocale)],
             ['name' => t('Genius NetScroll 310 silver', [], 'dataFixtures', $this->firstDomainLocale)],
             ['name' => t('Genius SlimStar i820', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('OKI MC861cdxn+ (01318206)', [], 'dataFixtures', $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'category', $productsExpected);

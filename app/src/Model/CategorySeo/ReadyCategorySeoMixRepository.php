@@ -83,7 +83,7 @@ class ReadyCategorySeoMixRepository
 
     /**
      * @param int $categoryId
-     * @param array $parameterValueIdsByParameterId
+     * @param array<int,int> $parameterValueIdsByParameterId
      * @param int[] $flagIds
      * @param string|null $ordering
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
@@ -96,11 +96,6 @@ class ReadyCategorySeoMixRepository
         ?string $ordering,
         DomainConfig $domainConfig
     ): ReadyCategorySeoMix {
-        $this->checkPossibilityToFindReadyCategorySeoMix($parameterValueIdsByParameterId, $flagIds, $ordering);
-        $parameterValueIdsByParameterId = array_filter($parameterValueIdsByParameterId);
-        $parameterValueIdByParameterId = array_map('array_shift', $parameterValueIdsByParameterId);
-        $parameterValueIdByParameterId = array_map('intval', $parameterValueIdByParameterId);
-
         if (count($flagIds) === 1) {
             $flagId = (int)array_shift($flagIds);
         } else {
@@ -112,7 +107,7 @@ class ReadyCategorySeoMixRepository
             $categoryId,
             $flagId,
             $ordering,
-            $parameterValueIdByParameterId
+            $parameterValueIdsByParameterId
         );
 
         $combinationJson = json_encode($combinationArray);
@@ -179,37 +174,6 @@ class ReadyCategorySeoMixRepository
         }
 
         return $this->readySeoCategorySetup[$domainId][$categoryId];
-    }
-
-    /**
-     * @param array $parameterValueIdsByParameterId
-     * @param int[] $flagIds
-     * @param string|null $ordering
-     */
-    private function checkPossibilityToFindReadyCategorySeoMix(
-        array $parameterValueIdsByParameterId,
-        array $flagIds,
-        ?string $ordering
-    ): void {
-        if ($ordering === null && count($parameterValueIdsByParameterId) === 0 && count($flagIds)) {
-            throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: it cannot have anything for conditions'
-            );
-        }
-
-        foreach ($parameterValueIdsByParameterId as $parameterValueIds) {
-            if (count($parameterValueIds) > 1) {
-                throw new UnableToFindReadyCategorySeoMixException(
-                    'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter'
-                );
-            }
-        }
-
-        if (count($flagIds) > 1) {
-            throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
-            );
-        }
     }
 
     /**

@@ -306,12 +306,16 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Product\Product $product4 */
         $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 4);
+        /** @var \App\Model\Product\Product $product9 */
+        $product9 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 9);
         /** @var \App\Model\Product\Product $product11 */
         $product11 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 11);
         /** @var \App\Model\Product\Product $product16 */
         $product16 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 16);
         /** @var \App\Model\Product\Product $product18 */
         $product18 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 18);
+        /** @var \App\Model\Product\Product $product35 */
+        $product35 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 35);
         /** @var \App\Model\Product\Product $product52 */
         $product52 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 52);
 
@@ -321,6 +325,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $this->addParameterValueToProduct($product16, $parameter, $this->getParameterValue($locale, '3'));
             $this->addParameterValueToProduct($product18, $parameter, $this->getParameterValue($locale, '4'));
             $this->addParameterValueToProduct($product52, $parameter, $this->getParameterValue($locale, '5'));
+            $this->addParameterValueToProduct($product9, $parameter, $this->getParameterValue($locale, '4'));
+            $this->addParameterValueToProduct($product35, $parameter, $this->getParameterValue($locale, '4'));
         }
     }
 

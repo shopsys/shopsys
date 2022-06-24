@@ -80,6 +80,7 @@ class ProductsResolver extends BaseProductsResolver
 
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
+            $readyCategorySeoMix = null;
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
                 $argument,
                 $category
@@ -87,6 +88,7 @@ class ProductsResolver extends BaseProductsResolver
             $orderingMode = $this->getOrderingModeFromArgument($argument);
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
+            $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
             $productFilterData = $this->productFilterDataFactory->createProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix);
             $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
         } else {
@@ -99,7 +101,7 @@ class ProductsResolver extends BaseProductsResolver
             );
         }
 
-        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode);
+        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $readyCategorySeoMix);
     }
 
     /**
@@ -244,13 +246,15 @@ class ProductsResolver extends BaseProductsResolver
      * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string|null $orderingMode
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
     private function getPromiseByCategory(
         Argument $argument,
         Category $category,
         ProductFilterData $productFilterData,
-        ?string $orderingMode = null
+        ?string $orderingMode,
+        ?ReadyCategorySeoMix $readyCategorySeoMix
     ): Promise {
         $this->setDefaultFirstOffsetIfNecessary($argument);
         $batchLoadDataId = Uuid::uuid4()->toString();
@@ -274,7 +278,23 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData,
             $orderingMode,
-            $batchLoadDataId
+            $batchLoadDataId,
+            $readyCategorySeoMix
         );
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string
+     */
+    protected function getOrderingModeFromArgument(Argument $argument): string
+    {
+        $orderingMode = $this->getDefaultOrderingMode($argument);
+
+        if ($argument->offsetExists('orderingMode') && $argument->offsetGet('orderingMode') !== null) {
+            $orderingMode = $argument->offsetGet('orderingMode');
+        }
+
+        return $orderingMode;
     }
 }

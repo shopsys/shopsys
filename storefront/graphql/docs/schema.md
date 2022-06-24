@@ -3508,6 +3508,15 @@ that will be added to current products result.
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the option is already selected (used for "ready category seo mixes")
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -5115,6 +5124,15 @@ The parameter maximal value
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>selectedValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The pre-selected value (used for "ready category seo mixes")
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -5206,6 +5224,15 @@ that will be added to current products result.
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the option is already selected (used for "ready category seo mixes")
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>rgbHex</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5266,6 +5293,15 @@ Count of products that will be filtered if this filter option is applied.
 If true than count parameter is number of products that will be displayed if
 this filter option is applied, if false count parameter is number of products
 that will be added to current products result.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicator whether the option is already selected (used for "ready category seo mixes")
 
 </td>
 </tr>

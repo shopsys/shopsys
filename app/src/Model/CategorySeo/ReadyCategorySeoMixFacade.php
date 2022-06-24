@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
+use App\FrontendApi\Model\Flag\FlagFacade;
+use App\FrontendApi\Model\Parameter\ParameterFacade;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
+use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
+use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
-use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class ReadyCategorySeoMixFacade
 {
@@ -39,42 +40,42 @@ class ReadyCategorySeoMixFacade
     private $friendlyUrlFacade;
 
     /**
-     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
-     */
-    private $productListOrderingModeForListFacade;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
+     * @var \App\FrontendApi\Model\Flag\FlagFacade
+     */
+    private FlagFacade $flagFacade;
+
+    /**
+     * @var \App\FrontendApi\Model\Parameter\ParameterFacade
+     */
+    private ParameterFacade $parameterFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\FrontendApi\Model\Flag\FlagFacade $flagFacade
+     * @param \App\FrontendApi\Model\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
-        RequestStack $requestStack,
-        Domain $domain
+        Domain $domain,
+        FlagFacade $flagFacade,
+        ParameterFacade $parameterFacade
     ) {
         $this->em = $em;
         $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
-        $this->requestStack = $requestStack;
         $this->domain = $domain;
+        $this->flagFacade = $flagFacade;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -237,56 +238,71 @@ class ReadyCategorySeoMixFacade
 
     /**
      * @param int $categoryId
-     * @param array $parameters
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
+     * @param string[] $flagUuids
+     * @param string|null $orderingMode
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function getCategorySeoMixByRawQueryData(int $categoryId, array $parameters): ReadyCategorySeoMix
-    {
-        $filterFormData = [];
-        if (array_key_exists(self::FILTER_FORM_KEY, $parameters) === true) {
-            $filterFormData = $parameters[self::FILTER_FORM_KEY];
-        }
+    public function findReadyCategorySeoMixByQueryInputData(
+        int $categoryId,
+        array $parametersFilterData,
+        array $flagUuids,
+        ?string $orderingMode
+    ): ?ReadyCategorySeoMix {
+        try {
+            $currentDomainConfig = $this->domain->getCurrentDomainConfig();
+            $this->checkPossibilityToFindReadyCategorySeoMix($parametersFilterData, $flagUuids, $orderingMode);
+            // From now on, we can count on the following facts:
+            // - Parameters have only 1 value, or values are empty and minimalValue === maximalValue (ie. exactly one value is selected in slider).
+            // - Count of flagUuids is 0 or 1.
 
-        return $this->getCategorySeoMixByRawFilterData($categoryId, $filterFormData);
+            return $this->readyCategorySeoMixRepository->getReadyCategorySeoMixFromFilter(
+                $categoryId,
+                $this->getParameterValueIdsByParameterId($parametersFilterData, $currentDomainConfig->getLocale()),
+                $this->flagFacade->getFlagIdsByUuids($flagUuids),
+                $orderingMode,
+                $currentDomainConfig
+            );
+        } catch (UnableToFindReadyCategorySeoMixException|ParameterValueNotFoundException $exception) {
+            return null;
+        }
     }
 
     /**
-     * @param int $categoryId
-     * @param array $filterFormData
-     * @return \App\Model\CategorySeo\ReadyCategorySeoMix
+     * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
+     * @param string[] $flagUuids
+     * @param string|null $ordering
      */
-    private function getCategorySeoMixByRawFilterData(int $categoryId, array $filterFormData): ReadyCategorySeoMix
-    {
-        $parameterValueIdsByParameterId = [];
-        if (array_key_exists('parameters', $filterFormData) === true) {
-            $parameterValueIdsByParameterId = $filterFormData['parameters'];
+    private function checkPossibilityToFindReadyCategorySeoMix(
+        array $parametersFilterData,
+        array $flagUuids,
+        ?string $ordering
+    ): void {
+        if ($ordering === null && count($parametersFilterData) === 0 && count($flagUuids)) {
+            throw new UnableToFindReadyCategorySeoMixException(
+                'Unable to find ReadyCategorySeoMix: it cannot have set no conditions'
+            );
         }
 
-        $flagIds = [];
-        if (array_key_exists('flags', $filterFormData) === true) {
-            $flagIds = $filterFormData['flags'];
+        foreach ($parametersFilterData as $parameterFilterData) {
+            $valuesCount = count($parameterFilterData['values']);
+            if ($valuesCount === 0 && ($parameterFilterData['minimalValue'] !== $parameterFilterData['maximalValue'])) {
+                throw new UnableToFindReadyCategorySeoMixException(
+                    'Unable to find ReadyCategorySeoMix: there must be exactly one value for slider parameters selected'
+                );
+            }
+            if ($valuesCount > 1) {
+                throw new UnableToFindReadyCategorySeoMixException(
+                    'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter'
+                );
+            }
         }
 
-        return $this->readyCategorySeoMixRepository->getReadyCategorySeoMixFromFilter(
-            $categoryId,
-            $parameterValueIdsByParameterId,
-            $flagIds,
-            $this->getCurrentOrderingModeId(),
-            $this->domain->getCurrentDomainConfig()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    private function getCurrentOrderingModeId(): string
-    {
-        $request = $this->requestStack->getMasterRequest();
-        if ($request === null) {
-            throw new RuntimeException('Master request is mandatory for generating CategorySeoMix url');
+        if (count($flagUuids) > 1) {
+            throw new UnableToFindReadyCategorySeoMixException(
+                'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
+            );
         }
-
-        return $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);
     }
 
     /**
@@ -305,5 +321,32 @@ class ReadyCategorySeoMixFacade
     public function getAllCategoryIdsInSeoMixes(): array
     {
         return $this->readyCategorySeoMixRepository->getAllCategoryIdsInSeoMixes();
+    }
+
+    /**
+     * @param array<int, array{parameter: string, values: string[], minimalValue: float|null, maximalValue: float|null}> $parametersFilterData
+     * @param string $currentLocale
+     * @return array<int,int>
+     */
+    private function getParameterValueIdsByParameterId(array $parametersFilterData, string $currentLocale): array
+    {
+        $parameterIdsByUuids = $this->parameterFacade->getParameterIdsIndexedByUuids(array_column($parametersFilterData, 'parameter'));
+        $allParameterValuesUuids = array_merge(...array_column($parametersFilterData, 'values'));
+        $parameterValueIdsByUuids = $this->parameterFacade->getParameterValueIdsIndexedByUuids($allParameterValuesUuids);
+        $parameterValueIdsByParameterId = [];
+        foreach ($parametersFilterData as $parameterFilterData) {
+            $parameterId = $parameterIdsByUuids[$parameterFilterData['parameter']];
+            if (count($parameterFilterData['values']) === 0) {
+                // slider parameter, minimal and maximal value are the same (see checkPossibilityToFindReadyCategorySeoMix method)
+                // so it does not matter which one is used for grabbing the text
+                $text = $parameterFilterData['minimalValue'];
+                $parameterValueId = $this->parameterFacade->getParameterValueIdByText((string)$text, $currentLocale);
+            } else {
+                $parameterValueId = $parameterValueIdsByUuids[reset($parameterFilterData['values'])];
+            }
+            $parameterValueIdsByParameterId[$parameterId] = $parameterValueId;
+        }
+
+        return $parameterValueIdsByParameterId;
     }
 }

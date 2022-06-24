@@ -34,11 +34,17 @@ class ParameterFilterOption extends BaseParameterFilterOption
     public bool $isCollapsed;
 
     /**
+     * @var float|null
+     */
+    public ?float $selectedValue;
+
+    /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
      * @param bool $isCollapsed
+     * @param float|null $selectedValue
      */
-    public function __construct(BaseParameter $parameter, array $values, bool $isCollapsed)
+    public function __construct(BaseParameter $parameter, array $values, bool $isCollapsed, ?float $selectedValue = null)
     {
         parent::__construct($parameter, $values);
 
@@ -50,6 +56,7 @@ class ParameterFilterOption extends BaseParameterFilterOption
         $floatValues = $this->getFloatValuesFromParameterValueFilterOptions($values);
         $this->minimalValue = min($floatValues);
         $this->maximalValue = max($floatValues);
+        $this->selectedValue = $selectedValue;
     }
 
     /**
