@@ -1,29 +1,36 @@
+"""Represents a singe additional image size"""
+type AdditionalSize {
+  """Height in pixels defined in images.yaml"""
+  height: Int
+  """Recommended media query defined in images.yaml"""
+  media: String!
+  """URL address of image"""
+  url: String!
+  """Width in pixels defined in images.yaml"""
+  width: Int
+}
+
 type AddProductResult {
+  addedQuantity: Int!
   cartItem: CartItem!
+  isNew: Boolean!
+  isQuantityOverLimit: Boolean
   notOnStockQuantity: Int!
   overLimitQuantity: Int
-  isQuantityOverLimit: Boolean
-  isNew: Boolean!
-  addedQuantity: Int!
 }
 
 input AddToCartInput {
-  """
-  Cart identifier, new cart will be created if not provided and customer is not logged in
-  """
+  """Cart identifier, new cart will be created if not provided and customer is not logged in"""
   cartUuid: Uuid = null
-
-  """Product UUID"""
-  productUuid: Uuid!
-
-  """Item quantity"""
-  quantity: Int!
-
   """
   True if quantity should be set no matter the current state of the cart. False
   if quantity should be added to the already existing same item in the cart
   """
   isAbsoluteQuantity: Boolean = false
+  """Product UUID"""
+  productUuid: Uuid!
+  """Item quantity"""
+  quantity: Int!
 }
 
 type AddToCartResult {
@@ -31,91 +38,54 @@ type AddToCartResult {
   cart: Cart!
 }
 
-"""Represents a singe additional image size"""
-type AdditionalSize {
-  """URL address of image"""
-  url: String!
-
-  """Width in pixels defined in images.yaml"""
-  width: Int
-
-  """Height in pixels defined in images.yaml"""
-  height: Int
-
-  """Recommended media query defined in images.yaml"""
-  media: String!
-}
-
 interface Advert {
-  """UUID"""
-  uuid: Uuid!
-
+  """Restricted categories of the advert (the advert is shown in these categories only)"""
+  categories: [Category!]!
   """Name of advert"""
   name: String!
-
-  """Type of advert"""
-  type: String!
-
   """Position of advert"""
   positionName: String!
-
-  """
-  Restricted categories of the advert (the advert is shown in these categories only)
-  """
-  categories: [Category!]!
+  """Type of advert"""
+  type: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 type AdvertCode implements Advert {
-  """UUID"""
-  uuid: Uuid!
-
-  """Name of advert"""
-  name: String!
-
-  """Type of advert"""
-  type: String!
-
-  """Position of advert"""
-  positionName: String!
-
-  """
-  Restricted categories of the advert (the advert is shown in these categories only)
-  """
+  """Restricted categories of the advert (the advert is shown in these categories only)"""
   categories: [Category!]!
-
   """Advert code"""
   code: String!
+  """Name of advert"""
+  name: String!
+  """Position of advert"""
+  positionName: String!
+  """Type of advert"""
+  type: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 type AdvertImage implements Advert {
-  """UUID"""
-  uuid: Uuid!
-
-  """Name of advert"""
-  name: String!
-
-  """Type of advert"""
-  type: String!
-
-  """Position of advert"""
-  positionName: String!
-
-  """
-  Restricted categories of the advert (the advert is shown in these categories only)
-  """
+  """Restricted categories of the advert (the advert is shown in these categories only)"""
   categories: [Category!]!
-
+  """Advert image"""
+  image(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
   """Advert link"""
   link: String
-
-  """Advert image"""
-  image(type: String = null, size: String = null, sizes: [String!] = null): [Image!]!
+  """Name of advert"""
+  name: String!
+  """Position of advert"""
+  positionName: String!
+  """Type of advert"""
+  type: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 type AdvertPosition {
   """Desription of advert position"""
   description: String!
-
   """Position of advert"""
   positionName: String!
 }
@@ -123,95 +93,75 @@ type AdvertPosition {
 input ApplyPromoCodeToCartInput {
   """Cart identifier or null if customer is logged in"""
   cartUuid: Uuid = null
-
   """Promo code to be used after checkout"""
   promoCode: String!
 }
 
 type Article implements Breadcrumb & Slug & ArticleInterface {
-  """UUID"""
-  uuid: Uuid!
-
-  """Placement of article"""
-  placement: String!
-
-  """Name of article"""
-  name: String!
-
-  """Text of article"""
-  text: String
-
-  """Seo first level heading of article"""
-  seoH1: String
-
-  """Seo title of article"""
-  seoTitle: String
-
-  """Seo meta description of article"""
-  seoMetaDescription: String
-
-  """Article URL slug"""
-  slug: String!
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
   """If the the article should be open in a new tab"""
   external: Boolean!
+  """Name of article"""
+  name: String!
+  """Placement of article"""
+  placement: String!
+  """Seo first level heading of article"""
+  seoH1: String
+  """Seo meta description of article"""
+  seoMetaDescription: String
+  """Seo title of article"""
+  seoTitle: String
+  """Article URL slug"""
+  slug: String!
+  """Text of article"""
+  text: String
+  """UUID"""
+  uuid: Uuid!
 }
 
 """A connection to a list of items."""
 type ArticleConnection {
-  """Total number of articles"""
-  totalCount: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [ArticleEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of articles"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type ArticleEdge {
-  """The item at the end of the edge."""
-  node: Article
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: Article
 }
 
 """Represents entity that is considered to be an article on the eshop"""
 interface ArticleInterface {
-  uuid: Uuid!
+  breadcrumb: [Link!]!
   name: String!
+  seoH1: String
+  seoMetaDescription: String
+  seoTitle: String
   slug: String!
   text: String
-  seoTitle: String
-  seoMetaDescription: String
-  seoH1: String
-  breadcrumb: [Link!]!
+  uuid: Uuid!
 }
 
-"""
-Possible placements of an article (used as an input for 'articles' query)
-"""
+"""Possible placements of an article (used as an input for 'articles' query)"""
 enum ArticlePlacementTypeEnum {
   """Articles in 1st footer column"""
   footer1
-
   """Articles in 2nd footer column"""
   footer2
-
   """Articles in 3rd footer column"""
   footer3
-
   """Articles in 4th footer column"""
   footer4
-
   """Articles in top menu"""
   topMenu
-
   """Articles without specific placement"""
   none
 }
@@ -220,166 +170,122 @@ enum ArticlePlacementTypeEnum {
 type Availability {
   """Localized availability name (domain dependent)"""
   name: String!
-
   """Availability status in a format suitable for usage in the code"""
   status: String!
 }
 
 type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
-  """The blog article UUID"""
-  uuid: Uuid!
-
-  """The blog article title"""
-  name: String!
-
-  """The blog article text"""
-  text: String
-
-  """Date and time of the blog article creation"""
-  createdAt: DateTime!
-
-  """Indicates whether the blog article is displayed on homepage"""
-  visibleOnHomepage: Boolean!
-
-  """Date and time of the blog article publishing"""
-  publishDate: DateTime!
-
-  """The blog article perex"""
-  perex: String
-
-  """The blog article SEO title"""
-  seoTitle: String
-
-  """The blog article SEO meta description"""
-  seoMetaDescription: String
-
-  """The blog article SEO H1 heading"""
-  seoH1: String
-
   """The list of the blog article blog categories"""
   blogCategories: [BlogCategory!]!
-
-  """The blog article absolute URL"""
-  link: String!
-
-  """The blog article URL slug"""
-  slug: String!
-
-  """The list of the products assigned to the blog article"""
-  products: [Product!]!
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Date and time of the blog article creation"""
+  createdAt: DateTime!
   """Blog article images"""
-  images(type: String = null, sizes: [String!] = null): [Image!]!
+  images(sizes: [String!] = null, type: String = null): [Image!]!
+  """The blog article absolute URL"""
+  link: String!
+  """The blog article title"""
+  name: String!
+  """The blog article perex"""
+  perex: String
+  """The list of the products assigned to the blog article"""
+  products: [Product!]!
+  """Date and time of the blog article publishing"""
+  publishDate: DateTime!
+  """The blog article SEO H1 heading"""
+  seoH1: String
+  """The blog article SEO meta description"""
+  seoMetaDescription: String
+  """The blog article SEO title"""
+  seoTitle: String
+  """The blog article URL slug"""
+  slug: String!
+  """The blog article text"""
+  text: String
+  """The blog article UUID"""
+  uuid: Uuid!
+  """Indicates whether the blog article is displayed on homepage"""
+  visibleOnHomepage: Boolean!
 }
 
 """A connection to a list of items."""
 type BlogArticleConnection {
-  """Total number of the blog articles"""
-  totalCount: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [BlogArticleEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of the blog articles"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type BlogArticleEdge {
-  """The item at the end of the edge."""
-  node: BlogArticle
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: BlogArticle
 }
 
 type BlogCategory implements Breadcrumb & Slug {
-  """The blog category UUID"""
-  uuid: Uuid!
-
-  """The blog category name"""
-  name: String!
-
-  """The blog category description"""
-  description: String
-
-  """The blog category parent"""
-  parent: BlogCategory
-
-  """The blog category children"""
-  children: [BlogCategory!]!
-
-  """The blog category SEO title"""
-  seoTitle: String
-
-  """The blog category SEO meta description"""
-  seoMetaDescription: String
-
-  """The blog category SEO H1 heading"""
-  seoH1: String
-
   """Paginated blog articles of the given blog category"""
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
-
-  """The blog category absolute URL"""
-  link: String!
-
-  """The blog category URL slug"""
-  slug: String!
-
+  blogArticles(after: String, before: String, first: Int, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
+  """The blog category children"""
+  children: [BlogCategory!]!
+  """The blog category description"""
+  description: String
+  """The blog category absolute URL"""
+  link: String!
+  """The blog category name"""
+  name: String!
+  """The blog category parent"""
+  parent: BlogCategory
+  """The blog category SEO H1 heading"""
+  seoH1: String
+  """The blog category SEO meta description"""
+  seoMetaDescription: String
+  """The blog category SEO title"""
+  seoTitle: String
+  """The blog category URL slug"""
+  slug: String!
+  """The blog category UUID"""
+  uuid: Uuid!
 }
 
 """Represents a brand"""
 type Brand implements Breadcrumb & Slug & ProductListable {
-  """UUID"""
-  uuid: Uuid!
-
-  """Brand name"""
-  name: String!
-
-  """Brand description"""
-  description: String
-
-  """Brand main URL"""
-  link: String!
-
-  """Brand SEO title"""
-  seoTitle: String
-
-  """Brand SEO meta description"""
-  seoMetaDescription: String
-
-  """Brand SEO H1"""
-  seoH1: String
-
-  """Brand images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Paginated and ordered products of brand"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
-
-  """Brand URL slug"""
-  slug: String!
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
+  """Brand description"""
+  description: String
+  """Brand images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  """Brand main URL"""
+  link: String!
+  """Brand name"""
+  name: String!
+  """Paginated and ordered products of brand"""
+  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  """Brand SEO H1"""
+  seoH1: String
+  """Brand SEO meta description"""
+  seoMetaDescription: String
+  """Brand SEO title"""
+  seoTitle: String
+  """Brand URL slug"""
+  slug: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Brand filter option"""
 type BrandFilterOption {
   """Brand"""
   brand: Brand!
-
-  """
-  Count of products that will be filtered if this filter option is applied.
-  """
+  """Count of products that will be filtered if this filter option is applied."""
   count: Int!
-
   """
   If true than count parameter is number of products that will be displayed if
   this filter option is applied, if false count parameter is number of products
@@ -395,91 +301,74 @@ interface Breadcrumb {
 }
 
 type Cart implements CartInterface {
-  """UUID of the cart, null for authenticated user"""
-  uuid: Uuid
-
   """All items in the cart"""
   items: [CartItem!]!
-
-  """Selected transport if transport provided"""
-  transport: Transport
-
+  modifications: CartModificationsResult!
   """Selected payment if payment provided"""
   payment: Payment
-
-  """Selected pickup place identifier if provided"""
-  selectedPickupPlaceIdentifier: String
-
-  """Applied promo code if provided"""
-  promoCode: String
-  modifications: CartModificationsResult!
-
-  """Total price including transport and payment"""
-  totalPrice: Price!
-
-  """Total items price (excluding transport and payment)"""
-  totalItemsPrice: Price!
-  totalDiscountPrice: Price!
-
-  """
-  Remaining amount for free transport and payment; null = transport cannot be free
-  """
-  remainingAmountWithVatForFreeTransport: Money
-
   """Selected bank swift code of goPay payment bank transfer"""
   paymentGoPayBankSwift: String
+  """Applied promo code if provided"""
+  promoCode: String
+  """Remaining amount for free transport and payment; null = transport cannot be free"""
+  remainingAmountWithVatForFreeTransport: Money
+  """Selected pickup place identifier if provided"""
+  selectedPickupPlaceIdentifier: String
+  totalDiscountPrice: Price!
+  """Total items price (excluding transport and payment)"""
+  totalItemsPrice: Price!
+  """Total price including transport and payment"""
+  totalPrice: Price!
+  """Selected transport if transport provided"""
+  transport: Transport
+  """UUID of the cart, null for authenticated user"""
+  uuid: Uuid
 }
 
 input CartInput {
-  """
-  Cart identifier, new cart will be created if not provided and customer is not logged in
-  """
+  """Cart identifier, new cart will be created if not provided and customer is not logged in"""
   cartUuid: Uuid = null
 }
 
 interface CartInterface {
-  uuid: Uuid
   items: [CartItem!]!
-  transport: Transport
-  payment: Payment
-  selectedPickupPlaceIdentifier: String
-  promoCode: String
   modifications: CartModificationsResult!
-
-  """Total price including transport and payment"""
-  totalPrice: Price!
-
+  payment: Payment
+  paymentGoPayBankSwift: String
+  promoCode: String
+  remainingAmountWithVatForFreeTransport: Money
+  selectedPickupPlaceIdentifier: String
+  totalDiscountPrice: Price!
   """Total items price (excluding transport and payment)"""
   totalItemsPrice: Price!
-  totalDiscountPrice: Price!
-  remainingAmountWithVatForFreeTransport: Money
-  paymentGoPayBankSwift: String
+  """Total price including transport and payment"""
+  totalPrice: Price!
+  transport: Transport
+  uuid: Uuid
 }
 
 """Represent one item in the cart"""
 type CartItem {
   """Product in the cart"""
   product: Product!
-
-  """Cart item UUID"""
-  uuid: Uuid!
-
   """Quantity of items in the cart"""
   quantity: Int!
+  """Cart item UUID"""
+  uuid: Uuid!
 }
 
 type CartItemModificationsResult {
-  noLongerListableCartItems: [CartItem!]!
-  cartItemsWithModifiedPrice: [CartItem!]!
   cartItemsWithChangedQuantity: [CartItem!]!
+  cartItemsWithModifiedPrice: [CartItem!]!
   noLongerAvailableCartItemsDueToQuantity: [CartItem!]!
+  noLongerListableCartItems: [CartItem!]!
 }
 
 type CartModificationsResult {
   itemModifications: CartItemModificationsResult!
-  transportModifications: CartTransportModificationsResult!
   paymentModifications: CartPaymentModificationsResult!
   promoCodeModifications: CartPromoCodeModificationsResult!
+  transportModifications: CartTransportModificationsResult!
 }
 
 type CartPaymentModificationsResult {
@@ -492,439 +381,323 @@ type CartPromoCodeModificationsResult {
 }
 
 type CartTransportModificationsResult {
+  personalPickupStoreUnavailable: Boolean!
   transportPriceChanged: Boolean!
   transportUnavailable: Boolean!
   transportWeightLimitExceeded: Boolean!
-  personalPickupStoreUnavailable: Boolean!
 }
 
 """Represents a category"""
 type Category implements Breadcrumb & Slug & ProductListable {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized category name (domain dependent)"""
-  name: String!
-
-  """Descendant categories"""
-  children: [Category!]!
-
-  """Ancestor category"""
-  parent: Category
-
-  """Category images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Paginated and ordered products of category"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
-
-  """Seo first level heading of category"""
-  seoH1: String
-
-  """Seo title of category"""
-  seoTitle: String
-
-  """Seo meta description of category"""
-  seoMetaDescription: String
-
-  """Localized category description (domain dependent)"""
-  description: String
-
   """Best selling products"""
   bestsellers: [Product!]!
-
-  """Category URL slug"""
-  slug: String!
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Descendant categories"""
+  children: [Category!]!
+  """Localized category description (domain dependent)"""
+  description: String
+  """Category images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  """A list of categories linked to the given category"""
+  linkedCategories: [Category!]!
+  """Localized category name (domain dependent)"""
+  name: String!
   """
   Original category URL slug (for CategorySeoMixes slug of assigned category is
   returned, null is returned for regular category)
   """
   originalCategorySlug: String
-
+  """Ancestor category"""
+  parent: Category
+  """Paginated and ordered products of category"""
+  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
   """An array of links of prepared category SEO mixes of a given category"""
   readyCategorySeoMixLinks: [Link!]!
-
-  """A list of categories linked to the given category"""
-  linkedCategories: [Category!]!
+  """Seo first level heading of category"""
+  seoH1: String
+  """Seo meta description of category"""
+  seoMetaDescription: String
+  """Seo title of category"""
+  seoTitle: String
+  """Category URL slug"""
+  slug: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """A connection to a list of items."""
 type CategoryConnection {
-  """Total number of categories"""
-  totalCount: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [CategoryEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of categories"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type CategoryEdge {
-  """The item at the end of the edge."""
-  node: Category
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: Category
 }
 
 input ChangePasswordInput {
   """Customer user email."""
   email: String!
-
-  """Current customer user password."""
-  oldPassword: Password!
-
   """New customer user password."""
   newPassword: Password!
+  """Current customer user password."""
+  oldPassword: Password!
 }
 
 input ChangePaymentInCartInput {
   """Cart identifier or null if customer is logged in"""
   cartUuid: Uuid = null
-
-  """
-  UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
-  """
-  paymentUuid: Uuid
-
   """Selected bank swift code of goPay payment bank transfer"""
   paymentGoPayBankSwift: String = null
+  """UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart"""
+  paymentUuid: Uuid
 }
 
 input ChangePersonalDataInput {
-  """Customer user first name"""
-  firstName: String!
-
-  """Customer user last name"""
-  lastName: String!
-
-  """The customer's telephone number"""
-  telephone: String!
-
-  """Billing address street name (will be on the tax invoice)"""
-  street: String!
-
   """Billing address city name (will be on the tax invoice)"""
   city: String!
-
-  """Billing address zip code (will be on the tax invoice)"""
-  postcode: String!
-
-  """
-  Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
-  """
-  country: String!
-
   """Determines whether the customer is a company or not."""
   companyCustomer: Boolean = false
-
   """The customer’s company name (required when companyCustomer is true)"""
   companyName: String
-
-  """
-  The customer’s company identification number (required when companyCustomer is true)
-  """
+  """The customer’s company identification number (required when companyCustomer is true)"""
   companyNumber: String
-
-  """
-  The customer’s company tax number (required when companyCustomer is true)
-  """
+  """The customer’s company tax number (required when companyCustomer is true)"""
   companyTaxNumber: String
-
+  """Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"""
+  country: String!
+  """Customer user first name"""
+  firstName: String!
+  """Customer user last name"""
+  lastName: String!
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
+  """Billing address zip code (will be on the tax invoice)"""
+  postcode: String!
+  """Billing address street name (will be on the tax invoice)"""
+  street: String!
+  """The customer's telephone number"""
+  telephone: String!
 }
 
 input ChangeTransportInCartInput {
   """Cart identifier or null if customer is logged in"""
   cartUuid: Uuid = null
-
-  """
-  UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart
-  """
-  transportUuid: Uuid
-
   """The identifier of selected personal pickup place"""
   pickupPlaceIdentifier: String = null
+  """UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart"""
+  transportUuid: Uuid
 }
 
 """Represents an currently logged customer user"""
 type CompanyCustomerUser implements CustomerUser {
-  """UUID"""
-  uuid: Uuid!
-
-  """First name"""
-  firstName: String!
-
-  """Last name"""
-  lastName: String!
-
-  """Email address"""
-  email: String!
-
-  """Phone number"""
-  telephone: String
-
-  """Billing address street name"""
-  street: String!
-
   """Billing address city name"""
   city: String!
-
-  """Billing address zip code"""
-  postcode: String!
-
-  """Billing address country"""
-  country: Country!
-
-  """Whether customer user receives newsletters or not"""
-  newsletterSubscription: Boolean!
-
-  """Default customer delivery addresses"""
-  defaultDeliveryAddress: DeliveryAddress
-
-  """List of delivery addresses"""
-  deliveryAddresses: [DeliveryAddress!]!
-
-  """The name of the customer pricing group"""
-  pricingGroup: String!
-
   """The customer’s company name (only when customer is a company)"""
   companyName: String
-
-  """
-  The customer’s company identification number (only when customer is a company)
-  """
+  """The customer’s company identification number (only when customer is a company)"""
   companyNumber: String
-
   """The customer’s company tax number (only when customer is a company)"""
   companyTaxNumber: String
+  """Billing address country"""
+  country: Country!
+  """Default customer delivery addresses"""
+  defaultDeliveryAddress: DeliveryAddress
+  """List of delivery addresses"""
+  deliveryAddresses: [DeliveryAddress!]!
+  """Email address"""
+  email: String!
+  """First name"""
+  firstName: String!
+  """Last name"""
+  lastName: String!
+  """Whether customer user receives newsletters or not"""
+  newsletterSubscription: Boolean!
+  """Billing address zip code"""
+  postcode: String!
+  """The name of the customer pricing group"""
+  pricingGroup: String!
+  """Billing address street name"""
+  street: String!
+  """Phone number"""
+  telephone: String
+  """UUID"""
+  uuid: Uuid!
 }
 
 input ContactInput {
-  """Name of the sender"""
-  name: String!
-
   """Email address of the sender"""
   email: String!
-
   """Message sent to recipient"""
   message: String!
+  """Name of the sender"""
+  name: String!
 }
 
 """Represents country"""
 type Country {
-  """Localized country name"""
-  name: String!
-
   """Country code in ISO 3166-1 alpha-2"""
   code: String!
+  """Localized country name"""
+  name: String!
 }
 
 """Represents an currently logged customer user"""
 interface CustomerUser {
-  """UUID"""
-  uuid: Uuid!
-
-  """First name"""
-  firstName: String!
-
-  """Last name"""
-  lastName: String!
-
-  """Email address"""
-  email: String!
-
-  """Phone number"""
-  telephone: String
-
-  """Billing address street name"""
-  street: String!
-
   """Billing address city name"""
   city: String!
-
-  """Billing address zip code"""
-  postcode: String!
-
   """Billing address country"""
   country: Country!
-
-  """Whether customer user receives newsletters or not"""
-  newsletterSubscription: Boolean!
-
   """Default customer delivery addresses"""
   defaultDeliveryAddress: DeliveryAddress
-
   """List of delivery addresses"""
   deliveryAddresses: [DeliveryAddress!]!
-
+  """Email address"""
+  email: String!
+  """First name"""
+  firstName: String!
+  """Last name"""
+  lastName: String!
+  """Whether customer user receives newsletters or not"""
+  newsletterSubscription: Boolean!
+  """Billing address zip code"""
+  postcode: String!
   """The name of the customer pricing group"""
   pricingGroup: String!
+  """Billing address street name"""
+  street: String!
+  """Phone number"""
+  telephone: String
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents and encapsulates an ISO-8601 encoded UTC date-time value"""
 scalar DateTime
 
 type DeliveryAddress {
-  """UUID"""
-  uuid: Uuid!
-
-  """Delivery address company name"""
-  companyName: String
-
-  """Delivery address street name"""
-  street: String
-
   """Delivery address city name"""
   city: String
-
-  """Delivery address zip code"""
-  postcode: String
-
-  """Delivery address telephone"""
-  telephone: String
-
+  """Delivery address company name"""
+  companyName: String
   """Delivery address country"""
   country: Country
-
   """Delivery address firstname"""
   firstName: String
-
   """Delivery address lastname"""
   lastName: String
+  """Delivery address zip code"""
+  postcode: String
+  """Delivery address street name"""
+  street: String
+  """Delivery address telephone"""
+  telephone: String
+  """UUID"""
+  uuid: Uuid!
 }
 
 input DeliveryAddressInput {
-  """UUID"""
-  uuid: Uuid = null
-
-  """Delivery address first name"""
-  firstName: String!
-
-  """Delivery address last name"""
-  lastName: String!
-
-  """Delivery address company name"""
-  companyName: String = null
-
-  """Delivery address street name"""
-  street: String!
-
   """Delivery address city name"""
   city: String!
-
-  """Delivery address zip code"""
-  postcode: String!
-
-  """Delivery address telephone"""
-  telephone: String = null
-
+  """Delivery address company name"""
+  companyName: String = null
   """Delivery address country"""
   country: String!
+  """Delivery address first name"""
+  firstName: String!
+  """Delivery address last name"""
+  lastName: String!
+  """Delivery address zip code"""
+  postcode: String!
+  """Delivery address street name"""
+  street: String!
+  """Delivery address telephone"""
+  telephone: String = null
+  """UUID"""
+  uuid: Uuid = null
 }
 
 """Represents a downloadable file"""
 type File {
   """Clickable text for a hyperlink"""
   anchorText: String!
-
   """Url to download the file"""
   url: String!
 }
 
 """Represents a flag"""
 type Flag implements Breadcrumb & Slug & ProductListable {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized flag name (domain dependent)"""
-  name: String!
-
-  """Flag color in rgb format"""
-  rgbColor: String!
-
-  """URL slug of flag"""
-  slug: String!
-
-  """Paginated and ordered products of flag"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
   """Categories containing at least one product with flag"""
   categories(productFilter: ProductFilter): [Category!]!
+  """Localized flag name (domain dependent)"""
+  name: String!
+  """Paginated and ordered products of flag"""
+  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  """Flag color in rgb format"""
+  rgbColor: String!
+  """URL slug of flag"""
+  slug: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Flag filter option"""
 type FlagFilterOption {
+  """Count of products that will be filtered if this filter option is applied."""
+  count: Int!
   """Flag"""
   flag: Flag!
-
-  """
-  Count of products that will be filtered if this filter option is applied.
-  """
-  count: Int!
-
   """
   If true than count parameter is number of products that will be displayed if
   this filter option is applied, if false count parameter is number of products
   that will be added to current products result.
   """
   isAbsolute: Boolean!
-
-  """
-  Indicator whether the option is already selected (used for "ready category seo mixes")
-  """
+  """Indicator whether the option is already selected (used for "ready category seo mixes")"""
   isSelected: Boolean!
 }
 
 type GoPayBankSwift {
-  """Swift code"""
-  swift: String!
-
-  """Bank name"""
-  name: String!
-
-  """normal image url"""
-  imageNormalUrl: String!
-
   """large image url"""
   imageLargeUrl: String!
+  """normal image url"""
+  imageNormalUrl: String!
   isOnline: Boolean!
+  """Bank name"""
+  name: String!
+  """Swift code"""
+  swift: String!
 }
 
 type GoPayCreatePaymentSetup {
-  """redirect URL to payment gateway"""
-  gatewayUrl: String!
-
-  """payment transaction identifier"""
-  goPayId: String!
-
   """url of gopay embedJs file"""
   embedJs: String!
+  """redirect URL to payment gateway"""
+  gatewayUrl: String!
+  """payment transaction identifier"""
+  goPayId: String!
 }
 
 type GoPayPaymentMethod {
   """Identifier of payment method"""
   identifier: String!
-
-  """Name of payment method"""
-  name: String!
-
-  """URL to normal size image of payment method"""
-  imageNormalUrl: String!
-
   """URL to large size image of payment method"""
   imageLargeUrl: String!
-
+  """URL to normal size image of payment method"""
+  imageNormalUrl: String!
+  """Name of payment method"""
+  name: String!
   """Group of payment methods"""
   paymentGroup: String!
 }
@@ -933,35 +706,29 @@ type GoPayPaymentMethod {
 type Image {
   """Position of image in list"""
   position: Int
-
+  sizes: [ImageSize!]!
   """Image type"""
   type: String
-  sizes: [ImageSize!]!
 }
 
 """Represents a single image size"""
 type ImageSize {
-  """Image size defined in images.yaml"""
-  size: String!
-
-  """URL address of image"""
-  url: String!
-
-  """Width in pixels defined in images.yaml"""
-  width: Int
-
-  """Height in pixels defined in images.yaml"""
-  height: Int
-
   """Additional sizes for different screen types"""
   additionalSizes: [AdditionalSize!]!
+  """Height in pixels defined in images.yaml"""
+  height: Int
+  """Image size defined in images.yaml"""
+  size: String!
+  """URL address of image"""
+  url: String!
+  """Width in pixels defined in images.yaml"""
+  width: Int
 }
 
 """Represents a single user translation of language constant"""
 type LanguageConstant {
   """Translation key"""
   key: String!
-
   """User translation"""
   translation: String!
 }
@@ -970,117 +737,85 @@ type LanguageConstant {
 type Link {
   """Clickable text for a hyperlink"""
   name: String!
-
   """Target URL slug"""
   slug: String!
 }
 
 input LoginInput {
-  """The user email."""
-  email: String!
-
-  """The user password."""
-  password: Password!
-
   """Uuid of the cart that should be merged to the cart of the user"""
   cartUuid: Uuid = null
+  """The user email."""
+  email: String!
+  """The user password."""
+  password: Password!
 }
 
 """Represents a product"""
 type MainVariant implements Product & Breadcrumb & Slug {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized product name (domain dependent)"""
-  name: String!
-
-  """Localized product short description (domain dependent)"""
-  shortDescription: String
-
-  """Product link"""
-  link: String!
-  unit: Unit!
-  isUsingStock: Boolean!
-  availability: Availability!
-
-  """Count of quantity on stock"""
-  stockQuantity: Int!
-
-  """List of categories"""
-  categories: [Category!]!
-
-  """List of flags"""
-  flags: [Flag!]!
-
-  """Product price"""
-  price: ProductPrice!
-
-  """Product images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Brand of product"""
-  brand: Brand
-  isSellingDenied: Boolean!
-  orderingPriority: Int!
-  description: String
   accessories: [Product!]!
-  parameters: [Parameter!]!
-
-  """Seo first level heading of product"""
-  seoH1: String
-
-  """Seo title of product"""
-  seoTitle: String
-
-  """Seo meta description of product"""
-  seoMetaDescription: String
-
-  """Product URL slug"""
-  slug: String!
-
-  """Product catalog number"""
-  catalogNumber: String!
-
-  """Product part number"""
-  partNumber: String
-
-  """EAN"""
-  ean: String
-
-  """List of product's unique selling propositions"""
-  usps: [String!]!
-
-  """Name prefix"""
-  namePrefix: String
-
-  """Name suffix"""
-  nameSuffix: String
-
-  """
-  The full name of the product, which consists of a prefix, name, and a suffix
-  """
-  fullName: String!
-
-  """Distinguishes if the product can be pre-ordered"""
-  hasPreorder: Boolean!
-
-  """List of downloadable files"""
-  files: [File!]!
-
-  """List of availabilities in individual stores"""
-  storeAvailabilities: [StoreAvailability!]!
-
+  availability: Availability!
   """Number of the stores where the product is available"""
   availableStoresCount: Int!
-
-  """Number of the stores where the product is exposed"""
-  exposedStoresCount: Int!
-
+  """Brand of product"""
+  brand: Brand
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Product catalog number"""
+  catalogNumber: String!
+  """List of categories"""
+  categories: [Category!]!
+  description: String
+  """EAN"""
+  ean: String
+  """Number of the stores where the product is exposed"""
+  exposedStoresCount: Int!
+  """List of downloadable files"""
+  files: [File!]!
+  """List of flags"""
+  flags: [Flag!]!
+  """The full name of the product, which consists of a prefix, name, and a suffix"""
+  fullName: String!
+  """Distinguishes if the product can be pre-ordered"""
+  hasPreorder: Boolean!
+  """Product images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isSellingDenied: Boolean!
+  isUsingStock: Boolean!
+  """Product link"""
+  link: String!
+  """Localized product name (domain dependent)"""
+  name: String!
+  """Name prefix"""
+  namePrefix: String
+  """Name suffix"""
+  nameSuffix: String
+  orderingPriority: Int!
+  parameters: [Parameter!]!
+  """Product part number"""
+  partNumber: String
+  """Product price"""
+  price: ProductPrice!
   """List of related products"""
   relatedProducts: [Product!]!
+  """Seo first level heading of product"""
+  seoH1: String
+  """Seo meta description of product"""
+  seoMetaDescription: String
+  """Seo title of product"""
+  seoTitle: String
+  """Localized product short description (domain dependent)"""
+  shortDescription: String
+  """Product URL slug"""
+  slug: String!
+  """Count of quantity on stock"""
+  stockQuantity: Int!
+  """List of availabilities in individual stores"""
+  storeAvailabilities: [StoreAvailability!]!
+  unit: Unit!
+  """List of product's unique selling propositions"""
+  usps: [String!]!
+  """UUID"""
+  uuid: Uuid!
   variants: [Variant!]!
 }
 
@@ -1088,106 +823,80 @@ type MainVariant implements Product & Breadcrumb & Slug {
 scalar Money
 
 type Mutation {
-  """Creates complete order with products and addresses"""
-  CreateOrder(input: OrderInput!): Order!
-
-  """Login user and return access and refresh tokens"""
-  Login(input: LoginInput!): Token!
-
-  """Logout user"""
-  Logout: Boolean!
-
-  """Refreshes access and refresh tokens"""
-  RefreshTokens(input: RefreshTokenInput!): Token!
-
-  """Changes customer user password"""
-  ChangePassword(input: ChangePasswordInput!): CustomerUser!
-
-  """Changes customer user personal data"""
-  ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
-
-  """Register new customer user"""
-  Register(input: RegistrationDataInput!): Token!
-
-  """Subscribe for e-mail newsletter"""
-  NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
-
   """Add product to cart for future checkout"""
   AddToCart(input: AddToCartInput!): AddToCartResult!
-
-  """Remove product from cart"""
-  RemoveFromCart(input: RemoveFromCartInput!): Cart!
-
   """Apply new promo code for the future checkout"""
   ApplyPromoCodeToCart(input: ApplyPromoCodeToCartInput!): Cart!
-
-  """Remove already used promo code from cart"""
-  RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
-
-  """Request password recovery - email with hash will be sent"""
-  RequestPasswordRecovery(email: String!): String!
-
-  """Recover password using hash required from RequestPasswordRecovery"""
-  RecoverPassword(input: RecoverPasswordInput!): Token!
-
-  """Request access to personal data"""
-  RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
-
-  """Delete delivery address by Uuid"""
-  DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
-
-  """Edit delivery address by Uuid"""
-  EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
-
-  """Set default delivery address by Uuid"""
-  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
-
+  """Changes customer user password"""
+  ChangePassword(input: ChangePasswordInput!): CustomerUser!
+  """Add a payment to the cart, or remove a payment from the cart"""
+  ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
+  """Changes customer user personal data"""
+  ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
+  """Add a transport to the cart, or remove a transport from the cart"""
+  ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
+  """check payment status of order after callback from payment service"""
+  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
-
+  """Creates complete order with products and addresses"""
+  CreateOrder(input: OrderInput!): Order!
+  """Delete delivery address by Uuid"""
+  DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
+  """Edit delivery address by Uuid"""
+  EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
+  """Login user and return access and refresh tokens"""
+  Login(input: LoginInput!): Token!
+  """Logout user"""
+  Logout: Boolean!
+  """Subscribe for e-mail newsletter"""
+  NewsletterSubscribe(input: NewsletterSubscriptionDataInput!): Boolean!
   """
   Pay order(create payment transaction in payment gateway) and get payment setup
   data for redirect or creating JS payment gateway layer
   """
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
-
-  """check payment status of order after callback from payment service"""
-  CheckPaymentStatus(orderUuid: Uuid!): Boolean!
-
-  """Add a payment to the cart, or remove a payment from the cart"""
-  ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
-
-  """Add a transport to the cart, or remove a transport from the cart"""
-  ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
+  """Recover password using hash required from RequestPasswordRecovery"""
+  RecoverPassword(input: RecoverPasswordInput!): Token!
+  """Refreshes access and refresh tokens"""
+  RefreshTokens(input: RefreshTokenInput!): Token!
+  """Register new customer user"""
+  Register(input: RegistrationDataInput!): Token!
+  """Remove product from cart"""
+  RemoveFromCart(input: RemoveFromCartInput!): Cart!
+  """Remove already used promo code from cart"""
+  RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
+  """Request password recovery - email with hash will be sent"""
+  RequestPasswordRecovery(email: String!): String!
+  """Request access to personal data"""
+  RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
+  """Set default delivery address by Uuid"""
+  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
 }
 
 """Represents a navigation structure item"""
 type NavigationItem {
-  """Navigation item name"""
-  name: String!
-
-  """Target URL"""
-  link: String!
-
   """Categories separated into columns"""
   categoriesByColumns: [NavigationItemCategoriesByColumns!]!
+  """Target URL"""
+  link: String!
+  """Navigation item name"""
+  name: String!
 }
 
 """Represents a single column inside the navigation item"""
 type NavigationItemCategoriesByColumns {
-  """Column number"""
-  columnNumber: Int!
-
   """Categories"""
   categories: [Category!]!
+  """Column number"""
+  columnNumber: Int!
 }
 
 type NewsletterSubscriber {
-  """Subscribed email address"""
-  email: String!
-
   """Date and time of subscription"""
   createdAt: DateTime!
+  """Subscribed email address"""
+  email: String!
 }
 
 """Represents the main input object to subscribe for e-mail newsletter"""
@@ -1197,482 +906,327 @@ input NewsletterSubscriptionDataInput {
 
 """Represents a notification supposed to be displayed on all pages"""
 type NotificationBar {
-  """Message of the notification"""
-  text: String!
-
+  """Notification bar images"""
+  images(sizes: [String!] = null, type: String = null): [Image!]!
   """Color of the notification"""
   rgbColor: String!
-
-  """Notification bar images"""
-  images(type: String = null, sizes: [String!] = null): [Image!]!
+  """Message of the notification"""
+  text: String!
 }
 
 type Order {
-  """UUID"""
-  uuid: Uuid!
-
-  """Unique order number"""
-  number: String!
-
-  """Date and time when the order was created"""
-  creationDate: DateTime!
-
-  """All items in the order including payment and transport"""
-  items: [OrderItem!]!
-
-  """Transport method applied to the order"""
-  transport: Transport!
-
-  """Payment method applied to the order"""
-  payment: Payment!
-
-  """Current status of the order"""
-  status: String!
-
-  """Total price of the order including transport and payment prices"""
-  totalPrice: Price!
-
-  """The customer's first name"""
-  firstName: String
-
-  """The customer's last name"""
-  lastName: String
-
-  """The customer's email address"""
-  email: String!
-
-  """The customer's telephone number"""
-  telephone: String!
-
-  """The customer’s company name (only when ordered on the company behalf)"""
-  companyName: String
-
-  """
-  The customer’s company identification number (only when ordered on the company behalf)
-  """
-  companyNumber: String
-
-  """
-  The customer’s company tax number (only when ordered on the company behalf)
-  """
-  companyTaxNumber: String
-
-  """Billing address street name """
-  street: String!
-
   """Billing address city name"""
   city: String!
-
-  """Billing address zip code"""
-  postcode: String!
-
+  """The customer’s company name (only when ordered on the company behalf)"""
+  companyName: String
+  """The customer’s company identification number (only when ordered on the company behalf)"""
+  companyNumber: String
+  """The customer’s company tax number (only when ordered on the company behalf)"""
+  companyTaxNumber: String
   """Billing address country"""
   country: Country!
-
-  """
-  Indicates whether the billing address is other than a delivery address
-  """
-  differentDeliveryAddress: Boolean!
-
-  """First name of the contact person for delivery"""
-  deliveryFirstName: String
-
-  """Last name of the contact person for delivery"""
-  deliveryLastName: String
-
-  """Company name for delivery"""
-  deliveryCompanyName: String
-
-  """Contact telephone number for delivery"""
-  deliveryTelephone: String
-
-  """Street name for delivery"""
-  deliveryStreet: String
-
+  """Date and time when the order was created"""
+  creationDate: DateTime!
   """City name for delivery"""
   deliveryCity: String
-
-  """Zip code for delivery"""
-  deliveryPostcode: String
-
+  """Company name for delivery"""
+  deliveryCompanyName: String
   """Country for delivery"""
   deliveryCountry: Country
-
+  """First name of the contact person for delivery"""
+  deliveryFirstName: String
+  """Last name of the contact person for delivery"""
+  deliveryLastName: String
+  """Zip code for delivery"""
+  deliveryPostcode: String
+  """Street name for delivery"""
+  deliveryStreet: String
+  """Contact telephone number for delivery"""
+  deliveryTelephone: String
+  """Indicates whether the billing address is other than a delivery address"""
+  differentDeliveryAddress: Boolean!
+  """The customer's email address"""
+  email: String!
+  """The customer's first name"""
+  firstName: String
+  """All items in the order including payment and transport"""
+  items: [OrderItem!]!
+  """The customer's last name"""
+  lastName: String
   """Other information related to the order"""
   note: String
-
-  """Unique url hash that can be used to """
-  urlHash: String!
-
-  """Promo code (coupon) used in the order"""
-  promoCode: String
-
-  """The order tracking number"""
-  trackingNumber: String
-
-  """The order tracking link"""
-  trackingUrl: String
-
+  """Unique order number"""
+  number: String!
+  """Payment method applied to the order"""
+  payment: Payment!
   """Selected pickup place identifier"""
   pickupPlaceIdentifier: String
+  """Billing address zip code"""
+  postcode: String!
+  """Promo code (coupon) used in the order"""
+  promoCode: String
+  """Current status of the order"""
+  status: String!
+  """Billing address street name """
+  street: String!
+  """The customer's telephone number"""
+  telephone: String!
+  """Total price of the order including transport and payment prices"""
+  totalPrice: Price!
+  """The order tracking number"""
+  trackingNumber: String
+  """The order tracking link"""
+  trackingUrl: String
+  """Transport method applied to the order"""
+  transport: Transport!
+  """Unique url hash that can be used to """
+  urlHash: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """A connection to a list of items."""
 type OrderConnection {
-  """Total number of orders"""
-  totalCount: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [OrderEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of orders"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type OrderEdge {
-  """The item at the end of the edge."""
-  node: Order
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: Order
 }
 
 """Represents the main input object to create orders"""
 input OrderInput {
-  """The customer's first name"""
-  firstName: String!
-
-  """The customer's last name"""
-  lastName: String!
-
-  """The customer's email address"""
-  email: String!
-
-  """The customer's phone number"""
-  telephone: String!
-
-  """Determines whether the order is made on the company behalf."""
-  onCompanyBehalf: Boolean!
-
-  """The customer’s company name (required when onCompanyBehalf is true)"""
-  companyName: String
-
-  """
-  The customer’s company identification number (required when onCompanyBehalf is true)
-  """
-  companyNumber: String
-
-  """
-  The customer’s company tax number (required when onCompanyBehalf is true)
-  """
-  companyTaxNumber: String
-
-  """Billing address street name (will be on the tax invoice)"""
-  street: String!
-
-  """Billing address city name (will be on the tax invoice)"""
-  city: String!
-
-  """Billing address zip code (will be on the tax invoice)"""
-  postcode: String!
-
-  """
-  Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
-  """
-  country: String!
-
-  """
-  Determines whether to deliver products to a different address than the billing one
-  """
-  differentDeliveryAddress: Boolean!
-
-  """
-  First name of the contact person for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryFirstName: String
-
-  """
-  Last name of the contact person for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryLastName: String
-
-  """Company name for delivery"""
-  deliveryCompanyName: String
-
-  """Contact telephone number for delivery"""
-  deliveryTelephone: String
-
-  """
-  Street name for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryStreet: String
-
-  """
-  City name for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryCity: String
-
-  """
-  Zip code for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryPostcode: String
-
-  """
-  Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)
-  """
-  deliveryCountry: String
-
-  """Other information related to the order"""
-  note: String
-
-  """
-  Deprecated, this field is not used, the payment is taken from the server cart instead.
-  """
-  payment: PaymentInput
-
-  """
-  Deprecated, this field is not used, the transport is taken from the server cart instead.
-  """
-  transport: TransportInput
-
-  """
-  Deprecated, this field is not used, the products are taken from the server cart instead.
-  """
-  products: [OrderProductInput!]
-
   """Cart identifier used for getting carts of not logged customers"""
   cartUuid: Uuid = null
-
+  """Billing address city name (will be on the tax invoice)"""
+  city: String!
+  """The customer’s company name (required when onCompanyBehalf is true)"""
+  companyName: String
+  """The customer’s company identification number (required when onCompanyBehalf is true)"""
+  companyNumber: String
+  """The customer’s company tax number (required when onCompanyBehalf is true)"""
+  companyTaxNumber: String
+  """Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"""
+  country: String!
   """Delivery address identifier"""
   deliveryAddressUuid: Uuid = null
+  """City name for delivery (required when differentDeliveryAddress is true)"""
+  deliveryCity: String
+  """Company name for delivery"""
+  deliveryCompanyName: String
+  """Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)"""
+  deliveryCountry: String
+  """First name of the contact person for delivery (required when differentDeliveryAddress is true)"""
+  deliveryFirstName: String
+  """Last name of the contact person for delivery (required when differentDeliveryAddress is true)"""
+  deliveryLastName: String
+  """Zip code for delivery (required when differentDeliveryAddress is true)"""
+  deliveryPostcode: String
+  """Street name for delivery (required when differentDeliveryAddress is true)"""
+  deliveryStreet: String
+  """Contact telephone number for delivery"""
+  deliveryTelephone: String
+  """Determines whether to deliver products to a different address than the billing one"""
+  differentDeliveryAddress: Boolean!
+  """The customer's email address"""
+  email: String!
+  """The customer's first name"""
+  firstName: String!
+  """The customer's last name"""
+  lastName: String!
+  """Other information related to the order"""
+  note: String
+  """Determines whether the order is made on the company behalf."""
+  onCompanyBehalf: Boolean!
+  """Deprecated, this field is not used, the payment is taken from the server cart instead."""
+  payment: PaymentInput
+  """Billing address zip code (will be on the tax invoice)"""
+  postcode: String!
+  """Deprecated, this field is not used, the products are taken from the server cart instead."""
+  products: [OrderProductInput!]
+  """Billing address street name (will be on the tax invoice)"""
+  street: String!
+  """The customer's phone number"""
+  telephone: String!
+  """Deprecated, this field is not used, the transport is taken from the server cart instead."""
+  transport: TransportInput
 }
 
 """Represent one item in the order"""
 type OrderItem {
   """Name of the order item"""
   name: String!
-
-  """Order item price per unit"""
-  unitPrice: Price!
-
-  """Total price for the quantity of order item"""
-  totalPrice: Price!
-
-  """Applied VAT rate percentage applied to the order item"""
-  vatRate: String!
-
   """Quantity of order items in the order"""
   quantity: Int!
-
+  """Total price for the quantity of order item"""
+  totalPrice: Price!
   """Unit of measurement used for the order item"""
   unit: String
+  """Order item price per unit"""
+  unitPrice: Price!
+  """Applied VAT rate percentage applied to the order item"""
+  vatRate: String!
 }
 
 """Represents a product in order"""
 input OrderProductInput {
-  """UUID"""
-  uuid: Uuid!
-
   """Quantity of products"""
   quantity: Int!
-
   """Product price per unit"""
   unitPrice: PriceInput!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Information about pagination in a connection."""
 type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
   """When paginating forwards, the cursor to continue."""
   endCursor: String
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 }
 
 """Represents a parameter"""
 type Parameter {
-  """UUID"""
-  uuid: Uuid!
-
-  """Parameter name"""
-  name: String!
-  visible: Boolean!
-  values: [ParameterValue!]!
-
   """Parameter group to which the parameter is assigned"""
   group: String
-
+  """Parameter name"""
+  name: String!
   """Unit of the parameter"""
   unit: Unit
+  """UUID"""
+  uuid: Uuid!
+  values: [ParameterValue!]!
+  visible: Boolean!
 }
 
 """Parameter filter option"""
 type ParameterCheckboxFilterOption implements ParameterFilterOptionInterface {
-  """The parameter UUID"""
-  uuid: Uuid!
-
-  """
-  Indicator whether the parameter should be collapsed based on the current category setting
-  """
+  """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
-
   """The parameter name"""
   name: String!
-
   """The parameter unit"""
   unit: Unit
-
+  """The parameter UUID"""
+  uuid: Uuid!
   """Filter options of parameter values"""
   values: [ParameterValueFilterOption!]!
 }
 
 """Parameter filter option"""
 type ParameterColorFilterOption implements ParameterFilterOptionInterface {
-  """The parameter UUID"""
-  uuid: Uuid!
-
-  """
-  Indicator whether the parameter should be collapsed based on the current category setting
-  """
+  """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
-
   """The parameter name"""
   name: String!
-
   """The parameter unit"""
   unit: Unit
-
+  """The parameter UUID"""
+  uuid: Uuid!
   """Filter options of parameter values"""
   values: [ParameterValueColorFilterOption!]!
 }
 
 """Represents a parameter filter"""
 input ParameterFilter {
-  """Uuid of filtered parameter"""
-  parameter: Uuid!
-
-  """Array of uuids representing parameter values to be filtered by"""
-  values: [Uuid!] = []
-
-  """The parameter minimal value (for parameters with "slider" type)"""
-  minimalValue: Float = null
-
   """The parameter maximal value (for parameters with "slider" type)"""
   maximalValue: Float = null
+  """The parameter minimal value (for parameters with "slider" type)"""
+  minimalValue: Float = null
+  """Uuid of filtered parameter"""
+  parameter: Uuid!
+  """Array of uuids representing parameter values to be filtered by"""
+  values: [Uuid!] = []
 }
 
 """Represents parameter filter option"""
 interface ParameterFilterOptionInterface {
-  """The parameter UUID"""
-  uuid: Uuid!
-
-  """
-  Indicator whether the parameter should be collapsed based on the current category setting
-  """
+  """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
-
   """The parameter name"""
   name: String!
-
   """The parameter unit"""
   unit: Unit
+  """The parameter UUID"""
+  uuid: Uuid!
 }
 
 """Parameter filter option"""
 type ParameterSliderFilterOption implements ParameterFilterOptionInterface {
-  """The parameter UUID"""
-  uuid: Uuid!
-
-  """
-  Indicator whether the parameter should be collapsed based on the current category setting
-  """
+  """Indicator whether the parameter should be collapsed based on the current category setting"""
   isCollapsed: Boolean!
-
-  """The parameter name"""
-  name: String!
-
-  """The parameter unit"""
-  unit: Unit
-
-  """The parameter minimal value"""
-  minimalValue: Float!
-
   """The parameter maximal value"""
   maximalValue: Float!
-
+  """The parameter minimal value"""
+  minimalValue: Float!
+  """The parameter name"""
+  name: String!
   """The pre-selected value (used for "ready category seo mixes")"""
   selectedValue: Float
+  """The parameter unit"""
+  unit: Unit
+  """The parameter UUID"""
+  uuid: Uuid!
 }
 
 """Represents a parameter value"""
 type ParameterValue {
-  """UUID"""
-  uuid: Uuid!
-
   """Parameter value"""
   text: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Parameter value filter option"""
 type ParameterValueColorFilterOption {
-  """UUID"""
-  uuid: Uuid!
-
-  """Parameter value"""
-  text: String!
-
-  """
-  Count of products that will be filtered if this filter option is applied.
-  """
+  """Count of products that will be filtered if this filter option is applied."""
   count: Int!
-
   """
   If true than count parameter is number of products that will be displayed if
   this filter option is applied, if false count parameter is number of products
   that will be added to current products result.
   """
   isAbsolute: Boolean!
-
-  """
-  Indicator whether the option is already selected (used for "ready category seo mixes")
-  """
+  """Indicator whether the option is already selected (used for "ready category seo mixes")"""
   isSelected: Boolean!
-
   """RGB hex of color parameter"""
   rgbHex: String
+  """Parameter value"""
+  text: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Parameter value filter option"""
 type ParameterValueFilterOption {
-  """UUID"""
-  uuid: Uuid!
-
-  """Parameter value"""
-  text: String!
-
-  """
-  Count of products that will be filtered if this filter option is applied.
-  """
+  """Count of products that will be filtered if this filter option is applied."""
   count: Int!
-
   """
   If true than count parameter is number of products that will be displayed if
   this filter option is applied, if false count parameter is number of products
   that will be added to current products result.
   """
   isAbsolute: Boolean!
-
-  """
-  Indicator whether the option is already selected (used for "ready category seo mixes")
-  """
+  """Indicator whether the option is already selected (used for "ready category seo mixes")"""
   isSelected: Boolean!
+  """Parameter value"""
+  text: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents and encapsulates a string for password"""
@@ -1680,44 +1234,34 @@ scalar Password
 
 """Represents a payment"""
 type Payment {
-  """UUID"""
-  uuid: Uuid!
-
-  """Payment name"""
-  name: String!
-
   """Localized payment description (domain dependent)"""
   description: String
-
-  """Localized payment instruction (domain dependent)"""
-  instruction: String
-
-  """Payment position"""
-  position: Int!
-
-  """Payment price"""
-  price(cartUuid: Uuid = null): Price!
-
-  """Payment images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """List of assigned transports"""
-  transports: [Transport!]!
-
-  """Type of payment"""
-  type: String!
-
   """Additional data for GoPay payment"""
   goPayPaymentMethod: GoPayPaymentMethod
+  """Payment images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  """Localized payment instruction (domain dependent)"""
+  instruction: String
+  """Payment name"""
+  name: String!
+  """Payment position"""
+  position: Int!
+  """Payment price"""
+  price(cartUuid: Uuid = null): Price!
+  """List of assigned transports"""
+  transports: [Transport!]!
+  """Type of payment"""
+  type: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents a payment in order"""
 input PaymentInput {
-  """UUID"""
-  uuid: Uuid!
-
   """Price for payment"""
   price: PriceInput!
+  """UUID"""
+  uuid: Uuid!
 }
 
 type PaymentSetupCreationData {
@@ -1726,23 +1270,18 @@ type PaymentSetupCreationData {
 }
 
 type PersonalData {
-  """Customer orders"""
-  orders: [Order!]!
-
   """Customer user data"""
   customerUser: CustomerUser
-
   """Newsletter subscription"""
   newsletterSubscriber: NewsletterSubscriber
+  """Customer orders"""
+  orders: [Order!]!
 }
 
 input PersonalDataAccessRequestInput {
   """The customer's email address"""
   email: String!
-
-  """
-  One of two possible types for personal data access request - display or export
-  """
+  """One of two possible types for personal data access request - display or export"""
   type: PersonalDataAccessRequestTypeEnum
 }
 
@@ -1750,61 +1289,47 @@ input PersonalDataAccessRequestInput {
 enum PersonalDataAccessRequestTypeEnum {
   """Display data"""
   display
-
   """Export data"""
   export
 }
 
 type PersonalDataPage {
-  """
-  The HTML content of the site where a customer can request displaying his personal data
-  """
+  """The HTML content of the site where a customer can request displaying his personal data"""
   displaySiteContent: String!
-
   """URL slug of display site"""
   displaySiteSlug: String!
-
-  """
-  The HTML content of the site where a customer can request exporting his personal data
-  """
+  """The HTML content of the site where a customer can request exporting his personal data"""
   exportSiteContent: String!
-
   """URL slug of export site"""
   exportSiteSlug: String!
 }
 
 """Represents the price"""
 type Price implements PriceInterface {
-  """Price with VAT"""
-  priceWithVat: Money!
-
   """Price without VAT"""
   priceWithoutVat: Money!
-
+  """Price with VAT"""
+  priceWithVat: Money!
   """Total value of VAT"""
   vatAmount: Money!
 }
 
 """Represents the price"""
 input PriceInput {
-  """Price with VAT"""
-  priceWithVat: Money!
-
   """Price without VAT"""
   priceWithoutVat: Money!
-
+  """Price with VAT"""
+  priceWithVat: Money!
   """Total value of VAT"""
   vatAmount: Money!
 }
 
 """Represents the price"""
 interface PriceInterface {
-  """Price with VAT"""
-  priceWithVat: Money!
-
   """Price without VAT"""
   priceWithoutVat: Money!
-
+  """Price with VAT"""
+  priceWithVat: Money!
   """Total value of VAT"""
   vatAmount: Money!
 }
@@ -1813,169 +1338,126 @@ interface PriceInterface {
 type PricingSetting {
   """Code of the default currency used on the current domain"""
   defaultCurrencyCode: String!
-
   """Minimum number of decimal places for the price on the current domain"""
   minimumFractionDigits: Int!
 }
 
 """Represents a product"""
 interface Product {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized product name (domain dependent)"""
-  name: String!
-
-  """Localized product short description (domain dependent)"""
-  shortDescription: String
-
-  """Product link"""
-  link: String!
-  unit: Unit!
-  isUsingStock: Boolean!
-  availability: Availability!
-
-  """Count of quantity on stock"""
-  stockQuantity: Int!
-
-  """List of categories"""
-  categories: [Category!]!
-
-  """List of flags"""
-  flags: [Flag!]!
-
-  """Product price"""
-  price: ProductPrice!
-
-  """Product images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Brand of product"""
-  brand: Brand
-  isSellingDenied: Boolean!
-  orderingPriority: Int!
-  description: String
   accessories: [Product!]!
-  parameters: [Parameter!]!
-
-  """Seo first level heading of product"""
-  seoH1: String
-
-  """Seo title of product"""
-  seoTitle: String
-
-  """Seo meta description of product"""
-  seoMetaDescription: String
-
-  """Product URL slug"""
-  slug: String!
-
-  """Product catalog number"""
-  catalogNumber: String!
-
-  """Product part number"""
-  partNumber: String
-
-  """EAN"""
-  ean: String
-
-  """List of product's unique selling propositions"""
-  usps: [String!]!
-
-  """Name prefix"""
-  namePrefix: String
-
-  """Name suffix"""
-  nameSuffix: String
-
-  """
-  The full name of the product, which consists of a prefix, name, and a suffix
-  """
-  fullName: String!
-
-  """Distinguishes if the product can be pre-ordered"""
-  hasPreorder: Boolean!
-
-  """List of downloadable files"""
-  files: [File!]!
-
-  """List of availabilities in individual stores"""
-  storeAvailabilities: [StoreAvailability!]!
-
+  availability: Availability!
   """Number of the stores where the product is available"""
   availableStoresCount: Int!
-
-  """Number of the stores where the product is exposed"""
-  exposedStoresCount: Int!
-
+  """Brand of product"""
+  brand: Brand
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Product catalog number"""
+  catalogNumber: String!
+  """List of categories"""
+  categories: [Category!]!
+  description: String
+  """EAN"""
+  ean: String
+  """Number of the stores where the product is exposed"""
+  exposedStoresCount: Int!
+  """List of downloadable files"""
+  files: [File!]!
+  """List of flags"""
+  flags: [Flag!]!
+  """The full name of the product, which consists of a prefix, name, and a suffix"""
+  fullName: String!
+  """Distinguishes if the product can be pre-ordered"""
+  hasPreorder: Boolean!
+  """Product images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isSellingDenied: Boolean!
+  isUsingStock: Boolean!
+  """Product link"""
+  link: String!
+  """Localized product name (domain dependent)"""
+  name: String!
+  """Name prefix"""
+  namePrefix: String
+  """Name suffix"""
+  nameSuffix: String
+  orderingPriority: Int!
+  parameters: [Parameter!]!
+  """Product part number"""
+  partNumber: String
+  """Product price"""
+  price: ProductPrice!
   """List of related products"""
   relatedProducts: [Product!]!
+  """Seo first level heading of product"""
+  seoH1: String
+  """Seo meta description of product"""
+  seoMetaDescription: String
+  """Seo title of product"""
+  seoTitle: String
+  """Localized product short description (domain dependent)"""
+  shortDescription: String
+  """Product URL slug"""
+  slug: String!
+  """Count of quantity on stock"""
+  stockQuantity: Int!
+  """List of availabilities in individual stores"""
+  storeAvailabilities: [StoreAvailability!]!
+  unit: Unit!
+  """List of product's unique selling propositions"""
+  usps: [String!]!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """A connection to a list of items."""
 type ProductConnection {
-  """Total number of products"""
-  totalCount: Int!
-  productFilterOptions: ProductFilterOptions!
-  orderingMode: ProductOrderingModeEnum!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [ProductEdge]
+  orderingMode: ProductOrderingModeEnum!
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  productFilterOptions: ProductFilterOptions!
+  """Total number of products"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type ProductEdge {
-  """The item at the end of the edge."""
-  node: Product
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: Product
 }
 
 """Represents a product filter"""
 input ProductFilter {
-  """Minimal price filter"""
-  minimalPrice: Money
-
-  """Maximal price filter"""
-  maximalPrice: Money
-
   """Array of uuids of brands filter"""
   brands: [Uuid!]
-
   """Array of uuids of flags filter"""
   flags: [Uuid!]
-
+  """Maximal price filter"""
+  maximalPrice: Money
+  """Minimal price filter"""
+  minimalPrice: Money
   """Only in stock filter"""
   onlyInStock: Boolean
-
   """Parameter filter"""
   parameters: [ParameterFilter!]
 }
 
 """Represents a product filter options"""
 type ProductFilterOptions {
-  """Minimal price of products for filtering"""
-  minimalPrice: Money!
-
-  """Maximal price of products for filtering"""
-  maximalPrice: Money!
-
   """Brands filter options"""
   brands: [BrandFilterOption!]
-
   """Flags filter options"""
   flags: [FlagFilterOption!]
-
   """Number of products in stock that will be filtered"""
   inStock: Int!
-
+  """Maximal price of products for filtering"""
+  maximalPrice: Money!
+  """Minimal price of products for filtering"""
+  minimalPrice: Money!
   """Parameter filter options"""
   parameters: [ParameterFilterOptionInterface!]
 }
@@ -1983,231 +1465,162 @@ type ProductFilterOptions {
 """Paginated and ordered products"""
 interface ProductListable {
   """Paginated and ordered products"""
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
+  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
 }
 
 """One of possible ordering modes for product"""
 enum ProductOrderingModeEnum {
   """Order by priority"""
   PRIORITY
-
   """Order by price ascending"""
   PRICE_ASC
-
   """Order by price descending"""
   PRICE_DESC
-
   """Order by name ascending"""
   NAME_ASC
-
   """Order by name descending"""
   NAME_DESC
-
   """Order by relevance"""
   RELEVANCE
 }
 
 """Represents the price of the product"""
 type ProductPrice implements PriceInterface {
-  """Price with VAT"""
-  priceWithVat: Money!
-
-  """Price without VAT"""
-  priceWithoutVat: Money!
-
-  """Total value of VAT"""
-  vatAmount: Money!
-
   """Determines whether it's a final price or starting price"""
   isPriceFrom: Boolean!
+  """Price without VAT"""
+  priceWithoutVat: Money!
+  """Price with VAT"""
+  priceWithVat: Money!
+  """Total value of VAT"""
+  vatAmount: Money!
 }
 
 type Query {
-  """Returns complete list of categories"""
-  categories: [Category!]!
-
-  """
-  Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords
-  """
-  categoriesSearch(after: String, first: Int, before: String, last: Int, search: String!): CategoryConnection!
-
-  """
-  Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords
-  """
-  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection!
-
-  """Returns product filtered using UUID or URL slug"""
-  product(uuid: Uuid, urlSlug: String): Product
-  RegularProduct: RegularProduct
-  MainVariant: MainVariant
-  Variant: Variant
-
-  """Returns category filtered using UUID or URL slug"""
-  category(uuid: Uuid, urlSlug: String): Category
-
-  """Returns complete list of payment methods"""
-  payments: [Payment!]!
-
-  """Returns payment filtered using UUID"""
-  payment(uuid: Uuid!): Payment
-
-  """Returns available transport methods based on the current cart state"""
-  transports(cartUuid: Uuid): [Transport!]!
-
-  """Returns complete list of transport methods"""
-  transport(uuid: Uuid!): Transport
-
-  """Returns currently logged in customer user"""
-  currentCustomerUser: CustomerUser
-
-  """
-  Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords
-  """
-  orders(after: String, first: Int, before: String, last: Int): OrderConnection
-
-  """Returns order filtered using UUID, orderNumber, or urlHash"""
-  order(uuid: Uuid, urlHash: String, orderNumber: String): Order
-
+  """Access personal data using hash received in email from personal data access request"""
+  accessPersonalData(
+    """Hash to securely recognize access"""
+    hash: String!
+  ): PersonalData!
+  AdvertCode: AdvertCode
+  AdvertImage: AdvertImage
+  """Returns list of advert positions."""
+  advertPositions: [AdvertPosition!]!
+  """Returns list of adverts, optionally filtered by `positionName`"""
+  adverts(positionName: String): [Advert!]!
+  """Returns article filtered using UUID or URL slug"""
+  article(urlSlug: String, uuid: Uuid): Article
   """
   Returns list of articles that can be paginated using `first`, `last`, `before`
   and `after` keywords and filtered by `placement`
   """
   articles(
     after: String
-    first: Int
     before: String
+    first: Int
     last: Int
-
     """An array of the required articles placements"""
     placement: [ArticlePlacementTypeEnum!] = []
   ): ArticleConnection!
-
-  """Returns article filtered using UUID or URL slug"""
-  article(uuid: Uuid, urlSlug: String): Article
-
-  """Returns Terms and Conditions article"""
-  termsAndConditionsArticle: Article
-
-  """Returns privacy policy article"""
-  privacyPolicyArticle: Article
-
-  """Returns information about cookies article"""
-  cookiesArticle: Article
-
-  """Returns complete list of brands"""
-  brands: [Brand!]!
-
-  """Returns brand filtered using UUID or URL slug"""
-  brand(uuid: Uuid, urlSlug: String): Brand
-
-  """Returns promoted products"""
-  promotedProducts: [Product!]!
-
-  """Returns list of adverts, optionally filtered by `positionName`"""
-  adverts(positionName: String): [Advert!]!
-  AdvertCode: AdvertCode
-  AdvertImage: AdvertImage
-
-  """Returns list of advert positions."""
-  advertPositions: [AdvertPosition!]!
-
-  """Returns complete navigation menu"""
-  navigation: [NavigationItem!]!
-  CompanyCustomerUser: CompanyCustomerUser
-  RegularCustomerUser: RegularCustomerUser
-
-  """Check if email is registered"""
-  isCustomerUserRegistered(email: String!): Boolean!
-
-  """Returns promoted categories"""
-  promotedCategories: [Category!]!
-
-  """
-  Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
-  """
-  stores(after: String, first: Int, before: String, last: Int): StoreConnection!
-
-  """Returns store filtered using UUID or URL slug"""
-  store(uuid: Uuid, urlSlug: String): Store
-
-  """Returns blog article filtered using UUID or URL slug"""
-  blogArticle(uuid: Uuid, urlSlug: String): BlogArticle
-
-  """
-  Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
-  """
-  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
-
-  """Returns blog category filtered using UUID or URL slug"""
-  blogCategory(uuid: Uuid, urlSlug: String): BlogCategory
-
-  """Returns a complete list of the blog categories"""
-  blogCategories: [BlogCategory!]!
-
-  """Returns a complete list of the slider items"""
-  sliderItems: [SliderItem!]!
-
   """Returns list of searched articles and blog articles"""
   articlesSearch(search: String!): [ArticleInterface!]!
-
-  """Returns a complete list of the flags"""
-  flags: [Flag!]
-
-  """Returns a flag by uuid or url slug"""
-  flag(uuid: Uuid, urlSlug: String): Flag
-
-  """Returns last order of the user or null if no order was placed yet"""
-  lastOrder: Order
-
-  """Returns HTML content for order sent page."""
-  orderSentPageContent(orderUuid: Uuid!): String!
-
-  """Return personal data page content and URL"""
-  personalDataPage: PersonalDataPage
-
-  """
-  Access personal data using hash received in email from personal data access request
-  """
-  accessPersonalData(
-    """Hash to securely recognize access"""
-    hash: String!
-  ): PersonalData!
-  ParameterSliderFilterOption: ParameterSliderFilterOption
-  ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
-  ParameterColorFilterOption: ParameterColorFilterOption
-
+  """Returns blog article filtered using UUID or URL slug"""
+  blogArticle(urlSlug: String, uuid: Uuid): BlogArticle
+  """Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"""
+  blogArticles(after: String, before: String, first: Int, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
+  """Returns a complete list of the blog categories"""
+  blogCategories: [BlogCategory!]!
+  """Returns blog category filtered using UUID or URL slug"""
+  blogCategory(urlSlug: String, uuid: Uuid): BlogCategory
+  """Returns brand filtered using UUID or URL slug"""
+  brand(urlSlug: String, uuid: Uuid): Brand
+  """Returns complete list of brands"""
+  brands: [Brand!]!
   """Returns list of searched brands"""
   brandSearch(search: String!): [Brand!]!
-
-  """Returns entity by slug"""
-  slug(slug: String!): Slug
-
-  """Returns a list of notifications supposed to be displayed on all pages"""
-  notificationBars: [NotificationBar!]
-
   """Return cart of logged customer or cart by UUID for anonymous user"""
   cart(cartInput: CartInput): Cart
-
+  """Returns complete list of categories"""
+  categories: [Category!]!
+  """Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"""
+  categoriesSearch(after: String, before: String, first: Int, last: Int, search: String!): CategoryConnection!
+  """Returns category filtered using UUID or URL slug"""
+  category(urlSlug: String, uuid: Uuid): Category
+  CompanyCustomerUser: CompanyCustomerUser
+  """Returns information about cookies article"""
+  cookiesArticle: Article
   """Returns available countries"""
   countries: [Country!]!
-
+  """Returns currently logged in customer user"""
+  currentCustomerUser: CustomerUser
+  """Returns a flag by uuid or url slug"""
+  flag(urlSlug: String, uuid: Uuid): Flag
+  """Returns a complete list of the flags"""
+  flags: [Flag!]
   """List of available banks for GoPay bank transfer payment"""
   GoPaySwifts(currencyCode: String!): [GoPayBankSwift!]!
-
+  """Check if email is registered"""
+  isCustomerUserRegistered(email: String!): Boolean!
   """Return user translated language constants for current domain locale"""
   languageConstants: [LanguageConstant!]!
-
+  """Returns last order of the user or null if no order was placed yet"""
+  lastOrder: Order
+  MainVariant: MainVariant
+  """Returns complete navigation menu"""
+  navigation: [NavigationItem!]!
+  """Returns a list of notifications supposed to be displayed on all pages"""
+  notificationBars: [NotificationBar!]
+  """Returns order filtered using UUID, orderNumber, or urlHash"""
+  order(orderNumber: String, urlHash: String, uuid: Uuid): Order
+  """Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"""
+  orders(after: String, before: String, first: Int, last: Int): OrderConnection
+  """Returns HTML content for order sent page."""
+  orderSentPageContent(orderUuid: Uuid!): String!
+  ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
+  ParameterColorFilterOption: ParameterColorFilterOption
+  ParameterSliderFilterOption: ParameterSliderFilterOption
+  """Returns payment filtered using UUID"""
+  payment(uuid: Uuid!): Payment
+  """Returns complete list of payment methods"""
+  payments: [Payment!]!
+  """Return personal data page content and URL"""
+  personalDataPage: PersonalDataPage
+  """Returns privacy policy article"""
+  privacyPolicyArticle: Article
+  """Returns product filtered using UUID or URL slug"""
+  product(urlSlug: String, uuid: Uuid): Product
+  """Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"""
+  products(after: String, before: String, filter: ProductFilter, first: Int, last: Int, orderingMode: ProductOrderingModeEnum, search: String): ProductConnection!
+  """Returns promoted categories"""
+  promotedCategories: [Category!]!
+  """Returns promoted products"""
+  promotedProducts: [Product!]!
+  RegularCustomerUser: RegularCustomerUser
+  RegularProduct: RegularProduct
   """Returns current setting"""
   settings: Settings
+  """Returns a complete list of the slider items"""
+  sliderItems: [SliderItem!]!
+  """Returns entity by slug"""
+  slug(slug: String!): Slug
+  """Returns store filtered using UUID or URL slug"""
+  store(urlSlug: String, uuid: Uuid): Store
+  """Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"""
+  stores(after: String, before: String, first: Int, last: Int): StoreConnection!
+  """Returns Terms and Conditions article"""
+  termsAndConditionsArticle: Article
+  """Returns complete list of transport methods"""
+  transport(uuid: Uuid!): Transport
+  """Returns available transport methods based on the current cart state"""
+  transports(cartUuid: Uuid): [Transport!]!
+  Variant: Variant
 }
 
 input RecoverPasswordInput {
   """Customer user email."""
   email: String!
-
   """Hash"""
   hash: String!
-
   """New customer user password."""
   newPassword: Password!
 }
@@ -2219,355 +1632,258 @@ input RefreshTokenInput {
 
 """Represents the main input object to register customer user"""
 input RegistrationDataInput {
-  """Customer user first name"""
-  firstName: String!
-
-  """Customer user last name"""
-  lastName: String!
-
-  """The customer's email address"""
-  email: String!
-
-  """Customer user password"""
-  password: Password!
-
-  """The customer's telephone number"""
-  telephone: String!
-
-  """Billing address street name (will be on the tax invoice)"""
-  street: String!
-
+  """Uuid of the cart that should be merged to the cart of the newly registered user"""
+  cartUuid: Uuid = null
   """Billing address city name (will be on the tax invoice)"""
   city: String!
-
-  """Billing address zip code (will be on the tax invoice)"""
-  postcode: String!
-
-  """
-  Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
-  """
-  country: String!
-
   """Determines whether the customer is a company or not."""
   companyCustomer: Boolean = false
-
   """The customer’s company name (required when companyCustomer is true)"""
   companyName: String
-
-  """
-  The customer’s company identification number (required when companyCustomer is true)
-  """
+  """The customer’s company identification number (required when companyCustomer is true)"""
   companyNumber: String
-
-  """
-  The customer’s company tax number (required when companyCustomer is true)
-  """
+  """The customer’s company tax number (required when companyCustomer is true)"""
   companyTaxNumber: String
-
+  """Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"""
+  country: String!
+  """The customer's email address"""
+  email: String!
+  """Customer user first name"""
+  firstName: String!
+  """Customer user last name"""
+  lastName: String!
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
-
-  """
-  Uuid of the cart that should be merged to the cart of the newly registered user
-  """
-  cartUuid: Uuid = null
+  """Customer user password"""
+  password: Password!
+  """Billing address zip code (will be on the tax invoice)"""
+  postcode: String!
+  """Billing address street name (will be on the tax invoice)"""
+  street: String!
+  """The customer's telephone number"""
+  telephone: String!
 }
 
 """Represents an currently logged customer user"""
 type RegularCustomerUser implements CustomerUser {
-  """UUID"""
-  uuid: Uuid!
-
-  """First name"""
-  firstName: String!
-
-  """Last name"""
-  lastName: String!
-
-  """Email address"""
-  email: String!
-
-  """Phone number"""
-  telephone: String
-
-  """Billing address street name"""
-  street: String!
-
   """Billing address city name"""
   city: String!
-
-  """Billing address zip code"""
-  postcode: String!
-
   """Billing address country"""
   country: Country!
-
-  """Whether customer user receives newsletters or not"""
-  newsletterSubscription: Boolean!
-
   """Default customer delivery addresses"""
   defaultDeliveryAddress: DeliveryAddress
-
   """List of delivery addresses"""
   deliveryAddresses: [DeliveryAddress!]!
-
+  """Email address"""
+  email: String!
+  """First name"""
+  firstName: String!
+  """Last name"""
+  lastName: String!
+  """Whether customer user receives newsletters or not"""
+  newsletterSubscription: Boolean!
+  """Billing address zip code"""
+  postcode: String!
   """The name of the customer pricing group"""
   pricingGroup: String!
+  """Billing address street name"""
+  street: String!
+  """Phone number"""
+  telephone: String
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents a product"""
 type RegularProduct implements Product & Breadcrumb & Slug {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized product name (domain dependent)"""
-  name: String!
-
-  """Localized product short description (domain dependent)"""
-  shortDescription: String
-
-  """Product link"""
-  link: String!
-  unit: Unit!
-  isUsingStock: Boolean!
-  availability: Availability!
-
-  """Count of quantity on stock"""
-  stockQuantity: Int!
-
-  """List of categories"""
-  categories: [Category!]!
-
-  """List of flags"""
-  flags: [Flag!]!
-
-  """Product price"""
-  price: ProductPrice!
-
-  """Product images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Brand of product"""
-  brand: Brand
-  isSellingDenied: Boolean!
-  orderingPriority: Int!
-  description: String
   accessories: [Product!]!
-  parameters: [Parameter!]!
-
-  """Seo first level heading of product"""
-  seoH1: String
-
-  """Seo title of product"""
-  seoTitle: String
-
-  """Seo meta description of product"""
-  seoMetaDescription: String
-
-  """Product URL slug"""
-  slug: String!
-
-  """Product catalog number"""
-  catalogNumber: String!
-
-  """Product part number"""
-  partNumber: String
-
-  """EAN"""
-  ean: String
-
-  """List of product's unique selling propositions"""
-  usps: [String!]!
-
-  """Name prefix"""
-  namePrefix: String
-
-  """Name suffix"""
-  nameSuffix: String
-
-  """
-  The full name of the product, which consists of a prefix, name, and a suffix
-  """
-  fullName: String!
-
-  """Distinguishes if the product can be pre-ordered"""
-  hasPreorder: Boolean!
-
-  """List of downloadable files"""
-  files: [File!]!
-
-  """List of availabilities in individual stores"""
-  storeAvailabilities: [StoreAvailability!]!
-
+  availability: Availability!
   """Number of the stores where the product is available"""
   availableStoresCount: Int!
-
-  """Number of the stores where the product is exposed"""
-  exposedStoresCount: Int!
-
+  """Brand of product"""
+  brand: Brand
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Product catalog number"""
+  catalogNumber: String!
+  """List of categories"""
+  categories: [Category!]!
+  description: String
+  """EAN"""
+  ean: String
+  """Number of the stores where the product is exposed"""
+  exposedStoresCount: Int!
+  """List of downloadable files"""
+  files: [File!]!
+  """List of flags"""
+  flags: [Flag!]!
+  """The full name of the product, which consists of a prefix, name, and a suffix"""
+  fullName: String!
+  """Distinguishes if the product can be pre-ordered"""
+  hasPreorder: Boolean!
+  """Product images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isSellingDenied: Boolean!
+  isUsingStock: Boolean!
+  """Product link"""
+  link: String!
+  """Localized product name (domain dependent)"""
+  name: String!
+  """Name prefix"""
+  namePrefix: String
+  """Name suffix"""
+  nameSuffix: String
+  orderingPriority: Int!
+  parameters: [Parameter!]!
+  """Product part number"""
+  partNumber: String
+  """Product price"""
+  price: ProductPrice!
   """List of related products"""
   relatedProducts: [Product!]!
+  """Seo first level heading of product"""
+  seoH1: String
+  """Seo meta description of product"""
+  seoMetaDescription: String
+  """Seo title of product"""
+  seoTitle: String
+  """Localized product short description (domain dependent)"""
+  shortDescription: String
+  """Product URL slug"""
+  slug: String!
+  """Count of quantity on stock"""
+  stockQuantity: Int!
+  """List of availabilities in individual stores"""
+  storeAvailabilities: [StoreAvailability!]!
+  unit: Unit!
+  """List of product's unique selling propositions"""
+  usps: [String!]!
+  """UUID"""
+  uuid: Uuid!
 }
 
 input RemoveFromCartInput {
-  """
-  Cart identifier, new cart will be created if not provided and customer is not logged in
-  """
-  cartUuid: Uuid = null
-
   """Cart item UUID"""
   cartItemUuid: Uuid!
+  """Cart identifier, new cart will be created if not provided and customer is not logged in"""
+  cartUuid: Uuid = null
 }
 
 input RemovePromoCodeFromCartInput {
   """Cart identifier or null if customer is logged in"""
   cartUuid: Uuid = null
-
   """Promo code to be removed"""
   promoCode: String!
 }
 
 """Represents setting of SEO"""
 type SeoSetting {
-  """Document's title that is shown in a browser's title"""
-  title: String!
-
-  """Complement to title"""
-  titleAddOn: String!
-
   """Description of the content of a web page"""
   metaDescription: String!
+  """Document's title that is shown in a browser's title"""
+  title: String!
+  """Complement to title"""
+  titleAddOn: String!
 }
 
 """Represents settings of the current domain"""
 type Settings {
-  """Settings related to pricing"""
-  pricing: PricingSetting!
-
-  """Settings related to SEO"""
-  seo: SeoSetting!
-
   """Main text for contact form"""
   contactFormMainText: String!
+  """Settings related to pricing"""
+  pricing: PricingSetting!
+  """Settings related to SEO"""
+  seo: SeoSetting!
 }
 
 type SliderItem {
-  """UUID"""
-  uuid: Uuid!
-
-  """Slider name"""
-  name: String!
-
-  """Target link"""
-  link: String!
-
   """Text below slider"""
   extendedText: String
-
   """Target link of text below slider"""
   extendedTextLink: String
-
-  """GTM ID"""
-  gtmId: String!
-
   """GTM creative"""
   gtmCreative: String
-
+  """GTM ID"""
+  gtmId: String!
   """Slider item images"""
-  images(type: String = null, sizes: [String!] = null): [Image!]!
+  images(sizes: [String!] = null, type: String = null): [Image!]!
+  """Target link"""
+  link: String!
+  """Slider name"""
+  name: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents entity retrievable by slug"""
 interface Slug {
-  """UUID"""
-  uuid: Uuid!
   name: String
   slug: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 type Store implements Breadcrumb & Slug {
-  """Store URL slug"""
-  slug: String!
-
-  """UUID"""
-  uuid: Uuid!
-
-  """Is set as default store"""
-  isDefault: Boolean!
-
-  """Store name"""
-  name: String!
-
-  """Store description"""
-  description: String
-
-  """Store address street"""
-  street: String!
-
-  """Store address city"""
-  city: String!
-
-  """Store address postcode"""
-  postcode: String!
-
-  """Store address country"""
-  country: Country!
-
-  """Store opening hours"""
-  openingHours: String
-
-  """Store opening hours, newlines are rendered as HTML breakline"""
-  openingHoursHtml: String
-  contactInfo: String
-  specialMessage: String
-
-  """Store location latitude"""
-  locationLatitude: String
-
-  """Store location longitude"""
-  locationLongitude: String
-
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
+  """Store address city"""
+  city: String!
+  contactInfo: String
+  """Store address country"""
+  country: Country!
+  """Store description"""
+  description: String
+  """Is set as default store"""
+  isDefault: Boolean!
+  """Store location latitude"""
+  locationLatitude: String
+  """Store location longitude"""
+  locationLongitude: String
+  """Store name"""
+  name: String!
+  """Store opening hours"""
+  openingHours: String
+  """Store opening hours, newlines are rendered as HTML breakline"""
+  openingHoursHtml: String
+  """Store address postcode"""
+  postcode: String!
+  """Store URL slug"""
+  slug: String!
+  specialMessage: String
+  """Store address street"""
+  street: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents an availability in an individual store"""
 type StoreAvailability {
-  """Is product exposed on this store"""
-  exposed: Boolean!
-
   """Detailed information about availability"""
   availabilityInformation: String!
-
   """Availability status in a format suitable for usage in the code"""
   availabilityStatus: String!
-
+  """Is product exposed on this store"""
+  exposed: Boolean!
   """Store"""
   store: Store
 }
 
 """A connection to a list of items."""
 type StoreConnection {
-  """Total number of stores"""
-  totalCount: Int!
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
   """Information to aid in pagination."""
   edges: [StoreEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of stores"""
+  totalCount: Int!
 }
 
 """An edge in a connection."""
 type StoreEdge {
-  """The item at the end of the edge."""
-  node: Store
-
   """A cursor for use in pagination."""
   cursor: String!
+  """The item at the end of the edge."""
+  node: Store
 }
 
 type Token {
@@ -2577,56 +1893,44 @@ type Token {
 
 """Represents a transport"""
 type Transport {
-  """UUID"""
-  uuid: Uuid!
-
-  """Transport name"""
-  name: String!
-
-  """Localized transport description (domain dependent)"""
-  description: String
-
-  """Localized transport instruction (domain dependent)"""
-  instruction: String
-
-  """Transport position"""
-  position: Int!
-
-  """Transport price"""
-  price(cartUuid: Uuid = null): Price!
-
-  """Transport images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """List of assigned payments"""
-  payments: [Payment!]!
-
   """Number of days until goods are delivered"""
   daysUntilDelivery: Int!
-
-  """Type of transport"""
-  transportType: TransportType!
-
+  """Localized transport description (domain dependent)"""
+  description: String
+  """Transport images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  """Localized transport instruction (domain dependent)"""
+  instruction: String
+  """Transport name"""
+  name: String!
+  """List of assigned payments"""
+  payments: [Payment!]!
+  """Transport position"""
+  position: Int!
+  """Transport price"""
+  price(cartUuid: Uuid = null): Price!
   """Stores available for personal pickup"""
   stores: StoreConnection
+  """Type of transport"""
+  transportType: TransportType!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents a transport in order"""
 input TransportInput {
-  """UUID"""
-  uuid: Uuid!
-
   """Price for transport"""
   price: PriceInput!
+  """UUID"""
+  uuid: Uuid!
 }
 
 """Represents a transport type"""
 type TransportType {
-  """Name of transport type"""
-  name: String!
-
   """Code of transport"""
   code: String!
+  """Name of transport type"""
+  name: String!
 }
 
 """Represents a unit"""
@@ -2640,98 +1944,69 @@ scalar Uuid
 
 """Represents a product"""
 type Variant implements Product & Breadcrumb & Slug {
-  """UUID"""
-  uuid: Uuid!
-
-  """Localized product name (domain dependent)"""
-  name: String!
-
-  """Localized product short description (domain dependent)"""
-  shortDescription: String
-
-  """Product link"""
-  link: String!
-  unit: Unit!
-  isUsingStock: Boolean!
-  availability: Availability!
-
-  """Count of quantity on stock"""
-  stockQuantity: Int!
-
-  """List of categories"""
-  categories: [Category!]!
-
-  """List of flags"""
-  flags: [Flag!]!
-
-  """Product price"""
-  price: ProductPrice!
-
-  """Product images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
-
-  """Brand of product"""
-  brand: Brand
-  isSellingDenied: Boolean!
-  orderingPriority: Int!
-  description: String
   accessories: [Product!]!
-  parameters: [Parameter!]!
-
-  """Seo first level heading of product"""
-  seoH1: String
-
-  """Seo title of product"""
-  seoTitle: String
-
-  """Seo meta description of product"""
-  seoMetaDescription: String
-
-  """Product URL slug"""
-  slug: String!
-
-  """Product catalog number"""
-  catalogNumber: String!
-
-  """Product part number"""
-  partNumber: String
-
-  """EAN"""
-  ean: String
-
-  """List of product's unique selling propositions"""
-  usps: [String!]!
-
-  """Name prefix"""
-  namePrefix: String
-
-  """Name suffix"""
-  nameSuffix: String
-
-  """
-  The full name of the product, which consists of a prefix, name, and a suffix
-  """
-  fullName: String!
-
-  """Distinguishes if the product can be pre-ordered"""
-  hasPreorder: Boolean!
-
-  """List of downloadable files"""
-  files: [File!]!
-
-  """List of availabilities in individual stores"""
-  storeAvailabilities: [StoreAvailability!]!
-
+  availability: Availability!
   """Number of the stores where the product is available"""
   availableStoresCount: Int!
-
-  """Number of the stores where the product is exposed"""
-  exposedStoresCount: Int!
-
+  """Brand of product"""
+  brand: Brand
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
-
+  """Product catalog number"""
+  catalogNumber: String!
+  """List of categories"""
+  categories: [Category!]!
+  description: String
+  """EAN"""
+  ean: String
+  """Number of the stores where the product is exposed"""
+  exposedStoresCount: Int!
+  """List of downloadable files"""
+  files: [File!]!
+  """List of flags"""
+  flags: [Flag!]!
+  """The full name of the product, which consists of a prefix, name, and a suffix"""
+  fullName: String!
+  """Distinguishes if the product can be pre-ordered"""
+  hasPreorder: Boolean!
+  """Product images"""
+  images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isSellingDenied: Boolean!
+  isUsingStock: Boolean!
+  """Product link"""
+  link: String!
+  mainVariant: MainVariant
+  """Localized product name (domain dependent)"""
+  name: String!
+  """Name prefix"""
+  namePrefix: String
+  """Name suffix"""
+  nameSuffix: String
+  orderingPriority: Int!
+  parameters: [Parameter!]!
+  """Product part number"""
+  partNumber: String
+  """Product price"""
+  price: ProductPrice!
   """List of related products"""
   relatedProducts: [Product!]!
-  mainVariant: MainVariant
+  """Seo first level heading of product"""
+  seoH1: String
+  """Seo meta description of product"""
+  seoMetaDescription: String
+  """Seo title of product"""
+  seoTitle: String
+  """Localized product short description (domain dependent)"""
+  shortDescription: String
+  """Product URL slug"""
+  slug: String!
+  """Count of quantity on stock"""
+  stockQuantity: Int!
+  """List of availabilities in individual stores"""
+  storeAvailabilities: [StoreAvailability!]!
+  unit: Unit!
+  """List of product's unique selling propositions"""
+  usps: [String!]!
+  """UUID"""
+  uuid: Uuid!
 }

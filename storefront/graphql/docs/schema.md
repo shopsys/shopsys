@@ -150,6 +150,266 @@
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>accessPersonalData</strong></td>
+<td valign="top"><a href="#personaldata">PersonalData</a>!</td>
+<td>
+
+Access personal data using hash received in email from personal data access request
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">hash</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Hash to securely recognize access
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>AdvertCode</strong></td>
+<td valign="top"><a href="#advertcode">AdvertCode</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>AdvertImage</strong></td>
+<td valign="top"><a href="#advertimage">AdvertImage</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>advertPositions</strong></td>
+<td valign="top">[<a href="#advertposition">AdvertPosition</a>!]!</td>
+<td>
+
+Returns list of advert positions.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>adverts</strong></td>
+<td valign="top">[<a href="#advert">Advert</a>!]!</td>
+<td>
+
+Returns list of adverts, optionally filtered by `positionName`
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">positionName</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>article</strong></td>
+<td valign="top"><a href="#article">Article</a></td>
+<td>
+
+Returns article filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>articles</strong></td>
+<td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
+<td>
+
+Returns list of articles that can be paginated using `first`, `last`, `before`
+and `after` keywords and filtered by `placement`
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">placement</td>
+<td valign="top">[<a href="#articleplacementtypeenum">ArticlePlacementTypeEnum</a>!]</td>
+<td>
+
+An array of the required articles placements
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>articlesSearch</strong></td>
+<td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
+<td>
+
+Returns list of searched articles and blog articles
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">search</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>blogArticle</strong></td>
+<td valign="top"><a href="#blogarticle">BlogArticle</a></td>
+<td>
+
+Returns blog article filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>blogArticles</strong></td>
+<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
+<td>
+
+Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">onlyHomepageArticles</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>blogCategories</strong></td>
+<td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
+<td>
+
+Returns a complete list of the blog categories
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>blogCategory</strong></td>
+<td valign="top"><a href="#blogcategory">BlogCategory</a></td>
+<td>
+
+Returns blog category filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>brand</strong></td>
+<td valign="top"><a href="#brand">Brand</a></td>
+<td>
+
+Returns brand filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>brands</strong></td>
+<td valign="top">[<a href="#brand">Brand</a>!]!</td>
+<td>
+
+Returns complete list of brands
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>brandSearch</strong></td>
+<td valign="top">[<a href="#brand">Brand</a>!]!</td>
+<td>
+
+Returns list of searched brands
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">search</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cart</strong></td>
+<td valign="top"><a href="#cart">Cart</a></td>
+<td>
+
+Return cart of logged customer or cart by UUID for anonymous user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartInput</td>
+<td valign="top"><a href="#cartinput">CartInput</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
@@ -173,13 +433,13 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -190,6 +450,296 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 <tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>category</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+Returns category filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
+<td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cookiesArticle</strong></td>
+<td valign="top"><a href="#article">Article</a></td>
+<td>
+
+Returns information about cookies article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>countries</strong></td>
+<td valign="top">[<a href="#country">Country</a>!]!</td>
+<td>
+
+Returns available countries
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>currentCustomerUser</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a></td>
+<td>
+
+Returns currently logged in customer user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>flag</strong></td>
+<td valign="top"><a href="#flag">Flag</a></td>
+<td>
+
+Returns a flag by uuid or url slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>flags</strong></td>
+<td valign="top">[<a href="#flag">Flag</a>!]</td>
+<td>
+
+Returns a complete list of the flags
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
+<td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
+<td>
+
+List of available banks for GoPay bank transfer payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">currencyCode</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isCustomerUserRegistered</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Check if email is registered
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">email</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>languageConstants</strong></td>
+<td valign="top">[<a href="#languageconstant">LanguageConstant</a>!]!</td>
+<td>
+
+Return user translated language constants for current domain locale
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastOrder</strong></td>
+<td valign="top"><a href="#order">Order</a></td>
+<td>
+
+Returns last order of the user or null if no order was placed yet
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>MainVariant</strong></td>
+<td valign="top"><a href="#mainvariant">MainVariant</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>navigation</strong></td>
+<td valign="top">[<a href="#navigationitem">NavigationItem</a>!]!</td>
+<td>
+
+Returns complete navigation menu
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>notificationBars</strong></td>
+<td valign="top">[<a href="#notificationbar">NotificationBar</a>!]</td>
+<td>
+
+Returns a list of notifications supposed to be displayed on all pages
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a></td>
+<td>
+
+Returns order filtered using UUID, orderNumber, or urlHash
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderNumber</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlHash</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orders</strong></td>
+<td valign="top"><a href="#orderconnection">OrderConnection</a></td>
+<td>
+
+Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderSentPageContent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Returns HTML content for order sent page.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterCheckboxFilterOption</strong></td>
+<td valign="top"><a href="#parametercheckboxfilteroption">ParameterCheckboxFilterOption</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterColorFilterOption</strong></td>
+<td valign="top"><a href="#parametercolorfilteroption">ParameterColorFilterOption</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ParameterSliderFilterOption</strong></td>
+<td valign="top"><a href="#parametersliderfilteroption">ParameterSliderFilterOption</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>payment</strong></td>
+<td valign="top"><a href="#payment">Payment</a></td>
+<td>
+
+Returns payment filtered using UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>payments</strong></td>
+<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td>
+
+Returns complete list of payment methods
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>personalDataPage</strong></td>
+<td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
+<td>
+
+Return personal data page content and URL
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>privacyPolicyArticle</strong></td>
+<td valign="top"><a href="#article">Article</a></td>
+<td>
+
+Returns privacy policy article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>product</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+Returns product filtered using UUID or URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">urlSlug</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -207,13 +757,18 @@ Returns list of ordered products that can be paginated using `first`, `last`, `b
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -227,32 +782,31 @@ Returns list of ordered products that can be paginated using `first`, `last`, `b
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#productfilter">ProductFilter</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>product</strong></td>
-<td valign="top"><a href="#product">Product</a></td>
+<td colspan="2" valign="top"><strong>promotedCategories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-Returns product filtered using UUID or URL slug
+Returns promoted categories
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
+<td colspan="2" valign="top"><strong>promotedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+Returns promoted products
+
+</td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>RegularCustomerUser</strong></td>
+<td valign="top"><a href="#regularcustomeruser">RegularCustomerUser</a></td>
 <td></td>
 </tr>
 <tr>
@@ -261,28 +815,45 @@ Returns product filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>MainVariant</strong></td>
-<td valign="top"><a href="#mainvariant">MainVariant</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>Variant</strong></td>
-<td valign="top"><a href="#variant">Variant</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>category</strong></td>
-<td valign="top"><a href="#category">Category</a></td>
+<td colspan="2" valign="top"><strong>settings</strong></td>
+<td valign="top"><a href="#settings">Settings</a></td>
 <td>
 
-Returns category filtered using UUID or URL slug
+Returns current setting
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>sliderItems</strong></td>
+<td valign="top">[<a href="#slideritem">SliderItem</a>!]!</td>
+<td>
+
+Returns a complete list of the slider items
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#slug">Slug</a></td>
+<td>
+
+Returns entity by slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">slug</td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>store</strong></td>
+<td valign="top"><a href="#store">Store</a></td>
+<td>
+
+Returns store filtered using UUID or URL slug
+
+</td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">urlSlug</td>
@@ -290,20 +861,54 @@ Returns category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payments</strong></td>
-<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>stores</strong></td>
+<td valign="top"><a href="#storeconnection">StoreConnection</a>!</td>
 <td>
 
-Returns complete list of payment methods
+Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#payment">Payment</a></td>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>termsAndConditionsArticle</strong></td>
+<td valign="top"><a href="#article">Article</a></td>
 <td>
 
-Returns payment filtered using UUID
+Returns Terms and Conditions article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a></td>
+<td>
+
+Returns complete list of transport methods
 
 </td>
 </tr>
@@ -327,614 +932,9 @@ Returns available transport methods based on the current cart state
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a></td>
-<td>
-
-Returns complete list of transport methods
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>Variant</strong></td>
+<td valign="top"><a href="#variant">Variant</a></td>
 <td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>currentCustomerUser</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a></td>
-<td>
-
-Returns currently logged in customer user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orders</strong></td>
-<td valign="top"><a href="#orderconnection">OrderConnection</a></td>
-<td>
-
-Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>order</strong></td>
-<td valign="top"><a href="#order">Order</a></td>
-<td>
-
-Returns order filtered using UUID, orderNumber, or urlHash
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlHash</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderNumber</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>articles</strong></td>
-<td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
-<td>
-
-Returns list of articles that can be paginated using `first`, `last`, `before`
-and `after` keywords and filtered by `placement`
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">placement</td>
-<td valign="top">[<a href="#articleplacementtypeenum">ArticlePlacementTypeEnum</a>!]</td>
-<td>
-
-An array of the required articles placements
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>article</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-Returns article filtered using UUID or URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>termsAndConditionsArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-Returns Terms and Conditions article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>privacyPolicyArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-Returns privacy policy article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cookiesArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-Returns information about cookies article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>brands</strong></td>
-<td valign="top">[<a href="#brand">Brand</a>!]!</td>
-<td>
-
-Returns complete list of brands
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
-<td valign="top"><a href="#brand">Brand</a></td>
-<td>
-
-Returns brand filtered using UUID or URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promotedProducts</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-Returns promoted products
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>adverts</strong></td>
-<td valign="top">[<a href="#advert">Advert</a>!]!</td>
-<td>
-
-Returns list of adverts, optionally filtered by `positionName`
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">positionName</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>AdvertCode</strong></td>
-<td valign="top"><a href="#advertcode">AdvertCode</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>AdvertImage</strong></td>
-<td valign="top"><a href="#advertimage">AdvertImage</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>advertPositions</strong></td>
-<td valign="top">[<a href="#advertposition">AdvertPosition</a>!]!</td>
-<td>
-
-Returns list of advert positions.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>navigation</strong></td>
-<td valign="top">[<a href="#navigationitem">NavigationItem</a>!]!</td>
-<td>
-
-Returns complete navigation menu
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
-<td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>RegularCustomerUser</strong></td>
-<td valign="top"><a href="#regularcustomeruser">RegularCustomerUser</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isCustomerUserRegistered</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Check if email is registered
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">email</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>promotedCategories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-Returns promoted categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>stores</strong></td>
-<td valign="top"><a href="#storeconnection">StoreConnection</a>!</td>
-<td>
-
-Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>store</strong></td>
-<td valign="top"><a href="#store">Store</a></td>
-<td>
-
-Returns store filtered using UUID or URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>blogArticle</strong></td>
-<td valign="top"><a href="#blogarticle">BlogArticle</a></td>
-<td>
-
-Returns blog article filtered using UUID or URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>blogArticles</strong></td>
-<td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
-<td>
-
-Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">onlyHomepageArticles</td>
-<td valign="top"><a href="#boolean">Boolean</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>blogCategory</strong></td>
-<td valign="top"><a href="#blogcategory">BlogCategory</a></td>
-<td>
-
-Returns blog category filtered using UUID or URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>blogCategories</strong></td>
-<td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
-<td>
-
-Returns a complete list of the blog categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>sliderItems</strong></td>
-<td valign="top">[<a href="#slideritem">SliderItem</a>!]!</td>
-<td>
-
-Returns a complete list of the slider items
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>articlesSearch</strong></td>
-<td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
-<td>
-
-Returns list of searched articles and blog articles
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
-<td valign="top">[<a href="#flag">Flag</a>!]</td>
-<td>
-
-Returns a complete list of the flags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flag</strong></td>
-<td valign="top"><a href="#flag">Flag</a></td>
-<td>
-
-Returns a flag by uuid or url slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">uuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">urlSlug</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastOrder</strong></td>
-<td valign="top"><a href="#order">Order</a></td>
-<td>
-
-Returns last order of the user or null if no order was placed yet
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orderSentPageContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Returns HTML content for order sent page.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>personalDataPage</strong></td>
-<td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
-<td>
-
-Return personal data page content and URL
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>accessPersonalData</strong></td>
-<td valign="top"><a href="#personaldata">PersonalData</a>!</td>
-<td>
-
-Access personal data using hash received in email from personal data access request
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">hash</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Hash to securely recognize access
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ParameterSliderFilterOption</strong></td>
-<td valign="top"><a href="#parametersliderfilteroption">ParameterSliderFilterOption</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ParameterCheckboxFilterOption</strong></td>
-<td valign="top"><a href="#parametercheckboxfilteroption">ParameterCheckboxFilterOption</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ParameterColorFilterOption</strong></td>
-<td valign="top"><a href="#parametercolorfilteroption">ParameterColorFilterOption</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>brandSearch</strong></td>
-<td valign="top">[<a href="#brand">Brand</a>!]!</td>
-<td>
-
-Returns list of searched brands
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#slug">Slug</a></td>
-<td>
-
-Returns entity by slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">slug</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>notificationBars</strong></td>
-<td valign="top">[<a href="#notificationbar">NotificationBar</a>!]</td>
-<td>
-
-Returns a list of notifications supposed to be displayed on all pages
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cart</strong></td>
-<td valign="top"><a href="#cart">Cart</a></td>
-<td>
-
-Return cart of logged customer or cart by UUID for anonymous user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">cartInput</td>
-<td valign="top"><a href="#cartinput">CartInput</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>countries</strong></td>
-<td valign="top">[<a href="#country">Country</a>!]!</td>
-<td>
-
-Returns available countries
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
-<td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
-<td>
-
-List of available banks for GoPay bank transfer payment
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">currencyCode</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>languageConstants</strong></td>
-<td valign="top">[<a href="#languageconstant">LanguageConstant</a>!]!</td>
-<td>
-
-Return user translated language constants for current domain locale
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>settings</strong></td>
-<td valign="top"><a href="#settings">Settings</a></td>
-<td>
-
-Returns current setting
-
-</td>
 </tr>
 </tbody>
 </table>
@@ -951,113 +951,6 @@ Returns current setting
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>CreateOrder</strong></td>
-<td valign="top"><a href="#order">Order</a>!</td>
-<td>
-
-Creates complete order with products and addresses
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#orderinput">OrderInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>Login</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
-<td>
-
-Login user and return access and refresh tokens
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#logininput">LoginInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>Logout</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Logout user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>RefreshTokens</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
-<td>
-
-Refreshes access and refresh tokens
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#refreshtokeninput">RefreshTokenInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ChangePassword</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
-<td>
-
-Changes customer user password
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#changepasswordinput">ChangePasswordInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ChangePersonalData</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
-<td>
-
-Changes customer user personal data
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#changepersonaldatainput">ChangePersonalDataInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>Register</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
-<td>
-
-Register new customer user
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#registrationdatainput">RegistrationDataInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>NewsletterSubscribe</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Subscribe for e-mail newsletter
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#newslettersubscriptiondatainput">NewsletterSubscriptionDataInput</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>AddToCart</strong></td>
 <td valign="top"><a href="#addtocartresult">AddToCartResult</a>!</td>
 <td>
@@ -1069,20 +962,6 @@ Add product to cart for future checkout
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#addtocartinput">AddToCartInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>RemoveFromCart</strong></td>
-<td valign="top"><a href="#cart">Cart</a>!</td>
-<td>
-
-Remove product from cart
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#removefromcartinput">RemoveFromCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1100,59 +979,101 @@ Apply new promo code for the future checkout
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemovePromoCodeFromCart</strong></td>
+<td colspan="2" valign="top"><strong>ChangePassword</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+Changes customer user password
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#changepasswordinput">ChangePasswordInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ChangePaymentInCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
-Remove already used promo code from cart
+Add a payment to the cart, or remove a payment from the cart
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#removepromocodefromcartinput">RemovePromoCodeFromCartInput</a>!</td>
+<td valign="top"><a href="#changepaymentincartinput">ChangePaymentInCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RequestPasswordRecovery</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>ChangePersonalData</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
 <td>
 
-Request password recovery - email with hash will be sent
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">email</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>RecoverPassword</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
-<td>
-
-Recover password using hash required from RequestPasswordRecovery
+Changes customer user personal data
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#recoverpasswordinput">RecoverPasswordInput</a>!</td>
+<td valign="top"><a href="#changepersonaldatainput">ChangePersonalDataInput</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RequestPersonalDataAccess</strong></td>
-<td valign="top"><a href="#personaldatapage">PersonalDataPage</a>!</td>
+<td colspan="2" valign="top"><strong>ChangeTransportInCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
-Request access to personal data
+Add a transport to the cart, or remove a transport from the cart
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#personaldataaccessrequestinput">PersonalDataAccessRequestInput</a>!</td>
+<td valign="top"><a href="#changetransportincartinput">ChangeTransportInCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+check payment status of order after callback from payment service
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>Contact</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Send message to the site owner
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#contactinput">ContactInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CreateOrder</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Creates complete order with products and addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#orderinput">OrderInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1184,31 +1105,40 @@ Edit delivery address by Uuid
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>SetDefaultDeliveryAddress</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td colspan="2" valign="top"><strong>Login</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
 <td>
 
-Set default delivery address by Uuid
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>Contact</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Send message to the site owner
+Login user and return access and refresh tokens
 
 </td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#contactinput">ContactInput</a>!</td>
+<td valign="top"><a href="#logininput">LoginInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>Logout</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Logout user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>NewsletterSubscribe</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Subscribe for e-mail newsletter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#newslettersubscriptiondatainput">NewsletterSubscriptionDataInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -1227,45 +1157,115 @@ data for redirect or creating JS payment gateway layer
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CheckPaymentStatus</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>RecoverPassword</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
 <td>
 
-check payment status of order after callback from payment service
+Recover password using hash required from RequestPasswordRecovery
 
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">orderUuid</td>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#recoverpasswordinput">RecoverPasswordInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RefreshTokens</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
+<td>
+
+Refreshes access and refresh tokens
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#refreshtokeninput">RefreshTokenInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>Register</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
+<td>
+
+Register new customer user
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#registrationdatainput">RegistrationDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemoveFromCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Remove product from cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removefromcartinput">RemoveFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemovePromoCodeFromCart</strong></td>
+<td valign="top"><a href="#cart">Cart</a>!</td>
+<td>
+
+Remove already used promo code from cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removepromocodefromcartinput">RemovePromoCodeFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RequestPasswordRecovery</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Request password recovery - email with hash will be sent
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">email</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RequestPersonalDataAccess</strong></td>
+<td valign="top"><a href="#personaldatapage">PersonalDataPage</a>!</td>
+<td>
+
+Request access to personal data
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#personaldataaccessrequestinput">PersonalDataAccessRequestInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>SetDefaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+Set default delivery address by Uuid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ChangePaymentInCart</strong></td>
-<td valign="top"><a href="#cart">Cart</a>!</td>
-<td>
-
-Add a payment to the cart, or remove a payment from the cart
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#changepaymentincartinput">ChangePaymentInCartInput</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>ChangeTransportInCart</strong></td>
-<td valign="top"><a href="#cart">Cart</a>!</td>
-<td>
-
-Add a transport to the cart, or remove a transport from the cart
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">input</td>
-<td valign="top"><a href="#changetransportincartinput">ChangeTransportInCartInput</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -1286,8 +1286,23 @@ Add a transport to the cart, or remove a transport from the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>addedQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>cartItem</strong></td>
 <td valign="top"><a href="#cartitem">CartItem</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isNew</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isQuantityOverLimit</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1298,21 +1313,6 @@ Add a transport to the cart, or remove a transport from the cart
 <tr>
 <td colspan="2" valign="top"><strong>overLimitQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isQuantityOverLimit</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isNew</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>addedQuantity</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -1358,24 +1358,6 @@ Represents a singe additional image size
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>url</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-URL address of image
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>width</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Width in pixels defined in images.yaml
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>height</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
@@ -1390,6 +1372,24 @@ Height in pixels defined in images.yaml
 <td>
 
 Recommended media query defined in images.yaml
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>url</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL address of image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>width</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Width in pixels defined in images.yaml
 
 </td>
 </tr>
@@ -1409,42 +1409,6 @@ Recommended media query defined in images.yaml
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of advert
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Type of advert
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Position of advert
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
@@ -1459,6 +1423,42 @@ Restricted categories of the advert (the advert is shown in these categories onl
 <td>
 
 Advert code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Position of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Type of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -1478,56 +1478,11 @@ Advert code
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of advert
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Type of advert
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Position of advert
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
 Restricted categories of the advert (the advert is shown in these categories only)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Advert link
 
 </td>
 </tr>
@@ -1541,11 +1496,6 @@ Advert image
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">size</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -1554,6 +1504,56 @@ Advert image
 <td colspan="2" align="right" valign="top">sizes</td>
 <td valign="top">[<a href="#string">String</a>!]</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Advert link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Position of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Type of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -1604,78 +1604,6 @@ Position of advert
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>placement</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Placement of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Text of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo first level heading of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of article
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Article URL slug
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
@@ -1690,6 +1618,78 @@ Hierarchy of the current element in relation to the structure
 <td>
 
 If the the article should be open in a new tab
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>placement</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Placement of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo first level heading of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo meta description of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo title of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Article URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Text of article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -1711,11 +1711,11 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#articleedge">ArticleEdge</a>]</td>
 <td>
 
-Total number of articles
+Information to aid in pagination.
 
 </td>
 </tr>
@@ -1729,11 +1729,11 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#articleedge">ArticleEdge</a>]</td>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of articles
 
 </td>
 </tr>
@@ -1755,20 +1755,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#article">Article</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -1823,128 +1823,11 @@ Availability status in a format suitable for usage in the code
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The blog article UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The blog article title
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article text
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a>!</td>
-<td>
-
-Date and time of the blog article creation
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>visibleOnHomepage</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Indicates whether the blog article is displayed on homepage
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>publishDate</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a>!</td>
-<td>
-
-Date and time of the blog article publishing
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>perex</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article perex
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article SEO title
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog article SEO H1 heading
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>blogCategories</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
 The list of the blog article blog categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The blog article absolute URL
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The blog article URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-The list of the products assigned to the blog article
 
 </td>
 </tr>
@@ -1958,6 +1841,15 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time of the blog article creation
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -1967,14 +1859,122 @@ Blog article images
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog article absolute URL
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog article title
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>perex</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article perex
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+The list of the products assigned to the blog article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>publishDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time of the blog article publishing
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article SEO H1 heading
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article SEO meta description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article SEO title
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog article URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog article text
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The blog article UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>visibleOnHomepage</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the blog article is displayed on homepage
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -1994,11 +1994,11 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#blogarticleedge">BlogArticleEdge</a>]</td>
 <td>
 
-Total number of the blog articles
+Information to aid in pagination.
 
 </td>
 </tr>
@@ -2012,11 +2012,11 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#blogarticleedge">BlogArticleEdge</a>]</td>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of the blog articles
 
 </td>
 </tr>
@@ -2038,20 +2038,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#blogarticle">BlogArticle</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#blogarticle">BlogArticle</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -2071,78 +2071,6 @@ A cursor for use in pagination.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The blog category UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The blog category name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>parent</strong></td>
-<td valign="top"><a href="#blogcategory">BlogCategory</a></td>
-<td>
-
-The blog category parent
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>children</strong></td>
-<td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
-<td>
-
-The blog category children
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category SEO title
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The blog category SEO H1 heading
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
 <td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
@@ -2157,13 +2085,13 @@ Paginated blog articles of the given blog category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -2177,11 +2105,83 @@ Paginated blog articles of the given blog category
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td>
+
+Hierarchy of the current element in relation to the structure
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>children</strong></td>
+<td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
+<td>
+
+The blog category children
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog category description
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 The blog category absolute URL
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The blog category name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parent</strong></td>
+<td valign="top"><a href="#blogcategory">BlogCategory</a></td>
+<td>
+
+The blog category parent
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog category SEO H1 heading
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog category SEO meta description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The blog category SEO title
 
 </td>
 </tr>
@@ -2195,11 +2195,11 @@ The blog category URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Hierarchy of the current element in relation to the structure
+The blog category UUID
 
 </td>
 </tr>
@@ -2221,20 +2221,11 @@ Represents a brand
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Brand name
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -2248,42 +2239,6 @@ Brand description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Brand main URL
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Brand SEO title
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Brand SEO meta description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Brand SEO H1
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -2291,11 +2246,6 @@ Brand SEO H1
 Brand images
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">size</td>
@@ -2306,6 +2256,29 @@ Brand images
 <td colspan="2" align="right" valign="top">sizes</td>
 <td valign="top">[<a href="#string">String</a>!]</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Brand main URL
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Brand name
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
@@ -2322,13 +2295,18 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -2342,14 +2320,36 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#productfilter">ProductFilter</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Brand SEO H1
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Brand SEO meta description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Brand SEO title
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>slug</strong></td>
@@ -2361,11 +2361,11 @@ Brand URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Hierarchy of the current element in relation to the structure
+UUID
 
 </td>
 </tr>
@@ -2431,15 +2431,6 @@ that will be added to current products result.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-UUID of the cart, null for authenticated user
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>items</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td>
@@ -2449,13 +2440,9 @@ All items in the cart
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a></td>
-<td>
-
-Selected transport if transport provided
-
-</td>
+<td colspan="2" valign="top"><strong>modifications</strong></td>
+<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
@@ -2467,11 +2454,11 @@ Selected payment if payment provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Selected pickup place identifier if provided
+Selected bank swift code of goPay payment bank transfer
 
 </td>
 </tr>
@@ -2485,18 +2472,27 @@ Applied promo code if provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>modifications</strong></td>
-<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
+<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
 <td>
 
-Total price including transport and payment
+Remaining amount for free transport and payment; null = transport cannot be free
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected pickup place identifier if provided
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
@@ -2508,25 +2504,29 @@ Total items price (excluding transport and payment)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
+<td colspan="2" valign="top"><strong>totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
 <td>
 
-Remaining amount for free transport and payment; null = transport cannot be free
+Total price including transport and payment
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a></td>
 <td>
 
-Selected bank swift code of goPay payment bank transfer
+Selected transport if transport provided
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of the cart, null for authenticated user
 
 </td>
 </tr>
@@ -2557,20 +2557,20 @@ Product in the cart
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-Cart item UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
 Quantity of items in the cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Cart item UUID
 
 </td>
 </tr>
@@ -2590,7 +2590,7 @@ Quantity of items in the cart
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>noLongerListableCartItems</strong></td>
+<td colspan="2" valign="top"><strong>cartItemsWithChangedQuantity</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
@@ -2600,12 +2600,12 @@ Quantity of items in the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartItemsWithChangedQuantity</strong></td>
+<td colspan="2" valign="top"><strong>noLongerAvailableCartItemsDueToQuantity</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>noLongerAvailableCartItemsDueToQuantity</strong></td>
+<td colspan="2" valign="top"><strong>noLongerListableCartItems</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
@@ -2630,11 +2630,6 @@ Quantity of items in the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportModifications</strong></td>
-<td valign="top"><a href="#carttransportmodificationsresult">CartTransportModificationsResult</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>paymentModifications</strong></td>
 <td valign="top"><a href="#cartpaymentmodificationsresult">CartPaymentModificationsResult</a>!</td>
 <td></td>
@@ -2642,6 +2637,11 @@ Quantity of items in the cart
 <tr>
 <td colspan="2" valign="top"><strong>promoCodeModifications</strong></td>
 <td valign="top"><a href="#cartpromocodemodificationsresult">CartPromoCodeModificationsResult</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transportModifications</strong></td>
+<td valign="top"><a href="#carttransportmodificationsresult">CartTransportModificationsResult</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -2705,6 +2705,11 @@ Quantity of items in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>personalPickupStoreUnavailable</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>transportPriceChanged</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -2716,11 +2721,6 @@ Quantity of items in the cart
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>transportWeightLimitExceeded</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>personalPickupStoreUnavailable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -2742,20 +2742,20 @@ Represents a category
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>bestsellers</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
-UUID
+Best selling products
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Localized category name (domain dependent)
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -2769,11 +2769,11 @@ Descendant categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parent</strong></td>
-<td valign="top"><a href="#category">Category</a></td>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-Ancestor category
+Localized category description (domain dependent)
 
 </td>
 </tr>
@@ -2787,11 +2787,6 @@ Category images
 </td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">size</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -2800,6 +2795,48 @@ Category images
 <td colspan="2" align="right" valign="top">sizes</td>
 <td valign="top">[<a href="#string">String</a>!]</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>linkedCategories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td>
+
+A list of categories linked to the given category
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized category name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>originalCategorySlug</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Original category URL slug (for CategorySeoMixes slug of assigned category is
+returned, null is returned for regular category)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parent</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+Ancestor category
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>products</strong></td>
@@ -2816,13 +2853,18 @@ Paginated and ordered products of category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -2836,14 +2878,18 @@ Paginated and ordered products of category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#productfilter">ProductFilter</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" align="right" valign="top">search</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>readyCategorySeoMixLinks</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td>
+
+An array of links of prepared category SEO mixes of a given category
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>seoH1</strong></td>
@@ -2851,15 +2897,6 @@ Paginated and ordered products of category
 <td>
 
 Seo first level heading of category
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of category
 
 </td>
 </tr>
@@ -2873,20 +2910,11 @@ Seo meta description of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Localized category description (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>bestsellers</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-Best selling products
+Seo title of category
 
 </td>
 </tr>
@@ -2900,39 +2928,11 @@ Category URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Hierarchy of the current element in relation to the structure
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>originalCategorySlug</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Original category URL slug (for CategorySeoMixes slug of assigned category is
-returned, null is returned for regular category)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>readyCategorySeoMixLinks</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-An array of links of prepared category SEO mixes of a given category
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>linkedCategories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-A list of categories linked to the given category
+UUID
 
 </td>
 </tr>
@@ -2954,11 +2954,11 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#categoryedge">CategoryEdge</a>]</td>
 <td>
 
-Total number of categories
+Information to aid in pagination.
 
 </td>
 </tr>
@@ -2972,11 +2972,11 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#categoryedge">CategoryEdge</a>]</td>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of categories
 
 </td>
 </tr>
@@ -2998,20 +2998,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#category">Category</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#category">Category</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -3033,119 +3033,11 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-First name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Phone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Billing address city name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#country">Country</a>!</td>
-<td>
-
-Billing address country
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Whether customer user receives newsletters or not
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
-<td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
-<td>
-
-Default customer delivery addresses
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
-<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
-<td>
-
-List of delivery addresses
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The name of the customer pricing group
 
 </td>
 </tr>
@@ -3176,6 +3068,114 @@ The customer’s company tax number (only when customer is a company)
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#country">Country</a>!</td>
+<td>
+
+Billing address country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
+<td>
+
+Default customer delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -3194,20 +3194,20 @@ Represents country
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized country name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Country code in ISO 3166-1 alpha-2
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized country name
 
 </td>
 </tr>
@@ -3227,33 +3227,6 @@ Country code in ISO 3166-1 alpha-2
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Delivery address company name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Delivery address street name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -3263,20 +3236,11 @@ Delivery address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Delivery address zip code
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Delivery address telephone
+Delivery address company name
 
 </td>
 </tr>
@@ -3304,6 +3268,42 @@ Delivery address firstname
 <td>
 
 Delivery address lastname
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address telephone
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -3360,86 +3360,6 @@ Represents a flag
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized flag name (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>rgbColor</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Flag color in rgb format
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-URL slug of flag
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
-<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
-<td>
-
-Paginated and ordered products of flag
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">after</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">last</td>
-<td valign="top"><a href="#int">Int</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">orderingMode</td>
-<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#productfilter">ProductFilter</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">search</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
@@ -3462,6 +3382,86 @@ Categories containing at least one product with flag
 <td valign="top"><a href="#productfilter">ProductFilter</a></td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized flag name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
+<td>
+
+Paginated and ordered products of flag
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">search</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>rgbColor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Flag color in rgb format
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL slug of flag
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -3480,20 +3480,20 @@ Flag filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>flag</strong></td>
-<td valign="top"><a href="#flag">Flag</a>!</td>
-<td>
-
-Flag
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
 Count of products that will be filtered if this filter option is applied.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>flag</strong></td>
+<td valign="top"><a href="#flag">Flag</a>!</td>
+<td>
+
+Flag
 
 </td>
 </tr>
@@ -3533,20 +3533,11 @@ Indicator whether the option is already selected (used for "ready category seo m
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>swift</strong></td>
+<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Swift code
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Bank name
+large image url
 
 </td>
 </tr>
@@ -3560,18 +3551,27 @@ normal image url
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
+<td colspan="2" valign="top"><strong>isOnline</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-large image url
+Bank name
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isOnline</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
+<td colspan="2" valign="top"><strong>swift</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Swift code
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -3589,6 +3589,15 @@ large image url
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>embedJs</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+url of gopay embedJs file
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>gatewayUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -3603,15 +3612,6 @@ redirect URL to payment gateway
 <td>
 
 payment transaction identifier
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>embedJs</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-url of gopay embedJs file
 
 </td>
 </tr>
@@ -3640,11 +3640,11 @@ Identifier of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Name of payment method
+URL to large size image of payment method
 
 </td>
 </tr>
@@ -3658,11 +3658,11 @@ URL to normal size image of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
+<td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-URL to large size image of payment method
+Name of payment method
 
 </td>
 </tr>
@@ -3702,6 +3702,11 @@ Position of image in list
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>sizes</strong></td>
+<td valign="top">[<a href="#imagesize">ImageSize</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>type</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -3709,11 +3714,6 @@ Position of image in list
 Image type
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>sizes</strong></td>
-<td valign="top">[<a href="#imagesize">ImageSize</a>!]!</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -3732,6 +3732,24 @@ Represents a single image size
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>additionalSizes</strong></td>
+<td valign="top">[<a href="#additionalsize">AdditionalSize</a>!]!</td>
+<td>
+
+Additional sizes for different screen types
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>height</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Height in pixels defined in images.yaml
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>size</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
@@ -3756,24 +3774,6 @@ URL address of image
 <td>
 
 Width in pixels defined in images.yaml
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>height</strong></td>
-<td valign="top"><a href="#int">Int</a></td>
-<td>
-
-Height in pixels defined in images.yaml
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>additionalSizes</strong></td>
-<td valign="top">[<a href="#additionalsize">AdditionalSize</a>!]!</td>
-<td>
-
-Additional sizes for different screen types
 
 </td>
 </tr>
@@ -3865,49 +3865,8 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized product name (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Localized product short description (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
-<td valign="top"><a href="#unit">Unit</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -3916,64 +3875,13 @@ Product link
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Count of quantity on stock
+Number of the stores where the product is available
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-List of categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
-<td valign="top">[<a href="#flag">Flag</a>!]!</td>
-<td>
-
-List of flags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
-<td>
-
-Product price
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
-<td>
-
-Product images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>brand</strong></td>
@@ -3985,63 +3893,11 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product URL slug
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -4055,13 +3911,18 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-Product part number
+List of categories
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ean</strong></td>
@@ -4073,29 +3934,29 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-List of product's unique selling propositions
+Number of the stores where the product is exposed
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
 
-Name prefix
+List of downloadable files
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>flags</strong></td>
+<td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
-Name suffix
+List of flags
 
 </td>
 </tr>
@@ -4118,11 +3979,163 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
-<td valign="top">[<a href="#file">File</a>!]!</td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-List of downloadable files
+Product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized product name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Product part number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>price</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Product price
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of related products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo first level heading of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo meta description of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo title of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized product short description (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of quantity on stock
 
 </td>
 </tr>
@@ -4136,38 +4149,25 @@ List of availabilities in individual stores
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>usps</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
-Number of the stores where the product is available
+List of product's unique selling propositions
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-Hierarchy of the current element in relation to the structure
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of related products
+UUID
 
 </td>
 </tr>
@@ -4194,11 +4194,11 @@ Represents a navigation structure item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>categoriesByColumns</strong></td>
+<td valign="top">[<a href="#navigationitemcategoriesbycolumns">NavigationItemCategoriesByColumns</a>!]!</td>
 <td>
 
-Navigation item name
+Categories separated into columns
 
 </td>
 </tr>
@@ -4212,11 +4212,11 @@ Target URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categoriesByColumns</strong></td>
-<td valign="top">[<a href="#navigationitemcategoriesbycolumns">NavigationItemCategoriesByColumns</a>!]!</td>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Categories separated into columns
+Navigation item name
 
 </td>
 </tr>
@@ -4238,20 +4238,20 @@ Represents a single column inside the navigation item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>columnNumber</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Column number
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
 Categories
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>columnNumber</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Column number
 
 </td>
 </tr>
@@ -4271,20 +4271,20 @@ Categories
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Subscribed email address
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
 Date and time of subscription
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Subscribed email address
 
 </td>
 </tr>
@@ -4306,13 +4306,23 @@ Represents a notification supposed to be displayed on all pages
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-Message of the notification
+Notification bar images
 
 </td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>rgbColor</strong></td>
@@ -4324,23 +4334,13 @@ Color of the notification
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Notification bar images
+Message of the notification
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -4358,110 +4358,11 @@ Notification bar images
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Unique order number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>creationDate</strong></td>
-<td valign="top"><a href="#datetime">DateTime</a>!</td>
-<td>
-
-Date and time when the order was created
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
-<td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
-<td>
-
-All items in the order including payment and transport
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a>!</td>
-<td>
-
-Transport method applied to the order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
-<td valign="top"><a href="#payment">Payment</a>!</td>
-<td>
-
-Payment method applied to the order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Current status of the order
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total price of the order including transport and payment prices
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The customer's first name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The customer's last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's telephone number
+Billing address city name
 
 </td>
 </tr>
@@ -4493,33 +4394,6 @@ The customer’s company tax number (only when ordered on the company behalf)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name 
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address city name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
@@ -4529,11 +4403,38 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>creationDate</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
-Indicates whether the billing address is other than a delivery address
+Date and time when the order was created
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+City name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td valign="top"><a href="#country">Country</a></td>
+<td>
+
+Country for delivery
 
 </td>
 </tr>
@@ -4556,20 +4457,11 @@ Last name of the contact person for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Company name for delivery
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Contact telephone number for delivery
+Zip code for delivery
 
 </td>
 </tr>
@@ -4583,29 +4475,56 @@ Street name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-City name for delivery
+Contact telephone number for delivery
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-Zip code for delivery
+Indicates whether the billing address is other than a delivery address
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
-<td valign="top"><a href="#country">Country</a></td>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Country for delivery
+The customer's email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer's first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
+<td>
+
+All items in the order including payment and transport
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer's last name
 
 </td>
 </tr>
@@ -4619,11 +4538,38 @@ Other information related to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>urlHash</strong></td>
+<td colspan="2" valign="top"><strong>number</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Unique url hash that can be used to 
+Unique order number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>payment</strong></td>
+<td valign="top"><a href="#payment">Payment</a>!</td>
+<td>
+
+Payment method applied to the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Selected pickup place identifier
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code
 
 </td>
 </tr>
@@ -4633,6 +4579,42 @@ Unique url hash that can be used to
 <td>
 
 Promo code (coupon) used in the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Current status of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name 
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's telephone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total price of the order including transport and payment prices
 
 </td>
 </tr>
@@ -4655,11 +4637,29 @@ The order tracking link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a>!</td>
 <td>
 
-Selected pickup place identifier
+Transport method applied to the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>urlHash</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Unique url hash that can be used to 
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -4681,11 +4681,11 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#orderedge">OrderEdge</a>]</td>
 <td>
 
-Total number of orders
+Information to aid in pagination.
 
 </td>
 </tr>
@@ -4699,11 +4699,11 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#orderedge">OrderEdge</a>]</td>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of orders
 
 </td>
 </tr>
@@ -4725,20 +4725,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#order">Order</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#order">Order</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -4769,11 +4769,11 @@ Name of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unitPrice</strong></td>
-<td valign="top"><a href="#price">Price</a>!</td>
+<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Order item price per unit
+Quantity of order items in the order
 
 </td>
 </tr>
@@ -4787,29 +4787,29 @@ Total price for the quantity of order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>vatRate</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Applied VAT rate percentage applied to the order item
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Quantity of order items in the order
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>unit</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Unit of measurement used for the order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>unitPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Order item price per unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>vatRate</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Applied VAT rate percentage applied to the order item
 
 </td>
 </tr>
@@ -4830,6 +4830,15 @@ Information about pagination in a connection.
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>endCursor</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+When paginating forwards, the cursor to continue.
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>hasNextPage</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
@@ -4857,15 +4866,6 @@ When paginating backwards, the cursor to continue.
 
 </td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong>endCursor</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-When paginating forwards, the cursor to continue.
-
-</td>
-</tr>
 </tbody>
 </table>
 
@@ -4884,11 +4884,11 @@ Represents a parameter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>group</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-UUID
+Parameter group to which the parameter is assigned
 
 </td>
 </tr>
@@ -4902,25 +4902,6 @@ Parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>visible</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>values</strong></td>
-<td valign="top">[<a href="#parametervalue">ParameterValue</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>group</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Parameter group to which the parameter is assigned
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
@@ -4928,6 +4909,25 @@ Parameter group to which the parameter is assigned
 Unit of the parameter
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>values</strong></td>
+<td valign="top">[<a href="#parametervalue">ParameterValue</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>visible</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -4946,15 +4946,6 @@ Parameter filter option
 </tr>
 </thead>
 <tbody>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The parameter UUID
-
-</td>
-</tr>
 <tr>
 <td colspan="2" valign="top"><strong>isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
@@ -4979,6 +4970,15 @@ The parameter name
 <td>
 
 The parameter unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
 
 </td>
 </tr>
@@ -5009,15 +5009,6 @@ Parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The parameter UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -5041,6 +5032,15 @@ The parameter name
 <td>
 
 The parameter unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
 
 </td>
 </tr>
@@ -5071,47 +5071,11 @@ Parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The parameter UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
 Indicator whether the parameter should be collapsed based on the current category setting
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The parameter name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
-<td valign="top"><a href="#unit">Unit</a></td>
-<td>
-
-The parameter unit
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>minimalValue</strong></td>
-<td valign="top"><a href="#float">Float</a>!</td>
-<td>
-
-The parameter minimal value
 
 </td>
 </tr>
@@ -5125,11 +5089,47 @@ The parameter maximal value
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td valign="top"><a href="#float">Float</a>!</td>
+<td>
+
+The parameter minimal value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The parameter name
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>selectedValue</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
 The pre-selected value (used for "ready category seo mixes")
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a></td>
+<td>
+
+The parameter unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
 
 </td>
 </tr>
@@ -5151,20 +5151,20 @@ Represents a parameter value
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Parameter value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -5185,24 +5185,6 @@ Parameter value filter option
 </tr>
 </thead>
 <tbody>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Parameter value
-
-</td>
-</tr>
 <tr>
 <td colspan="2" valign="top"><strong>count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
@@ -5241,6 +5223,24 @@ RGB hex of color parameter
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Parameter value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -5258,24 +5258,6 @@ Parameter value filter option
 </tr>
 </thead>
 <tbody>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Parameter value
-
-</td>
-</tr>
 <tr>
 <td colspan="2" valign="top"><strong>count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
@@ -5305,6 +5287,24 @@ Indicator whether the option is already selected (used for "ready category seo m
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>text</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Parameter value
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -5323,24 +5323,6 @@ Represents a payment
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Payment name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5350,11 +5332,53 @@ Localized payment description (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>goPayPaymentMethod</strong></td>
+<td valign="top"><a href="#gopaypaymentmethod">GoPayPaymentMethod</a></td>
+<td>
+
+Additional data for GoPay payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
+<td>
+
+Payment images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>instruction</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Localized payment instruction (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Payment name
 
 </td>
 </tr>
@@ -5382,30 +5406,6 @@ Payment price
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
-<td>
-
-Payment images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>transports</strong></td>
 <td valign="top">[<a href="#transport">Transport</a>!]!</td>
 <td>
@@ -5424,11 +5424,11 @@ Type of payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>goPayPaymentMethod</strong></td>
-<td valign="top"><a href="#gopaypaymentmethod">GoPayPaymentMethod</a></td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Additional data for GoPay payment
+UUID
 
 </td>
 </tr>
@@ -5472,15 +5472,6 @@ Identifiers of GoPay payment method
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>orders</strong></td>
-<td valign="top">[<a href="#order">Order</a>!]!</td>
-<td>
-
-Customer orders
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>customerUser</strong></td>
 <td valign="top"><a href="#customeruser">CustomerUser</a></td>
 <td>
@@ -5495,6 +5486,15 @@ Customer user data
 <td>
 
 Newsletter subscription
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orders</strong></td>
+<td valign="top">[<a href="#order">Order</a>!]!</td>
+<td>
+
+Customer orders
 
 </td>
 </tr>
@@ -5567,20 +5567,20 @@ Represents the price
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price with VAT
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
 Price without VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
 
 </td>
 </tr>
@@ -5646,18 +5646,13 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#productedge">ProductEdge</a>]</td>
 <td>
 
-Total number of products
+Information to aid in pagination.
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>productFilterOptions</strong></td>
-<td valign="top"><a href="#productfilteroptions">ProductFilterOptions</a>!</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>orderingMode</strong></td>
@@ -5674,11 +5669,16 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#productedge">ProductEdge</a>]</td>
+<td colspan="2" valign="top"><strong>productFilterOptions</strong></td>
+<td valign="top"><a href="#productfilteroptions">ProductFilterOptions</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of products
 
 </td>
 </tr>
@@ -5700,20 +5700,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#product">Product</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -5734,24 +5734,6 @@ Represents a product filter options
 </tr>
 </thead>
 <tbody>
-<tr>
-<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Minimal price of products for filtering
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Maximal price of products for filtering
-
-</td>
-</tr>
 <tr>
 <td colspan="2" valign="top"><strong>brands</strong></td>
 <td valign="top">[<a href="#brandfilteroption">BrandFilterOption</a>!]</td>
@@ -5776,6 +5758,24 @@ Flags filter options
 <td>
 
 Number of products in stock that will be filtered
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Maximal price of products for filtering
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Minimal price of products for filtering
 
 </td>
 </tr>
@@ -5806,11 +5806,11 @@ Represents the price of the product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
+<td colspan="2" valign="top"><strong>isPriceFrom</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-Price with VAT
+Determines whether it's a final price or starting price
 
 </td>
 </tr>
@@ -5824,20 +5824,20 @@ Price without VAT
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>vatAmount</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
 Total value of VAT
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isPriceFrom</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Determines whether it's a final price or starting price
 
 </td>
 </tr>
@@ -5859,60 +5859,6 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-First name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Phone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -5922,29 +5868,11 @@ Billing address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
 Billing address country
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Whether customer user receives newsletters or not
 
 </td>
 </tr>
@@ -5967,11 +5895,83 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -5993,49 +5993,8 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized product name (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Localized product short description (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
-<td valign="top"><a href="#unit">Unit</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -6044,64 +6003,13 @@ Product link
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Count of quantity on stock
+Number of the stores where the product is available
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-List of categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
-<td valign="top">[<a href="#flag">Flag</a>!]!</td>
-<td>
-
-List of flags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
-<td>
-
-Product price
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
-<td>
-
-Product images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>brand</strong></td>
@@ -6113,63 +6021,11 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product URL slug
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -6183,13 +6039,18 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-Product part number
+List of categories
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ean</strong></td>
@@ -6201,29 +6062,29 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-List of product's unique selling propositions
+Number of the stores where the product is exposed
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
 
-Name prefix
+List of downloadable files
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>flags</strong></td>
+<td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
-Name suffix
+List of flags
 
 </td>
 </tr>
@@ -6246,11 +6107,163 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
-<td valign="top">[<a href="#file">File</a>!]!</td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-List of downloadable files
+Product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized product name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Product part number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>price</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Product price
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of related products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo first level heading of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo meta description of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo title of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized product short description (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of quantity on stock
 
 </td>
 </tr>
@@ -6264,38 +6277,25 @@ List of availabilities in individual stores
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>usps</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
-Number of the stores where the product is available
+List of product's unique selling propositions
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-Hierarchy of the current element in relation to the structure
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of related products
+UUID
 
 </td>
 </tr>
@@ -6317,6 +6317,15 @@ Represents setting of SEO
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>metaDescription</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Description of the content of a web page
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6331,15 +6340,6 @@ Document's title that is shown in a browser's title
 <td>
 
 Complement to title
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>metaDescription</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Description of the content of a web page
 
 </td>
 </tr>
@@ -6361,6 +6361,15 @@ Represents settings of the current domain
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>contactFormMainText</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Main text for contact form
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>pricing</strong></td>
 <td valign="top"><a href="#pricingsetting">PricingSetting</a>!</td>
 <td>
@@ -6375,15 +6384,6 @@ Settings related to pricing
 <td>
 
 Settings related to SEO
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>contactFormMainText</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Main text for contact form
 
 </td>
 </tr>
@@ -6403,33 +6403,6 @@ Main text for contact form
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Slider name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Target link
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>extendedText</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6448,20 +6421,20 @@ Target link of text below slider
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>gtmId</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-GTM ID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>gtmCreative</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 GTM creative
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>gtmId</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+GTM ID
 
 </td>
 </tr>
@@ -6475,14 +6448,41 @@ Slider item images
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Target link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Slider name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -6500,56 +6500,11 @@ Slider item images
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Store URL slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isDefault</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Is set as default store
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Store name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Store description
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Store address street
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -6563,13 +6518,9 @@ Store address city
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Store address postcode
-
-</td>
+<td colspan="2" valign="top"><strong>contactInfo</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
@@ -6577,6 +6528,51 @@ Store address postcode
 <td>
 
 Store address country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isDefault</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Is set as default store
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>locationLatitude</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store location latitude
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>locationLongitude</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store location longitude
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Store name
 
 </td>
 </tr>
@@ -6599,9 +6595,22 @@ Store opening hours, newlines are rendered as HTML breakline
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>contactInfo</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Store address postcode
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Store URL slug
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>specialMessage</strong></td>
@@ -6609,29 +6618,20 @@ Store opening hours, newlines are rendered as HTML breakline
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>locationLatitude</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Store location latitude
+Store address street
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>locationLongitude</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Store location longitude
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-Hierarchy of the current element in relation to the structure
+UUID
 
 </td>
 </tr>
@@ -6653,15 +6653,6 @@ Represents an availability in an individual store
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>exposed</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Is product exposed on this store
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>availabilityInformation</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6676,6 +6667,15 @@ Detailed information about availability
 <td>
 
 Availability status in a format suitable for usage in the code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>exposed</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Is product exposed on this store
 
 </td>
 </tr>
@@ -6706,11 +6706,11 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#storeedge">StoreEdge</a>]</td>
 <td>
 
-Total number of stores
+Information to aid in pagination.
 
 </td>
 </tr>
@@ -6724,11 +6724,11 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#storeedge">StoreEdge</a>]</td>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Information to aid in pagination.
+Total number of stores
 
 </td>
 </tr>
@@ -6750,20 +6750,20 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#store">Store</a></td>
-<td>
-
-The item at the end of the edge.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#store">Store</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -6810,20 +6810,11 @@ Represents a transport
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>daysUntilDelivery</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Transport name
+Number of days until goods are delivered
 
 </td>
 </tr>
@@ -6837,11 +6828,53 @@ Localized transport description (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
+<td>
+
+Transport images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>instruction</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Localized transport instruction (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Transport name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>payments</strong></td>
+<td valign="top">[<a href="#payment">Payment</a>!]!</td>
+<td>
+
+List of assigned payments
 
 </td>
 </tr>
@@ -6869,44 +6902,11 @@ Transport price
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
+<td colspan="2" valign="top"><strong>stores</strong></td>
+<td valign="top"><a href="#storeconnection">StoreConnection</a></td>
 <td>
 
-Transport images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>payments</strong></td>
-<td valign="top">[<a href="#payment">Payment</a>!]!</td>
-<td>
-
-List of assigned payments
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>daysUntilDelivery</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Number of days until goods are delivered
+Stores available for personal pickup
 
 </td>
 </tr>
@@ -6920,11 +6920,11 @@ Type of transport
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stores</strong></td>
-<td valign="top"><a href="#storeconnection">StoreConnection</a></td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Stores available for personal pickup
+UUID
 
 </td>
 </tr>
@@ -6946,20 +6946,20 @@ Represents a transport type
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of transport type
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Code of transport
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of transport type
 
 </td>
 </tr>
@@ -7007,49 +7007,8 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized product name (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Localized product short description (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
-<td valign="top"><a href="#unit">Unit</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -7058,64 +7017,13 @@ Product link
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Count of quantity on stock
+Number of the stores where the product is available
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-List of categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
-<td valign="top">[<a href="#flag">Flag</a>!]!</td>
-<td>
-
-List of flags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
-<td>
-
-Product price
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
-<td>
-
-Product images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>brand</strong></td>
@@ -7127,63 +7035,11 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product URL slug
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -7197,13 +7053,18 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-Product part number
+List of categories
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ean</strong></td>
@@ -7215,29 +7076,29 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-List of product's unique selling propositions
+Number of the stores where the product is exposed
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
 
-Name prefix
+List of downloadable files
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>flags</strong></td>
+<td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
-Name suffix
+List of flags
 
 </td>
 </tr>
@@ -7260,47 +7121,105 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
-<td valign="top">[<a href="#file">File</a>!]!</td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-List of downloadable files
+Product images
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
-<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-List of availabilities in individual stores
+Product link
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
+<td colspan="2" valign="top"><strong>mainVariant</strong></td>
+<td valign="top"><a href="#mainvariant">MainVariant</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized product name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-Number of the stores where the product is available
+Product part number
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>price</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-Hierarchy of the current element in relation to the structure
+Product price
 
 </td>
 </tr>
@@ -7314,9 +7233,90 @@ List of related products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainVariant</strong></td>
-<td valign="top"><a href="#mainvariant">MainVariant</a></td>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo first level heading of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo meta description of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo title of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized product short description (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of quantity on stock
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
+<td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
+<td>
+
+List of availabilities in individual stores
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>usps</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
+<td>
+
+List of product's unique selling propositions
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -7344,6 +7344,16 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isAbsoluteQuantity</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td>
+
+True if quantity should be set no matter the current state of the cart. False
+if quantity should be added to the already existing same item in the cart
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -7358,16 +7368,6 @@ Product UUID
 <td>
 
 Item quantity
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isAbsoluteQuantity</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a></td>
-<td>
-
-True if quantity should be set no matter the current state of the cart. False
-if quantity should be added to the already existing same item in the cart
 
 </td>
 </tr>
@@ -7450,20 +7450,20 @@ Customer user email.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>oldPassword</strong></td>
-<td valign="top"><a href="#password">Password</a>!</td>
-<td>
-
-Current customer user password.
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>newPassword</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
 New customer user password.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>oldPassword</strong></td>
+<td valign="top"><a href="#password">Password</a>!</td>
+<td>
+
+Current customer user password.
 
 </td>
 </tr>
@@ -7491,20 +7491,20 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 Selected bank swift code of goPay payment bank transfer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of a payment that should be added to the cart. If this is set to null, the payment is removed from the cart
 
 </td>
 </tr>
@@ -7523,65 +7523,11 @@ Selected bank swift code of goPay payment bank transfer
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Customer user first name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Customer user last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's telephone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Billing address city name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
 
 </td>
 </tr>
@@ -7622,11 +7568,65 @@ The customer’s company tax number (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user last name
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
 Whether customer user should receive newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's telephone number
 
 </td>
 </tr>
@@ -7654,20 +7654,20 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
 The identifier of selected personal pickup place
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transportUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID of a transport that should be added to the cart. If this is set to null, the transport is removed from the cart
 
 </td>
 </tr>
@@ -7686,15 +7686,6 @@ The identifier of selected personal pickup place
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of the sender
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -7709,6 +7700,15 @@ Email address of the sender
 <td>
 
 Message sent to recipient
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of the sender
 
 </td>
 </tr>
@@ -7727,11 +7727,29 @@ Message sent to recipient
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-UUID
+Delivery address city name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Delivery address company name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Delivery address country
 
 </td>
 </tr>
@@ -7754,11 +7772,11 @@ Delivery address last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Delivery address company name
+Delivery address zip code
 
 </td>
 </tr>
@@ -7772,24 +7790,6 @@ Delivery address street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Delivery address city name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Delivery address zip code
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7799,11 +7799,11 @@ Delivery address telephone
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-Delivery address country
+UUID
 
 </td>
 </tr>
@@ -7822,6 +7822,15 @@ Delivery address country
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the cart that should be merged to the cart of the user
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -7836,15 +7845,6 @@ The user email.
 <td>
 
 The user password.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-Uuid of the cart that should be merged to the cart of the user
 
 </td>
 </tr>
@@ -7886,47 +7886,20 @@ Represents the main input object to create orders
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-The customer's first name
+Cart identifier used for getting carts of not logged customers
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-The customer's last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's phone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>onCompanyBehalf</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Determines whether the order is made on the company behalf.
+Billing address city name (will be on the tax invoice)
 
 </td>
 </tr>
@@ -7958,33 +7931,6 @@ The customer’s company tax number (required when onCompanyBehalf is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address city name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -7994,11 +7940,38 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>deliveryAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-Determines whether to deliver products to a different address than the billing one
+Delivery address identifier
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+City name for delivery (required when differentDeliveryAddress is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)
 
 </td>
 </tr>
@@ -8021,20 +7994,11 @@ Last name of the contact person for delivery (required when differentDeliveryAdd
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-Company name for delivery
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Contact telephone number for delivery
+Zip code for delivery (required when differentDeliveryAddress is true)
 
 </td>
 </tr>
@@ -8048,29 +8012,47 @@ Street name for delivery (required when differentDeliveryAddress is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
-City name for delivery (required when differentDeliveryAddress is true)
+Contact telephone number for delivery
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>differentDeliveryAddress</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
-Zip code for delivery (required when differentDeliveryAddress is true)
+Determines whether to deliver products to a different address than the billing one
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)
+The customer's email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's last name
 
 </td>
 </tr>
@@ -8084,6 +8066,15 @@ Other information related to the order
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>onCompanyBehalf</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Determines whether the order is made on the company behalf.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
 <td valign="top"><a href="#paymentinput">PaymentInput</a></td>
 <td>
@@ -8093,11 +8084,11 @@ Deprecated, this field is not used, the payment is taken from the server cart in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transportinput">TransportInput</a></td>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Deprecated, this field is not used, the transport is taken from the server cart instead.
+Billing address zip code (will be on the tax invoice)
 
 </td>
 </tr>
@@ -8111,20 +8102,29 @@ Deprecated, this field is not used, the products are taken from the server cart 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Cart identifier used for getting carts of not logged customers
+Billing address street name (will be on the tax invoice)
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddressUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Delivery address identifier
+The customer's phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transportinput">TransportInput</a></td>
+<td>
+
+Deprecated, this field is not used, the transport is taken from the server cart instead.
 
 </td>
 </tr>
@@ -8145,15 +8145,6 @@ Represents a product in order
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
@@ -8168,6 +8159,15 @@ Quantity of products
 <td>
 
 Product price per unit
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -8188,6 +8188,24 @@ Represents a parameter filter
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>maximalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter maximal value (for parameters with "slider" type)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+The parameter minimal value (for parameters with "slider" type)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>parameter</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -8202,24 +8220,6 @@ Uuid of filtered parameter
 <td>
 
 Array of uuids representing parameter values to be filtered by
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>minimalValue</strong></td>
-<td valign="top"><a href="#float">Float</a></td>
-<td>
-
-The parameter minimal value (for parameters with "slider" type)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>maximalValue</strong></td>
-<td valign="top"><a href="#float">Float</a></td>
-<td>
-
-The parameter maximal value (for parameters with "slider" type)
 
 </td>
 </tr>
@@ -8240,20 +8240,20 @@ Represents a payment in order
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
 <td valign="top"><a href="#priceinput">PriceInput</a>!</td>
 <td>
 
 Price for payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -8306,20 +8306,20 @@ Represents the price
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price with VAT
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
 Price without VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
 
 </td>
 </tr>
@@ -8349,24 +8349,6 @@ Represents a product filter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
-<td>
-
-Minimal price filter
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
-<td>
-
-Maximal price filter
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>brands</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]</td>
 <td>
@@ -8381,6 +8363,24 @@ Array of uuids of brands filter
 <td>
 
 Array of uuids of flags filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
+<td>
+
+Maximal price filter
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
+<td>
+
+Minimal price filter
 
 </td>
 </tr>
@@ -8483,56 +8483,11 @@ Represents the main input object to register customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
-Customer user first name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Customer user last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>password</strong></td>
-<td valign="top"><a href="#password">Password</a>!</td>
-<td>
-
-Customer user password
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-The customer's telephone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name (will be on the tax invoice)
+Uuid of the cart that should be merged to the cart of the newly registered user
 
 </td>
 </tr>
@@ -8542,24 +8497,6 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 Billing address city name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
 
 </td>
 </tr>
@@ -8600,6 +8537,42 @@ The customer’s company tax number (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user first name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Customer user last name
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -8609,11 +8582,38 @@ Whether customer user should receive newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>password</strong></td>
+<td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
-Uuid of the cart that should be merged to the cart of the newly registered user
+Customer user password
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's telephone number
 
 </td>
 </tr>
@@ -8632,20 +8632,20 @@ Uuid of the cart that should be merged to the cart of the newly registered user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-Cart identifier, new cart will be created if not provided and customer is not logged in
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>cartItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
 Cart item UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart identifier, new cart will be created if not provided and customer is not logged in
 
 </td>
 </tr>
@@ -8698,20 +8698,20 @@ Represents a transport in order
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
 <td valign="top"><a href="#priceinput">PriceInput</a>!</td>
 <td>
 
 Price for transport
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -8922,11 +8922,11 @@ Represents and encapsulates an ISO-8601 encoded UTC date-time value
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-UUID
+Restricted categories of the advert (the advert is shown in these categories only)
 
 </td>
 </tr>
@@ -8940,15 +8940,6 @@ Name of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Type of advert
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>positionName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -8958,11 +8949,20 @@ Position of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
-Restricted categories of the advert (the advert is shown in these categories only)
+Type of advert
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -8984,13 +8984,28 @@ Represents entity that is considered to be an article on the eshop
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -9004,23 +9019,8 @@ Represents entity that is considered to be an article on the eshop
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -9065,18 +9065,13 @@ Hierarchy of the current element in relation to the structure
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>items</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
-<td valign="top"><a href="#transport">Transport</a></td>
+<td colspan="2" valign="top"><strong>modifications</strong></td>
+<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -9085,7 +9080,7 @@ Hierarchy of the current element in relation to the structure
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
+<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
@@ -9095,18 +9090,19 @@ Hierarchy of the current element in relation to the structure
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>modifications</strong></td>
-<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
+<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
-<td>
-
-Total price including transport and payment
-
-</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
@@ -9118,18 +9114,22 @@ Total items price (excluding transport and payment)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
+<td colspan="2" valign="top"><strong>totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total price including transport and payment
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
-<td valign="top"><a href="#money">Money</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 </tbody>
@@ -9150,60 +9150,6 @@ Represents an currently logged customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-First name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Email address
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Phone number
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -9213,29 +9159,11 @@ Billing address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
 Billing address country
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Whether customer user receives newsletters or not
 
 </td>
 </tr>
@@ -9258,11 +9186,83 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>
@@ -9283,15 +9283,6 @@ Represents parameter filter option
 </tr>
 </thead>
 <tbody>
-<tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-The parameter UUID
-
-</td>
-</tr>
 <tr>
 <td colspan="2" valign="top"><strong>isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
@@ -9319,6 +9310,15 @@ The parameter unit
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+The parameter UUID
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -9337,20 +9337,20 @@ Represents the price
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
-<td valign="top"><a href="#money">Money</a>!</td>
-<td>
-
-Price with VAT
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
 Price without VAT
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td valign="top"><a href="#money">Money</a>!</td>
+<td>
+
+Price with VAT
 
 </td>
 </tr>
@@ -9381,49 +9381,8 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Localized product name (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Localized product short description (domain dependent)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product link
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
-<td valign="top"><a href="#unit">Unit</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -9432,64 +9391,13 @@ Product link
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-Count of quantity on stock
+Number of the stores where the product is available
 
 </td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-List of categories
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
-<td valign="top">[<a href="#flag">Flag</a>!]!</td>
-<td>
-
-List of flags
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
-<td>
-
-Product price
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>!]!</td>
-<td>
-
-Product images
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">sizes</td>
-<td valign="top">[<a href="#string">String</a>!]</td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>brand</strong></td>
@@ -9501,63 +9409,11 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
-Seo first level heading of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo title of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-Seo meta description of product
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Product URL slug
+Hierarchy of the current element in relation to the structure
 
 </td>
 </tr>
@@ -9571,13 +9427,18 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>categories</strong></td>
+<td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
-Product part number
+List of categories
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ean</strong></td>
@@ -9589,29 +9450,29 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
-List of product's unique selling propositions
+Number of the stores where the product is exposed
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]!</td>
 <td>
 
-Name prefix
+List of downloadable files
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>flags</strong></td>
+<td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
-Name suffix
+List of flags
 
 </td>
 </tr>
@@ -9634,11 +9495,163 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
-<td valign="top">[<a href="#file">File</a>!]!</td>
+<td colspan="2" valign="top"><strong>images</strong></td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-List of downloadable files
+Product images
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">sizes</td>
+<td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isUsingStock</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>link</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized product name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name prefix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name suffix
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Product part number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>price</strong></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
+<td>
+
+Product price
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of related products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo first level heading of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo meta description of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Seo title of product
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Localized product short description (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>slug</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product URL slug
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Count of quantity on stock
 
 </td>
 </tr>
@@ -9652,38 +9665,25 @@ List of availabilities in individual stores
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>unit</strong></td>
+<td valign="top"><a href="#unit">Unit</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>usps</strong></td>
+<td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
-Number of the stores where the product is available
+List of product's unique selling propositions
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exposedStoresCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
-Number of the stores where the product is exposed
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
-<td valign="top">[<a href="#link">Link</a>!]!</td>
-<td>
-
-Hierarchy of the current element in relation to the structure
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
-<td valign="top">[<a href="#product">Product</a>!]!</td>
-<td>
-
-List of related products
+UUID
 
 </td>
 </tr>
@@ -9719,13 +9719,18 @@ Paginated and ordered products
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">first</td>
-<td valign="top"><a href="#int">Int</a></td>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" align="right" valign="top">before</td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
 <td></td>
 </tr>
 <tr>
@@ -9736,11 +9741,6 @@ Paginated and ordered products
 <tr>
 <td colspan="2" align="right" valign="top">orderingMode</td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">filter</td>
-<td valign="top"><a href="#productfilter">ProductFilter</a></td>
 <td></td>
 </tr>
 <tr>
@@ -9766,15 +9766,6 @@ Represents entity retrievable by slug
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -9783,6 +9774,15 @@ UUID
 <td colspan="2" valign="top"><strong>slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
