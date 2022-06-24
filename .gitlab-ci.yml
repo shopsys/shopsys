@@ -232,11 +232,14 @@ service:merge_request:
         - cd ./app/
         - docker create -ti --name image ${TAG} bash
         - docker cp image:/var/www/html/var/ ./
+        - echo "${KUBE_CONFIG}" > /root/.kube/config
         - chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh deploy
 
 deploy:production:
     <<: *deploy
     resource_group: deploy_production
+    variables:
+        KUBE_CONFIG: ${KUBE_CONFIG_PROD}
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
@@ -254,6 +257,8 @@ deploy:production:
 deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
+    variables:
+        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
