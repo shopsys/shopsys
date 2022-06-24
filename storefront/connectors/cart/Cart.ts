@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
 import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
@@ -7,7 +7,16 @@ import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapTransport } from 'connectors/transports/Transports';
-import { AddToCartMutationApi, CartFragmentApi, CartItemFragmentApi, useCartQueryApi } from 'graphql/generated';
+import {
+    AddToCartMutationApi,
+    CartFragmentApi,
+    CartItemFragmentApi,
+    CartItemModificationsFragmentApi,
+    CartPaymentModificationsFragmentApi,
+    CartPromoCodeModificationsFragmentApi,
+    CartTransportModificationsFragmentApi,
+    useCartQueryApi,
+} from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -54,6 +63,8 @@ export const useCurrentCart = (fromCache = false): CurrentCartType => {
             // EXTEND EMPTY CART HERE
             return getEmptyCart(isInitiallyLoaded.current, true);
         }
+
+        handleCartModifications(result.data.cart, t);
 
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart, currencyCode);
@@ -145,4 +156,74 @@ export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string):
             categoryNames: apiData.product.categories.map((category) => category.name),
         },
     };
+};
+
+const handleCartModifications = (cart: CartFragmentApi, t: Translate): void => {
+    handleCartTransportModifications(cart.modifications.transportModifications, t);
+    handleCartPaymentModifications(cart.modifications.paymentModifications, t);
+    handleCartItemModifications(cart.modifications.itemModifications, t);
+    handleCartPromoCodeModifications(cart.modifications.promoCodeModifications, t);
+};
+
+const handleCartTransportModifications = (
+    transportModifications: CartTransportModificationsFragmentApi,
+    t: Translate,
+): void => {
+    if (transportModifications.transportPriceChanged) {
+        showInfoMessage(t('The price of the transport you selected has changed.'));
+    }
+    if (transportModifications.transportUnavailable) {
+        showInfoMessage(t('The transport you selected is no longer available.'));
+    }
+    if (transportModifications.transportWeightLimitExceeded) {
+        showInfoMessage(t('You have exceeded the weight limit of the selected transport.'));
+    }
+};
+
+const handleCartPaymentModifications = (
+    paymentModifications: CartPaymentModificationsFragmentApi,
+    t: Translate,
+): void => {
+    if (paymentModifications.paymentPriceChanged) {
+        showInfoMessage(t('The price of the payment you selected has changed.'));
+    }
+    if (paymentModifications.paymentUnavailable) {
+        showInfoMessage(t('The payment you selected is no longer available.'));
+    }
+};
+
+const handleCartItemModifications = (itemModifications: CartItemModificationsFragmentApi, t: Translate): void => {
+    for (const cartItemWithChangedQuantity of itemModifications.cartItemsWithChangedQuantity) {
+        showInfoMessage(
+            t('The quantity of item {{ itemName }} has changed.', {
+                itemName: cartItemWithChangedQuantity.product.fullName,
+            }),
+        );
+    }
+    for (const cartItemWithModifiedPrice of itemModifications.cartItemsWithModifiedPrice) {
+        showInfoMessage(
+            t('The price of item {{ itemName }} has changed.', {
+                itemName: cartItemWithModifiedPrice.product.fullName,
+            }),
+        );
+    }
+    for (const soldOutCartItem of itemModifications.noLongerAvailableCartItemsDueToQuantity) {
+        showInfoMessage(t('Item {{ itemName }} has been sold out.', { itemName: soldOutCartItem.product.fullName }));
+    }
+    for (const nonListableCartItem of itemModifications.noLongerListableCartItems) {
+        showInfoMessage(
+            t('Item {{ itemName }} can no longer be bought.', { itemName: nonListableCartItem.product.fullName }),
+        );
+    }
+};
+
+const handleCartPromoCodeModifications = (
+    promoCodeModifications: CartPromoCodeModificationsFragmentApi,
+    t: Translate,
+): void => {
+    for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {
+        showInfoMessage(
+            t('The promo code {{ promoCode }} is no longer applicable.', { promoCode: nonApplicablePromoCode }),
+        );
+    }
 };

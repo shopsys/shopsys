@@ -1,32 +1,18 @@
 fragment CartModificationsFragment on CartInterface {
     __typename
-    modifications{
+    modifications {
         __typename
         itemModifications {
-            __typename
-            noLongerListableCartItems {
-                ...CartItemFragment
-            }
-            cartItemsWithModifiedPrice {
-                ...CartItemFragment
-            }
-            cartItemsWithChangedQuantity {
-                ...CartItemFragment
-            }
-            noLongerAvailableCartItemsDueToQuantity {
-                ...CartItemFragment
-            }
+            ...CartItemModificationsFragment
         }
         transportModifications {
-            __typename
-            transportPriceChanged
-            transportUnavailable
-            transportWeightLimitExceeded
+            ...CartTransportModificationsFragment
         }
         paymentModifications {
-            __typename
-            paymentPriceChanged
-            paymentUnavailable
+            ...CartPaymentModificationsFragment
+        }
+        promoCodeModifications {
+            ...CartPromoCodeModificationsFragment
         }
     }
 }
