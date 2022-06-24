@@ -17,30 +17,30 @@ type BlogSingpostProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-';
 
-const BlogSignpost: FC<BlogSingpostProps> = (props) => {
+const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
     const t = useTypedTranslationFunction();
 
     return (
         <BlogSignpostStyled>
             <BlogSignpostHeadingStyled type="h2">{t('Article categories')}</BlogSignpostHeadingStyled>
-            {props.blogCategoryItems !== undefined &&
-                props.blogCategoryItems.map((blogCategory, index) => (
+            {blogCategoryItems !== undefined &&
+                blogCategoryItems.map((blogCategory, index) => (
                     <Fragment key={blogCategory.uuid}>
                         <NextLink href={blogCategory.link} passHref>
                             <BlogSignpostItemStyled
-                                isActive={props.activeItem === blogCategory.uuid}
+                                isActive={activeItem === blogCategory.uuid}
                                 data-testid={TEST_IDENTIFIER + index}
                             >
                                 <BlogSignpostItemIconStyled
                                     iconType="icon"
                                     icon="Arrow"
-                                    isActive={props.activeItem === blogCategory.uuid}
+                                    isActive={activeItem === blogCategory.uuid}
                                 />
                                 {blogCategory.name}
                             </BlogSignpostItemStyled>
                         </NextLink>
                         {blogCategory.children.length > 0 && (
-                            <Children blogCategory={blogCategory} activeItem={props.activeItem} itemLevel={1} />
+                            <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
                         )}
                     </Fragment>
                 ))}

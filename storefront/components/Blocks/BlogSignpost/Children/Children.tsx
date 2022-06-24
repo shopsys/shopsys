@@ -11,31 +11,27 @@ type ChildrenProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
 
-const Children: FC<ChildrenProps> = (props) => {
+const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => {
     return (
         <>
-            {props.blogCategory.children.map((blogCategoryChild, index) => (
+            {blogCategory.children.map((blogCategoryChild, index) => (
                 <Fragment key={blogCategoryChild.uuid}>
                     <NextLink href={blogCategoryChild.link} passHref>
                         <BlogSignpostItemStyled
-                            isActive={props.activeItem === blogCategoryChild.uuid}
-                            itemLevel={props.itemLevel}
+                            isActive={activeItem === blogCategoryChild.uuid}
+                            itemLevel={itemLevel}
                             data-testid={TEST_IDENTIFIER + index}
                         >
                             <BlogSignpostItemIconStyled
                                 iconType="icon"
                                 icon="Arrow"
-                                isActive={props.activeItem === blogCategoryChild.uuid}
+                                isActive={activeItem === blogCategoryChild.uuid}
                             />
                             {blogCategoryChild.name}
                         </BlogSignpostItemStyled>
                     </NextLink>
                     {blogCategoryChild.children.length > 0 && (
-                        <Children
-                            blogCategory={blogCategoryChild}
-                            activeItem={props.activeItem}
-                            itemLevel={props.itemLevel + 1}
-                        />
+                        <Children blogCategory={blogCategoryChild} activeItem={activeItem} itemLevel={itemLevel + 1} />
                     )}
                 </Fragment>
             ))}

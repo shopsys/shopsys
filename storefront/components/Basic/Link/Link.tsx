@@ -1,7 +1,7 @@
 import { ButtonStyled, LinkStyled } from './Link.style';
 import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import NextLink from 'next/link';
-import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
+import { AnchorHTMLAttributes, FC } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
@@ -10,10 +10,7 @@ type NativePropsAnchor = ExtractNativePropsFromDefault<
     'rel' | 'target'
 >;
 
-type NativePropsImage = ExtractNativePropsFromDefault<ImgHTMLAttributes<HTMLImageElement>, never, 'alt'>;
-
 type LinkProps = NativePropsAnchor &
-    NativePropsImage &
     ButtonDefaultPropType & {
         linkType?: 'external';
         isButton?: boolean;
@@ -24,33 +21,31 @@ type LinkProps = NativePropsAnchor &
  * or bare anchor tag depending on the "linkType" prop
  * or a button link when the "isButton" prop is true
  */
-const Link: FC<LinkProps> = (props) => {
+const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, borderRadius, ...restProps }) => {
     const testIdentifier =
-        'basic-link' +
-        (props.linkType !== undefined ? '-' + props.linkType : '') +
-        (props.isButton === true ? '-button' : '');
+        'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
 
-    if (props.linkType === 'external') {
+    if (linkType === 'external') {
         return (
-            <LinkStyled {...props} data-testid={testIdentifier}>
-                {props.children}
+            <LinkStyled {...restProps} data-testid={testIdentifier}>
+                {children}
             </LinkStyled>
         );
     }
 
-    if (props.isButton === true) {
+    if (isButton === true) {
         return (
-            <NextLink {...props} passHref>
-                <ButtonStyled {...props} data-testid={testIdentifier}>
-                    {props.children}
+            <NextLink {...restProps} passHref>
+                <ButtonStyled size={size} variant={variant} borderRadius={borderRadius} data-testid={testIdentifier}>
+                    {children}
                 </ButtonStyled>
             </NextLink>
         );
     }
 
     return (
-        <NextLink {...props} passHref>
-            <LinkStyled data-testid={testIdentifier}>{props.children}</LinkStyled>
+        <NextLink {...restProps} passHref>
+            <LinkStyled data-testid={testIdentifier}>{children}</LinkStyled>
         </NextLink>
     );
 };
