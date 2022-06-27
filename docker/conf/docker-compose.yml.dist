@@ -41,6 +41,8 @@ services:
             dockerfile: ./docker/dev.Dockerfile
             target: development
         container_name: shopsys-framework-storefront
+        command: # Optional
+            - dev # change to `- build` if you want to test application build
         volumes:
             - ./storefront:/home/node/app
         ports:
