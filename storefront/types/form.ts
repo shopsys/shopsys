@@ -101,3 +101,12 @@ export type ContactFormType = {
     name: string;
     message: string;
 };
+
+export type UserConsentFormType = {
+    functional: boolean;
+    marketing: boolean;
+    targeting: boolean;
+    statistics: boolean;
+    performance: boolean;
+    preferences: boolean;
+};

@@ -343,5 +343,6 @@
     "About Commerce Cloud":  "About Commerce Cloud",
     "About shopping": "About shopping",
     "E-shop": "E-shop",
-    "We are sorry, but your payment was not successful. Please contact us.": "We are sorry, but your payment was not successful. Please contact us."
+    "We are sorry, but your payment was not successful. Please contact us.": "We are sorry, but your payment was not successful. Please contact us.",
+    "cookiePolicyLink": "To learn more, you can read our <link>cookie policy</link>"
 }

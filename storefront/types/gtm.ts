@@ -38,6 +38,7 @@ export type GtmListNameType =
 
 export type GtmEventType =
     | 'page_ready' // page view event
+    | 'consent.update'
     | 'ec.add_to_cart' // add to cart/increase cart item quantity
     | 'ec.remove_from_cart' // remove from cart/reduce cart item quantity
     | 'ec.cart' // cart page view event
@@ -59,6 +60,11 @@ export type GtmUserType = 'visitor' | 'customer';
 export type GtmDeviceTypes = 'desktop' | 'tablet' | 'mobile' | 'unknown';
 
 export type GtmConsent = 'granted' | 'denied';
+
+export type GtmConsentUpdateType = {
+    event: GtmEventType;
+    consent: GtmConsentInfoType;
+};
 
 export type GtmEcommerceEventType = {
     event: GtmEventType;
