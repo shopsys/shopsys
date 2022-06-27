@@ -337,5 +337,7 @@
     "Save choices": "Save choices",
     "Accept all": "Accept all",
     "Reject all": "Reject all",
-    "cookiePolicyLink": "To learn more, you can read our <link>cookie policy</link>"
+    "cookiePolicyLink": "To learn more, you can read our <link>cookie policy</link>",
+    "Cookie consent update": "Cookie consent update",
+    "Your cookie settings have been saved.": "Your cookie settings have been saved."
 }

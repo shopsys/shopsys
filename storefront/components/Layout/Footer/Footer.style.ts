@@ -49,3 +49,18 @@ export const FooterBlockStyled = styled.div`
         }
     `}
 `;
+
+export const CookieConsentLinkStyled = styled.a(
+    ({ theme }) => css`
+        align-self: center;
+
+        color: ${theme.color.greyLight};
+        text-decoration: none;
+        transition: ${theme.transition};
+
+        &:hover {
+            color: ${theme.color.whitesmoke};
+            text-decoration: none;
+        }
+    `,
+);

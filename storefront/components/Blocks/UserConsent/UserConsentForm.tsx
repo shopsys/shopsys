@@ -3,6 +3,7 @@ import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './
 import Heading from 'components/Basic/Heading';
 import Button from 'components/Forms/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
@@ -27,12 +28,13 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
     const saveCookieChoices = useCallback(() => {
         const formValues = formProviderMethods.getValues();
         setUserConsentCookie(formValues);
+        showSuccessMessage(t('Your cookie settings have been saved.'));
         onConsentUpdateGtmEventHandler(getGtmConsentInfo());
 
         if (onSetUserConsentVisibilityCallback !== undefined && getUserConsentCookie() !== null) {
             onSetUserConsentVisibilityCallback(false);
         }
-    }, [formProviderMethods, onSetUserConsentVisibilityCallback]);
+    }, [formProviderMethods, onSetUserConsentVisibilityCallback, t]);
 
     const acceptAllCookieChoices = useCallback(() => {
         for (const key in formMeta.fields) {

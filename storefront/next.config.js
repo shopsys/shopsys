@@ -25,6 +25,7 @@ const staticUrls = {
         '/order-payment-confirmation': '/potvrzeni-platby-objednavky',
         '/order/payment-status-notify': '/order/payment-status-notify',
         '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
+        '/cookie-consent': '/souhlas-se-soubory-cookies',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hladanie',
@@ -48,6 +49,7 @@ const staticUrls = {
         '/order-payment-confirmation': '/potvrdenie-platby-objednavky',
         '/order/payment-status-notify': '/order/payment-status-notify',
         '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
+        '/cookie-consent': '/souhlas-se-soubory-cookies',
     },
 };
 
