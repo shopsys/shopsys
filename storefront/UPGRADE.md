@@ -666,3 +666,26 @@
     - the `sort` value is read from the URL, and there is useState to manage the `SortingBar` component's state
     - `orderingMode` is now returned from API for category response
     - filters are set to the redux state conditionally based on the seo category config
+
+### Storefront docker image build process was changed
+  - [FWCC-1076](https://shopsys.atlassian.net/browse/FWCC-1076)
+  - [FWCC-1076 - Fix install script and optimize storefront dockerfiles](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/673/diffs)
+  - `@urql/devtools` package must be moved from `devDependencies` to `dependencies` section
+  - updated dev.Dockerfile adds the possibility to easily build application for testing
+    - to build application add build directive to storefront section in your docker-compose.yml file
+      ```yaml
+        storefront:
+            ...
+            command:
+                - build
+            ...
+      ```
+    - to run application in dev mode add dev directive to storefront section in your docker-compose.yml file
+      ```yaml
+        storefront:
+            ...
+            command:
+                - dev
+            ...
+      ```
+    - `command` directive is optional and can be omitted, dev mode is default behavior. For more details see docker-compose.yml.dist
