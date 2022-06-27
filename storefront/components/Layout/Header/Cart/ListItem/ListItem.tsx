@@ -29,7 +29,7 @@ const ListItem: FC<ListItemProps> = (props) => {
                 <Image alt={props.cartItem.product.fullName} type="thumbnail" image={props.cartItem.product.image} />
             </ListItemImageWrapperStyled>
             <ListItemDetailStyled>
-                <NextLink href={props.cartItem.product.slug}>
+                <NextLink href={props.cartItem.product.slug} passHref>
                     <ListItemTitleStyled>{props.cartItem.product.fullName}</ListItemTitleStyled>
                 </NextLink>
                 <ListItemQuantityStyled>

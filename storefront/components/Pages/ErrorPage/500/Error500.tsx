@@ -8,7 +8,7 @@ import {
     ErrorPageTextStyled,
 } from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import React, { FC } from 'react';
 
 const Error500: FC = () => {
@@ -22,9 +22,9 @@ const Error500: FC = () => {
                         <ErrorPageTextHeadingStyled>{t('Something went wrong.')}</ErrorPageTextHeadingStyled>
                         <ErrorPageTextMainStyled>{t('Please try again later or contact us.')}</ErrorPageTextMainStyled>
 
-                        <Link href="/" passHref>
-                            <ErrorPageButtonLinkStyled href="/">{t('Back to shop')}</ErrorPageButtonLinkStyled>
-                        </Link>
+                        <NextLink href="/" passHref>
+                            <ErrorPageButtonLinkStyled>{t('Back to shop')}</ErrorPageButtonLinkStyled>
+                        </NextLink>
                     </ErrorPageTextStyled>
                 </ErrorPageStyled>
             </Webline>

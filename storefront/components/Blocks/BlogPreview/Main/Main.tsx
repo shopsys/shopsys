@@ -12,6 +12,7 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import NextLink from 'next/link';
 import { FC, Fragment, useState } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
@@ -41,9 +42,11 @@ const Main: FC<MainProps> = (props) => {
                     index < visibleArticles && (
                         <MainItemStyled key={index} data-testid={testIdentifier + index}>
                             <MainImageStyled>
-                                <MainImageLinkStyled href={blogMainItem.link}>
-                                    <Image image={blogMainItem.image} type="list" alt="alt" />
-                                </MainImageLinkStyled>
+                                <NextLink href={blogMainItem.link} passHref>
+                                    <MainImageLinkStyled>
+                                        <Image image={blogMainItem.image} type="list" alt="alt" />
+                                    </MainImageLinkStyled>
+                                </NextLink>
                             </MainImageStyled>
                             <MainContentStyled>
                                 {blogMainItem.blogCategories.map((blogPreviewCategory, index) => (
@@ -55,8 +58,9 @@ const Main: FC<MainProps> = (props) => {
                                         )}
                                     </Fragment>
                                 ))}
-
-                                <MainNameStyled href={blogMainItem.link}>{blogMainItem.name}</MainNameStyled>
+                                <NextLink href={blogMainItem.link} passHref>
+                                    <MainNameStyled>{blogMainItem.name}</MainNameStyled>
+                                </NextLink>
                                 <MainDescriptionStyled>{blogMainItem.perex}</MainDescriptionStyled>
                             </MainContentStyled>
                         </MainItemStyled>

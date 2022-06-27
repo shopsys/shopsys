@@ -33,13 +33,15 @@ const Customer: FC = () => {
             </Webline>
             <Webline>
                 <CustomerListStyled>
-                    <NextLink href={customerOrdersUrl} passHref>
-                        <CustomerListItemStyled>{t('My orders')}</CustomerListItemStyled>
-                    </NextLink>
-                    <NextLink href={customerEditProfileUrl}>
-                        <CustomerListItemStyled>{t('Edit profile')}</CustomerListItemStyled>
-                    </NextLink>
-                    <CustomerListItemStyled onClick={logoutHandler}>{t('Logout')}</CustomerListItemStyled>
+                    <CustomerListItemStyled>
+                        <NextLink href={customerOrdersUrl}>{t('My orders')}</NextLink>
+                    </CustomerListItemStyled>
+                    <CustomerListItemStyled>
+                        <NextLink href={customerEditProfileUrl}>{t('Edit profile')}</NextLink>
+                    </CustomerListItemStyled>
+                    <CustomerListItemStyled>
+                        <a onClick={logoutHandler}>{t('Logout')}</a>
+                    </CustomerListItemStyled>
                 </CustomerListStyled>
             </Webline>
         </>

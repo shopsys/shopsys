@@ -18,6 +18,7 @@ import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import NextLink from 'next/link';
 import { FC, useState } from 'react';
 
 const BlogPreview: FC = () => {
@@ -47,10 +48,12 @@ const BlogPreview: FC = () => {
             <BlogPreviewHeadingStyled>
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
                 {blogUrl !== undefined && (
-                    <BlogPreviewHeadingLinkStyled href={blogUrl}>
-                        <span>{t('View all')}</span>
-                        <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
-                    </BlogPreviewHeadingLinkStyled>
+                    <NextLink href={blogUrl} passHref>
+                        <BlogPreviewHeadingLinkStyled>
+                            <span>{t('View all')}</span>
+                            <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
+                        </BlogPreviewHeadingLinkStyled>
+                    </NextLink>
                 )}
             </BlogPreviewHeadingStyled>
 

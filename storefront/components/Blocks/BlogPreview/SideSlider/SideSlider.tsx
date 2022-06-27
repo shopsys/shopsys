@@ -10,6 +10,7 @@ import Image from 'components/Basic/Image';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
@@ -46,9 +47,11 @@ const SideSlider: FC<SideSliderProps> = (props) => {
                         data-testid={testIdentifier + index}
                     >
                         <SideSliderImageStyled>
-                            <SideSliderImageLinkStyled href={blogSideItem.link}>
-                                <Image image={blogSideItem.image} type="list" alt="alt" />
-                            </SideSliderImageLinkStyled>
+                            <NextLink href={blogSideItem.link} passHref>
+                                <SideSliderImageLinkStyled>
+                                    <Image image={blogSideItem.image} type="list" alt="alt" />
+                                </SideSliderImageLinkStyled>
+                            </NextLink>
                         </SideSliderImageStyled>
                         <SideSliderContentStyled>
                             {blogSideItem.blogCategories.map((blogPreviewCategorie, index) => (
@@ -61,7 +64,9 @@ const SideSlider: FC<SideSliderProps> = (props) => {
                                 </Fragment>
                             ))}
 
-                            <SideSliderNameStyled href={blogSideItem.link}>{blogSideItem.name}</SideSliderNameStyled>
+                            <NextLink href={blogSideItem.link} passHref>
+                                <SideSliderNameStyled>{blogSideItem.name}</SideSliderNameStyled>
+                            </NextLink>
                         </SideSliderContentStyled>
                     </SideSliderItemStyled>
                 ))}

@@ -1,6 +1,7 @@
 import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
+import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
@@ -16,9 +17,11 @@ const Side: FC<SideProps> = (props) => {
             {props.blogSideItems.map((blogSideItem, index) => (
                 <SideItemStyled key={index} data-testid={testIdentifier + index}>
                     <SideImageStyled>
-                        <SideImageLinkStyled href={blogSideItem.link}>
-                            <Image image={blogSideItem.image} type="listAside" alt="alt" />
-                        </SideImageLinkStyled>
+                        <NextLink href={blogSideItem.link} passHref>
+                            <SideImageLinkStyled>
+                                <Image image={blogSideItem.image} type="listAside" alt="alt" />
+                            </SideImageLinkStyled>
+                        </NextLink>
                     </SideImageStyled>
                     <SideContentStyled>
                         {blogSideItem.blogCategories.map((blogPreviewCategory, index) => (
@@ -30,8 +33,9 @@ const Side: FC<SideProps> = (props) => {
                                 )}
                             </Fragment>
                         ))}
-
-                        <SideNameStyled href={blogSideItem.link}>{blogSideItem.name}</SideNameStyled>
+                        <NextLink href={blogSideItem.link} passHref>
+                            <SideNameStyled>{blogSideItem.name}</SideNameStyled>
+                        </NextLink>
                     </SideContentStyled>
                 </SideItemStyled>
             ))}

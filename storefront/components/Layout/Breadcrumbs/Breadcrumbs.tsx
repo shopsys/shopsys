@@ -27,7 +27,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
         <Webline>
             <BreadcrumbsStyled data-testid={testIdentifier}>
                 <LeftArrowIconStyled iconType="icon" icon="Arrow" />
-                <NextLink href="/">
+                <NextLink href="/" passHref>
                     <BreadcrumbsLinkStyled data-testid={testIdentifier + '-item-root'}>
                         {t('Home page')}
                     </BreadcrumbsLinkStyled>
@@ -35,7 +35,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
                 <BreadcrumbsSpanStyled>/</BreadcrumbsSpanStyled>
                 {props.breadcrumb.slice(0, props.breadcrumb.length - 1).map((breadcrumb, index) => (
                     <Fragment key={index}>
-                        <NextLink href={breadcrumb.slug}>
+                        <NextLink href={breadcrumb.slug} passHref>
                             <BreadcrumbsLinkStyled data-testid={testIdentifier + '-item-' + index}>
                                 {breadcrumb.name}
                             </BreadcrumbsLinkStyled>
