@@ -342,7 +342,7 @@ Returns complete list of transport methods
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>currentCustomerUser</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#customeruser">CustomerUser</a></td>
 <td>
 
 Returns currently logged in customer user

@@ -2,62 +2,64 @@ import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'gra
 import { CustomerTypeEnum } from 'types/customer';
 import { ContactInformationFormType } from 'types/form';
 
-export function useCurrentCustomerContactInformationQuery(): ContactInformationFormType | undefined {
+export function useCurrentCustomerContactInformationQuery(): ContactInformationFormType | null | undefined {
     const [{ data }] = useCurrentCustomerUserQueryApi();
 
     if (data?.currentCustomerUser === undefined) {
         return undefined;
     }
 
-    return mapCurrentCustomerContactInformationApiData(data);
+    return mapCurrentCustomerContactInformationApiData(data.currentCustomerUser);
 }
 
 const mapCurrentCustomerContactInformationApiData = (
-    apiCurrentCustomerUserData: CurrentCustomerUserQueryApi,
-): ContactInformationFormType => {
-    const companyCustomerUser = apiCurrentCustomerUserData.currentCustomerUser;
+    apiCurrentCustomerUserData: CurrentCustomerUserQueryApi['currentCustomerUser'],
+): ContactInformationFormType | null => {
+    if (apiCurrentCustomerUserData === null) {
+        return null;
+    }
 
     // EXTEND CUSTOMER CONTACT INFORMATION HERE
 
     return {
-        ...companyCustomerUser,
+        ...apiCurrentCustomerUserData,
         companyName:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyName !== null
-                ? apiCurrentCustomerUserData.currentCustomerUser.companyName
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
+            apiCurrentCustomerUserData.companyName !== null
+                ? apiCurrentCustomerUserData.companyName
                 : '',
         companyNumber:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyNumber !== null
-                ? apiCurrentCustomerUserData.currentCustomerUser.companyNumber
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
+            apiCurrentCustomerUserData.companyNumber !== null
+                ? apiCurrentCustomerUserData.companyNumber
                 : '',
         companyTaxNumber:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser' &&
-            apiCurrentCustomerUserData.currentCustomerUser.companyTaxNumber !== null
-                ? apiCurrentCustomerUserData.currentCustomerUser.companyTaxNumber
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
+            apiCurrentCustomerUserData.companyTaxNumber !== null
+                ? apiCurrentCustomerUserData.companyTaxNumber
                 : '',
-        telephone: companyCustomerUser.telephone !== null ? companyCustomerUser.telephone : '',
+        telephone: apiCurrentCustomerUserData.telephone !== null ? apiCurrentCustomerUserData.telephone : '',
         country: {
-            value: companyCustomerUser.country.code,
-            label: companyCustomerUser.country.name,
+            value: apiCurrentCustomerUserData.country.code,
+            label: apiCurrentCustomerUserData.country.name,
         },
-        deliveryFirstName: companyCustomerUser.defaultDeliveryAddress?.firstName ?? '',
-        deliveryLastName: companyCustomerUser.defaultDeliveryAddress?.lastName ?? '',
-        deliveryCompanyName: companyCustomerUser.defaultDeliveryAddress?.companyName ?? '',
-        deliveryTelephone: companyCustomerUser.defaultDeliveryAddress?.telephone ?? '',
-        deliveryStreet: companyCustomerUser.defaultDeliveryAddress?.street ?? '',
-        deliveryCity: companyCustomerUser.defaultDeliveryAddress?.city ?? '',
-        deliveryPostcode: companyCustomerUser.defaultDeliveryAddress?.postcode ?? '',
+        deliveryFirstName: apiCurrentCustomerUserData.defaultDeliveryAddress?.firstName ?? '',
+        deliveryLastName: apiCurrentCustomerUserData.defaultDeliveryAddress?.lastName ?? '',
+        deliveryCompanyName: apiCurrentCustomerUserData.defaultDeliveryAddress?.companyName ?? '',
+        deliveryTelephone: apiCurrentCustomerUserData.defaultDeliveryAddress?.telephone ?? '',
+        deliveryStreet: apiCurrentCustomerUserData.defaultDeliveryAddress?.street ?? '',
+        deliveryCity: apiCurrentCustomerUserData.defaultDeliveryAddress?.city ?? '',
+        deliveryPostcode: apiCurrentCustomerUserData.defaultDeliveryAddress?.postcode ?? '',
         deliveryCountry: {
-            value: companyCustomerUser.defaultDeliveryAddress?.country?.code ?? '',
-            label: companyCustomerUser.defaultDeliveryAddress?.country?.name ?? '',
+            value: apiCurrentCustomerUserData.defaultDeliveryAddress?.country?.code ?? '',
+            label: apiCurrentCustomerUserData.defaultDeliveryAddress?.country?.name ?? '',
         },
-        deliveryAddressUuid: companyCustomerUser.defaultDeliveryAddress?.uuid ?? null,
+        deliveryAddressUuid: apiCurrentCustomerUserData.defaultDeliveryAddress?.uuid ?? null,
         register: false,
         passwordFirst: '',
         passwordSecond: '',
         customer:
-            apiCurrentCustomerUserData.currentCustomerUser.__typename === 'CompanyCustomerUser'
+            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
         differentDeliveryAddress: false,

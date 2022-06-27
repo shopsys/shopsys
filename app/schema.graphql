@@ -2058,7 +2058,7 @@ type Query {
   transport(uuid: Uuid!): Transport
 
   """Returns currently logged in customer user"""
-  currentCustomerUser: CustomerUser!
+  currentCustomerUser: CustomerUser
 
   """
   Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords

@@ -596,3 +596,13 @@
     - url for the "terms and conditions" page can be obtained from the `useGetTermsAndConditionsArticleUrl` hook
     - url for the "privacy policy" page can be obtained from the `useGetPrivacyPolicyArticleUrl` hook
     - url for the "cookies" page can be obtained from the `useGetCookiesArticleUrl` hook
+
+### Current customer user query now returns null instead of a warning when user is not signed in
+- [FWCC-1042](https://shopsys.atlassian.net/browse/FWCC-1042)
+- [FWCC-1042 - currentCustomerUser now returns null instead of a warning when user is not signed in](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/668/diffs)
+- the reasons these changes were introduced
+  - previous approach caused errors to appear in the console, which made debugging more complicated
+  - because no data was returned, the result could not be cached, and was called more often than necessary
+- most significant changes
+  - `currentCustomerUser` query returns `null` when no user is signed in
+  - SF code was refactored to be able to work with the `null` value

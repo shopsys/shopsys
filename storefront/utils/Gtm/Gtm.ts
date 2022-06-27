@@ -185,14 +185,14 @@ export const getGtmConsentInfo = (): GtmConsentInfoType => {
 };
 
 export const getGtmUserInfo = (
-    currentCustomer: CurrentCustomerType | undefined,
+    currentCustomer: CurrentCustomerType | null | undefined,
     isUserLoggedIn: boolean,
 ): GtmUserInfoType => {
     const userInfo: GtmUserInfoType = {
         type: 'visitor',
     };
 
-    if (isUserLoggedIn && currentCustomer !== undefined) {
+    if (isUserLoggedIn && currentCustomer !== undefined && currentCustomer !== null) {
         userInfo.type = 'customer';
         userInfo.id = currentCustomer.uuid;
         userInfo.email = currentCustomer.email;

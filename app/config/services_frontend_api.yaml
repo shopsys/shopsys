@@ -139,3 +139,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation:
         alias: App\FrontendApi\Mutation\Login\RefreshTokensMutation
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserResolver:
+        alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserResolver
+        public: true
