@@ -643,3 +643,15 @@
     ```ts
     const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
     ```
+### Upgrade to Shopsys Framework 10.0.1
+- [FWCC-891](https://shopsys.atlassian.net/browse/FWCC-891)
+- [FWCC-891 - upgrade to SSFW 10](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/549)
+- the reasons these changes were introduced
+    - we want the codebase to be up-to-date
+- most significant changes
+    - PHP 8.1
+    - upgraded libraries to the versions that support the new PHP
+- tips on how to implement them
+    - follow the [upgrading instructions](https://github.com/shopsys/shopsys/blob/master/upgrade/UPGRADE-v10.0.0.md) of Shopsys Framework
+    - you should get most of the changes out-of-the-box, however, you need to check your custom code whether it is compatible with the new version
+    - if you use Docker, you should rebuild your `php-fpm` docker image (`docker-compose build --no-cache php-fpm`) and recreate the containers (`docker-compose up -d --force-recreate`) locally
