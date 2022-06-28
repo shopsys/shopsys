@@ -391,6 +391,9 @@ msgstr ""
 msgid "Custom"
 msgstr ""
 
+msgid "Customer not found."
+msgstr ""
+
 msgid "Customers - full"
 msgstr ""
 
