@@ -534,3 +534,6 @@ Shopsys\FrameworkBundle\Migrations\Version20220610144218:
     skip: false
 App\Migrations\Version20220610144637:
     skip: false
+20220628185551:
+    class: App\Migrations\Version20220628185551
+    skip: false

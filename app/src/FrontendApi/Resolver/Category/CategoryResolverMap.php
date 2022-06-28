@@ -152,7 +152,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
         $category = $readyCategorySeoMix->getCategory();
         switch ($fieldName) {
             case 'uuid':
-                return $category->getUuid();
+                return $readyCategorySeoMix->getUuid();
             case 'name':
                 // @phpstan-ignore-next-line Category::getName() is wrongly annotated
                 return $category->getName($this->domain->getLocale()) ?? '';
