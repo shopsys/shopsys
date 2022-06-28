@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Image\Image;
-use App\Component\Image\ImageCacheFacade;
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
@@ -80,11 +79,6 @@ class TransferredProductProcessor
     private $parameterFacade;
 
     /**
-     * @var \App\Component\Image\ImageCacheFacade
-     */
-    private $imageCacheFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
     private $imageConfig;
@@ -105,7 +99,6 @@ class TransferredProductProcessor
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
      * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct(
@@ -119,7 +112,6 @@ class TransferredProductProcessor
         FileUpload $fileUpload,
         ParameterFacade $parameterFacade,
         ImageConfig $imageConfig,
-        ImageCacheFacade $imageCacheFacade,
         FilesystemInterface $filesystem
     ) {
         $this->productFacade = $productFacade;
@@ -131,7 +123,6 @@ class TransferredProductProcessor
         $this->assetTransferAkeneoFacade = $assetTransferAkeneoFacade;
         $this->fileUpload = $fileUpload;
         $this->parameterFacade = $parameterFacade;
-        $this->imageCacheFacade = $imageCacheFacade;
         $this->imageConfig = $imageConfig;
         $this->filesystem = $filesystem;
     }
@@ -149,7 +140,7 @@ class TransferredProductProcessor
         if ($product !== null) {
             $entityName = $this->imageConfig->getEntityName($product);
             $entityId = $product->getId();
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
+            $this->imageFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
         }
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product, $logger);
 

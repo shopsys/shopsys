@@ -21,6 +21,8 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 
 /**
  * class don't inherit from \Shopsys\Cdn\Component\Image\ImageFacade and implement replacing manually until
@@ -44,9 +46,9 @@ class ImageFacade extends BaseImageFacade
     public const OPTIMIZED_NOIMAGE_FILENAME = 'optimized-' . self::NOIMAGE_FILENAME;
 
     /**
-     * @var \App\Component\Image\ImageCacheFacade
+     * @var \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface
      */
-    private $imageCacheFacade;
+    protected CacheInterface|AdapterInterface $cache;
 
     /**
      * @var string|null
@@ -63,7 +65,7 @@ class ImageFacade extends BaseImageFacade
      * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
+     * @param \Symfony\Contracts\Cache\CacheInterface $cache
      */
     public function __construct(
         $imageUrlPrefix,
@@ -75,7 +77,7 @@ class ImageFacade extends BaseImageFacade
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
         MountManager $mountManager,
-        ImageCacheFacade $imageCacheFacade
+        CacheInterface $cache
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -89,7 +91,7 @@ class ImageFacade extends BaseImageFacade
             $mountManager
         );
 
-        $this->imageCacheFacade = $imageCacheFacade;
+        $this->cache = $cache;
     }
 
     /**
@@ -113,28 +115,25 @@ class ImageFacade extends BaseImageFacade
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
+        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $type, $sizeName);
 
-        $imageUrl = $this->imageCacheFacade->findImageUrlInCache($image->getId(), $type, $sizeName);
-        if ($imageUrl !== null) {
-            return $imageUrl;
-        }
+        return $this->cache->get(
+            $cacheId,
+            function () use ($image, $domainConfig, $sizeName) {
+                if (!$this->imageLocator->imageExists($image)) {
+                    throw new ImageNotFoundException();
+                }
 
-        if (!$this->imageLocator->imageExists($image)) {
-            throw new ImageNotFoundException();
-        }
+                $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
+                $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
-        $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-        $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
+                $imageUrl = $domainConfig->getUrl()
+                    . $this->imageUrlPrefix
+                    . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
 
-        $imageUrl = $domainConfig->getUrl()
-            . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
-
-        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
-
-        $this->imageCacheFacade->setImageUrlIntoCache($imageUrl, $image->getId(), $type, $sizeName);
-
-        return $imageUrl;
+                return $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+            }
+        );
     }
 
     /**
@@ -271,34 +270,21 @@ class ImageFacade extends BaseImageFacade
             throw new ImageNotFoundException();
         }
 
-        $imageUrl = $this->imageCacheFacade->findImageUrlInCache(
-            $image->getId(),
-            $image->getType(),
-            $sizeName,
-            $additionalSizeIndex
+        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $image->getType(), $sizeName, $additionalSizeIndex);
+
+        return $this->cache->get(
+            $cacheId,
+            function () use ($image, $domainConfig, $additionalSizeIndex, $sizeName) {
+                $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
+                $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
+
+                $imageUrl = $domainConfig->getUrl()
+                    . $this->imageUrlPrefix
+                    . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
+
+                return $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
+            }
         );
-        if ($imageUrl !== null) {
-            return $imageUrl;
-        }
-
-        $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
-        $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
-
-        $imageUrl = $domainConfig->getUrl()
-            . $this->imageUrlPrefix
-            . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
-
-        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
-
-        $this->imageCacheFacade->setImageUrlIntoCache(
-            $imageUrl,
-            $image->getId(),
-            $image->getType(),
-            $sizeName,
-            $additionalSizeIndex
-        );
-
-        return $imageUrl;
     }
 
     /**
@@ -323,7 +309,8 @@ class ImageFacade extends BaseImageFacade
         if ($oldImage !== null && $deleteOldImage === true) {
             $this->em->remove($oldImage);
         }
-        $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
+
+        $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
 
         $newImage = $this->imageFactory->create(
             $imageEntityConfig->getEntityName(),
@@ -353,7 +340,7 @@ class ImageFacade extends BaseImageFacade
                 $this->em->persist($image);
             }
 
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
+            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
 
             $this->em->flush();
         }
@@ -379,7 +366,8 @@ class ImageFacade extends BaseImageFacade
             if ($oldImage !== null && $deleteOldImage === true) {
                 $this->em->remove($oldImage);
             }
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
+
+            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
 
             /** @var \App\Component\Image\Image|null $newImage */
             $newImage = $this->imageFactory->create(
@@ -412,7 +400,7 @@ class ImageFacade extends BaseImageFacade
 
         foreach ($images as $image) {
             $imageToRemove = $this->imageRepository->findById($image->getId());
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $image->getType());
+            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $image->getType());
             if ($imageToRemove !== null) {
                 $this->em->remove($imageToRemove);
             }
@@ -429,46 +417,18 @@ class ImageFacade extends BaseImageFacade
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
-        $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
+        $cacheId = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
 
-        if ($image !== null) {
-            return $image;
-        }
-
-        $image = $this->imageRepository->getImageByEntity(
-            $entityName,
-            $entityId,
-            $type
+        return $this->cache->get(
+            $cacheId,
+            function () use ($entityName, $entityId, $type) {
+                return $this->imageRepository->getImageByEntity(
+                    $entityName,
+                    $entityId,
+                    $type
+                );
+            }
         );
-
-        $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type, $image);
-
-        return $image;
-    }
-
-    /**
-     * @param int $entityId
-     * @param string $entityClass
-     * @param string $akeneoImageType
-     * @return \App\Component\Image\Image
-     */
-    public function getImageByEntityIdAndAkeneoType(int $entityId, string $entityClass, string $akeneoImageType): Image
-    {
-        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
-        $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType($entityName, $entityId, $akeneoImageType);
-
-        if ($image !== null) {
-            return $image;
-        }
-
-        $image = $this->imageRepository->findImageByEntityForAkeneoImageType($entityName, $entityId, $akeneoImageType);
-        if ($image === null) {
-            throw new ImageNotFoundException();
-        }
-
-        $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $akeneoImageType, $image);
-
-        return $image;
     }
 
     /**
@@ -480,21 +440,19 @@ class ImageFacade extends BaseImageFacade
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
-        $images = $this->imageCacheFacade->findCachedImageEntitiesByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
 
-        if ($images !== null) {
-            return $images;
-        }
+        $cacheId = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
 
-        $imagesByEntity = $this->imageRepository->getImagesByEntityIndexedById(
-            $entityName,
-            $entityId,
-            $type
+        return $this->cache->get(
+            $cacheId,
+            function () use ($entityName, $entityId, $type) {
+                return $this->imageRepository->getImagesByEntityIndexedById(
+                    $entityName,
+                    $entityId,
+                    $type
+                );
+            }
         );
-
-        $this->imageCacheFacade->setImageEntitiesIntoCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type, $imagesByEntity);
-
-        return $imagesByEntity;
     }
 
     /**
@@ -506,7 +464,8 @@ class ImageFacade extends BaseImageFacade
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
-        $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
+
+        $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, null);
 
         parent::manageImages($entity, $imageUploadData, $type);
     }
@@ -576,6 +535,62 @@ class ImageFacade extends BaseImageFacade
      */
     public function clearImageCache(): bool
     {
-        return $this->imageCacheFacade->invalidateAll();
+        return $this->cache->clear();
+    }
+
+    /**
+     * @param int $imageId
+     * @param string|null $type
+     * @param string|null $sizeName
+     * @param int|null $additionalIndex
+     * @return string
+     */
+    private function getCacheIdForImageUrl(int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex = null): string
+    {
+        return sprintf('ImageUrl_imageId-%d_type-%s_size-%s_additionalIndex-%s', $imageId, $type, $sizeName, $additionalIndex);
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string|null $type
+     * @return string
+     */
+    private function getCacheIdForSingleEntity(string $entityName, int $entityId, ?string $type): string
+    {
+        if ($type === null) {
+            return sprintf('cache_image_entity_%s_%d', $entityName, $entityId);
+        }
+
+        return sprintf('cache_image_entity_%s_%d_%s', $entityName, $entityId, $type);
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string|null $type
+     * @return string
+     */
+    private function getCacheIdForMultipleEntities(string $entityName, int $entityId, ?string $type): string
+    {
+        if ($type === null) {
+            return sprintf('cache_images_entities_%s_%d', $entityName, $entityId);
+        }
+
+        return sprintf('cache_images_entities_%s_%d_%s', $entityName, $entityId, $type);
+    }
+
+    /**
+     * @param string $entityName
+     * @param int $entityId
+     * @param string|null $type
+     */
+    public function invalidateCacheByEntityNameAndEntityIdAndType(string $entityName, int $entityId, ?string $type): void
+    {
+        $cacheIdForSingleEntity = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
+        $cacheIdForMultipleEntities = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
+
+        $this->cache->delete($cacheIdForSingleEntity);
+        $this->cache->delete($cacheIdForMultipleEntities);
     }
 }

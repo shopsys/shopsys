@@ -8,7 +8,12 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Tests\App\Test\FunctionalTestCase;
 
 class VatFacadeTest extends FunctionalTestCase
@@ -17,31 +22,31 @@ class VatFacadeTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
-    private $transportDataFactory;
+    private TransportDataFactoryInterface $transportDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
-    private $paymentDataFactory;
+    private PaymentDataFactoryInterface $paymentDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      * @inject
      */
-    private $paymentFacade;
+    private PaymentFacade $paymentFacade;
 
     public function testDeleteByIdAndReplaceForFirstDomain()
     {

@@ -248,7 +248,7 @@ class ParameterRepository extends BaseParameterRepository
             ->getQuery()
             ->execute();
 
-        return array_map('reset', $result);
+        return array_column($result, 'id');
     }
 
     /**

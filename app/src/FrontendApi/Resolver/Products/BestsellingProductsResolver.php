@@ -75,6 +75,7 @@ class BestsellingProductsResolver implements ResolverInterface
             );
         }
 
+        /** @var \App\Model\Product\Product[] $bestsellingProducts */
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),
             $category,

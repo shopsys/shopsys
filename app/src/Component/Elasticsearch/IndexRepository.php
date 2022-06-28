@@ -61,7 +61,9 @@ class IndexRepository extends BaseIndexRepository
      */
     public function bulkUpdate(string $indexAlias, array $data, bool $createIfNotExists = true): void
     {
-        $params = ['body' => []];
+        $params = [
+            'body' => [],
+        ];
 
         foreach ($data as $id => $row) {
             $params['body'][] = [

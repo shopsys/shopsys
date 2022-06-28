@@ -7,6 +7,10 @@ namespace Tests\App\Functional\Model\Product\Availability;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\FunctionalTestCase;
 
 final class AvailabilityFacadeTest extends FunctionalTestCase
@@ -15,25 +19,25 @@ final class AvailabilityFacadeTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface
      * @inject
      */
-    private $availabilityDataFactory;
+    private AvailabilityDataFactoryInterface $availabilityDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
      * @inject
      */
-    private $availabilityFacade;
+    private AvailabilityFacade $availabilityFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     public function testDeleteByIdAndReplaceProductAvailability(): void
     {

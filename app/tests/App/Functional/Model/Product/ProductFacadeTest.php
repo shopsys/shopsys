@@ -9,7 +9,11 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use ReflectionClass;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductFacadeTest extends FunctionalTestCase
@@ -18,25 +22,25 @@ class ProductFacadeTest extends FunctionalTestCase
      * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
      * @inject
      */
-    private $productPriceRecalculationScheduler;
+    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider

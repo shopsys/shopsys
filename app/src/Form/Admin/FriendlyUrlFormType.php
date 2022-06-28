@@ -48,7 +48,9 @@ class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $friendlyUrlData->slug,
-                    'attr' => ['class' => 'input--auto-size'],
+                    'attr' => [
+                        'class' => 'input--auto-size',
+                    ],
                 ]
             )
             ->add(
@@ -57,7 +59,9 @@ class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => FriendlyUrlGridFactory::getReadableNameForRouteName($friendlyUrlData->name),
-                    'attr' => ['class' => 'input--auto-size'],
+                    'attr' => [
+                        'class' => 'input--auto-size',
+                    ],
                 ]
             )
             ->add(
@@ -66,7 +70,9 @@ class FriendlyUrlFormType extends AbstractType
                 [
                     'compound' => false,
                     'data' => $friendlyUrlData->entityId,
-                    'attr' => ['class' => 'input--auto-size'],
+                    'attr' => [
+                        'class' => 'input--auto-size',
+                    ],
                 ]
             )
             ->add('redirectTo', TextType::class, [

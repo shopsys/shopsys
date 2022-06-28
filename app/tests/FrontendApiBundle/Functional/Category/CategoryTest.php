@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -13,7 +14,7 @@ class CategoryTest extends GraphQlTestCase
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    protected $category;
+    protected Category $category;
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface

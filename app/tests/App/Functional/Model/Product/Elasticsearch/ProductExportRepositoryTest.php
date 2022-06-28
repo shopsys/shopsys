@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductExportRepositoryTest extends FunctionalTestCase
@@ -12,7 +13,7 @@ class ProductExportRepositoryTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
      * @inject
      */
-    private $repository;
+    private ProductExportRepository $repository;
 
     public function testProductDataHaveExpectedStructure(): void
     {

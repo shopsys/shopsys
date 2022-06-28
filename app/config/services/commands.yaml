@@ -6,4 +6,3 @@ services:
 
     App\Command\:
         resource: '../../src/Command'
-        exclude: '../../src/Command/ExtendedClassesAnnotationsCommand.php'

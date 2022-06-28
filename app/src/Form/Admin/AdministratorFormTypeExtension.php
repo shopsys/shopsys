@@ -51,7 +51,9 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             'type' => PasswordType::class,
             'required' => $options['scenario'] === AdministratorFormType::SCENARIO_CREATE,
             'options' => [
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                ],
             ],
             'first_options' => [
                 'label' => t('Password'),
@@ -77,7 +79,9 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             'choice_label' => function (AdministratorRoleGroup $administratorRoleGroup) {
                 return $administratorRoleGroup->getName();
             },
-            'attr' => ['class' => 'js-role-group-select'],
+            'attr' => [
+                'class' => 'js-role-group-select',
+            ],
         ]);
 
         if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
@@ -87,13 +91,17 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
                 'placeholder' => t('-- Vyber roli --'),
                 'multiple' => true,
                 'label' => t('Role'),
-                'attr' => ['class' => 'js-role-group-custom'],
+                'attr' => [
+                    'class' => 'js-role-group-custom',
+                ],
             ]);
         } elseif ($options['administrator'] !== null) {
             $builder->add('roles', DisplayOnlyType::class, [
                 'label' => t('Role'),
                 'data' => $this->getAdministratorRolesList($options['administrator']),
-                'attr' => ['class' => 'js-role-group-custom'],
+                'attr' => [
+                    'class' => 'js-role-group-custom',
+                ],
             ]);
         }
     }

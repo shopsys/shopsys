@@ -8,9 +8,13 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
 use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -21,31 +25,31 @@ class ProductInputPriceRecalculatorTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      * @inject
      */
-    private $setting;
+    private Setting $setting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
      * @inject
      */
-    private $pricingSetting;
+    private PricingSetting $pricingSetting;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator
      * @inject
      */
-    private $productInputPriceRecalculator;
+    private ProductInputPriceRecalculator $productInputPriceRecalculator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     public function testRecalculateInputPriceForNewVatPercentWithInputPriceWithoutVat()
     {
@@ -56,7 +60,10 @@ class ProductInputPriceRecalculatorTest extends FunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
+        $productData->manualInputPricesByPricingGroupId = [
+            1 => Money::zero(),
+            2 => Money::zero(),
+        ];
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -77,7 +84,10 @@ class ProductInputPriceRecalculatorTest extends FunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
+        $productData->manualInputPricesByPricingGroupId = [
+            1 => Money::zero(),
+            2 => Money::zero(),
+        ];
         $this->setVats($productData);
         $product = Product::create($productData);
 

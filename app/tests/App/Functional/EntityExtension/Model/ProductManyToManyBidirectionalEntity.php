@@ -18,7 +18,7 @@ class ProductManyToManyBidirectionalEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
@@ -30,7 +30,7 @@ class ProductManyToManyBidirectionalEntity
      * @var string
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name

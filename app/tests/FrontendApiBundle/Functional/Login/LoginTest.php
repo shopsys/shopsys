@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Login;
 
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
+use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Throwable;
 
@@ -14,7 +15,7 @@ class LoginTest extends GraphQlTestCase
      * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
      * @inject
      */
-    protected $tokenFacade;
+    protected TokenFacade $tokenFacade;
 
     public function testLoginMutation(): void
     {

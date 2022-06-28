@@ -62,7 +62,8 @@ class SitemapListener extends BaseSitemapListener
         $this->addUrlsBySitemapItems($categorySitemapItems, $generator, $domainConfig, 'categories', static::PRIORITY_CATEGORIES);
 
         $categorySeoMixSitemapItems = $this->sitemapRepository->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
-        $this->addUrlsBySitemapItems($categorySeoMixSitemapItems, $generator, $domainConfig, 'filtersCategories', static::PRIORITY_CATEGORY_SEO_MIX);
+        // @phpstan-ignore-next-line Wrong annotation in parent class
+        $this->addUrlsBySitemapItems($categorySeoMixSitemapItems, $generator, $domainConfig, 'filtersCategories', self::PRIORITY_CATEGORY_SEO_MIX);
 
         $productSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleProducts($domainConfig);
         $this->addUrlsBySitemapItems($productSitemapItems, $generator, $domainConfig, 'sellableProducts', static::PRIORITY_PRODUCTS);

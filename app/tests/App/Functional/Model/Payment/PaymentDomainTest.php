@@ -6,6 +6,8 @@ namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentData;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class PaymentDomainTest extends FunctionalTestCase
@@ -17,13 +19,13 @@ class PaymentDomainTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
-    private $paymentDataFactory;
+    private PaymentDataFactoryInterface $paymentDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface
      * @inject
      */
-    private $paymentFactory;
+    private PaymentFactoryInterface $paymentFactory;
 
     public function testCreatePaymentEnabledOnDomain()
     {

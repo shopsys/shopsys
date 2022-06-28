@@ -109,6 +109,7 @@ class Product extends BaseProduct
      * @var null
      * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
+     * @phpstan-ignore-next-line Removed property
      */
     protected $calculatedAvailability;
 
@@ -270,7 +271,7 @@ class Product extends BaseProduct
 
         $this->variants->add($variant);
         $variant->setMainVariant($this);
-        $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
+        $variant->copyProductCategoryDomains($this->productCategoryDomains->getValues());
     }
 
     /**
@@ -644,7 +645,7 @@ class Product extends BaseProduct
             }
         }
         foreach ($productCategoryDomains as $productCategoryDomain) {
-            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->toArray()) === false) {
+            if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->getValues()) === false) {
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
         }
@@ -703,7 +704,7 @@ class Product extends BaseProduct
      */
     public function getRelatedProducts(): array
     {
-        return $this->relatedProducts->toArray();
+        return $this->relatedProducts->getValues();
     }
 
     /**

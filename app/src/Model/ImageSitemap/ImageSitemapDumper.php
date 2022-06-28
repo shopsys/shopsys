@@ -9,9 +9,9 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper;
 class ImageSitemapDumper extends SitemapDumper
 {
     /**
-     * @param mixed|null $section
+     * @param string|null $section
      */
-    protected function populate($section = null)
+    protected function populate(?string $section = null): void
     {
         $event = new ImageSitemapPopulateEvent($this, $section);
 

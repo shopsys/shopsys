@@ -25,11 +25,11 @@ class ImageSitemapTest extends ApplicationTestCase
             $filename = 'web/content-test/sitemaps/domain_' . $domainId . '_sitemap_image.products.xml';
             $xml = simplexml_load_file($filename);
 
-            $expected = $this->getExpectedXml($domainConfig);
+            $expectedRegular = $this->getExpectedXmlRegex($domainConfig);
             $unexpectedNotMainImage = $this->getUnexpectedNotMainXml($domainConfig);
             $unexpectedNotNotVisibleProduct = $this->getUnexpectedNotVisibleXml($domainConfig);
 
-            $this->assertStringContainsStringIgnoringCase($expected, $xml->asXML());
+            $this->assertMatchesRegularExpression($expectedRegular, $xml->asXML());
             $this->assertStringNotContainsStringIgnoringCase($unexpectedNotMainImage, $xml->asXML());
             $this->assertStringNotContainsStringIgnoringCase($unexpectedNotNotVisibleProduct, $xml->asXML());
         }
@@ -39,11 +39,11 @@ class ImageSitemapTest extends ApplicationTestCase
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    private function getExpectedXml(DomainConfig $domainConfig): string
+    private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
-        $url = $domainConfig->getUrl();
+        $urlPattern = preg_quote($domainConfig->getUrl(), '~');
 
-        return '<url><loc>' . $url . '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova</loc><image:image><image:loc>' . $url . '/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg</image:loc><image:title><![CDATA[22" Sencor SLE 22F46DM4 HELLO KITTY]]></image:title></image:image></url>';
+        return '~<url><loc>' . $urlPattern . '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova</loc><lastmod>.*</lastmod><changefreq>daily</changefreq><priority>1\.0</priority><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc><image\:title><!\[CDATA\[22" Sencor SLE 22F46DM4 HELLO KITTY\]\]></image\:title></image\:image></url>~';
     }
 
     /**

@@ -1,4 +1,4 @@
-FROM shopsys/ssfw-base-image:v9.1.2 as base
+FROM shopsys/ssfw-base-image:v10.0.0 as base
 
 USER www-data
 

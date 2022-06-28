@@ -193,7 +193,7 @@ class ReadyCategorySeoMix
      */
     public function getReadyCategorySeoMixParameterParameterValues(): array
     {
-        return $this->readyCategorySeoMixParameterParameterValues->toArray();
+        return $this->readyCategorySeoMixParameterParameterValues->getValues();
     }
 
     /**

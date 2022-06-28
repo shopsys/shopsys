@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Article;
 use App\DataFixtures\Demo\ArticleDataFixture;
 use App\Model\Article\Article;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -16,7 +17,7 @@ class GetArticleTest extends GraphQlTestCase
      * @var \App\Model\Article\ArticleFacade
      * @inject
      */
-    private $articleFacade;
+    private ArticleFacade $articleFacade;
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface

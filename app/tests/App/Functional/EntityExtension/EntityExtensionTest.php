@@ -7,9 +7,9 @@ namespace Tests\App\Functional\EntityExtension;
 use App\Model\Order\Order as ExtendedOrder;
 use App\Model\Product\Brand\Brand as ExtendedBrand;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -47,13 +47,13 @@ class EntityExtensionTest extends FunctionalTestCase
      * @var \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
      * @inject
      */
-    private $entityNameResolver;
+    private OverwritableEntityNameResolver $entityNameResolver;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
+     * @var \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber
      * @inject
      */
-    private $loadORMMetadataSubscriber;
+    private OverwritableEntityExtensionSubscriber $entityExtensionSubscriber;
 
     protected function setUp(): void
     {
@@ -117,7 +117,7 @@ class EntityExtensionTest extends FunctionalTestCase
      */
     public function overwriteEntityExtensionMapInServicesInContainer(array $entityExtensionMap): void
     {
-        $this->loadORMMetadataSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
+        $this->entityExtensionSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
         $this->entityNameResolver->overwriteEntityExtensionMap($entityExtensionMap);
     }
 

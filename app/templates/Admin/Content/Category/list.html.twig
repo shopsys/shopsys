@@ -15,7 +15,7 @@
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
                             <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">
-                                <i class="svg svg-pencil"></i>
+                                {{ icon('pencil') }}
                             </a>
                             {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
                             {% set categoryDeleteUrl = url('admin_category_delete', {
@@ -26,7 +26,7 @@
                                 class="form-tree__item__control {{ categoryHasSeoMix ? 'js-category-with-seomix-delete-confirm' : 'js-category-delete-confirm' }}"
                                 data-delete-url="{{categoryDeleteUrl}}"
                             >
-                                <i class="svg svg-trash"></i>
+                                {{ icon('trash') }}
                             </a>
                         </span>
                     </div>

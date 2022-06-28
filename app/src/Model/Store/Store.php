@@ -141,7 +141,7 @@ class Store implements OrderableEntityInterface
     public function __construct(StoreData $storeData)
     {
         $this->domains = new ArrayCollection();
-        $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+        $this->position = self::GEDMO_SORTABLE_LAST_POSITION;
         $this->createDomains($storeData);
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($storeData);
@@ -345,7 +345,7 @@ class Store implements OrderableEntityInterface
      */
     public function getEnabledDomains(): array
     {
-        return array_filter($this->domains->toArray(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
+        return array_filter($this->domains->getValues(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
     }
 
     /**
@@ -360,7 +360,7 @@ class Store implements OrderableEntityInterface
             }
         }
 
-        throw new StoreDomainNotFoundException($this->id, $domainId);
+        throw new StoreDomainNotFoundException($domainId, $this->id);
     }
 
     /**

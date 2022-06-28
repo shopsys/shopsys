@@ -76,7 +76,9 @@ class CategorySeoFilterFormType extends AbstractType
             ->setAllowedTypes('domainId', 'int')
             ->setDefaults([
                 'data_class' => CategorySeoFiltersData::class,
-                'attr' => ['novalidate' => 'novalidate'],
+                'attr' => [
+                    'novalidate' => 'novalidate',
+                ],
             ]);
     }
 }

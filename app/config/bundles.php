@@ -2,7 +2,6 @@
 
 return [
     Craue\FormFlowBundle\CraueFormFlowBundle::class => ['all' => true],
-    Doctrine\Bundle\DoctrineCacheBundle\DoctrineCacheBundle::class => ['all' => true],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['all' => true],
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
@@ -27,9 +26,7 @@ return [
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
     Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
-    VasekPurchart\ConsoleErrorsBundle\ConsoleErrorsBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
-    Joschi127\DoctrineEntityOverrideBundle\Joschi127DoctrineEntityOverrideBundle::class => ['all' => true],
     Fp\JsFormValidatorBundle\FpJsFormValidatorBundle::class => ['all' => true],
     Shopsys\FrameworkBundle\ShopsysFrameworkBundle::class => ['all' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],

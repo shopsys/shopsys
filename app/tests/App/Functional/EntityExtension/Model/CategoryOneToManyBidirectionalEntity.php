@@ -17,20 +17,20 @@ class CategoryOneToManyBidirectionalEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
      * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManyBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
      */
-    protected $category;
+    protected ExtendedCategory $category;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name

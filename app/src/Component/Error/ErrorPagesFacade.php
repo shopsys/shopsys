@@ -9,7 +9,6 @@ use DevOps\KubernetesDeployment\Component\Error\ErrorPagesFacade as BaseErrorPag
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider;
 use Shopsys\FrameworkBundle\Component\Error\Exception\BadErrorPageStatusCodeException;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Component\Filesystem\Filesystem;
@@ -26,7 +25,6 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \League\Flysystem\FilesystemInterface $abstractFilesystem
-     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      * @param string $environment
      */
     public function __construct(
@@ -35,10 +33,9 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
         DomainRouterFactory $domainRouterFactory,
         Filesystem $filesystem,
         FilesystemInterface $abstractFilesystem,
-        ErrorIdProvider $errorIdProvider,
         string $environment = EnvironmentType::PRODUCTION
     ) {
-        parent::__construct($errorPagesDir, $domain, $domainRouterFactory, $filesystem, $abstractFilesystem, $errorIdProvider);
+        parent::__construct($errorPagesDir, $domain, $domainRouterFactory, $filesystem, $abstractFilesystem);
 
         $this->environment = $environment;
     }

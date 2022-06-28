@@ -237,7 +237,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         $unitPriceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
 
         $discountedProductQuantity = intdiv($quantity, 2);
-        $discountMultiplier = (string)($percent / 100);
+        $discountMultiplier = (string)((float)$percent / 100);
         $singleDiscountFromUnitPrice = $unitPriceWithVat->multiply($discountMultiplier);
 
         $singleDiscountWithVat = $this->rounding->roundPriceWithVatByCurrency(

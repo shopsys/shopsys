@@ -253,9 +253,9 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($asFilterInCategories as $category) {
             $categoryParameter = new CategoryParameter($category, $parameter, false, $counter);
             $this->entityManager->persist($categoryParameter);
-            $this->entityManager->flush($categoryParameter);
             $counter++;
         }
+        $this->entityManager->flush();
 
         return $parameter;
     }
@@ -292,7 +292,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         );
 
         $this->entityManager->persist($productParameterValue);
-        $this->entityManager->flush($productParameterValue);
+        $this->entityManager->flush();
     }
 
     private function createSliderParameterWithValuesAndAssignThemToProducts(): void

@@ -32,8 +32,14 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
 
-    private const ENABLED_FIRST_DOMAIN = [1 => true, 2 => false];
-    private const ENABLED_SECOND_DOMAIN = [1 => false, 2 => true];
+    private const ENABLED_FIRST_DOMAIN = [
+        1 => true,
+        2 => false,
+    ];
+    private const ENABLED_SECOND_DOMAIN = [
+        1 => false,
+        2 => true,
+    ];
 
     public const STORE_PREFIX = 'store_';
 

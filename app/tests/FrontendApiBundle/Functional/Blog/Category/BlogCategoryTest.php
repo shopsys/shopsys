@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use App\Model\Blog\Category\BlogCategory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -13,13 +15,13 @@ class BlogCategoryTest extends GraphQlTestCase
     /**
      * @var \App\Model\Blog\Category\BlogCategory
      */
-    private $blogCategory;
+    private BlogCategory $blogCategory;
 
     /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
-    private $friendlyUrlFacade;
+    private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface

@@ -422,7 +422,7 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     public function getProducts(): array
     {
-        return $this->products->toArray();
+        return $this->products->getValues();
     }
 
     /**

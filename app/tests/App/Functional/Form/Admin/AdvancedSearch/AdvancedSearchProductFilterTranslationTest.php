@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Form\Admin\AdvancedSearch;
 
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchProductFilterTranslation;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
 use Tests\App\Test\FunctionalTestCase;
 
 class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
@@ -14,13 +15,13 @@ class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig
      * @inject
      */
-    private $advancedSearchConfig;
+    private ProductAdvancedSearchConfig $advancedSearchConfig;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchProductFilterTranslation
      * @inject
      */
-    private $advancedSearchProductFilterTranslation;
+    private AdvancedSearchProductFilterTranslation $advancedSearchProductFilterTranslation;
 
     public function testTranslateFilterName()
     {

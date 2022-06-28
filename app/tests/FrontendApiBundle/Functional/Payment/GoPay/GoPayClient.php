@@ -17,7 +17,7 @@ class GoPayClient extends BaseGoPayClient
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
         $response = new Response();
-        $response->json = [ // @phpstan-ignore-line
+        $response->json = [
             'gw_url' => 'https://example.com?supertoken=xyz123456',
             'id' => '987654321',
             'state' => 'CREATED',
@@ -34,7 +34,7 @@ class GoPayClient extends BaseGoPayClient
     public function getStatus(string $id): Response
     {
         $response = new Response();
-        $response->json = [ // @phpstan-ignore-line
+        $response->json = [
             'state' => 'PAID',
             'id' => $id,
         ];
@@ -51,7 +51,7 @@ class GoPayClient extends BaseGoPayClient
     public function refundTransaction(string $id, int $amount): Response
     {
         $response = new Response();
-        $response->json = [ // @phpstan-ignore-line
+        $response->json = [
             'id' => '987654321',
             'result' => 'FINISHED',
         ];

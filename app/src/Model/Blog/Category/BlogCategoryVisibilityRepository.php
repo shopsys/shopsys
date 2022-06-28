@@ -90,7 +90,7 @@ class BlogCategoryVisibilityRepository
      */
     private function getMaxLevelOnDomain(DomainConfig $domainConfig): int
     {
-        return (int)$this->em->getConnection()->fetchColumn(
+        return (int)$this->em->getConnection()->fetchOne(
             'SELECT MAX(bc.level)
             FROM blog_categories bc
             JOIN blog_category_domains bcd ON bcd.blog_category_id = bc.id AND bcd.domain_id = :domainId

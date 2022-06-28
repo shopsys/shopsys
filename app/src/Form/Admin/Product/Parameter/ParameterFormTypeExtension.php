@@ -47,7 +47,7 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function getExtendedTypes()
+    public static function getExtendedTypes(): iterable
     {
         yield ParameterFormType::class;
     }

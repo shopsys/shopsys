@@ -100,7 +100,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
      */
     private function getLocalTemporaryDirectory(): string
     {
-        return $this->localTemporaryDir . '/' . static::LOCAL_TEMPORARY_DIRECTORY;
+        return $this->localTemporaryDir . '/' . self::LOCAL_TEMPORARY_DIRECTORY;
     }
 
     /**

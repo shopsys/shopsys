@@ -10,10 +10,3 @@ services:
         arguments:
             - '%shopsys.entity_extension.map%'
             - '%shopsys.framework.root_dir%'
-
-    App\Command\ExtendedClassesAnnotationsCommand:
-        arguments:
-            - '%shopsys.root_dir%'
-
-    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
-        alias: App\Command\ExtendedClassesAnnotationsCommand

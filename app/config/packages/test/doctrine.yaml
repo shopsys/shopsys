@@ -6,10 +6,3 @@ doctrine:
         user: "%test_database_user%"
         password: "%test_database_password%"
         persistent: false
-    orm:
-        metadata_cache_driver:
-            type: service
-            id: Doctrine\Common\Cache\ArrayCache
-        query_cache_driver:
-            type: service
-            id: Doctrine\Common\Cache\ArrayCache

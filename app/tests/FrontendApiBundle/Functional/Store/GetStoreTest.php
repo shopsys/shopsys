@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use App\DataFixtures\Demo\StoreDataFixture;
+use App\Model\Store\StoreFacade;
 use App\Model\Store\StoreFriendlyUrlProvider;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,13 +19,13 @@ class GetStoreTest extends GraphQlTestCase
      * @var \App\Model\Store\StoreFacade
      * @inject
      */
-    private $storeFacade;
+    private StoreFacade $storeFacade;
 
     /**
      * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
-    private $friendlyUrlFacade;
+    private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface

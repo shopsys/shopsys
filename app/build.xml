@@ -12,6 +12,7 @@
     <property name="path.frontend-api" value="${path.vendor}/shopsys/frontend-api"/>
 
     <property name="phpstan.level" value="5"/>
+    <property name="env.lang.english" value="LANG=en_US.UTF-8"/>
 
     <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
     <import file="${path.framework}/build.xml"/>
@@ -191,6 +192,12 @@
             <arg value="--format"/>
             <arg value="graphql"/>
             <arg value="--modern"/>
+        </exec>
+        <exec executable="${env.lang.english}" passthru="true" checkreturn="true">
+            <arg value="node"/>
+            <arg value="${path.node_modules.bin}/format-graphql"/>
+            <arg value="--write"/>
+            <arg value="${path.root}/schema.graphql"/>
         </exec>
     </target>
 

@@ -17,7 +17,7 @@ class ExtendedProductTranslation extends ProductTranslation
      * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $productDetailName;
+    protected string $productDetailName;
 
     /**
      * @return string

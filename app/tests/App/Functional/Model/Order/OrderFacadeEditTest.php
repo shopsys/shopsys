@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Order;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
-use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
@@ -23,25 +26,26 @@ final class OrderFacadeEditTest extends FunctionalTestCase
     /**
      * @var \App\Model\Order\Order
      */
-    private $order;
+    private Order $order;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
-    private $orderDataFactory;
+    private OrderDataFactoryInterface $orderDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
      * @inject
+     * @phpstan-ignore-next-line Tests are skipped
      */
-    private $orderItemDataFactory;
+    private OrderItemDataFactoryInterface $orderItemDataFactory;
 
     protected function setUp(): void
     {
@@ -99,7 +103,7 @@ final class OrderFacadeEditTest extends FunctionalTestCase
     public function testAddProductItem(): void
     {
         $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
-        . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
 
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
@@ -244,6 +248,7 @@ final class OrderFacadeEditTest extends FunctionalTestCase
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
+     * @phpstan-ignore-next-line Tests are skipped
      */
     private function getOrderItemByName(Order $order, string $name): OrderItem
     {

@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Payment;
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Payment\Payment;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentTest extends GraphQlTestCase
@@ -14,7 +15,7 @@ class PaymentTest extends GraphQlTestCase
     /**
      * @var \App\Model\Payment\Payment
      */
-    protected $payment;
+    protected Payment $payment;
 
     protected function setUp(): void
     {

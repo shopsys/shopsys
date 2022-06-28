@@ -55,7 +55,7 @@ mutation {
     }
 }';
         $expectedViolationMessages = [
-            0 => 'New password must be at least 6 characters long',
+            0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], 'validators'),
         ];
 
         $response = $this->getResponseContentForQuery($query);

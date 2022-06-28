@@ -95,6 +95,6 @@ class Advert extends BaseAdvert
      */
     public function getCategories(): array
     {
-        return $this->categories->toArray();
+        return $this->categories->getValues();
     }
 }

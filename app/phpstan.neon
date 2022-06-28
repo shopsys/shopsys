@@ -2,8 +2,8 @@ parameters:
 
     treatPhpDocTypesAsCertain: false
     symfony:
-        container_xml_path: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
-        constant_hassers: false
+        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        constantHassers: false
 
     ignoreErrors:
         -
@@ -36,9 +36,6 @@ parameters:
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
         -
-            message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
-            path: *
-        -
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
@@ -56,8 +53,13 @@ parameters:
             message: '#^Unreachable statement - code above always terminates\.#'
             path: %currentWorkingDirectory%/tests/App/Functional/EntityExtension/EntityExtensionTest.php
 
+    excludePaths:
+        - tests/App/Unit/PhpStan/GedmoTestEntity.php
+
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/shopsys/coding-standards/extension.neon
+    - sniffer/PhpStan/extension.neon

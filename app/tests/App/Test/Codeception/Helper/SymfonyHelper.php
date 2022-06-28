@@ -13,9 +13,9 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 class SymfonyHelper extends Module
 {
     /**
-     * @var \Symfony\Component\HttpKernel\Kernel
+     * @var \App\Kernel
      */
-    private $kernel;
+    private Kernel $kernel;
 
     /**
      * {@inheritDoc}

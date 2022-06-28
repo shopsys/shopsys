@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Redis;
 
+use Redis;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -12,7 +13,7 @@ class RedisFacadeTest extends FunctionalTestCase
     /**
      * @var \Redis
      */
-    private $redisClient;
+    private Redis $redisClient;
 
     protected function setUp(): void
     {

@@ -55,6 +55,7 @@ class RemoveMappingsSubscriber implements EventSubscriber
      */
     private function removeColumnsFromEntityMappings(string $parentClassName, array $attributeNames, ClassMetadata $classMetadata): void
     {
+        // @phpstan-ignore-next-line
         if ($classMetadata->rootEntityName === $parentClassName || is_subclass_of($classMetadata->rootEntityName, $parentClassName)) {
             foreach ($attributeNames as $attributeName) {
                 $classMetadata->associationMappings = $this->removeMappingByKey($attributeName, $classMetadata->associationMappings);
@@ -68,8 +69,8 @@ class RemoveMappingsSubscriber implements EventSubscriber
 
     /**
      * @param string $attributeName
-     * @param array<string, array<string, string>> $mapping
-     * @return array<string, array<string, string>>
+     * @param array<string, array<string, mixed>> $mapping
+     * @return array<string, array<string, mixed>>
      */
     private function removeMappingByKey(string $attributeName, array $mapping): array
     {

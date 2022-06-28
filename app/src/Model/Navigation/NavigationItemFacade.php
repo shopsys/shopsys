@@ -97,7 +97,7 @@ class NavigationItemFacade
         $navigationItem = new NavigationItem($navigationItemData);
 
         $this->em->persist($navigationItem);
-        $this->em->flush($navigationItem);
+        $this->em->flush();
 
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
@@ -117,7 +117,7 @@ class NavigationItemFacade
 
         $navigationItem->edit($navigationItemData);
 
-        $this->em->flush($navigationItem);
+        $this->em->flush();
 
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
@@ -153,6 +153,6 @@ class NavigationItemFacade
     public function delete(NavigationItem $navigationItem): void
     {
         $this->em->remove($navigationItem);
-        $this->em->flush($navigationItem);
+        $this->em->flush();
     }
 }

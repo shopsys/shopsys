@@ -23,8 +23,6 @@ class Article extends BaseArticle
     public const TYPE_SITE = 'site';
     public const TYPE_LINK = 'link';
 
-    public const EMPTY_STRING = '';
-
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
@@ -45,7 +43,7 @@ class Article extends BaseArticle
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $url;
 
@@ -75,7 +73,7 @@ class Article extends BaseArticle
         $this->createdAt = $articleData->createdAt ?? new DateTime();
         $this->external = $articleData->external;
         $this->type = $articleData->type;
-        $this->url = $articleData->url ?? self::EMPTY_STRING;
+        $this->url = $articleData->url;
     }
 
     /**
@@ -103,9 +101,9 @@ class Article extends BaseArticle
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }

@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Administrator;
 
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use DateTime;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -15,7 +16,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
      * @inject
      */
-    private $administratorRepository;
+    private AdministratorRepository $administratorRepository;
 
     public function testGetByValidMultidomainLogin()
     {
@@ -26,7 +27,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $administratorFromDb = $this->administratorRepository->getByValidMultidomainLoginToken($validMultidomainLoginToken);
 
@@ -43,7 +44,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 
@@ -59,7 +60,7 @@ class AdministratorRepositoryTest extends FunctionalTestCase
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
 
         $administrator->setMultidomainLoginTokenWithExpiration($validMultidomainLoginToken, $multidomainLoginTokenExpiration);
-        $this->em->flush($administrator);
+        $this->em->flush();
 
         $this->expectException(InvalidTokenException::class);
 

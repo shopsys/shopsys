@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ImageSitemapDumperFactory extends SitemapDumperFactory
 {
@@ -26,6 +27,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      * @param \App\Model\ImageSitemap\ImageSitemapFilePrefixer $imageSitemapFilePrefixer
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
@@ -33,9 +35,10 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
         FilesystemInterface $filesystem,
         MountManager $mountManager,
         SitemapFilePrefixer $sitemapFilePrefixer,
-        ImageSitemapFilePrefixer $imageSitemapFilePrefixer
+        ImageSitemapFilePrefixer $imageSitemapFilePrefixer,
+        UrlGeneratorInterface $urlGenerator
     ) {
-        parent::__construct($eventDispatcher, $localFilesystem, $filesystem, $mountManager, $sitemapFilePrefixer);
+        parent::__construct($eventDispatcher, $localFilesystem, $filesystem, $mountManager, $sitemapFilePrefixer, $urlGenerator);
 
         $this->imageSitemapFilePrefixer = $imageSitemapFilePrefixer;
     }
@@ -51,6 +54,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
             $this->localFilesystem,
             $this->filesystem,
             $this->mountManager,
+            $this->urlGenerator,
             $this->imageSitemapFilePrefixer->getSitemapFilePrefixForDomain($domainId),
             static::MAX_ITEMS_IN_FILE
         );

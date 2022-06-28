@@ -209,7 +209,7 @@ class MergadoFeedItem implements FeedItemInterface
      */
     public function getCategoryPath(): string
     {
-        return implode(static::CATEGORY_PATH_SEPARATOR, $this->categoryPath);
+        return implode(self::CATEGORY_PATH_SEPARATOR, $this->categoryPath);
     }
 
     /**
@@ -217,7 +217,7 @@ class MergadoFeedItem implements FeedItemInterface
      */
     public function getShortDescription(): string
     {
-        return implode(static::SHORT_DESCRIPTION_SEPARATOR, $this->shortDescriptionUsp);
+        return implode(self::SHORT_DESCRIPTION_SEPARATOR, $this->shortDescriptionUsp);
     }
 
     /**

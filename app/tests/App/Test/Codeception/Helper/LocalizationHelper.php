@@ -17,27 +17,27 @@ class LocalizationHelper extends Module
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    private $localization;
+    private Localization $localization;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
-    private $domainRouterFactory;
+    private DomainRouterFactory $domainRouterFactory;
 
     /**
      * @var \Tests\App\Test\Codeception\Module\StrictWebDriver
      */
-    private $webDriver;
+    private StrictWebDriver $webDriver;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
      */
-    private $unitFacade;
+    private UnitFacade $unitFacade;
 
     /**
      * @param \Codeception\TestInterface $test

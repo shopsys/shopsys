@@ -6,11 +6,24 @@ namespace Tests\App\Functional\Model\Cart;
 
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
+use App\Model\Cart\Watcher\CartWatcherFacade;
+use App\Model\Category\CategoryFacade;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\ProductRepository;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
+use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\FunctionalTestCase;
+use Twig\Environment;
 
 class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 {
@@ -18,79 +31,79 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
      * @inject
      */
-    private $cartFactory;
+    private CartFactory $cartFactory;
 
     /**
      * @var \App\Model\Product\ProductRepository
      * @inject
      */
-    private $productRepository;
+    private ProductRepository $productRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
      * @inject
      */
-    private $currentPromoCodeFacade;
+    private CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
-    private $productPriceCalculationForCustomerUser;
+    private ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
-    private $cartItemFactoryInterface;
+    private CartItemFactoryInterface $cartItemFactoryInterface;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
      * @inject
      */
-    private $cartRepository;
+    private CartRepository $cartRepository;
 
     /**
      * @var \App\Model\Cart\Watcher\CartWatcherFacade
      * @inject
      */
-    private $cartWatcherFacade;
+    private CartWatcherFacade $cartWatcherFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
     /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      * @inject
      */
-    private $productAvailabilityFacade;
+    private ProductAvailabilityFacade $productAvailabilityFacade;
 
     /**
      * @var \Twig\Environment
      * @inject
      */
-    private $twigEnvironment;
+    private Environment $twigEnvironment;
 
     /**
      * @var \App\Model\Category\CategoryFacade
      * @inject
      */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -100,7 +113,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 61 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -115,7 +128,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 59 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -130,7 +143,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 121 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 
@@ -145,7 +158,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 
         $cart->setModifiedAt(new DateTime('- 119 days'));
 
-        $this->em->flush($cart);
+        $this->em->flush();
 
         $cartFacade->deleteOldCarts();
 

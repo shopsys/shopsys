@@ -12,12 +12,18 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Tests\App\Test\FunctionalTestCase;
 
 class ProductVisibilityRepositoryTest extends FunctionalTestCase
@@ -26,37 +32,37 @@ class ProductVisibilityRepositoryTest extends FunctionalTestCase
      * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      * @inject
      */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
      * @inject
      */
-    private $productPriceRecalculator;
+    private ProductPriceRecalculator $productPriceRecalculator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
      * @inject
      */
-    private $productVisibilityRepository;
+    private ProductVisibilityRepository $productVisibilityRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
      */
-    private $localization;
+    private Localization $localization;
 
     /**
      * @return \App\Model\Product\ProductData
