@@ -13,9 +13,7 @@ import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPac
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/UseChangeTransportInCart';
-import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Controller, ControllerRenderProps, useFormContext, useWatch } from 'react-hook-form';
@@ -29,10 +27,10 @@ const { publicRuntimeConfig } = getConfig();
 
 type SelectProps = {
     transports: TransportType[];
-    preselectedPickupPlace: PickupPlaceType | null;
+    lastOrderPickupPlace: PickupPlaceType | null;
 };
 
-const Select: FC<SelectProps> = (props) => {
+const Select: FC<SelectProps> = ({ transports, lastOrderPickupPlace }) => {
     const testIdentifier = 'pages-order-';
 
     const t = useTypedTranslationFunction();
@@ -44,12 +42,12 @@ const Select: FC<SelectProps> = (props) => {
         control: formProviderMethods.control,
     });
     const [preSelectedTransport, setPreselectedTransport] = useState<TransportType | null>(null);
-    const { transport, pickupPlace, payment } = useCurrentCart();
+    const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<PickupPlaceType | null>(lastOrderPickupPlace);
+    const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
+
     const changeTransportInCart = useChangeTransportInCart();
     const changePaymentInCart = useChangePaymentInCart();
-    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({
-        variables: { currencyCode: currencyCode },
-    });
+    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
 
     const isPickupPlaceSelected = pickupPlace !== null;
 
@@ -98,31 +96,70 @@ const Select: FC<SelectProps> = (props) => {
         [openPacketeryPopup],
     );
 
-    useComponentUpdate(() => {
-        const potentialNewTransport = props.transports.find((transport) => transport.uuid === transportValue);
+    const handleTransportChange = useCallback(
+        (newTransportUuid: string | null) => {
+            const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
+            if (potentialNewTransport?.uuid === transport?.uuid) {
+                return;
+            }
 
-        if (potentialNewTransport === undefined) {
-            changeTransportInCart(null, null);
-            return;
-        }
+            if (potentialNewTransport === undefined) {
+                changeTransportInCart(null, null);
+                return;
+            }
 
-        if (potentialNewTransport.isPersonalPickup) {
-            openPersonalPickupPopup(potentialNewTransport);
-            return;
-        }
+            if (potentialNewTransport.isPersonalPickup) {
+                if (preSelectedPickupPlace === null) {
+                    openPersonalPickupPopup(potentialNewTransport);
+                    return;
+                }
 
-        changeTransportInCart(transportValue, null);
-    }, [transportValue]);
+                changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
+                setPreSelectedPickupPlace(null);
+                return;
+            }
 
-    useEffectOnce(() => {
-        changeTransportInCart(transportValue, props.preselectedPickupPlace);
-    });
+            if (newTransportUuid !== transport?.uuid) {
+                changeTransportInCart(newTransportUuid, null);
+            }
+        },
+        [changeTransportInCart, transports, openPersonalPickupPopup, transport?.uuid, preSelectedPickupPlace],
+    );
+
+    const handlePaymentChange = useCallback(
+        (newPaymentUuid: string | null, newGoPaySwiftValue: string | null) => {
+            const hasPaymentUuidChanged = newPaymentUuid !== (payment?.uuid ?? null);
+            const hasGoPayBankSwiftChanged = newGoPaySwiftValue !== paymentGoPayBankSwift;
+
+            if (hasPaymentUuidChanged && hasGoPayBankSwiftChanged) {
+                changePaymentInCart(newPaymentUuid, newGoPaySwiftValue);
+            } else if (hasPaymentUuidChanged) {
+                changePaymentInCart(newPaymentUuid, null);
+            } else if (hasGoPayBankSwiftChanged) {
+                changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
+            }
+        },
+        [changePaymentInCart, paymentGoPayBankSwift, payment],
+    );
 
     useEffect(() => {
-        changePaymentInCart(paymentValue, goPaySwiftValue);
-    }, [paymentValue, goPaySwiftValue, changePaymentInCart]);
+        if (isInitiallyLoaded) {
+            handleTransportChange(transportValue);
+        }
+    }, [transportValue, handleTransportChange, isInitiallyLoaded]);
 
-    const resetTransportAndPayment = () => {
+    useEffect(() => {
+        if (isInitiallyLoaded) {
+            handlePaymentChange(paymentValue, goPaySwiftValue);
+        }
+    }, [paymentValue, goPaySwiftValue, handlePaymentChange, isInitiallyLoaded]);
+
+    const resetPaymentAndGoPayBankSwift = () => {
+        formProviderMethods.setValue(formMeta.fields.payment.name, null);
+        formProviderMethods.setValue(formMeta.fields.goPaySwift.name, null);
+    };
+
+    const resetAll = () => {
         formProviderMethods.setValue(formMeta.fields.transport.name, null);
         formProviderMethods.setValue(formMeta.fields.payment.name, null);
         formProviderMethods.setValue(formMeta.fields.goPaySwift.name, null);
@@ -133,6 +170,7 @@ const Select: FC<SelectProps> = (props) => {
         if (selectedPickupPlace !== null) {
             changeTransportInCart(transportValue, selectedPickupPlace);
         } else {
+            formProviderMethods.setValue(formMeta.fields.transport.name, null);
             removePacketeryCookie();
         }
 
@@ -169,7 +207,7 @@ const Select: FC<SelectProps> = (props) => {
                     fieldRef={fieldRef}
                     image={transportItem.image}
                     checked={isActive}
-                    uncheckCallback={resetTransportAndPayment}
+                    uncheckCallback={resetAll}
                     data-testid={testIdentifier + 'transport-item-input'}
                     label={
                         <SelectItemLabel
@@ -230,16 +268,16 @@ const Select: FC<SelectProps> = (props) => {
                             <ul>
                                 {transport !== null
                                     ? renderTransportListItem(transport, true, field)
-                                    : props.transports.map((transportItem) =>
+                                    : transports.map((transportItem) =>
                                           renderTransportListItem(transportItem, false, field),
                                       )}
                             </ul>
                         )}
                     />
-                    {transportValue !== null && (
+                    {transportValue !== null && transport !== null && (
                         <ResetButtonStyled
                             type="button"
-                            onClick={resetTransportAndPayment}
+                            onClick={resetAll}
                             data-testid={testIdentifier + 'reset-transport'}
                         >
                             {t('Change transport type')}
@@ -300,7 +338,7 @@ const Select: FC<SelectProps> = (props) => {
                             {paymentValue !== null && payment !== null && (
                                 <ResetButtonStyled
                                     type="button"
-                                    onClick={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
+                                    onClick={resetPaymentAndGoPayBankSwift}
                                     data-testid={testIdentifier + 'reset-payment'}
                                 >
                                     {t('Change payment type')}

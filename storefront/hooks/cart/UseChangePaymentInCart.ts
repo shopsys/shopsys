@@ -19,9 +19,12 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
 
     const changePaymentHandler = useCallback(
         async (newPaymentUuid: string | null, newGoPayBankSwift: string | null) => {
-            const changePaymentResult = await changePaymentInCart({
-                input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
-            });
+            const changePaymentResult = await changePaymentInCart(
+                {
+                    input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
+                },
+                { additionalTypenames: ['dedup'] },
+            );
 
             // EXTEND PAYMENT MODIFICATIONS HERE
 

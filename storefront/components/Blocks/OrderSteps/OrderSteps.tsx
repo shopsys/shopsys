@@ -24,7 +24,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
             <OrderStepsListStyled>
                 <OrderStepsListItemStyled data-testid={testIdentifier + '1'}>
                     {props.activeStep > 1 ? (
-                        <NextLink href={cartUrl} passHref>
+                        <NextLink href={cartUrl} passHref prefetch>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'1. ' + t('Cart')}
                             </OrderStepsListItemLinkStyled>
@@ -37,7 +37,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled data-testid={testIdentifier + '2'}>
                     {props.activeStep > 2 ? (
-                        <NextLink href={transportAndPaymentUrl} passHref>
+                        <NextLink href={transportAndPaymentUrl} passHref prefetch>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'2. ' + t('Transport and payment')}
                             </OrderStepsListItemLinkStyled>

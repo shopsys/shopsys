@@ -29,14 +29,14 @@ const OrderAction: FC<OrderActionProps> = (props) => {
 
     const onNextStepHandler = () => {
         if (props.buttonNextLink !== undefined) {
-            router.push(props.buttonNextLink);
+            router.push(props.buttonNextLink, undefined, { shallow: true });
         }
     };
 
     return (
         <OrderActionStyled withGapBottom={props.withGapBottom} withGapTop={props.withGapTop}>
             <OrderActionLeftStyled data-testid={testIdentifier + 'back'}>
-                <NextLink href={props.buttonBackLink} passHref>
+                <NextLink href={props.buttonBackLink} passHref shallow prefetch>
                     <OrderActionLinkBackStyled>
                         <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
                         {props.buttonBack}

@@ -606,3 +606,40 @@
 - most significant changes
   - `currentCustomerUser` query returns `null` when no user is signed in
   - SF code was refactored to be able to work with the `null` value
+
+### Optimistic updates in 2nd order step
+- [FWCC-1036](https://shopsys.atlassian.net/browse/FWCC-1036)
+- [FWCC-1036 - optimistic updates in 2nd order step ](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/658/diffs)
+- the reasons these changes were introduced
+  - selection of transport and payment took too long, which worsened the UX
+  - with optimistic updates, it happens immadiately
+- most significant changes
+  - `ChangeTransportInCart` and `ChangePaymentInCart` mutations were added to the `optimistic` field in `cacheExchange`
+  - this way they first return a "virtual result" with a hardcoded value, and then update it when the actual HTTP result finishes
+- tips on how to implement them
+  - in the place where these mutations are called, nothing needs to be changed
+  - however, if you wish to change other updates to use the optimistic approach, you have to
+    - add a config object to the `optimistic` field in `cacheExchange` with the name of the mutation as the key (e.g. `Login`)
+    - inside this object, you have access to the current cache and variables that were sent to the query 
+    ```ts
+    ChangeTransportInCart: ({ input }: { input: ChangeTransportInCartInputApi }, cache) => {...
+    ```
+    - your optimistic mutation has to return an object corresponding to the actual object that the mutation would return (same fragment, `null`)
+- other changes
+  - resetting of transport and payment on navigation or refresh when pickup place is selected has been fixed by setting the initial value of the `pickupPlaceIdentifier` to the value from API
+  - custom dedup exchange was introduced to allow custom deduplication logic
+    - it allows for mutation deduplication, which is disallowed by default
+    - to deduplicate your mutation, add a `additionalTypenames` config with `['dedup']` as a value
+    ```ts
+    const changePaymentResult = await changePaymentInCart(
+        {
+            input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
+        },
+        { additionalTypenames: ['dedup'] },
+    );
+    ```
+    - you will probably not need to deduplicate your mutations, it is only required for optimistic mutations, where changes may glitch if they are not deduplicated
+    - cart can now be taken from cache, just use the `fromCache` option on the `useCurrentCart` hook
+    ```ts
+    const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
+    ```

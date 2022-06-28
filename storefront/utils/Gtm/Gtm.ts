@@ -28,7 +28,7 @@ import { TransportType } from 'types/transport';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
-    const { cart, promoCode, isLoaded } = useCurrentCart();
+    const { cart, promoCode, isLoaded } = useCurrentCart(true);
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { isUserLoggedIn } = useCurrentUserData();
     const { domain } = useShopsysSelector((state) => state);

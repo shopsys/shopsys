@@ -17,6 +17,7 @@ export type CurrentCartType = {
     paymentGoPayBankSwift: string | null;
     promoCode: string | null;
     isLoaded: boolean;
+    isInitiallyLoaded: boolean;
 };
 
 export type ProductCartItemType = {
