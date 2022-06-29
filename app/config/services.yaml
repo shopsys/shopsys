@@ -87,7 +87,10 @@ services:
         alias: App\Component\Doctrine\NotNullableColumnsFinder
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
-        class: 'App\Model\Customer\User\CustomerUserUpdateDataFactory'
+        alias: App\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
+        alias: App\Model\Customer\User\CustomerUserUpdateDataFactory
 
     App\Model\Customer\User\RegistrationDataFactory: ~
 
@@ -145,7 +148,10 @@ services:
     App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory:
-        class: 'App\Model\Customer\BillingAddressDataFactory'
+        alias: App\Model\Customer\BillingAddressDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
+        alias: App\Model\Customer\BillingAddressDataFactory
 
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
@@ -712,6 +718,9 @@ services:
         alias: App\Model\Customer\User\CustomerUserIdentifierFactory
 
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory:
+        alias: App\Model\Customer\DeliveryAddressDataFactory
+
+    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
         alias: App\Model\Customer\DeliveryAddressDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade:

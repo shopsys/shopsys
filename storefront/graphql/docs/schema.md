@@ -8057,6 +8057,15 @@ The customer's last name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td>
+
+Allows user to subscribe/unsubscribe newsletter.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>note</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>

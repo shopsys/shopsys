@@ -6,19 +6,65 @@ namespace App\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseCustomerUserData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData as BaseCustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
+/**
+ * @property \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
+ * @property \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+ * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
+ * @method __construct(\App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory, \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory, \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory, \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory)
+ * @method \App\Model\Customer\User\CustomerUserUpdateData create()
+ * @method \App\Model\Customer\DeliveryAddressData getDeliveryAddressDataFromCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \App\Model\Customer\DeliveryAddressData getAmendedDeliveryAddressDataByOrder(\App\Model\Order\Order $order, \App\Model\Customer\DeliveryAddress|null $deliveryAddress = null)
+ */
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
     /**
-     * @param \App\Model\Customer\User\RegistrationData $registrationData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @param \App\Model\Customer\BillingAddressData $billingAddressData
+     * @param \App\Model\Customer\DeliveryAddressData $deliveryAddressData
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createFromRegistrationData(RegistrationData $registrationData): CustomerUserUpdateData
+    protected function createInstance(
+        BillingAddressData $billingAddressData,
+        DeliveryAddressData $deliveryAddressData,
+        BaseCustomerUserData $customerUserData
+    ): BaseCustomerUserUpdateData {
+        return new CustomerUserUpdateData(
+            $billingAddressData,
+            $deliveryAddressData,
+            $customerUserData
+        );
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
+     */
+    public function createFromCustomerUser(CustomerUser $customerUser): BaseCustomerUserUpdateData
+    {
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        return $this->createInstance(
+            $this->billingAddressDataFactory->createFromBillingAddress($billingAddress),
+            $this->getDeliveryAddressDataFromCustomerUser($customerUser),
+            $this->customerUserDataFactory->createFromCustomerUser($customerUser)
+        );
+    }
+
+    /**
+     * @param \App\Model\Customer\User\RegistrationData $registrationData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
+     */
+    public function createFromRegistrationData(RegistrationData $registrationData): BaseCustomerUserUpdateData
     {
 
         /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
@@ -55,9 +101,9 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Order\Order $order
      * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): CustomerUserUpdateData
+    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): BaseCustomerUserUpdateData
     {
         /** @var \App\Model\Customer\BillingAddress $billingAddress */
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
@@ -96,7 +142,6 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      */
     protected function getAmendedBillingAddressDataByOrder(Order $order, BillingAddress $billingAddress)
     {
-        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
         if ($billingAddress->getStreet() === null) {

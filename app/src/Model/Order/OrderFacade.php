@@ -523,7 +523,7 @@ class OrderFacade extends BaseOrderFacade
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Order\FrontOrderData $frontOrderData
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function mapFrontOrderDataToCustomerUserUpdateData(
         CustomerUser $customerUser,

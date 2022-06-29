@@ -29,3 +29,7 @@ OrderInput:
                 type: "Uuid"
                 description: "Delivery address identifier"
                 defaultValue: null
+            newsletterSubscription:
+                type: Boolean
+                description: "Allows user to subscribe/unsubscribe newsletter."
+                defaultValue: false

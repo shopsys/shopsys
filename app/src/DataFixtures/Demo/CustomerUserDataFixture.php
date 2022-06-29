@@ -74,7 +74,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
+     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
      */
     private $customerUserUpdateDataFactory;
 
@@ -89,7 +89,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
     public function __construct(
@@ -142,7 +142,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param int $domainId
      * @param array $data
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
     {
@@ -483,7 +483,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $billingAddressInputData
      */
     private function setBillingAddressData(CustomerUserUpdateData $customerUserUpdateData, array $billingAddressInputData): void
@@ -501,7 +501,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $deliveryAddressInputData
      */
     private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void

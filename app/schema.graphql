@@ -1043,6 +1043,8 @@ input OrderInput {
   firstName: String!
   """The customer's last name"""
   lastName: String!
+  """Allows user to subscribe/unsubscribe newsletter."""
+  newsletterSubscription: Boolean = false
   """Other information related to the order"""
   note: String
   """Determines whether the order is made on the company behalf."""
