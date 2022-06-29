@@ -215,11 +215,13 @@ security:
         - { path: ^/%admin_url%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # orders
+        - { path: ^/%admin_url%/order/edit, roles: ROLE_ORDER_FULL, methods: [POST] }
         - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/add-product/, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/, roles: ROLE_ORDER_VIEW }
         # customers
         - { path: ^/%admin_url%/customer/new, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/edit, roles: ROLE_CUSTOMER_FULL, methods: [POST] }
         - { path: ^/%admin_url%/customer/delete, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/login-as-user/, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }
@@ -229,28 +231,40 @@ security:
         - { path: ^/%admin_url%/newsletter/, roles: ROLE_NEWSLETTER_VIEW }
         # promo codes
         - { path: ^/%admin_url%/promo-code/new, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/edit, roles: ROLE_PROMO_CODE_FULL, methods: [POST] }
         - { path: ^/%admin_url%/promo-code/new-mass-generate, roles: ROLE_PROMO_CODE_FULL }
         - { path: ^/%admin_url%/promo-code/delete, roles: ROLE_PROMO_CODE_FULL }
         - { path: ^/%admin_url%/promo-code/, roles: ROLE_PROMO_CODE_VIEW }
         # products, top/bestselling products, flags, parameters, and units
+        - { path: ^/%admin_url%/product/list, roles: ROLE_PRODUCT_FULL, methods: [POST] } # mass edit form
         - { path: ^/%admin_url%/product/new, roles: ROLE_PRODUCT_FULL }
+        - { path: ^/%admin_url%/product/edit/catnum-exists, roles: ROLE_PRODUCT_VIEW, methods: [POST] }
+        - { path: ^/%admin_url%/product/edit, roles: ROLE_PRODUCT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/product/create-variant, roles: ROLE_PRODUCT_FULL }
         - { path: ^/%admin_url%/product/delete, roles: ROLE_PRODUCT_FULL }
-        - { path: ^/%admin_url%/product/top-product, roles: ROLE_TOP_PRODUCT_VIEW }
-        - { path: ^/%admin_url%/product/bestselling-product, roles: ROLE_BESTSELLING_PRODUCT_VIEW }
+        - { path: ^/%admin_url%/product/top-product, roles: ROLE_TOP_PRODUCT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/top-product, roles: ROLE_TOP_PRODUCT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/bestselling-product, roles: ROLE_BESTSELLING_PRODUCT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/bestselling-product, roles: ROLE_BESTSELLING_PRODUCT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/product/flag/delete, roles: ROLE_FLAG_FULL }
+        - { path: ^/%admin_url%/product/flag/new, roles: ROLE_FLAG_FULL }
+        - { path: ^/%admin_url%/product/flag/edit, roles: ROLE_FLAG_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/flag/edit, roles: ROLE_FLAG_VIEW, methods: [GET] }
         - { path: ^/%admin_url%/product/flag/, roles: ROLE_FLAG_VIEW }
         - { path: ^/%admin_url%/product/parameter/delete, roles: ROLE_PARAMETER_FULL }
         - { path: ^/%admin_url%/product/parameter/, roles: ROLE_PARAMETER_VIEW }
         - { path: ^/%admin_url%/product/unit/delete, roles: ROLE_UNIT_FULL }
-        - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_VIEW }
+        - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/product/, roles: ROLE_PRODUCT_VIEW }
         # categories and top categories
         - { path: ^/%admin_url%/category/new, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/edit, roles: ROLE_CATEGORY_FULL, methods: [POST] }
         - { path: ^/%admin_url%/category/delete, roles: ROLE_CATEGORY_FULL }
         - { path: ^/%admin_url%/category/save-order/, roles: ROLE_CATEGORY_FULL }
         - { path: ^/%admin_url%/category/apply-sorting/, roles: ROLE_CATEGORY_FULL }
-        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_VIEW }
+        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_FULL, methods: [POST] }
         - { path: ^/%admin_url%/category/, roles: ROLE_CATEGORY_VIEW }
         # pricing groups
         - { path: ^/%admin_url%/pricing/group/delete, roles: ROLE_PRICING_GROUP_FULL }
@@ -261,47 +275,59 @@ security:
         # articles
         - { path: ^/%admin_url%/article/delete, roles: ROLE_ARTICLE_FULL }
         - { path: ^/%admin_url%/article/new, roles: ROLE_ARTICLE_FULL }
+        - { path: ^/%admin_url%/article/edit, roles: ROLE_ARTICLE_FULL, methods: [POST] }
         - { path: ^/%admin_url%/article/save-ordering/, roles: ROLE_ARTICLE_FULL }
         - { path: ^/%admin_url%/article/, roles: ROLE_ARTICLE_VIEW }
         # adverts
         - { path: ^/%admin_url%/advert/new, roles: ROLE_ADVERT_FULL }
+        - { path: ^/%admin_url%/advert/edit, roles: ROLE_ADVERT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/advert/delete, roles: ROLE_ADVERT_FULL }
         - { path: ^/%admin_url%/advert/, roles: ROLE_ADVERT_VIEW }
         # slider items
         - { path: ^/%admin_url%/slider/item/new, roles: ROLE_SLIDER_ITEM_FULL }
         - { path: ^/%admin_url%/slider/item/delete, roles: ROLE_SLIDER_ITEM_FULL }
+        - { path: ^/%admin_url%/slider/item/edit, roles: ROLE_SLIDER_ITEM_FULL, methods: [POST] }
         - { path: ^/%admin_url%/slider/, roles: ROLE_SLIDER_ITEM_VIEW }
         # navigation
         - { path: ^/%admin_url%/navigation/new, roles: ROLE_NAVIGATION_FULL }
+        - { path: ^/%admin_url%/navigation/edit, roles: ROLE_NAVIGATION_FULL, methods: [POST] }
         - { path: ^/%admin_url%/navigation/delete, roles: ROLE_NAVIGATION_FULL }
         - { path: ^/%admin_url%/navigation/, roles: ROLE_NAVIGATION_VIEW }
         # blog categories
         - { path: ^/%admin_url%/blog/category/new, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/edit, roles: ROLE_BLOG_CATEGORY_FULL, methods: [POST] }
         - { path: ^/%admin_url%/blog/category/delete, roles: ROLE_BLOG_CATEGORY_FULL }
         - { path: ^/%admin_url%/blog/category/apply-sorting/, roles: ROLE_BLOG_CATEGORY_FULL }
         - { path: ^/%admin_url%/blog/category/, roles: ROLE_BLOG_CATEGORY_VIEW }
         # blog articles
         - { path: ^/%admin_url%/blog/article/new, roles: ROLE_BLOG_ARTICLE_FULL }
+        - { path: ^/%admin_url%/blog/article/edit, roles: ROLE_BLOG_ARTICLE_FULL, methods: [POST] }
         - { path: ^/%admin_url%/blog/article/delete, roles: ROLE_BLOG_ARTICLE_FULL }
         - { path: ^/%admin_url%/blog/article/, roles: ROLE_BLOG_ARTICLE_VIEW }
         # notification bar
         - { path: ^/%admin_url%/notification-bar/new, roles: ROLE_NOTIFICATION_BAR_FULL }
+        - { path: ^/%admin_url%/notification-bar/edit, roles: ROLE_NOTIFICATION_BAR_FULL, methods: [POST] }
         - { path: ^/%admin_url%/notification-bar/delete, roles: ROLE_NOTIFICATION_BAR_FULL }
         - { path: ^/%admin_url%/notification-bar/, roles: ROLE_NOTIFICATION_BAR_VIEW }
         # order submitted page setting
-        - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_VIEW }
+        - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_FULL, methods: [POST] }
         # legal conditions setting
-        - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_VIEW }
+        - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_FULL, methods: [POST] }
         # privacy policy setting
-        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_VIEW }
+        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_FULL, methods: [POST] }
         # personal data access setting
-        - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_VIEW }
+        - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_FULL, methods: [POST] }
         # cookies article setting
-        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_VIEW }
+        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_FULL, methods: [POST] }
         # administrators
         - { path: ^/%admin_url%/administrator/new, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/delete, roles: ROLE_ADMINISTRATOR_FULL }
-        - { path: ^/%admin_url%/administrator/edit/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/edit/, roles: ROLE_ADMIN } # @see \App\Controller\Admin\AdministratorController::denyAccessUnlessHimselfOrGranted
         - { path: ^/%admin_url%/administrator/my-account/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/administrator/enable-two-factor-authentication/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/administrator/disable-two-factor-authentication/, roles: ROLE_ADMIN }
@@ -314,21 +340,27 @@ security:
         # domains
         - { path: ^/%admin_url%/domain/, roles: ROLE_DOMAIN_VIEW }
         # shop info
-        - { path: ^/%admin_url%/shop-info/setting, roles: ROLE_SHOP_INFO_VIEW }
+        - { path: ^/%admin_url%/shop-info/setting, roles: ROLE_SHOP_INFO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/shop-info/setting, roles: ROLE_SHOP_INFO_FULL, methods: [POST] }
         # mail setting
-        - { path: ^/%admin_url%/mail/setting, roles: ROLE_MAIL_SETTING_VIEW }
+        - { path: ^/%admin_url%/mail/setting, roles: ROLE_MAIL_SETTING_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/mail/setting, roles: ROLE_MAIL_SETTING_FULL, methods: [POST] }
         # mail templates
         - { path: ^/%admin_url%/mail/create, roles: ROLE_MAIL_TEMPLATE_FULL }
+        - { path: ^/%admin_url%/mail/edit, roles: ROLE_MAIL_TEMPLATE_FULL, methods: [POST] }
         - { path: ^/%admin_url%/mail/delete, roles: ROLE_MAIL_TEMPLATE_FULL }
         - { path: ^/%admin_url%/mail/edit/, roles: ROLE_MAIL_TEMPLATE_VIEW }
         - { path: ^/%admin_url%/mail/template/, roles: ROLE_MAIL_TEMPLATE_VIEW }
         # transports and payments
-        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/transport-and-payment/list, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
         - { path: ^/%admin_url%/transport/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/transport/edit, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/transport/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
         - { path: ^/%admin_url%/transport/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
         - { path: ^/%admin_url%/payment/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/payment/edit, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/payment/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
         - { path: ^/%admin_url%/payment/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
         # order statuses
@@ -336,35 +368,44 @@ security:
         - { path: ^/%admin_url%/order-status/, roles: ROLE_ORDER_STATUS_VIEW }
         # brands
         - { path: ^/%admin_url%/brand/new, roles: ROLE_BRAND_FULL }
+        - { path: ^/%admin_url%/brand/edit, roles: ROLE_BRAND_FULL, methods: [POST] }
         - { path: ^/%admin_url%/brand/delete, roles: ROLE_BRAND_FULL }
         - { path: ^/%admin_url%/brand/, roles: ROLE_BRAND_VIEW }
         # countries
         - { path: ^/%admin_url%/country/new, roles: ROLE_COUNTRY_FULL }
+        - { path: ^/%admin_url%/country/edit, roles: ROLE_COUNTRY_FULL, methods: [POST] }
         - { path: ^/%admin_url%/country/, roles: ROLE_COUNTRY_VIEW }
         # stores
         - { path: ^/%admin_url%/store/new, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/edit, roles: ROLE_STORE_FULL, methods: [POST] }
         - { path: ^/%admin_url%/store/delete, roles: ROLE_STORE_FULL }
         - { path: ^/%admin_url%/store/setdefault/, roles: ROLE_STORE_FULL }
         - { path: ^/%admin_url%/store/, roles: ROLE_STORE_VIEW }
         # parameter values
-        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_VIEW }
+        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_VIEW, method: [GET] }
+        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_FULL, method: [POST] }
         # transport types
-        - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_VIEW }
+        - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_VIEW, method: [GET] }
+        - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_FULL, method: [POST] }
         # image sizes
         - { path: ^/%admin_url%/image/overview, roles: ROLE_IMAGE_SIZE_VIEW }
         # SEO
-        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_VIEW } # this is actually "edit" path
+        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_FULL, methods: [POST] }
         - { path: ^/%admin_url%/seo/category/new, roles: ROLE_CATEGORY_SEO_FULL }
         - { path: ^/%admin_url%/seo/category/ready-combination/delete, roles: ROLE_CATEGORY_SEO_FULL }
         - { path: ^/%admin_url%/seo/category, roles: ROLE_CATEGORY_SEO_VIEW }
-        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_VIEW }
+        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_FULL, methods: [POST] }
         # friendly URLs
         - { path: ^/%admin_url%/unused-friendly-url/delete, roles: ROLE_FRIENDLY_URL_FULL }
         - { path: ^/%admin_url%/unused-friendly-url/, roles: ROLE_FRIENDLY_URL_VIEW }
         # contact form
-        - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_VIEW }
+        - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_FULL, methods: [POST] }
         # stocks
         - { path: ^/%admin_url%/stock/new, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/edit, roles: ROLE_STOCK_FULL, methods: [POST] }
         - { path: ^/%admin_url%/stock/delete, roles: ROLE_STOCK_FULL }
         - { path: ^/%admin_url%/stock/savesettings/, roles: ROLE_STOCK_FULL }
         - { path: ^/%admin_url%/stock/setdefault/, roles: ROLE_STOCK_FULL }
@@ -372,11 +413,14 @@ security:
         # feeds
         - { path: ^/%admin_url%/feed/list/, roles: ROLE_FEED_VIEW }
         # Heureka
-        - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_VIEW }
+        - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_FULL, methods: [POST] }
         # scripts
         - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
+        - { path: ^/%admin_url%/script/edit, roles: ROLE_SCRIPT_FULL, methods: [POST] }
         - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
-        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW }
+        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_FULL, methods: [POST] }
         # language constants
         - { path: ^/%admin_url%/constant/edit, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
         - { path: ^/%admin_url%/constant/delete, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
