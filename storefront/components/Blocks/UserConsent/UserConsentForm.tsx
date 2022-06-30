@@ -107,13 +107,30 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
                 />
             </ConsentRowStyled>
             <ConsentButtonsRowStyled>
-                <Button type="button" size="small" variant="primary" onClick={saveCookieChoices}>
+                <Button
+                    data-testid="blocks-userconsent-save"
+                    type="button"
+                    size="small"
+                    variant="primary"
+                    onClick={saveCookieChoices}
+                >
                     {t('Save choices')}
                 </Button>
-                <Button type="button" size="small" onClick={acceptAllCookieChoices}>
+                <Button
+                    data-testid="blocks-userconsent-accept"
+                    type="button"
+                    size="small"
+                    onClick={acceptAllCookieChoices}
+                >
                     {t('Accept all')}
                 </Button>
-                <Button type="button" size="small" variant="secondary" onClick={rejectAllCookieChoices}>
+                <Button
+                    data-testid="blocks-userconsent-reject"
+                    type="button"
+                    size="small"
+                    variant="secondary"
+                    onClick={rejectAllCookieChoices}
+                >
                     {t('Reject all')}
                 </Button>
             </ConsentButtonsRowStyled>
