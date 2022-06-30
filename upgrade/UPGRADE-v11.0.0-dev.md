@@ -571,6 +571,56 @@ There you can find links to upgrade notes for other versions too.
             +       LoggerInterface $logger
                 )
             ```
+          
+- Changes in error handling ([#2474](https://github.com/shopsys/shopsys/pull/2474))
+    - `symfony/debug` component was replaced by `symfony/error-handler` component
+        - reflect this change in your `composer.json`
+            ```diff
+            - "symfony/debug": "^4.4.0",
+            + "symfony/error-handler": "^4.4.0",
+            ```
+        - if you import any classes from `symfony\debug` component, import them from `symfony/error-handler`
+        - rename `config/routes/dev/twig.yaml` to `config/routes/dev/framework.yaml` and change its content
+            ```diff
+            - # config/routes/dev/twig.yaml
+            + # config/routes/dev/framework.yaml
+              _errors:
+            -     resource: '@TwigBundle/Resources/config/routing/errors.xml'
+            +     resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+                  prefix:   /_error
+            ```
+    - Class `Shopsys\FrameworkBundle\Component\Error\ExceptionController` was removed and it's not needed anymore.
+    - Class `App\Controller\Front\ErrorController` was moved to `Shopsys\FrameworkBundle\Component\Error\ErrorController`
+        - change your config of `error_controller` in `config/packages/framework.yaml`
+            ```diff
+            -    error_controller: 'App\Controller\Front\ErrorController::showAction'
+            +    error_controller: 'Shopsys\FrameworkBundle\Component\Error::showAction'
+            ```
+        - remove config of `ErrorController` in `config/services.yaml`. It is configured in framework from now on.
+            ```diff
+            - App\Controller\Front\ErrorController:
+            -     arguments:
+            -         $environment: '%kernel.environment%'
+            -         $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
+            ```
+        - remove `front_error_page` and `front_error_page_format` routes from `config/routes/shopsys_front.yaml`. It's handled by framework from now on.
+            ```diff
+            - front_error_page:
+            -     path: /_error/{code}/
+            -     defaults:
+            -         _controller: App\Controller\Front\ErrorController:errorPageAction
+            -     requirements:
+            -         code: \d+
+
+            - front_error_page_format:
+            -     path: /_error/{code}/{_format}/
+            -     defaults:
+            -         _controller: App\Controller\Front\ErrorController:errorPageAction
+            -     requirements:
+            -         code: \d+
+            -         _format: css|html|js|json|txt|xml
+            ```
+        - see #project-base-diff to update your project
 
 ## Application
 

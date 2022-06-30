@@ -126,11 +126,6 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
-    App\Controller\Front\ErrorController:
-        arguments:
-            $environment: '%kernel.environment%'
-            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
-
     App\Controller\Front\RobotsController:
         arguments:
             $sitemapsUrlPrefix: '%shopsys.sitemaps_url_prefix%'
