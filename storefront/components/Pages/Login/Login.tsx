@@ -51,6 +51,8 @@ const Login: FC = () => {
         await login({ email: data.email, password: data.password, previousCartUuid: cartUuid });
     };
 
+    const testIdentifier = 'pages-login-submit';
+
     return (
         <SimpleLayout heading={t('Login')} breadcrumb={[{ name: t('Login'), slug: loginUrl }]}>
             <FormProvider {...formProviderMethods}>
@@ -107,7 +109,9 @@ const Login: FC = () => {
                     />
 
                     <ButtonWrapperStyled>
-                        <Button type="submit">{t('Log in')}</Button>
+                        <Button type="submit" data-testid={testIdentifier}>
+                            {t('Log in')}
+                        </Button>
                     </ButtonWrapperStyled>
                 </Form>
             </FormProvider>
