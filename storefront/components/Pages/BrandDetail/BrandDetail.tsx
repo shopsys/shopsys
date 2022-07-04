@@ -17,37 +17,34 @@ type BrandDetailProps = {
     brand: BrandDetailType;
 };
 
-const BrandDetail: FC<BrandDetailProps> = (props) => {
-    const testIdentifier = 'pages-branddetail-';
+const TEST_IDENTIFIER = 'pages-branddetail-';
 
+const BrandDetail: FC<BrandDetailProps> = ({ brand }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (
         <>
             <Webline>
-                <Heading type={'h1'}>{props.brand.seoH1 !== null ? props.brand.seoH1 : props.brand.name}</Heading>
+                <Heading type={'h1'}>{brand.seoH1 !== null ? brand.seoH1 : brand.name}</Heading>
                 <BrandDetailStyled>
-                    <BrandDetailImageStyled data-testid={testIdentifier + 'image'}>
-                        <Image image={props.brand.image} type="default" alt={props.brand.name} />
+                    <BrandDetailImageStyled data-testid={TEST_IDENTIFIER + 'image'}>
+                        <Image image={brand.image} type="default" alt={brand.name} />
                     </BrandDetailImageStyled>
-                    <BrandDetailTextStyled data-testid={testIdentifier + 'description'}>
-                        {props.brand.description !== null ? <UserText htmlContent={props.brand.description} /> : null}
+                    <BrandDetailTextStyled data-testid={TEST_IDENTIFIER + 'description'}>
+                        {brand.description !== null ? <UserText htmlContent={brand.description} /> : null}
                     </BrandDetailTextStyled>
                 </BrandDetailStyled>
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
                     <SortingBar
-                        sorting={props.brand.productConnection.orderingMode}
-                        totalCount={props.brand.productConnection.totalCount}
+                        sorting={brand.productConnection.orderingMode}
+                        totalCount={brand.productConnection.totalCount}
                     />
-                    {props.brand.productConnection.products.length !== 0 && (
-                        <ProductsList products={props.brand.productConnection.products} gtmListName="brand" />
+                    {brand.productConnection.products.length !== 0 && (
+                        <ProductsList products={brand.productConnection.products} gtmListName="brand" />
                     )}
-                    <Pagination
-                        totalCount={props.brand.productConnection.totalCount}
-                        containerWrapRef={containerWrapRef}
-                    />
+                    <Pagination totalCount={brand.productConnection.totalCount} containerWrapRef={containerWrapRef} />
                 </div>
             </Webline>
         </>
