@@ -52,6 +52,6 @@ class Article extends BaseArticle
      */
     public function getCreatedAt(): DateTime
     {
-        return $this->createdAt;
+        return $this->createdAt->modify('+1 day');
     }
 }

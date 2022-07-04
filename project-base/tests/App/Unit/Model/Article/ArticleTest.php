@@ -18,6 +18,6 @@ class ArticleTest extends TestCase
 
         $article = new Article($articleData);
 
-        $this->assertEquals(new Datetime('2000-01-01'), $article->getCreatedAt());
+        $this->assertEquals(new Datetime('2000-01-02'), $article->getCreatedAt());
     }
 }
