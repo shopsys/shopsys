@@ -1,18 +1,19 @@
 import { styled } from 'components/Theme/main';
+import { HTMLAttributes } from 'react';
 import { css } from 'styled-components';
 
-type PaginationButtonStyledProps = {
+type PaginationButtonStyledProps = HTMLAttributes<HTMLAnchorElement> & {
     active?: boolean;
     dotButton?: boolean;
 };
 
 const localVariables = {
-    paginationWidth: '335px',
-    buttonHeightAndWidth: '45px',
+    paginationWidth: '340px',
+    buttonHeightAndWidth: '44px',
 };
 
-export const PaginationWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const PaginationWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         margin: 10px auto;
@@ -29,11 +30,13 @@ export const PaginationWrapperStyled = styled.div`
             left: 100%;
             margin-left: -${localVariables.paginationWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const PaginationButtonStyled = styled.button<PaginationButtonStyledProps>`
-    ${({ theme, active, dotButton }) => css`
+export const PaginationButtonStyled = styled.a<PaginationButtonStyledProps>(
+    ({ theme, active, dotButton }) => css`
+        display: flex;
+        text-decoration: none;
         width: ${localVariables.buttonHeightAndWidth};
         height: ${localVariables.buttonHeightAndWidth};
 
@@ -41,9 +44,11 @@ export const PaginationButtonStyled = styled.button<PaginationButtonStyledProps>
         border: 1px solid ${theme.color.whitesmoke};
         border-radius: ${theme.radius.medium};
         font-weight: 700;
+        align-items: center;
+        justify-content: center;
 
         &:hover {
-            cursor: pointer;
+            text-decoration: none;
         }
 
         ${active &&
@@ -62,5 +67,5 @@ export const PaginationButtonStyled = styled.button<PaginationButtonStyledProps>
                 cursor: default;
             }
         `};
-    `};
-`;
+    `,
+);
