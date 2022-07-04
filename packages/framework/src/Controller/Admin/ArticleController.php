@@ -200,7 +200,7 @@ class ArticleController extends AdminBaseController
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
 
-            $this->articleFacade->delete($id);
+            //$this->articleFacade->delete($id);
 
             $this->addSuccessFlashTwig(
                 t('Article <strong>{{ name }}</strong> deleted'),
