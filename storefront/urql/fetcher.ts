@@ -68,18 +68,24 @@ export const fetcher =
                 return Promise.resolve(response);
             }
 
-            return fetch(input, {
+            const result = await fetch(input, {
                 ...init,
                 body,
-            }).then(async (result) => {
-                const res = await result.clone().json();
-
-                if (res.data !== undefined && client !== null) {
-                    await client.set(hash, JSON.stringify(res.data), { EX: ttl });
-                }
-
-                return result;
             });
+
+            const res = await result.json();
+
+            if (res.data !== undefined) {
+                await client.set(hash, JSON.stringify(res.data), { EX: ttl });
+            }
+
+            return Promise.resolve(
+                new Response(JSON.stringify(res), {
+                    statusText: 'OK',
+                    status: 200,
+                    headers: { 'Content-Type': 'text/html' },
+                }),
+            );
         } catch (e) {
             captureException(e);
 
