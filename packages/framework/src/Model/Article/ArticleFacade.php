@@ -145,6 +145,10 @@ class ArticleFacade
 
         $this->dismantleArticleData($articleData);
 
+        if (count($articleData->urls->toDelete[1]) > 0) {
+            throw new Exception();
+        }
+
         $article->edit($articleData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
 
