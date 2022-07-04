@@ -246,7 +246,7 @@ class ArticleController extends AdminBaseController
      */
     public function saveOrderingAction(Request $request)
     {
-        $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
+        //$this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 
         $responseData = ['success' => true];
 
