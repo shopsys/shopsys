@@ -274,8 +274,8 @@ class ArticleController extends AdminBaseController
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_article_edit', ['id' => 'a.id']);
-        $grid->addDeleteActionColumn('admin_article_deleteconfirm', ['id' => 'a.id'])
-            ->setAjaxConfirm();
+        $grid->addDeleteActionColumn('admin_article_delete', ['id' => 'a.id']);
+            //->setAjaxConfirm();
 
         $grid->enableMultipleDragAndDrop();
         $grid->setTheme('@ShopsysFramework/Admin/Content/Article/listGrid.html.twig');
