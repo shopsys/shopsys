@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ArticleFacade
 {
@@ -115,6 +116,8 @@ class ArticleFacade
      */
     public function create(ArticleData $articleData)
     {
+        $this->dismantleArticleData($articleData);
+
         $article = $this->articleFactory->create($articleData);
 
         $this->em->persist($article);
@@ -140,6 +143,8 @@ class ArticleFacade
         $article = $this->articleRepository->getById($articleId);
         $originalName = $article->getName();
 
+        $this->dismantleArticleData($articleData);
+
         $article->edit($articleData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_article_detail', $article->getId(), $articleData->urls);
 
@@ -154,6 +159,24 @@ class ArticleFacade
         $this->em->flush();
 
         return $article;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
+     */
+    protected function dismantleArticleData(ArticleData $articleData): void
+    {
+        // error 500 thrown when trying to save changes after a certain url was marked for deletion
+        if (isset($articleData->urls->toDelete[1]) && count($articleData->urls->toDelete[1]) > 0) {
+            throw new Exception();
+        }
+
+        // disable text alignment in the wysiwyg editor
+        $articleData->text = preg_replace(
+            '/"text-align: (left|right|center|justify);"/',
+            'text-align: "";',
+            $articleData->text
+        );
     }
 
     /**

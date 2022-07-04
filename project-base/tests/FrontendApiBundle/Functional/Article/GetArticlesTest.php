@@ -36,7 +36,6 @@ class GetArticlesTest extends GraphQlTestCase
                         'text',
                         'seoH1',
                         'seoTitle',
-                        'seoMetaDescription',
                     ],
                     $edge['node'],
                     array_shift($expectedArticlesData)
