@@ -1,9 +1,0 @@
-swiftmailer:
-    transport: "%env(MAILER_TRANSPORT)%"
-    host: "%env(MAILER_HOST)%"
-    username: "%env(MAILER_USER)%"
-    password: "%env(MAILER_PASSWORD)%"
-    spool: { type: memory }
-    disable_delivery: "%mailer_disable_delivery%"
-    delivery_addresses: ["%mailer_master_email_address%"]
-    delivery_whitelist: "%mailer_delivery_whitelist%"

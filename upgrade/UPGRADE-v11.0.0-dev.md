@@ -646,3 +646,54 @@ There you can find links to upgrade notes for other versions too.
         - onKernelException(GetResponseForExceptionEvent $event)
         + onKernelException(ExceptionEvent $event): void
         ```
+
+## Composer dependencies
+
+- replace swiftmailer with symfony/mailer [#2470](https://github.com/shopsys/shopsys/pull/2470)
+    - see #project-base-diff
+    - from now on, the mail transport is configured using `MAILER_DSN` env variable
+        - `MAILER_TRANSPORT`, `MAILER_HOST`, `MAILER_USER`, and `MAILER_PASSWORD` env variables had been removed
+    - the mail spooling functionality has been removed without replacement
+        - if you need the asynchronous mails, you can implement it using [Symfony messenger](https://symfony.com/doc/current/mailer.html#sending-messages-async)
+    - `Shopsys\FrameworkBundle\Component\Cron\CronFacade` class:
+        - `$mailer` property has been removed
+        - constructor changed its interface:
+        ```diff
+            public function __construct(
+                 Logger $logger,
+                 CronConfig $cronConfig,
+                 CronModuleFacade $cronModuleFacade,
+        -        Mailer $mailer,
+                 CronModuleExecutor $cronModuleExecutor
+        ```
+    - `Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException` has been removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException` has been removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Mailer` class:
+        - property `$swiftMailer` has been removed
+        - property `$realSwiftTransport` has been removed
+        - property `$mailTemplateFacade` is now strictly typed
+        - constructor changed its interface:
+        ```diff
+            public function __construct(
+        -        Swift_Mailer $swiftMailer,
+        -        Swift_Transport $realSwiftTransport,
+        +        MailerInterface $symfonyMailer,
+                 MailTemplateFacade $mailTemplateFacade,
+                 LoggerInterface $logger
+        ```
+        - method `flushSpoolQueue` has been removed
+        - method `send` is now strictly typed
+        - method `getMessageWithReplacedVariables` is now strictly typed and returns `\Symfony\Component\Mime\Email` instead of `\Swift_Message`
+        - method `replaceVariables` is now strictly typed
+    - `Shopsys\FrameworkBundle\Model\Mail\MessageData` class is now strictly typed
+    - `Shopsys\FrameworkBundle\Twig\MailerSettingExtension` class:
+        - property `$container` has been removed
+        - property `$isDeliveryDisabled` has been removed
+        - property `$mailerMasterEmailAddress` has been removed
+        - property `$twigEnvironment` is now strictly typed
+        - constructor changed its interface:
+        ```diff
+        - public function __construct(ContainerInterface $container, Environment $twigEnvironment)
+        + public function __construct(MailerSettingProvider $mailerSettingProvider, Environment $twigEnvironment)
+        ```
+    - translations - the `Unable to send updating email` msgid is no longer available

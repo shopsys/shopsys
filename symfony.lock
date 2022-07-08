@@ -656,9 +656,6 @@
     "superbalist/flysystem-google-storage": {
         "version": "7.2.2"
     },
-    "swiftmailer/swiftmailer": {
-        "version": "v6.2.1"
-    },
     "symfony-cmf/routing": {
         "version": "2.1.0"
     },
@@ -790,6 +787,18 @@
     "symfony/intl": {
         "version": "v3.4.32"
     },
+    "symfony/mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "97a61eabb351d7f6cb7702039bcfe07fe9d7e03c"
+        },
+        "files": [
+            "project-base/config/packages/mailer.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v4.3.6"
     },
@@ -814,9 +823,6 @@
         "version": "v3.4.32"
     },
     "symfony/polyfill-ctype": {
-        "version": "v1.12.0"
-    },
-    "symfony/polyfill-iconv": {
         "version": "v1.12.0"
     },
     "symfony/polyfill-intl-icu": {
@@ -897,20 +903,6 @@
     },
     "symfony/stopwatch": {
         "version": "v3.4.32"
-    },
-    "symfony/swiftmailer-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "429afc6c6778a1fdddb52a4f708cd94ff2c9960f"
-        },
-        "files": [
-            "project-base/config/packages/dev/swiftmailer.yaml",
-            "project-base/config/packages/swiftmailer.yaml",
-            "project-base/config/packages/test/swiftmailer.yaml"
-        ]
     },
     "symfony/translation": {
         "version": "3.3",

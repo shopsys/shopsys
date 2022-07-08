@@ -1,34 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use League\Flysystem\FileNotFoundException;
 use Psr\Log\LoggerInterface;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException;
-use Swift_Attachment;
-use Swift_Mailer;
-use Swift_Message;
-use Swift_Spool;
-use Swift_Transport;
-use Swift_Transport_SpoolTransport;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 
 class Mailer
 {
-    /**
-     * @var \Swift_Transport
-     */
-    protected $realSwiftTransport;
+    public const DISABLED_MAILER_DSN = 'null://null';
 
     /**
-     * @var \Swift_Mailer
+     * @var \Symfony\Component\Mailer\MailerInterface
      */
-    protected $swiftMailer;
+    protected MailerInterface $symfonyMailer;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
      */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -36,61 +31,42 @@ class Mailer
     protected LoggerInterface $logger;
 
     /**
-     * @param \Swift_Mailer $swiftMailer
-     * @param \Swift_Transport $realSwiftTransport
+     * @param \Symfony\Component\Mailer\MailerInterface $symfonyMailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        Swift_Mailer $swiftMailer,
-        Swift_Transport $realSwiftTransport,
+        MailerInterface $symfonyMailer,
         MailTemplateFacade $mailTemplateFacade,
         LoggerInterface $logger
     ) {
-        $this->swiftMailer = $swiftMailer;
-        $this->realSwiftTransport = $realSwiftTransport;
+        $this->symfonyMailer = $symfonyMailer;
         $this->mailTemplateFacade = $mailTemplateFacade;
         $this->logger = $logger;
     }
 
-    public function flushSpoolQueue()
-    {
-        $transport = $this->swiftMailer->getTransport();
-        if (!($transport instanceof Swift_Transport_SpoolTransport)) {
-            return;
-        }
-
-        $spool = $transport->getSpool();
-        if ($spool instanceof Swift_Spool) {
-            $spool->flushQueue($this->realSwiftTransport);
-        }
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
      */
-    public function send(MessageData $messageData)
+    public function send(MessageData $messageData): void
     {
         $message = $this->getMessageWithReplacedVariables($messageData);
-        $failedRecipients = [];
 
-        if ($messageData->body === null || $messageData->subject === null) {
-            throw new EmptyMailException();
-        }
-
-        $successSend = $this->swiftMailer->send($message, $failedRecipients);
-        if (!$successSend && count($failedRecipients) > 0) {
-            throw new SendMailFailedException($failedRecipients);
+        try {
+            $this->symfonyMailer->send($message);
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error('There was a failure while sending emails', [
+                'exception' => $exception,
+            ]);
         }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @return \Swift_Message
+     * @return \Symfony\Component\Mime\Email
      */
-    protected function getMessageWithReplacedVariables(MessageData $messageData)
+    protected function getMessageWithReplacedVariables(MessageData $messageData): Email
     {
-        $toEmail = $messageData->toEmail;
         $body = $this->replaceVariables(
             $messageData->body,
             $messageData->variablesReplacementsForBody
@@ -99,45 +75,42 @@ class Mailer
             $messageData->subject,
             $messageData->variablesReplacementsForSubject
         );
-        $fromEmail = $messageData->fromEmail;
-        $fromName = $messageData->fromName;
 
-        $message = new Swift_Message();
-        $message->setSubject($subject);
-        $message->setFrom($fromEmail, $fromName);
-        $message->setTo($toEmail);
+        $email = new Email();
+        $email
+            ->subject($subject)
+            ->from(new Address($messageData->fromEmail, $messageData->fromName))
+            ->to($messageData->toEmail)
+            ->text(htmlspecialchars_decode(strip_tags($body)))
+            ->html($body);
         if ($messageData->bccEmail !== null) {
-            $message->addBcc($messageData->bccEmail);
+            $email->addBcc($messageData->bccEmail);
         }
         if ($messageData->replyTo !== null) {
-            $message->addReplyTo($messageData->replyTo);
+            $email->addReplyTo($messageData->replyTo);
         }
-        $message->setContentType('text/plain; charset=UTF-8');
-        $message->setBody(htmlspecialchars_decode(strip_tags($body), ENT_QUOTES), 'text/plain');
-        $message->addPart($body, 'text/html');
 
         foreach ($messageData->attachments as $attachment) {
             try {
-                $swiftAttachment = Swift_Attachment::fromPath(
-                    $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment)
+                $email->attachFromPath(
+                    $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment),
+                    $attachment->getNameWithExtension()
                 );
             } catch (FileNotFoundException $exception) {
                 $this->logger->error('Attachment could not be added because file was not found.', [$exception]);
                 continue;
             }
-            $swiftAttachment->setFilename($attachment->getNameWithExtension());
-            $message->attach($swiftAttachment);
         }
 
-        return $message;
+        return $email;
     }
 
     /**
      * @param string $string
-     * @param array $variablesKeysAndValues
+     * @param string[] $variablesKeysAndValues
      * @return string
      */
-    protected function replaceVariables($string, $variablesKeysAndValues)
+    protected function replaceVariables(string $string, array $variablesKeysAndValues): string
     {
         return strtr($string, $variablesKeysAndValues);
     }

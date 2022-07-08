@@ -2260,9 +2260,6 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
-msgid "Unable to send updating email"
-msgstr "Nepodařilo se odeslat aktualizační e-mail"
-
 msgid "Unexpected error occurred, file was not uploaded."
 msgstr "Došlo k neočekávané chybě, soubor nebyl nahrán."
 

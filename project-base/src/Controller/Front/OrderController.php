@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -231,13 +230,7 @@ class OrderController extends FrontBaseController
 
                 $orderFlow->reset();
 
-                try {
-                    $this->sendMail($order);
-                } catch (MailException $e) {
-                    $this->addErrorFlash(
-                        t('Unable to send some emails, please contact us for order verification.')
-                    );
-                }
+                $this->sendMail($order);
 
                 $this->session->set(self::SESSION_CREATED_ORDER, $order->getId());
 

@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
-use Shopsys\FrameworkBundle\Model\Mail\Mailer;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
@@ -115,12 +114,10 @@ class CronFacadeTest extends TestCase
     {
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
-        /** @var \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailerMock */
-        $mailerMock = $this->createMock(Mailer::class);
 
         $cronModuleExecutor = new CronModuleExecutor(240);
 
-        return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $mailerMock, $cronModuleExecutor);
+        return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }
 
     /**

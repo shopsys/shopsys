@@ -408,8 +408,7 @@ services:
     CommerceGuys\Intl\Currency\CurrencyRepositoryInterface:
         class: Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
 
-    Shopsys\FrameworkBundle\Model\Mail\Mailer:
-        arguments: ['@mailer', '@swiftmailer.transport.real']
+    Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting: ~
 
@@ -985,3 +984,9 @@ services:
             - '%env(DATABASE_NAME)%'
             - '%env(DATABASE_USER)%'
             - '%env(DATABASE_PASSWORD)%'
+
+    Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider:
+        arguments:
+            - '%env(MAILER_DELIVERY_WHITELIST)%'
+            - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
+            - '%env(MAILER_DSN)%'

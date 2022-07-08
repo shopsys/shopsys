@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 class MessageData
@@ -7,52 +9,52 @@ class MessageData
     /**
      * @var string
      */
-    public $toEmail;
+    public string $toEmail;
 
     /**
      * @var string|null
      */
-    public $bccEmail;
+    public ?string $bccEmail;
 
     /**
      * @var string
      */
-    public $body;
+    public string $body;
 
     /**
      * @var string
      */
-    public $subject;
+    public string $subject;
 
     /**
      * @var string
      */
-    public $fromEmail;
+    public string $fromEmail;
 
     /**
      * @var string
      */
-    public $fromName;
+    public string $fromName;
 
     /**
      * @var string[]
      */
-    public $variablesReplacementsForSubject;
+    public array $variablesReplacementsForSubject;
 
     /**
      * @var string[]
      */
-    public $variablesReplacementsForBody;
+    public array $variablesReplacementsForBody;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public $attachments;
+    public array $attachments;
 
     /**
      * @var string|null
      */
-    public $replyTo;
+    public ?string $replyTo;
 
     /**
      * @param string $toEmail
@@ -67,16 +69,16 @@ class MessageData
      * @param string|null $replyTo
      */
     public function __construct(
-        $toEmail,
-        $bccEmail,
-        $body,
-        $subject,
-        $fromEmail,
-        $fromName,
+        string $toEmail,
+        ?string $bccEmail,
+        string $body,
+        string $subject,
+        string $fromEmail,
+        string $fromName,
         array $variablesReplacementsForBody = [],
         array $variablesReplacementsForSubject = [],
         array $attachments = [],
-        $replyTo = null
+        ?string $replyTo = null
     ) {
         $this->toEmail = $toEmail;
         $this->bccEmail = $bccEmail;
