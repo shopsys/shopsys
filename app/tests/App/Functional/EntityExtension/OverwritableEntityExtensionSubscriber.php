@@ -4,7 +4,7 @@
 
 namespace Tests\App\Functional\EntityExtension;
 
- use Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber;
+ use App\Component\EntityExtension\EntityExtensionSubscriber;
 
  class OverwritableEntityExtensionSubscriber extends EntityExtensionSubscriber
  {

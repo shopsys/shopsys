@@ -840,3 +840,12 @@ services:
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory:
         alias: App\Model\User\FrontendApi\FrontendApiUserFactory
+
+    App\Component\EntityExtension\EntityExtensionSubscriber:
+        arguments:
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
+        tags:
+            - { name: doctrine.event_subscriber, priority: -10 }
+
+    Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
+        alias: App\Component\EntityExtension\EntityExtensionSubscriber
