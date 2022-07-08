@@ -6,10 +6,7 @@ namespace Tests\App\Functional\EntityExtension;
 
 use App\Model\Order\Order as ExtendedOrder;
 use App\Model\Product\Brand\Brand as ExtendedBrand;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -47,22 +44,16 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     protected const ORDER_ITEM_ID = 1;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
+     * @var \Tests\App\Functional\EntityExtension\EntityExtensionTestHelper
      * @inject
      */
-    private OverwritableEntityNameResolver $entityNameResolver;
-
-    /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber
-     * @inject
-     */
-    private OverwritableEntityExtensionSubscriber $entityExtensionSubscriber;
+    private EntityExtensionTestHelper $entityExtensionTestHelper;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->registerTestEntities();
+        $this->entityExtensionTestHelper->registerTestEntities();
 
         $entityExtensionMap = [
             Product::class => ExtendedProduct::class,
@@ -91,35 +82,13 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
             CategoryOneToManyBidirectionalEntity::class,
         ];
 
-        $this->overwriteEntityExtensionMapInServicesInContainer($entityExtensionMap);
+        $this->entityExtensionTestHelper->overwriteEntityExtensionMapInServicesInContainer($entityExtensionMap);
 
         $testEntities = array_merge($newEntities, array_values($entityExtensionMap));
         $metadata = $this->getMetadata($testEntities);
 
         $this->generateProxies($metadata);
         $this->updateDatabaseSchema($metadata);
-    }
-
-    public function registerTestEntities(): void
-    {
-        $driver = new AnnotationDriver(new AnnotationReader(), __DIR__ . '/Model');
-
-        $configuration = $this->em->getConfiguration();
-        $metadataDriverChain = $configuration->getMetadataDriverImpl();
-        if ($metadataDriverChain instanceof MappingDriverChain) {
-            $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
-        } else {
-            $this->fail(sprintf('Metadata driver must be type of %s', MappingDriverChain::class));
-        }
-    }
-
-    /**
-     * @param string[] $entityExtensionMap
-     */
-    public function overwriteEntityExtensionMapInServicesInContainer(array $entityExtensionMap): void
-    {
-        $this->entityExtensionSubscriber->overwriteEntityExtensionMap($entityExtensionMap);
-        $this->entityNameResolver->overwriteEntityExtensionMap($entityExtensionMap);
     }
 
     /**

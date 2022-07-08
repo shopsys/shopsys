@@ -141,7 +141,7 @@ class EntityExtensionSubscriber implements EventSubscriber
 
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
-            foreach ($parentMetadata->getAssociationMappings() as $parentEntityClass => $parentEntityAssociationMapping) {
+            foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
                 if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
                     $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
                 }
@@ -151,9 +151,38 @@ class EntityExtensionSubscriber implements EventSubscriber
                     $parentClass
                 );
 
-                $classMetadata->associationMappings[$parentEntityClass] = $parentEntityAssociationMapping;
+                $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
+                $isOverriddenPropertyInChildClass = true;
+                if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
+                    $overridingClassReflection = new ReflectionClass($currentEntityClass);
+                    $overridingClassProperties = $overridingClassReflection->getProperties();
+                    $isOverriddenPropertyInChildClass = $this->checkIsOverriddenPropertyInChildClass($overridingClassProperties, $associationName, $currentEntityClass);
+                }
+
+                if (!$isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping || !$isOverriddenPropertyInChildClass) {
+                    $classMetadata->associationMappings[$associationName] = $parentEntityAssociationMapping;
+                }
             }
         }
+    }
+
+    /**
+     * @param \ReflectionProperty[] $overridingClassProperties
+     * @param string $parentClassPropertyName
+     * @param string $overridingClassName
+     * @return bool
+     */
+    protected function checkIsOverriddenPropertyInChildClass(
+        array $overridingClassProperties,
+        string $parentClassPropertyName,
+        string $overridingClassName
+    ): bool {
+        foreach ($overridingClassProperties as $overridingClassProperty) {
+            if ($overridingClassProperty->name === $parentClassPropertyName && $overridingClassProperty->class === $overridingClassName) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
