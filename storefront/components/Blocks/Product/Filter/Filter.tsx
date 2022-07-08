@@ -42,14 +42,12 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
         [productFilterOptions.brands],
     );
 
-    const defaultFlagValues = useMemo(
-        () =>
-            productFilterOptions.flags.map((value) => ({
-                ...value.flag,
-                checked: false,
-            })),
-        [productFilterOptions.flags],
-    );
+    const defaultFlagValues = useMemo(() => {
+        return productFilterOptions.flags.map((value) => ({
+            ...value.flag,
+            checked: value.isSelected,
+        }));
+    }, [productFilterOptions.flags]);
 
     const getParametersValues = useCallback((): FilterFormParameterType[] => {
         if (productFilterOptions.parameters === undefined) {
@@ -63,7 +61,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
 
             return parameter.values.map((value) => ({
                 ...value,
-                checked: false,
+                checked: value.isSelected,
             }));
         }
 
@@ -74,6 +72,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
             isCollapsed: parameter.isCollapsed,
             minimalValue: 'minimalValue' in parameter ? parameter.minimalValue : undefined,
             maximalValue: 'maximalValue' in parameter ? parameter.maximalValue : undefined,
+            selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : undefined,
             unit: 'unit' in parameter ? parameter.unit : undefined,
         }));
     }, [productFilterOptions.parameters]);
@@ -95,17 +94,38 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
     const minimalPriceValue = useWatch({ name: 'minimalPrice', control: formProviderMethods.control });
     const maximalPriceValue = useWatch({ name: 'maximalPrice', control: formProviderMethods.control });
 
-    useComponentUpdate(() => {
+    useEffect(() => {
         const parameters = [];
+
+        const defaultCheckedParamsCount = productFilterOptions.parameters?.reduce(
+            (partialSum, parameter) =>
+                'values' in parameter
+                    ? partialSum + parameter.values.filter((value) => value.isSelected).length
+                    : partialSum,
+            0,
+        );
+
+        const checkedParametersCount = parametersValue.reduce(
+            (partialSum, parameter) => partialSum + parameter.values.filter((value) => value.checked).length,
+            0,
+        );
 
         for (const parameter of parametersValue) {
             const checkedValues = [];
 
-            // NOTE: "parameter.values" is sometimes undefined despite typing
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            for (const value of parameter.values ?? []) {
-                if (value.checked) {
-                    checkedValues.push(value.uuid);
+            const param = productFilterOptions.parameters?.find((p) => p.uuid === parameter.parameterUuid);
+
+            if (defaultCheckedParamsCount !== checkedParametersCount) {
+                // NOTE: "parameter.values" is sometimes undefined despite typing
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                for (const value of parameter.values ?? []) {
+                    const defaultChecked =
+                        param && 'values' in param
+                            ? param.values.find((val) => val.uuid === value.uuid)?.isSelected
+                            : false;
+                    if (value.checked && !defaultChecked) {
+                        checkedValues.push(value.uuid);
+                    }
                 }
             }
 
@@ -126,7 +146,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
         }
 
         dispatch(optionsFilterActions.setParametersFilter(parameters));
-    }, [parametersValue]);
+    }, [dispatch, parametersValue, productFilterOptions.parameters]);
 
     useComponentUpdate(() => {
         const brands = brandsValue.reduce(function (result: string[], brand) {
@@ -141,7 +161,10 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
 
     useComponentUpdate(() => {
         const flags = flagsValue.reduce(function (result: string[], flag) {
-            if (flag.checked === true) {
+            if (
+                flag.checked === true &&
+                !productFilterOptions.flags.find((productFlag) => productFlag.flag.uuid === flag.uuid)?.isSelected
+            ) {
                 result.push(flag.uuid);
             }
             return result;
@@ -213,7 +236,7 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
             const parameter = parametersValue[getIndexOfParameter(parametersValue, parameterUuid)];
 
             return (
-                parameter.values.filter((v) => v.checked).length === 0 &&
+                parameter.values.filter((value) => value.checked).length === 0 &&
                 parameter.minimalValue === undefined &&
                 parameter.maximalValue === undefined
             );

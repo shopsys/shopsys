@@ -15,21 +15,29 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
+import { getProductListSort } from 'helpers/sorting/GetProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { FC, useState } from 'react';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { useRouter } from 'next/router';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { useShopsysDispatch } from 'redux/main';
 import { initialState, userActions } from 'redux/slices/user';
 
-const SortingBar: FC<{ totalCount: number }> = (props) => {
-    const testIdentifier = 'blocks-sortingbar';
+type SortingBarProps = { totalCount: number; sorting: ProductOrderingModeEnumApi | null };
 
+const TEST_IDENTIFIER = 'blocks-sortingbar';
+
+const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
+    const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
+    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+    const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(
+        sorting ?? sortingFromQuery ?? ProductOrderingModeEnumApi.PriorityApi,
+    );
     const { width } = useGetWindowSize();
-    const { totalCount } = props;
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
     useResizeWidthEffect(
         width,
@@ -38,7 +46,6 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         () => setMobileSortBarVisible(true),
         () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
-    const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
     const sortValues = [
         { stateValue: ProductOrderingModeEnumApi.PriorityApi, displayValue: t('priority') },
@@ -46,30 +53,56 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
 
-    useEffectOnce(() => {
-        updateUrlWithCurrentSort(selectedSort);
-    });
+    useEffect(() => {
+        setSelectedSort(sorting);
+    }, [sorting]);
 
-    const updateUrlWithCurrentSort = (sort: string) => {
-        if (!canUseDom()) {
-            return;
-        }
+    const updateUrlWithCurrentSort = useCallback(
+        (sort: string) => {
+            if (!canUseDom()) {
+                return;
+            }
 
-        const queryParams = new URLSearchParams(window.location.search);
-        if (sort === initialState.sort) {
-            queryParams.delete('sort');
-        } else {
-            queryParams.set('sort', sort);
-        }
-        let newState = document.location.pathname;
-        if (queryParams.toString().length > 0) {
-            newState = '?' + queryParams.toString();
-        }
-        history.replaceState(history.state, document.title, newState);
-    };
+            const pathname = router.asPath.split('?')[0];
+            const queryParams = router.query;
+            delete queryParams.all;
+            queryParams.sort = sort;
+
+            router.replace({ pathname, query: queryParams }, undefined, { shallow: true, scroll: false });
+        },
+        [router],
+    );
+
+    const onSelectSortMenu = useCallback(
+        (value: ProductOrderingModeEnumApi) => () => {
+            setToggleSortMenu((prev) => !prev);
+            updateUrlWithCurrentSort(value);
+            setSelectedSort(value);
+        },
+        [updateUrlWithCurrentSort],
+    );
+
+    const onMobileSort = useCallback(
+        (value: ProductOrderingModeEnumApi) => () => {
+            setToggleSortMenu((prev) => !prev);
+            updateUrlWithCurrentSort(value);
+            setSelectedSort(value);
+            dispatch(userActions.setPagination({ ...initialState.pagination }));
+        },
+        [dispatch, updateUrlWithCurrentSort],
+    );
+
+    const onSort = useCallback(
+        (value: ProductOrderingModeEnumApi) => () => {
+            updateUrlWithCurrentSort(value);
+            setSelectedSort(value);
+            dispatch(userActions.setPagination({ ...initialState.pagination }));
+        },
+        [dispatch, updateUrlWithCurrentSort],
+    );
 
     return (
-        <SortingBarStyled data-testid={testIdentifier}>
+        <SortingBarStyled data-testid={TEST_IDENTIFIER}>
             {isMobileSortBarVisible ? (
                 <SortingBarOptionsWrapStyled>
                     <SortingBarItemStyled>
@@ -78,17 +111,13 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                             .map((value) => (
                                 <SortingBarSelectedSortStyled
                                     key={value.stateValue}
-                                    onClick={() => {
-                                        setToggleSortMenu(!toggleSortMenu);
-                                        updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort(value.stateValue));
-                                    }}
-                                    data-testid={testIdentifier + '-selected'}
+                                    onClick={onSelectSortMenu(value.stateValue)}
+                                    data-testid={TEST_IDENTIFIER + '-selected'}
                                 >
                                     <SortingBarSortIconStyled iconType="icon" icon="Sort" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
-                                        <SortingBarSelectedValue data-testid={testIdentifier + '-selected-value'}>
+                                        <SortingBarSelectedValue data-testid={TEST_IDENTIFIER + '-selected-value'}>
                                             {value.displayValue}
                                         </SortingBarSelectedValue>
                                     </SortingBarSeletedSortWrapStyled>
@@ -103,13 +132,8 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     <SortingBarItemStyled key={value.stateValue}>
                                         <SortingBarItemLinkStyled
                                             isActive={selectedSort === value.stateValue}
-                                            onClick={() => {
-                                                setToggleSortMenu(!toggleSortMenu);
-                                                updateUrlWithCurrentSort(value.stateValue);
-                                                dispatch(userActions.setSort(value.stateValue));
-                                                dispatch(userActions.setPagination({ ...initialState.pagination }));
-                                            }}
-                                            data-testid={testIdentifier + '-' + index}
+                                            onClick={onMobileSort(value.stateValue)}
+                                            data-testid={TEST_IDENTIFIER + '-' + index}
                                         >
                                             {value.displayValue}
                                         </SortingBarItemLinkStyled>
@@ -124,12 +148,8 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                             return (
                                 <SortingBarItemStyled
                                     key={value.stateValue}
-                                    onClick={() => {
-                                        updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort(value.stateValue));
-                                        dispatch(userActions.setPagination({ ...initialState.pagination }));
-                                    }}
-                                    data-testid={testIdentifier + '-' + index}
+                                    onClick={onSort(value.stateValue)}
+                                    data-testid={TEST_IDENTIFIER + '-' + index}
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
                                         <SortingBarItemLinkWrapStyled>

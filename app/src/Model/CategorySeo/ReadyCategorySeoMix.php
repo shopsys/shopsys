@@ -6,6 +6,7 @@ namespace App\Model\CategorySeo;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
@@ -103,6 +104,12 @@ class ReadyCategorySeoMix
     private bool $showInCategory;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    private string $uuid;
+
+    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
      */
     public function __construct(ReadyCategorySeoMixData $readyCategorySeoMixData)
@@ -121,6 +128,8 @@ class ReadyCategorySeoMix
         $this->title = $readyCategorySeoMixData->title;
         $this->metaDescription = $readyCategorySeoMixData->metaDescription;
         $this->showInCategory = $readyCategorySeoMixData->showInCategory;
+
+        $this->uuid = Uuid::uuid4()->toString();
     }
 
     /**
@@ -250,5 +259,13 @@ class ReadyCategorySeoMix
     public function showInCategory(): bool
     {
         return $this->showInCategory;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }

@@ -12,7 +12,7 @@ import ProductDetailPage from 'components/Pages/ProductDetail';
 import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
-import { Maybe, SlugQueryDocumentApi } from 'graphql/generated';
+import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
 import { createClient } from 'helpers/createClient';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
@@ -43,10 +43,6 @@ import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQu
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-
-    useEffect(() => {
-        dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
-    }, [dispatch, router.query.sort]);
 
     useEffect(() => {
         dispatch(
@@ -106,7 +102,7 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    store.dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(context.query.sort))));
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
     store.dispatch(
         userActions.setPagination(
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
@@ -119,9 +115,9 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const exchange = ssrExchange({ isClient: false });
     const client = await createClient(context, store, exchange);
 
-    const slugQueryVariables = {
+    const slugQueryVariables: SlugQueryVariablesApi = {
         slug: getUrlWithoutGetParameters(context.resolvedUrl),
-        sortingMode: store.getState().user.sort,
+        orderingMode,
         endCursorForPagination: store.getState().user.pagination.paginationCursor,
         pageSize: initialState.pagination.pageSize,
         filter: mapParametersFilter(store.getState().optionsFilter),
@@ -141,9 +137,12 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         exchange,
     );
 
-    const slugQueryResult = client?.readQuery(SlugQueryDocumentApi, slugQueryVariables);
+    const slugQueryResult = client?.readQuery<SlugQueryApi, SlugQueryVariablesApi>(
+        SlugQueryDocumentApi,
+        slugQueryVariables,
+    );
 
-    if (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) {
+    if (!slugQueryResult || slugQueryResult.data === undefined) {
         // eslint-disable-next-line require-atomic-updates
         context.res.statusCode = 404;
     }

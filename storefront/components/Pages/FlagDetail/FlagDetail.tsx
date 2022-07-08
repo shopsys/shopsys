@@ -10,24 +10,24 @@ type FlagDetailProps = {
     flag: FlagDetailType;
 };
 
-const FlagDetail: FC<FlagDetailProps> = (props) => {
+const FlagDetail: FC<FlagDetailProps> = ({ flag }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (
         <>
             <Webline>
-                <Heading type={'h1'}>{props.flag.name}</Heading>
+                <Heading type={'h1'}>{flag.name}</Heading>
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar totalCount={props.flag.productConnection.totalCount} />
-                    {props.flag.productConnection.products.length !== 0 && (
-                        <ProductsList products={props.flag.productConnection.products} gtmListName="flag" />
-                    )}
-                    <Pagination
-                        totalCount={props.flag.productConnection.totalCount}
-                        containerWrapRef={containerWrapRef}
+                    <SortingBar
+                        sorting={flag.productConnection.orderingMode}
+                        totalCount={flag.productConnection.totalCount}
                     />
+                    {flag.productConnection.products.length !== 0 && (
+                        <ProductsList products={flag.productConnection.products} gtmListName="flag" />
+                    )}
+                    <Pagination totalCount={flag.productConnection.totalCount} containerWrapRef={containerWrapRef} />
                 </div>
             </Webline>
         </>

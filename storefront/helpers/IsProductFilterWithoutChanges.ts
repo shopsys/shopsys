@@ -6,8 +6,10 @@ export const isProductFilterWithoutChanges = (
 ): boolean => {
     return (
         parametersFilterState.brands.length === 0 &&
-        parametersFilterState.flags.length === 0 &&
-        parametersFilterState.parameters.length === 0 &&
+        parametersFilterState.flags.filter(
+            (flag) => !productFilterOptions.flags.find((productFlag) => productFlag.flag.uuid === flag)?.isSelected,
+        ).length === 0 &&
+        parametersFilterState.parameters.filter((parameter) => parameter.values.length > 0).length === 0 &&
         parametersFilterState.onlyInStock === false &&
         (parametersFilterState.minimalPrice === productFilterOptions.minimalPrice ||
             parametersFilterState.minimalPrice === null) &&

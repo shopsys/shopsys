@@ -8,18 +8,22 @@ import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { Maybe, useSlugQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { getProductListSort } from 'helpers/sorting/GetProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
 export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageType> {
-    const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
+    const router = useRouter();
+    const categoryDetailSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = useShopsysSelector((state) => state.optionsFilter);
     const [{ data, error }] = useSlugQueryApi({
         variables: {
             slug,
-            sortingMode: categoryDetailSort,
+            orderingMode: categoryDetailSort,
             endCursorForPagination: pagination.paginationCursor,
             pageSize: pagination.pageSize,
             filter: mapParametersFilter(categoryParametersFilter),

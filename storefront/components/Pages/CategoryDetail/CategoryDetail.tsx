@@ -19,7 +19,7 @@ import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
 import { FilterOptionsType } from 'types/productFilter';
 import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
@@ -28,16 +28,12 @@ type CategoryDetailProps = {
     category: CategoryDetailType;
 };
 
-const CategoryDetail: FC<CategoryDetailProps> = (props) => {
+const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
-    const [productFilterOptionsData, setProductFilterOptionsData] = useState<FilterOptionsType>(
-        props.category.productConnection.productFilterOptions as FilterOptionsType,
-    );
-    const [categorySlug, setCategorySlug] = useState(props.category.slug);
 
     const handlePanelOpenerClick = () => {
         setIsPanelOpen(!isPanelOpen);
@@ -54,42 +50,31 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
         }
     };
 
-    useEffect(() => {
-        if (props.category.productConnection.productFilterOptions !== null) {
-            setProductFilterOptionsData(props.category.productConnection.productFilterOptions);
-            setCategorySlug(props.category.slug);
-        }
-    }, [props.category.productConnection.productFilterOptions, props.category.slug]);
-
-    const gtmListName = useMemo(
-        () => getCategoryOrSeoCategoryGtmListName(props.category, props.category.slug),
-        [props.category],
-    );
+    const gtmListName = useMemo(() => getCategoryOrSeoCategoryGtmListName(category, category.slug), [category]);
 
     return (
         <Webline>
             <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter productFilterOptions={productFilterOptionsData} slug={categorySlug} />
+                    <ProductFilter
+                        productFilterOptions={category.productConnection.productFilterOptions as FilterOptionsType}
+                        slug={category.slug}
+                    />
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
                     <CategoryDetailAdvertsStyled positionName="productList" />
-                    <Heading type={'h1'}>
-                        {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
-                    </Heading>
-                    {props.category.description !== null && props.category.description !== '' && (
+                    <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
+                    {category.description !== null && category.description !== '' && (
                         <CategoryDetailDescriptionStyled
-                            dangerouslySetInnerHTML={{ __html: props.category.description }}
+                            dangerouslySetInnerHTML={{ __html: category.description }}
                         ></CategoryDetailDescriptionStyled>
                     )}
-                    <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={props.category} />
+                    <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={category} />
                     <SubcategoriesSimpleNavigationStyled
-                        listedItems={[...props.category.children, ...props.category.linkedCategories]}
+                        listedItems={[...category.children, ...category.linkedCategories]}
                     />
-                    <CategoryDetailAdvancedSeoCategories
-                        readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks}
-                    />
+                    <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
                     <CategoryDetailPanelOpenerStyled
                         id="js-category-detail-panel"
                         ref={buttonRef}
@@ -99,9 +84,12 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
                         {t('Filter')}
                     </CategoryDetailPanelOpenerStyled>
-                    <SortingBar totalCount={props.category.productConnection.totalCount} />
-                    {props.category.productConnection.products.length !== 0 ? (
-                        <ProductsList products={props.category.productConnection.products} gtmListName={gtmListName} />
+                    <SortingBar
+                        sorting={category.productConnection.orderingMode}
+                        totalCount={category.productConnection.totalCount}
+                    />
+                    {category.productConnection.products.length !== 0 ? (
+                        <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />
                     ) : (
                         <CategoryDetailContentMessageStyled>
                             <div>
@@ -113,7 +101,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         </CategoryDetailContentMessageStyled>
                     )}
                     <Pagination
-                        totalCount={props.category.productConnection.totalCount}
+                        totalCount={category.productConnection.totalCount}
                         containerWrapRef={containerWrapRef}
                     />
                 </CategoryDetailContentStyled>

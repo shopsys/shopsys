@@ -1,5 +1,5 @@
 fragment ListedProductsFragment on ProductListable {
-    products(orderingMode: $sortingMode, after: $endCursorForPagination, first: $pageSize, filter: $filter) {
+    products(orderingMode: $orderingMode, after: $endCursorForPagination, first: $pageSize, filter: $filter) {
         ...ListedProductConnectionFragment
     }
 }

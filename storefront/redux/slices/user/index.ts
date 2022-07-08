@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { HYDRATE } from 'next-redux-wrapper';
-
-export const enabledSortTypes = [
-    ProductOrderingModeEnumApi.PriorityApi,
-    ProductOrderingModeEnumApi.PriceAscApi,
-    ProductOrderingModeEnumApi.PriceDescApi,
-];
 
 export type PaginationType = {
     currentPage: number;
@@ -15,7 +8,6 @@ export type PaginationType = {
 };
 
 type InitialState = {
-    sort: ProductOrderingModeEnumApi;
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     lastOrderUuid: string;
@@ -25,7 +17,6 @@ type InitialState = {
 };
 
 export const initialState = {
-    sort: ProductOrderingModeEnumApi.PriorityApi,
     pagination: {
         currentPage: 1,
         paginationCursor: '',
@@ -40,9 +31,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setSort(state, action: PayloadAction<ProductOrderingModeEnumApi>) {
-            state.sort = action.payload;
-        },
         setPagination(state, action: PayloadAction<PaginationType>) {
             state.pagination = action.payload;
         },

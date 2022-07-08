@@ -37,7 +37,7 @@ type SearchProps = {
     searchResults: SearchType | undefined;
 };
 
-const Search: FC<SearchProps> = (props) => {
+const Search: FC<SearchProps> = ({ searchResults }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -106,9 +106,9 @@ const Search: FC<SearchProps> = (props) => {
             setRouterQueryChanged(!routerQueryChanged);
             setQueryPathWasChanged(false);
         }
-    }, [props.searchResults?.productsSearch.productFilterOptions]);
+    }, [searchResults?.productsSearch.productFilterOptions]);
 
-    if (props.searchResults === undefined) {
+    if (searchResults === undefined) {
         return null;
     }
 
@@ -120,16 +120,16 @@ const Search: FC<SearchProps> = (props) => {
             </Webline>
             {currentPage === 1 && (
                 <>
-                    {props.searchResults.articlesSearch.length > 0 && (
+                    {searchResults.articlesSearch.length > 0 && (
                         <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found articles')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areArticlesResultsVisible}>
                                 <SimpleNavigation
-                                    listedItems={props.searchResults.articlesSearch}
+                                    listedItems={searchResults.articlesSearch}
                                     imageType="searchThumbnail"
                                 />
                             </SearchResultsBlockStyled>
-                            {numberOfVisible < props.searchResults.articlesSearch.length && (
+                            {numberOfVisible < searchResults.articlesSearch.length && (
                                 <ShowResultsButtonWrapperStyled>
                                     <Button
                                         type="button"
@@ -144,13 +144,13 @@ const Search: FC<SearchProps> = (props) => {
                             )}
                         </SearchResultsWeblineStyled>
                     )}
-                    {props.searchResults.brandSearch.length > 0 && (
+                    {searchResults.brandSearch.length > 0 && (
                         <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found brands')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areBrandsResultsVisible}>
-                                <SimpleNavigation listedItems={props.searchResults.brandSearch} />
+                                <SimpleNavigation listedItems={searchResults.brandSearch} />
                             </SearchResultsBlockStyled>
-                            {numberOfVisible < props.searchResults.brandSearch.length && (
+                            {numberOfVisible < searchResults.brandSearch.length && (
                                 <ShowResultsButtonWrapperStyled>
                                     <Button
                                         type="button"
@@ -165,13 +165,13 @@ const Search: FC<SearchProps> = (props) => {
                             )}
                         </SearchResultsWeblineStyled>
                     )}
-                    {props.searchResults.categoriesSearch.totalCount > 0 && (
+                    {searchResults.categoriesSearch.totalCount > 0 && (
                         <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found categories')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areCategoriesResultsVisible}>
-                                <SimpleNavigation listedItems={props.searchResults.categoriesSearch.categories} />
+                                <SimpleNavigation listedItems={searchResults.categoriesSearch.categories} />
                             </SearchResultsBlockStyled>
-                            {numberOfVisible < props.searchResults.categoriesSearch.categories.length && (
+                            {numberOfVisible < searchResults.categoriesSearch.categories.length && (
                                 <ShowResultsButtonWrapperStyled>
                                     <Button
                                         type="button"
@@ -192,29 +192,30 @@ const Search: FC<SearchProps> = (props) => {
             <SearchResultsWeblineStyled>
                 <Heading type={'h3'}>{t('Found products')}</Heading>
                 <SearchResultsStyled ref={containerWrapRef}>
-                    {props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0 &&
-                        props.searchResults.productsSearch.productFilterOptions !== null && (
+                    {searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0 &&
+                        searchResults.productsSearch.productFilterOptions !== null && (
                             <SearchResultsPanelStyled>
                                 <ProductFilter
-                                    productFilterOptions={props.searchResults.productsSearch.productFilterOptions}
+                                    productFilterOptions={searchResults.productsSearch.productFilterOptions}
                                     formUpdateDependency={routerQueryChanged}
                                 />
                                 <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>
                         )}
                     <SearchResultsContentStyled
-                        isPanelActive={props.searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
+                        isPanelActive={searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
                     >
-                        <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
+                        <SortingBar
+                            sorting={searchResults.productsSearch.orderingMode}
+                            totalCount={searchResults.productsSearch.totalCount}
+                        />
                         <ResultProducts
-                            products={props.searchResults.productsSearch.products}
-                            areProductsShowed={props.searchResults.productsSearch.totalCount > 0}
-                            noProductsFound={
-                                props.searchResults.productsSearch.productFilterOptions?.maximalPrice === 0
-                            }
+                            products={searchResults.productsSearch.products}
+                            areProductsShowed={searchResults.productsSearch.totalCount > 0}
+                            noProductsFound={searchResults.productsSearch.productFilterOptions?.maximalPrice === 0}
                         />
                         <Pagination
-                            totalCount={props.searchResults.productsSearch.totalCount}
+                            totalCount={searchResults.productsSearch.totalCount}
                             containerWrapRef={containerWrapRef}
                         />
                     </SearchResultsContentStyled>

@@ -28,7 +28,7 @@ const Search: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const searchProductsSort = useShopsysSelector((state) => state.user.sort);
+    const searchProductsSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
     const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
@@ -37,10 +37,6 @@ const Search: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search');
     useGtmStaticPageView(gtmStaticPageViewEvent);
     useGtmSearchResultsListView(searchResults, searchQuery);
-
-    useEffect(() => {
-        dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
-    }, [dispatch, router.query.sort]);
 
     useEffect(() => {
         dispatch(
@@ -61,7 +57,7 @@ const Search: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    store.dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(context.query.sort))));
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
     store.dispatch(
         userActions.setPagination(
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
@@ -76,7 +72,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
             query: SearchQueryDocumentApi,
             variables: {
                 search: getStringFromUrlQuery(context.query.q),
-                orderingMode: store.getState().user.sort,
+                orderingMode,
                 after: store.getState().user.pagination.paginationCursor,
                 filter: mapParametersFilter(store.getState().optionsFilter),
                 first: initialState.pagination.pageSize,

@@ -14,7 +14,7 @@ import { SearchType } from 'types/search';
 
 export const useSearch = (
     searchQuery: string,
-    searchProductsSort: ProductOrderingModeEnumApi,
+    searchProductsSort: ProductOrderingModeEnumApi | null,
     searchProductsPagination: PaginationType['paginationCursor'],
     optionsFilter: FilterOptionsStateType,
 ): SearchType | undefined => {

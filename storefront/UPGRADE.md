@@ -655,3 +655,14 @@
     - follow the [upgrading instructions](https://github.com/shopsys/shopsys/blob/master/upgrade/UPGRADE-v10.0.0.md) of Shopsys Framework
     - you should get most of the changes out-of-the-box, however, you need to check your custom code whether it is compatible with the new version
     - if you use Docker, you should rebuild your `php-fpm` docker image (`docker-compose build --no-cache php-fpm`) and recreate the containers (`docker-compose up -d --force-recreate`) locally
+
+### Show correct filters for SEO category
+- [FWCC-977](https://shopsys.atlassian.net/browse/FWCC-977)
+- [FWCC-977 - correct seo category filters](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/672/diffs)
+- the reasons these changes were introduced:
+    - filters and sorting bar in seo category should respect the config of this category
+- most significant changes
+    - the `sort` value was removed from the redux `userSlice`
+    - the `sort` value is read from the URL, and there is useState to manage the `SortingBar` component's state
+    - `orderingMode` is now returned from API for category response
+    - filters are set to the redux state conditionally based on the seo category config

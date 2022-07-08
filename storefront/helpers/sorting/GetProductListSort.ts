@@ -1,8 +1,13 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { enabledSortTypes, initialState } from 'redux/slices/user';
 
-export const getProductListSort = (sortQuery: string | undefined): ProductOrderingModeEnumApi => {
+const enabledSortTypes = [
+    ProductOrderingModeEnumApi.PriorityApi,
+    ProductOrderingModeEnumApi.PriceAscApi,
+    ProductOrderingModeEnumApi.PriceDescApi,
+];
+
+export const getProductListSort = (sortQuery: string | undefined): ProductOrderingModeEnumApi | null => {
     return enabledSortTypes.some((sort) => sort === sortQuery)
-        ? (sortQuery as ProductOrderingModeEnumApi)
-        : initialState.sort;
+        ? (sortQuery as ProductOrderingModeEnumApi | null)
+        : null;
 };
