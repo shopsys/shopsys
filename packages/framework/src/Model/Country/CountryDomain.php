@@ -28,7 +28,7 @@ class CountryDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $country;
 

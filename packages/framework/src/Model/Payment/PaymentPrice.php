@@ -17,7 +17,7 @@ class PaymentPrice
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="prices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $payment;
 

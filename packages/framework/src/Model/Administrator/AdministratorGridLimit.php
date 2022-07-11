@@ -14,7 +14,7 @@ class AdministratorGridLimit
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Administrator\Administrator", inversedBy="gridLimits")
-     * @ORM\JoinColumn(name="administrator_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="administrator_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $administrator;
 

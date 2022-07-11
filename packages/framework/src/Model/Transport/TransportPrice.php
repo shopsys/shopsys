@@ -17,7 +17,7 @@ class TransportPrice
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="prices")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $transport;
 

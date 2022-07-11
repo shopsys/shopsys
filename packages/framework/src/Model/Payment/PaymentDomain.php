@@ -27,7 +27,7 @@ class PaymentDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $payment;
 

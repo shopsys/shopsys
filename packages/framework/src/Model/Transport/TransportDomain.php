@@ -27,7 +27,7 @@ class TransportDomain
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="domains")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     protected $transport;
 

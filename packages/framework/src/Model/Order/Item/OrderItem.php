@@ -40,7 +40,7 @@ class OrderItem
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Order
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order", inversedBy="items")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $order;
 
