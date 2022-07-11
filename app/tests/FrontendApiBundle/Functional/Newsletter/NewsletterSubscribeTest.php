@@ -13,7 +13,7 @@ class NewsletterSubscribeTest extends GraphQlTestCase
     public function testNewsletterSubscribeRegister(): void
     {
         $graphQlType = 'NewsletterSubscribe';
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/NewsletterSubscribeMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/NewsletterSubscribeMutation.graphql', [
             'email' => self::DEFAULT_USER_EMAIL,
         ]);
 
@@ -25,7 +25,7 @@ class NewsletterSubscribeTest extends GraphQlTestCase
 
     public function testNewsletterSubscribeWithInvalidEmailRegister(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/NewsletterSubscribeMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/NewsletterSubscribeMutation.graphql', [
             'email' => 'no-replyshopsys.com',
         ]);
 

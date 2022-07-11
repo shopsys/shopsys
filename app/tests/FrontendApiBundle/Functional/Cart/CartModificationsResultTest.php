@@ -87,7 +87,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $this->hideTestingProduct();
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $newlyCreatedCart['uuid'],
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $productQuantity,
@@ -105,7 +105,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $newlyCreatedCart['uuid'],
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $productQuantity,
@@ -526,7 +526,7 @@ class CartModificationsResultTest extends GraphQlTestCase
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);
@@ -590,7 +590,7 @@ class CartModificationsResultTest extends GraphQlTestCase
      */
     private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity, string $cartUuid): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,

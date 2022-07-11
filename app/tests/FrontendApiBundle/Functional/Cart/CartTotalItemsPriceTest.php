@@ -36,7 +36,7 @@ class CartTotalItemsPriceTest extends GraphQlTestCase
         /** @var \App\Model\Product\Product $helloKittyProduct */
         $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        return $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $helloKittyProduct->getUuid(),
             'quantity' => 1,
         ]);

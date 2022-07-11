@@ -37,19 +37,19 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => 1,
         ]);
 
         $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangeTransportInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
             'transportUuid' => $transport->getUuid(),
             'cartUuid' => $cartUuid,
         ]);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangePaymentInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'paymentUuid' => $transport->getPayments()[0]->getUuid(),
             'cartUuid' => $cartUuid,
         ]);
@@ -69,6 +69,6 @@ class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
             'newsletterSubscription' => true,
         ];
 
-        $this->getResponseContentForGql(__DIR__ . '/../Order/graphql/CreateOrderMutation.graphql', $orderVariables);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);
     }
 }

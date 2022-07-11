@@ -29,7 +29,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
         ];
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/EditDeliveryAddressMutation.graphql',
+            __DIR__ . '/../_graphql/mutation/EditDeliveryAddressMutation.graphql',
             $editedValues
         );
 
@@ -71,7 +71,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
         ];
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/EditDeliveryAddressMutation.graphql',
+            __DIR__ . '/../_graphql/mutation/EditDeliveryAddressMutation.graphql',
             $editedValues
         );
 

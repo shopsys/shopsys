@@ -35,7 +35,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
             'deliveryCountry' => 'CZ',
         ];
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/CreateOrderMutation.graphql', $orderVariables);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);
 
         $deliveryAddresses = $this->getCustomersDeliveryAddresses();
         $lastDeliveryAddressUuid = end($deliveryAddresses)['uuid'];
@@ -44,7 +44,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
 
         $this->initializeCart();
         $this->getResponseContentForGql(
-            __DIR__ . '/graphql/CreateOrderMutation.graphql',
+            __DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql',
             $orderVariables + [
                 'deliveryAddressUuid' => $lastDeliveryAddressUuid,
             ]
@@ -64,16 +64,16 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => 1,
         ]);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangeTransportInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
             'transportUuid' => $transport->getUuid(),
         ]);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangePaymentInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'paymentUuid' => $transport->getPayments()[0]->getUuid(),
         ]);
     }
@@ -83,7 +83,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
      */
     private function getCustomersDeliveryAddresses(): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Customer/graphql/CurrentCustomerUserQuery.graphql');
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/CurrentCustomerUserQuery.graphql');
         return $this->getResponseDataForGraphQlType(
             $response,
             'currentCustomerUser'

@@ -57,7 +57,7 @@ class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 
         self::assertTrue($product->getSaleExclusion($this->domain->getId()));
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ProductQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/ProductQuery.graphql', [
             'uuid' => $product->getUuid(),
         ]);
 

@@ -173,7 +173,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         /** @var \App\Model\Product\Product $productInCart */
         $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $productInCart->getUuid(),
             'quantity' => 1,
         ]);

@@ -11,7 +11,7 @@ class IsCustomerUserRegisteredTest extends GraphQlTestCase
 {
     public function testIsUserRegisteredWithRegisteredEmail(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../graphql/IsCustomerUserRegisteredQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/IsCustomerUserRegisteredQuery.graphql', [
             'email' => 'no-reply@shopsys.com',
         ]);
 
@@ -20,7 +20,7 @@ class IsCustomerUserRegisteredTest extends GraphQlTestCase
 
     public function testIsUserRegisteredWithNotRegisteredEmail(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../graphql/IsCustomerUserRegisteredQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/IsCustomerUserRegisteredQuery.graphql', [
             'email' => 'not-registered@shopsys.com',
         ]);
 
@@ -29,7 +29,7 @@ class IsCustomerUserRegisteredTest extends GraphQlTestCase
 
     public function testIsUserRegisteredWithInvalidEmail(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../graphql/IsCustomerUserRegisteredQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/IsCustomerUserRegisteredQuery.graphql', [
             'email' => 'invalidEmail',
         ]);
 

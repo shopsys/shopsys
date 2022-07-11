@@ -18,7 +18,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
-        $initCartResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $initCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product1->getUuid(),
             'quantity' => 1,
         ]);
@@ -73,7 +73,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
 
-        $addAnotherToCartResponse = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $addAnotherToCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'productUuid' => $product72->getUuid(),
             'quantity' => 1,

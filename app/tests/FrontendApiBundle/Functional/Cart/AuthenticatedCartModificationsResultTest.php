@@ -87,7 +87,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->hideTestingProduct();
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);
@@ -104,7 +104,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);
@@ -494,7 +494,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);
@@ -560,7 +560,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      */
     private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);

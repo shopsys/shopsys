@@ -204,7 +204,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product1->getUuid(),
             'quantity' => 1,
         ]);
@@ -214,7 +214,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'productUuid' => $product72->getUuid(),
             'quantity' => 2,

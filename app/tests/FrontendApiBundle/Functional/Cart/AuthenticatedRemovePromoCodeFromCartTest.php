@@ -78,7 +78,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
 
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => 2,
         ]);

@@ -30,7 +30,7 @@ class RemoveFromCartTest extends GraphQlTestCase
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
         $secondProductQuantity = 3;
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $newlyCreatedCart['uuid'],
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $secondProductQuantity,
@@ -89,7 +89,7 @@ class RemoveFromCartTest extends GraphQlTestCase
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);

@@ -173,7 +173,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
      */
     private function addProductToCustomerCart(Product $product, int $productQuantity): void
     {
-        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => $productQuantity,
         ]);

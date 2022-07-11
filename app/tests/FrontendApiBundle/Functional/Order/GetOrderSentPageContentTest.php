@@ -24,24 +24,24 @@ class GetOrderSentPageContentTest extends AbstractOrderTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => 1,
         ]);
 
         $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangeTransportInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'transportUuid' => $transport->getUuid(),
         ]);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/ChangePaymentInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'paymentUuid' => $transport->getPayments()[0]->getUuid(),
         ]);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateOrderMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', [
             'cartUuid' => $cartUuid,
             'firstName' => 'firstName',
             'lastName' => 'lastName',
@@ -56,7 +56,7 @@ class GetOrderSentPageContentTest extends AbstractOrderTestCase
         ]);
 
         $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['uuid'];
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/OrderSentPageContentQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/OrderSentPageContentQuery.graphql', [
             'orderUuid' => $orderUuid,
         ]);
 
@@ -68,7 +68,7 @@ class GetOrderSentPageContentTest extends AbstractOrderTestCase
 
     public function testGetOrderSentPageContentForNonExistingOrder(): void
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/OrderSentPageContentQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/OrderSentPageContentQuery.graphql', [
             'orderUuid' => '4c0e44a5-74fc-4df3-b868-c4900b36adbf',
         ]);
 

@@ -68,7 +68,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
         $addedProductQuantity = 3;
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $addedProductQuantity,
         ]);
@@ -89,7 +89,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
         $secondProductQuantity = 5;
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $secondProduct->getUuid(),
             'quantity' => $secondProductQuantity,
         ]);
@@ -114,7 +114,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
         $desiredProductQuantity = 3;
 
-        $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $desiredProductQuantity,
             'isAbsoluteQuantity' => true,
@@ -134,7 +134,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
      */
     private function addTestingProductToCustomerCart(int $productQuantity): array
     {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);

@@ -41,7 +41,7 @@ class ProductSourceEqualityTest extends GraphQlTestCase
         $productArrayResponse = $this->getResponseContentForQuery($productArrayQuery);
         $productArrayData = $this->getResponseDataForGraphQlType($productArrayResponse, 'product');
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Cart/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $productUuid,
             'quantity' => 1,
         ]);
