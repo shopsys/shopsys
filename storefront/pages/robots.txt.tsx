@@ -24,6 +24,7 @@ const getRobotsTxtContent = (domain: string, domainId: number): string => {
 ${staticUrlsToNoIndex.map((page) => `\nDisallow: ${page}`).join('')}
 Disallow: ${customerUrl}/*
 Disallow: /admin
+Disallow: *?filter=
 
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap.xml
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap_image.xml

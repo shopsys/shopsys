@@ -10,6 +10,7 @@ import {
     SubcategoriesSimpleNavigationStyled,
 } from './CategoryDetail.style';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
@@ -19,6 +20,7 @@ import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
+import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
 import { FilterOptionsType } from 'types/productFilter';
@@ -34,6 +36,8 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
+    const { query } = useRouter();
+    const isFiltered = 'filter' in query;
 
     const handlePanelOpenerClick = () => {
         setIsPanelOpen(!isPanelOpen);
@@ -54,6 +58,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
 
     return (
         <Webline>
+            {isFiltered && <MetaRobots content="noindex, follow" />}
             <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
                     <ProductFilter
