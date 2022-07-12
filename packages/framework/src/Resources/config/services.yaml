@@ -514,11 +514,6 @@ services:
         tags:
             - { name: 'translation.loader', alias: 'po' }
 
-    Shopsys\FrameworkBundle\Component\Error\ExceptionController:
-        arguments:
-            - '@twig'
-            - '%kernel.debug%'
-
     Shopsys\FrameworkBundle\Component\Error\NotLogFakeHttpExceptionsErrorListener:
         alias: exception_listener
 
@@ -990,3 +985,9 @@ services:
             - '%env(MAILER_DELIVERY_WHITELIST)%'
             - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
             - '%env(MAILER_DSN)%'
+
+    Shopsys\FrameworkBundle\Component\Error\ErrorController:
+        arguments:
+            $debug: '%kernel.debug%'
+            $environment: '%kernel.environment%'
+            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
