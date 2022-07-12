@@ -31,3 +31,5 @@ services:
 
     League\Flysystem\FilesystemInterface:
         alias: main_filesystem
+
+    Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
