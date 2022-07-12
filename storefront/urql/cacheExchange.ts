@@ -1,6 +1,7 @@
 import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
 import {
+    AddToCartResultApi,
     CartQueryApi,
     CartQueryDocumentApi,
     CartQueryVariablesApi,
@@ -16,7 +17,6 @@ import {
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
-const keyCart = () => 'cart';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
@@ -36,7 +36,7 @@ const cache = cacheExchange({
         BlogCategory: keyUuid,
         Brand: keyUuid,
         BrandFilterOption: keyNull,
-        Cart: keyCart,
+        Cart: keyUuid,
         CartItem: keyUuid,
         CartItemModificationsResult: keyNull,
         CartModificationsResult: keyNull,
@@ -100,6 +100,27 @@ const cache = cacheExchange({
             },
             CreateOrder(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
+            },
+            AddToCart(result, _args, cache) {
+                if (typeof result.AddToCart !== 'undefined') {
+                    const response = result.AddToCart as AddToCartResultApi;
+                    cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
+                        { query: CartQueryDocumentApi, variables: { cartUuid: response.cart.uuid } },
+                        (data) => {
+                            if (typeof result.AddToCart !== 'undefined') {
+                                // eslint-disable-next-line no-param-reassign
+                                data = {
+                                    __typename: 'Query',
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-ignore
+                                    cart: response.cart,
+                                };
+                            }
+
+                            return data;
+                        },
+                    );
+                }
             },
         },
     },
