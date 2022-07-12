@@ -1,24 +1,25 @@
-FROM node:16.15.0-alpine as production
+FROM node:16.15.0-alpine as deps
 
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+WORKDIR /tmp/build
+COPY package.json package-lock.json ./
 
-ARG APP_DIR=/home/node/app
-
-RUN mkdir -p $APP_DIR && chown -R node:node $APP_DIR
-
-USER node
-
-WORKDIR $APP_DIR
-
-COPY --chown=node:node . .
-
-# CI = clear install, don't try to update dependencies
-RUN npm ci --no-dev
-
+RUN npm ci
+COPY . .
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build
+RUN npm ci --production
+RUN rm -rf ./.next/cache
 
-CMD npm run start
+FROM node:16.15.0-alpine AS production
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+
+USER node
+ARG APP_DIR=/home/node/app
+WORKDIR $APP_DIR
+
+COPY --from=deps --chown=node:node /tmp/build $APP_DIR
+
+CMD ["npm", "start"]
