@@ -1,3 +1,4 @@
+import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import SearchPage from 'components/Pages/Search';
@@ -48,6 +49,7 @@ const Search: FC<ServerSidePropsType> = () => {
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
+            <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={t('Search')}>
                 <SearchPage searchResults={searchResults} />
             </CommonLayout>

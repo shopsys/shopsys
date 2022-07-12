@@ -8,6 +8,7 @@ const getRobotsTxtContent = (domain: string, domainId: number): string => {
         [
             '/cart',
             '/new-password',
+            '/search',
             '/order-confirmation',
             '/order-payment-confirmation',
             '/personal-data-export',
