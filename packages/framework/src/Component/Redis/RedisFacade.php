@@ -62,7 +62,7 @@ class RedisFacade
         while ($keys !== false) {
             $keys = $redisClient->scan($iterator, $pattern, $suggestedScanBatchSize);
             if (is_array($keys) && count($keys) > 0) {
-                $redisClient->eval("return redis.call('unlink', unpack(ARGV))", $keys);
+                $redisClient->eval("return redis.call('unlink', unpack(ARGV))", $keys, 0);
             }
         }
     }
