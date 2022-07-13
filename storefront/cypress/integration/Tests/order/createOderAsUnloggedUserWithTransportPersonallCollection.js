@@ -60,7 +60,7 @@ import {
     fillInNoteInThirdStep,
 } from '../../Functions/orderThirdStep';
 
-it('Creating an order as unlogged user with one item, Personall collection and Cash', () => {
+it('Creating an order as unlogged user with one item, Personal collection and Cash', () => {
     cy.visit('/');
     cy.contains('Odmítnout vše').click();
     addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
