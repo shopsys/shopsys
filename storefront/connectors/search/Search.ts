@@ -16,7 +16,7 @@ export const useSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi | null,
     searchProductsPagination: PaginationType['paginationCursor'],
-    optionsFilter: FilterOptionsUrlQueryType,
+    optionsFilter: FilterOptionsUrlQueryType | null,
 ): SearchType | undefined => {
     const [result] = useSearchQueryApi({
         variables: {

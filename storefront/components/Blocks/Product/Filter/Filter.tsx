@@ -23,7 +23,7 @@ import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'type
 
 type FilterProps = {
     productFilterOptions: FilterOptionsType;
-    slug?: string;
+    slug: string;
     originalSlug: string | null;
 };
 

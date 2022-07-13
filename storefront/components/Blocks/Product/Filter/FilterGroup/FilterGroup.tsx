@@ -6,8 +6,8 @@ import {
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { FC, Fragment, useState } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { FC, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 
 type FilterGroupProps = {
@@ -34,9 +34,10 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
 
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
-    const { fields } = useFieldArray({
-        control: formProviderMethods.control,
+
+    const filterGroupValue = useWatch({
         name: props.filterField,
+        control: formProviderMethods.control,
     });
 
     const handleGroupClick = () => {
@@ -50,28 +51,25 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                {fields.map((dataItem, index) => (
-                    <Fragment key={dataItem.id}>
-                        <Controller
-                            name={`${props.filterField}.${index}.checked`}
-                            render={({ field }) => (
-                                <FilterGroupContentItemStyled
-                                    key={dataItem.uuid}
-                                    isDisabled={props.data?.[index]?.count === 0}
-                                    isActive={field.value}
-                                    data-testid={testIdentifier + '-' + index}
-                                >
-                                    <Checkbox
-                                        name={field.name}
-                                        id={field.name}
-                                        label={dataItem.name}
-                                        fieldRef={field}
-                                        count={props.data?.[index]?.count}
-                                    />
-                                </FilterGroupContentItemStyled>
-                            )}
-                        />
-                    </Fragment>
+                {filterGroupValue.map((dataItem, index) => (
+                    <Controller
+                        name={`${props.filterField}.${index}.checked`}
+                        key={dataItem.uuid}
+                        render={({ field }) => (
+                            <FilterGroupContentItemStyled
+                                isDisabled={props.data?.[index]?.count === 0}
+                                isActive={field.value}
+                                data-testid={testIdentifier + '-' + index}
+                            >
+                                <Checkbox
+                                    name={field.name}
+                                    label={dataItem.name}
+                                    fieldRef={field}
+                                    count={props.data?.[index]?.count}
+                                />
+                            </FilterGroupContentItemStyled>
+                        )}
+                    />
                 ))}
             </FilterGroupContentStyled>
         </FilterGroupStyled>

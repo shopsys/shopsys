@@ -30,9 +30,9 @@ const Search: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const searchProductsSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
-    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
+    const searchParametersFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
     const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
-    const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, optionsFilter);
+    const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, searchParametersFilter);
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search');
     useGtmStaticPageView(gtmStaticPageViewEvent);

@@ -198,7 +198,8 @@ const Search: FC<SearchProps> = ({ searchResults }) => {
                             <SearchResultsPanelStyled>
                                 <ProductFilter
                                     productFilterOptions={searchResults.productsSearch.productFilterOptions}
-                                    formUpdateDependency={routerQueryChanged}
+                                    slug={searchUrl}
+                                    originalSlug={null}
                                 />
                                 <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>
