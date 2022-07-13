@@ -16,7 +16,6 @@ parameters:
     shopsys.image_config_filepath: '%kernel.project_dir%/config/images.yaml'
     shopsys.image_dir: '/web%shopsys.image_url_prefix%'
     shopsys.image_url_prefix: '/%shopsys.content_dir_name%/images/'
-    shopsys.javascript_url_prefix: /assets/scripts/
     shopsys.log_stream: /tmp/log-pipe
     shopsys.resources_dir: '%kernel.project_dir%/src/Resources'
     shopsys.sitemaps_dir: '/web%shopsys.sitemaps_url_prefix%'
