@@ -7,8 +7,6 @@ import {
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import { FC, useCallback, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { FilterFormType } from 'types/productFilter';
 
 type FilterGroupPriceProps = {
@@ -33,9 +31,6 @@ type FilterGroupPriceProps = {
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-price';
 
 const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPrice, maximalPrice }) => {
-    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
-    const dispatch = useShopsysDispatch();
-
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
 
     const handleGroupClick = () => {
@@ -50,29 +45,21 @@ const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPri
 
     const setMinimalPrice = useCallback(
         (value: number) => {
-            setValue('minimalPrice', value);
+            if (minimalPriceValue !== value) {
+                setValue('minimalPrice', value);
+            }
         },
-        [setValue],
+        [minimalPriceValue, setValue],
     );
 
     const setMaximalPrice = useCallback(
         (value: number) => {
-            setValue('maximalPrice', value);
+            if (maximalPriceValue !== value) {
+                setValue('maximalPrice', value);
+            }
         },
-        [setValue],
+        [maximalPriceValue, setValue],
     );
-
-    const dispatchMinimalPrice = useCallback(() => {
-        if (parametersFilterState.minimalPrice !== null && parametersFilterState.minimalPrice > minimalPrice) {
-            dispatch(optionsFilterActions.setMinimalPriceFilter(minimalPrice));
-        }
-    }, [dispatch, minimalPrice, parametersFilterState.minimalPrice]);
-
-    const dispatchMaximalPrice = useCallback(() => {
-        if (parametersFilterState.maximalPrice !== null && parametersFilterState.maximalPrice < maximalPrice) {
-            dispatch(optionsFilterActions.setMaximalPriceFilter(minimalPrice));
-        }
-    }, [dispatch, maximalPrice, minimalPrice, parametersFilterState.maximalPrice]);
 
     return (
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
@@ -88,8 +75,6 @@ const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPri
                     maxValue={maximalPriceValue}
                     setMinValueCallback={setMinimalPrice}
                     setMaxValueCallback={setMaximalPrice}
-                    dispatchMinValue={dispatchMinimalPrice}
-                    dispatchMaxValue={dispatchMaximalPrice}
                 />
             </FilterGroupContentStyled>
         </FilterGroupStyled>

@@ -17,7 +17,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { useRouter } from 'next/router';
 import { FC, useEffect, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { initialState, userActions } from 'redux/slices/user';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
@@ -31,7 +30,7 @@ const Search: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const searchProductsSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
-    const optionsFilter = useShopsysSelector((state) => state.optionsFilter);
+    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
     const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
     const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, optionsFilter);
 
@@ -60,13 +59,11 @@ const Search: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
+    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query.filter));
     store.dispatch(
         userActions.setPagination(
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
         ),
-    );
-    store.dispatch(
-        optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
     );
 
     return initServerSideProps(context, store, false, [
@@ -76,7 +73,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 search: getStringFromUrlQuery(context.query.q),
                 orderingMode,
                 after: store.getState().user.pagination.paginationCursor,
-                filter: mapParametersFilter(store.getState().optionsFilter),
+                filter: mapParametersFilter(optionsFilter),
                 first: initialState.pagination.pageSize,
             },
         },

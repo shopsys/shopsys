@@ -7,7 +7,9 @@ import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { Maybe, useSlugQueryApi } from 'graphql/generated';
+import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
@@ -19,7 +21,7 @@ export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageT
     const router = useRouter();
     const categoryDetailSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const pagination = useShopsysSelector((state) => state.user.pagination);
-    const categoryParametersFilter = useShopsysSelector((state) => state.optionsFilter);
+    const categoryParametersFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
     const [{ data, error }] = useSlugQueryApi({
         variables: {
             slug,
@@ -29,6 +31,7 @@ export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageT
             filter: mapParametersFilter(categoryParametersFilter),
         },
     });
+
     useQueryError(error);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 

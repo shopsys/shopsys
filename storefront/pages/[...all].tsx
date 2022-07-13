@@ -30,7 +30,6 @@ import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { initialState, userActions } from 'redux/slices/user';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
@@ -61,7 +60,6 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     useGtmProductDetailView(data, slug);
     useGtmBrandProductListView(data, slug);
     useGtmFlagProductListView(data, slug);
-
     return renderContent(data);
 };
 
@@ -103,13 +101,11 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
+    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query.filter));
     store.dispatch(
         userActions.setPagination(
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
         ),
-    );
-    store.dispatch(
-        optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
     );
 
     const exchange = ssrExchange({ isClient: false });
@@ -120,7 +116,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         orderingMode,
         endCursorForPagination: store.getState().user.pagination.paginationCursor,
         pageSize: initialState.pagination.pageSize,
-        filter: mapParametersFilter(store.getState().optionsFilter),
+        filter: mapParametersFilter(optionsFilter),
     };
 
     const initServerSideData = await initServerSideProps(

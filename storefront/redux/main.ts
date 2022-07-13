@@ -1,6 +1,5 @@
 import { contactInformationSlice } from './slices/contactInformation';
 import { domainSlice } from './slices/domain';
-import { optionsFilterSlice } from './slices/optionsFilter';
 import { userSlice } from './slices/user';
 import { configureStore } from '@reduxjs/toolkit';
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
@@ -13,7 +12,6 @@ const makeStore = wrapMakeStore(() =>
             domain: domainSlice.reducer,
             user: userSlice.reducer,
             contactInformation: contactInformationSlice.reducer,
-            optionsFilter: optionsFilterSlice.reducer,
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().prepend(
