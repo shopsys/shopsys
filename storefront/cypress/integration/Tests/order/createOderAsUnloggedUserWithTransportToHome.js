@@ -57,11 +57,14 @@ import {
 
 it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
     cy.visit('/');
+    cy.contains('Odmítnout vše').click();
     addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
     checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
     checkProductInCart(product1_catnum, product1_name_prefix_suffix);
     cy.url().should('contain', url_cart);
     continueToSecondStep();
+
+    // second step
     cy.url().should('contain', url_order_second_step);
     checkTransportPrice('0', transport1_price); // fist argument = position of transport list (start from id 0)
     chooseTransportToHome(transport1_name);
@@ -77,6 +80,8 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         cart_total_price3,
     );
     continueToThirdStep();
+
+    // third step
     cy.url().should('contain', url_order_third_step);
     fillEmailInThirdStep(customer1_email);
     fillCustomerInformationInThirdStep(customer1_phone, customer1_first_name, customer1_last_name);
@@ -93,8 +98,12 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         cart_total_price3,
     );
     clickOnSendOrderButton();
+
+    // than you page order
     checkFinishOrderPageAsUnregistredCustomer();
     clickOnOrderDetailButtonOnThankYouPage();
+
+    // ordet detail
     cy.url().should('contain', url_order_detail);
     checkBasicInformationAndNoteInOrderDetail(order_note1);
     checkBillingAdressInOrderDetail(

@@ -62,11 +62,14 @@ import {
 
 it('Creating an order as unlogged user with one item, Personall collection and Cash', () => {
     cy.visit('/');
+    cy.contains('Odmítnout vše').click();
     addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
     checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
     checkProductInCart(product1_catnum, product1_name_prefix_suffix);
     cy.url().should('contain', url_cart);
     continueToSecondStep();
+
+    // second step
     cy.url().should('contain', url_order_second_step);
     checkTransportPrice('2', free_price); // fist argument = position of transport list (start from id 0)
     chooseTransportPersonalCollectionAndStore(store1_name);
@@ -83,6 +86,8 @@ it('Creating an order as unlogged user with one item, Personall collection and C
         cart_total_price1,
     );
     continueToThirdStep();
+
+    // third step
     cy.url().should('contain', url_order_third_step);
     fillEmailInThirdStep(customer1_email);
     fillCustomerInformationInThirdStep(customer1_phone, customer1_first_name, customer1_last_name);
@@ -99,8 +104,12 @@ it('Creating an order as unlogged user with one item, Personall collection and C
         cart_total_price1,
     );
     clickOnSendOrderButton();
+
+    // thank you page order
     checkFinishOrderPageAsUnregistredCustomer();
     clickOnOrderDetailButtonOnThankYouPage();
+
+    // order detail
     cy.url().should('contain', url_order_detail);
     checkBasicInformationAndNoteInOrderDetail(order_note1);
     checkBillingAdressInOrderDetail(
