@@ -3,244 +3,62 @@ import FilterGroup from './FilterGroup';
 import FilterGroupInStock from './FilterGroupInStock';
 import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
+import { getDefaultFormValues } from './formMeta';
 import { getIndexOfParameter } from './helpers/getIndexOfParameter';
-import { getIndexOfParameterValue } from './helpers/getIndexOfParameterValue';
 import SelectedParameters from './SelectedParameters';
 import Form from 'components/Forms/Form';
-import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/GetActualUrlQueryWithoutDefaultPriceFilter';
+import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
+import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
+import { getIsProductFilterSameAsDefault } from 'helpers/filterOptions/GetIsProductFilterSameAsDefault';
+import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWithoutAllParameter';
+import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
+import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo } from 'react';
-import { FormProvider, useFieldArray, useWatch } from 'react-hook-form';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
-import { FilterFormParameterType, FilterFormType, FilterOptionsType, ParametersType } from 'types/productFilter';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
 
 type FilterProps = {
     productFilterOptions: FilterOptionsType;
     slug?: string;
-    formUpdateDependency?: boolean;
+    originalSlug: string | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDependency }) => {
-    const router = useRouter();
+const Filter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) => {
     const t = useTypedTranslationFunction();
-    const dispatch = useShopsysDispatch();
-    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
-
-    const defaultBrandValues = useMemo(
-        () =>
-            productFilterOptions.brands.map((value) => ({
-                ...value.brand,
-                checked: false,
-            })),
-        [productFilterOptions.brands],
+    const router = useRouter();
+    const deepComparedProductFitlerOptions = useMemo(
+        () => productFilterOptions,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [JSON.stringify(productFilterOptions)],
     );
 
-    const defaultFlagValues = useMemo(() => {
-        return productFilterOptions.flags.map((value) => ({
-            ...value.flag,
-            checked: value.isSelected,
-        }));
-    }, [productFilterOptions.flags]);
-
-    const getParametersValues = useCallback((): FilterFormParameterType[] => {
-        if (productFilterOptions.parameters === undefined) {
-            return [];
-        }
-
-        function getValues(parameter: ParametersType) {
-            if (!('values' in parameter)) {
-                return [];
-            }
-
-            return parameter.values.map((value) => ({
-                ...value,
-                checked: value.isSelected,
-            }));
-        }
-
-        return productFilterOptions.parameters.map((parameter) => ({
-            parameterName: parameter.name,
-            parameterUuid: parameter.uuid,
-            values: getValues(parameter),
-            isCollapsed: parameter.isCollapsed,
-            minimalValue:
-                'minimalValue' in parameter
-                    ? 'selectedValue' in parameter && parameter.minimalValue === parameter.selectedValue
-                        ? parameter.minimalValue
-                        : undefined
-                    : undefined,
-            maximalValue:
-                'maximalValue' in parameter
-                    ? 'selectedValue' in parameter && parameter.maximalValue === parameter.selectedValue
-                        ? parameter.maximalValue
-                        : undefined
-                    : undefined,
-            selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : undefined,
-            unit: 'unit' in parameter ? parameter.unit : undefined,
-        }));
-    }, [productFilterOptions.parameters]);
-
-    const formProviderMethods = useShopsysForm<FilterFormType>(undefined, {
-        brands: defaultBrandValues,
-        flags: defaultFlagValues,
-        parameters: getParametersValues(),
-        onlyInStock: false,
-        minimalPrice: productFilterOptions.minimalPrice,
-        maximalPrice: productFilterOptions.maximalPrice,
+    const formProviderMethods = useForm<FilterFormType>({
+        defaultValues: getDefaultFormValues(
+            mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(router.query.filter))),
+            deepComparedProductFitlerOptions,
+            originalSlug,
+        ),
     });
 
-    const { fields: fieldsParameters } = useFieldArray({ control: formProviderMethods.control, name: 'parameters' });
-    const brandsValue = useWatch({ name: 'brands', control: formProviderMethods.control });
-    const flagsValue = useWatch({ name: 'flags', control: formProviderMethods.control });
-    const parametersValue = useWatch({ name: 'parameters', control: formProviderMethods.control });
-    const onlyInStockValue = useWatch({ name: 'onlyInStock', control: formProviderMethods.control });
-    const minimalPriceValue = useWatch({ name: 'minimalPrice', control: formProviderMethods.control });
-    const maximalPriceValue = useWatch({ name: 'maximalPrice', control: formProviderMethods.control });
-
     useEffect(() => {
-        const parameters = [];
+        const queryFromUrl = mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(router.query.filter)));
 
-        const defaultCheckedParamsCount = productFilterOptions.parameters?.reduce(
-            (partialSum, parameter) =>
-                'values' in parameter
-                    ? partialSum + parameter.values.filter((value) => value.isSelected).length
-                    : partialSum,
-            0,
-        );
+        formProviderMethods.reset(getDefaultFormValues(queryFromUrl, deepComparedProductFitlerOptions, originalSlug));
 
-        const checkedParametersCount = parametersValue.reduce(
-            (partialSum, parameter) =>
-                partialSum + ('values' in parameter ? parameter.values.filter((value) => value.checked).length : 0),
-            0,
-        );
-
-        for (const parameter of parametersValue) {
-            const checkedValues = [];
-
-            const param = productFilterOptions.parameters?.find((p) => p.uuid === parameter.parameterUuid);
-
-            if (defaultCheckedParamsCount !== checkedParametersCount) {
-                // NOTE: "parameter.values" is sometimes undefined despite typing
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                for (const value of parameter.values ?? []) {
-                    const defaultChecked =
-                        param && 'values' in param
-                            ? param.values.find((val) => val.uuid === value.uuid)?.isSelected
-                            : false;
-                    if (value.checked && !defaultChecked) {
-                        checkedValues.push(value.uuid);
-                    }
-                }
-            }
-
-            if (
-                checkedValues.length === 0 &&
-                parameter.minimalValue === undefined &&
-                parameter.maximalValue === undefined
-            ) {
-                continue;
-            }
-
-            parameters.push({
-                parameter: parameter.parameterUuid,
-                values: checkedValues,
-                minimalValue: parameter.minimalValue ?? null,
-                maximalValue: parameter.maximalValue ?? null,
-            });
-        }
-
-        dispatch(optionsFilterActions.setParametersFilter(parameters));
-    }, [dispatch, parametersValue, productFilterOptions.parameters]);
-
-    useComponentUpdate(() => {
-        const brands = brandsValue.reduce(function (result: string[], brand) {
-            if (brand.checked === true) {
-                result.push(brand.uuid);
-            }
-            return result;
-        }, []);
-
-        dispatch(optionsFilterActions.setBrandsFilter(brands));
-    }, [brandsValue]);
-
-    useComponentUpdate(() => {
-        const flags = flagsValue.reduce(function (result: string[], flag) {
-            if (
-                flag.checked === true &&
-                !productFilterOptions.flags.find((productFlag) => productFlag.flag.uuid === flag.uuid)?.isSelected
-            ) {
-                result.push(flag.uuid);
-            }
-            return result;
-        }, []);
-
-        dispatch(optionsFilterActions.setFlagsFilter(flags));
-    }, [flagsValue]);
-
-    useComponentUpdate(() => {
-        dispatch(optionsFilterActions.setOnlyInStockFilter(onlyInStockValue));
-    }, [onlyInStockValue]);
-
-    useComponentUpdate(() => {
-        dispatch(optionsFilterActions.setMinimalPriceFilter(minimalPriceValue));
-    }, [minimalPriceValue]);
-
-    useComponentUpdate(() => {
-        dispatch(optionsFilterActions.setMaximalPriceFilter(maximalPriceValue));
-    }, [maximalPriceValue]);
-
-    useComponentUpdate(() => {
-        formProviderMethods.setValue(`brands`, defaultBrandValues);
-        formProviderMethods.setValue(`flags`, defaultFlagValues);
-        formProviderMethods.setValue(`parameters`, getParametersValues());
-        formProviderMethods.setValue(`onlyInStock`, false);
-        formProviderMethods.setValue(`minimalPrice`, productFilterOptions.minimalPrice);
-        formProviderMethods.setValue(`maximalPrice`, productFilterOptions.maximalPrice);
-    }, [slug, formUpdateDependency]);
-
-    useEffect(() => {
-        const queryParams = router.query;
-        const pathname = router.asPath.split('?')[0];
-
-        delete queryParams.all;
-        if (isProductFilterWithoutChanges(parametersFilterState, productFilterOptions)) {
-            delete queryParams.filter;
-        } else {
-            queryParams.filter = JSON.stringify(parametersFilterState);
-        }
-
-        router.replace({ pathname, query: queryParams }, undefined, {
-            scroll: false,
-            shallow: true,
-        });
+        // update dependencies are missing,because each rerender triggers another rerender, resulting in an infinite loop
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [parametersFilterState]);
+    }, [originalSlug, deepComparedProductFitlerOptions, slug]);
 
-    const onBrandCheck = (uuid: string) => {
-        const indexOfValue = brandsValue.findIndex((value) => value.uuid === uuid);
-
-        formProviderMethods.setValue(`brands.${indexOfValue}.checked`, true);
-    };
-
-    const onFlagCheck = (uuid: string) => {
-        const indexOfValue = flagsValue.findIndex((value) => value.uuid === uuid);
-
-        formProviderMethods.setValue(`flags.${indexOfValue}.checked`, true);
-    };
-
-    const onParameterCheck = (parameterUuid: string, parameterValueUuid: string) => {
-        const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
-        const indexOfValue = getIndexOfParameterValue(parametersValue, indexOfParameter, parameterValueUuid);
-
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, true);
-    };
+    const [brandsValue, flagsValue, parametersValue, isOnlyInStock, minimalPrice, maximalPrice] = useWatch({
+        name: ['brands', 'flags', 'parameters', 'onlyInStock', 'minimalPrice', 'maximalPrice'],
+        control: formProviderMethods.control,
+    });
 
     const getIsNotFilteredByParameter = useCallback(
         (parameterUuid: string) => {
@@ -248,85 +66,130 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
 
             return (
                 parameter.values.filter((value) => value.checked).length === 0 &&
-                parameter.minimalValue === undefined &&
-                parameter.maximalValue === undefined
+                parameter.minimalValue === null &&
+                parameter.maximalValue === null
             );
         },
         [parametersValue],
     );
 
-    // this useEffect triggered only on the first render
-    useEffectOnce(() => {
-        parametersFilterState.brands.forEach((brandUuid) => onBrandCheck(brandUuid));
-        parametersFilterState.flags.forEach((flagUuid) => onFlagCheck(flagUuid));
-        parametersFilterState.parameters.forEach((parameterItem) => {
-            parameterItem.values.forEach((parameterValueUuid) =>
-                onParameterCheck(parameterItem.parameter, parameterValueUuid),
-            );
-            if (parameterItem.minimalValue !== null) {
-                const indexOfParameter = getIndexOfParameter(parametersValue, parameterItem.parameter);
+    const checkedBrands = useMemo(() => brandsValue.filter((brand) => brand.checked), [brandsValue]);
+    const checkedFlags = useMemo(() => flagsValue.filter((brand) => brand.checked), [flagsValue]);
+    const checkedParameters = useMemo(() => {
+        const newCheckedParameters: FilterFormParameterType[] = [];
 
-                formProviderMethods.setValue(`parameters.${indexOfParameter}.minimalValue`, parameterItem.minimalValue);
-            }
-            if (parameterItem.maximalValue !== null) {
-                const indexOfParameter = getIndexOfParameter(parametersValue, parameterItem.parameter);
+        parametersValue.forEach((currentParameterWithFilteredValues) => {
+            const filteredValues = currentParameterWithFilteredValues.values.filter((value) => value.checked);
 
-                formProviderMethods.setValue(`parameters.${indexOfParameter}.maximalValue`, parameterItem.maximalValue);
+            if (filteredValues.length > 0) {
+                newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: filteredValues });
             }
         });
-        formProviderMethods.setValue(`onlyInStock`, parametersFilterState.onlyInStock);
-        if (parametersFilterState.minimalPrice !== null) {
-            formProviderMethods.setValue(`minimalPrice`, parametersFilterState.minimalPrice);
+
+        return newCheckedParameters;
+    }, [parametersValue]);
+
+    useEffect(() => {
+        const routerQueryWithoutAllParameter = getQueryWithoutAllParameter(router);
+        let pathname = slug;
+        const isProductFilterSameAsDefault = getIsProductFilterSameAsDefault(
+            checkedBrands,
+            checkedFlags,
+            minimalPrice,
+            maximalPrice,
+            isOnlyInStock,
+            checkedParameters,
+            deepComparedProductFitlerOptions,
+        );
+
+        if (isProductFilterSameAsDefault) {
+            delete routerQueryWithoutAllParameter.filter;
+            shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
+            return;
         }
-        if (parametersFilterState.maximalPrice !== null) {
-            formProviderMethods.setValue(`maximalPrice`, parametersFilterState.maximalPrice);
+
+        const isProductFilterEmpty = getIsProductFilterEmpty(
+            checkedBrands,
+            checkedFlags,
+            minimalPrice,
+            maximalPrice,
+            isOnlyInStock,
+            checkedParameters,
+            deepComparedProductFitlerOptions,
+        );
+        pathname = originalSlug ?? slug;
+        if (isProductFilterEmpty) {
+            delete routerQueryWithoutAllParameter.filter;
+        } else {
+            routerQueryWithoutAllParameter.filter = getActualUrlQueryWithoutDefaultPriceFilter(
+                checkedBrands,
+                checkedFlags,
+                minimalPrice,
+                maximalPrice,
+                isOnlyInStock,
+                checkedParameters,
+                deepComparedProductFitlerOptions,
+            );
         }
-    });
+
+        shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
+    }, [
+        checkedBrands,
+        checkedFlags,
+        minimalPrice,
+        maximalPrice,
+        isOnlyInStock,
+        checkedParameters,
+        deepComparedProductFitlerOptions,
+        router,
+        originalSlug,
+        slug,
+    ]);
 
     return (
         <FormProvider {...formProviderMethods}>
-            <SelectedParameters productFilterOptions={productFilterOptions} />
+            <SelectedParameters productFilterOptions={deepComparedProductFitlerOptions} />
             <FilterStyled data-testid={TEST_IDENTIFIER}>
                 <Form>
                     <FilterGroupPrice
                         title={t('Price')}
-                        minimalPrice={productFilterOptions.minimalPrice}
-                        maximalPrice={productFilterOptions.maximalPrice}
+                        minimalPrice={deepComparedProductFitlerOptions.minimalPrice}
+                        maximalPrice={deepComparedProductFitlerOptions.maximalPrice}
                         isOpen={true}
                     />
 
                     <FilterGroupInStock
                         title={t('Availability')}
-                        inStockCount={productFilterOptions.inStock}
+                        inStockCount={deepComparedProductFitlerOptions.inStock}
                         isOpen={true}
                     />
 
-                    {productFilterOptions.flags.length > 0 && (
+                    {deepComparedProductFitlerOptions.flags.length > 0 && (
                         <FilterGroup
                             title={t('Flags')}
                             filterField="flags"
-                            data={productFilterOptions.flags}
+                            data={deepComparedProductFitlerOptions.flags}
                             isOpen={true}
                         />
                     )}
 
-                    {productFilterOptions.brands.length > 0 && (
+                    {deepComparedProductFitlerOptions.brands.length > 0 && (
                         <FilterGroup
                             title={t('Brands')}
                             filterField="brands"
-                            data={productFilterOptions.brands}
+                            data={deepComparedProductFitlerOptions.brands}
                             isOpen={true}
                         />
                     )}
 
-                    {productFilterOptions.parameters !== undefined &&
-                        fieldsParameters.map((parametersItem, index) => (
+                    {deepComparedProductFitlerOptions.parameters !== undefined &&
+                        parametersValue.map((parametersItem, index) => (
                             <FilterGroupParameters
-                                key={parametersItem.id}
+                                key={parametersItem.parameterUuid}
                                 parameterParentUuid={parametersItem.parameterUuid}
                                 parameterParentIndex={index}
                                 title={parametersItem.parameterName}
-                                data={productFilterOptions.parameters?.[index]}
+                                data={deepComparedProductFitlerOptions.parameters?.[index]}
                                 isDefaultCollapsed={
                                     parametersItem.isCollapsed &&
                                     getIsNotFilteredByParameter(parametersItem.parameterUuid)

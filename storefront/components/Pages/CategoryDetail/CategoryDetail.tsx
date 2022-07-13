@@ -23,7 +23,6 @@ import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
-import { FilterOptionsType } from 'types/productFilter';
 import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
 
 type CategoryDetailProps = {
@@ -61,10 +60,13 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
             {isFiltered && <MetaRobots content="noindex, follow" />}
             <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter
-                        productFilterOptions={category.productConnection.productFilterOptions as FilterOptionsType}
-                        slug={category.slug}
-                    />
+                    {category.productConnection.productFilterOptions !== null && (
+                        <ProductFilter
+                            productFilterOptions={category.productConnection.productFilterOptions}
+                            slug={category.slug}
+                            originalSlug={category.originalCategorySlug}
+                        />
+                    )}
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>

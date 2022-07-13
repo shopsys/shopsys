@@ -11,13 +11,12 @@ import {
     SelectedParametersStyled,
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
-import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
+import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, useEffect, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
-import { FilterFormType, FilterOptionsType } from 'types/productFilter';
+import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
@@ -25,65 +24,82 @@ type SelectedParametersProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-const SelectedParameters: FC<SelectedParametersProps> = (props) => {
+const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterOptions }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const formProviderMethods = useFormContext<FilterFormType>();
-    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
-    const isOnlyInStock = parametersFilterState.onlyInStock;
-    const [brandsValue, flagsValue, parametersValue] = useWatch({
-        name: ['brands', 'flags', 'parameters'],
+
+    const [brandsValue, flagsValue, parametersValue, isOnlyInStock, minimalPrice, maximalPrice] = useWatch({
+        name: ['brands', 'flags', 'parameters', 'onlyInStock', 'minimalPrice', 'maximalPrice'],
         control: formProviderMethods.control,
     });
-    const [isMinimalPriceVisible, setMinimalPriceVisibility] = useState(false);
-    const [isMaximalPriceVisible, setMaximalPriceVisibility] = useState(false);
 
-    useEffect(() => {
-        setMinimalPriceVisibility(
-            parametersFilterState.minimalPrice !== props.productFilterOptions.minimalPrice &&
-                parametersFilterState.minimalPrice !== null,
-        );
-    }, [parametersFilterState.minimalPrice, props.productFilterOptions.minimalPrice]);
+    const isMinimalPriceVisible = minimalPrice !== productFilterOptions.minimalPrice;
+    const isMaximalPriceVisible = maximalPrice !== productFilterOptions.maximalPrice;
 
-    useEffect(() => {
-        setMaximalPriceVisibility(
-            parametersFilterState.maximalPrice !== props.productFilterOptions.maximalPrice &&
-                parametersFilterState.maximalPrice !== null,
-        );
-    }, [parametersFilterState.maximalPrice, props.productFilterOptions.maximalPrice]);
+    const checkedBrands = useMemo(() => brandsValue.filter((brand) => brand.checked), [brandsValue]);
+    const checkedFlags = useMemo(() => flagsValue.filter((brand) => brand.checked), [flagsValue]);
+    const checkedParameters = useMemo(() => {
+        const newCheckedParameters: FilterFormParameterType[] = [];
+
+        parametersValue.forEach((currentParameterWithFilteredValues) => {
+            const filteredValues = currentParameterWithFilteredValues.values.filter((value) => value.checked);
+
+            if (filteredValues.length > 0) {
+                newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: filteredValues });
+            }
+        });
+
+        return newCheckedParameters;
+    }, [parametersValue]);
 
     const onUncheckFlag = (uuid: string) => () => {
         const indexOfValue = flagsValue.findIndex((item) => item.uuid === uuid);
 
-        formProviderMethods.setValue(`flags.${indexOfValue}.checked`, false);
+        formProviderMethods.setValue(`flags.${indexOfValue}`, { ...flagsValue[indexOfValue], checked: false });
     };
 
     const onUncheckBrand = (uuid: string) => () => {
         const indexOfValue = brandsValue.findIndex((item) => item.uuid === uuid);
 
-        formProviderMethods.setValue(`brands.${indexOfValue}.checked`, false);
+        formProviderMethods.setValue(`brands.${indexOfValue}`, { ...brandsValue[indexOfValue], checked: false });
     };
 
     const onResetPrices = () => {
-        formProviderMethods.setValue('minimalPrice', props.productFilterOptions.minimalPrice);
-        formProviderMethods.setValue('maximalPrice', props.productFilterOptions.maximalPrice);
+        formProviderMethods.setValue('minimalPrice', productFilterOptions.minimalPrice);
+        formProviderMethods.setValue('maximalPrice', productFilterOptions.maximalPrice);
     };
 
     const onResetAllParameters = () => {
-        flagsValue.forEach((_, index) => formProviderMethods.setValue(`flags.${index}.checked`, false));
-        brandsValue.forEach((_, index) => formProviderMethods.setValue(`brands.${index}.checked`, false));
+        flagsValue.forEach((flag, index) =>
+            formProviderMethods.setValue(`flags.${index}`, { ...flag, checked: false }),
+        );
+        brandsValue.forEach((brand, index) =>
+            formProviderMethods.setValue(`brands.${index}`, { ...brand, checked: false }),
+        );
         parametersValue.forEach((parameterItem, parameterIndex) => {
-            formProviderMethods.setValue(`parameters.${parameterIndex}.minimalValue`, undefined);
-            formProviderMethods.setValue(`parameters.${parameterIndex}.maximalValue`, undefined);
-            parameterItem.values.forEach((_, itemIndex) =>
-                formProviderMethods.setValue(`parameters.${parameterIndex}.values.${itemIndex}.checked`, false),
-            );
+            formProviderMethods.setValue(`parameters.${parameterIndex}`, {
+                ...parameterItem,
+                minimalValue: null,
+                maximalValue: null,
+                values: parameterItem.values.map((value) => ({ ...value, checked: false })),
+            });
         });
         formProviderMethods.setValue(`onlyInStock`, false);
         onResetPrices();
     };
 
-    if (isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions)) {
+    if (
+        getIsProductFilterEmpty(
+            checkedBrands,
+            checkedFlags,
+            minimalPrice,
+            maximalPrice,
+            isOnlyInStock,
+            checkedParameters,
+            productFilterOptions,
+        )
+    ) {
         return null;
     }
 
@@ -91,39 +107,39 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
         <SelectedParametersStyled data-testid={TEST_IDENTIFIER}>
             <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
             <SelectedParametersBlockStyled>
-                {parametersFilterState.brands.length > 0 && (
+                {checkedBrands.length > 0 && (
                     <SelectedParametersListStyled>
                         <SelectedParametersNameStyled>{t('Brands')}:</SelectedParametersNameStyled>
-                        {parametersFilterState.brands.map((brandUuid) => (
-                            <SelectedParametersListItemStyled key={brandUuid}>
-                                {brandsValue.find((value) => value.uuid === brandUuid)?.name}
+                        {checkedBrands.map((filterFormBrand) => (
+                            <SelectedParametersListItemStyled key={filterFormBrand.uuid}>
+                                {filterFormBrand.name}
                                 <SelectedParametersListItemRemoveStyled
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={onUncheckBrand(brandUuid)}
+                                    onClick={onUncheckBrand(filterFormBrand.uuid)}
                                 />
                             </SelectedParametersListItemStyled>
                         ))}
                     </SelectedParametersListStyled>
                 )}
 
-                {parametersFilterState.flags.length > 0 && (
+                {checkedFlags.length > 0 && (
                     <SelectedParametersListStyled>
                         <SelectedParametersNameStyled>{t('Flags')}:</SelectedParametersNameStyled>
-                        {parametersFilterState.flags.map((flagUuid) => (
-                            <SelectedParametersListItemStyled key={flagUuid}>
-                                {flagsValue.find((value) => value.uuid === flagUuid)?.name}
+                        {checkedFlags.map((filterFormFlag) => (
+                            <SelectedParametersListItemStyled key={filterFormFlag.uuid}>
+                                {filterFormFlag.name}
                                 <SelectedParametersListItemRemoveStyled
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={onUncheckFlag(flagUuid)}
+                                    onClick={onUncheckFlag(filterFormFlag.uuid)}
                                 />
                             </SelectedParametersListItemStyled>
                         ))}
                     </SelectedParametersListStyled>
                 )}
 
-                <Parameters filterOptions={props.productFilterOptions} />
+                <Parameters checkedParameters={checkedParameters} filterOptions={productFilterOptions} />
 
                 {isOnlyInStock && (
                     <SelectedParametersListStyled>
@@ -148,16 +164,14 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                             {isMinimalPriceVisible && (
                                 <>
                                     <span>{t('from')}&nbsp;</span>
-                                    {parametersFilterState.minimalPrice !== null &&
-                                        formatPrice(parametersFilterState.minimalPrice)}
+                                    {formatPrice(minimalPrice)}
                                     {isMaximalPriceVisible ? ' ' : ''}
                                 </>
                             )}
                             {isMaximalPriceVisible && (
                                 <>
                                     <span>{t('to')}&nbsp;</span>
-                                    {parametersFilterState.maximalPrice !== null &&
-                                        formatPrice(parametersFilterState.maximalPrice)}
+                                    {formatPrice(maximalPrice)}
                                 </>
                             )}
                             <SelectedParametersListItemRemoveStyled
