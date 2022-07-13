@@ -70,8 +70,18 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
             parameterUuid: parameter.uuid,
             values: getValues(parameter),
             isCollapsed: parameter.isCollapsed,
-            minimalValue: 'minimalValue' in parameter ? parameter.minimalValue : undefined,
-            maximalValue: 'maximalValue' in parameter ? parameter.maximalValue : undefined,
+            minimalValue:
+                'minimalValue' in parameter
+                    ? 'selectedValue' in parameter && parameter.minimalValue === parameter.selectedValue
+                        ? parameter.minimalValue
+                        : undefined
+                    : undefined,
+            maximalValue:
+                'maximalValue' in parameter
+                    ? 'selectedValue' in parameter && parameter.maximalValue === parameter.selectedValue
+                        ? parameter.maximalValue
+                        : undefined
+                    : undefined,
             selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : undefined,
             unit: 'unit' in parameter ? parameter.unit : undefined,
         }));
@@ -106,7 +116,8 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, formUpdateDepende
         );
 
         const checkedParametersCount = parametersValue.reduce(
-            (partialSum, parameter) => partialSum + parameter.values.filter((value) => value.checked).length,
+            (partialSum, parameter) =>
+                partialSum + ('values' in parameter ? parameter.values.filter((value) => value.checked).length : 0),
             0,
         );
 
