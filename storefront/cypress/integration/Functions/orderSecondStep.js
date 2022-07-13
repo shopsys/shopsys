@@ -1,4 +1,4 @@
-import { currency, quantity_unit1, transport3_name } from '../../fixtures/demodata';
+import { currency, quantityUnit, transport } from '../../fixtures/demodata';
 
 export function continueToSecondStep() {
     cy.get('[data-testid="blocks-orderaction-next"]').click();
@@ -10,8 +10,8 @@ export function checkTransportPrice(position, transport_price) {
         .contains(transport_price);
 }
 
-export function chooseTransportPersonalCollectionAndStore(store_name) {
-    cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(transport3_name).click();
+export function chooseTransportPersonalCollectionAndStore(storeName) {
+    cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(transport.personalCollection.name).click();
     cy.get('[data-testid="layout-popup"]');
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(store_name).click();
     cy.get('[data-testid="pages-order-pickupplace-popup-confirm"]').click();

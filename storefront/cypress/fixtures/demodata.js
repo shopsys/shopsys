@@ -29,42 +29,56 @@ export const quantity_unit1 = 'ks';
 export const currency = 'Kč';
 export const free_price = 'Zdarma';
 export const countryCZ = 'Česká republika';
-
-export const store1_name = 'Ostrava';
-export const store1_street = 'Koksární 10';
-export const store1_city = 'Ostrava';
-export const store1_postcode = '70200';
-
-export const transport1_name = 'Česká pošta - balík do ruky';
-export const transport1_price = '121';
-export const transport1_price_without_vat = '100,00 Kč';
-export const transport3_name = 'Osobní převzetí';
-
-export const payment1_name = 'Hotově';
-export const payment2_name = 'Dobírka';
-export const payment2_price = '50,00';
-
-export const customer1_email = 'no-reply@shopsys.com';
-export const customer1_first_name = 'jméno';
-export const customer1_last_name = 'příjmení';
-export const customer1_phone = '777666555';
-export const customer1_billing_street = 'faktrační ulice 1/15a';
-export const customer1_billing_city = 'fakturační město';
-export const customer1_billing_zip = '70200';
-
-export const order_note1 = 'poznámka v objednávce';
-export const order_detail_butoton = 'Zobrazit moje objednávky';
-
-export const placeholder_password = 'Heslo';
-export const placeholder_email = 'Váš e-mail';
-export const placeholder_phone = 'Telefon';
-export const placeholder_first_name = 'Jméno';
-export const placeholder_last_name = 'Příjmení';
-export const placeholder_street = 'Ulice a číslo popisné';
-export const placeholder_city = 'Město';
-export const placeholder_zip = 'PSČ';
-export const placeholder_coupone = 'Kupón';
-export const placeholder_note = 'Poznámka';
-
 export const standart_rate = '21 %';
 export const zero_rate = '0 %';
+export const order_note = 'poznámka v objednávce';
+export const order_detail_butoton = 'Zobrazit moje objednávky';
+
+export const transport = {
+    personalCollection: {
+        name: 'Osobní převzetí',
+        storeOstrava: {
+            name: 'Ostrava',
+            street: 'Koksární 10',
+            city: 'Ostrava',
+            postcode: '70200',
+        },
+    },
+    czechPost: {
+        name: 'Česká pošta - balík do ruky',
+        priceWithVat: '121',
+        priceWithoutVat: '100,00 Kč',
+    },
+};
+
+export const payment = {
+    cash: 'Hotově',
+    onDelivery: {
+        name: 'Dobírka',
+        priceWithVat: '50,00',
+        priceWithoutVat: '50,00',
+    },
+};
+
+export const customer1 = {
+    email: 'no-reply@shopsys.com',
+    first_name: 'jméno',
+    last_name: 'příjmení',
+    phone: '777666555',
+    billing_street: 'fakturační ulice 1/15a',
+    billing_city: 'fakturační město',
+    billing_zip: '70200',
+};
+
+export const placeholder = {
+    password: 'Heslo',
+    email: 'Váš e-mail',
+    phone: 'Telefon',
+    first_name: 'Jméno',
+    last_name: 'Příjmení',
+    street: 'Ulice a číslo popisné',
+    city: 'Město',
+    zip: 'PSČ',
+    coupone: 'Kupón',
+    note: 'Poznámka',
+};

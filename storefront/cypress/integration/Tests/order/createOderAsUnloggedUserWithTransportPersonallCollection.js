@@ -2,26 +2,16 @@
 import {
     cart_total_price1,
     countryCZ,
-    customer1_billing_city,
-    customer1_billing_street,
-    customer1_billing_zip,
-    customer1_email,
-    customer1_first_name,
-    customer1_last_name,
-    customer1_phone,
-    free_price,
-    order_note1,
-    payment1_name,
+    customer1,
+    freePrice,
+    orderNote,
+    payment,
     product1_catnum,
     product1_name_prefix_suffix,
     product1_price,
     product1_price_without_vat,
-    standart_rate,
-    store1_city,
-    store1_name,
-    store1_postcode,
-    store1_street,
-    transport3_name,
+    standartRate,
+    transport,
     url_cart,
     url_order_detail,
     url_order_second_step,
@@ -70,37 +60,37 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     continueToSecondStep();
 
     // second step
-    cy.url().should('contain', url_order_second_step);
-    checkTransportPrice('2', free_price); // fist argument = position of transport list (start from id 0)
-    chooseTransportPersonalCollectionAndStore(store1_name);
-    checkSelectedStoreInTransportList(store1_name);
-    choosePayment(payment1_name);
+    cy.url().should('contain', urlOrderSecondStep);
+    checkTransportPrice('2', freePrice); // fist argument = position of transport list (start from id 0)
+    chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
+    checkSelectedStoreInTransportList(transport.personalCollection.storeOstrava.name);
+    choosePayment(payment.cash);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
         '1', // product qunatity
         product1_price,
-        transport3_name,
-        free_price,
-        payment1_name,
-        free_price,
+        transport.personalCollection.name,
+        freePrice,
+        payment.cash,
+        freePrice,
         cart_total_price1,
     );
     continueToThirdStep();
 
     // third step
     cy.url().should('contain', url_order_third_step);
-    fillEmailInThirdStep(customer1_email);
-    fillCustomerInformationInThirdStep(customer1_phone, customer1_first_name, customer1_last_name);
-    fillBillingAdressInThirdStep(customer1_billing_street, customer1_billing_city, customer1_billing_zip);
-    fillInNoteInThirdStep(order_note1);
+    fillEmailInThirdStep(customer1.email);
+    fillCustomerInformationInThirdStep(customer1.phone, customer1.first_name, customer1.last_name);
+    fillBillingAdressInThirdStep(customer1.billing_street, customer1.billing_city, customer1.billing_zip);
+    fillInNoteInThirdStep(order_note);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
         '1', // product quantity
         product1_price,
-        transport3_name,
-        free_price,
-        payment1_name,
-        free_price,
+        transport.personalCollection.name,
+        freePrice,
+        payment.cash,
+        freePrice,
         cart_total_price1,
     );
     clickOnSendOrderButton();
@@ -111,24 +101,24 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
 
     // order detail
     cy.url().should('contain', url_order_detail);
-    checkBasicInformationAndNoteInOrderDetail(order_note1);
+    checkBasicInformationAndNoteInOrderDetail(order_note);
     checkBillingAdressInOrderDetail(
-        customer1_first_name,
-        customer1_last_name,
-        customer1_email,
-        customer1_phone,
-        customer1_billing_street,
-        customer1_billing_city,
-        customer1_billing_zip,
+        customer1.first_name,
+        customer1.last_name,
+        customer1.email,
+        customer1.phone,
+        customer1.billing_street,
+        customer1.billing_city,
+        customer1.billing_zip,
         countryCZ,
     );
     checkDeliveryAdressInOrderDetail(
-        customer1_first_name,
-        customer1_last_name,
-        customer1_phone,
-        store1_street,
-        store1_city,
-        store1_postcode,
+        customer1.first_name,
+        customer1.last_name,
+        customer1.phone,
+        transport.personalCollection.storeOstrava.street,
+        transport.personalCollection.storeOstrava.city,
+        transport.personalCollection.storeOstrava.postcode,
         countryCZ,
     );
     checkOneItemInOrderDetail(
@@ -140,6 +130,14 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         product1_price_without_vat,
         product1_price,
     );
-    checkOneItemInOrderDetail('1', payment1_name, free_price, '1', zero_rate, free_price, free_price);
-    checkOneItemInOrderDetail('2', transport3_name, free_price, '1', standart_rate, free_price, free_price);
+    checkOneItemInOrderDetail('1', payment.cash, freePrice, '1', zeroRate, freePrice, freePrice);
+    checkOneItemInOrderDetail(
+        '2',
+        transport.personalCollection.name,
+        freePrice,
+        '1',
+        standart_rate,
+        free_price,
+        free_price,
+    );
 });
