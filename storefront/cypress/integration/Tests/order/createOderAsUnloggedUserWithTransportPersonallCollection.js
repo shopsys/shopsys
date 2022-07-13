@@ -48,7 +48,10 @@ import {
     continueToSecondStep,
     continueToThirdStep,
 } from '../../Functions/orderSecondStep';
-import { checkFinishOrderPageAsUnregistredCustomer, clickOnOrderDetailButton } from '../../Functions/orderThankYouPage';
+import {
+    checkFinishOrderPageAsUnregistredCustomer,
+    clickOnOrderDetailButtonOnThankYouPage,
+} from '../../Functions/orderThankYouPage';
 import {
     clickOnSendOrderButton,
     fillBillingAdressInThirdStep,
@@ -96,8 +99,8 @@ it('Creating an order as unlogged user with one item, Personall collection and C
         cart_total_price1,
     );
     clickOnSendOrderButton();
-    checkFinishOrderPageAsUnregistredCustomer(customer1_email);
-    clickOnOrderDetailButton();
+    checkFinishOrderPageAsUnregistredCustomer();
+    clickOnOrderDetailButtonOnThankYouPage();
     cy.url().should('contain', url_order_detail);
     checkBasicInformationAndNoteInOrderDetail(order_note1);
     checkBillingAdressInOrderDetail(

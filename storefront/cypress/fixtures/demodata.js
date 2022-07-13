@@ -37,6 +37,7 @@ export const store1_postcode = '70200';
 
 export const transport1_name = 'Česká pošta - balík do ruky';
 export const transport1_price = '121';
+export const transport1_price_without_vat = '100,00 Kč';
 export const transport3_name = 'Osobní převzetí';
 
 export const payment1_name = 'Hotově';
@@ -52,6 +53,7 @@ export const customer1_billing_city = 'fakturační město';
 export const customer1_billing_zip = '70200';
 
 export const order_note1 = 'poznámka v objednávce';
+export const order_detail_butoton = 'Zobrazit moje objednávky';
 
 export const placeholder_password = 'Heslo';
 export const placeholder_email = 'Váš e-mail';
