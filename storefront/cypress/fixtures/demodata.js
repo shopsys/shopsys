@@ -1,6 +1,7 @@
 export const url_cart = '/kosik';
 export const url_search = '/hledani?q=';
 export const url_brand_overview = '/prehled-znacek';
+
 export const product1_name = '22" Sencor SLE 22F46DM4 HELLO KITTY';
 export const product1_name_prefix_suffix = 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová';
 export const product1_catnum = '9177759';
@@ -10,8 +11,12 @@ export const product2_catnum = '9176544M';
 export const product2_url = '/philips-32pfl4308';
 export const product3_name = '54" Philips CRT 32PFL4308';
 export const product3_catnum = '9176588';
+
 export const category1_name = 'Elektro';
 export const category1_url = '/elektro';
 export const cart_total_price1 = '3 499,00 Kč';
 export const cart_total_price2 = '12 310,00 Kč';
+
 export const brand_name1 = 'Sencor';
+
+export const button_cart_continue_to_2step = 'Doprava a platba';
