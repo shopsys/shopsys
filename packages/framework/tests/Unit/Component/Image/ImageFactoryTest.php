@@ -89,7 +89,7 @@ class ImageFactoryTest extends TestCase
         $mountManager = new MountManager();
         $abstractFilesystem = $this->createMock(FilesystemInterface::class);
         $parameterBag = new ParameterBag();
-        $parameterBag->set('kernel.root_dir', sys_get_temp_dir());
+        $parameterBag->set('kernel.project_dir', sys_get_temp_dir());
 
         return new FileUpload(
             'temporaryDir',

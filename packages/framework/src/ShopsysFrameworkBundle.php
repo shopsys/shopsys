@@ -47,7 +47,7 @@ class ShopsysFrameworkBundle extends Bundle
 
         $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
 
-        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
-        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
+        $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Component'));
+        $container->addResource(new DirectoryResource($container->getParameter('kernel.project_dir') . '/src/Model'));
     }
 }

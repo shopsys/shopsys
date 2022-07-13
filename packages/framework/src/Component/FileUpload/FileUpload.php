@@ -140,7 +140,7 @@ class FileUpload
     public function getAbsoluteTemporaryFilepath($temporaryFilename)
     {
         return $this->parameterBag->get(
-            'kernel.root_dir'
+            'kernel.project_dir'
         ) . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename(
             $temporaryFilename
         );
