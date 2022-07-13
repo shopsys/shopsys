@@ -4,6 +4,7 @@ export const url_order_third_step = '/objednavka/kontaktni-udaje';
 export const url_order_thank_you_page = '/potvrzeni-objednavky';
 export const url_search = '/hledani?q=';
 export const url_brand_overview = '/prehled-znacek';
+export const url_order_detail = '/detail-objednavky/';
 
 export const product1_name = '22" Sencor SLE 22F46DM4 HELLO KITTY';
 export const product1_name_prefix_suffix = 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová';

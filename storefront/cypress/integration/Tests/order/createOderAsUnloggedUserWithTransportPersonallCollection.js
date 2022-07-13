@@ -33,7 +33,7 @@ import {
     continueToSecondStep,
     continueToThirdStep,
 } from '../../Functions/orderSecondStep';
-import { checkFinishOrderPageAsUnregistredCustomer } from '../../Functions/orderThankYouPage';
+import { checkFinishOrderPageAsUnregistredCustomer, clickOnOrderDetailButton } from '../../Functions/orderThankYouPage';
 import {
     clickOnSendOrderButton,
     fillBillingAdressInThirdStep,
@@ -80,4 +80,5 @@ it('Creating an order as unlogged user with one item, Personall collection and C
     );
     clickOnSendOrderButton();
     checkFinishOrderPageAsUnregistredCustomer(customer1_email);
+    clickOnOrderDetailButton();
 });
