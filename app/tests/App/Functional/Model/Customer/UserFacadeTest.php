@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Customer;
 
+use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
@@ -56,6 +57,14 @@ class UserFacadeTest extends FunctionalTestCase
         $customerUserData->firstName = 'John';
         $customerUserData->lastName = 'Doe';
         $customerUserData->password = 'password';
+
+        $billingAddressData = $customerUserUpdateData->billingAddressData;
+        $billingAddressData->companyCustomer = false;
+        $billingAddressData->street = '123 Fake Street';
+        $billingAddressData->city = 'Springfield';
+        $billingAddressData->postcode = '12345';
+        $billingAddressData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
 
         $this->customerUserFacade->create($customerUserUpdateData);
 
