@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
-class TransportsResolver implements ResolverInterface, AliasedInterface
+class TransportsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade

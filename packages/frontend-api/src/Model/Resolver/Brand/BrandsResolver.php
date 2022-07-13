@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
-class BrandsResolver implements ResolverInterface, AliasedInterface
+class BrandsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade

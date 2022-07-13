@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as FrontendApiOrderFacade;
 
-class OrderResolver implements ResolverInterface, AliasedInterface
+class OrderResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser

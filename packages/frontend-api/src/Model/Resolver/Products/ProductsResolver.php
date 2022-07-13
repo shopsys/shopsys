@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -15,7 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
-class ProductsResolver implements ResolverInterface, AliasedInterface
+class ProductsResolver implements QueryInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
 

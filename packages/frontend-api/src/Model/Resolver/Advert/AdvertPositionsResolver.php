@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Advert;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 
-class AdvertPositionsResolver implements ResolverInterface, AliasedInterface
+class AdvertPositionsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry
