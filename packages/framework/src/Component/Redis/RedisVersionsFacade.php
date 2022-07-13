@@ -39,7 +39,7 @@ class RedisVersionsFacade
         $iterator = null;
 
         do {
-            $keys = $this->globalClient->scan($iterator, $versionPattern);
+            $keys = $this->globalClient->scan($iterator, $versionPattern, 0);
 
             if ($keys === false) {
                 continue;
