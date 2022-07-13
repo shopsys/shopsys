@@ -29,7 +29,7 @@ import {
     checkSelectedStoreInTransportList,
     checkTransportPrice,
     choosePayment,
-    chooseTransportPersonalCollection,
+    chooseTransportPersonalCollectionAndStore,
     continueToSecondStep,
     continueToThirdStep,
 } from '../../Functions/orderSecondStep';
@@ -49,13 +49,13 @@ it('Creating an order as unlogged user with one item, Personall collection and C
     cy.url().should('contain', url_cart);
     continueToSecondStep();
     cy.url().should('contain', url_order_second_step);
-    checkTransportPrice('2', free_price); // position of transport start from id 0
-    chooseTransportPersonalCollection(store1_name);
+    checkTransportPrice('2', free_price); // fist argument = position of transport list (start from id 0)
+    chooseTransportPersonalCollectionAndStore(store1_name);
     checkSelectedStoreInTransportList(store1_name);
     choosePayment(payment1_name);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
-        '1',
+        '1', // product qunatity
         product1_price,
         transport3_name,
         free_price,
@@ -70,7 +70,7 @@ it('Creating an order as unlogged user with one item, Personall collection and C
     fillBillingAdressInThirdStep(customer1_billing_street, customer1_billing_city, customer1_billing_zip);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
-        '1',
+        '1', // product quantity
         product1_price,
         transport3_name,
         free_price,

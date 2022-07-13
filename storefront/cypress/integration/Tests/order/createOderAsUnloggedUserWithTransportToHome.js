@@ -46,12 +46,12 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     cy.url().should('contain', url_cart);
     continueToSecondStep();
     cy.url().should('contain', url_order_second_step);
-    checkTransportPrice('0', transport1_price); // position of transport start from id 0
+    checkTransportPrice('0', transport1_price); // fist argument = position of transport list (start from id 0)
     chooseTransportToHome(transport1_name);
     choosePayment(payment2_name);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
-        '1',
+        '1', // product quantity
         product1_price,
         transport1_name,
         transport1_price,
@@ -66,7 +66,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     fillBillingAdressInThirdStep(customer1_billing_street, customer1_billing_city, customer1_billing_zip);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
-        '1',
+        '1', // product quantity
         product1_price,
         transport1_name,
         transport1_price,

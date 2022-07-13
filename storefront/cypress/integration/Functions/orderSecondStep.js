@@ -10,7 +10,7 @@ export function checkTransportPrice(position, transport_price) {
         .contains(transport_price);
 }
 
-export function chooseTransportPersonalCollection(store_name) {
+export function chooseTransportPersonalCollectionAndStore(store_name) {
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(transport3_name).click();
     cy.get('[data-testid="layout-popup"]');
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(store_name).click();
