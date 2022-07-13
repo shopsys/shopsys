@@ -30,3 +30,21 @@ export const store1_name = 'Ostrava';
 export const transport3_name = 'Osobní převzetí';
 
 export const payment1_name = 'Hotově';
+
+export const customer1_email = 'no-reply@shopsys.com';
+export const customer1_first_name = 'jméno';
+export const customer1_last_name = 'příjmení';
+export const customer1_phone = '777666555';
+export const customer1_billing_street = 'faktrační ulice 1/15a';
+export const customer1_billing_city = 'fakturační město';
+export const customer1_billing_zip = '70200';
+
+export const placeholder_password = 'Heslo';
+export const placeholder_email = 'Váš e-mail';
+export const placeholder_phone = 'Telefon';
+export const placeholder_first_name = 'Jméno';
+export const placeholder_last_name = 'Příjmení';
+export const placeholder_street = 'Ulice a číslo popisné';
+export const placeholder_city = 'Město';
+export const placeholder_zip = 'PSČ';
+export const placeholder_coupone = 'Kupón';

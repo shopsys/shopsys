@@ -1,6 +1,13 @@
 /// <reference types="Cypress" />
 import {
     cart_total_price1,
+    customer1_billing_city,
+    customer1_billing_street,
+    customer1_billing_zip,
+    customer1_email,
+    customer1_first_name,
+    customer1_last_name,
+    customer1_phone,
     free_price,
     payment1_name,
     product1_catnum,
@@ -15,12 +22,7 @@ import {
 import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
-import {
-    clickOnSendOrderButton,
-    fillBillingAdressInThirdStep,
-    fillCustomerInformationInThirdStep,
-    fillEmailInThirdStep,
-} from '../../Functions/orderContactInformation';
+import { clickOnSendOrderButton, fillEmailInThirdStep } from '../../Functions/orderContactInformation';
 import {
     checkOrderSummaryWithOneItem,
     checkSelectedStoreInTransportList,
@@ -31,6 +33,12 @@ import {
     continueToThirdStep,
 } from '../../Functions/orderSecondStep';
 import { checkFinishOrderPageAsUnregistredCustomer } from '../../Functions/orderThankYouPage';
+import {
+    clickOnSendOrderButton,
+    fillBillingAdressInThirdStep,
+    fillCustomerInformationInThirdStep,
+    fillEmailInThirdStep,
+} from '../../Functions/orderThirdStep';
 
 it('Creating an order as unlogged user with one item, Personall collection and Cash', () => {
     cy.visit('/');
