@@ -23,6 +23,7 @@ import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
 import { clickOnSendOrderButton, fillEmailInThirdStep } from '../../Functions/orderContactInformation';
+import { checkFinishOrderPageAsUnregistredCustomer } from '../../Functions/orderThankYouPage';
 import {
     checkOrderSummaryWithOneItem,
     checkSelectedStoreInTransportList,
