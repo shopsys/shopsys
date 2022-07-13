@@ -3,7 +3,6 @@ import {
     placeholder_password,
     url_order_detail,
     url_order_thank_you_page,
-    url_order_thay_you_page,
 } from '../../fixtures/demodata';
 
 export function checkFinishOrderPageAsUnregistredCustomer() {
