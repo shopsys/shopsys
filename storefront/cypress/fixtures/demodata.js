@@ -82,3 +82,7 @@ export const placeholder = {
     coupone: 'Kupón',
     note: 'Poznámka',
 };
+
+export const flashMessages = {
+    successfulSaveCookiesOptions: 'Vaše nastavení souborů cookies bylo uloženo.',
+};

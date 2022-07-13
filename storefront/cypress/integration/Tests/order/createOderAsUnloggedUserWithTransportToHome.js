@@ -18,6 +18,7 @@ import {
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
@@ -47,7 +48,7 @@ import {
 
 it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
     cy.visit('/');
-    cy.contains('Odmítnout vše').click();
+    saveCookiesOptionsInCookiesBar();
     addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
     checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
     checkProductInCart(product1_catnum, product1_name_prefix_suffix);

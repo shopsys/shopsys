@@ -19,6 +19,7 @@ import {
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
 import { clickOnSendOrderButton, fillEmailInThirdStep } from '../../Functions/orderContactInformation';
 import { checkFinishOrderPageAsUnregistredCustomer } from '../../Functions/orderThankYouPage';
@@ -51,7 +52,7 @@ import {
 
 it('Creating an order as unlogged user with one item, Personal collection and Cash', () => {
     cy.visit('/');
-    cy.contains('Odmítnout vše').click();
+    saveCookiesOptionsInCookiesBar();
     addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
     checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
     checkProductInCart(product1_catnum, product1_name_prefix_suffix);
