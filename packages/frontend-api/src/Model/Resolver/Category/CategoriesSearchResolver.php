@@ -6,12 +6,12 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
 
-class CategoriesSearchResolver implements ResolverInterface, AliasedInterface
+class CategoriesSearchResolver implements QueryInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
 

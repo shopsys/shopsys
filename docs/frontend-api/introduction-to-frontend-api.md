@@ -162,7 +162,7 @@ Query:
 
 ### Resolvers
 Resolvers are normal Symfony services.
-They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to be recognized as an available resolver for the GraphQL.
+They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` to be recognized as an available resolver for the GraphQL.
 
 There are several ways how to define resolvers in definition YAML files.
 We use `Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface` to keep definitions simple and easy to read.
