@@ -21,14 +21,14 @@ const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex })
 
     const setMinimalPrice = useCallback(
         (value: number) => {
-            setValue(minValueName, value !== min ? value : undefined);
+            setValue(minValueName, value !== min ? value : null);
         },
         [min, minValueName, setValue],
     );
 
     const setMaximalPrice = useCallback(
         (value: number) => {
-            setValue(maxValueName, value !== max ? value : undefined);
+            setValue(maxValueName, value !== max ? value : null);
         },
         [max, maxValueName, setValue],
     );

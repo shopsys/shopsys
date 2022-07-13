@@ -72,17 +72,19 @@ export type FilterFormParameterValuesType = {
     checked: boolean;
     uuid: string;
     text: string;
-    rgbHex?: string | null;
+    rgbHex: string | null;
 };
 
 export type FilterFormParameterType = {
     parameterName: string;
     parameterUuid: string;
     values: FilterFormParameterValuesType[];
-    minimalValue?: number;
-    maximalValue?: number;
-    selectedValue?: number | null;
-    unit?: { name: string } | null;
+    minimalValue: number | null;
+    maximalValue: number | null;
+    selectedValue: number | null;
+    unit: {
+        name: string;
+    } | null;
     isCollapsed: boolean;
 };
 
@@ -107,18 +109,18 @@ export type FilterFormType = {
     parameters: FilterFormParameterType[];
 };
 
-export type FilterOptionsParameterStateType = {
+export type FilterOptionsParameterUrlQueryType = {
     parameter: string;
     values: string[];
     minimalValue: number | null;
     maximalValue: number | null;
 };
 
-export type FilterOptionsStateType = {
-    brands: string[];
-    flags: string[];
-    minimalPrice: number | null;
-    maximalPrice: number | null;
-    onlyInStock: boolean;
-    parameters: FilterOptionsParameterStateType[];
+export type FilterOptionsUrlQueryType = {
+    brands?: string[];
+    flags?: string[];
+    minimalPrice?: number;
+    maximalPrice?: number;
+    onlyInStock?: boolean;
+    parameters?: FilterOptionsParameterUrlQueryType[];
 };

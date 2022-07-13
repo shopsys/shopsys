@@ -34,9 +34,7 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
     const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
-    const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(
-        sorting ?? sortingFromQuery ?? ProductOrderingModeEnumApi.PriorityApi,
-    );
+    const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(sorting ?? sortingFromQuery);
     const { width } = useGetWindowSize();
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
     useResizeWidthEffect(
