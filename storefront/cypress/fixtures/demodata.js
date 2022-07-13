@@ -21,6 +21,7 @@ export const category1_name = 'Elektro';
 export const category1_url = '/elektro';
 export const cart_total_price1 = '3 499,00 Kč';
 export const cart_total_price2 = '12 310,00 Kč';
+export const cart_total_price3 = '3 670,00';
 
 export const brand_name1 = 'Sencor';
 export const quantity_unit1 = 'ks';
@@ -28,9 +29,13 @@ export const currency = 'Kč';
 export const free_price = 'Zdarma';
 
 export const store1_name = 'Ostrava';
+export const transport1_name = 'Česká pošta - balík do ruky';
+export const transport1_price = '121';
 export const transport3_name = 'Osobní převzetí';
 
 export const payment1_name = 'Hotově';
+export const payment2_name = 'Dobírka';
+export const payment2_price = '50,00';
 
 export const customer1_email = 'no-reply@shopsys.com';
 export const customer1_first_name = 'jméno';

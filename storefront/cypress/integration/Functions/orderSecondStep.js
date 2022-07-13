@@ -17,6 +17,12 @@ export function chooseTransportPersonalCollection(store_name) {
     cy.get('[data-testid="pages-order-pickupplace-popup-confirm"]').click();
 }
 
+export function chooseTransportToHome(transport_name) {
+    cy.get('[data-testid="pages-order-transport"] [data-testid="pages-order-selectitem-label-name"]')
+        .contains(transport_name)
+        .click('left');
+}
+
 export function checkSelectedStoreInTransportList(store_name) {
     cy.get('[data-testid="pages-order-selectitem-label-place"]').contains(store_name);
 }
