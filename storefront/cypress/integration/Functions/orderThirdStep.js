@@ -3,6 +3,7 @@ import {
     placeholder_email,
     placeholder_first_name,
     placeholder_last_name,
+    placeholder_note,
     placeholder_phone,
     placeholder_street,
     placeholder_zip,
@@ -30,4 +31,8 @@ export function fillBillingAdressInThirdStep(street, city, zip_code) {
 
 export function clickOnSendOrderButton() {
     cy.get('[data-testid="blocks-orderaction-next"]').click();
+}
+
+export function fillInNoteInThirdStep(note) {
+    cy.get('#contact-information-form-note').should('have.attr', 'placeholder', placeholder_note).type(note);
 }

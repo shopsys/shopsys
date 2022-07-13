@@ -11,6 +11,7 @@ export const product1_name_prefix_suffix = 'Televize 22" Sencor SLE 22F46DM4 HEL
 export const product1_catnum = '9177759';
 export const product1_url_prefix_suffix = '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova';
 export const product1_price = '3 499,00';
+export const product1_price_without_vat = '2 891,74 Kč';
 export const product2_name = 'Philips 32PFL4308';
 export const product2_catnum = '9176544M';
 export const product2_url = '/philips-32pfl4308';
@@ -27,8 +28,13 @@ export const brand_name1 = 'Sencor';
 export const quantity_unit1 = 'ks';
 export const currency = 'Kč';
 export const free_price = 'Zdarma';
+export const countryCZ = 'Česká republika';
 
 export const store1_name = 'Ostrava';
+export const store1_street = 'Koksární 10';
+export const store1_city = 'Ostrava';
+export const store1_postcode = '70200';
+
 export const transport1_name = 'Česká pošta - balík do ruky';
 export const transport1_price = '121';
 export const transport3_name = 'Osobní převzetí';
@@ -45,6 +51,8 @@ export const customer1_billing_street = 'faktrační ulice 1/15a';
 export const customer1_billing_city = 'fakturační město';
 export const customer1_billing_zip = '70200';
 
+export const order_note1 = 'poznámka v objednávce';
+
 export const placeholder_password = 'Heslo';
 export const placeholder_email = 'Váš e-mail';
 export const placeholder_phone = 'Telefon';
@@ -54,3 +62,7 @@ export const placeholder_street = 'Ulice a číslo popisné';
 export const placeholder_city = 'Město';
 export const placeholder_zip = 'PSČ';
 export const placeholder_coupone = 'Kupón';
+export const placeholder_note = 'Poznámka';
+
+export const standart_rate = '21 %';
+export const zero_rate = '0 %';
