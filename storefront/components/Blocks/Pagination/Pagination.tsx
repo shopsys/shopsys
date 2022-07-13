@@ -45,6 +45,7 @@ const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const queryParamsWithoutPage = { ...router.query };
+    delete queryParamsWithoutPage.all;
     delete queryParamsWithoutPage.page;
 
     useEffect(() => {
@@ -87,7 +88,7 @@ const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
                     ) : (
                         <NextLink
                             href={{
-                                href: asPathWithoutQueryParams,
+                                pathname: asPathWithoutQueryParams,
                                 query: {
                                     ...queryParamsWithoutPage,
                                     ...(pageNumber !== 1 ? { page: pageNumber } : {}),
