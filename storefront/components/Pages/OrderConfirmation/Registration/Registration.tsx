@@ -68,6 +68,7 @@ const Registration: FC = () => {
             }
         }
     };
+    const testIdentifier = 'pages-orderconfirmation-registration-create-account';
 
     return (
         <>
@@ -105,6 +106,7 @@ const Registration: FC = () => {
                                             <RegistrationFormItemStyled>
                                                 <FormLine>
                                                     <TextInput
+                                                        id={formMeta.formName + '-' + formMeta.fields.password.name}
                                                         name={formMeta.fields.password.name}
                                                         label={formMeta.fields.password.label}
                                                         type="password"
@@ -153,6 +155,7 @@ const Registration: FC = () => {
                                         )}
                                     />
                                     <Button
+                                        data-testid={testIdentifier}
                                         type="submit"
                                         variant="primary"
                                         borderRadius="big"

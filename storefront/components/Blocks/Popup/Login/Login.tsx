@@ -123,7 +123,9 @@ const Login: FC = () => {
                         />
                         <ButtonsStyled>
                             <ButtonWrapperStyled>
-                                <Button type="submit">{t('Log-in')}</Button>
+                                <Button type="submit" data-testid="blocks-popup-login-submit">
+                                    {t('Log-in')}
+                                </Button>
                             </ButtonWrapperStyled>
                             <LoginLostPassStyled>
                                 <LoginLostPassIconStyled iconType="icon" icon="Warning" />

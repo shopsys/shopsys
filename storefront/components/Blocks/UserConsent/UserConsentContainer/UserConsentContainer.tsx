@@ -7,10 +7,11 @@ export const UserConsentContainer: FC = () => {
     if (!isUserConsentVisible) {
         return null;
     }
+    const testIdentifier = 'blocks-userconsent';
 
     return (
         <UserConsentContainerStyled>
-            <UserConsentStyled>
+            <UserConsentStyled data-testid={testIdentifier}>
                 <UserConsentForm onSetUserConsentVisibilityCallback={setUserConsentVisibility} />
             </UserConsentStyled>
         </UserConsentContainerStyled>

@@ -64,7 +64,7 @@ const GoPayGateway: FC<GoPayGatewayProps> = (props) => {
             method="post"
             id="gopay-payment-button"
         >
-            <Button name="pay" type="submit">
+            <Button data-testid="pages-order-paymentconfirmation-pay" name="pay" type="submit">
                 {t('Pay with GoPay')}
             </Button>
         </form>
