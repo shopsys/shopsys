@@ -1,4 +1,8 @@
 /// <reference types="Cypress" />
+import { product1_catnum, product1_name_prefix_suffix, url_cart } from '../../../fixtures/demodata';
+import { checkProductInCart } from '../../Functions/CartPage';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
 
 it('Creating an order as unlogged user with one item, Personall collection and Cash', () => {
     cy.visit('/');
