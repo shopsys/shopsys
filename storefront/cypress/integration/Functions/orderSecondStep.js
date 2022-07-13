@@ -4,55 +4,55 @@ export function continueToSecondStep() {
     cy.get('[data-testid="blocks-orderaction-next"]').click();
 }
 
-export function checkTransportPrice(position, transport_price) {
+export function checkTransportPrice(position, transportPrice) {
     cy.get('[data-testid="pages-order-transport"] [data-testid="pages-order-transport-item"]')
         .eq(position)
-        .contains(transport_price);
+        .contains(transportPrice);
 }
 
 export function chooseTransportPersonalCollectionAndStore(storeName) {
     cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(transport.personalCollection.name).click();
     cy.get('[data-testid="layout-popup"]');
-    cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(store_name).click();
+    cy.get('[data-testid="pages-order-selectitem-label-name"]').contains(storeName).click();
     cy.get('[data-testid="pages-order-pickupplace-popup-confirm"]').click();
 }
 
-export function chooseTransportToHome(transport_name) {
+export function chooseTransportToHome(transportName) {
     cy.get('[data-testid="pages-order-transport"] [data-testid="pages-order-selectitem-label-name"]')
-        .contains(transport_name)
+        .contains(transportName)
         .click('left');
 }
 
-export function checkSelectedStoreInTransportList(store_name) {
-    cy.get('[data-testid="pages-order-selectitem-label-place"]').contains(store_name);
+export function checkSelectedStoreInTransportList(storeName) {
+    cy.get('[data-testid="pages-order-selectitem-label-place"]').contains(storeName);
 }
 
-export function choosePayment(payment_name) {
+export function choosePayment(paymentName) {
     cy.get('[data-testid="pages-order-payment"] [data-testid="pages-order-selectitem-label-name"]')
-        .contains(payment_name)
+        .contains(paymentName)
         .click('left');
 }
 
 export function checkOrderSummaryWithOneItem(
-    product_name,
-    product_quantity,
-    product_price,
-    transport_name,
-    transport_price,
-    payment_name,
-    payment_price,
-    total_order_price,
+    productName,
+    productQuantity,
+    productPrice,
+    transportName,
+    transportPrice,
+    paymentName,
+    paymentPrice,
+    totalOrderPrice,
 ) {
-    const product_quantity_with_unit = product_quantity + ' ' + quantity_unit1;
-    const product_price_with_currency = product_price + ' ' + currency;
+    const product_quantity_with_unit = productQuantity + ' ' + quantityUnit;
+    const product_price_with_currency = productPrice + ' ' + currency;
     cy.get('[data-testid="blocks-ordersummary-singleproduct-count"]').contains(product_quantity_with_unit);
-    cy.get('[data-testid="blocks-ordersummary-singleproduct-name"]').contains(product_name);
+    cy.get('[data-testid="blocks-ordersummary-singleproduct-name"]').contains(productName);
     cy.get('[data-testid="blocks-ordersummary-singleproduct-price"]').contains(product_price_with_currency);
-    cy.get('[data-testid="blocks-ordersummary-transport-name"]').contains(transport_name);
-    cy.get('[data-testid="blocks-ordersummary-transport-price"]').contains(transport_price);
-    cy.get('[data-testid="blocks-ordersummary-payment-name"]').contains(payment_name);
-    cy.get('[data-testid="blocks-ordersummary-payment-price"]').contains(payment_price);
-    cy.get('[data-testid="blocks-ordersummary-totalprice-amount"]').contains(total_order_price);
+    cy.get('[data-testid="blocks-ordersummary-transport-name"]').contains(transportName);
+    cy.get('[data-testid="blocks-ordersummary-transport-price"]').contains(transportPrice);
+    cy.get('[data-testid="blocks-ordersummary-payment-name"]').contains(paymentName);
+    cy.get('[data-testid="blocks-ordersummary-payment-price"]').contains(paymentPrice);
+    cy.get('[data-testid="blocks-ordersummary-totalprice-amount"]').contains(totalOrderPrice);
 }
 
 export function continueToThirdStep() {

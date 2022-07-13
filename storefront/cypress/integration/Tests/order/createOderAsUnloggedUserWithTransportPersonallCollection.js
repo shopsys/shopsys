@@ -13,10 +13,9 @@ import {
     standartRate,
     transport,
     url_cart,
-    url_order_detail,
-    url_order_second_step,
-    url_order_third_step,
-    zero_rate,
+    urlOrderSecondStep,
+    urlOrderThirdStep,
+    zeroRate,
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
@@ -78,11 +77,11 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     continueToThirdStep();
 
     // third step
-    cy.url().should('contain', url_order_third_step);
+    cy.url().should('contain', urlOrderThirdStep);
     fillEmailInThirdStep(customer1.email);
     fillCustomerInformationInThirdStep(customer1.phone, customer1.first_name, customer1.last_name);
     fillBillingAdressInThirdStep(customer1.billing_street, customer1.billing_city, customer1.billing_zip);
-    fillInNoteInThirdStep(order_note);
+    fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
         product1_name_prefix_suffix,
         '1', // product quantity
@@ -100,8 +99,7 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     clickOnOrderDetailButtonOnThankYouPage();
 
     // order detail
-    cy.url().should('contain', url_order_detail);
-    checkBasicInformationAndNoteInOrderDetail(order_note);
+    checkBasicInformationAndNoteInOrderDetail(orderNote);
     checkBillingAdressInOrderDetail(
         customer1.first_name,
         customer1.last_name,
@@ -126,7 +124,7 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         product1_name_prefix_suffix,
         product1_price,
         '1',
-        standart_rate,
+        standartRate,
         product1_price_without_vat,
         product1_price,
     );
@@ -136,8 +134,8 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         transport.personalCollection.name,
         freePrice,
         '1',
-        standart_rate,
-        free_price,
-        free_price,
+        standartRate,
+        freePrice,
+        freePrice,
     );
 });

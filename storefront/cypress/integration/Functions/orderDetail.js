@@ -3,9 +3,9 @@ export function checkBasicInformationAndNoteInOrderDetail(note) {
     cy.get('[data-testid="pages-customer-orderdetail-note"]').contains(note);
 }
 
-export function checkBillingAdressInOrderDetail(firt_name, last_name, email, phone, street, city, postcode, country) {
-    cy.get('[data-testid="pages-customer-orderdetail-firstName"]').contains(firt_name);
-    cy.get('[data-testid="pages-customer-orderdetail-lastName"]').contains(last_name);
+export function checkBillingAdressInOrderDetail(firtName, lastName, email, phone, street, city, postcode, country) {
+    cy.get('[data-testid="pages-customer-orderdetail-firstName"]').contains(firtName);
+    cy.get('[data-testid="pages-customer-orderdetail-lastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-email"]').contains(email);
     cy.get('[data-testid="pages-customer-orderdetail-telephone"]').contains(phone);
     cy.get('[data-testid="pages-customer-orderdetail-street"]').contains(street);
@@ -14,9 +14,9 @@ export function checkBillingAdressInOrderDetail(firt_name, last_name, email, pho
     cy.get('[data-testid="pages-customer-orderdetail-country"]').contains(country);
 }
 
-export function checkDeliveryAdressInOrderDetail(firt_name, last_name, phone, street, city, postcode, country) {
-    cy.get('[data-testid="pages-customer-orderdetail-deliveryFirstName"]').contains(firt_name);
-    cy.get('[data-testid="pages-customer-orderdetail-deliveryLastName"]').contains(last_name);
+export function checkDeliveryAdressInOrderDetail(firtName, lastName, phone, street, city, postcode, country) {
+    cy.get('[data-testid="pages-customer-orderdetail-deliveryFirstName"]').contains(firtName);
+    cy.get('[data-testid="pages-customer-orderdetail-deliveryLastName"]').contains(lastName);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryTelephone"]').contains(phone);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryStreet"]').contains(street);
     cy.get('[data-testid="pages-customer-orderdetail-deliveryCity"]').contains(city);
@@ -25,49 +25,49 @@ export function checkDeliveryAdressInOrderDetail(firt_name, last_name, phone, st
 }
 
 export function checkOneItemInOrderDetail(
-    row_number,
-    item_name,
-    item_unit_price,
-    item_quantity_with_unit,
+    rowNumber,
+    itemName,
+    itemUnitPrice,
+    itemQuantityQithUnit,
     vat,
-    item_price_without_vat,
-    item_price_vat,
+    itemPriceWithoutVat,
+    itemPriceVat,
 ) {
-    const item_name_selector =
+    const itemNameSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-name"]';
-    const item_unite_price_selector =
+    const itemUnitPriceSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-unitprice"]';
-    const item_quantity_selector =
+    const itemQuantitySelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-quantity"]';
-    const item_vat_selector =
+    const itemVatSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-vat"]';
-    const item_price_without_vat_selector =
+    const itemPriceWithoutVatSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-price"]';
-    const item_price_vat_selector =
+    const itemPriceVatSelector =
         '[data-testid="pages-customer-orderdetail-item-' +
-        row_number +
+        rowNumber +
         '"] ' +
         '[data-testid="pages-customer-orderdetail-item-pricevat"]';
 
-    cy.get(item_name_selector).contains(item_name);
-    cy.get(item_unite_price_selector).contains(item_unit_price);
-    cy.get(item_quantity_selector).contains(item_quantity_with_unit);
-    cy.get(item_vat_selector).contains(vat);
-    cy.get(item_price_without_vat_selector).contains(item_price_without_vat);
-    cy.get(item_price_vat_selector).contains(item_price_vat);
+    cy.get(itemNameSelector).contains(itemName);
+    cy.get(itemUnitPriceSelector).contains(itemUnitPrice);
+    cy.get(itemQuantitySelector).contains(itemQuantityQithUnit);
+    cy.get(itemVatSelector).contains(vat);
+    cy.get(itemPriceWithoutVatSelector).contains(itemPriceWithoutVat);
+    cy.get(itemPriceVatSelector).contains(itemPriceVat);
 }
