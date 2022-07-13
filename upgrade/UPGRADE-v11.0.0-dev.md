@@ -894,3 +894,30 @@ There you can find links to upgrade notes for other versions too.
         + public function __construct(MailerSettingProvider $mailerSettingProvider, Environment $twigEnvironment)
         ```
     - translations - the `Unable to send updating email` msgid is no longer available
+- update `overblog/graphql-bundle` to `^0.14.3` ([#2479](https://github.com/shopsys/shopsys/pull/2479))
+    - switch implementation of deprecated `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` in your resolvers
+    - change `resolver` expression function to `query` in your types defined in yaml files
+        - Old signature (deprecated): `resolver(string $alias, array $args = []): mixed`
+        - New signature: `query(string $alias, ...$args): mixed`
+        - Example:
+        ```diff
+        - resolve: "@=resolver('categoriesSearch', [args])"
+        + resolve: "@=query('categoriesSearch', args)"
+        ```
+    - change `service` expression function to `query` in your types defined in yaml files
+        - it is no longer supported to use private services in @=service function
+        - for more details check: https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/expression-language.md#private-services
+        - Example:
+        ```diff
+        - resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
+        + resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
+        ```
+    - `mutation` expression function signature was changed
+        - Old signature: `mutation(string $alias, array $args = []): mixed`
+        - New signature: `mutation(string $alias, ...$args): mixed`
+        - Example:
+        ```diff
+        - resolve: "@=mutation('create_order', [args, validator])"
+        + resolve: resolve: "@=mutation('create_order', args, validator)"
+        ```
+  - check other changes in [GraphQLBundle UPGRADE notes](https://github.com/overblog/GraphQLBundle/blob/master/UPGRADE.md#upgrade-from-013-to-014) and implement them in your codebase
