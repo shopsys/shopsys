@@ -9,9 +9,14 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { FC, useState } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { FilterFormType, ParametersCheckboxType, ParametersColorType, ParametersType } from 'types/productFilter';
+import { FC, useCallback, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import {
+    ParametersCheckboxType,
+    ParametersCheckboxValuesType,
+    ParametersColorType,
+    ParametersType,
+} from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     /**
@@ -38,16 +43,26 @@ type FilterGroupParametersProps = {
 
 const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
     const testIdentifier = 'blocks-product-filter-filtergroup-parameters-' + props.parameterParentIndex;
-
-    const [isGroupCollapsed, setIsGroupCollapsed] = useState(props.isDefaultCollapsed);
-    const formProviderMethods = useFormContext<FilterFormType>();
-    const { fields } = useFieldArray({
+    const formProviderMethods = useFormContext();
+    const parameterValue = useWatch({
         control: formProviderMethods.control,
         name: `parameters.${props.parameterParentIndex}.values`,
     });
+    const [isGroupCollapsed, setIsGroupCollapsed] = useState(props.isDefaultCollapsed);
+
     const handleGroupClick = () => {
         setIsGroupCollapsed(!isGroupCollapsed);
     };
+
+    const onChangeParameterValueHandler = useCallback(
+        (dataItem: ParametersCheckboxValuesType, index: number) => () => {
+            formProviderMethods.setValue(`parameters.${props.parameterParentIndex}.values.${index}`, {
+                ...dataItem,
+                checked: !(parameterValue[index].checked as boolean),
+            });
+        },
+        [formProviderMethods, parameterValue, props.parameterParentIndex],
+    );
 
     return (
         <FilterGroupStyled data-testid={testIdentifier}>
@@ -57,9 +72,9 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {props.data?.__typename === 'ParameterCheckboxFilterOption' &&
-                    fields.map((dataItem, index) => (
+                    props.data.values.map((dataItem, index) => (
                         <Controller
-                            key={dataItem.id}
+                            key={dataItem.uuid}
                             name={`parameters.${props.parameterParentIndex}.values.${index}.checked`}
                             render={({ field }) => (
                                 <FilterGroupContentItemStyled
@@ -70,9 +85,9 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                                 >
                                     <Checkbox
                                         name={field.name}
-                                        id={field.name}
                                         label={dataItem.text}
-                                        fieldRef={field}
+                                        onChange={onChangeParameterValueHandler(dataItem, index)}
+                                        value={parameterValue[index].checked}
                                         count={(props.data as ParametersCheckboxType).values[index]?.count}
                                     />
                                 </FilterGroupContentItemStyled>
@@ -81,9 +96,9 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                     ))}
                 {props.data?.__typename === 'ParameterColorFilterOption' && (
                     <FilterGroupColorStyled>
-                        {fields.map((dataItem, index) => (
+                        {props.data.values.map((dataItem, index) => (
                             <ColorPicker
-                                key={dataItem.id}
+                                key={dataItem.uuid}
                                 parameterParentIndex={props.parameterParentIndex}
                                 parameterParentUuid={props.parameterParentUuid}
                                 dataItem={dataItem}

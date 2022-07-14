@@ -27,28 +27,57 @@ type CheckboxProps = NativeProps & {
      * Display count of items. This is an optional prop primary from the parameters filter.
      */
     count?: number;
-    /**
-     * a ref of the controlled field element used for hooking onto the field events/changes
-     */
-    fieldRef?: ControllerRenderProps<any, any>;
-};
+} & (
+        | {
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              value: unknown;
+              /**
+               * a ref of the controlled field element used for hooking onto the field events/changes
+               */
+              fieldRef?: never;
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              onChange: (...event: any[]) => void;
+          }
+        | {
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              value?: never;
+              /**
+               * a ref of the controlled field element used for hooking onto the field events/changes
+               */
+              fieldRef: ControllerRenderProps<any, any>;
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              onChange?: never;
+          }
+    );
 
 /**
  * An HTML Checkbox element of type checkbox
  */
-const Checkbox: FC<CheckboxProps> = (props) => {
+const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disabled, fieldRef, onChange, value }) => {
     return (
         <LabelWrapper
-            {...props}
-            htmlFor={props.id === undefined ? props.name + 'checkbox-id' : props.id}
+            label={label}
+            count={count}
+            required={required}
+            htmlFor={id === undefined ? name + 'checkbox-id' : id}
             inputType="checkbox"
-            checked={props.fieldRef?.value}
+            checked={fieldRef ? fieldRef.value : value}
         >
             <CheckboxStyled
-                {...props}
-                {...props.fieldRef}
-                id={props.id === undefined ? props.name + 'checkbox-id' : props.id}
-                checked={props.fieldRef?.value}
+                {...restProps}
+                required={required}
+                id={id === undefined ? name + 'checkbox-id' : id}
+                {...(fieldRef ?? {})}
+                checked={fieldRef ? fieldRef.value : value}
+                onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
             />
         </LabelWrapper>

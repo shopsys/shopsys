@@ -19,7 +19,7 @@ type CheckboxColorProps = NativeProps & {
     /**
      * Background color of color chooser
      */
-    bgColor: string;
+    bgColor?: string;
     /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
@@ -37,13 +37,13 @@ type CheckboxColorProps = NativeProps & {
 /**
  * CheckboxColor - circle color with invisible checkbox, selected color will display tick
  */
-const CheckboxColor: FC<CheckboxColorProps> = (props) => {
+const CheckboxColor: FC<CheckboxColorProps> = ({ bgColor = '#d4d4d4', ...props }) => {
     return (
         <ColorLabelWrapper
             htmlFor={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
             label={props.label}
-            bgColor={props.bgColor}
-            isLightColor={tinycolor(props.bgColor).isLight()}
+            bgColor={bgColor}
+            isLightColor={tinycolor(bgColor).isLight()}
             isDisabled={props.isDisabled}
             isActive={props.isActive}
         >

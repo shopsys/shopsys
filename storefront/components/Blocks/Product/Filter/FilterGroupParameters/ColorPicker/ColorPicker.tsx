@@ -1,12 +1,12 @@
 import CheckboxColor from 'components/Forms/CheckboxColor';
 import { FC } from 'react';
 import { Controller } from 'react-hook-form';
-import { FilterFormParameterValuesType } from 'types/productFilter';
+import { ParametersColorValuesType } from 'types/productFilter';
 
 type ColorPickerProps = {
     parameterParentIndex: number;
     parameterParentUuid: string;
-    dataItem: FilterFormParameterValuesType;
+    dataItem: ParametersColorValuesType;
     index: number;
     isDisabled: boolean;
 };
@@ -24,7 +24,7 @@ const ColorPicker: FC<ColorPickerProps> = (props) => {
                         id={field.name}
                         isDisabled={props.isDisabled}
                         isActive={field.value}
-                        bgColor={props.dataItem.rgbHex as string}
+                        bgColor={props.dataItem.rgbHex ?? undefined}
                         fieldRef={field}
                         data-testid={testIdentifier}
                     />
