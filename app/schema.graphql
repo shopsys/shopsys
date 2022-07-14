@@ -777,6 +777,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   fullName: String!
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
+  """Product id"""
+  id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   isSellingDenied: Boolean!
@@ -1371,6 +1373,8 @@ interface Product {
   fullName: String!
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
+  """Product id"""
+  id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   isSellingDenied: Boolean!
@@ -1723,6 +1727,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   fullName: String!
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
+  """Product id"""
+  id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   isSellingDenied: Boolean!
@@ -1971,6 +1977,8 @@ type Variant implements Product & Breadcrumb & Slug {
   fullName: String!
   """Distinguishes if the product can be pre-ordered"""
   hasPreorder: Boolean!
+  """Product id"""
+  id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   isSellingDenied: Boolean!

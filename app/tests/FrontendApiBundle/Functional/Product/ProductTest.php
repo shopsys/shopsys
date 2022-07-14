@@ -62,6 +62,7 @@ class ProductTest extends GraphQlTestCase
         $query = '
             query {
                 product(uuid: "' . $this->product->getUuid() . '") {
+                    id
                     name
                     slug
                     shortDescription
@@ -174,6 +175,7 @@ class ProductTest extends GraphQlTestCase
         return [
             'data' => [
                 'product' => [
+                    'id' => 1,
                     'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
                     'slug' => '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
                     'shortDescription' => $shortDescription,

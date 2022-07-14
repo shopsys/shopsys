@@ -3979,6 +3979,15 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Product id
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -6107,6 +6116,15 @@ Distinguishes if the product can be pre-ordered
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Product id
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -7117,6 +7135,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 <td>
 
 Distinguishes if the product can be pre-ordered
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Product id
 
 </td>
 </tr>
@@ -9500,6 +9527,15 @@ The full name of the product, which consists of a prefix, name, and a suffix
 <td>
 
 Distinguishes if the product can be pre-ordered
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>id</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Product id
 
 </td>
 </tr>
