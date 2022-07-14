@@ -226,7 +226,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             $category->getId(),
             $variableValues['filter']['parameters'] ?? [],
             $variableValues['filter']['flags'] ?? [],
-            $variableValues['sortingMode'] ?? null
+            $variableValues['orderingMode'] ?? null
         );
     }
 
@@ -255,7 +255,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     private function isSortingDifferentFromReadyCategorySeoMix(ResolveInfo $resolveInfo, ReadyCategorySeoMix $readyCategorySeoMix): bool
     {
         $variableValues = $resolveInfo->variableValues;
-        $sorting = $variableValues['sortingMode'] ?? null;
+        $sorting = $variableValues['orderingMode'] ?? null;
 
         if ($sorting === null) {
             return false;

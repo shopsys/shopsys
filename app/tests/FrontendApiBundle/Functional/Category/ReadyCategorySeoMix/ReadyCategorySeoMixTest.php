@@ -235,7 +235,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
-            'sortingMode' => null,
+            'orderingMode' => null,
         ]);
 
         $this->assertSame($categoryPcSlug, $data['originalCategorySlug']);
@@ -251,7 +251,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
-            'sortingMode' => strtoupper($readyCategorySeoPcNewWithUsb->getOrdering()),
+            'orderingMode' => strtoupper($readyCategorySeoPcNewWithUsb->getOrdering()),
         ]);
 
         $this->assertSame($categoryPcSlug, $data['originalCategorySlug']);
@@ -264,7 +264,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
-            'sortingMode' => 'PRIORITY',
+            'orderingMode' => 'PRIORITY',
         ]);
 
         $this->assertNull($data['originalCategorySlug']);
@@ -384,7 +384,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         );
         $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/SlugQueryCategoryMatchingSeoMix.graphql', [
             'slug' => $categorySlug,
-            'sortingMode' => 'PRICE_DESC',
+            'orderingMode' => 'PRICE_DESC',
             'filter' => [
                 'flags' => [$flagNew->getUuid()],
                 'parameters' => [

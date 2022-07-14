@@ -1,4 +1,4 @@
-query SlugQuery($slug: String!, $sortingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
   slug(slug: $slug) {
     ... on Category {
       ...TestCategoryDetailFragment
@@ -46,7 +46,7 @@ fragment TestCategoryPreviewFragment on Category {
 
 fragment TestListedProductsFragment on ProductListable {
   products(
-    orderingMode: $sortingMode
+    orderingMode: $orderingMode
     filter: $filter
   ) {
     ...TestListedProductConnectionFragment
