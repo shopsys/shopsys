@@ -46,15 +46,6 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) =
         ),
     });
 
-    useEffect(() => {
-        const queryFromUrl = mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(router.query.filter)));
-
-        formProviderMethods.reset(getDefaultFormValues(queryFromUrl, deepComparedProductFitlerOptions, originalSlug));
-
-        // update dependencies are missing,because each rerender triggers another rerender, resulting in an infinite loop
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [originalSlug, deepComparedProductFitlerOptions, slug]);
-
     const [brandsValue, flagsValue, parametersValue, isOnlyInStock, minimalPrice, maximalPrice] = useWatch({
         name: ['brands', 'flags', 'parameters', 'onlyInStock', 'minimalPrice', 'maximalPrice'],
         control: formProviderMethods.control,

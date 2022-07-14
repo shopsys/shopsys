@@ -62,6 +62,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
                     {category.productConnection.productFilterOptions !== null && (
                         <ProductFilter
+                            key={category.slug}
                             productFilterOptions={category.productConnection.productFilterOptions}
                             slug={category.slug}
                             originalSlug={category.originalCategorySlug}

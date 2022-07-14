@@ -23,6 +23,7 @@ export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageT
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
     const [{ data, error }] = useSlugQueryApi({
+        requestPolicy: 'network-only',
         variables: {
             slug,
             orderingMode: categoryDetailSort,
