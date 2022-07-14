@@ -115,7 +115,7 @@ class ImageFacade extends BaseImageFacade
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
-        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $type, $sizeName);
+        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId(), $type, $sizeName);
 
         return $this->cache->get(
             $cacheId,
@@ -270,7 +270,13 @@ class ImageFacade extends BaseImageFacade
             throw new ImageNotFoundException();
         }
 
-        $cacheId = $this->getCacheIdForImageUrl($image->getId(), $image->getType(), $sizeName, $additionalSizeIndex);
+        $cacheId = $this->getCacheIdForImageUrl(
+            $image->getId(),
+            $domainConfig->getId(),
+            $image->getType(),
+            $sizeName,
+            $additionalSizeIndex
+        );
 
         return $this->cache->get(
             $cacheId,
@@ -540,14 +546,27 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param int $imageId
+     * @param int $domainId
      * @param string|null $type
      * @param string|null $sizeName
      * @param int|null $additionalIndex
      * @return string
      */
-    private function getCacheIdForImageUrl(int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex = null): string
-    {
-        return sprintf('ImageUrl_imageId-%d_type-%s_size-%s_additionalIndex-%s', $imageId, $type, $sizeName, $additionalIndex);
+    private function getCacheIdForImageUrl(
+        int $imageId,
+        int $domainId,
+        ?string $type,
+        ?string $sizeName,
+        ?int $additionalIndex = null
+    ): string {
+        return sprintf(
+            'ImageUrl_imageId-%d_domainId-%d_type-%s_size-%s_additionalIndex-%s',
+            $imageId,
+            $domainId,
+            $type,
+            $sizeName,
+            $additionalIndex
+        );
     }
 
     /**
