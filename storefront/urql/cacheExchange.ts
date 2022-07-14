@@ -2,6 +2,7 @@ import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
 import {
     AddToCartResultApi,
+    CartApi,
     CartQueryApi,
     CartQueryDocumentApi,
     CartQueryVariablesApi,
@@ -99,28 +100,45 @@ const cache = cacheExchange({
                 invalidateFields(cache, ['currentCustomerUser']);
             },
             CreateOrder(_result, _args, cache) {
-                invalidateFields(cache, ['currentCustomerUser']);
+                invalidateFields(cache, ['currentCustomerUser', 'cart']);
             },
             AddToCart(result, _args, cache) {
-                if (typeof result.AddToCart !== 'undefined') {
-                    const response = result.AddToCart as AddToCartResultApi;
-                    cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
-                        { query: CartQueryDocumentApi, variables: { cartUuid: response.cart.uuid } },
-                        (data) => {
-                            if (typeof result.AddToCart !== 'undefined') {
-                                // eslint-disable-next-line no-param-reassign
-                                data = {
-                                    __typename: 'Query',
-                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                    // @ts-ignore
-                                    cart: response.cart,
-                                };
-                            }
-
-                            return data;
-                        },
-                    );
-                }
+                const newCart =
+                    typeof result.AddToCart !== 'undefined' ? (result.AddToCart as AddToCartResultApi) : undefined;
+                manuallyUpdateCartFragment(cache, newCart?.cart);
+            },
+            ChangeTransportInCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ChangeTransportInCart !== 'undefined'
+                        ? (result.ChangeTransportInCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            ChangePaymentInCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ChangePaymentInCart !== 'undefined'
+                        ? (result.ChangePaymentInCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            RemoveFromCart(result, _args, cache) {
+                const newCart =
+                    typeof result.RemoveFromCart !== 'undefined' ? (result.RemoveFromCart as CartApi) : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            ApplyPromoCodeToCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ApplyPromoCodeToCart !== 'undefined'
+                        ? (result.ApplyPromoCodeToCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            RemovePromoCodeFromCart(result, _args, cache) {
+                const newCart =
+                    typeof result.RemovePromoCodeFromCart !== 'undefined'
+                        ? (result.RemovePromoCodeFromCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
             },
         },
     },
@@ -169,6 +187,27 @@ const invalidateFields = (cache: Cache, fields: string[]): void => {
         if (fields.includes(field.fieldName)) {
             cache.invalidate(key, field.fieldKey);
         }
+    }
+};
+
+const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined) => {
+    if (newCart !== undefined) {
+        cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
+            { query: CartQueryDocumentApi, variables: { cartUuid: newCart.uuid } },
+            (data) => {
+                if (typeof newCart !== 'undefined') {
+                    // eslint-disable-next-line no-param-reassign
+                    data = {
+                        __typename: 'Query',
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        cart: newCart,
+                    };
+                }
+
+                return data;
+            },
+        );
     }
 };
 
