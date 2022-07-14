@@ -965,6 +965,8 @@ type Order {
   pickupPlaceIdentifier: String
   """Billing address zip code"""
   postcode: String!
+  """All product items in the order"""
+  productItems: [OrderItem!]!
   """Promo code (coupon) used in the order"""
   promoCode: String
   """Current status of the order"""
@@ -1276,6 +1278,8 @@ type PaymentSetupCreationData {
 type PersonalData {
   """Customer user data"""
   customerUser: CustomerUser
+  """A link for downloading the personal data in an XML file"""
+  exportLink: String!
   """Newsletter subscription"""
   newsletterSubscriber: NewsletterSubscriber
   """Customer orders"""

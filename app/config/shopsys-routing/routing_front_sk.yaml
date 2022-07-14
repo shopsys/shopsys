@@ -31,13 +31,13 @@ front_brand_list:
     path: /prehled-znacek
 
 front_personal_data:
-    path: /prehled-osobnich-udaju
+    path: /prehlad-osobnych-udajov
 
 front_personal_data_access:
-    path: /prehled-osobnich-udaju/{hash}
+    path: /prehlad-osobnych-udajov/{hash}
 
 front_personal_data_export:
-    path: /export-osobnich-udaju
+    path: /export-osobnych-udajov
 
 front_stores:
     path: /obchodne-domy

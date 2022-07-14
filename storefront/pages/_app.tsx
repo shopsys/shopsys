@@ -1,6 +1,10 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import Error500 from 'components/Pages/ErrorPage/500';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
+import { extend, locale } from 'dayjs';
+import 'dayjs/locale/cs';
+import 'dayjs/locale/sk';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useReloadCart } from 'hooks/cart/UseReloadCart';
 import i18nConfig from 'i18n';
@@ -23,6 +27,8 @@ import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
+extend(LocalizedFormat);
+
 type AppPropsWithError = AppProps & {
     err?: any;
 };
@@ -30,9 +36,11 @@ type AppPropsWithError = AppProps & {
 function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const { url, defaultLocale } = useShopsysSelector((state) => state.domain);
     const userConsentCookie = getUserConsentCookie();
     useReloadCart();
+
+    locale(defaultLocale);
 
     const handleRouteChangeStart = useCallback(
         (targetUrl: string) => {
@@ -86,7 +94,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
         },
     );
 
-    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], domainUrl);
+    const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
 
     return (

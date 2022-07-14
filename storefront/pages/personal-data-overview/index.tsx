@@ -2,6 +2,7 @@ import MetaRobots from 'components/Basic/Head/MetaRobots';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import PersonalDataOverview from 'components/Pages/PersonalData/Overview';
+import { PersonalDataPageTextQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -28,7 +29,7 @@ const PersonalDataOverviewPage: FC = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store);
+    return initServerSideProps(context, store, false, [{ query: PersonalDataPageTextQueryDocumentApi }]);
 });
 
 export default PersonalDataOverviewPage;

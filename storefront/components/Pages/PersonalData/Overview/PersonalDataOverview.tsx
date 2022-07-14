@@ -53,11 +53,7 @@ const PersonalDataOverview: FC = () => {
         }
     }, [formMeta.messages.success, personalDataOverviewResult]);
 
-    const contentSiteText: string | undefined =
-        personalDataPageTextResult.data?.personalDataPage !== undefined &&
-        personalDataPageTextResult.data.personalDataPage !== null
-            ? personalDataPageTextResult.data.personalDataPage.displaySiteContent
-            : undefined;
+    const contentSiteText = personalDataPageTextResult.data?.personalDataPage?.displaySiteContent;
 
     return (
         <>

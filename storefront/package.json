@@ -35,6 +35,7 @@
         "@urql/exchange-auth": "^0.1.6",
         "@urql/exchange-graphcache": "^4.3.5",
         "crypto-js": "^4.1.1",
+        "dayjs": "^1.11.3",
         "google-map-react": "^2.1.10",
         "graphql": "^15.5.1",
         "graphql-markdown": "^6.0.0",

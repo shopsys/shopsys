@@ -1234,6 +1234,8 @@ export type OrderApi = {
   pickupPlaceIdentifier: Maybe<Scalars['String']>;
   /** Billing address zip code */
   postcode: Scalars['String'];
+  /** All product items in the order */
+  productItems: Array<OrderItemApi>;
   /** Promo code (coupon) used in the order */
   promoCode: Maybe<Scalars['String']>;
   /** Current status of the order */
@@ -1570,6 +1572,8 @@ export type PersonalDataApi = {
   __typename?: 'PersonalData';
   /** Customer user data */
   customerUser: Maybe<CustomerUserApi>;
+  /** A link for downloading the personal data in an XML file */
+  exportLink: Scalars['String'];
   /** Newsletter subscription */
   newsletterSubscriber: Maybe<NewsletterSubscriberApi>;
   /** Customer orders */
@@ -2986,6 +2990,13 @@ export type PersonalDataRequestMutationVariablesApi = Exact<{
 
 
 export type PersonalDataRequestMutationApi = { __typename?: 'Mutation', RequestPersonalDataAccess: { __typename?: 'PersonalDataPage', displaySiteSlug: string, exportSiteSlug: string } };
+
+export type PersonalDataDetailQueryVariablesApi = Exact<{
+  hash: Scalars['String'];
+}>;
+
+
+export type PersonalDataDetailQueryApi = { __typename?: 'Query', accessPersonalData: { __typename: 'PersonalData', exportLink: string, orders: Array<{ __typename: 'Order', uuid: string, city: string, companyName: string | null, number: string, creationDate: any, firstName: string | null, lastName: string | null, telephone: string, companyNumber: string | null, companyTaxNumber: string | null, street: string, postcode: string, deliveryFirstName: string | null, deliveryLastName: string | null, deliveryCompanyName: string | null, deliveryTelephone: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, country: { __typename: 'Country', name: string, code: string }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null }, productItems: Array<{ __typename: 'OrderItem', name: string, vatRate: string, quantity: number, unit: string | null, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }>, totalPrice: { __typename?: 'Price', priceWithVat: string } }>, customerUser: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, pricingGroup: string, country: { __typename: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null }> } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, pricingGroup: string, country: { __typename: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null }> } | null, newsletterSubscriber: { __typename: 'NewsletterSubscriber', email: string, createdAt: any } | null } };
 
 export type PersonalDataPageTextQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -5041,6 +5052,71 @@ export const PersonalDataRequestMutationDocumentApi = gql`
 
 export function usePersonalDataRequestMutationApi() {
   return Urql.useMutation<PersonalDataRequestMutationApi, PersonalDataRequestMutationVariablesApi>(PersonalDataRequestMutationDocumentApi);
+};
+export const PersonalDataDetailQueryDocumentApi = gql`
+    query PersonalDataDetailQuery($hash: String!) {
+  accessPersonalData(hash: $hash) {
+    __typename
+    orders {
+      __typename
+      uuid
+      city
+      companyName
+      number
+      creationDate
+      firstName
+      lastName
+      telephone
+      companyNumber
+      companyTaxNumber
+      street
+      city
+      postcode
+      country {
+        ...CountryFragment
+      }
+      deliveryFirstName
+      deliveryLastName
+      deliveryCompanyName
+      deliveryTelephone
+      deliveryStreet
+      deliveryCity
+      deliveryPostcode
+      deliveryCountry {
+        ...CountryFragment
+      }
+      payment {
+        ...SimplePaymentFragment
+      }
+      transport {
+        ...SimpleTransportFragment
+      }
+      productItems {
+        ...OrderDetailItemFragment
+      }
+      totalPrice {
+        priceWithVat
+      }
+    }
+    customerUser {
+      ...CustomerUserFragment
+    }
+    newsletterSubscriber {
+      __typename
+      email
+      createdAt
+    }
+    exportLink
+  }
+}
+    ${CountryFragmentApi}
+${SimplePaymentFragmentApi}
+${SimpleTransportFragmentApi}
+${OrderDetailItemFragmentApi}
+${CustomerUserFragmentApi}`;
+
+export function usePersonalDataDetailQueryApi(options: Omit<Urql.UseQueryArgs<PersonalDataDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<PersonalDataDetailQueryApi>({ query: PersonalDataDetailQueryDocumentApi, ...options });
 };
 export const PersonalDataPageTextQueryDocumentApi = gql`
     query PersonalDataPageTextQuery {

@@ -28,3 +28,6 @@ Order:
             pickupPlaceIdentifier:
                 type: "String"
                 description: "Selected pickup place identifier"
+            productItems:
+                type: "[OrderItem!]!"
+                description: "All product items in the order"

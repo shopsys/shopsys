@@ -4583,6 +4583,15 @@ Billing address zip code
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productItems</strong></td>
+<td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
+<td>
+
+All product items in the order
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>promoCode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -5486,6 +5495,15 @@ Identifiers of GoPay payment method
 <td>
 
 Customer user data
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>exportLink</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A link for downloading the personal data in an XML file
 
 </td>
 </tr>
