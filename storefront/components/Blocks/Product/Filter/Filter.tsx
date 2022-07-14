@@ -177,7 +177,6 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) =
                         parametersValue.map((parametersItem, index) => (
                             <FilterGroupParameters
                                 key={parametersItem.parameterUuid}
-                                parameterParentUuid={parametersItem.parameterUuid}
                                 parameterParentIndex={index}
                                 title={parametersItem.parameterName}
                                 data={deepComparedProductFitlerOptions.parameters?.[index]}

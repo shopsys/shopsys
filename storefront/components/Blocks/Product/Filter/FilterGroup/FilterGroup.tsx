@@ -29,14 +29,15 @@ type FilterGroupProps = {
     data?: FilterOptionFlagsType[] | BrandsType[];
 };
 
-const FilterGroup: FC<FilterGroupProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-filtergroup-' + props.filterField;
+const TEST_IDENTIFIER = (filterField: FilterGroupProps['filterField']) =>
+    'blocks-product-filter-filtergroup-' + filterField;
 
-    const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
+const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, data }) => {
+    const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
 
     const filterGroupValue = useWatch({
-        name: props.filterField,
+        name: filterField,
         control: formProviderMethods.control,
     });
 
@@ -45,27 +46,27 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
     };
 
     return (
-        <FilterGroupStyled data-testid={testIdentifier}>
+        <FilterGroupStyled data-testid={TEST_IDENTIFIER(filterField)}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
-                {props.title}
+                {title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 {filterGroupValue.map((dataItem, index) => (
                     <Controller
-                        name={`${props.filterField}.${index}.checked`}
+                        name={`${filterField}.${index}.checked`}
                         key={dataItem.uuid}
                         render={({ field }) => (
                             <FilterGroupContentItemStyled
-                                isDisabled={props.data?.[index]?.count === 0}
+                                isDisabled={data?.[index]?.count === 0}
                                 isActive={field.value}
-                                data-testid={testIdentifier + '-' + index}
+                                data-testid={TEST_IDENTIFIER(filterField) + '-' + index}
                             >
                                 <Checkbox
                                     name={field.name}
                                     label={dataItem.name}
                                     fieldRef={field}
-                                    count={props.data?.[index]?.count}
+                                    count={data?.[index]?.count}
                                 />
                             </FilterGroupContentItemStyled>
                         )}

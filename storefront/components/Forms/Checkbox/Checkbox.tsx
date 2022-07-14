@@ -12,14 +12,6 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type CheckboxProps = NativeProps & {
     /**
-     * A prop to decide if the input has errors
-     */
-    hasError?: boolean;
-    /**
-     * A prop to decide if the input is touched
-     */
-    isTouched?: boolean;
-    /**
      * Display Label of the HTML checkbox element
      */
     label: string | ReactNode | ReactNode[];
@@ -72,7 +64,7 @@ const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disable
             checked={fieldRef ? fieldRef.value : value}
         >
             <CheckboxStyled
-                {...restProps}
+                disabled={disabled}
                 required={required}
                 id={id === undefined ? name + 'checkbox-id' : id}
                 {...(fieldRef ?? {})}

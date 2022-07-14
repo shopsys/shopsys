@@ -7,8 +7,8 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name',
-    'id' | 'disabled' | 'required'
+    'name' | 'disabled',
+    'id' | 'required'
 >;
 
 type CheckboxColorProps = NativeProps & {
@@ -24,34 +24,34 @@ type CheckboxColorProps = NativeProps & {
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
     fieldRef?: ControllerRenderProps<any, any>;
-    /**
-     * Prop to check if checkbox is disabled
-     */
-    isDisabled: boolean;
-    /**
-     * Prop to check if checkbox is active
-     */
-    isActive: boolean;
 };
 
 /**
  * CheckboxColor - circle color with invisible checkbox, selected color will display tick
  */
-const CheckboxColor: FC<CheckboxColorProps> = ({ bgColor = '#d4d4d4', ...props }) => {
+const CheckboxColor: FC<CheckboxColorProps> = ({
+    bgColor = '#d4d4d4',
+    label,
+    fieldRef,
+    id,
+    name,
+    disabled,
+    required,
+}) => {
     return (
         <ColorLabelWrapper
-            htmlFor={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
-            label={props.label}
+            htmlFor={id === undefined ? name + 'checkbox_color-id' : id}
+            label={label}
             bgColor={bgColor}
             isLightColor={tinycolor(bgColor).isLight()}
-            isDisabled={props.isDisabled}
-            isActive={props.isActive}
+            isDisabled={disabled}
+            isActive={fieldRef?.value ?? false}
         >
             <CheckboxColorStyled
-                {...props}
-                {...props.fieldRef}
-                id={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
-                checked={props.fieldRef?.value}
+                {...fieldRef}
+                disabled={disabled}
+                required={required}
+                id={id === undefined ? name + 'checkbox_color-id' : id}
                 type="checkbox"
             />
         </ColorLabelWrapper>

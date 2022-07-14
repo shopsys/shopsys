@@ -5,28 +5,26 @@ import { ParametersColorValuesType } from 'types/productFilter';
 
 type ColorPickerProps = {
     parameterParentIndex: number;
-    parameterParentUuid: string;
     dataItem: ParametersColorValuesType;
-    index: number;
+    valueIndex: number;
     isDisabled: boolean;
 };
 
-const ColorPicker: FC<ColorPickerProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-filtergroupparameters-colorpicker-' + props.index;
+const TEST_IDENTIFIER = (valueIndex: number) => 'blocks-product-filter-filtergroupparameters-colorpicker-' + valueIndex;
 
+const ColorPicker: FC<ColorPickerProps> = ({ parameterParentIndex, dataItem, valueIndex: index, isDisabled }) => {
     return (
         <Controller
-            name={`parameters.${props.parameterParentIndex}.values.${props.index}.checked`}
+            name={`parameters.${parameterParentIndex}.values.${index}.checked`}
             render={({ field }) => (
                 <>
                     <CheckboxColor
                         name={field.name}
                         id={field.name}
-                        isDisabled={props.isDisabled}
-                        isActive={field.value}
-                        bgColor={props.dataItem.rgbHex ?? undefined}
+                        disabled={isDisabled}
+                        bgColor={dataItem.rgbHex ?? undefined}
                         fieldRef={field}
-                        data-testid={testIdentifier}
+                        data-testid={TEST_IDENTIFIER(index)}
                     />
                 </>
             )}
