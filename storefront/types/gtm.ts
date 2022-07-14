@@ -137,10 +137,7 @@ export type GtmUserInfoType = {
 export type GtmConsentInfoType = {
     statistics: GtmConsent;
     marketing: GtmConsent;
-    targeting: GtmConsent;
     preferences: GtmConsent;
-    performance: GtmConsent;
-    functional: GtmConsent;
 };
 
 export type GtmBreadcrumbInfoType = {
