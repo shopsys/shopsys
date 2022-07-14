@@ -46,7 +46,7 @@ class FriendlyUrlMatcher
         $matchedParameters['id'] = $friendlyUrl->getEntityId();
 
         if (!$friendlyUrl->isMain()) {
-            $matchedParameters['_controller'] = 'FrameworkBundle:Redirect:redirect';
+            $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction';
             $matchedParameters['route'] = $friendlyUrl->getRouteName();
             $matchedParameters['permanent'] = true;
         }
