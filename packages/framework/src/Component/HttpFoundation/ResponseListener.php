@@ -2,14 +2,14 @@
 
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ResponseListener
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $event->getResponse()->headers->set('X-Frame-Options', 'sameorigin');
         $event->getResponse()->headers->set('X-XSS-Protection', '1; mode=block');

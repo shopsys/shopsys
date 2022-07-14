@@ -5,7 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Product;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ProductVisibilityFacadeTest extends TestCase
 {
@@ -20,7 +20,7 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock);
         $productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
 
-        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)
+        $eventMock = $this->getMockBuilder(ResponseEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest'])
             ->getMock();
@@ -37,7 +37,7 @@ class ProductVisibilityFacadeTest extends TestCase
 
         $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock);
 
-        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)
+        $eventMock = $this->getMockBuilder(ResponseEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest'])
             ->getMock();

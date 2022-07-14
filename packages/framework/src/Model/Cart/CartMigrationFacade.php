@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class CartMigrationFacade
 {
@@ -84,11 +84,11 @@ class CartMigrationFacade
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $filterControllerEvent
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      */
-    public function onKernelController(FilterControllerEvent $filterControllerEvent)
+    public function onKernelController(ControllerEvent $event): void
     {
-        $session = $filterControllerEvent->getRequest()->getSession();
+        $session = $event->getRequest()->getSession();
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
         if (

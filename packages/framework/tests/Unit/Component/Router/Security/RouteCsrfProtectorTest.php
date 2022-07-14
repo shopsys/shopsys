@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
@@ -18,7 +18,7 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(FilterControllerEvent::class)
+        $eventMock = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest', 'getController'])
             ->getMock();
@@ -34,7 +34,7 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(FilterControllerEvent::class)
+        $eventMock = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
             ->getMock();
@@ -68,7 +68,7 @@ class RouteCsrfProtectorTest extends TestCase
             }))
             ->willReturn(true);
 
-        $eventMock = $this->getMockBuilder(FilterControllerEvent::class)
+        $eventMock = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
             ->getMock();
@@ -89,7 +89,7 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(FilterControllerEvent::class)
+        $eventMock = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
             ->getMock();
@@ -125,7 +125,7 @@ class RouteCsrfProtectorTest extends TestCase
             }))
             ->willReturn(false);
 
-        $eventMock = $this->getMockBuilder(FilterControllerEvent::class)
+        $eventMock = $this->getMockBuilder(ControllerEvent::class)
             ->disableOriginalConstructor()
             ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
             ->getMock();
