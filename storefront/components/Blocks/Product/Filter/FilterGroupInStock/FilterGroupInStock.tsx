@@ -27,7 +27,7 @@ type FilterGroupInStockProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
 
-const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStockCount }) => {
+export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStockCount }) => {
     const t = useTypedTranslationFunction();
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
 
@@ -60,5 +60,3 @@ const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStoc
         </FilterGroupStyled>
     );
 };
-
-export default FilterGroupInStock;

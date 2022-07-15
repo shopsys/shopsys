@@ -1,6 +1,6 @@
 import { FilterStyled } from './Filter.style';
 import { FilterGroup } from './FilterGroup/FilterGroup';
-import FilterGroupInStock from './FilterGroupInStock';
+import { FilterGroupInStock } from './FilterGroupInStock/FilterGroupInStock';
 import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
 import { getDefaultFormValues } from './formMeta';
