@@ -35,7 +35,7 @@ type FilterGroupParametersProps = {
 const TEST_IDENTIFIER = (parameterParentIndex: number) =>
     'blocks-product-filter-filtergroup-parameters-' + parameterParentIndex;
 
-const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
+export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     title,
     isDefaultCollapsed,
     parameterParentIndex,
@@ -116,5 +116,3 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
         </FilterGroupStyled>
     );
 };
-
-export default FilterGroupParameters;
