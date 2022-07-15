@@ -7,12 +7,9 @@ export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserC
     const userContentCookie = getUserConsentCookie();
 
     const defaultValues = userContentCookie ?? {
-        functional: false,
-        marketing: false,
-        performance: false,
-        preferences: false,
         statistics: false,
-        targeting: false,
+        marketing: false,
+        preferences: false,
     };
 
     return [useShopsysForm(undefined, defaultValues), defaultValues];
@@ -31,23 +28,14 @@ export const useUserConsentFormMeta = (): UserConsentFormMeta => {
     const formMeta: UserConsentFormMeta = {
         formName: 'user-consent-form',
         fields: {
-            functional: {
-                name: 'functional' as const,
-            },
             marketing: {
                 name: 'marketing' as const,
-            },
-            performance: {
-                name: 'performance' as const,
             },
             preferences: {
                 name: 'preferences' as const,
             },
             statistics: {
                 name: 'statistics' as const,
-            },
-            targeting: {
-                name: 'targeting' as const,
             },
         },
     };

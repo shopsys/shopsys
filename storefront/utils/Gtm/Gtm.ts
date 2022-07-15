@@ -175,11 +175,8 @@ export const getGtmConsentInfo = (): GtmConsentInfoType => {
     const userConsentCookie = getUserConsentCookie();
 
     return {
-        functional: userConsentCookie?.functional ? 'granted' : 'denied',
         marketing: userConsentCookie?.marketing ? 'granted' : 'denied',
-        targeting: userConsentCookie?.targeting ? 'granted' : 'denied',
         statistics: userConsentCookie?.statistics ? 'granted' : 'denied',
-        performance: userConsentCookie?.performance ? 'granted' : 'denied',
         preferences: userConsentCookie?.preferences ? 'granted' : 'denied',
     };
 };

@@ -65,13 +65,6 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
                 />
             </p>
             <ConsentRowStyled>
-                <ConsentNameStyled>{t('Functional')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.functional.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.functional.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
-            <ConsentRowStyled>
                 <ConsentNameStyled>{t('Marketing')}</ConsentNameStyled>
                 <Controller
                     name={formMeta.fields.marketing.name}
@@ -79,24 +72,10 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
                 />
             </ConsentRowStyled>
             <ConsentRowStyled>
-                <ConsentNameStyled>{t('Targeting')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.targeting.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.targeting.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
-            <ConsentRowStyled>
                 <ConsentNameStyled>{t('Statistics')}</ConsentNameStyled>
                 <Controller
                     name={formMeta.fields.statistics.name}
                     render={({ field }) => <ToggleSwitch id={formMeta.fields.statistics.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
-            <ConsentRowStyled>
-                <ConsentNameStyled>{t('Performance')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.performance.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.performance.name} fieldRef={field} />}
                 />
             </ConsentRowStyled>
             <ConsentRowStyled>

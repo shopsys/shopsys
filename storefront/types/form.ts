@@ -1,4 +1,5 @@
 import { CustomerTypeEnum } from './customer';
+import { GtmConsentInfoType } from './gtm';
 import { SelectOptionType } from './selectOptions';
 
 export type PromoCodeFormType = {
@@ -102,11 +103,4 @@ export type ContactFormType = {
     message: string;
 };
 
-export type UserConsentFormType = {
-    functional: boolean;
-    marketing: boolean;
-    targeting: boolean;
-    statistics: boolean;
-    performance: boolean;
-    preferences: boolean;
-};
+export type UserConsentFormType = Record<keyof GtmConsentInfoType, boolean>;
