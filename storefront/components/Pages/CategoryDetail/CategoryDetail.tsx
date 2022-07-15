@@ -14,7 +14,7 @@ import MetaRobots from 'components/Basic/Head/MetaRobots';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
-import ProductFilter from 'components/Blocks/Product/Filter';
+import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';

@@ -29,7 +29,7 @@ type FilterProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-const Filter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) => {
+export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const deepComparedProductFitlerOptions = useMemo(
@@ -191,6 +191,3 @@ const Filter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) =
         </FormProvider>
     );
 };
-
-/* @component */
-export default Filter;

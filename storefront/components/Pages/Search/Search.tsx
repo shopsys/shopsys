@@ -10,7 +10,7 @@ import {
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
-import ProductFilter from 'components/Blocks/Product/Filter';
+import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import Button from 'components/Forms/Button';
