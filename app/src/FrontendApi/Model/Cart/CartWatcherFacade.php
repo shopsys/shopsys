@@ -100,9 +100,9 @@ class CartWatcherFacade
     {
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
 
+        $this->checkNotListableItems($cart);
         $this->checkUnavailableStockQuantityItems($cart);
         $this->checkModifiedPrices($cart);
-        $this->checkNotListableItems($cart);
         $this->checkPromoCodeValidity($cart);
 
         $this->em->flush();
