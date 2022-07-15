@@ -32,7 +32,7 @@ type FilterGroupProps = {
 const TEST_IDENTIFIER = (filterField: FilterGroupProps['filterField']) =>
     'blocks-product-filter-filtergroup-' + filterField;
 
-const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, data }) => {
+export const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, data }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
 
@@ -76,6 +76,3 @@ const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, data })
         </FilterGroupStyled>
     );
 };
-
-/* @component */
-export default FilterGroup;

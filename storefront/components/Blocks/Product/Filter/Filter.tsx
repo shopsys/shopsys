@@ -1,5 +1,5 @@
 import { FilterStyled } from './Filter.style';
-import FilterGroup from './FilterGroup';
+import { FilterGroup } from './FilterGroup/FilterGroup';
 import FilterGroupInStock from './FilterGroupInStock';
 import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
