@@ -50,7 +50,7 @@ class ImageAbstractFilesystemValidator extends ImageValidator
     {
         $abstractPath = $this->fileUpload->getTemporaryFilepath($value->getFilename());
         $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());
-        $localPath = $this->parameterBag->get('shopsys.root_dir') . $localFileUniqueName;
+        $localPath = $this->parameterBag->get('kernel.project_dir') . $localFileUniqueName;
 
         $copyResult = $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
 

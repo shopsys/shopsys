@@ -21,4 +21,4 @@ services:
 
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         arguments:
-            - '%shopsys.root_dir%'
+            - '%kernel.project_dir%'

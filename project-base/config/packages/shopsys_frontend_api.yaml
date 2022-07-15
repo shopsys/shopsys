@@ -6,7 +6,7 @@ overblog_graphql:
         mappings:
             types:
                 -   type: yaml
-                    dir: "%shopsys.root_dir%/config/graphql/types"
+                    dir: "%kernel.project_dir%/config/graphql/types"
         builders:
             args:
                 -   alias: "PaginatorArgumentsBuilder"

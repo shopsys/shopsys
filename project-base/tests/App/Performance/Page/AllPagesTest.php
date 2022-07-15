@@ -61,7 +61,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
-            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-admin.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-admin.csv'
         );
     }
 
@@ -69,7 +69,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
-            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-front.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-front.csv'
         );
     }
 

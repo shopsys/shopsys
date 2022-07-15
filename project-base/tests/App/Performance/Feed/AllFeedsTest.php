@@ -91,7 +91,7 @@ class AllFeedsTest extends KernelTestCase
 
         $this->exportJmeterCsvReport(
             $performanceTestSamples,
-            static::$container->getParameter('shopsys.root_dir') . '/build/stats/performance-tests-feeds.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-feeds.csv'
         );
 
         $this->assertSamplesAreSuccessful($performanceTestSamples);
