@@ -21,8 +21,6 @@ import { checkProductInCart } from '../../Functions/CartPage';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
 import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
 import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
-import { clickOnSendOrderButton, fillEmailInThirdStep } from '../../Functions/orderContactInformation';
-import { checkFinishOrderPageAsUnregistredCustomer } from '../../Functions/orderThankYouPage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
