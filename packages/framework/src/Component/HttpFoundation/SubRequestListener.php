@@ -5,8 +5,8 @@ namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class SubRequestListener
 {
@@ -21,9 +21,9 @@ class SubRequestListener
     protected $masterRequest;
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->masterRequest = $event->getRequest();
@@ -47,9 +47,9 @@ class SubRequestListener
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if ($event->isMasterRequest()) {
             if ($this->redirectResponse !== null) {

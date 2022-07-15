@@ -8,13 +8,13 @@ use Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class DomainSubscriberTest extends TestCase
 {
     public function testOnKernelRequestWithoutMasterRequest()
     {
-        $eventMock = $this->getMockBuilder(GetResponseEvent::class)
+        $eventMock = $this->getMockBuilder(RequestEvent::class)
             ->setMethods(['__construct', 'isMasterRequest'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -29,7 +29,7 @@ class DomainSubscriberTest extends TestCase
 
     public function testOnKernelRequestWithMasterRequestAndSetDomain()
     {
-        $eventMock = $this->getMockBuilder(GetResponseEvent::class)
+        $eventMock = $this->getMockBuilder(RequestEvent::class)
             ->setMethods(['__construct', 'isMasterRequest'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -48,7 +48,7 @@ class DomainSubscriberTest extends TestCase
     public function testOnKernelRequestWithMasterRequest()
     {
         $getRequestResult = new Request();
-        $eventMock = $this->getMockBuilder(GetResponseEvent::class)
+        $eventMock = $this->getMockBuilder(RequestEvent::class)
             ->setMethods(['__construct', 'isMasterRequest', 'getRequest'])
             ->disableOriginalConstructor()
             ->getMock();

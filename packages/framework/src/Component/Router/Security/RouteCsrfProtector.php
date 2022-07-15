@@ -6,7 +6,7 @@ use Doctrine\Common\Annotations\Reader;
 use ReflectionMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -48,9 +48,9 @@ class RouteCsrfProtector implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         if ($this->isProtected($event)) {
             $request = $event->getRequest();
@@ -94,10 +94,10 @@ class RouteCsrfProtector implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      * @return bool
      */
-    protected function isProtected(FilterControllerEvent $event)
+    protected function isProtected(ControllerEvent $event): bool
     {
         if (!$event->isMasterRequest()) {
             return false;

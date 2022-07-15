@@ -4,8 +4,8 @@ namespace Shopsys\FrameworkBundle\Component\Log;
 
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\PostResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class SlowLogSubscriber implements EventSubscriberInterface
@@ -32,9 +32,9 @@ class SlowLogSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
      */
-    public function initStartTime(GetResponseEvent $event)
+    public function initStartTime(RequestEvent $event): void
     {
         if ($event->isMasterRequest()) {
             $this->startTime = microtime(true);
@@ -42,9 +42,9 @@ class SlowLogSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\PostResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\TerminateEvent $event
      */
-    public function addNotice(PostResponseEvent $event)
+    public function addNotice(TerminateEvent $event): void
     {
         $requestTime = $this->getRequestTime();
         if ($requestTime <= static::REQUEST_TIME_LIMIT_SECONDS) {

@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class DomainAwareSecurityHeadersSetter
 {
@@ -20,9 +20,9 @@ class DomainAwareSecurityHeadersSetter
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

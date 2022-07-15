@@ -3,9 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class TransactionalMasterRequestListener
 {
@@ -29,9 +29,9 @@ class TransactionalMasterRequestListener
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if ($event->isMasterRequest() && !$this->inTransaction) {
             $this->em->beginTransaction();
@@ -40,9 +40,9 @@ class TransactionalMasterRequestListener
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if ($event->isMasterRequest() && $this->inTransaction) {
             $this->em->commit();
@@ -51,9 +51,9 @@ class TransactionalMasterRequestListener
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if ($event->isMasterRequest() && $this->inTransaction) {
             $this->em->rollback();

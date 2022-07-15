@@ -696,10 +696,140 @@ There you can find links to upgrade notes for other versions too.
         - onKernelException(GetResponseForExceptionEvent $event)
         + onKernelException(ExceptionEvent $event): void
         ```
+- replace usage of deprecated kernel events ([#2482](https://github.com/shopsys/shopsys/pull/2482))
+    - see #project-base-diff to update your project
+    - see https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#httpkernel for the full list of replacements for your code
+    - `Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\DenyScriptNameInRequestPathListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $event)
+        + onKernelController(ControllerEvent $event): void
+        ```
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\VaryResponseByXRequestedWithHeaderListener` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber` class:
+        - method `initStartTime` changed its interface:
+        ```diff
+        - initStartTime(GetResponseEvent $event)
+        + initStartTime(RequestEvent $event): void
+        ```
+        - method `addNotice` changed its interface:
+        ```diff
+        - addNotice(PostResponseEvent $event)
+        + addNotice(TerminateEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $event)
+        + onKernelController(ControllerEvent $event): void
+        ```
+        - method `isProtected` changed its interface:
+        ```diff
+        - isProtected(FilterControllerEvent $event)
+        + isProtected(ControllerEvent $event): bool
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $filterControllerEvent)
+        + onKernelController(ControllerEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Localization\LocalizationListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
 
 ## Composer dependencies
 
-- replace swiftmailer with symfony/mailer [#2470](https://github.com/shopsys/shopsys/pull/2470)
+- replace swiftmailer with symfony/mailer ([#2470](https://github.com/shopsys/shopsys/pull/2470))
     - see #project-base-diff
     - from now on, the mail transport is configured using `MAILER_DSN` env variable
         - `MAILER_TRANSPORT`, `MAILER_HOST`, `MAILER_USER`, and `MAILER_PASSWORD` env variables had been removed
