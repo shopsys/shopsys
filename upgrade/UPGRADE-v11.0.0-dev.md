@@ -826,6 +826,10 @@ There you can find links to upgrade notes for other versions too.
         - onKernelResponse(FilterResponseEvent $event)
         + onKernelResponse(ResponseEvent $event): void
         ```
+- remove obsolete path parameters ([#2468](https://github.com/shopsys/shopsys/pull/2468))
+    - see #project-base-diff to update your project
+    - replace parameter `kernel.root_dir` with `%kernel.project_dir%/src` in your codebase
+    - parameter `shopsys.framework.javascript_sources_dir` was removed because it's not used anywhere
 
 ## Composer dependencies
 
