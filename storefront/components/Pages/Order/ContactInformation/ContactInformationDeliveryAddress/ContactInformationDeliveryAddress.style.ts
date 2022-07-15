@@ -5,8 +5,10 @@ type ContactInformationDeliveryAddressStyledProps = {
     contentElementHeight: number;
 };
 
-export const ContactInformationDeliveryAddressStyled = styled.div<ContactInformationDeliveryAddressStyledProps>`
-    ${({ contentElementHeight }) => css`
+export const ContactInformationDeliveryAddressStyled = styled.div<ContactInformationDeliveryAddressStyledProps>(
+    ({ contentElementHeight }) => css`
+        padding-bottom: 40px;
+
         .contactInformationDeliveryAddress-enter {
             height: 0;
             overflow: hidden;
@@ -28,11 +30,11 @@ export const ContactInformationDeliveryAddressStyled = styled.div<ContactInforma
             transition: 0.5s all ease;
             overflow: hidden;
         }
-    `}
-`;
+    `,
+);
 
-export const ContactInformationDeliveryAddressContentStyled = styled.div`
-    padding-bottom: 40px;
+export const ContactInformationDeliveryAddressPickupPlaceStyled = styled.div`
+    font-size: 16px;
 `;
 
 export const ListStyled = styled.div`

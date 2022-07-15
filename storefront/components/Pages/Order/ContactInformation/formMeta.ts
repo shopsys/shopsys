@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
@@ -181,6 +182,7 @@ export const useContactInformationFormMeta = (
     formProviderMethods: UseFormReturn<ContactInformationFormType>,
 ): ContactInformationFormMetaType => {
     const t = useTypedTranslationFunction();
+    const { pickupPlace } = useCurrentCart();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
 
     const differentDeliveryAddressFieldName = 'differentDeliveryAddress' as const;
@@ -281,7 +283,7 @@ export const useContactInformationFormMeta = (
 
             [differentDeliveryAddressFieldName]: {
                 name: differentDeliveryAddressFieldName,
-                label: t('Enter the delivery address'),
+                label: pickupPlace ? t('Enter the delivery information') : t('Enter the delivery address'),
                 errorMessage: isEmailValid ? errors.differentDeliveryAddress?.message : undefined,
             },
             deliveryFirstName: {

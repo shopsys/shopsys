@@ -81,6 +81,7 @@
     "Edit profile": "Upraviť údaje",
     "Email": "E-mail",
     "Enter the delivery address": "Zadať dodaciu adresu",
+    "Enter the delivery information": "Enter the delivery information",
     "Error occured while changing your password": "Pri zmene hesla nastala chyba ",
     "Error occured while loading form data": "Nastala chyba pri načítaní formulára",
     "Error occured while saving your profile": "Pri ukladaní Vášho profilu došlo k chybe ",
@@ -368,5 +369,6 @@
     "Newsletter subscription": "Newsletter subscription",
     "Subscribed from": "Subscribed from",
     "Default delivery address": "Default delivery address",
-    "Download as XML": "Download as XML"
+    "Download as XML": "Download as XML",
+    "Pickup place": "Pickup place"
 }

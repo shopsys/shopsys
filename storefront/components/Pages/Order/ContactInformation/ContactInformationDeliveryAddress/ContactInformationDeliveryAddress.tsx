@@ -1,9 +1,10 @@
 import {
-    ContactInformationDeliveryAddressContentStyled,
+    ContactInformationDeliveryAddressPickupPlaceStyled,
     ContactInformationDeliveryAddressStyled,
     ListItemStyled,
     ListStyled,
 } from './ContactInformationDeliveryAddress.style';
+import Heading from 'components/Basic/Heading';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import FormColumn from 'components/Forms/Lib/FormColumn';
@@ -42,6 +43,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     });
 
     const isCustomAddressSelected = deliveryAddressUuidValue === '';
+    const showAddressSelection = isUserLoggedIn && !pickupPlace && (!user || user.deliveryAddresses.length > 0);
 
     const countrySelectOptions = useCountriesAsSelectOptions();
     useEffect(() => {
@@ -136,6 +138,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
+            <Heading type="h3">{t('Delivery address')}</Heading>
             <FormLine lg="65%">
                 <ChoiceFormLine>
                     <Controller
@@ -163,8 +166,8 @@ const ContactInformationDeliveryAddress: FC = () => {
                     nodeRef={cssTransitionRef}
                 >
                     <div ref={cssTransitionRef}>
-                        <ContactInformationDeliveryAddressContentStyled ref={contentElement}>
-                            {isUserLoggedIn && (
+                        <div ref={contentElement}>
+                            {showAddressSelection && (
                                 <FormLine bottomGap={true} lg="65%">
                                     <ListStyled>
                                         {user?.deliveryAddresses.map((address) => (
@@ -228,7 +231,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     </ListStyled>
                                 </FormLine>
                             )}
-                            {(!isUserLoggedIn || isCustomAddressSelected) && (
+                            {(!showAddressSelection || isCustomAddressSelected) && (
                                 <>
                                     <FormColumn lg="65%">
                                         <FormLine bottomGap={true} width="100%" lg="50%">
@@ -390,177 +393,186 @@ const ContactInformationDeliveryAddress: FC = () => {
                                             )}
                                         />
                                     </FormLine>
-                                    <FormLine bottomGap={true} lg="65%">
-                                        <Controller
-                                            name={formMeta.fields.deliveryStreet.name}
-                                            defaultValue={pickupPlace?.street}
-                                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                                <>
-                                                    <TextInput
-                                                        id={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.deliveryStreet.name
-                                                        }
-                                                        name={formMeta.fields.deliveryStreet.name}
-                                                        label={formMeta.fields.deliveryStreet.label}
-                                                        type="text"
-                                                        required={true}
-                                                        isTouched={isTouched}
-                                                        hasError={invalid}
-                                                        fieldRef={field}
-                                                        disabled={pickupPlace !== null}
-                                                        onBlurCapture={() =>
-                                                            dispatch(
-                                                                contactInformationActions.setDeliveryStreet(
-                                                                    field.value,
-                                                                ),
-                                                            )
-                                                        }
-                                                    />
-                                                    <FormLineError
-                                                        error={error}
-                                                        inputType="text-input"
-                                                        data-testid={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.deliveryStreet.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </>
-                                            )}
-                                        />
-                                    </FormLine>
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap={true}>
-                                            <Controller
-                                                name={formMeta.fields.deliveryCity.name}
-                                                defaultValue={pickupPlace?.city}
-                                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                                    <>
-                                                        <TextInput
-                                                            id={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryCity.name
-                                                            }
-                                                            name={formMeta.fields.deliveryCity.name}
-                                                            label={formMeta.fields.deliveryCity.label}
-                                                            required={true}
-                                                            type="text"
-                                                            isTouched={isTouched}
-                                                            hasError={invalid}
-                                                            fieldRef={field}
-                                                            disabled={pickupPlace !== null}
-                                                            onBlurCapture={() =>
-                                                                dispatch(
-                                                                    contactInformationActions.setDeliveryCity(
-                                                                        field.value,
-                                                                    ),
-                                                                )
-                                                            }
-                                                        />
-                                                        <FormLineError
-                                                            error={error}
-                                                            inputType="text-input"
-                                                            data-testid={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryCity.name +
-                                                                '-error'
-                                                            }
-                                                        />
-                                                    </>
-                                                )}
-                                            />
-                                        </FormLine>
-                                        <FormLine bottomGap={true} width="100%" lg="142px">
-                                            <Controller
-                                                name={formMeta.fields.deliveryPostcode.name}
-                                                defaultValue={pickupPlace?.postcode}
-                                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                                    <>
-                                                        <TextInput
-                                                            id={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryPostcode.name
-                                                            }
-                                                            name={formMeta.fields.deliveryPostcode.name}
-                                                            label={formMeta.fields.deliveryPostcode.label}
-                                                            required={true}
-                                                            type="text"
-                                                            isTouched={isTouched}
-                                                            hasError={invalid}
-                                                            fieldRef={field}
-                                                            disabled={pickupPlace !== null}
-                                                            onBlurCapture={() =>
-                                                                dispatch(
-                                                                    contactInformationActions.setDeliveryPostcode(
-                                                                        field.value,
-                                                                    ),
-                                                                )
-                                                            }
-                                                        />
-                                                        <FormLineError
-                                                            error={error}
-                                                            inputType="text-input"
-                                                            data-testid={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryPostcode.name +
-                                                                '-error'
-                                                            }
-                                                        />
-                                                    </>
-                                                )}
-                                            />
-                                        </FormLine>
-                                    </FormColumn>
-                                    <FormLine lg="65%">
-                                        <Controller
-                                            name={formMeta.fields.deliveryCountry.name}
-                                            render={({ fieldState: { invalid, error }, field }) => (
-                                                <>
-                                                    <Select
-                                                        label={formMeta.fields.deliveryCountry.label}
-                                                        hasError={invalid}
-                                                        options={countrySelectOptions}
-                                                        onChange={(...data) => {
-                                                            field.onChange(...data);
-                                                            dispatch(
-                                                                contactInformationActions.setDeliveryCountry(
-                                                                    data[0] as SelectOptionType,
-                                                                ),
-                                                            );
-                                                        }}
-                                                        isDisabled={pickupPlace !== null}
-                                                        value={countrySelectOptions.find(
-                                                            (option) => option.value === field.value.value,
+                                    {!pickupPlace && (
+                                        <>
+                                            <FormLine bottomGap={true} lg="65%">
+                                                <Controller
+                                                    name={formMeta.fields.deliveryStreet.name}
+                                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                                        <>
+                                                            <TextInput
+                                                                id={
+                                                                    formMeta.formName +
+                                                                    '-' +
+                                                                    formMeta.fields.deliveryStreet.name
+                                                                }
+                                                                name={formMeta.fields.deliveryStreet.name}
+                                                                label={formMeta.fields.deliveryStreet.label}
+                                                                type="text"
+                                                                required={true}
+                                                                isTouched={isTouched}
+                                                                hasError={invalid}
+                                                                fieldRef={field}
+                                                                onBlurCapture={() =>
+                                                                    dispatch(
+                                                                        contactInformationActions.setDeliveryStreet(
+                                                                            field.value,
+                                                                        ),
+                                                                    )
+                                                                }
+                                                            />
+                                                            <FormLineError
+                                                                error={error}
+                                                                inputType="text-input"
+                                                                data-testid={
+                                                                    formMeta.formName +
+                                                                    '-' +
+                                                                    formMeta.fields.deliveryStreet.name +
+                                                                    '-error'
+                                                                }
+                                                            />
+                                                        </>
+                                                    )}
+                                                />
+                                            </FormLine>
+                                            <FormColumn lg="65%">
+                                                <FormLine bottomGap={true}>
+                                                    <Controller
+                                                        name={formMeta.fields.deliveryCity.name}
+                                                        render={({
+                                                            fieldState: { isTouched, invalid, error },
+                                                            field,
+                                                        }) => (
+                                                            <>
+                                                                <TextInput
+                                                                    id={
+                                                                        formMeta.formName +
+                                                                        '-' +
+                                                                        formMeta.fields.deliveryCity.name
+                                                                    }
+                                                                    name={formMeta.fields.deliveryCity.name}
+                                                                    label={formMeta.fields.deliveryCity.label}
+                                                                    required={true}
+                                                                    type="text"
+                                                                    isTouched={isTouched}
+                                                                    hasError={invalid}
+                                                                    fieldRef={field}
+                                                                    onBlurCapture={() =>
+                                                                        dispatch(
+                                                                            contactInformationActions.setDeliveryCity(
+                                                                                field.value,
+                                                                            ),
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <FormLineError
+                                                                    error={error}
+                                                                    inputType="text-input"
+                                                                    data-testid={
+                                                                        formMeta.formName +
+                                                                        '-' +
+                                                                        formMeta.fields.deliveryCity.name +
+                                                                        '-error'
+                                                                    }
+                                                                />
+                                                            </>
                                                         )}
-                                                        fieldRef={field}
                                                     />
+                                                </FormLine>
+                                                <FormLine bottomGap={true} width="100%" lg="142px">
+                                                    <Controller
+                                                        name={formMeta.fields.deliveryPostcode.name}
+                                                        render={({
+                                                            fieldState: { isTouched, invalid, error },
+                                                            field,
+                                                        }) => (
+                                                            <>
+                                                                <TextInput
+                                                                    id={
+                                                                        formMeta.formName +
+                                                                        '-' +
+                                                                        formMeta.fields.deliveryPostcode.name
+                                                                    }
+                                                                    name={formMeta.fields.deliveryPostcode.name}
+                                                                    label={formMeta.fields.deliveryPostcode.label}
+                                                                    required={true}
+                                                                    type="text"
+                                                                    isTouched={isTouched}
+                                                                    hasError={invalid}
+                                                                    fieldRef={field}
+                                                                    onBlurCapture={() =>
+                                                                        dispatch(
+                                                                            contactInformationActions.setDeliveryPostcode(
+                                                                                field.value,
+                                                                            ),
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <FormLineError
+                                                                    error={error}
+                                                                    inputType="text-input"
+                                                                    data-testid={
+                                                                        formMeta.formName +
+                                                                        '-' +
+                                                                        formMeta.fields.deliveryPostcode.name +
+                                                                        '-error'
+                                                                    }
+                                                                />
+                                                            </>
+                                                        )}
+                                                    />
+                                                </FormLine>
+                                            </FormColumn>
+                                            <FormLine lg="65%">
+                                                <Controller
+                                                    name={formMeta.fields.deliveryCountry.name}
+                                                    render={({ fieldState: { invalid, error }, field }) => (
+                                                        <>
+                                                            <Select
+                                                                label={formMeta.fields.deliveryCountry.label}
+                                                                hasError={invalid}
+                                                                options={countrySelectOptions}
+                                                                onChange={(...data) => {
+                                                                    field.onChange(...data);
+                                                                    dispatch(
+                                                                        contactInformationActions.setDeliveryCountry(
+                                                                            data[0] as SelectOptionType,
+                                                                        ),
+                                                                    );
+                                                                }}
+                                                                value={countrySelectOptions.find(
+                                                                    (option) => option.value === field.value.value,
+                                                                )}
+                                                                fieldRef={field}
+                                                            />
 
-                                                    <FormLineError
-                                                        error={error}
-                                                        inputType="select"
-                                                        data-testid={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.deliveryCountry.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </>
-                                            )}
-                                        />
-                                    </FormLine>
+                                                            <FormLineError
+                                                                error={error}
+                                                                inputType="select"
+                                                                data-testid={
+                                                                    formMeta.formName +
+                                                                    '-' +
+                                                                    formMeta.fields.deliveryCountry.name +
+                                                                    '-error'
+                                                                }
+                                                            />
+                                                        </>
+                                                    )}
+                                                />
+                                            </FormLine>
+                                        </>
+                                    )}
                                 </>
                             )}
-                        </ContactInformationDeliveryAddressContentStyled>
+                        </div>
                     </div>
                 </CSSTransition>
+                {!!pickupPlace && (
+                    <ContactInformationDeliveryAddressPickupPlaceStyled>
+                        <strong>{t('Pickup place')}:</strong> {pickupPlace.street}, {pickupPlace.postcode}{' '}
+                        {pickupPlace.city}, {pickupPlace.country.name}
+                    </ContactInformationDeliveryAddressPickupPlaceStyled>
+                )}
             </ContactInformationDeliveryAddressStyled>
         </>
     );
