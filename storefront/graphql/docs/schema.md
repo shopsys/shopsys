@@ -2114,6 +2114,15 @@ Paginated blog articles of the given blog category
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>blogCategoriesTree</strong></td>
+<td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
+<td>
+
+Tho whole blog categories tree (used for blog navigation rendering)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>

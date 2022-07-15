@@ -283,6 +283,8 @@ export type BlogCategoryApi = BreadcrumbApi & SlugApi & {
   __typename?: 'BlogCategory';
   /** Paginated blog articles of the given blog category */
   blogArticles: BlogArticleConnectionApi;
+  /** Tho whole blog categories tree (used for blog navigation rendering) */
+  blogCategoriesTree: Array<BlogCategoryApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
   /** The blog category children */

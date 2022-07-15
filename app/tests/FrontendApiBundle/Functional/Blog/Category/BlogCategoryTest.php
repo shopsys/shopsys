@@ -60,6 +60,12 @@ class BlogCategoryTest extends GraphQlTestCase
                         name
                         slug
                     }
+                    blogCategoriesTree {
+                        name
+                        children {
+                            name
+                        }
+                    }
                 }
             }
         ';
@@ -91,6 +97,12 @@ class BlogCategoryTest extends GraphQlTestCase
                     breadcrumb {
                         name
                         slug
+                    }
+                    blogCategoriesTree {
+                        name
+                        children {
+                            name
+                        }
                     }
                 }
             }
@@ -248,6 +260,18 @@ class BlogCategoryTest extends GraphQlTestCase
                         [
                             'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                             'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
+                        ],
+                    ],
+                    'blogCategoriesTree' => [
+                        [
+                            'name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'children' => [
+                                [
+                                    'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                ], [
+                                    'name' => t('Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                ],
+                            ],
                         ],
                     ],
                 ],

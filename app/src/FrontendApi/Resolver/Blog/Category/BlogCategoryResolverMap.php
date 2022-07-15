@@ -79,6 +79,12 @@ class BlogCategoryResolverMap extends ResolverMap
                         $this->domain->getId()
                     );
                 },
+                'blogCategoriesTree' => function () {
+                    return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
+                        $this->blogCategoryFacade->getRootBlogCategory(),
+                        $this->domain->getId()
+                    );
+                },
             ],
         ];
     }
