@@ -26,6 +26,7 @@ import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { SearchType } from 'types/search';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,
@@ -116,7 +117,7 @@ const Search: FC<SearchProps> = ({ searchResults }) => {
         <>
             <Breadcrumbs breadcrumb={[{ name: t('Search'), slug: searchUrl }]} />
             <Webline>
-                <Heading type={'h1'}>{`${t('Search results for')} "${router.query.q}"`}</Heading>
+                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             </Webline>
             {currentPage === 1 && (
                 <>
