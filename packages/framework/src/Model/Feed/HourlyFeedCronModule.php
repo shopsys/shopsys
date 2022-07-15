@@ -49,7 +49,7 @@ class HourlyFeedCronModule implements SimpleCronModuleInterface
                 $this->feedFacade->generateFeed($feedInfo->getName(), $domainConfig);
                 $endTime = microtime(true);
 
-                $this->logger->addDebug(sprintf(
+                $this->logger->debug(sprintf(
                     'Feed "%s" generated on domain "%s" into "%s" in %.3f s',
                     $feedInfo->getName(),
                     $domainConfig->getName(),

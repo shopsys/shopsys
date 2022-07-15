@@ -51,7 +51,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
             $heurekaCategoriesData = $this->heurekaCategoryDownloader->getHeurekaCategories();
             $this->heurekaCategoryFacade->saveHeurekaCategories($heurekaCategoriesData);
         } catch (HeurekaCategoryDownloadFailedException $e) {
-            $this->logger->addError($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
     }
 }

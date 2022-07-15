@@ -198,7 +198,7 @@ class AcmeDataDownloadCronModule implements SimpleCronModuleInterface
         $data = $this->downloadData();
         $this->saveData($data);
 
-        $this->logger->addInfo(sprintf('Downloaded %d new records.', count($data)));
+        $this->logger->info(sprintf('Downloaded %d new records.', count($data)));
     }
 
     // ...
