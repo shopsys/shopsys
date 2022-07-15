@@ -30,7 +30,7 @@ type FilterGroupPriceProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-price';
 
-const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPrice, maximalPrice }) => {
+export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPrice, maximalPrice }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
 
     const handleGroupClick = () => {
@@ -80,5 +80,3 @@ const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPri
         </FilterGroupStyled>
     );
 };
-
-export default FilterGroupPrice;
