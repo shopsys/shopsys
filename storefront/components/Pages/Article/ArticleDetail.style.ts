@@ -2,33 +2,45 @@ import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 const localVariables = {
-    TitleFontSize: '45px',
+    TitleFontSize: '44px',
     TitleLineheight: '42px',
     Radius: '8px',
 };
 
-export const ArticleWrapper = styled.div`
-    ${({ theme }) => css`
+export const ArticleWrapper = styled.div(
+    ({ theme }) => css`
         padding: 0 20px;
 
         @media ${theme.mediaQueries.queryVl} {
             display: flex;
         }
-    `}
-`;
+    `,
+);
 
-export const ArticleTitle = styled.h1`
-    ${({ theme }) => css`
+export const ArticleTitle = styled.h1(
+    ({ theme }) => css`
         display: block;
         line-height: ${localVariables.TitleLineheight};
         padding: 0 20px;
-        margin-bottom: 25px;
+        margin-bottom: 24px;
 
         color: ${theme.color.primary};
         font-weight: 700;
         font-size: ${localVariables.TitleFontSize};
-    `}
-`;
+    `,
+);
+
+export const ArticleDate = styled.p(
+    ({ theme }) => css`
+        font-size: ${theme.fontSize.extraSmall};
+        font-weight: 600;
+        text-align: left;
+        color: ${theme.color.grey};
+        padding: 0 20px;
+
+        margin-bottom: 8px;
+    `,
+);
 
 export const ArticleTextContent = styled.div`
     display: flex;

@@ -1613,6 +1613,15 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time of the article creation
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>external</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>

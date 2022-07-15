@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Article;
 
+use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class ArticleResolverMap extends ResolverMap
@@ -16,6 +17,9 @@ class ArticleResolverMap extends ResolverMap
         $map['Article'] = [
             'slug' => function (array $articleData) {
                 return '/' . $articleData['mainSlug'];
+            },
+            'createdAt' => static function (array $blogArticleData) {
+                return new DateTime($blogArticleData['createdAt']);
             },
         ];
 

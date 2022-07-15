@@ -47,6 +47,8 @@ export const BlogArticleDate = styled.div`
         font-weight: 600;
         text-align: left;
         color: ${theme.color.grey};
+
+        margin-bottom: 8px;
     `}
 `;
 

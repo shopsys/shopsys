@@ -8,4 +8,5 @@ fragment ArticleDetailFragment on Article {
     ...BreadcrumbFragment
     seoTitle
     seoMetaDescription
+    createdAt
 }

@@ -17,3 +17,6 @@ Article:
             external:
                 type: "Boolean!"
                 description: "If the the article should be open in a new tab"
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time of the article creation"

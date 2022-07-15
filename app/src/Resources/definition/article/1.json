@@ -178,6 +178,9 @@
       "external": {
         "type": "boolean"
       },
+      "createdAt": {
+        "type": "text"
+      },
       "breadcrumb": {
         "properties": {
           "name": {

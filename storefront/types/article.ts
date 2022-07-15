@@ -10,6 +10,7 @@ export type ArticleDetailType = {
     breadcrumb: BreadcrumbItemType[];
     seoTitle: string | null;
     seoMetaDescription: string | null;
+    createdAt: string;
 };
 
 export type SimpleArticleType = {

@@ -113,6 +113,7 @@ class ArticleExportRepository
             'position' => $article->getPosition(),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
             'external' => $article->isExternal(),
+            'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
     }
 }

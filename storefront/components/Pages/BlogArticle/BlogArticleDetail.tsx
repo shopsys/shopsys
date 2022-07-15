@@ -11,64 +11,68 @@ import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
 import UserText from 'components/Helpers/UserText';
 import Webline from 'components/Layout/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleDetail.style';
+import { formatDate } from 'helpers/formaters/formatDate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { BlogArticleDetailType } from 'types/blogArticle';
 
 type BlogArticleDetailProps = {
     blogArticle: BlogArticleDetailType;
 };
-const BlogDetail: FC<BlogArticleDetailProps> = (props) => {
-    const testIdentifier = 'pages-blogarticle-';
 
+const TEST_IDENTIFIER = 'pages-blogarticle-';
+const PRODUCT_STRING_PATTERN = /\{[^}]*\}/g;
+const CATALOG_NUMBERS_PATTERN = /[0-9]+/g;
+
+const BlogDetail: FC<BlogArticleDetailProps> = ({ blogArticle }) => {
     const t = useTypedTranslationFunction();
 
-    const addProductNamesToText = function useRegex(text: string | null): string | null {
-        if (text === null) {
-            return null;
-        }
+    const textWithProductNames = useMemo(() => {
+        const addProductNamesToText = function useRegex(text: string | null): string | null {
+            if (text === null) {
+                return null;
+            }
 
-        const productStringPattern = /\{[^}]*\}/g;
-        const replaceProductString = (matchedString: string): string => {
-            const catalogNumbersPattern = /[0-9]+/g;
-            const replaceProducts = (product: string): string => {
-                const namedProduct = props.blogArticle.blogArticleProducts.find(
-                    (blogArticleProduct) => blogArticleProduct.catalogNumber.toString() === product,
-                );
-                if (namedProduct === undefined) {
-                    return ' ';
-                }
-                return `<a href='${namedProduct.slug}'> ${namedProduct.fullName}</a>`;
+            const replaceProductString = (matchedString: string): string => {
+                const replaceProducts = (product: string): string => {
+                    const namedProduct = blogArticle.blogArticleProducts.find(
+                        (blogArticleProduct) => blogArticleProduct.catalogNumber.toString() === product,
+                    );
+                    if (namedProduct === undefined) {
+                        return ' ';
+                    }
+                    return `<a href='${namedProduct.slug}'> ${namedProduct.fullName}</a>`;
+                };
+                return matchedString.replaceAll(CATALOG_NUMBERS_PATTERN, replaceProducts).slice(10).slice(0, -1);
             };
-            return matchedString.replaceAll(catalogNumbersPattern, replaceProducts).slice(10).slice(0, -1);
+            return text.replaceAll(PRODUCT_STRING_PATTERN, replaceProductString);
         };
-        return text.replaceAll(productStringPattern, replaceProductString);
-    };
 
-    const textWithProductNames = addProductNamesToText(props.blogArticle.text);
+        return addProductNamesToText(blogArticle.text);
+    }, [blogArticle.blogArticleProducts, blogArticle.text]);
 
     return (
         <Webline>
-            <ArticleTitle data-testid={testIdentifier + 'title'}>{props.blogArticle.name}</ArticleTitle>
+            <ArticleTitle data-testid={TEST_IDENTIFIER + 'title'}>{blogArticle.name}</ArticleTitle>
             <BlogArticleWrapper>
                 <BlogArticleTextContent>
-                    {props.blogArticle.image === null ? null : (
-                        <ArticleImageWrapper data-testid={testIdentifier + 'image'}>
-                            <Image image={props.blogArticle.image} type="default" alt={props.blogArticle.name} />
+                    {blogArticle.image !== null && (
+                        <ArticleImageWrapper data-testid={TEST_IDENTIFIER + 'image'}>
+                            <Image image={blogArticle.image} type="default" alt={blogArticle.name} />
                         </ArticleImageWrapper>
                     )}
-                    <BlogArticleDate data-testid={testIdentifier + 'date'}>
-                        {props.blogArticle.publishDate}
+                    <BlogArticleDate data-testid={TEST_IDENTIFIER + 'date'}>
+                        {formatDate(blogArticle.publishDate, 'l')}
                     </BlogArticleDate>
-                    {textWithProductNames === null ? null : (
-                        <UserText htmlContent={textWithProductNames} data-testid={testIdentifier + 'content'} />
+                    {textWithProductNames !== null && (
+                        <UserText htmlContent={textWithProductNames} data-testid={TEST_IDENTIFIER + 'content'} />
                     )}
                 </BlogArticleTextContent>
 
-                {props.blogArticle.blogArticleProducts.length === 0 ? null : (
-                    <ProductSectionWrapper data-testid={testIdentifier + 'products'}>
+                {blogArticle.blogArticleProducts.length > 0 && (
+                    <ProductSectionWrapper data-testid={TEST_IDENTIFIER + 'products'}>
                         <ProductSectionTitle>{t('Products mentioned in this article')}</ProductSectionTitle>
-                        <ProductsSlider products={props.blogArticle.blogArticleProducts} gtmListName="blog article" />
+                        <ProductsSlider products={blogArticle.blogArticleProducts} gtmListName="blog article" />
                     </ProductSectionWrapper>
                 )}
             </BlogArticleWrapper>
