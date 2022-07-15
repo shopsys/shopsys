@@ -18,7 +18,7 @@ type ParametersProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters-parameters-';
 
-const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParameters }) => {
+export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParameters }) => {
     const t = useTypedTranslationFunction();
 
     const formProviderMethods = useFormContext<FilterFormType>();
@@ -132,5 +132,3 @@ const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParameters }) =
         </>
     );
 };
-
-export default Parameters;

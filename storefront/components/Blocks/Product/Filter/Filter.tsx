@@ -5,7 +5,7 @@ import { FilterGroupParameters } from './FilterGroupParameters/FilterGroupParame
 import { FilterGroupPrice } from './FilterGroupPrice/FilterGroupPrice';
 import { getDefaultFormValues } from './formMeta';
 import { getIndexOfParameter } from './helpers/getIndexOfParameter';
-import SelectedParameters from './SelectedParameters';
+import { SelectedParameters } from './SelectedParameters/SelectedParameters';
 import Form from 'components/Forms/Form';
 import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/GetActualUrlQueryWithoutDefaultPriceFilter';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';

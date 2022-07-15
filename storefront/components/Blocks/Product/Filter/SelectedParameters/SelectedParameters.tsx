@@ -1,4 +1,4 @@
-import Parameters from './Parameters';
+import { Parameters } from './Parameters/Parameters';
 import {
     SelectedParametersBlockStyled,
     SelectedParametersListItemRemoveStyled,
@@ -24,7 +24,7 @@ type SelectedParametersProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterOptions }) => {
+export const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterOptions }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const formProviderMethods = useFormContext<FilterFormType>();
@@ -190,5 +190,3 @@ const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterOptions 
         </SelectedParametersStyled>
     );
 };
-
-export default SelectedParameters;
