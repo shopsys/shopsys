@@ -23,7 +23,7 @@ class PersonalDataExportMail extends BasePersonalDataExportMail
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
      */
