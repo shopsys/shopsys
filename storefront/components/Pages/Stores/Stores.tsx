@@ -14,16 +14,19 @@ import {
 } from './Stores.style';
 import GoogleMap from 'components/Basic/GoogleMap';
 import SimpleLayout from 'components/Layout/SimpleLayout';
-import { useStores } from 'connectors/stores/Stores';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { FC, useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { ListedStoreType } from 'types/store';
 
-const Stores: FC = () => {
+type StoresProps = {
+    stores: ListedStoreType[];
+};
+
+const Stores: FC<StoresProps> = ({ stores }) => {
     const t = useTypedTranslationFunction();
-    const stores = useStores();
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
     const [activeInfoBox, setActiveInfoBox] = useState(-1);
     const [closeInfoBox, setCloseInfoBox] = useState(true);
