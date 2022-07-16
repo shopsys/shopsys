@@ -15,21 +15,27 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
+import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/GetFilterUrlQueryForSortingInSeoCategory';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useShopsysDispatch } from 'redux/main';
 import { initialState, userActions } from 'redux/slices/user';
+import { FilterOptionsType } from 'types/productFilter';
 
-type SortingBarProps = { totalCount: number; sorting: ProductOrderingModeEnumApi | null };
+type SortingBarProps = {
+    totalCount: number;
+    sorting: ProductOrderingModeEnumApi | null;
+    productFilterOptions?: FilterOptionsType;
+};
 
 const TEST_IDENTIFIER = 'blocks-sortingbar';
 
-const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
+const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -55,6 +61,12 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         setSelectedSort(sorting);
     }, [sorting]);
 
+    const deepComparedProductFilterOptions = useMemo(
+        () => productFilterOptions ?? null,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [JSON.stringify(productFilterOptions)],
+    );
+
     const updateUrlWithCurrentSort = useCallback(
         (sort: string) => {
             if (!canUseDom()) {
@@ -66,9 +78,17 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
             delete queryParams.all;
             queryParams.sort = sort;
 
+            const filterUrlQuery =
+                deepComparedProductFilterOptions !== null
+                    ? getFilterUrlQueryForSortingInSeoCategory(deepComparedProductFilterOptions)
+                    : null;
+            if (filterUrlQuery !== null) {
+                queryParams.filter = filterUrlQuery;
+            }
+
             router.replace({ pathname, query: queryParams }, undefined, { shallow: true, scroll: false });
         },
-        [router],
+        [router, deepComparedProductFilterOptions],
     );
 
     const onSelectSortMenu = useCallback(

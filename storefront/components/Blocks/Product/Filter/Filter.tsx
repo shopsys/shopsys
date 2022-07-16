@@ -7,6 +7,7 @@ import { getDefaultFormValues } from './formMeta';
 import { getIndexOfParameter } from './helpers/getIndexOfParameter';
 import { SelectedParameters } from './SelectedParameters/SelectedParameters';
 import Form from 'components/Forms/Form';
+import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/GetActualUrlQueryWithoutDefaultPriceFilter';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
@@ -15,6 +16,8 @@ import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWitho
 import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
+import { getProductListSort } from 'helpers/sorting/GetProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo } from 'react';
@@ -32,6 +35,8 @@ const TEST_IDENTIFIER = 'blocks-product-filter';
 export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
+    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+
     const deepComparedProductFitlerOptions = useMemo(
         () => productFilterOptions,
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,7 +128,11 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
             );
         }
 
+        if (sortingFromQuery === null) {
+            routerQueryWithoutAllParameter.sort = ProductOrderingModeEnumApi.PriorityApi;
+        }
         shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         checkedBrands,
         checkedFlags,
@@ -132,14 +141,21 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
         isOnlyInStock,
         checkedParameters,
         deepComparedProductFitlerOptions,
-        router,
         originalSlug,
         slug,
     ]);
 
     return (
         <FormProvider {...formProviderMethods}>
-            <SelectedParameters productFilterOptions={deepComparedProductFitlerOptions} />
+            <SelectedParameters
+                checkedBrands={checkedBrands}
+                checkedFlags={checkedFlags}
+                checkedParameters={checkedParameters}
+                minimalPrice={minimalPrice}
+                maximalPrice={maximalPrice}
+                isOnlyInStock={isOnlyInStock}
+                productFilterOptions={deepComparedProductFitlerOptions}
+            />
             <FilterStyled data-testid={TEST_IDENTIFIER}>
                 <Form>
                     <FilterGroupPrice

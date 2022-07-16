@@ -95,6 +95,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
                     <SortingBar
                         sorting={category.productConnection.orderingMode}
                         totalCount={category.productConnection.totalCount}
+                        productFilterOptions={category.productConnection.productFilterOptions!}
                     />
                     {category.productConnection.products.length !== 0 ? (
                         <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />

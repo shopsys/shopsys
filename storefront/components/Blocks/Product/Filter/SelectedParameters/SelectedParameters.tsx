@@ -14,55 +14,54 @@ import {
 import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, useMemo } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
+import { FC } from 'react';
+import { useFormContext } from 'react-hook-form';
+import {
+    FilterFormBrandType,
+    FilterFormFlagType,
+    FilterFormParameterType,
+    FilterFormType,
+    FilterOptionsType,
+} from 'types/productFilter';
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
+    checkedBrands: FilterFormBrandType[];
+    checkedFlags: FilterFormFlagType[];
+    checkedParameters: FilterFormParameterType[];
+    isOnlyInStock: boolean;
+    minimalPrice: number;
+    maximalPrice: number;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-export const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterOptions }) => {
+export const SelectedParameters: FC<SelectedParametersProps> = ({
+    productFilterOptions,
+    checkedBrands,
+    checkedFlags,
+    checkedParameters,
+    isOnlyInStock,
+    minimalPrice,
+    maximalPrice,
+}) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const formProviderMethods = useFormContext<FilterFormType>();
 
-    const [brandsValue, flagsValue, parametersValue, isOnlyInStock, minimalPrice, maximalPrice] = useWatch({
-        name: ['brands', 'flags', 'parameters', 'onlyInStock', 'minimalPrice', 'maximalPrice'],
-        control: formProviderMethods.control,
-    });
-
     const isMinimalPriceVisible = minimalPrice !== productFilterOptions.minimalPrice;
     const isMaximalPriceVisible = maximalPrice !== productFilterOptions.maximalPrice;
 
-    const checkedBrands = useMemo(() => brandsValue.filter((brand) => brand.checked), [brandsValue]);
-    const checkedFlags = useMemo(() => flagsValue.filter((brand) => brand.checked), [flagsValue]);
-    const checkedParameters = useMemo(() => {
-        const newCheckedParameters: FilterFormParameterType[] = [];
-
-        parametersValue.forEach((currentParameterWithFilteredValues) => {
-            const filteredValues = currentParameterWithFilteredValues.values.filter((value) => value.checked);
-
-            if (filteredValues.length > 0) {
-                newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: filteredValues });
-            }
-        });
-
-        return newCheckedParameters;
-    }, [parametersValue]);
-
     const onUncheckFlag = (uuid: string) => () => {
-        const indexOfValue = flagsValue.findIndex((item) => item.uuid === uuid);
+        const indexOfValue = productFilterOptions.flags.findIndex((item) => item.flag.uuid === uuid);
 
-        formProviderMethods.setValue(`flags.${indexOfValue}`, { ...flagsValue[indexOfValue], checked: false });
+        formProviderMethods.setValue(`flags.${indexOfValue}`, { ...checkedFlags[indexOfValue], checked: false });
     };
 
     const onUncheckBrand = (uuid: string) => () => {
-        const indexOfValue = brandsValue.findIndex((item) => item.uuid === uuid);
+        const indexOfValue = productFilterOptions.brands.findIndex((item) => item.brand.uuid === uuid);
 
-        formProviderMethods.setValue(`brands.${indexOfValue}`, { ...brandsValue[indexOfValue], checked: false });
+        formProviderMethods.setValue(`brands.${indexOfValue}`, { ...checkedBrands[indexOfValue], checked: false });
     };
 
     const onResetPrices = () => {
@@ -71,22 +70,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ productFilterO
     };
 
     const onResetAllParameters = () => {
-        flagsValue.forEach((flag, index) =>
-            formProviderMethods.setValue(`flags.${index}`, { ...flag, checked: false }),
-        );
-        brandsValue.forEach((brand, index) =>
-            formProviderMethods.setValue(`brands.${index}`, { ...brand, checked: false }),
-        );
-        parametersValue.forEach((parameterItem, parameterIndex) => {
-            formProviderMethods.setValue(`parameters.${parameterIndex}`, {
-                ...parameterItem,
-                minimalValue: null,
-                maximalValue: null,
-                values: parameterItem.values.map((value) => ({ ...value, checked: false })),
-            });
-        });
-        formProviderMethods.setValue(`onlyInStock`, false);
-        onResetPrices();
+        formProviderMethods.reset();
     };
 
     if (
