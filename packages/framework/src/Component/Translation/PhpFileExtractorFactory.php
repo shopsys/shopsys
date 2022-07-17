@@ -26,9 +26,7 @@ class PhpFileExtractorFactory
     {
         $transMethodSpecifications = [
             new TransMethodSpecification('trans', 0, 2),
-            new TransMethodSpecification('transChoice', 0, 3),
             new TransMethodSpecification('t', 0, 2),
-            new TransMethodSpecification('tc', 0, 3),
         ];
 
         return new PhpFileExtractor($this->docParser, $transMethodSpecifications);

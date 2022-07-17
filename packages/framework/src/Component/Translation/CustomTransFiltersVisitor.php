@@ -8,7 +8,7 @@ use Twig\Node\Node;
 use Twig\NodeVisitor\AbstractNodeVisitor;
 
 /**
- * Normalizes Twig translation filters by replacing custom filter names "transHtml" and "transChoiceHtml" by the default filter
+ * Normalizes Twig translation filters by replacing custom filter "transHtml" by the default filter
  * names "trans" and "transChoice". This ensures that they will be treated the same way by following Twig node visitors.
  *
  * Used for dumping translation messages in both custom and default translation filters because the extractor class
@@ -18,7 +18,6 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
 {
     protected const CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP = [
         'transHtml' => 'trans',
-        'transchoiceHtml' => 'transchoice',
     ];
     protected const PRIORITY = -1;
 

@@ -27,7 +27,7 @@ class TwigFileExtractor implements FileVisitorInterface
     }
 
     /**
-     * We want to extract messages from custom Twig translation filters "transHtml" and "transchoiceHtml"
+     * We want to extract messages from custom Twig translation filter "transHtml"
      * but original \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor is not open for that type of extension
      * so we need to inject our \Shopsys\FrameworkBundle\Component\Translation\CustomTransFiltersVisitor using ReflectionObject
      */

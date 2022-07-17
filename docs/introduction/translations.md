@@ -97,20 +97,19 @@ class MyConstraint extends \Symfony\Component\Validator\Constraint
 
 {% trans %}Add another parameter{% endtrans %}
 
-{{ '{0} no products|{1} product|]1,Inf[ products'|transchoice(count) }}
+{{ '{0} no products|{1} product|]1,Inf[ products'|trans(count) }}
 
-{% transchoice count  %}
+{% trans with { '%count%': count }  %}
     {0} no products|{1} product|]1,Inf[ products
-{% endtranschoice %}
+{% trans %}
 
 {{ 'items added to <a href="/cart">cart</a>'|transHtml }}
 
-{{ '{1} item added to <a href="/cart">cart</a>|]1,Inf[ items added to <a href="/cart">cart</a>'|transchoiceHtml(count) }}
 ```
 
-`trans` and `transchoice` are standard Symfony translations.
-`transHtml` and `transchoiceHtml` are our custom translation methods that can be used only in Twig templates and are similar to filters `|trans|raw`.
-The difference is that `transHtml` and `transchoiceHtml` escape parameters to prevent XSS.
+`trans` is standard Symfony translation.
+`transHtml` is our custom translation method that can be used only in Twig templates and is similar to filters `|trans|raw`.
+The difference is that `transHtml` escape parameters to prevent XSS.
 
 They are safe to use in a place where you need HTML in texts together with parameters that are taken from user input.
 

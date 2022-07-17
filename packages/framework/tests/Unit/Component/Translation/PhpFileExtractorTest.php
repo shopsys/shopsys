@@ -29,32 +29,16 @@ class PhpFileExtractorTest extends TestCase
         $message->addSource(new FileSource($fileName, 16));
         $expected->add($message);
 
-        $message = new Message('transChoice test', 'messages');
+        $message = new Message('trans test with domain', 'testDomain');
         $message->addSource(new FileSource($fileName, 17));
         $expected->add($message);
 
-        $message = new Message('trans test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 18));
-        $expected->add($message);
-
-        $message = new Message('transChoice test with domain', 'testDomain');
+        $message = new Message('t test', 'messages');
         $message->addSource(new FileSource($fileName, 19));
         $expected->add($message);
 
-        $message = new Message('t test', 'messages');
-        $message->addSource(new FileSource($fileName, 21));
-        $expected->add($message);
-
-        $message = new Message('tc test', 'messages');
-        $message->addSource(new FileSource($fileName, 22));
-        $expected->add($message);
-
         $message = new Message('t test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 23));
-        $expected->add($message);
-
-        $message = new Message('tc test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 24));
+        $message->addSource(new FileSource($fileName, 20));
         $expected->add($message);
 
         $this->assertEquals($expected, $catalogue);

@@ -18,10 +18,6 @@ class TranslationExtension extends AbstractExtension
                 'needs_environment' => true,
                 'is_safe' => ['html'],
             ]),
-            new TwigFilter('transchoiceHtml', [$this, 'transchoiceHtml'], [
-                'needs_environment' => true,
-                'is_safe' => ['html'],
-            ]),
         ];
     }
 
@@ -52,28 +48,6 @@ class TranslationExtension extends AbstractExtension
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
 
         return $defaultTransCallable($message, $escapedArguments, $domain, $locale);
-    }
-
-    /**
-     * Similar to "transchoice" filter, the message is not escaped in html but all translation arguments are
-     *
-     * Helpful for protection from XSS when providing user input as translation argument
-     *
-     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
-     * @param \Twig\Environment $twig
-     * @param string $message
-     * @param int $count
-     * @param array $arguments
-     * @param string|null $domain
-     * @param string|null $locale
-     * @return string
-     */
-    public function transchoiceHtml(Environment $twig, $message, $count, array $arguments = [], $domain = null, $locale = null)
-    {
-        $defaultTranschoiceCallable = $twig->getFilter('transchoice')->getCallable();
-        $escapedArguments = $this->getEscapedElements($twig, $arguments);
-
-        return $defaultTranschoiceCallable($message, $count, $escapedArguments, $domain, $locale);
     }
 
     /**
