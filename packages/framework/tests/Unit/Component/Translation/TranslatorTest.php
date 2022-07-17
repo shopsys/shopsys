@@ -7,14 +7,13 @@ use Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Component\Translation\MessageCatalogue;
-use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Translator as SymfonyTranslator;
 use Symfony\Component\Translation\TranslatorBagInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class TranslatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\TranslatorInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\Translator
      */
     private $originalTranslatorMock;
 
@@ -31,22 +30,24 @@ class TranslatorTest extends TestCase
     /**
      * @var \Symfony\Component\Translation\IdentityTranslator
      */
-    private $identityTranslator;
+    private IdentityTranslator $identityTranslator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Translation\Translator
      */
-    private $translator;
+    private Translator $translator;
 
     protected function setUp(): void
     {
-        $this->originalTranslatorMock = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $this->originalTranslatorMock = $this->getMockBuilder(SymfonyTranslator::class)
+            ->setConstructorArgs(['en'])
+            ->getMock();
         $this->originalTranslatorBagMock = $this->getMockBuilder(TranslatorBagInterface::class)->getMock();
         $this->messageIdNormalizerMock = $this->getMockBuilder(MessageIdNormalizer::class)->getMock();
-        $this->identityTranslator = new IdentityTranslator(new MessageSelector());
+        $this->identityTranslator = new IdentityTranslator();
     }
 
-    private function initTranslator()
+    private function initTranslator(): void
     {
         $this->translator = new Translator(
             $this->originalTranslatorMock,
@@ -56,9 +57,9 @@ class TranslatorTest extends TestCase
         );
     }
 
-    public function testTransWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage()
+    public function testTransWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue(Translator::SOURCE_LOCALE, []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -77,9 +78,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage()
+    public function testTransWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('trans')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
                 $this->identicalTo(['%parameter%' => 'parameter value'])
@@ -93,7 +94,7 @@ class TranslatorTest extends TestCase
             ]
         );
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn($messageCatalogue);
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -112,12 +113,12 @@ class TranslatorTest extends TestCase
         $this->assertSame('translated message parameter value', $translatedMessage);
     }
 
-    public function testTransWithSourceLocaleAsDefaultLocaleReturnsSourceMessage()
+    public function testTransWithSourceLocaleAsDefaultLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('getLocale')
+        $this->originalTranslatorMock->method('getLocale')
             ->willReturn(Translator::SOURCE_LOCALE);
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue(Translator::SOURCE_LOCALE, []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -134,16 +135,16 @@ class TranslatorTest extends TestCase
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage()
+    public function testTransWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('trans')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
                 $this->identicalTo(['%parameter%' => 'parameter value'])
             )
             ->willReturn('source message parameter value');
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue('nonSourceLocale', []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -162,9 +163,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('source message parameter value', $translatedMessage);
     }
 
-    public function testTransWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage()
+    public function testTransWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('trans')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
                 $this->identicalTo(['%parameter%' => 'parameter value'])
@@ -178,7 +179,7 @@ class TranslatorTest extends TestCase
             ]
         );
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn($messageCatalogue);
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -197,9 +198,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('translated message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage()
+    public function testTransChoiceWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue('nonSourceLocale', []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -219,9 +220,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage()
+    public function testTransChoiceWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('transChoice')
+        $this->originalTranslatorMock->method('transChoice')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
                 $this->identicalTo(1),
@@ -236,7 +237,7 @@ class TranslatorTest extends TestCase
             ]
         );
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn($messageCatalogue);
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -256,12 +257,12 @@ class TranslatorTest extends TestCase
         $this->assertSame('translated message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithSourceLocaleAsDefaultLocaleReturnsSourceMessage()
+    public function testTransChoiceWithSourceLocaleAsDefaultLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('getLocale')
+        $this->originalTranslatorMock->method('getLocale')
             ->willReturn(Translator::SOURCE_LOCALE);
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue(Translator::SOURCE_LOCALE, []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -279,9 +280,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage()
+    public function testTransChoiceWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('transChoice')
+        $this->originalTranslatorMock->method('transChoice')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
                 $this->identicalTo(1),
@@ -289,7 +290,7 @@ class TranslatorTest extends TestCase
             )
             ->willReturn('source message parameter value');
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue('nonSourceLocale', []));
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')
@@ -309,9 +310,9 @@ class TranslatorTest extends TestCase
         $this->assertSame('source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage()
+    public function testTransChoiceWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->expects($this->any())->method('transChoice')
+        $this->originalTranslatorMock->method('transChoice')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
                 $this->identicalTo(1),
@@ -326,7 +327,7 @@ class TranslatorTest extends TestCase
             ]
         );
 
-        $this->originalTranslatorBagMock->expects($this->any())->method('getCatalogue')
+        $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn($messageCatalogue);
 
         $this->messageIdNormalizerMock->expects($this->atLeastOnce())->method('normalizeMessageId')

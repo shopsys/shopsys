@@ -3,10 +3,12 @@
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
 use Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException;
+use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class Translator implements TranslatorInterface, TranslatorBagInterface
+class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
     protected const DEFAULT_DOMAIN = 'messages';
     public const SOURCE_LOCALE = 'en';
@@ -14,38 +16,38 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @var \Shopsys\FrameworkBundle\Component\Translation\Translator|null
      */
-    protected static $self;
+    protected static ?self $self;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface
      */
-    protected $originalTranslator;
+    protected TranslatorInterface & LocaleAwareInterface $originalTranslator;
 
     /**
      * @var \Symfony\Component\Translation\TranslatorBagInterface
      */
-    protected $originalTranslatorBag;
+    protected TranslatorBagInterface $originalTranslatorBag;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface
      */
-    protected $identityTranslator;
+    protected TranslatorInterface & LocaleAwareInterface $identityTranslator;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer
      */
-    protected $messageIdNormalizer;
+    protected MessageIdNormalizer $messageIdNormalizer;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $originalTranslator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface $originalTranslator
      * @param \Symfony\Component\Translation\TranslatorBagInterface $originalTranslatorBag
-     * @param \Symfony\Component\Translation\TranslatorInterface $identityTranslator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface $identityTranslator
      * @param \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer $messageIdNormalizer
      */
     public function __construct(
-        TranslatorInterface $originalTranslator,
+        TranslatorInterface & LocaleAwareInterface $originalTranslator,
         TranslatorBagInterface $originalTranslatorBag,
-        TranslatorInterface $identityTranslator,
+        TranslatorInterface & LocaleAwareInterface $identityTranslator,
         MessageIdNormalizer $messageIdNormalizer
     ) {
         $this->originalTranslator = $originalTranslator;
@@ -58,7 +60,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      * Passes trans() call to original translator for logging purposes.
      * {@inheritdoc}
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         $normalizedId = $this->messageIdNormalizer->normalizeMessageId($id);
         $resolvedLocale = $this->resolveLocale($locale);
@@ -136,32 +138,24 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      * @param string|null $locale
      * @return string|null
      */
-    protected function resolveLocale($locale)
+    protected function resolveLocale(?string $locale): ?string
     {
-        if ($locale === null) {
-            return $this->getLocale();
-        }
-
-        return $locale;
+        return $locale ?? $this->getLocale();
     }
 
     /**
      * @param string|null $domain
      * @return string
      */
-    protected function resolveDomain($domain)
+    protected function resolveDomain(?string $domain): string
     {
-        if ($domain === null) {
-            return static::DEFAULT_DOMAIN;
-        }
-
-        return $domain;
+        return $domain ?? static::DEFAULT_DOMAIN;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->originalTranslator->getLocale();
     }
@@ -169,7 +163,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * {@inheritDoc}
      */
-    public function setLocale($locale)
+    public function setLocale($locale): void
     {
         $this->originalTranslator->setLocale($locale);
         $this->identityTranslator->setLocale($locale);
@@ -178,7 +172,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * {@inheritDoc}
      */
-    public function getCatalogue($locale = null)
+    public function getCatalogue($locale = null): MessageCatalogueInterface
     {
         return $this->originalTranslatorBag->getCatalogue($locale);
     }
@@ -186,7 +180,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Translation\Translator $translator
      */
-    public static function injectSelf(self $translator)
+    public static function injectSelf(self $translator): void
     {
         self::$self = $translator;
     }
@@ -198,8 +192,12 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      * @param string|null $locale
      * @return string
      */
-    public static function staticTrans($id, array $parameters = [], $domain = null, $locale = null)
-    {
+    public static function staticTrans(
+        string $id,
+        array $parameters = [],
+        ?string $domain = null,
+        ?string $locale = null
+    ): string {
         if (self::$self === null) {
             throw new InstanceNotInjectedException();
         }
