@@ -204,9 +204,6 @@
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
-    "fp/jsformvalidator-bundle": {
-        "version": "1.5-dev"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -595,6 +592,9 @@
     },
     "shopsys/http-smoke-testing": {
         "version": "dev-mg-weird-flex-but-ok"
+    },
+    "shopsys/jsformvalidator-bundle": {
+        "version": "1.7.0"
     },
     "shopsys/migrations": {
         "version": "dev-mg-weird-flex-but-ok"

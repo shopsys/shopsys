@@ -39,7 +39,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param array $viewTransformers
      * @return array
      */
-    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers)
+    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers): array
     {
         $config = $form->getConfig();
 
@@ -70,7 +70,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param \Symfony\Component\Form\Form $form
      * @return \Fp\JsFormValidatorBundle\Model\JsFormElement|null
      */
-    public function createJsModel(Form $form)
+    public function createJsModel(Form $form): ?JsFormElement
     {
         /** @var \Symfony\Component\Form\Form|null $prototype */
         $prototype = $form->getConfig()->getAttribute('prototype');
@@ -91,7 +91,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param string $route
      * @return string
      */
-    protected function generateUrl($route)
+    protected function generateUrl($route): string
     {
         if ($route === 'fp_js_form_validator.check_unique_entity') {
             $message = 'Unable to generate a URL for the named route "' . $route . '" as such route was removed as unsafe.';
