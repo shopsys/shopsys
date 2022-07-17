@@ -736,7 +736,7 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-msgid "{0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found"
+msgid "{0} No product found | {1} 1 product found | [2,Inf] %count% product found"
 msgstr ""
 
 msgid "{1} <strong class=\"cart__state\">%count%</strong> item for <strong class=\"cart__state\">%priceWithVat%</strong>|[2,Inf] <strong class=\"cart__state\">%count%</strong> items for <strong class=\"cart__state\">%priceWithVat%</strong>"
