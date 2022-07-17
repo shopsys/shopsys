@@ -1,5 +1,2 @@
 parameters:
     shopsys.frontend_api.domains: []
-
-    # hotfix for https://github.com/overblog/GraphQLBundle/issues/588
-    container.build_id: null
