@@ -830,6 +830,19 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - replace parameter `kernel.root_dir` with `%kernel.project_dir%/src` in your codebase
     - parameter `shopsys.framework.javascript_sources_dir` was removed because it's not used anywhere
+- debug data collectors are now future compatible with Symfony 5 ([#2484](https://github.com/shopsys/shopsys/pull/2484))
+    - `Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector` class:
+        - method `collect` changed its interface:
+        ```diff
+        - collect(Request $request, Response $response, ?Exception $exception = null): void
+        + collect(Request $request, Response $response, ?Throwable $exception = null): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector` class:
+        - method `collect` changed its interface:
+        ```diff
+        - collect(Request $request, Response $response, ?Exception $exception = null): void
+        + collect(Request $request, Response $response, ?Throwable $exception = null): void
+        ```
 
 ## Composer dependencies
 

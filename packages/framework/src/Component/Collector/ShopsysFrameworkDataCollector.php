@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
-use Exception;
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Throwable;
 
 class ShopsysFrameworkDataCollector extends DataCollector
 {
@@ -40,7 +40,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, ?Exception $exception = null): void
+    public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = [
             'version' => ShopsysFrameworkBundle::VERSION,
