@@ -84,7 +84,7 @@ class CronFacade
      */
     protected function runModules(array $cronModuleConfigs, string $instanceName): void
     {
-        $this->logger->addInfo(sprintf('====== Start of cron instance %s ======', $instanceName));
+        $this->logger->info(sprintf('====== Start of cron instance %s ======', $instanceName));
 
         foreach ($cronModuleConfigs as $cronModuleConfig) {
             $this->runSingleModule($cronModuleConfig);
@@ -93,7 +93,7 @@ class CronFacade
             }
         }
 
-        $this->logger->addInfo(sprintf('======= End of cron instance %s =======', $instanceName));
+        $this->logger->info(sprintf('======= End of cron instance %s =======', $instanceName));
     }
 
     /**
@@ -115,7 +115,7 @@ class CronFacade
             return;
         }
 
-        $this->logger->addInfo('Start of ' . $cronModuleConfig->getServiceId());
+        $this->logger->info('Start of ' . $cronModuleConfig->getServiceId());
         $cronModuleService = $cronModuleConfig->getService();
         $cronModuleService->setLogger($this->logger);
         $this->cronModuleFacade->markCronAsStarted($cronModuleConfig);
@@ -127,7 +127,7 @@ class CronFacade
             );
         } catch (Throwable $throwable) {
             $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
-            $this->logger->addError('End of ' . $cronModuleConfig->getServiceId() . ' because of error', [
+            $this->logger->error('End of ' . $cronModuleConfig->getServiceId() . ' because of error', [
                 'throwable' => $throwable,
             ]);
             throw $throwable;
@@ -146,10 +146,10 @@ class CronFacade
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
-            $this->logger->addInfo('End of ' . $cronModuleConfig->getServiceId());
+            $this->logger->info('End of ' . $cronModuleConfig->getServiceId());
         } elseif ($status === CronModuleExecutor::RUN_STATUS_SUSPENDED) {
             $this->cronModuleFacade->suspendModule($cronModuleConfig);
-            $this->logger->addInfo('Suspend ' . $cronModuleConfig->getServiceId());
+            $this->logger->info('Suspend ' . $cronModuleConfig->getServiceId());
         } elseif ($status === CronModuleExecutor::RUN_STATUS_TIMEOUT) {
             $this->logger->info('Cron reached timeout.');
         }

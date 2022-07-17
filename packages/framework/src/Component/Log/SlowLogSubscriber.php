@@ -55,7 +55,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
         $controllerNameAndAction = $event->getRequest()->get('_controller');
 
         $message = $requestTime . ' ' . $controllerNameAndAction . ' ' . $requestUri;
-        $this->logger->addNotice($message);
+        $this->logger->notice($message);
     }
 
     /**
