@@ -3,17 +3,17 @@
 namespace Shopsys\ProductFeed\GoogleBundle;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleFeedInfo implements FeedInfoInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {

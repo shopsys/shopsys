@@ -6,12 +6,12 @@ use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactoryInterface;
 use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -26,7 +26,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     private $googleProductDomainDataFactory;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainFacade $googleProductDomainFacade
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactoryInterface $googleProductDomainDataFactory
      */
