@@ -204,21 +204,4 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
         return self::$self->trans($id, $parameters, $domain, $locale);
     }
-
-    /**
-     * @param string $id
-     * @param int $number
-     * @param array $parameters
-     * @param string|null $domain
-     * @param string|null $locale
-     * @return string
-     */
-    public static function staticTransChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
-    {
-        if (self::$self === null) {
-            throw new InstanceNotInjectedException();
-        }
-
-        return self::$self->transChoice($id, $number, $parameters, $domain, $locale);
-    }
 }

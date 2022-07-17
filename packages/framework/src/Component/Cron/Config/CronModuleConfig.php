@@ -127,7 +127,10 @@ class CronModuleConfig implements CronTimeInterface
         }
 
         if (is_numeric($this->timeHours) && $this->timeMinutes === '*') {
-            return tc('Every 5 minutes in %hour% hour', (int)$this->timeHours, ['%hour%' => (int)$this->timeHours]);
+            return t('Every 5 minutes in %hour% hour', [
+                '%hour%' => (int)$this->timeHours,
+                '%count%' => (int)$this->timeHours,
+            ]);
         }
 
         if (is_numeric($this->timeHours) && is_numeric($this->timeMinutes)) {

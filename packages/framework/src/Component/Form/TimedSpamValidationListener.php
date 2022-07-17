@@ -39,12 +39,12 @@ class TimedSpamValidationListener implements EventSubscriberInterface
             $form->getConfig()->getOption('compound') &&
             !$this->formTimeProvider->isFormTimeValid($form->getName(), $this->options)
         ) {
-            $message = tc(
+            $message = t(
                 '{1} You must wait 1 second before submitting the form.
                 |[2,Inf] You must wait %seconds% seconds before submitting the form.',
-                (int)$this->options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS],
                 [
                     '%seconds%' => $this->options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS],
+                    '%count%' => (int)$this->options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS],
                 ]
             );
             $form->addError(new FormError($message));

@@ -70,9 +70,6 @@ $this->translator->transChoice('{0} no products|{1} product|]1,Inf[ products', $
 // shortcut for Translator::staticTrans()
 t('Offer in feed');
 
-// shortcut for Translator::staticTransChoice()
-tc('{0} no products|{1} product|]1,Inf[ products', $count);
-
 // see Shopsys\FrameworkBundle\Component\TranslationConstraintViolationExtractor
 $executionContextInterface->addViolation('This message will be extracted into "validators" translation domain');
 

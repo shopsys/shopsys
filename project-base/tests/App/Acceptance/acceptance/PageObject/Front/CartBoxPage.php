@@ -21,12 +21,11 @@ class CartBoxPage extends AbstractPage
         $expectedFormattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
             $convertedPrice
         );
-        $messageId = '{1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>';
-        $translatedMessageWithTags = tc(
+        $messageId = '{1} <strong class="cart__state">%count%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%count%</strong> items for <strong class="cart__state">%priceWithVat%</strong>';
+        $translatedMessageWithTags = t(
             $messageId,
-            $expectedCount,
             [
-                '%itemsCount%' => $expectedCount,
+                '%count%' => $expectedCount,
                 '%priceWithVat%' => $expectedFormattedPriceWithCurrency,
             ],
             'messages',
