@@ -219,6 +219,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Budišov nad Budišovkou',
+                    self::KEY_ADDRESS_POSTCODE => '74787',
+                    self::KEY_ADDRESS_STREET => 'Berounská',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                 ],
             ],
@@ -234,6 +236,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Brno',
+                    self::KEY_ADDRESS_POSTCODE => '60200',
+                    self::KEY_ADDRESS_STREET => 'Žižkova 7',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                 ],
             ],
@@ -307,7 +311,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_LAST_NAME => 'Wallicová',
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_POSTCODE => '70030',
-                    self::KEY_ADDRESS_STREET => 'Rudná',
+                    self::KEY_ADDRESS_STREET => 'Rudná 5',
                     self::KEY_ADDRESS_TELEPHONE => '123456789',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => 'd5595a22-cb85-4c05-846e-8475f09229ef',
@@ -326,7 +330,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Bratislava',
-                    self::KEY_ADDRESS_STREET => 'Brněnská',
+                    self::KEY_ADDRESS_STREET => 'Brněnská 2',
                     self::KEY_ADDRESS_POSTCODE => '1010',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA),
                 ],
@@ -362,6 +366,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Aš',
+                    self::KEY_ADDRESS_POSTCODE => '35201',
+                    self::KEY_ADDRESS_STREET => 'Větrná 1',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => '05fdae0f-8d43-4081-823c-cfa0e92d6281',
                 ],
@@ -378,6 +384,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Praha',
+                    self::KEY_ADDRESS_POSTCODE => '10100',
+                    self::KEY_ADDRESS_STREET => 'U Trati 8',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => '711ad188-a1c3-4739-9961-50ccaaed0371',
                 ],
@@ -394,6 +402,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Jeseník',
+                    self::KEY_ADDRESS_POSTCODE => '79001',
+                    self::KEY_ADDRESS_STREET => 'Luční 2',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => 'b4e73e2a-70f8-4583-b10a-691c91c26d56',
                 ],
@@ -401,7 +411,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_ADDRESS_FILLED => true,
                     self::KEY_ADDRESS_CITY => 'Opava',
                     self::KEY_ADDRESS_POSTCODE => '70000',
-                    self::KEY_ADDRESS_STREET => 'Ostravská',
+                    self::KEY_ADDRESS_STREET => 'Ostravská 6',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => '40736c88-3829-4d76-932c-91fd003d9d67',
                 ],
@@ -418,6 +428,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_POSTCODE => '70800',
+                    self::KEY_ADDRESS_STREET => 'Opavská 5',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => 'fdfb03a4-9bb6-4f40-acd4-03f3352d54e5',
                 ],
@@ -434,6 +446,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => false,
                     self::KEY_ADDRESS_CITY => 'Opava',
+                    self::KEY_ADDRESS_POSTCODE => '74601',
+                    self::KEY_ADDRESS_STREET => 'Ostravská 5',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                     self::KEY_ADDRESS_UUID => 'b57fa361-5121-4594-a838-6469aa61890e',
                 ],
