@@ -65,7 +65,8 @@ When `php phing translations-dump` command is run, texts are extracted from foll
 ```php
 $this->translator->trans('Offer in feed');
 
-$this->translator->transChoice('{0} no products|{1} product|]1,Inf[ products', $count);
+// pluralization (replacement of transChoice)
+$this->translator->trans('{0} no products|{1} product|]1,Inf[ products', ['%count%' => $count]);
 
 // shortcut for Translator::staticTrans()
 t('Offer in feed');

@@ -92,49 +92,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     }
 
     /**
-     * Passes transChoice() call to original translator for logging purposes.
-     * {@inheritdoc}
-     */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
-    {
-        $normalizedId = $this->messageIdNormalizer->normalizeMessageId($id);
-        $resolvedLocale = $this->resolveLocale($locale);
-        $resolvedDomain = $this->resolveDomain($domain);
-
-        $catalogue = $this->originalTranslatorBag->getCatalogue($resolvedLocale);
-
-        if ($resolvedLocale === self::SOURCE_LOCALE) {
-            if ($catalogue->defines($normalizedId, $resolvedDomain)) {
-                $message = $this->originalTranslator->transChoice(
-                    $normalizedId,
-                    $number,
-                    $parameters,
-                    $resolvedDomain,
-                    $resolvedLocale
-                );
-            } else {
-                $message = $this->identityTranslator->transChoice(
-                    $normalizedId,
-                    $number,
-                    $parameters,
-                    $resolvedDomain,
-                    $resolvedLocale
-                );
-            }
-        } else {
-            $message = $this->originalTranslator->transChoice(
-                $normalizedId,
-                $number,
-                $parameters,
-                $resolvedDomain,
-                $resolvedLocale
-            );
-        }
-
-        return $message;
-    }
-
-    /**
      * @param string|null $locale
      * @return string|null
      */

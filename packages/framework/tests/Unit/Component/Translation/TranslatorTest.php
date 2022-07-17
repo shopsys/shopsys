@@ -198,7 +198,7 @@ class TranslatorTest extends TestCase
         $this->assertSame('translated message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage(): void
+    public function testTransPluralizationWithNotTranslatedMessageAndSourceLocaleReturnsSourceMessage(): void
     {
         $this->originalTranslatorBagMock->method('getCatalogue')
             ->willReturn(new MessageCatalogue('nonSourceLocale', []));
@@ -209,10 +209,12 @@ class TranslatorTest extends TestCase
 
         $this->initTranslator();
 
-        $translatedMessage = $this->translator->transChoice(
+        $translatedMessage = $this->translator->trans(
             '{0}zero|{1}source message %parameter%',
-            1,
-            ['%parameter%' => 'parameter value'],
+            [
+                '%parameter%' => 'parameter value',
+                '%count%' => 1,
+            ],
             null,
             Translator::SOURCE_LOCALE
         );
@@ -220,13 +222,15 @@ class TranslatorTest extends TestCase
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage(): void
+    public function testTransPluralizationWithTranslatedMessageAndSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->method('transChoice')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
-                $this->identicalTo(1),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo([
+                    '%parameter%' => 'parameter value',
+                    '%count%' => 1,
+                ])
             )
             ->willReturn('translated message parameter value');
 
@@ -246,10 +250,12 @@ class TranslatorTest extends TestCase
 
         $this->initTranslator();
 
-        $translatedMessage = $this->translator->transChoice(
+        $translatedMessage = $this->translator->trans(
             '{0}zero|{1}source message %parameter%',
-            1,
-            ['%parameter%' => 'parameter value'],
+            [
+                '%parameter%' => 'parameter value',
+                '%count%' => 1,
+            ],
             'translationDomain',
             Translator::SOURCE_LOCALE
         );
@@ -257,7 +263,7 @@ class TranslatorTest extends TestCase
         $this->assertSame('translated message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithSourceLocaleAsDefaultLocaleReturnsSourceMessage(): void
+    public function testTransPluralizationWithSourceLocaleAsDefaultLocaleReturnsSourceMessage(): void
     {
         $this->originalTranslatorMock->method('getLocale')
             ->willReturn(Translator::SOURCE_LOCALE);
@@ -271,22 +277,26 @@ class TranslatorTest extends TestCase
 
         $this->initTranslator();
 
-        $translatedMessage = $this->translator->transChoice(
+        $translatedMessage = $this->translator->trans(
             '{0}zero|{1}source message %parameter%',
-            1,
-            ['%parameter%' => 'parameter value']
+            [
+                '%parameter%' => 'parameter value',
+                '%count%' => 1,
+            ]
         );
 
         $this->assertSame('normalized source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage(): void
+    public function testTransPluralizationWithNotTranslatedMessageAndNonSourceLocaleReturnsSourceMessage(): void
     {
-        $this->originalTranslatorMock->method('transChoice')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
-                $this->identicalTo(1),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo([
+                    '%parameter%' => 'parameter value',
+                    '%count%' => 1,
+                ])
             )
             ->willReturn('source message parameter value');
 
@@ -299,10 +309,12 @@ class TranslatorTest extends TestCase
 
         $this->initTranslator();
 
-        $translatedMessage = $this->translator->transChoice(
+        $translatedMessage = $this->translator->trans(
             '{0}zero|{1}source message %parameter%',
-            1,
-            ['%parameter%' => 'parameter value'],
+            [
+                '%parameter%' => 'parameter value',
+                '%count%' => 1,
+            ],
             null,
             'nonSourceLocale'
         );
@@ -310,13 +322,15 @@ class TranslatorTest extends TestCase
         $this->assertSame('source message parameter value', $translatedMessage);
     }
 
-    public function testTransChoiceWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage(): void
+    public function testTransPluralizationWithTranslatedMessageAndNonSourceLocaleReturnsTranslatedMessage(): void
     {
-        $this->originalTranslatorMock->method('transChoice')
+        $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('{0}zero|{1}normalized source message %parameter%'),
-                $this->identicalTo(1),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo([
+                    '%parameter%' => 'parameter value',
+                    '%count%' => 1,
+                ])
             )
             ->willReturn('translated message parameter value');
 
@@ -336,10 +350,12 @@ class TranslatorTest extends TestCase
 
         $this->initTranslator();
 
-        $translatedMessage = $this->translator->transChoice(
+        $translatedMessage = $this->translator->trans(
             '{0}zero|{1}source message %parameter%',
-            1,
-            ['%parameter%' => 'parameter value'],
+            [
+                '%parameter%' => 'parameter value',
+                '%count%' => 1,
+            ],
             'translationDomain',
             'nonSourceLocale'
         );
