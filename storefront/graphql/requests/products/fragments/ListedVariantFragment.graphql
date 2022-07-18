@@ -1,5 +1,6 @@
 fragment ListedVariantFragment on Variant {
     __typename
+    id
     uuid
     slug
     name

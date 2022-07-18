@@ -149,7 +149,7 @@ export type GtmBreadcrumbInfoType = {
 /** product data types for category list, detail, cart item and order item */
 
 export type GtmProductInterface = {
-    id: string;
+    id: number;
     name: string;
     availability: string;
     labels: string[];

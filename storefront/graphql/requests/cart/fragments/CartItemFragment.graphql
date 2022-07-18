@@ -4,6 +4,7 @@ fragment CartItemFragment on CartItem {
     quantity
     product {
         __typename
+        id
         uuid
         slug
         fullName

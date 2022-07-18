@@ -23,6 +23,7 @@ export type CurrentCartType = {
 };
 
 export type ProductCartItemType = {
+    id: number;
     uuid: string;
     slug: string;
     fullName: string;

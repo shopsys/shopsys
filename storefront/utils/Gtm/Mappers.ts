@@ -23,7 +23,7 @@ export const mapGtmProductDetailType = (product: ProductDetailType | MainVariant
     mapGtmProductInterface(product, 1);
 
 const mapGtmProductInterface = (productInterface: ProductInterfaceType, listIndex: number): GtmProductInterface => ({
-    id: productInterface.uuid,
+    id: productInterface.id,
     name: productInterface.fullName,
     availability: productInterface.availability.name,
     imageUrl: mapGtmProductInterfaceImageUrl(productInterface),

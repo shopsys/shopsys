@@ -1,5 +1,6 @@
 fragment ListedProductFragment on Product {
     __typename
+    id
     uuid
     slug
     fullName

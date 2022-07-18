@@ -12,6 +12,7 @@ import { ProductPriceType } from 'types/price';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';
+    id: number;
     uuid: string;
     catalogNumber: string;
     slug: string;
@@ -39,6 +40,7 @@ export type ListedProductConnectionType = {
 };
 
 export type ListedProductType = {
+    id: number;
     uuid: string;
     slug: string;
     fullName: string;
@@ -63,6 +65,7 @@ export type ListedVariantType = ListedProductType & {
 export type SliderProductItemType = ListedProductType;
 
 export type ProductDetailInterfaceType = {
+    id: number;
     uuid: string;
     slug: string;
     name: string;
