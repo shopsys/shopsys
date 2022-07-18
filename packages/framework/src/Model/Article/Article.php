@@ -176,7 +176,7 @@ class Article implements OrderableEntityInterface
      */
     public function getSeoMetaDescription()
     {
-        return null;
+        return $this->seoMetaDescription;
     }
 
     /**
