@@ -43,18 +43,18 @@ class NewsletterSubscribeFromOrderLoggedInTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../Order/graphql/AddToCartMutation.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'productUuid' => $product->getUuid(),
             'quantity' => 1,
         ]);
 
         $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
 
-        $this->getResponseContentForGql(__DIR__ . '/../Order/graphql/ChangeTransportInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
             'transportUuid' => $transport->getUuid(),
         ]);
 
-        $this->getResponseContentForGql(__DIR__ . '/../Order/graphql/ChangePaymentInCartMutation.graphql', [
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'paymentUuid' => $transport->getPayments()[0]->getUuid(),
         ]);
 
@@ -73,6 +73,6 @@ class NewsletterSubscribeFromOrderLoggedInTest extends GraphQlWithLoginTestCase
             'newsletterSubscription' => $newsletterSubscription,
         ];
 
-        $this->getResponseContentForGql(__DIR__ . '/../Order/graphql/CreateOrderMutation.graphql', $orderVariables);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);
     }
 }

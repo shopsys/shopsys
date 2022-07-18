@@ -53,19 +53,11 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
         $addedProductQuantity = 3;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $newlyCreatedCart['uuid'] . '",
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $addedProductQuantity . '
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $addedProductQuantity,
+        ]);
 
         self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
@@ -85,19 +77,11 @@ class AnonymousAddToCartTest extends GraphQlTestCase
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 72);
         $secondProductQuantity = 5;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $newlyCreatedCart['uuid'] . '",
-                productUuid: "' . $secondProduct->getUuid() . '",
-                quantity: ' . $secondProductQuantity . '
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+            'productUuid' => $secondProduct->getUuid(),
+            'quantity' => $secondProductQuantity,
+        ]);
 
         self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
@@ -121,20 +105,12 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
         $desiredProductQuantity = 3;
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $newlyCreatedCart['uuid'] . '",
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $desiredProductQuantity . '
-                isAbsoluteQuantity: true
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $newlyCreatedCart['uuid'],
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $desiredProductQuantity,
+            'isAbsoluteQuantity' => true,
+        ]);
 
         self::assertEquals($newlyCreatedCart['uuid'], $response['data']['AddToCart']['cart']['uuid']);
 
@@ -152,18 +128,10 @@ class AnonymousAddToCartTest extends GraphQlTestCase
      */
     public function testInvalidQuantityProvided($invalidQuantity): void
     {
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $invalidQuantity . '
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $invalidQuantity,
+        ]);
 
         self::assertArrayHasKey('errors', $response);
 
@@ -205,19 +173,10 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     public function testInvalidProductProvided(): void
     {
         $unknownUuid = '6c42d01c-b597-4afa-b58f-f792ff00b783';
-
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $unknownUuid . '",
-                quantity: 10
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $unknownUuid,
+            'quantity' => 10,
+        ]);
 
         self::assertArrayHasKey('errors', $response);
 
@@ -230,20 +189,11 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     public function testInvalidCartUuidCreatesNewCart(): void
     {
         $unknownUuid = '6c42d01c-b597-4afa-b58f-f792ff00b783';
-
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $unknownUuid . '"
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: 10
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $unknownUuid,
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => 10,
+        ]);
 
         self::assertEquals($unknownUuid, $response['data']['AddToCart']['cart']['uuid']);
     }
@@ -254,18 +204,10 @@ class AnonymousAddToCartTest extends GraphQlTestCase
      */
     private function addTestingProductToNewCart(int $productQuantity): array
     {
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $this->testingProduct->getUuid() . '",
-                quantity: ' . $productQuantity . '
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($mutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $this->testingProduct->getUuid(),
+            'quantity' => $productQuantity,
+        ]);
         return $response['data']['AddToCart']['cart'];
     }
 }

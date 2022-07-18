@@ -193,18 +193,11 @@ class CartTransportTest extends GraphQlTestCase
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
 
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . CartDataFixture::CART_UUID . '",
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 40
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'productUuid' => $product->getUuid(),
+            'quantity' => 40,
+        ]);
 
         $getCartQuery = '{
             cart(cartInput: {

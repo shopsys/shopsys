@@ -211,7 +211,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     public function testReadyCategorySeoMixReturnsSelectedFilterOptions(): void
     {
-        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql');
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql');
 
         $this->assertSelectedFlags($data['products']['productFilterOptions']['flags']);
         $this->assertSelectedParameterCheckboxFilterOptions($data['products']['productFilterOptions']['parameters']);
@@ -220,7 +220,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
     public function testReadyCategorySeoMixDataAreReturnedWhenMatchedFromCategory(): void
     {
-        $dataForCategorySeoMix = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql');
+        $dataForCategorySeoMix = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/SlugQueryCategoryMatchingSeoMix.graphql');
         $dataForCategory = $this->getDataForCategoryWithFiltersMatchingSeoMix();
 
         $this->assertSame($dataForCategorySeoMix, $dataForCategory);
@@ -234,7 +234,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         /** @var \App\Model\Category\Category $categoryPc */
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
             'sortingMode' => null,
         ]);
 
@@ -250,7 +250,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         /** @var \App\Model\Category\Category $categoryPc */
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
             'sortingMode' => strtoupper($readyCategorySeoPcNewWithUsb->getOrdering()),
         ]);
 
@@ -263,7 +263,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         /** @var \App\Model\Category\Category $categoryPc */
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
             'sortingMode' => 'PRIORITY',
         ]);
 
@@ -278,7 +278,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         /** @var \App\Model\Category\Category $categoryPc */
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);
         $categoryPcSlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/graphql/ReadyCategorySeoMixQuery.graphql', [
+        $data = $this->getDataForCategorySeoMixPcNewWithUsb(__DIR__ . '/../../_graphql/query/ReadyCategorySeoMixQuery.graphql', [
             'filter' => ['flags' => [$flagSale->getUuid()]],
         ]);
 
@@ -382,7 +382,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             t('Yes', [], 'dataFixtures', $firstDomainLocale),
             $firstDomainLocale
         );
-        $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/graphql/SlugQueryCategoryMatchingSeoMix.graphql', [
+        $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/SlugQueryCategoryMatchingSeoMix.graphql', [
             'slug' => $categorySlug,
             'sortingMode' => 'PRICE_DESC',
             'filter' => [

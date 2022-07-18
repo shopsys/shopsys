@@ -41,27 +41,12 @@ class ProductSourceEqualityTest extends GraphQlTestCase
         $productArrayResponse = $this->getResponseContentForQuery($productArrayQuery);
         $productArrayData = $this->getResponseDataForGraphQlType($productArrayResponse, 'product');
 
-        $productEntityMutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $productUuid . '",
-                quantity: 1
-            }) {
-                cart {
-                    items {
-                        product {
-                            ' . $this->getAllProductFields() . '
-                            ... on Variant {
-                                mainVariant {
-                                    ' . $this->getAllProductFields() . '
-                                } 
-                            }
-                        }
-                    }
-                }
-            }
-        }';
-        $productEntityResponse = $this->getResponseContentForQuery($productEntityMutation);
-        $productEntityData = $this->getResponseDataForGraphQlType($productEntityResponse, 'AddToCart')['cart']['items'][0]['product'];
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $productUuid,
+            'quantity' => 1,
+        ]);
+
+        $productEntityData = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['items'][0]['product'];
 
         self::assertEquals($productArrayData, $productEntityData);
     }

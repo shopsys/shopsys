@@ -11,7 +11,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class GetArticlesTest extends GraphQlTestCase
 {
     private const ARTICLES_TOTAL_COUNT = 21;
-    private const QUERY_PATH = __DIR__ . '/graphql/ArticlesQuery.graphql';
+    private const QUERY_PATH = __DIR__ . '/../_graphql/query/ArticlesQuery.graphql';
 
     public function testGetArticles(): void
     {

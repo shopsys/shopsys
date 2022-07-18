@@ -50,19 +50,13 @@ class PaymentTest extends GraphQlTestCase
         $cartUuid = CartDataFixture::CART_UUID;
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
-        $mutation = 'mutation {
-            AddToCart(input: {
-                cartUuid:"' . $cartUuid . '"
-                productUuid: "' . $product->getUuid() . '"
-                quantity: 100
-            }) {
-                cart {
-                    uuid
-                }                
-            }
-        }';
 
-        $this->getResponseContentForQuery($mutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'productUuid' => $product->getUuid(),
+            'quantity' => 100,
+        ]);
+
         $query = '
             query {
                 payment(uuid: "' . $this->payment->getUuid() . '") {

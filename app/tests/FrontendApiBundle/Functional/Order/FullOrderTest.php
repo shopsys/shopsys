@@ -57,17 +57,13 @@ class FullOrderTest extends AbstractOrderTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                }
-            }
-        }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['cart']['uuid'];
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
 
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);

@@ -689,3 +689,45 @@
             ...
       ```
     - `command` directive is optional and can be omitted, dev mode is default behavior. For more details see docker-compose.yml.dist
+
+### API - improvement of graphql usage in tests
+- [FWCC-938](https://shopsys.atlassian.net/browse/FWCC-938)
+- [FWCC-938 Use GraphQL in PHP tests correctly](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/577)
+- from now on, you can use reusable queries and mutations in PHP tests
+- it's optional - you don't have to rewrite any of your tests in project!
+- difference between old style
+    ```diff
+    -    $mutation = 'mutation {
+    -        AddToCart(input: {
+    -            cartUuid: "' . $newlyCreatedCart['uuid'] . '",
+    -            productUuid: "' . $this->testingProduct->getUuid() . '",
+    -            quantity: ' . $addedProductQuantity . '
+    -        }) {
+    -            cart {
+    -                uuid
+    -            }
+    -        }
+    -    }';
+    -    $response = $this->getResponseContentForQuery($mutation);
+    +    $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+    +       'cartUuid' => $newlyCreatedCart['uuid'],
+    +       'productUuid' => $this->testingProduct->getUuid(),
+    +       'quantity' => $addedProductQuantity,
+    +   ]);
+    ```
+- advantages
+    - better syntax
+    - queries and mutations in tests are in one place, and you will get autocompletion
+    - If you have changed some queries/mutations on project (AddToCartMutation at this moment), you only need to change it in 1 file, and it will be reflected to all tests
+        - you will still need to fix asserts for removed fields in tests
+- `.graphql` files are located in `app/tests/FrontendApiBundle/Functional/_graphql`
+- best practises
+    - take a look into `app/tests/FrontendApiBundle/Functional/_graphql/mutation/AddToCartMutation.graphql`
+    - it's good to have complete response and all parameters there, as you can use it in any test, and you should assert in test only what you need
+    - if you use fragments in `.graphql` files please prefix them with `Test` (`TestMainVariantFragment`), so you won't mess autocomplete for FE developers - this fragments won't work in storefront and storefront fragments won't work in API tests
+- limitations
+    - file path in `getResponseContentForGql()` method argument must be with `__DIR__` (`__DIR__ . '/../_graphql/query/...`) as you get autocomplete for file names
+        - `__DIR__ . '/../_graphql` cannot be in constant as we would lose filename autocomplete because of [WI-64072](https://youtrack.jetbrains.com/issue/WI-64072/Provide-completion-after-constants-that-recursively-contains-DIR-in-any-expression-not-just-in-includerequire-statements) bug in Jetbrains IDEs
+            - You can vote for this issue by clicking thumbs up icon on Youtrack website - more votes, the sooner it will be fixed
+    - fragments are not reusable at this moment and when you want to use fragment for example in `AddToCartMutation.graphql` you have to write (or copy and paste) fragment to this file
+        - it's because `\Tests\FrontendApiBundle\Test\GraphQlTestCase::getResponseContentForGql` method loads only file with specific query of mutation

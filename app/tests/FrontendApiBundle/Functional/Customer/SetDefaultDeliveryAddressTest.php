@@ -34,7 +34,7 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
         $newDeliveryAddress = $this->createNewDeliveryAddress($customerUser);
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/SetDefaultDeliveryAddressMutation.graphql',
+            __DIR__ . '/../_graphql/mutation/SetDefaultDeliveryAddressMutation.graphql',
             [
                 'deliveryAddressUuid' => $newDeliveryAddress->getUuid(),
             ]

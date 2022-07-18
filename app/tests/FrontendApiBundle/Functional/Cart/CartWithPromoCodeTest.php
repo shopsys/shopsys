@@ -18,28 +18,12 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
 
-        $initCartMutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product1->getUuid() . '"
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                    totalPrice{
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    totalDiscountPrice{
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                }
-            }
-        }';
+        $initCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product1->getUuid(),
+            'quantity' => 1,
+        ]);
 
-        $initCartResult = $this->getResponseContentForQuery($initCartMutation)['data']['AddToCart'];
+        $initCartResult = $initCartResponse['data']['AddToCart'];
         $cartUuid = $initCartResult['cart']['uuid'];
 
         /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
@@ -89,31 +73,11 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
 
-        $addAnotherToCartMutation = 'mutation {
-            AddToCart(input: {
-                cartUuid: "' . $cartUuid . '"
-                productUuid: "' . $product72->getUuid() . '"
-                quantity: 1
-            }) {
-                cart {
-                    uuid
-                    items{
-                        uuid
-                        product{uuid}
-                    }
-                    totalPrice{
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    totalDiscountPrice{
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                }
-            }
-        }';
+        $addAnotherToCartResponse = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'productUuid' => $product72->getUuid(),
+            'quantity' => 1,
+        ]);
 
         $totalPrice = AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems([
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2602.48', $vatHigh)],
@@ -137,7 +101,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
             'vatAmount' => $totalDiscountPrice->getVatAmount()->getAmount(),
         ];
 
-        $addToCartResult = $this->getResponseContentForQuery($addAnotherToCartMutation)['data']['AddToCart'];
+        $addToCartResult = $addAnotherToCartResponse['data']['AddToCart'];
         $this->assertSame($totalPriceExpected, $addToCartResult['cart']['totalPrice']);
         $this->assertSame($totalDiscountPriceExpected, $addToCartResult['cart']['totalDiscountPrice']);
     }
