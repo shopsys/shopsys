@@ -7,6 +7,9 @@ Product:
             slug:
                 type: "String!"
                 description: "Product URL slug"
+            id:
+                type: "Int!"
+                description: "Product id"
             catalogNumber:
                 type: "String!"
                 description: "Product catalog number"
