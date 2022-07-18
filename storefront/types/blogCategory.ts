@@ -9,6 +9,7 @@ export type BlogCategoryDetailType = {
     breadcrumb: BreadcrumbItemType[];
     seoTitle: string | null;
     seoMetaDescription: string | null;
+    blogCategoriesTree: ListedBlogCategoryType[];
 };
 
 export type ListedBlogCategoryType = SimpleBlogCategoryType & {

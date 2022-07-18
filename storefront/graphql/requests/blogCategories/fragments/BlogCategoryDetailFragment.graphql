@@ -8,4 +8,7 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     ...BreadcrumbFragment
     seoTitle
     seoMetaDescription
+    blogCategoriesTree {
+        ...BlogCategoriesFragment
+    }
 }

@@ -1,0 +1,15 @@
+fragment BlogCategoriesFragment on BlogCategory {
+    ...SimpleBlogCategoryFragment
+    children {
+        ...SimpleBlogCategoryFragment
+        children {
+            ...SimpleBlogCategoryFragment
+            children {
+                ...SimpleBlogCategoryFragment
+                children {
+                    ...SimpleBlogCategoryFragment
+                }
+            }
+        }
+    }
+}
