@@ -843,6 +843,10 @@ There you can find links to upgrade notes for other versions too.
         - collect(Request $request, Response $response, ?Exception $exception = null): void
         + collect(Request $request, Response $response, ?Throwable $exception = null): void
         ```
+- remove not used `twig/extensions` package ([#2486](https://github.com/shopsys/shopsys/pull/2486))
+    - see #project-base-diff to update your project
+    - see the list of filters and update your code if you use any – https://github.com/twigphp/Twig-extensions
+        - `trans` filter is already used from symfony/twig-bridge package
 
 ## Composer dependencies
 
