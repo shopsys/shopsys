@@ -18,4 +18,4 @@ Mutation:
                                     maxMessage: "Email cannot be longer than {{ limit }} characters"
                                     min: 0
                                     minMessage: ~
-                resolve: "@=mutation('newsletter_subscribe', [args, validator])"
+                resolve: "@=mutation('newsletter_subscribe', args, validator)"
