@@ -776,3 +776,16 @@
   },
 
   ```
+
+### Blog category page: SSR rendering of blog category tree
+- [FWCC-1072](https://shopsys.atlassian.net/browse/FWCC-1072)
+- [FWCC-1072 blog category page: SSR rendering of blog category tree](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/702)
+- API:
+    - `blogCategoriesTree` added to `BlogCategory.types.yaml`
+    - the new field is resolved in `BlogCategoryResolverMap`
+- SF:
+    - the blog category tree is not fetched separately anymore in `BlogCategory.tsx` page
+    - `useBlogCategoryItems` hook is removed
+    - `blogCategoriesTree` of type `ListedBlogCategoryType[]` is added to `BlogCategoryDetailType`
+    - created new fragment `BlogCategoriesFragment` on `BlogCategory` (extracted from `BlogCategoriesQuery.graphql`)
+        - used in `BlogCategoryDetailFragment.graphql`
