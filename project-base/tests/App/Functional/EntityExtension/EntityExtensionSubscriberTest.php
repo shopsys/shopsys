@@ -32,6 +32,7 @@ class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
         $classMetadata = $this->em->getClassMetadata(ExtendedDummyEntity::class);
 
         $expectedOrderByValue = ['id' => 'DESC'];
+        // @phpstan-ignore-next-line
         $this->assertEquals($expectedOrderByValue, $classMetadata->associationMappings['flags']['orderBy']);
     }
 }
