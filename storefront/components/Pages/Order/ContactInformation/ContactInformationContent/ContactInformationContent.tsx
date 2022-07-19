@@ -53,7 +53,7 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
                 <div ref={cssTransitionRef}>
                     <div ref={contentElement}>
                         <ContactInformationContentSectionStyled>
-                            {isUserLoggedIn === false && <ContactInformationRegister />}
+                            {!isUserLoggedIn && <ContactInformationRegister />}
                         </ContactInformationContentSectionStyled>
                         <ContactInformationContentSectionStyled>
                             <ContactInformationCustomer />

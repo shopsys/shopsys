@@ -23,6 +23,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
+import { SelectOptionType } from 'types/selectOptions';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
@@ -83,18 +84,6 @@ const ContactInformationDeliveryAddress: FC = () => {
         dispatch,
     ]);
 
-    useEffect(() => {
-        if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
-            setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
-        }
-    }, [
-        countrySelectOptions,
-        differentDeliveryAddressValue,
-        formMeta.fields.deliveryCountry.name,
-        pickupPlace,
-        setValue,
-    ]);
-
     const calcHeight = () => {
         if (contentElement.current) {
             setContentElementHeight(contentElement.current.clientHeight);
@@ -102,21 +91,25 @@ const ContactInformationDeliveryAddress: FC = () => {
     };
 
     useEffect(() => {
-        const deliveryAddress = user?.deliveryAddresses.find((address) => address.uuid === deliveryAddressUuidValue);
-        const selectedCountryOption =
-            countrySelectOptions.find((option) => option.value === deliveryAddress?.country) ??
-            countrySelectOptions.find((option) => option.value === user?.country.code);
+        if (isUserLoggedIn) {
+            const deliveryAddress = user?.deliveryAddresses.find(
+                (address) => address.uuid === deliveryAddressUuidValue,
+            );
+            const selectedCountryOption =
+                countrySelectOptions.find((option) => option.value === deliveryAddress?.country) ??
+                countrySelectOptions.find((option) => option.value === user?.country.code);
 
-        if (selectedCountryOption !== undefined || countrySelectOptions.length > 0) {
-            setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress?.firstName ?? '');
-            setValue(formMeta.fields.deliveryLastName.name, deliveryAddress?.lastName ?? '');
-            setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress?.companyName ?? '');
-            setValue(formMeta.fields.deliveryTelephone.name, deliveryAddress?.telephone ?? '');
-            if (pickupPlace === null) {
-                setValue(formMeta.fields.deliveryStreet.name, deliveryAddress?.street ?? '');
-                setValue(formMeta.fields.deliveryCity.name, deliveryAddress?.city ?? '');
-                setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress?.postcode ?? '');
-                setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption ?? countrySelectOptions[0]);
+            if (selectedCountryOption !== undefined || countrySelectOptions.length > 0) {
+                setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress?.firstName ?? '');
+                setValue(formMeta.fields.deliveryLastName.name, deliveryAddress?.lastName ?? '');
+                setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress?.companyName ?? '');
+                setValue(formMeta.fields.deliveryTelephone.name, deliveryAddress?.telephone ?? '');
+                if (pickupPlace === null) {
+                    setValue(formMeta.fields.deliveryStreet.name, deliveryAddress?.street ?? '');
+                    setValue(formMeta.fields.deliveryCity.name, deliveryAddress?.city ?? '');
+                    setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress?.postcode ?? '');
+                    setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption ?? countrySelectOptions[0]);
+                }
             }
         }
     }, [
@@ -130,6 +123,7 @@ const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryPostcode.name,
         formMeta.fields.deliveryStreet.name,
         formMeta.fields.deliveryTelephone.name,
+        isUserLoggedIn,
         pickupPlace,
         setValue,
         user?.country.code,
@@ -255,6 +249,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             isTouched={isTouched}
                                                             hasError={invalid}
                                                             fieldRef={field}
+                                                            onBlurCapture={() => {
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryFirstName(
+                                                                        field.value,
+                                                                    ),
+                                                                );
+                                                            }}
                                                         />
                                                         <FormLineError
                                                             error={error}
@@ -288,6 +289,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             isTouched={isTouched}
                                                             hasError={invalid}
                                                             fieldRef={field}
+                                                            onBlurCapture={() =>
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryLastName(
+                                                                        field.value,
+                                                                    ),
+                                                                )
+                                                            }
                                                         />
                                                         <FormLineError
                                                             error={error}
@@ -321,6 +329,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         isTouched={isTouched}
                                                         hasError={invalid}
                                                         fieldRef={field}
+                                                        onBlurCapture={() =>
+                                                            dispatch(
+                                                                contactInformationActions.setDeliveryCompanyName(
+                                                                    field.value,
+                                                                ),
+                                                            )
+                                                        }
                                                     />
                                                     <FormLineError
                                                         error={error}
@@ -353,6 +368,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         isTouched={isTouched}
                                                         hasError={invalid}
                                                         fieldRef={field}
+                                                        onBlurCapture={() =>
+                                                            dispatch(
+                                                                contactInformationActions.setDeliveryTelephone(
+                                                                    field.value,
+                                                                ),
+                                                            )
+                                                        }
                                                     />
                                                     <FormLineError
                                                         error={error}
@@ -388,6 +410,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         hasError={invalid}
                                                         fieldRef={field}
                                                         disabled={pickupPlace !== null}
+                                                        onBlurCapture={() =>
+                                                            dispatch(
+                                                                contactInformationActions.setDeliveryStreet(
+                                                                    field.value,
+                                                                ),
+                                                            )
+                                                        }
                                                     />
                                                     <FormLineError
                                                         error={error}
@@ -424,6 +453,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             hasError={invalid}
                                                             fieldRef={field}
                                                             disabled={pickupPlace !== null}
+                                                            onBlurCapture={() =>
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryCity(
+                                                                        field.value,
+                                                                    ),
+                                                                )
+                                                            }
                                                         />
                                                         <FormLineError
                                                             error={error}
@@ -459,6 +495,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             hasError={invalid}
                                                             fieldRef={field}
                                                             disabled={pickupPlace !== null}
+                                                            onBlurCapture={() =>
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryPostcode(
+                                                                        field.value,
+                                                                    ),
+                                                                )
+                                                            }
                                                         />
                                                         <FormLineError
                                                             error={error}
@@ -484,7 +527,14 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         label={formMeta.fields.deliveryCountry.label}
                                                         hasError={invalid}
                                                         options={countrySelectOptions}
-                                                        onChange={field.onChange}
+                                                        onChange={(...data) => {
+                                                            field.onChange(...data);
+                                                            dispatch(
+                                                                contactInformationActions.setDeliveryCountry(
+                                                                    data[0] as SelectOptionType,
+                                                                ),
+                                                            );
+                                                        }}
                                                         isDisabled={pickupPlace !== null}
                                                         value={countrySelectOptions.find(
                                                             (option) => option.value === field.value.value,
