@@ -200,6 +200,7 @@ const Search: FC<SearchProps> = ({ searchResults }) => {
                                     productFilterOptions={searchResults.productsSearch.productFilterOptions}
                                     slug={searchUrl}
                                     originalSlug={null}
+                                    orderingMode={searchResults.productsSearch.orderingMode}
                                 />
                                 <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>

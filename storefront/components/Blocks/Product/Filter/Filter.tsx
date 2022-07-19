@@ -28,16 +28,17 @@ type FilterProps = {
     productFilterOptions: FilterOptionsType;
     slug: string;
     originalSlug: string | null;
+    orderingMode: ProductOrderingModeEnumApi | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug }) => {
+export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug, orderingMode }) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
 
-    const deepComparedProductFitlerOptions = useMemo(
+    const deepComparedProductFilterOptions = useMemo(
         () => productFilterOptions,
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [JSON.stringify(productFilterOptions)],
@@ -46,7 +47,7 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
     const formProviderMethods = useForm<FilterFormType>({
         defaultValues: getDefaultFormValues(
             mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(router.query.filter))),
-            deepComparedProductFitlerOptions,
+            deepComparedProductFilterOptions,
             originalSlug,
         ),
     });
@@ -75,7 +76,8 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
         const newCheckedParameters: FilterFormParameterType[] = [];
 
         parametersValue.forEach((currentParameterWithFilteredValues) => {
-            const filteredValues = currentParameterWithFilteredValues.values.filter((value) => value.checked);
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            const filteredValues = currentParameterWithFilteredValues.values?.filter((value) => value.checked) ?? [];
 
             if (filteredValues.length > 0) {
                 newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: filteredValues });
@@ -95,7 +97,7 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
             maximalPrice,
             isOnlyInStock,
             checkedParameters,
-            deepComparedProductFitlerOptions,
+            deepComparedProductFilterOptions,
         );
 
         if (isProductFilterSameAsDefault) {
@@ -111,9 +113,10 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
             maximalPrice,
             isOnlyInStock,
             checkedParameters,
-            deepComparedProductFitlerOptions,
+            deepComparedProductFilterOptions,
         );
         pathname = originalSlug ?? slug;
+
         if (isProductFilterEmpty) {
             delete routerQueryWithoutAllParameter.filter;
         } else {
@@ -124,12 +127,12 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
                 maximalPrice,
                 isOnlyInStock,
                 checkedParameters,
-                deepComparedProductFitlerOptions,
+                deepComparedProductFilterOptions,
             );
         }
 
         if (sortingFromQuery === null) {
-            routerQueryWithoutAllParameter.sort = ProductOrderingModeEnumApi.PriorityApi;
+            routerQueryWithoutAllParameter.sort = orderingMode ?? ProductOrderingModeEnumApi.PriorityApi;
         }
         shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,7 +143,7 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
         maximalPrice,
         isOnlyInStock,
         checkedParameters,
-        deepComparedProductFitlerOptions,
+        deepComparedProductFilterOptions,
         originalSlug,
         slug,
     ]);
@@ -148,54 +151,54 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
     return (
         <FormProvider {...formProviderMethods}>
             <SelectedParameters
+                productFilterOptions={deepComparedProductFilterOptions}
                 checkedBrands={checkedBrands}
                 checkedFlags={checkedFlags}
                 checkedParameters={checkedParameters}
                 minimalPrice={minimalPrice}
                 maximalPrice={maximalPrice}
                 isOnlyInStock={isOnlyInStock}
-                productFilterOptions={deepComparedProductFitlerOptions}
             />
             <FilterStyled data-testid={TEST_IDENTIFIER}>
                 <Form>
                     <FilterGroupPrice
                         title={t('Price')}
-                        minimalPrice={deepComparedProductFitlerOptions.minimalPrice}
-                        maximalPrice={deepComparedProductFitlerOptions.maximalPrice}
+                        minimalPrice={deepComparedProductFilterOptions.minimalPrice}
+                        maximalPrice={deepComparedProductFilterOptions.maximalPrice}
                         isOpen={true}
                     />
 
                     <FilterGroupInStock
                         title={t('Availability')}
-                        inStockCount={deepComparedProductFitlerOptions.inStock}
+                        inStockCount={deepComparedProductFilterOptions.inStock}
                         isOpen={true}
                     />
 
-                    {deepComparedProductFitlerOptions.flags.length > 0 && (
+                    {deepComparedProductFilterOptions.flags.length > 0 && (
                         <FilterGroup
                             title={t('Flags')}
                             filterField="flags"
-                            data={deepComparedProductFitlerOptions.flags}
+                            data={deepComparedProductFilterOptions.flags}
                             isOpen={true}
                         />
                     )}
 
-                    {deepComparedProductFitlerOptions.brands.length > 0 && (
+                    {deepComparedProductFilterOptions.brands.length > 0 && (
                         <FilterGroup
                             title={t('Brands')}
                             filterField="brands"
-                            data={deepComparedProductFitlerOptions.brands}
+                            data={deepComparedProductFilterOptions.brands}
                             isOpen={true}
                         />
                     )}
 
-                    {deepComparedProductFitlerOptions.parameters !== undefined &&
+                    {deepComparedProductFilterOptions.parameters !== undefined &&
                         parametersValue.map((parametersItem, index) => (
                             <FilterGroupParameters
                                 key={parametersItem.parameterUuid}
                                 parameterParentIndex={index}
                                 title={parametersItem.parameterName}
-                                data={deepComparedProductFitlerOptions.parameters?.[index]}
+                                data={deepComparedProductFilterOptions.parameters?.[index]}
                                 isDefaultCollapsed={
                                     parametersItem.isCollapsed &&
                                     getIsNotFilteredByParameter(parametersItem.parameterUuid)

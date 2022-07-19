@@ -7,7 +7,7 @@ import {
     SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
 
@@ -65,7 +65,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
     return (
         <>
             {checkedParameters.map((filteredParameter) => (
-                <>
+                <Fragment key={filteredParameter.parameterUuid}>
                     {(isMinMaxValueVisible(filteredParameter, 'minimalValue') ||
                         isMinMaxValueVisible(filteredParameter, 'maximalValue')) && (
                         <SelectedParametersListStyled>
@@ -127,7 +127,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                             )}
                         </SelectedParametersListStyled>
                     )}
-                </>
+                </Fragment>
             ))}
         </>
     );

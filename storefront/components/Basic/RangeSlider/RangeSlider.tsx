@@ -8,7 +8,6 @@ import {
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
 import TextInput from 'components/Forms/TextInput';
-import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import {
     ChangeEvent,
@@ -34,8 +33,6 @@ type RangeSliderProps = {
     maxValue: number;
     setMinValueCallback: (value: number) => void;
     setMaxValueCallback: (value: number) => void;
-    dispatchMinValue?: () => void;
-    dispatchMaxValue?: () => void;
 };
 
 const TEST_IDENTIFIER = 'basic-rangeslider';
@@ -48,32 +45,38 @@ const RangeSlider: FC<RangeSliderProps> = ({
     maxValue,
     setMinValueCallback,
     setMaxValueCallback,
-    dispatchMinValue,
-    dispatchMaxValue,
 }) => {
     const t = useTypedTranslationFunction();
 
     const [minValueInput, setMinValueInput] = useState(min);
     const [minValueThumb, setMinValueThumb] = useState(min);
-    const debouncedMinValue = useDebounce(minValueThumb, delay);
 
     const [maxValueInput, setMaxValueInput] = useState(max);
     const [maxValueThumb, setMaxValueThumb] = useState(max);
-    const debouncedMaxValue = useDebounce(maxValueThumb, delay);
 
     const range = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (debouncedMinValue !== minValue) {
-            setMinValueCallback(debouncedMinValue);
-        }
-    }, [debouncedMinValue, minValue, setMinValueCallback]);
+        const timer = setTimeout(() => {
+            if (minValueThumb !== minValue) {
+                setMinValueCallback(minValueThumb);
+            }
+        }, delay);
+
+        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [minValueThumb, delay]);
 
     useEffect(() => {
-        if (debouncedMaxValue !== maxValue) {
-            setMaxValueCallback(debouncedMaxValue);
-        }
-    }, [debouncedMaxValue, maxValue, setMaxValueCallback]);
+        const timer = setTimeout(() => {
+            if (maxValueThumb !== maxValue) {
+                setMaxValueCallback(maxValueThumb);
+            }
+        }, delay);
+
+        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [maxValueThumb, delay]);
 
     useEffect(() => {
         if (minValue < min) {
@@ -113,32 +116,26 @@ const RangeSlider: FC<RangeSliderProps> = ({
         (event) => {
             const value = parseFloat(event.currentTarget.value);
             if (value < min || Number.isNaN(value)) {
-                if (dispatchMinValue) {
-                    dispatchMinValue();
-                }
                 setMinValueThumb(min);
                 setMinValueInput(min);
             } else {
                 setMinValueCallback(value);
             }
         },
-        [dispatchMinValue, min, setMinValueCallback],
+        [min, setMinValueCallback],
     );
 
     const onBlurMaxHandler = useCallback<FocusEventHandler<HTMLInputElement>>(
         (event) => {
             const value = parseFloat(event.currentTarget.value);
             if (value > max || Number.isNaN(value)) {
-                if (dispatchMaxValue) {
-                    dispatchMaxValue();
-                }
                 setMaxValueThumb(max);
                 setMaxValueInput(max);
             } else {
                 setMaxValueCallback(value);
             }
         },
-        [dispatchMaxValue, max, setMaxValueCallback],
+        [max, setMaxValueCallback],
     );
 
     const onChangeMaxInputHandler = useCallback<ChangeEventHandler<HTMLInputElement>>(

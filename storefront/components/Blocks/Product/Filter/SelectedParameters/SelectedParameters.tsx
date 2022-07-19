@@ -70,7 +70,33 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
     };
 
     const onResetAllParameters = () => {
-        formProviderMethods.reset();
+        productFilterOptions.flags.forEach((flag, index) =>
+            formProviderMethods.setValue(`flags.${index}`, { ...flag.flag, checked: false }),
+        );
+        productFilterOptions.brands.forEach((brand, index) =>
+            formProviderMethods.setValue(`brands.${index}`, { ...brand.brand, checked: false }),
+        );
+        productFilterOptions.parameters?.forEach((parameterItem, parameterIndex) => {
+            formProviderMethods.setValue(`parameters.${parameterIndex}`, {
+                parameterName: parameterItem.name,
+                selectedValue: 'selectedValue' in parameterItem ? parameterItem.selectedValue : null,
+                parameterUuid: parameterItem.uuid,
+                unit: 'unit' in parameterItem ? parameterItem.unit : null,
+                isCollapsed: parameterItem.isCollapsed,
+                minimalValue: null,
+                maximalValue: null,
+                values:
+                    'values' in parameterItem
+                        ? parameterItem.values.map((value) => ({
+                              ...value,
+                              rgbHex: 'rgbHex' in value ? value.rgbHex : null,
+                              checked: false,
+                          }))
+                        : [],
+            });
+        });
+        formProviderMethods.setValue(`onlyInStock`, false);
+        onResetPrices();
     };
 
     if (
