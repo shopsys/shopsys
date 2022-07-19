@@ -9,7 +9,7 @@ If you are using PHPStorm, we have prepared code scheme for you to work easily w
 - To configure your IDE, select `PhpStorm -> Preferences` for macOS or `File -> Settings` for Windows and Linux.
 - From menu select `Editor -> Code Style`
 - Right of `Scheme` select box is cogwheel, click it and select `Import Scheme...`
-- Import file `storefront/config/phpstorm/phpstorm.xml`
+- Import file `app/config/phpstorm/phpstorm.xml`
 - Now you will see new scheme in Scheme select box
 - Make sure that you have selected this scheme for PHP, Javascript and Typescript
 
