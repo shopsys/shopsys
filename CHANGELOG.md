@@ -29,6 +29,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [v10.0.2](https://github.com/shopsys/shopsys/compare/v10.0.1...v10.0.2) (2022-07-20)
+
+:bug: Bug Fixes
+- \[framework\] fixed EntityExtensionSubscriber [\#2473](https://github.com/shopsys/shopsys/pull/2473) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:hammer: Developer experience and refactoring
+
+- \[framework\] removed usage of deprecated FrameworkBundle:Redirect:redirect [\#2480](https://github.com/shopsys/shopsys/pull/2480) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[framework\] removed Redis deprecations [\#2481](https://github.com/shopsys/shopsys/pull/2481) ([RobinDvorak](https://github.com/RobinDvorak))
+- \[shopsys\] logger usage is now compliant with PSR-3 [\#2483](https://github.com/shopsys/shopsys/pull/2483) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] removed graphql hotfix after underlying issue was resolved [\#2485](https://github.com/shopsys/shopsys/pull/2485) ([grossmannmartin](https://github.com/grossmannmartin))
+
 ## [v10.0.1](https://github.com/shopsys/shopsys/compare/v10.0.0...v10.0.1) (2022-06-16)
 
 :bug: Bug Fixes
