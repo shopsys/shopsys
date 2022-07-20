@@ -81,11 +81,30 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
 
             if (filteredValues.length > 0) {
                 newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: filteredValues });
+            } else if (
+                'minimalValue' in currentParameterWithFilteredValues &&
+                'maximalValue' in currentParameterWithFilteredValues
+            ) {
+                const parameter = deepComparedProductFilterOptions.parameters?.find(
+                    (param) => param.uuid === currentParameterWithFilteredValues.parameterUuid,
+                );
+                if (
+                    (currentParameterWithFilteredValues.minimalValue !== null &&
+                        parameter &&
+                        'minimalValue' in parameter &&
+                        parameter.minimalValue !== currentParameterWithFilteredValues.minimalValue) ||
+                    (currentParameterWithFilteredValues.maximalValue !== null &&
+                        parameter &&
+                        'maximalValue' in parameter &&
+                        parameter.maximalValue !== currentParameterWithFilteredValues.maximalValue)
+                ) {
+                    newCheckedParameters.push({ ...currentParameterWithFilteredValues, values: [] });
+                }
             }
         });
 
         return newCheckedParameters;
-    }, [parametersValue]);
+    }, [deepComparedProductFilterOptions.parameters, parametersValue]);
 
     useEffect(() => {
         const routerQueryWithoutAllParameter = getQueryWithoutAllParameter(router);
