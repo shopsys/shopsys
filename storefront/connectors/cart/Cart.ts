@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
 import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
@@ -7,8 +7,19 @@ import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapTransport } from 'connectors/transports/Transports';
-import { AddToCartMutationApi, CartFragmentApi, CartItemFragmentApi, useCartQueryApi } from 'graphql/generated';
+import {
+    AddToCartMutationApi,
+    CartFragmentApi,
+    CartItemFragmentApi,
+    CartItemModificationsFragmentApi,
+    CartModificationsFragmentApi,
+    CartPaymentModificationsFragmentApi,
+    CartPromoCodeModificationsFragmentApi,
+    CartTransportModificationsFragmentApi,
+    useCartQueryApi,
+} from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
@@ -17,7 +28,7 @@ import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
 import { CombinedError } from 'urql';
 
-export const useCurrentCart = (fromCache = false): CurrentCartType => {
+export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isInitiallyLoaded = useRef(false);
     const { isUserLoggedIn } = useCurrentUserData();
     const { cartUuid } = useShopsysSelector((state) => state.user);
@@ -54,7 +65,6 @@ export const useCurrentCart = (fromCache = false): CurrentCartType => {
             // EXTEND EMPTY CART HERE
             return getEmptyCart(isInitiallyLoaded.current, true);
         }
-
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart, currencyCode);
 
@@ -70,6 +80,7 @@ export const useCurrentCart = (fromCache = false): CurrentCartType => {
             promoCode: result.data.cart.promoCode,
             isLoaded: true,
             isInitiallyLoaded: isInitiallyLoaded.current,
+            modifications: result.data.cart.modifications,
         };
     }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded]);
 };
@@ -84,6 +95,7 @@ const getEmptyCart = (isInitiallyLoaded: boolean, isLoaded = true): CurrentCartT
     promoCode: null,
     isLoaded,
     isInitiallyLoaded,
+    modifications: null,
 });
 
 const handleCartError = (error: CombinedError, t: Translate) => {
@@ -145,4 +157,83 @@ export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string):
             categoryNames: apiData.product.categories.map((category) => category.name),
         },
     };
+};
+
+export const handleCartModifications = (
+    cartModifications: CartModificationsFragmentApi,
+    t: Translate,
+    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
+): void => {
+    handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
+    handleCartPaymentModifications(cartModifications.paymentModifications, t);
+    handleCartItemModifications(cartModifications.itemModifications, t);
+    handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t);
+};
+
+const handleCartTransportModifications = (
+    transportModifications: CartTransportModificationsFragmentApi,
+    t: Translate,
+    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
+): void => {
+    if (transportModifications.transportPriceChanged) {
+        showInfoMessage(t('The price of the transport you selected has changed.'));
+    }
+    if (transportModifications.transportUnavailable) {
+        changePaymentInCart(null, null);
+        showInfoMessage(t('The transport you selected is no longer available.'));
+        showInfoMessage(t('Your payment selection has been removed.'));
+    }
+    if (transportModifications.transportWeightLimitExceeded) {
+        changePaymentInCart(null, null);
+        showInfoMessage(t('You have exceeded the weight limit of the selected transport.'));
+        showInfoMessage(t('Your payment selection has been removed.'));
+    }
+};
+
+const handleCartPaymentModifications = (
+    paymentModifications: CartPaymentModificationsFragmentApi,
+    t: Translate,
+): void => {
+    if (paymentModifications.paymentPriceChanged) {
+        showInfoMessage(t('The price of the payment you selected has changed.'));
+    }
+    if (paymentModifications.paymentUnavailable) {
+        showInfoMessage(t('The payment you selected is no longer available.'));
+    }
+};
+
+const handleCartItemModifications = (itemModifications: CartItemModificationsFragmentApi, t: Translate): void => {
+    for (const cartItemWithChangedQuantity of itemModifications.cartItemsWithChangedQuantity) {
+        showInfoMessage(
+            t('The quantity of item {{ itemName }} has changed.', {
+                itemName: cartItemWithChangedQuantity.product.fullName,
+            }),
+        );
+    }
+    for (const cartItemWithModifiedPrice of itemModifications.cartItemsWithModifiedPrice) {
+        showInfoMessage(
+            t('The price of item {{ itemName }} has changed.', {
+                itemName: cartItemWithModifiedPrice.product.fullName,
+            }),
+        );
+    }
+    for (const soldOutCartItem of itemModifications.noLongerAvailableCartItemsDueToQuantity) {
+        showInfoMessage(t('Item {{ itemName }} has been sold out.', { itemName: soldOutCartItem.product.fullName }));
+    }
+    for (const nonListableCartItem of itemModifications.noLongerListableCartItems) {
+        showInfoMessage(
+            t('Item {{ itemName }} can no longer be bought.', { itemName: nonListableCartItem.product.fullName }),
+        );
+    }
+};
+
+const handleCartPromoCodeModifications = (
+    promoCodeModifications: CartPromoCodeModificationsFragmentApi,
+    t: Translate,
+): void => {
+    for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {
+        showInfoMessage(
+            t('The promo code {{ promoCode }} is no longer applicable.', { promoCode: nonApplicablePromoCode }),
+        );
+    }
 };

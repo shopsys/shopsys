@@ -1,0 +1,7 @@
+fragment CartTransportModificationsFragment on CartTransportModificationsResult {
+    __typename
+    transportPriceChanged
+    transportUnavailable
+    transportWeightLimitExceeded
+    personalPickupStoreUnavailable
+}

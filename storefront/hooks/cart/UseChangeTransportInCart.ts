@@ -2,6 +2,7 @@ import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -14,6 +15,8 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
+
+    const gtmCart = useLatest(gtmCartEventInfo.cart);
 
     const changeTransportHandler = useCallback(
         async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
@@ -43,7 +46,7 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
             }
 
             onTransportChangeGtmEventHandler(
-                gtmCartEventInfo.cart,
+                gtmCart.current,
                 changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
                 newPickupPlace,
                 changeTransportResult.data?.ChangeTransportInCart.payment?.name,
@@ -52,7 +55,7 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
 
             return changeTransportResult.data?.ChangeTransportInCart;
         },
-        [cartUuid, changeTransportInCart, currencyCode, gtmCartEventInfo.cart, t],
+        [cartUuid, changeTransportInCart, currencyCode, gtmCart, t],
     );
 
     return changeTransportHandler;

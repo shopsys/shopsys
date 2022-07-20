@@ -2,13 +2,19 @@ import { toast } from 'react-toastify';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
-        toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-error'} />);
+        toast.error(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-error'} />, {
+            toastId: message,
+        });
     }
     if (type === 'info') {
-        toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-info'} />);
+        toast.info(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-info'} />, {
+            toastId: message,
+        });
     }
     if (type === 'success') {
-        toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-success'} />);
+        toast.success(() => <span dangerouslySetInnerHTML={{ __html: message }} data-testid={'toast-success'} />, {
+            toastId: message,
+        });
     }
 };
 

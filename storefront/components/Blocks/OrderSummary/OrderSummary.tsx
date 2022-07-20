@@ -17,7 +17,7 @@ const OrderSummary: FC = () => {
     const testIdentifier = 'blocks-ordersummary';
 
     const t = useTypedTranslationFunction();
-    const { cart, transport, payment, promoCode } = useCurrentCart(true);
+    const { cart, transport, payment, promoCode } = useCurrentCart();
 
     if (cart === null) {
         return null;

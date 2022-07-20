@@ -1,32 +1,15 @@
-fragment CartModificationsFragment on CartInterface {
+fragment CartModificationsFragment on CartModificationsResult {
     __typename
-    modifications{
-        __typename
-        itemModifications {
-            __typename
-            noLongerListableCartItems {
-                ...CartItemFragment
-            }
-            cartItemsWithModifiedPrice {
-                ...CartItemFragment
-            }
-            cartItemsWithChangedQuantity {
-                ...CartItemFragment
-            }
-            noLongerAvailableCartItemsDueToQuantity {
-                ...CartItemFragment
-            }
-        }
-        transportModifications {
-            __typename
-            transportPriceChanged
-            transportUnavailable
-            transportWeightLimitExceeded
-        }
-        paymentModifications {
-            __typename
-            paymentPriceChanged
-            paymentUnavailable
-        }
+    itemModifications {
+        ...CartItemModificationsFragment
+    }
+    transportModifications {
+        ...CartTransportModificationsFragment
+    }
+    paymentModifications {
+        ...CartPaymentModificationsFragment
+    }
+    promoCodeModifications {
+        ...CartPromoCodeModificationsFragment
     }
 }

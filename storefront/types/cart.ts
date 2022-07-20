@@ -2,6 +2,7 @@ import { AvailabilityType } from './availability';
 import { SimpleBrandType } from './brand';
 import { ImageType } from './image';
 import { PaymentType } from './payment';
+import { CartModificationsFragmentApi } from 'graphql/generated';
 import { SimpleFlagType } from 'types/flag';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType, ProductPriceType } from 'types/price';
@@ -18,6 +19,7 @@ export type CurrentCartType = {
     promoCode: string | null;
     isLoaded: boolean;
     isInitiallyLoaded: boolean;
+    modifications: CartModificationsFragmentApi | null;
 };
 
 export type ProductCartItemType = {

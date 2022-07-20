@@ -355,5 +355,16 @@
     "Reject all": "Odmítnout vše",
     "cookiePolicyLink": "Pro více informací si můžete přečíst <link>jak zacházíme se soubory cookies</link>",
     "Cookie consent update": "Nastavení cookies",
-    "Your cookie settings have been saved.": "Vaše nastavení souborů cookies bylo uloženo."
+    "Your cookie settings have been saved.": "Vaše nastavení souborů cookies bylo uloženo.",
+    "The price of the transport you selected has changed.": "Cena dopravy, kterou jste si zvolili, se změnila.",
+    "The transport you selected is no longer available.": "Doprava, kterou jste si zvolili, již není dostupná.",
+    "You have exceeded the weight limit of the selected transport.": "Přesáhli jste váhový limit vámi zvolené dopravy.",
+    "The price of the payment you selected has changed.": "Cena platby, kterou jste si zvolili, se změnila.",
+    "The payment you selected is no longer available.": "Platba, kterou jste si zvolili, již není dostupná.",
+    "The quantity of item {{ itemName }} has changed.": "Množství položky {{ itemName }} se změnilo.",
+    "The price of item {{ itemName }} has changed.": "Cena položky {{ itemName }} se změnila.",
+    "Item {{ itemName }} has been sold out.": "Položka {{ itemName }} byla vyprodána.",
+    "Item {{ itemName }} can no longer be bought.": "Položku {{ itemName }} již nelze zakoupit.",
+    "The promo code {{ promoCode }} is no longer applicable.": "Slevový kupón {{ promoCode }} již nelze uplatnit.",
+    "Your payment selection has been removed.": "Vaše volba dopravy byla zrušena."
 }

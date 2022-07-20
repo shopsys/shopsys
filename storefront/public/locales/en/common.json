@@ -336,5 +336,16 @@
     "Reject all": "Reject all",
     "cookiePolicyLink": "To learn more, you can read our <link>cookie policy</link>",
     "Cookie consent update": "Cookie consent update",
-    "Your cookie settings have been saved.": "Your cookie settings have been saved."
+    "Your cookie settings have been saved.": "Your cookie settings have been saved.",
+    "The price of the transport you selected has changed.": "The price of the transport you selected has changed.",
+    "The transport you selected is no longer available.": "The transport you selected is no longer available.",
+    "You have exceeded the weight limit of the selected transport.": "You have exceeded the weight limit of the selected transport.",
+    "The price of the payment you selected has changed.": "The price of the payment you selected has changed.",
+    "The payment you selected is no longer available.": "The payment you selected is no longer available.",
+    "The quantity of item {{ itemName }} has changed.": "The quantity of item {{ itemName }} has changed.",
+    "The price of item {{ itemName }} has changed.": "The price of item {{ itemName }} has changed.",
+    "Item {{ itemName }} has been sold out.": "Item {{ itemName }} has been sold out.",
+    "Item {{ itemName }} can no longer be bought.": "Item {{ itemName }} can no longer be bought.",
+    "The promo code {{ promoCode }} is no longer applicable.": "The promo code {{ promoCode }} is no longer applicable.",
+    "Your payment selection has been removed.": "Your payment selection has been removed."
 }

@@ -639,7 +639,7 @@
     );
     ```
     - you will probably not need to deduplicate your mutations, it is only required for optimistic mutations, where changes may glitch if they are not deduplicated
-    - cart can now be taken from cache, just use the `fromCache` option on the `useCurrentCart` hook
+    - [WARNING - Changed in another US](https://shopsys.atlassian.net/browse/FWCC-452) cart can now be taken from cache, just use the `fromCache` option on the `useCurrentCart` hook
     ```ts
     const { transport, pickupPlace, payment, isInitiallyLoaded, paymentGoPayBankSwift } = useCurrentCart(true);
     ```
@@ -731,3 +731,48 @@
             - You can vote for this issue by clicking thumbs up icon on Youtrack website - more votes, the sooner it will be fixed
     - fragments are not reusable at this moment and when you want to use fragment for example in `AddToCartMutation.graphql` you have to write (or copy and paste) fragment to this file
         - it's because `\Tests\FrontendApiBundle\Test\GraphQlTestCase::getResponseContentForGql` method loads only file with specific query of mutation
+
+### Cart watcher
+- [FWCC-452](https://shopsys.atlassian.net/browse/FWCC-452)
+- [FWCC-452 - Cart watcher ](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/671/diffs)
+- the reasons these changes were introduced
+  - user should be notified when his cart, transport, or payment change in any way
+  - some actions need to be taken on SF if a data point is modified by the API
+- most significant changes
+  - cart modifications are handled every time they change
+  - every change is shown to the user via flash message (toast)
+  - `useReloadCart` hook was introduced to handle cart reloading and modifications on every page
+- other changes
+  - `useCurrentCart` hook now by default reads the data from the cache
+   - the only exception is the `useReloadCart` hook, which is placed in the `_app.tsx` component to load the cart on every page
+   - this reduced the number of calls to the API to get a fresh cart without compromising data integrity
+   - rewriting of `CartFragment` needs to be handled manually for cart-modifying mutations (change of transport/payment, promocode changes)
+- tips on how to implement them
+  - if you have a different mutation that is able to modify cart (club points, other special data points), you will need to modify the cache in order so it is able to manually update the cache
+  - below you can see an example, where the pseudo-name is `MyCustomMutationName`
+  - if you want to make it work, you will need to change `MyCustomMutationName` to you own mutation name
+  - the mutation needs to return `Cart` API type
+  ```ts
+  MyCustomMutationName(result, _args, cache) {
+      if (typeof result.MyCustomMutationName !== 'undefined') {
+        const response = result.MyCustomMutationName as CartApi;
+        cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
+            { query: CartQueryDocumentApi, variables: { cartUuid: response.uuid } },
+            (data) => {
+                if (typeof result.MyCustomMutationName !== 'undefined') {
+                    // eslint-disable-next-line no-param-reassign
+                    data = {
+                        __typename: 'Query',
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        cart: response,
+                    };
+                }
+
+                return data;
+            },
+        );
+      }
+  },
+
+  ```

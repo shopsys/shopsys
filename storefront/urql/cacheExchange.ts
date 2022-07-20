@@ -1,6 +1,8 @@
 import { Cache, cacheExchange, Data } from '@urql/exchange-graphcache';
 import { IntrospectionQuery } from 'graphql';
 import {
+    AddToCartResultApi,
+    CartApi,
     CartQueryApi,
     CartQueryDocumentApi,
     CartQueryVariablesApi,
@@ -16,7 +18,6 @@ import {
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
-const keyCart = () => 'cart';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
@@ -36,7 +37,7 @@ const cache = cacheExchange({
         BlogCategory: keyUuid,
         Brand: keyUuid,
         BrandFilterOption: keyNull,
-        Cart: keyCart,
+        Cart: keyUuid,
         CartItem: keyUuid,
         CartItemModificationsResult: keyNull,
         CartModificationsResult: keyNull,
@@ -99,7 +100,45 @@ const cache = cacheExchange({
                 invalidateFields(cache, ['currentCustomerUser']);
             },
             CreateOrder(_result, _args, cache) {
-                invalidateFields(cache, ['currentCustomerUser']);
+                invalidateFields(cache, ['currentCustomerUser', 'cart']);
+            },
+            AddToCart(result, _args, cache) {
+                const newCart =
+                    typeof result.AddToCart !== 'undefined' ? (result.AddToCart as AddToCartResultApi) : undefined;
+                manuallyUpdateCartFragment(cache, newCart?.cart);
+            },
+            ChangeTransportInCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ChangeTransportInCart !== 'undefined'
+                        ? (result.ChangeTransportInCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            ChangePaymentInCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ChangePaymentInCart !== 'undefined'
+                        ? (result.ChangePaymentInCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            RemoveFromCart(result, _args, cache) {
+                const newCart =
+                    typeof result.RemoveFromCart !== 'undefined' ? (result.RemoveFromCart as CartApi) : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            ApplyPromoCodeToCart(result, _args, cache) {
+                const newCart =
+                    typeof result.ApplyPromoCodeToCart !== 'undefined'
+                        ? (result.ApplyPromoCodeToCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
+            },
+            RemovePromoCodeFromCart(result, _args, cache) {
+                const newCart =
+                    typeof result.RemovePromoCodeFromCart !== 'undefined'
+                        ? (result.RemovePromoCodeFromCart as CartApi)
+                        : undefined;
+                manuallyUpdateCartFragment(cache, newCart);
             },
         },
     },
@@ -148,6 +187,27 @@ const invalidateFields = (cache: Cache, fields: string[]): void => {
         if (fields.includes(field.fieldName)) {
             cache.invalidate(key, field.fieldKey);
         }
+    }
+};
+
+const manuallyUpdateCartFragment = (cache: Cache, newCart: CartApi | undefined) => {
+    if (newCart !== undefined) {
+        cache.updateQuery<CartQueryApi, CartQueryVariablesApi>(
+            { query: CartQueryDocumentApi, variables: { cartUuid: newCart.uuid } },
+            (data) => {
+                if (typeof newCart !== 'undefined') {
+                    // eslint-disable-next-line no-param-reassign
+                    data = {
+                        __typename: 'Query',
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        cart: newCart,
+                    };
+                }
+
+                return data;
+            },
+        );
     }
 };
 
