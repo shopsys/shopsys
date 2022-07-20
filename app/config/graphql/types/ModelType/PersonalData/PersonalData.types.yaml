@@ -11,3 +11,6 @@ PersonalData:
             newsletterSubscriber:
                 type: "NewsletterSubscriber"
                 description: "Newsletter subscription"
+            exportLink:
+                type: "String!"
+                description: "A link for downloading the personal data in an XML file"

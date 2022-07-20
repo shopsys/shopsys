@@ -8,6 +8,7 @@ use App\Component\Setting\Setting;
 use App\FrontendApi\Resolver\PersonalData\Exception\PersonalDataHashInvalidUserError;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\OrderFacade;
+use App\Model\PersonalData\PersonalDataExportFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
@@ -57,6 +58,11 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
     private PersonalDataAccessRequestFacade $personalDataAccessRequestFacade;
 
     /**
+     * @var \App\Model\PersonalData\PersonalDataExportFacade
+     */
+    private PersonalDataExportFacade $personalDataExportFacade;
+
+    /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -64,6 +70,7 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
+     * @param \App\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
      */
     public function __construct(
         Setting $setting,
@@ -72,7 +79,8 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
         CustomerUserFacade $customerUserFacade,
         OrderFacade $orderFacade,
         NewsletterFacade $newsletterFacade,
-        PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
+        PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        PersonalDataExportFacade $personalDataExportFacade,
     ) {
         $this->setting = $setting;
         $this->domain = $domain;
@@ -81,6 +89,7 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
         $this->orderFacade = $orderFacade;
         $this->newsletterFacade = $newsletterFacade;
         $this->personalDataAccessRequestFacade = $personalDataAccessRequestFacade;
+        $this->personalDataExportFacade = $personalDataExportFacade;
     }
 
     /**
@@ -121,6 +130,7 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
             'orders' => $orders,
             'customerUser' => $customerUser,
             'newsletterSubscriber' => $newsletterSubscriber,
+            'exportLink' => $this->personalDataExportFacade->generateExportRequestAndGetLink($email),
         ];
     }
 

@@ -64,7 +64,7 @@
     "Customized E-shop by": "E-shop na míru od",
     "Czechia": "Česko",
     "Delivery address": "Dodací adresa",
-    "Delivery addresses": "Dodací adresa",
+    "Delivery addresses": "Dodací adresy",
     "Delivery in {{count}} days_0": "Můžete mít ještě dnes",
     "Delivery in {{count}} days_one": "Doručení do 1 dne",
     "Delivery in {{count}} days_few": "Doručení do {{count}} dnů",
@@ -366,5 +366,9 @@
     "Item {{ itemName }} has been sold out.": "Položka {{ itemName }} byla vyprodána.",
     "Item {{ itemName }} can no longer be bought.": "Položku {{ itemName }} již nelze zakoupit.",
     "The promo code {{ promoCode }} is no longer applicable.": "Slevový kupón {{ promoCode }} již nelze uplatnit.",
-    "Your payment selection has been removed.": "Vaše volba dopravy byla zrušena."
+    "Your payment selection has been removed.": "Vaše volba dopravy byla zrušena.",
+    "Newsletter subscription": "Odběr newsletteru",
+    "Subscribed from": "Odebíráno od",
+    "Default delivery address": "Výchozí dodací adresa",
+    "Download as XML": "Stáhnout ve formátu XML"
 }

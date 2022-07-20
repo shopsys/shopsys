@@ -20,7 +20,9 @@ class AccessPersonalDataTest extends GraphQlTestCase
     {
         parent::setUp();
 
+        /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory */
         $personalDataAccessRequestDataFactory = $this->getContainer()->get(PersonalDataAccessRequestDataFactory::class);
+        /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade */
         $personalDataAccessRequestFacade = $this->getContainer()->get(PersonalDataAccessRequestFacade::class);
 
         $personalDataAccessRequest = $personalDataAccessRequestDataFactory->createForDisplay();
@@ -48,6 +50,7 @@ class AccessPersonalDataTest extends GraphQlTestCase
                     newsletterSubscriber {
                         email
                     }
+                    exportLink
                 }
             }
         ';
@@ -63,12 +66,14 @@ class AccessPersonalDataTest extends GraphQlTestCase
             'email' => 'no-reply@shopsys.com',
         ];
 
-        $this->assertSame($accessPersonalDataData['customerUser'], $expectedCustomerUser);
+        $this->assertSame($expectedCustomerUser, $accessPersonalDataData['customerUser']);
 
         $expectedNewsletterSubscriber = [
             'email' => 'no-reply@shopsys.com',
         ];
 
-        $this->assertSame($accessPersonalDataData['newsletterSubscriber'], $expectedNewsletterSubscriber);
+        $this->assertSame($expectedNewsletterSubscriber, $accessPersonalDataData['newsletterSubscriber']);
+
+        $this->assertMatchesRegularExpression('/.*\/personal-overview-export\/xml\/.*/', $accessPersonalDataData['exportLink']);
     }
 }

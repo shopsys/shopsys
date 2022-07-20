@@ -53,11 +53,7 @@ const PersonalDataExport: FC = () => {
         }
     }, [formMeta.messages.success, personalDataExportResult]);
 
-    const contentSiteText: string | undefined =
-        personalDataPageTextResult.data?.personalDataPage !== undefined &&
-        personalDataPageTextResult.data.personalDataPage !== null
-            ? personalDataPageTextResult.data.personalDataPage.exportSiteContent
-            : undefined;
+    const contentSiteText = personalDataPageTextResult.data?.personalDataPage?.exportSiteContent;
 
     return (
         <>

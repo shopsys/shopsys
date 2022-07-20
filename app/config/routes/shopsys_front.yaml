@@ -67,6 +67,9 @@ front_additional_image_without_type:
 
 front_export_personal_data:
     path: /personal-overview-export/xml/{hash}
+    defaults:
+        _controller: App\Controller\Front\PersonalDataController:exportXmlAction
+        type: ~
 
 front_download_uploaded_file:
     path: /file/{uploadedFileId}/{uploadedFilename}
