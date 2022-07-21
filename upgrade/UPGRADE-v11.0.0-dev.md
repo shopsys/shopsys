@@ -941,4 +941,7 @@ There you can find links to upgrade notes for other versions too.
         - resolve: "@=mutation('create_order', [args, validator])"
         + resolve: resolve: "@=mutation('create_order', args, validator)"
         ```
-  - check other changes in [GraphQLBundle UPGRADE notes](https://github.com/overblog/GraphQLBundle/blob/master/UPGRADE.md#upgrade-from-013-to-014) and implement them in your codebase
+    - check other changes in [GraphQLBundle UPGRADE notes](https://github.com/overblog/GraphQLBundle/blob/master/UPGRADE.md#upgrade-from-013-to-014) and implement them in your codebase
+- remove mocked Events from your tests ([#2490](https://github.com/shopsys/shopsys/pull/2490))
+    - see #project-base-diff
+    - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
