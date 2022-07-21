@@ -5,11 +5,14 @@ namespace Tests\FrameworkBundle\Unit\Model\Product;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ProductVisibilityFacadeTest extends TestCase
 {
-    public function testOnKernelResponseRecalc()
+    public function testOnKernelResponseRecalc(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock
@@ -20,34 +23,34 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock);
         $productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
 
-        $eventMock = $this->getMockBuilder(ResponseEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
-            ->getMock();
-        $eventMock->expects($this->any())->method('isMasterRequest')
-            ->willReturn(true);
+        $responseEvent = new ResponseEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+            new Response()
+        );
 
-        $productVisibilityFacade->onKernelResponse($eventMock);
+        $productVisibilityFacade->onKernelResponse($responseEvent);
     }
 
-    public function testOnKernelResponseNoRecalc()
+    public function testOnKernelResponseNoRecalc(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock->expects($this->never())->method('refreshProductsVisibility');
 
         $productVisibilityFacade = new ProductVisibilityFacade($productVisibilityRepositoryMock);
 
-        $eventMock = $this->getMockBuilder(ResponseEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
-            ->getMock();
-        $eventMock->expects($this->any())->method('isMasterRequest')
-            ->willReturn(true);
+        $responseEvent = new ResponseEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+            new Response()
+        );
 
-        $productVisibilityFacade->onKernelResponse($eventMock);
+        $productVisibilityFacade->onKernelResponse($responseEvent);
     }
 
-    public function testRefreshProductsVisibility()
+    public function testRefreshProductsVisibility(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock->expects($this->once())->method('refreshProductsVisibility');
@@ -56,7 +59,7 @@ class ProductVisibilityFacadeTest extends TestCase
         $productVisibilityFacade->refreshProductsVisibility();
     }
 
-    public function testRefreshProductsVisibilityForMarked()
+    public function testRefreshProductsVisibilityForMarked(): void
     {
         $productVisibilityRepositoryMock = $this->createMock(ProductVisibilityRepository::class);
         $productVisibilityRepositoryMock
