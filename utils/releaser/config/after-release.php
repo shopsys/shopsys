@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\BeHappyReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckHeimdallBuildReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesOnPackagistReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesTravisBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CreateReleaseNotesReleaseWorker;
@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(CheckUncommittedChangesReleaseWorker::class);
     $services->set(CheckPackagesOnPackagistReleaseWorker::class);
     $services->set(CheckHeimdallBuildReleaseWorker::class);
-    $services->set(CheckPackagesTravisBuildsReleaseWorker::class);
+    $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
     $services->set(RemoveLockFilesReleaseWorker::class);
     $services->set(SetFrameworkBundleVersionToDevReleaseWorker::class);
     $services->set(SetMutualDependenciesToDevelopmentVersionReleaseWorker::class);
