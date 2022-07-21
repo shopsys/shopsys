@@ -789,3 +789,14 @@
     - `blogCategoriesTree` of type `ListedBlogCategoryType[]` is added to `BlogCategoryDetailType`
     - created new fragment `BlogCategoriesFragment` on `BlogCategory` (extracted from `BlogCategoriesQuery.graphql`)
         - used in `BlogCategoryDetailFragment.graphql`
+
+### Reset contact information for not-logged user when order is sent
+- [FWCC-1066](https://shopsys.atlassian.net/browse/FWCC-1066)
+- [FWCC-1066 - reset contact information for not-logged user when order is sent](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/706/diffs)
+- the reasons these changes were introduced:
+    - data for a non-logged-in user in the order process was now only partially remembered
+    - the user data of a non-logged-in user should not be remembered after the order has been sent
+- most significant changes
+    - dispatch to Redux for inputs for delivery form was added 
+    - the useEffect to handle users delivery addresses is used only for logged user
+    - `reset` action was added to the `contactInformationActions` and is called when order is successfully sent
