@@ -44,3 +44,6 @@ BlogCategory:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_blogcategory_detail"])'
+            blogCategoriesTree:
+                type: "[BlogCategory!]!"
+                description: "Tho whole blog categories tree (used for blog navigation rendering)"

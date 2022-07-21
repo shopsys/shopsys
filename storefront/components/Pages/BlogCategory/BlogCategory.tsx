@@ -4,7 +4,6 @@ import Heading from 'components/Basic/Heading';
 import BlogSignpost from 'components/Blocks/BlogSignpost';
 import Pagination from 'components/Blocks/Pagination/Pagination';
 import Webline from 'components/Layout/Webline';
-import { useBlogCategoryItems } from 'connectors/blogCategory/BlogCategory';
 import { FC, useRef } from 'react';
 import { BlogCategoryDetailType } from 'types/blogCategory';
 
@@ -13,7 +12,6 @@ type BlogCategoryProps = {
 };
 
 const BlogCategory: FC<BlogCategoryProps> = (props) => {
-    const blogCategoriesItems = useBlogCategoryItems();
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (
@@ -31,7 +29,10 @@ const BlogCategory: FC<BlogCategoryProps> = (props) => {
                         </BlogCategoryListStyled>
                     )}
                     <BlogCategoryPanelStyled>
-                        <BlogSignpost blogCategoryItems={blogCategoriesItems} activeItem={props.blogCategory.uuid} />
+                        <BlogSignpost
+                            blogCategoryItems={props.blogCategory.blogCategoriesTree}
+                            activeItem={props.blogCategory.uuid}
+                        />
                     </BlogCategoryPanelStyled>
                 </BlogCategoryStyled>
             </div>

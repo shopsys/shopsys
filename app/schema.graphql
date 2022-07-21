@@ -232,6 +232,8 @@ type BlogArticleEdge {
 type BlogCategory implements Breadcrumb & Slug {
   """Paginated blog articles of the given blog category"""
   blogArticles(after: String, before: String, first: Int, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection!
+  """Tho whole blog categories tree (used for blog navigation rendering)"""
+  blogCategoriesTree: [BlogCategory!]!
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
   """The blog category children"""
