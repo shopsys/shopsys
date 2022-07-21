@@ -40,8 +40,8 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
      */
     public function run(): void
     {
-        $this->logger->addInfo('Start clear transfer issue table');
+        $this->logger->info('Start clear transfer issue table');
         $this->transferIssueRepository->deleteOldTransferIssues();
-        $this->logger->addInfo('End of clear transfer issue table');
+        $this->logger->info('End of clear transfer issue table');
     }
 }

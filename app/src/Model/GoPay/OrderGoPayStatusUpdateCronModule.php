@@ -65,13 +65,13 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
         $twentyOneDaysAgo = $now->sub(DateInterval::createFromDateString('21 days'));
         $orders = $this->orderFacade->getAllUnpaidGoPayOrders($twentyOneDaysAgo);
 
-        $this->logger->addInfo('Downloading status updates for `' . count($orders) . '` orders.');
+        $this->logger->info('Downloading status updates for `' . count($orders) . '` orders.');
 
         foreach ($orders as $order) {
-            $this->logger->addInfo('Downloading GoPay status for order with ID `' . $order->getId() . '`.');
+            $this->logger->info('Downloading GoPay status for order with ID `' . $order->getId() . '`.');
 
             if ($order->isDeleted()) {
-                $this->logger->addInfo(sprintf(
+                $this->logger->info(sprintf(
                     'Order status of order with ID `%s` has not been changed because is deleted',
                     $order->getId()
                 ));
@@ -85,7 +85,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             try {
                 $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
             } catch (GoPayPaymentDownloadException $e) {
-                $this->logger->addError($e->getMessage());
+                $this->logger->error($e->getMessage());
 
                 continue;
             }

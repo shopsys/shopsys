@@ -37,8 +37,8 @@ class RemoveOldCustomerUserRefreshTokenChainsCronModule implements SimpleCronMod
 
     public function run(): void
     {
-        $this->logger->addInfo('Removing expired customer refresh token chains');
+        $this->logger->info('Removing expired customer refresh token chains');
         $this->customerUserRefreshTokenChainRepository->removeOldCustomerRefreshTokenChains();
-        $this->logger->addInfo('Customer refresh token chains removed');
+        $this->logger->info('Customer refresh token chains removed');
     }
 }
