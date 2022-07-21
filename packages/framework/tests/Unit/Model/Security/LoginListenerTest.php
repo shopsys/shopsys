@@ -17,10 +17,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListenerTest extends TestCase
 {
-    public function testOnSecurityInteractiveLoginUnique()
+    public function testOnSecurityInteractiveLoginUnique(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->once())->method('flush');
@@ -31,30 +31,24 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $eventMock = $this->getMockBuilder(InteractiveLoginEvent::class)
-            ->setMethods(['__construct', 'getAuthenticationToken'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('getAuthenticationToken')->willReturn($tokenMock);
-
         $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
         $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
-        $loginListener->onSecurityInteractiveLogin($eventMock);
+        $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
-    public function testOnSecurityInteractiveLoginTimelimit()
+    public function testOnSecurityInteractiveLoginTimeLimit(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
-        $emMock->expects($this->any())->method('flush');
+        $emMock->expects($this->atLeastOnce())->method('flush');
 
         $userMock = $this->createMock(TimelimitLoginInterface::class);
         $userMock->expects($this->once())->method('setLastActivity');
@@ -62,47 +56,35 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $eventMock = $this->getMockBuilder(InteractiveLoginEvent::class)
-            ->setMethods(['__construct', 'getAuthenticationToken'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('getAuthenticationToken')->willReturn($tokenMock);
-
         $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
         $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
-        $loginListener->onSecurityInteractiveLogin($eventMock);
+        $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
-    public function testOnSecurityInteractiveLoginResetOrderForm()
+    public function testOnSecurityInteractiveLoginResetOrderForm(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
-        $emMock->expects($this->any())->method('flush');
+        $emMock->expects($this->atLeastOnce())->method('flush');
 
         $userMock = $this->getMockBuilder(CustomerUser::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($userMock);
 
-        $eventMock = $this->getMockBuilder(InteractiveLoginEvent::class)
-            ->setMethods(['__construct', 'getAuthenticationToken'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('getAuthenticationToken')->willReturn($tokenMock);
-
         $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->setMethods(['__construct', 'resetOrderForm'])
+            ->onlyMethods(['__construct', 'resetOrderForm'])
             ->disableOriginalConstructor()
             ->getMock();
         $orderFlowFacadeMock->expects($this->once())->method('resetOrderForm');
@@ -110,13 +92,13 @@ class LoginListenerTest extends TestCase
         $administratorActivityFacadeMock = $this->createMock(AdministratorActivityFacade::class);
 
         $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
-        $loginListener->onSecurityInteractiveLogin($eventMock);
+        $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 
-    public function testOnSecurityInteractiveLoginAdministrator()
+    public function testOnSecurityInteractiveLoginAdministrator(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
-            ->setMethods(['__construct', 'persist', 'flush'])
+            ->onlyMethods(['__construct', 'persist', 'flush'])
             ->disableOriginalConstructor()
             ->getMock();
         $emMock->expects($this->once())->method('flush');
@@ -127,25 +109,18 @@ class LoginListenerTest extends TestCase
         $tokenMock = $this->createMock(TokenInterface::class);
         $tokenMock->expects($this->once())->method('getUser')->willReturn($administratorMock);
 
-        $eventMock = $this->getMockBuilder(InteractiveLoginEvent::class)
-            ->setMethods(['__construct', 'getAuthenticationToken', 'getRequest'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('getAuthenticationToken')->willReturn($tokenMock);
-        $eventMock->expects($this->once())->method('getRequest')->willReturn(new Request());
-
         $orderFlowFacadeMock = $this->getMockBuilder(OrderFlowFacade::class)
-            ->setMethods(['__construct'])
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $administratorActivityFacadeMock = $this->getMockBuilder(AdministratorActivityFacade::class)
-            ->setMethods(['create'])
+            ->onlyMethods(['create'])
             ->disableOriginalConstructor()
             ->getMock();
         $administratorActivityFacadeMock->expects($this->once())->method('create');
 
         $loginListener = new LoginListener($emMock, $orderFlowFacadeMock, $administratorActivityFacadeMock);
-        $loginListener->onSecurityInteractiveLogin($eventMock);
+        $loginListener->onSecurityInteractiveLogin(new InteractiveLoginEvent(new Request(), $tokenMock));
     }
 }
