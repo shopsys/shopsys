@@ -149,7 +149,7 @@ QueryDecorator:
         fields:
             categories:
                 type: '[Category!]!'                    # Array of the categories will be returned.
-                resolve: "@=resolver('categories')"   # Define the resolver responsible for returning the data. See the resolvers section below.
+                resolve: "@=query('categories')"   # Define the resolver responsible for returning the data. See the resolvers section below.
 ```
 
 And specific `Query` type is defined in `config/graphql/types/Query.types.yaml`
@@ -162,7 +162,7 @@ Query:
 
 ### Resolvers
 Resolvers are normal Symfony services.
-They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to be recognized as an available resolver for the GraphQL.
+They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` to be recognized as an available resolver for the GraphQL.
 
 There are several ways how to define resolvers in definition YAML files.
 We use `Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface` to keep definitions simple and easy to read.
@@ -184,7 +184,7 @@ public function resolve(): array
 public static function getAliases(): array
 {
     return [
-        'resolve' => 'categories',  // field with resolver defined as "@=resolver('categories')" (see above) will use `resolve` method in this class
+        'resolve' => 'categories',  // field with resolver defined as "@=query('categories')" (see above) will use `resolve` method in this class
     ];
 }
 ```

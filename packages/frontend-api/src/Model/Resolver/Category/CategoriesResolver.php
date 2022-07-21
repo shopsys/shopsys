@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 
-class CategoriesResolver implements ResolverInterface, AliasedInterface
+class CategoriesResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade

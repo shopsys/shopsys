@@ -19,7 +19,7 @@ CategoryDecorator:
             images:
                 type: "[Image]!"
                 description: "Category images"
-                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByCategory(value, args["type"], args["size"])'
+                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByCategory", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
@@ -33,7 +33,7 @@ CategoryDecorator:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategory(args, value)'
+                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver::resolveByCategory", args, value)'
             seoH1:
                 type: "String"
                 description: "Seo first level heading of category"

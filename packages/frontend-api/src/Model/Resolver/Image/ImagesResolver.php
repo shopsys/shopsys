@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
 
-class ImagesResolver implements ResolverInterface
+class ImagesResolver implements QueryInterface
 {
     protected const IMAGE_ENTITY_PRODUCT = 'product';
     protected const IMAGE_ENTITY_CATEGORY = 'category';

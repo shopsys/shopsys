@@ -6,13 +6,13 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 
-class ArticlesResolver implements ResolverInterface, AliasedInterface
+class ArticlesResolver implements QueryInterface, AliasedInterface
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
 

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 
-class PromotedProductsResolver implements ResolverInterface, AliasedInterface
+class PromotedProductsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade

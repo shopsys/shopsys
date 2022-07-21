@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Advert;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade;
 
-class AdvertsResolver implements ResolverInterface, AliasedInterface
+class AdvertsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade

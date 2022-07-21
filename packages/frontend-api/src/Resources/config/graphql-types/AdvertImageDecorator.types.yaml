@@ -11,7 +11,7 @@ AdvertImageDecorator:
             image:
                 type: "[Image]"
                 description: "Advert image"
-                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
+                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
