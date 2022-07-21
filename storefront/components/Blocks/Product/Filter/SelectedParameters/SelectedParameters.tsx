@@ -54,14 +54,22 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
 
     const onUncheckFlag = (uuid: string) => () => {
         const indexOfValue = productFilterOptions.flags.findIndex((item) => item.flag.uuid === uuid);
+        const indexOfValueInChecked = checkedFlags.findIndex((item) => item.uuid === uuid);
 
-        formProviderMethods.setValue(`flags.${indexOfValue}`, { ...checkedFlags[indexOfValue], checked: false });
+        formProviderMethods.setValue(`flags.${indexOfValue}`, {
+            ...checkedFlags[indexOfValueInChecked],
+            checked: false,
+        });
     };
 
     const onUncheckBrand = (uuid: string) => () => {
         const indexOfValue = productFilterOptions.brands.findIndex((item) => item.brand.uuid === uuid);
+        const indexOfValueInChecked = checkedBrands.findIndex((item) => item.uuid === uuid);
 
-        formProviderMethods.setValue(`brands.${indexOfValue}`, { ...checkedBrands[indexOfValue], checked: false });
+        formProviderMethods.setValue(`brands.${indexOfValue}`, {
+            ...checkedBrands[indexOfValueInChecked],
+            checked: false,
+        });
     };
 
     const onResetPrices = () => {

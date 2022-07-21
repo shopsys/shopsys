@@ -32,7 +32,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
         valueType: 'minimalValue' | 'maximalValue',
     ) => {
         const parameter = filterOptions.parameters
-            ? filterOptions.parameters[getIndexOfParameter(parametersValue, filteredParameter.parameterUuid)]
+            ? filterOptions.parameters[getIndexOfParameter(filterOptions.parameters, filteredParameter.parameterUuid)]
             : null;
 
         return (
@@ -43,8 +43,12 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
     };
 
     const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
-        const indexOfValue = getIndexOfParameterValue(parametersValue, indexOfParameter, parameterValueUuid);
+        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
+        const indexOfValue = getIndexOfParameterValue(
+            filterOptions.parameters ?? [],
+            indexOfParameter,
+            parameterValueUuid,
+        );
 
         formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}`, {
             ...parametersValue[indexOfParameter].values[indexOfValue],
@@ -53,7 +57,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
     };
 
     const onUncheckSliderParameter = (parameterUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
+        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
 
         formProviderMethods.setValue(`parameters.${indexOfParameter}`, {
             ...parametersValue[indexOfParameter],

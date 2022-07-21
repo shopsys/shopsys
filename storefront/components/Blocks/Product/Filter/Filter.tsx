@@ -59,7 +59,8 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
 
     const getIsNotFilteredByParameter = useCallback(
         (parameterUuid: string) => {
-            const parameter = parametersValue[getIndexOfParameter(parametersValue, parameterUuid)];
+            const parameter =
+                parametersValue[getIndexOfParameter(deepComparedProductFilterOptions.parameters ?? [], parameterUuid)];
 
             return (
                 parameter.values.filter((value) => value.checked).length === 0 &&
@@ -67,7 +68,7 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
                 parameter.maximalValue === null
             );
         },
-        [parametersValue],
+        [deepComparedProductFilterOptions.parameters, parametersValue],
     );
 
     const checkedBrands = useMemo(() => brandsValue.filter((brand) => brand.checked), [brandsValue]);

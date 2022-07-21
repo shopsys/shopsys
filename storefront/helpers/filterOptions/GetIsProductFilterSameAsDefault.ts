@@ -29,14 +29,19 @@ export const areFlagFiltersWithoutChanges = (
     checkedFlags: FilterFormFlagType[],
     productFilterOptions: FilterOptionsType,
 ): boolean => {
-    const checkedFlagsSet = new Set(checkedFlags.map((checkedFlag) => checkedFlag.uuid));
-    productFilterOptions.flags.forEach((defaultFlag) => {
-        if (defaultFlag.isSelected) {
-            checkedFlagsSet.delete(defaultFlag.flag.uuid);
+    const checkedFlagsSet = checkedFlags.map((checkedFlag) => checkedFlag.uuid);
+    const defaultCheckedFlagsSet = productFilterOptions.flags.reduce((array: string[], flag) => {
+        if (flag.isSelected) {
+            array.push(flag.flag.uuid);
         }
-    });
 
-    return checkedFlagsSet.size === 0;
+        return array;
+    }, []);
+
+    return (
+        checkedFlagsSet.every((flag) => defaultCheckedFlagsSet.includes(flag)) &&
+        checkedFlags.length === defaultCheckedFlagsSet.length
+    );
 };
 
 export const isMinimalPriceFilterWithoutChanges = (
