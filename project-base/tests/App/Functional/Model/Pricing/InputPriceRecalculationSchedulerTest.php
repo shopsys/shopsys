@@ -18,7 +18,10 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -28,6 +31,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     private const METHOD_WITH_VAT = 'scheduleSetInputPricesWithVat';
+
     private const METHOD_WITHOUT_VAT = 'scheduleSetInputPricesWithoutVat';
 
     /**
@@ -69,25 +73,25 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     public function testOnKernelResponseNoAction()
     {
         $inputPriceRecalculatorMock = $this->getMockBuilder(InputPriceRecalculator::class)
-            ->setMethods(['__construct', 'recalculateToInputPricesWithoutVat', 'recalculateToInputPricesWithVat'])
+            ->onlyMethods(['__construct', 'recalculateToInputPricesWithoutVat', 'recalculateToInputPricesWithVat'])
             ->disableOriginalConstructor()
             ->getMock();
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithoutVat');
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithVat');
-
-        $responseEventMock = $this->getMockBuilder(ResponseEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
-            ->getMock();
-        $responseEventMock->expects($this->any())->method('isMasterRequest')
-            ->willReturn(true);
 
         $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler(
             $inputPriceRecalculatorMock,
             $this->setting
         );
 
-        $inputPriceRecalculationScheduler->onKernelResponse($responseEventMock);
+        $responseEvent = new ResponseEvent(
+            self::$kernel,
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+            new Response()
+        );
+
+        $inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
     }
 
     public function inputPricesTestDataProvider()
@@ -154,8 +158,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
      * @param mixed $vatPercent
      * @param string $scheduleSetInputPricesMethod
      */
-    private function doTestOnKernelResponseRecalculateInputPrices(Money $inputPrice, Money $expectedPrice, $vatPercent, string $scheduleSetInputPricesMethod): void
-    {
+    private function doTestOnKernelResponseRecalculateInputPrices(
+        Money $inputPrice,
+        Money $expectedPrice,
+        $vatPercent,
+        string $scheduleSetInputPricesMethod
+    ): void {
         $paymentData = $this->paymentDataFactory->create();
         $transportData = $this->transportDataFactory->create();
 
@@ -184,20 +192,20 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
 
-        $responseEventMock = $this->getMockBuilder(ResponseEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
-            ->getMock();
-        $responseEventMock->expects($this->any())->method('isMasterRequest')
-            ->willReturn(true);
-
         if ($scheduleSetInputPricesMethod === self::METHOD_WITH_VAT) {
             $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithVat();
         } elseif ($scheduleSetInputPricesMethod === self::METHOD_WITHOUT_VAT) {
             $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithoutVat();
         }
 
-        $this->inputPriceRecalculationScheduler->onKernelResponse($responseEventMock);
+        $responseEvent = new ResponseEvent(
+            self::$kernel,
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+            new Response()
+        );
+
+        $this->inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
 
         $this->em->refresh($payment);
         $this->em->refresh($transport);
