@@ -20,12 +20,12 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @var \Doctrine\Common\Annotations\Reader
      */
-    protected $annotationReader;
+    protected Reader $annotationReader;
 
     /**
      * @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
      */
-    protected $tokenManager;
+    protected CsrfTokenManagerInterface $tokenManager;
 
     /**
      * @param \Doctrine\Common\Annotations\Reader $annotationReader
@@ -40,7 +40,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
     /**
      * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
@@ -67,7 +67,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
      * @param string $routeName
      * @return string
      */
-    public function getCsrfTokenId($routeName)
+    public function getCsrfTokenId(string $routeName): string
     {
         return static::CSRF_TOKEN_ID_PREFIX . $routeName;
     }
@@ -76,7 +76,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
      * @param string $routeName
      * @return string
      */
-    public function getCsrfTokenByRoute($routeName)
+    public function getCsrfTokenByRoute(string $routeName): string
     {
         return $this->tokenManager->getToken($this->getCsrfTokenId($routeName))->getValue();
     }
@@ -86,7 +86,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
      * @param string $csrfToken
      * @return bool
      */
-    protected function isCsrfTokenValid($routeName, $csrfToken)
+    protected function isCsrfTokenValid(string $routeName, string $csrfToken): bool
     {
         $token = new CsrfToken($this->getCsrfTokenId($routeName), $csrfToken);
 
