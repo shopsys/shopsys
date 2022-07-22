@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
@@ -18,15 +19,15 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest', 'getController'])
-            ->getMock();
-        $eventMock->expects($this->atLeastOnce())->method('isMasterRequest')->willReturn(false);
-        $eventMock->expects($this->never())->method('getController');
+        $event = new ControllerEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new ControllerProtected(),
+            new Request(),
+            HttpKernelInterface::SUB_REQUEST,
+        );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
-        $routeCsrfProtector->onKernelController($eventMock);
+        $routeCsrfProtector->onKernelController($event);
     }
 
     public function testRequestWithoutProtection(): void
@@ -34,19 +35,15 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
-            ->getMock();
-        $eventMock->expects($this->atLeastOnce())->method('isMasterRequest')->willReturn(true);
-        $eventMock
-            ->expects($this->atLeastOnce())
-            ->method('getController')
-            ->willReturn([DummyController::class, 'withoutProtectionAction']);
-        $eventMock->expects($this->never())->method('getRequest');
+        $event = new ControllerEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new ControllerNotProtected(),
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST,
+        );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
-        $routeCsrfProtector->onKernelController($eventMock);
+        $routeCsrfProtector->onKernelController($event);
     }
 
     public function testRequestWithProtection(): void
@@ -61,7 +58,7 @@ class RouteCsrfProtectorTest extends TestCase
         );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
-            ->setMethods(['isTokenValid'])
+            ->onlyMethods(['isTokenValid'])
             ->disableOriginalConstructor()
             ->getMock();
         $tokenManagerMock
@@ -72,19 +69,15 @@ class RouteCsrfProtectorTest extends TestCase
             }))
             ->willReturn(true);
 
-        $eventMock = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
-            ->getMock();
-        $eventMock->expects($this->atLeastOnce())->method('isMasterRequest')->willReturn(true);
-        $eventMock
-            ->expects($this->atLeastOnce())
-            ->method('getController')
-            ->willReturn([DummyController::class, 'withProtectionAction']);
-        $eventMock->expects($this->atLeastOnce())->method('getRequest')->willReturn($request);
+        $event = new ControllerEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new ControllerProtected(),
+            $request,
+            HttpKernelInterface::MASTER_REQUEST,
+        );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
-        $routeCsrfProtector->onKernelController($eventMock);
+        $routeCsrfProtector->onKernelController($event);
     }
 
     public function testRequestWithProtectionWithoutCsrfToken(): void
@@ -93,21 +86,17 @@ class RouteCsrfProtectorTest extends TestCase
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
 
-        $eventMock = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
-            ->getMock();
-        $eventMock->expects($this->atLeastOnce())->method('isMasterRequest')->willReturn(true);
-        $eventMock
-            ->expects($this->atLeastOnce())
-            ->method('getController')
-            ->willReturn([DummyController::class, 'withProtectionAction']);
-        $eventMock->expects($this->atLeastOnce())->method('getRequest')->willReturn($request);
+        $event = new ControllerEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new ControllerProtected(),
+            $request,
+            HttpKernelInterface::MASTER_REQUEST,
+        );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
 
         $this->expectException(BadRequestHttpException::class);
-        $routeCsrfProtector->onKernelController($eventMock);
+        $routeCsrfProtector->onKernelController($event);
     }
 
     public function testRequestWithProtectionWithInvalidCsrfToken(): void
@@ -122,7 +111,7 @@ class RouteCsrfProtectorTest extends TestCase
         );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
-            ->setMethods(['isTokenValid'])
+            ->onlyMethods(['isTokenValid'])
             ->disableOriginalConstructor()
             ->getMock();
         $tokenManagerMock
@@ -133,20 +122,16 @@ class RouteCsrfProtectorTest extends TestCase
             }))
             ->willReturn(false);
 
-        $eventMock = $this->getMockBuilder(ControllerEvent::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest', 'getController', 'getRequest'])
-            ->getMock();
-        $eventMock->expects($this->atLeastOnce())->method('isMasterRequest')->willReturn(true);
-        $eventMock
-            ->expects($this->atLeastOnce())
-            ->method('getController')
-            ->willReturn([DummyController::class, 'withProtectionAction']);
-        $eventMock->expects($this->atLeastOnce())->method('getRequest')->willReturn($request);
+        $event = new ControllerEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new ControllerProtected(),
+            $request,
+            HttpKernelInterface::MASTER_REQUEST,
+        );
 
         $routeCsrfProtector = new RouteCsrfProtector($annotationReader, $tokenManagerMock);
 
         $this->expectException(BadRequestHttpException::class);
-        $routeCsrfProtector->onKernelController($eventMock);
+        $routeCsrfProtector->onKernelController($event);
     }
 }
