@@ -9,61 +9,61 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class DomainSubscriberTest extends TestCase
 {
-    public function testOnKernelRequestWithoutMasterRequest()
+    public function testOnKernelRequestWithoutMasterRequest(): void
     {
-        $eventMock = $this->getMockBuilder(RequestEvent::class)
-            ->setMethods(['__construct', 'isMasterRequest'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('isMasterRequest')->willReturn(false);
+        $event = new RequestEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new Request(),
+            HttpKernelInterface::SUB_REQUEST
+        );
+
         $settingMock = $this->createMock(Setting::class);
 
         $domain = new Domain([], $settingMock);
 
         $domainSubscriber = new DomainSubscriber($domain);
-        $domainSubscriber->onKernelRequest($eventMock);
+        $domainSubscriber->onKernelRequest($event);
     }
 
-    public function testOnKernelRequestWithMasterRequestAndSetDomain()
+    public function testOnKernelRequestWithMasterRequestAndSetDomain(): void
     {
-        $eventMock = $this->getMockBuilder(RequestEvent::class)
-            ->setMethods(['__construct', 'isMasterRequest'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('isMasterRequest')->willReturn(true);
+        $event = new RequestEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST
+        );
 
         $domainMock = $this->getMockBuilder(Domain::class)
-            ->setMethods(['__construct', 'getId'])
+            ->onlyMethods(['__construct', 'getId'])
             ->disableOriginalConstructor()
             ->getMock();
         $domainMock->expects($this->once())->method('getId');
 
         $domainSubscriber = new DomainSubscriber($domainMock);
-        $domainSubscriber->onKernelRequest($eventMock);
+        $domainSubscriber->onKernelRequest($event);
     }
 
-    public function testOnKernelRequestWithMasterRequest()
+    public function testOnKernelRequestWithMasterRequest(): void
     {
-        $getRequestResult = new Request();
-        $eventMock = $this->getMockBuilder(RequestEvent::class)
-            ->setMethods(['__construct', 'isMasterRequest', 'getRequest'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $eventMock->expects($this->once())->method('isMasterRequest')->willReturn(true);
-        $eventMock->expects($this->once())->method('getRequest')->willReturn($getRequestResult);
+        $event = new RequestEvent(
+            $this->createMock(HttpKernelInterface::class),
+            new Request(),
+            HttpKernelInterface::MASTER_REQUEST
+        );
 
         $exception = new NoDomainSelectedException();
         $domainMock = $this->getMockBuilder(Domain::class)
-            ->setMethods(['__construct', 'getId', 'switchDomainByRequest'])
+            ->onlyMethods(['__construct', 'getId', 'switchDomainByRequest'])
             ->disableOriginalConstructor()
             ->getMock();
         $domainMock->expects($this->once())->method('getId')->willThrowException($exception);
-        $domainMock->expects($this->once())->method('switchDomainByRequest')->with($this->equalTo($getRequestResult));
+        $domainMock->expects($this->once())->method('switchDomainByRequest')->with($this->equalTo(new Request()));
 
         $domainSubscriber = new DomainSubscriber($domainMock);
-        $domainSubscriber->onKernelRequest($eventMock);
+        $domainSubscriber->onKernelRequest($event);
     }
 }
