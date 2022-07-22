@@ -13,7 +13,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 class RouteCsrfProtectorTest extends TestCase
 {
-    public function testSubRequest()
+    public function testSubRequest(): void
     {
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
@@ -29,7 +29,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithoutProtection()
+    public function testRequestWithoutProtection(): void
     {
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->createMock(CsrfTokenManager::class);
@@ -49,12 +49,16 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtection()
+    public function testRequestWithProtection(): void
     {
         $validCsrfToken = 'validCsrfToken';
-        $request = new Request([
-            RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $validCsrfToken,
-        ]);
+        $request = new Request(
+            [
+                RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $validCsrfToken,
+            ],
+            [],
+            ['_route' => 'someRouteName']
+        );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
             ->setMethods(['isTokenValid'])
@@ -83,7 +87,7 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtectionWithoutCsrfToken()
+    public function testRequestWithProtectionWithoutCsrfToken(): void
     {
         $request = new Request();
         $annotationReader = new AnnotationReader();
@@ -106,12 +110,16 @@ class RouteCsrfProtectorTest extends TestCase
         $routeCsrfProtector->onKernelController($eventMock);
     }
 
-    public function testRequestWithProtectionWithInvalidCsrfToken()
+    public function testRequestWithProtectionWithInvalidCsrfToken(): void
     {
         $invalidCsrfToken = 'invalidCsrfToken';
-        $request = new Request([
-            RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $invalidCsrfToken,
-        ]);
+        $request = new Request(
+            [
+                RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $invalidCsrfToken,
+            ],
+            [],
+            ['_route' => 'someRouteName']
+        );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
             ->setMethods(['isTokenValid'])
