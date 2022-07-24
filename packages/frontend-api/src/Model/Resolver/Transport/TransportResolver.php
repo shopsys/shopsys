@@ -6,11 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Transport\Exception\TransportNotFoundUserError;
 
 class TransportResolver implements ResolverInterface, AliasedInterface
 {
@@ -43,7 +43,7 @@ class TransportResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->transportFacade->getEnabledOnDomainByUuid($uuid, $this->domain->getId());
         } catch (TransportNotFoundException $transportNotFoundException) {
-            throw new UserError($transportNotFoundException->getMessage());
+            throw new TransportNotFoundUserError($transportNotFoundException->getMessage());
         }
     }
 
