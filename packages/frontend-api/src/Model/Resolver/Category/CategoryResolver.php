@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\CategoryNotFoundUserError;
 
 class CategoryResolver implements ResolverInterface, AliasedInterface
 {
@@ -82,7 +83,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->categoryFacade->getVisibleOnDomainByUuid($this->domain->getId(), $uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {
-            throw new UserError($categoryNotFoundException->getMessage());
+            throw new CategoryNotFoundUserError($categoryNotFoundException->getMessage());
         }
     }
 
@@ -124,7 +125,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->categoryFacade->getByUuid($uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {
-            throw new UserError($categoryNotFoundException->getMessage());
+            throw new CategoryNotFoundUserError($categoryNotFoundException->getMessage());
         }
     }
 
@@ -143,7 +144,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
 
             return $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | CategoryNotFoundException $categoryNotFoundException) {
-            throw new UserError('Category with URL slug `' . $urlSlug . '` does not exist.');
+            throw new CategoryNotFoundUserError('Category with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }
