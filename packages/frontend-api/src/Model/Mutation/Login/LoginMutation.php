@@ -9,7 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
-use Shopsys\FrontendApiBundle\Model\Mutation\Login\Exception\LoginFailedUserError;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -57,11 +57,11 @@ class LoginMutation implements MutationInterface, AliasedInterface
         try {
             $user = $this->frontendUserProvider->loadUserByUsername($input['email']);
         } catch (UsernameNotFoundException $e) {
-            throw new LoginFailedUserError('Log in failed.');
+            throw new InvalidAccountOrPasswordUserError($e->getMessage());
         }
 
         if (!$this->userPasswordEncoder->isPasswordValid($user, $input['password'])) {
-            throw new LoginFailedUserError('Log in failed.');
+            throw new InvalidAccountOrPasswordUserError('Invalid password.');
         }
 
         $deviceId = Uuid::uuid4()->toString();
