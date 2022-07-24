@@ -6,11 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 
@@ -61,7 +61,7 @@ class ProductDetailResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleProductArrayOnDomainBySlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**

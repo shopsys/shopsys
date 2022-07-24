@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Article\Article;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
 
@@ -80,7 +80,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleByDomainIdAndSlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
