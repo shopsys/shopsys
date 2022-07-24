@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Exception\BrandNotFoundUserError;
 
 class BrandResolver implements ResolverInterface, AliasedInterface
 {
@@ -83,7 +84,7 @@ class BrandResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->brandFacade->getByUuid($uuid);
         } catch (BrandNotFoundException $brandNotFoundException) {
-            throw new UserError($brandNotFoundException->getMessage());
+            throw new BrandNotFoundUserError($brandNotFoundException->getMessage());
         }
     }
 
@@ -102,7 +103,7 @@ class BrandResolver implements ResolverInterface, AliasedInterface
 
             return $this->brandFacade->getById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | BrandNotFoundException $brandNotFoundException) {
-            throw new UserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
+            throw new BrandNotFoundUserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }
