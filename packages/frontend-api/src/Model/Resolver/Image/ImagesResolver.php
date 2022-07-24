@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
@@ -22,6 +21,8 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageSizeInvalidUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageTypeInvalidUserError;
 
 class ImagesResolver implements ResolverInterface
 {
@@ -200,9 +201,9 @@ class ImagesResolver implements ResolverInterface
                 }
             }
         } catch (ImageSizeNotFoundException $e) {
-            throw new UserError(sprintf('Image size %s not found for %s', $size, $entityName));
+            throw new ImageSizeInvalidUserError(sprintf('Image size %s not found for %s', $size, $entityName));
         } catch (ImageTypeNotFoundException $e) {
-            throw new UserError(sprintf('Image type %s not found for %s', $type, $entityName));
+            throw new ImageTypeInvalidUserError(sprintf('Image type %s not found for %s', $type, $entityName));
         }
 
         return $sizeConfigs;
