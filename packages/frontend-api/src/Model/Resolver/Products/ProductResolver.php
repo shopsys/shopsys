@@ -6,12 +6,12 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 
 /**
  * @deprecated Use ProductDetailResolver instead
@@ -51,7 +51,7 @@ class ProductResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->productFacade->getByUuid($uuid);
         } catch (ProductNotFoundException $productNotFoundException) {
-            throw new UserError($productNotFoundException->getMessage());
+            throw new ProductNotFoundUserError($productNotFoundException->getMessage());
         }
     }
 

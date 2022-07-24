@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNo
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 
 class ProductDetailResolver implements ResolverInterface, AliasedInterface
 {
@@ -82,7 +83,7 @@ class ProductDetailResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->productElasticsearchProvider->getVisibleProductArrayByUuid($uuid);
         } catch (ProductNotFoundException $productNotFoundException) {
-            throw new UserError($productNotFoundException->getMessage());
+            throw new ProductNotFoundUserError($productNotFoundException->getMessage());
         }
     }
 
@@ -101,7 +102,7 @@ class ProductDetailResolver implements ResolverInterface, AliasedInterface
 
             return $this->productElasticsearchProvider->getVisibleProductArrayById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | ProductNotFoundException $productNotFoundException) {
-            throw new UserError('Product with URL slug `' . $urlSlug . '` does not exist.');
+            throw new ProductNotFoundUserError('Product with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }
