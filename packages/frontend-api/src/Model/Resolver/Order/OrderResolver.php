@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -14,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as FrontendApiOrderFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
 class OrderResolver implements ResolverInterface, AliasedInterface
 {
@@ -73,10 +74,10 @@ class OrderResolver implements ResolverInterface, AliasedInterface
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }
         } catch (OrderNotFoundException $orderNotFoundException) {
-            throw new UserError($orderNotFoundException->getMessage());
+            throw new OrderNotFoundUserError($orderNotFoundException->getMessage());
         }
 
-        throw new UserError('You need to be logged in or provide argument \'urlHash\'.');
+        throw new InvalidAccessUserError('You need to be logged in or provide argument \'urlHash\'.');
     }
 
     /**
