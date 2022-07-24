@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
 
 class ArticleResolver implements ResolverInterface, AliasedInterface
 {
@@ -90,7 +91,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
         $article = $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId());
 
         if ($article === null) {
-            throw new UserError('Terms and condition article was not found');
+            throw new ArticleNotFoundUserError('Terms and condition article was not found', 'terms-and-conditions');
         }
 
         return $article;
@@ -104,7 +105,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
         $article = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());
 
         if ($article === null) {
-            throw new UserError('Privacy policy article was not found');
+            throw new ArticleNotFoundUserError('Privacy policy article was not found', 'privacy-policy');
         }
 
         return $article;
@@ -118,7 +119,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
         $article = $this->cookiesFacade->findCookiesArticleByDomainId($this->domain->getId());
 
         if ($article === null) {
-            throw new UserError('Information about cookies article was not found');
+            throw new ArticleNotFoundUserError('Information about cookies article was not found', 'cookies');
         }
 
         return $article;
@@ -146,7 +147,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->articleFacade->getVisibleByDomainIdAndUuid($this->domain->getId(), $uuid);
         } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError($articleNotFoundException->getMessage());
+            throw new ArticleNotFoundUserError($articleNotFoundException->getMessage());
         }
     }
 
@@ -168,7 +169,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
                 $friendlyUrl->getEntityId()
             );
         } catch (FriendlyUrlNotFoundException | ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError('Article with URL slug `' . $urlSlug . '` does not exist.');
+            throw new ArticleNotFoundUserError('Article with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }
