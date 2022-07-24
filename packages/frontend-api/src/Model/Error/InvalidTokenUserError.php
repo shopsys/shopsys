@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception;
+namespace Shopsys\FrontendApiBundle\Model\Error;
 
 use GraphQL\Error\UserError;
-use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class InvalidTokenUserError extends UserError implements UserErrorWithCodeInterface
 {

@@ -7,12 +7,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidTokenUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidTokenUserError;
 
 class OrdersResolver implements ResolverInterface, AliasedInterface
 {

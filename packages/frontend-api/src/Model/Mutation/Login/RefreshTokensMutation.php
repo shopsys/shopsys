@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 
-use GraphQL\Error\UserError;
 use Lcobucci\JWT\Token\DataSet;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -12,6 +11,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidTokenUserError;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 
@@ -73,7 +73,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
-            throw new UserError('Token is not valid.');
+            throw new InvalidTokenUserError('Token is not valid.');
         }
 
         return [
@@ -94,7 +94,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
     protected function assertClaimsExists(DataSet $claims): void
     {
         if (!$claims->has('uuid') || !$claims->has('secretChain')) {
-            throw new UserError('Token is not valid.');
+            throw new InvalidTokenUserError('Token is not valid.');
         }
     }
 
