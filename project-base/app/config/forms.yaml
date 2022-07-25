@@ -58,10 +58,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType }
 
-    App\Form\Admin\Customer\DeliveryAddressFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType }
-
     App\Form\Type\CKEditorTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
