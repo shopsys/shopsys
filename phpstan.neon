@@ -4,7 +4,7 @@ parameters:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
     symfony:
-        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
 
     ignoreErrors:

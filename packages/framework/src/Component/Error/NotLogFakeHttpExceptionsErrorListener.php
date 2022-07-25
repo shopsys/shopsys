@@ -22,8 +22,12 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
      * @param \Psr\Log\LoggerInterface|null $logger
      * @param bool $debug
      */
-    public function __construct($controller, ErrorIdProvider $errorIdProvider, ?LoggerInterface $logger = null, bool $debug = false)
-    {
+    public function __construct(
+        $controller,
+        ErrorIdProvider $errorIdProvider,
+        ?LoggerInterface $logger = null,
+        bool $debug = false
+    ) {
         parent::__construct($controller, $logger, $debug);
 
         $this->errorIdProvider = $errorIdProvider;
@@ -32,12 +36,12 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     /**
      * @inheritDoc
      */
-    protected function logException(Throwable $exception, $message): void
+    protected function logException(Throwable $exception, string $message, ?string $logLevel = null): void
     {
         if (!$exception instanceof FakeHttpException) {
             $message .= sprintf(' Error ID: %s', $this->errorIdProvider->getErrorId());
 
-            parent::logException($exception, $message);
+            parent::logException($exception, $message, $logLevel);
         }
     }
 }
