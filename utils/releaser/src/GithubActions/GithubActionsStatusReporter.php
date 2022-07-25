@@ -2,27 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\Releaser\Travis;
+namespace Shopsys\Releaser\GithubActions;
 
 use Shopsys\Releaser\Guzzle\ApiCaller;
 use Shopsys\Releaser\Packagist\PackageProvider;
 
-final class TravisStatusReporter
+final class GithubActionsStatusReporter
 {
     /**
-     * Packages that are not on Packagist, so unable to found by API, but also running on Travis
+     * Packages that are not on Packagist, so unable to found by API, but also running on GitHub Actions
      *
      * @var string[]
      */
     private const EXTRA_PACKAGES = [];
 
     /**
-     * Packages that are not tested on Travis - old packages or forks
+     * Packages that are not tested on GitHub Actions - old packages or forks
      *
      * @var string[]
      */
     private const EXCLUDED_PACKAGES = [
         // forks
+        'shopsys/jsformvalidator-bundle',
         'shopsys/changelog-linker',
         'shopsys/doctrine-orm',
         'shopsys/jparser',
@@ -33,6 +34,9 @@ final class TravisStatusReporter
         'shopsys/sysconfig',
         'shopsys/sysreports',
         'shopsys/sysstdlib',
+        'shopsys/backend-api',
+        'shopsys/phpstorm-inspect',
+        'shopsys/product-feed-interface',
     ];
 
     /**
@@ -63,16 +67,17 @@ final class TravisStatusReporter
     /**
      * @param string $organization
      * @param string $branch
+     * @param string $githubToken
      * @return string[]
      */
-    public function getStatusForPackagesByOrganizationAndBranch(string $organization, string $branch): array
+    public function getStatusForPackagesByOrganizationAndBranch(string $organization, string $branch, string $githubToken): array
     {
         $packages = $this->packageProvider->getPackagesByOrganization($organization, self::EXCLUDED_PACKAGES);
         $packages = array_merge($packages, self::EXTRA_PACKAGES);
 
         $urls = $this->createApiUrls($packages, $branch);
 
-        $responses = $this->apiCaller->sendGetsAsyncToStrings($urls);
+        $responses = $this->apiCaller->sendGetsAsyncToStrings($urls, ['Authorization' => sprintf('token %s', $githubToken)]);
 
         foreach ($responses as $response) {
             $this->processResponse($response);
@@ -90,28 +95,26 @@ final class TravisStatusReporter
     {
         $apiUrls = [];
         foreach ($packages as $package) {
-            $apiUrls[] = 'https://api.travis-ci.org/repos/' . $package . '/cc.xml?branch=' . $branch;
+            $apiUrls[] = sprintf('https://api.github.com/repos/%s/actions/workflows/run-checks-tests.yaml/runs?per_page=1&status=completed&branch=%s', $package, $branch);
         }
 
         return $apiUrls;
     }
 
     /**
-     * @param string $response
+     * @param string $responseJson
      */
-    private function processResponse(string $response): void
+    private function processResponse(string $responseJson): void
     {
-        $xmlResponse = simplexml_load_string($response);
+        $arrayResponse = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
 
-        $projectXmlElements = $xmlResponse->xpath('Project');
-        if ($projectXmlElements === []) {
+        if ($arrayResponse['total_count'] === 0) {
             return;
         }
 
-        $projectXmlElement = $projectXmlElements[0];
-
-        $packageName = (string)$projectXmlElement->attributes()->name;
-        $status = (string)$projectXmlElement->attributes()->lastBuildStatus;
+        $lastRun = array_pop($arrayResponse['workflow_runs']);
+        $packageName = $lastRun['repository']['full_name'];
+        $status = $lastRun['conclusion'];
 
         $this->statusForPackages[$packageName] = $status;
     }

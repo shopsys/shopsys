@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\BuildProjectBaseOnHeimdallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckNewDoctrineReleaseReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesTravisBuildsReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckUncommittedChangesReleaseWorker;
@@ -36,7 +36,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
-    $services->set(CheckPackagesTravisBuildsReleaseWorker::class);
+    $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
     $services->set(CreateBranchReleaseWorker::class);
     $services->set(CheckReleaseBlogPostReleaseWorker::class);
     $services->set(StopMergingReleaseWorker::class);
