@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
-use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
@@ -20,7 +17,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     use SymfonyTestContainer;
 
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var \Tests\App\Test\Client
      */
     private Client $client;
 
@@ -54,7 +51,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param string $password
      * @param array $kernelOptions
      * @param array $clientOptions
-     * @return \Symfony\Bundle\FrameworkBundle\Client
+     * @return \Tests\App\Test\Client
      */
     protected function findClient(
         $createNew = false,
@@ -71,10 +68,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
 
         if ($createNew) {
-            $this->client = $this->createClient($kernelOptions, $clientOptions);
+            $this->client = self::createClient($kernelOptions, $clientOptions);
             $this->setUpDomain();
         } elseif (!isset($this->client)) {
-            $this->client = $this->createClient($kernelOptions, $clientOptions);
+            $this->client = self::createClient($kernelOptions, $clientOptions);
         }
 
         if ($username !== null) {
@@ -88,28 +85,12 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected function getContainer()
-    {
-        return $this->findClient()->getContainer()->get('test.service_container');
-    }
-
-    /**
      * @param string $referenceName
      * @return object
      */
     protected function getReference($referenceName)
     {
         return $this->persistentReferenceFacade->getReference($referenceName);
-    }
-
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
-    public function createContainer(): ContainerInterface
-    {
-        return $this->getContainer()->get('test.service_container');
     }
 
     /**
@@ -148,7 +129,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
     {
-        $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
