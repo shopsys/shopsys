@@ -7,23 +7,21 @@ import {
     SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, useEffect, useState } from 'react';
+import { FC, Fragment } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
 import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
 
 type ParametersProps = {
     filterOptions: FilterOptionsType;
+    checkedParameters: FilterFormParameterType[];
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters-parameters-';
 
-const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
+export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParameters }) => {
     const t = useTypedTranslationFunction();
 
     const formProviderMethods = useFormContext<FilterFormType>();
-    const [filteredParameters, setFilteredParameters] = useState<FilterFormParameterType[]>([]);
-    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
     const parametersValue = useWatch({
         name: 'parameters',
         control: formProviderMethods.control,
@@ -34,50 +32,44 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
         valueType: 'minimalValue' | 'maximalValue',
     ) => {
         const parameter = filterOptions.parameters
-            ? filterOptions.parameters[getIndexOfParameter(parametersValue, filteredParameter.parameterUuid)]
+            ? filterOptions.parameters[getIndexOfParameter(filterOptions.parameters, filteredParameter.parameterUuid)]
             : null;
 
         return (
-            filteredParameter[valueType] !== undefined &&
+            filteredParameter[valueType] !== null &&
             parameter?.__typename === 'ParameterSliderFilterOption' &&
             parameter[valueType] !== filteredParameter[valueType]
         );
     };
 
     const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
-        const indexOfValue = getIndexOfParameterValue(parametersValue, indexOfParameter, parameterValueUuid);
+        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
+        const indexOfValue = getIndexOfParameterValue(
+            filterOptions.parameters ?? [],
+            indexOfParameter,
+            parameterValueUuid,
+        );
 
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, false);
+        formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}`, {
+            ...parametersValue[indexOfParameter].values[indexOfValue],
+            checked: false,
+        });
     };
 
     const onUncheckSliderParameter = (parameterUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(parametersValue, parameterUuid);
+        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
 
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.minimalValue`, undefined);
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.maximalValue`, undefined);
+        formProviderMethods.setValue(`parameters.${indexOfParameter}`, {
+            ...parametersValue[indexOfParameter],
+            minimalValue: null,
+            maximalValue: null,
+        });
     };
-
-    useEffect(() => {
-        const updatedFilteredParameters = [];
-
-        for (const parameter of parametersValue) {
-            if (
-                parametersFilterState.parameters.some(
-                    (stateParameter) => stateParameter.parameter === parameter.parameterUuid,
-                )
-            ) {
-                updatedFilteredParameters.push(parameter);
-            }
-        }
-
-        setFilteredParameters(updatedFilteredParameters);
-    }, [parametersFilterState.parameters, parametersValue]);
 
     return (
         <>
-            {filteredParameters.map((filteredParameter) => (
-                <>
+            {checkedParameters.map((filteredParameter) => (
+                <Fragment key={filteredParameter.parameterUuid}>
                     {(isMinMaxValueVisible(filteredParameter, 'minimalValue') ||
                         isMinMaxValueVisible(filteredParameter, 'maximalValue')) && (
                         <SelectedParametersListStyled>
@@ -139,10 +131,8 @@ const Parameters: FC<ParametersProps> = ({ filterOptions }) => {
                             )}
                         </SelectedParametersListStyled>
                     )}
-                </>
+                </Fragment>
             ))}
         </>
     );
 };
-
-export default Parameters;

@@ -9,9 +9,9 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { FC, useState } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
-import { FilterFormType, ParametersCheckboxType, ParametersColorType, ParametersType } from 'types/productFilter';
+import { FC, useCallback, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     /**
@@ -23,10 +23,6 @@ type FilterGroupParametersProps = {
      */
     isDefaultCollapsed: boolean;
     /**
-     * parameterParentUuid of parameters
-     */
-    parameterParentUuid: string;
-    /**
      * parameterParentIndex of parameters
      */
     parameterParentIndex: number;
@@ -36,73 +32,87 @@ type FilterGroupParametersProps = {
     data?: ParametersType;
 };
 
-const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-filtergroup-parameters-' + props.parameterParentIndex;
+const TEST_IDENTIFIER = (parameterParentIndex: number) =>
+    'blocks-product-filter-filtergroup-parameters-' + parameterParentIndex;
 
-    const [isGroupCollapsed, setIsGroupCollapsed] = useState(props.isDefaultCollapsed);
-    const formProviderMethods = useFormContext<FilterFormType>();
-    const { fields } = useFieldArray({
+export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
+    title,
+    isDefaultCollapsed,
+    parameterParentIndex,
+    data,
+}) => {
+    const formProviderMethods = useFormContext();
+    const parameterValue = useWatch({
         control: formProviderMethods.control,
-        name: `parameters.${props.parameterParentIndex}.values`,
+        name: `parameters.${parameterParentIndex}.values`,
     });
+    const [isGroupCollapsed, setIsGroupCollapsed] = useState(isDefaultCollapsed);
+
     const handleGroupClick = () => {
         setIsGroupCollapsed(!isGroupCollapsed);
     };
 
+    const onChangeParameterValueHandler = useCallback(
+        (dataItem: ParametersCheckboxValuesType, index: number) => () => {
+            formProviderMethods.setValue(`parameters.${parameterParentIndex}.values.${index}`, {
+                ...dataItem,
+                checked: !(parameterValue[index].checked as boolean),
+            });
+        },
+        [formProviderMethods, parameterValue, parameterParentIndex],
+    );
+
     return (
-        <FilterGroupStyled data-testid={testIdentifier}>
+        <FilterGroupStyled data-testid={TEST_IDENTIFIER(parameterParentIndex)}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
-                {props.title}
+                {title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
-                {props.data?.__typename === 'ParameterCheckboxFilterOption' &&
-                    fields.map((dataItem, index) => (
+                {data?.__typename === 'ParameterCheckboxFilterOption' &&
+                    data.values.map((dataItem, index) => (
                         <Controller
-                            key={dataItem.id}
-                            name={`parameters.${props.parameterParentIndex}.values.${index}.checked`}
+                            key={dataItem.uuid}
+                            name={`parameters.${parameterParentIndex}.values.${index}.checked`}
                             render={({ field }) => (
                                 <FilterGroupContentItemStyled
                                     key={dataItem.uuid}
-                                    isDisabled={(props.data as ParametersCheckboxType).values[index]?.count === 0}
+                                    isDisabled={data.values[index]?.count === 0}
                                     isActive={field.value}
-                                    data-testid={testIdentifier + '-' + index}
+                                    data-testid={TEST_IDENTIFIER(parameterParentIndex) + '-' + index}
                                 >
                                     <Checkbox
                                         name={field.name}
-                                        id={field.name}
                                         label={dataItem.text}
-                                        fieldRef={field}
-                                        count={(props.data as ParametersCheckboxType).values[index]?.count}
+                                        onChange={onChangeParameterValueHandler(dataItem, index)}
+                                        value={parameterValue[index].checked}
+                                        count={(data as ParametersCheckboxType).values[index]?.count}
                                     />
                                 </FilterGroupContentItemStyled>
                             )}
                         />
                     ))}
-                {props.data?.__typename === 'ParameterColorFilterOption' && (
+                {data?.__typename === 'ParameterColorFilterOption' && (
                     <FilterGroupColorStyled>
-                        {fields.map((dataItem, index) => (
+                        {data.values.map((dataItem, index) => (
                             <ColorPicker
-                                key={dataItem.id}
-                                parameterParentIndex={props.parameterParentIndex}
-                                parameterParentUuid={props.parameterParentUuid}
+                                key={dataItem.uuid}
+                                parameterParentIndex={parameterParentIndex}
                                 dataItem={dataItem}
-                                index={index}
-                                isDisabled={(props.data as ParametersColorType).values[index]?.count === 0}
+                                valueIndex={index}
+                                isDisabled={data.values[index]?.count === 0}
                             />
                         ))}
                     </FilterGroupColorStyled>
                 )}
-                {props.data?.__typename === 'ParameterSliderFilterOption' && (
+                {data?.__typename === 'ParameterSliderFilterOption' && (
                     <SliderFilter
-                        parameterParentIndex={props.parameterParentIndex}
-                        min={props.data.minimalValue}
-                        max={props.data.maximalValue}
+                        parameterParentIndex={parameterParentIndex}
+                        min={data.minimalValue}
+                        max={data.maximalValue}
                     />
                 )}
             </FilterGroupContentStyled>
         </FilterGroupStyled>
     );
 };
-
-export default FilterGroupParameters;

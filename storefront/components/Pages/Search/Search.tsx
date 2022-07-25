@@ -10,7 +10,7 @@ import {
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
-import ProductFilter from 'components/Blocks/Product/Filter';
+import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import Button from 'components/Forms/Button';
@@ -198,7 +198,9 @@ const Search: FC<SearchProps> = ({ searchResults }) => {
                             <SearchResultsPanelStyled>
                                 <ProductFilter
                                     productFilterOptions={searchResults.productsSearch.productFilterOptions}
-                                    formUpdateDependency={routerQueryChanged}
+                                    slug={searchUrl}
+                                    originalSlug={null}
+                                    orderingMode={searchResults.productsSearch.orderingMode}
                                 />
                                 <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>

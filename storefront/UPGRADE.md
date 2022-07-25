@@ -800,3 +800,26 @@
     - dispatch to Redux for inputs for delivery form was added 
     - the useEffect to handle users delivery addresses is used only for logged user
     - `reset` action was added to the `contactInformationActions` and is called when order is successfully sent
+
+### SEO categories transition & filter refactoring
+  - [FWCC-1026](https://shopsys.atlassian.net/browse/FWCC-1026)
+  - [FWCC-1026 SEO categories](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/691/diffs)
+  - most significant changes
+    - redux for parameter filters has been completely removed
+    - all parameter filter state is stored in the form state for easier state management
+    - after all filter changes the current filters are checked and the user is redirected to SEO category if necessary
+    - key is set on the `<Filter />` component in order to remount it every time the slug changes
+      - this is necessary for the form state to reload
+    ```jsx
+    <ProductFilter
+        key={category.slug}
+        productFilterOptions={category.productConnection.productFilterOptions}
+        slug={category.slug}
+        originalSlug={category.originalCategorySlug}
+    />
+    ```
+    - the `useFieldArray` hook has been removed, because it was not able to work with the new, more complex, form state
+      - in some situations it returned `{ checked: true }` for all fields instead of a complex object containing the UUID and name
+  - other changes
+    - all `sortingMode` occurences have been renamed to `orderingMode`
+    - best practices have been applied to all "touched" files

@@ -25,33 +25,33 @@ type FilterGroupInStockProps = {
     inStockCount: number;
 };
 
-const FilterGroupInStock: FC<FilterGroupInStockProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-filtergroup-instock';
+const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
 
+export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStockCount }) => {
     const t = useTypedTranslationFunction();
-    const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
+    const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
 
     const handleGroupClick = () => {
         setIsGroupOpen(!isGroupOpen);
     };
 
     return (
-        <FilterGroupStyled data-testid={testIdentifier}>
+        <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
-                {props.title}
+                {title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 <Controller
                     name="onlyInStock"
                     render={({ field }) => (
-                        <FilterGroupContentItemStyled isDisabled={props.inStockCount === 0} isActive={field.value}>
+                        <FilterGroupContentItemStyled isDisabled={inStockCount === 0} isActive={field.value}>
                             <Checkbox
                                 name={field.name}
                                 id={field.name}
                                 label={t('In stock')}
                                 fieldRef={field}
-                                count={props.inStockCount}
+                                count={inStockCount}
                             />
                         </FilterGroupContentItemStyled>
                     )}
@@ -60,5 +60,3 @@ const FilterGroupInStock: FC<FilterGroupInStockProps> = (props) => {
         </FilterGroupStyled>
     );
 };
-
-export default FilterGroupInStock;

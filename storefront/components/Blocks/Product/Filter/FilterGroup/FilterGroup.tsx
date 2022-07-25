@@ -6,8 +6,8 @@ import {
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { FC, Fragment, useState } from 'react';
-import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
+import { FC, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 
 type FilterGroupProps = {
@@ -29,14 +29,16 @@ type FilterGroupProps = {
     data?: FilterOptionFlagsType[] | BrandsType[];
 };
 
-const FilterGroup: FC<FilterGroupProps> = (props) => {
-    const testIdentifier = 'blocks-product-filter-filtergroup-' + props.filterField;
+const TEST_IDENTIFIER = (filterField: FilterGroupProps['filterField']) =>
+    'blocks-product-filter-filtergroup-' + filterField;
 
-    const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
+export const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, data }) => {
+    const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
-    const { fields } = useFieldArray({
+
+    const filterGroupValue = useWatch({
+        name: filterField,
         control: formProviderMethods.control,
-        name: props.filterField,
     });
 
     const handleGroupClick = () => {
@@ -44,39 +46,33 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
     };
 
     return (
-        <FilterGroupStyled data-testid={testIdentifier}>
+        <FilterGroupStyled data-testid={TEST_IDENTIFIER(filterField)}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
-                {props.title}
+                {title}
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                {fields.map((dataItem, index) => (
-                    <Fragment key={dataItem.id}>
-                        <Controller
-                            name={`${props.filterField}.${index}.checked`}
-                            render={({ field }) => (
-                                <FilterGroupContentItemStyled
-                                    key={dataItem.uuid}
-                                    isDisabled={props.data?.[index]?.count === 0}
-                                    isActive={field.value}
-                                    data-testid={testIdentifier + '-' + index}
-                                >
-                                    <Checkbox
-                                        name={field.name}
-                                        id={field.name}
-                                        label={dataItem.name}
-                                        fieldRef={field}
-                                        count={props.data?.[index]?.count}
-                                    />
-                                </FilterGroupContentItemStyled>
-                            )}
-                        />
-                    </Fragment>
+                {filterGroupValue.map((dataItem, index) => (
+                    <Controller
+                        name={`${filterField}.${index}.checked`}
+                        key={dataItem.uuid}
+                        render={({ field }) => (
+                            <FilterGroupContentItemStyled
+                                isDisabled={data?.[index]?.count === 0}
+                                isActive={field.value}
+                                data-testid={TEST_IDENTIFIER(filterField) + '-' + index}
+                            >
+                                <Checkbox
+                                    name={field.name}
+                                    label={dataItem.name}
+                                    fieldRef={field}
+                                    count={data?.[index]?.count}
+                                />
+                            </FilterGroupContentItemStyled>
+                        )}
+                    />
                 ))}
             </FilterGroupContentStyled>
         </FilterGroupStyled>
     );
 };
-
-/* @component */
-export default FilterGroup;

@@ -1,4 +1,4 @@
-import { FilterFormParameterType } from 'types/productFilter';
+import { ParametersType } from 'types/productFilter';
 
-export const getIndexOfParameter = (parametersValue: FilterFormParameterType[], parameterUuid: string): number =>
-    parametersValue.findIndex((item) => item.parameterUuid === parameterUuid);
+export const getIndexOfParameter = (parametersValue: ParametersType[], parameterUuid: string): number =>
+    parametersValue.findIndex((item) => item.uuid === parameterUuid);

@@ -14,7 +14,7 @@ import MetaRobots from 'components/Basic/Head/MetaRobots';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
-import ProductFilter from 'components/Blocks/Product/Filter';
+import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
@@ -23,7 +23,6 @@ import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
-import { FilterOptionsType } from 'types/productFilter';
 import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
 
 type CategoryDetailProps = {
@@ -61,10 +60,15 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
             {isFiltered && <MetaRobots content="noindex, follow" />}
             <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter
-                        productFilterOptions={category.productConnection.productFilterOptions as FilterOptionsType}
-                        slug={category.slug}
-                    />
+                    {category.productConnection.productFilterOptions !== null && (
+                        <ProductFilter
+                            key={category.slug}
+                            productFilterOptions={category.productConnection.productFilterOptions}
+                            slug={category.slug}
+                            originalSlug={category.originalCategorySlug}
+                            orderingMode={category.productConnection.orderingMode}
+                        />
+                    )}
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
@@ -92,6 +96,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
                     <SortingBar
                         sorting={category.productConnection.orderingMode}
                         totalCount={category.productConnection.totalCount}
+                        productFilterOptions={category.productConnection.productFilterOptions!}
                     />
                     {category.productConnection.products.length !== 0 ? (
                         <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />

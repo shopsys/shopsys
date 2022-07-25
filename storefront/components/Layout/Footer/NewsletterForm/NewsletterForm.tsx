@@ -99,15 +99,13 @@ const NewsletterForm: FC = () => {
                             <ChoiceFormLine>
                                 <Controller
                                     name={formMeta.fields.privacyPolicy.name}
-                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                    render={({ fieldState: { error }, field }) => (
                                         <>
                                             <Checkbox
                                                 id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
                                                 name={formMeta.fields.privacyPolicy.name}
                                                 label={formMeta.fields.privacyPolicy.label}
                                                 required={true}
-                                                isTouched={isTouched}
-                                                hasError={invalid}
                                                 fieldRef={field}
                                             />
                                             <FormLineError

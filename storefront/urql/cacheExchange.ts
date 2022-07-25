@@ -66,6 +66,7 @@ const cache = cacheExchange({
         ParameterCheckboxFilterOption: keyNull,
         ParameterSliderFilterOption: keyNull,
         ParameterColorFilterOption: keyNull,
+        ParameterValueColorFilterOption: keyNull,
         ParameterValue: keyUuid,
         ParameterValueFilterOption: keyNull,
         Payment: keyUuid,

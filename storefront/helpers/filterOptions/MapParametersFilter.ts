@@ -1,10 +1,17 @@
 import { ProductFilterApi } from 'graphql/generated';
-import { FilterOptionsStateType } from 'types/productFilter';
+import { FilterOptionsUrlQueryType } from 'types/productFilter';
 
-export const mapParametersFilter = (parametersFilter: FilterOptionsStateType): ProductFilterApi => {
+export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType | null): ProductFilterApi | null => {
+    if (parametersFilter === null) {
+        return null;
+    }
+
     return {
-        ...parametersFilter,
-        minimalPrice: parametersFilter.minimalPrice !== null ? parametersFilter.minimalPrice.toString() : null,
-        maximalPrice: parametersFilter.maximalPrice !== null ? parametersFilter.maximalPrice.toString() : null,
+        brands: parametersFilter.brands ?? null,
+        flags: parametersFilter.flags ?? null,
+        onlyInStock: parametersFilter.onlyInStock ?? null,
+        parameters: parametersFilter.parameters ?? null,
+        minimalPrice: parametersFilter.minimalPrice !== undefined ? parametersFilter.minimalPrice.toString() : null,
+        maximalPrice: parametersFilter.maximalPrice !== undefined ? parametersFilter.maximalPrice.toString() : null,
     };
 };

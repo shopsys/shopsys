@@ -9,14 +9,14 @@ import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { initialState, PaginationType } from 'redux/slices/user';
-import { FilterOptionsStateType } from 'types/productFilter';
+import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { SearchType } from 'types/search';
 
 export const useSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi | null,
     searchProductsPagination: PaginationType['paginationCursor'],
-    optionsFilter: FilterOptionsStateType,
+    optionsFilter: FilterOptionsUrlQueryType | null,
 ): SearchType | undefined => {
     const [result] = useSearchQueryApi({
         variables: {
