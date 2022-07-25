@@ -70,7 +70,6 @@ const moduleExports = nextTranslate({
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         graphqlRedisCache: process.env.GRAPHQL_REDIS_CACHE,
-        gtmId: process.env.GTM_ID,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
         sentryDsn: process.env.SENTRY_DSN || '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT || '',
@@ -86,6 +85,7 @@ const moduleExports = nextTranslate({
                     longitude: 15.473,
                     zoom: 7,
                 },
+                gtmId: process.env.GTM_ID,
             },
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
@@ -98,6 +98,7 @@ const moduleExports = nextTranslate({
                     longitude: 19.699,
                     zoom: 7,
                 },
+                gtmId: process.env.GTM_ID,
             },
             {
                 publicGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
@@ -110,6 +111,7 @@ const moduleExports = nextTranslate({
                     longitude: 15.473,
                     zoom: 7,
                 },
+                gtmId: process.env.GTM_ID,
             },
         ],
         availableStaticUrls: staticUrls,
