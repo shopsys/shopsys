@@ -32,7 +32,16 @@
 
     <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
+    <target name="clean-storefront-query-cache" hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true" output="${dev.null}">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:redis:clean-storefront-query-cache"/>
+        </exec>
+    </target>
+
     <target name="db-demo" depends="production-protection,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,frontend-api-generate-new-keys,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data"/>
+
+    <target name="build-version-generate" depends="shopsys_framework.build-version-generate,clean-storefront-query-cache" description="Generates parameters_version.yaml config file with a new build version number and clean query cache"/>
 
     <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
 
