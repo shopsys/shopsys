@@ -6,10 +6,10 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
-use Symfony\Component\Security\Core\User\UserChecker;
+use Symfony\Component\Security\Core\User\InMemoryUserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class AdministratorChecker extends UserChecker
+class AdministratorChecker extends InMemoryUserChecker
 {
     /**
      * @var string
