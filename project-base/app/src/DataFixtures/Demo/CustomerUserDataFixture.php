@@ -303,6 +303,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_ADDRESS_FILLED => true,
                     self::KEY_ADDRESS_COMPANY_NAME => 'Rockpoint',
+                    self::KEY_ADDRESS_FIRST_NAME => 'Ľubomír',
+                    self::KEY_ADDRESS_LAST_NAME => 'Novák',
                     self::KEY_ADDRESS_CITY => 'Bratislava',
                     self::KEY_ADDRESS_POSTCODE => '10100',
                     self::KEY_ADDRESS_STREET => 'Ostravská 55/65A',
@@ -378,6 +380,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_ADDRESS_FILLED => true,
+                    self::KEY_ADDRESS_FIRST_NAME => 'Petr',
+                    self::KEY_ADDRESS_LAST_NAME => 'Anrig',
                     self::KEY_ADDRESS_CITY => 'Opava',
                     self::KEY_ADDRESS_POSTCODE => '74601',
                     self::KEY_ADDRESS_STREET => 'Komenského 419/10',
