@@ -39,14 +39,15 @@ final class ApiCaller
 
     /**
      * @param string[] $urls
+     * @param array $headers
      * @return string[]
      */
-    public function sendGetsAsyncToStrings(array $urls)
+    public function sendGetsAsyncToStrings(array $urls, array $headers): array
     {
         $promises = [];
 
         foreach ($urls as $url) {
-            $request = new Request('GET', $url);
+            $request = new Request('GET', $url, $headers);
             $promises[] = $this->client->sendAsync($request);
         }
 
