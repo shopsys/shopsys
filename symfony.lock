@@ -693,9 +693,6 @@
     "symfony/css-selector": {
         "version": "v3.4.32"
     },
-    "symfony/debug": {
-        "version": "v3.4.32"
-    },
     "symfony/debug-bundle": {
         "version": "3.3",
         "recipe": {
@@ -772,19 +769,10 @@
             "project-base/src/Kernel.php"
         ]
     },
-    "symfony/http-client-contracts": {
-        "version": "v1.1.7"
-    },
     "symfony/http-foundation": {
         "version": "v3.4.32"
     },
     "symfony/http-kernel": {
-        "version": "v3.4.32"
-    },
-    "symfony/inflector": {
-        "version": "v3.4.32"
-    },
-    "symfony/intl": {
         "version": "v3.4.32"
     },
     "symfony/mailer": {

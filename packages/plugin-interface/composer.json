@@ -17,7 +17,7 @@
     },
     "require": {
         "php": "^8.1",
-        "symfony/monolog-bridge": "^4.4.0"
+        "symfony/monolog-bridge": "^5.4.0"
     },
     "require-dev": {
         "shopsys/coding-standards": "11.0.x-dev"

@@ -2,7 +2,7 @@ parameters:
 
     treatPhpDocTypesAsCertain: false
     symfony:
-        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
 
     ignoreErrors:
