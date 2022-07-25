@@ -140,6 +140,7 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
         if (isProductFilterEmpty) {
             delete routerQueryWithoutAllParameter.filter;
         } else {
+            delete routerQueryWithoutAllParameter.page;
             routerQueryWithoutAllParameter.filter = getActualUrlQueryWithoutDefaultPriceFilter(
                 checkedBrands,
                 checkedFlags,
