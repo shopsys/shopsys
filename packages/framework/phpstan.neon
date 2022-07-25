@@ -21,9 +21,6 @@ parameters:
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
             path: %currentWorkingDirectory%/src/Model/Order/Order.php
         -
-            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
-            path: %currentWorkingDirectory%/src/*
-        -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
     excludePaths:
