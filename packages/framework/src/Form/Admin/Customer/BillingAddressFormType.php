@@ -39,9 +39,6 @@ class BillingAddressFormType extends AbstractType
 
         $builderCompanyDataGroup = $builder->create('companyData', GroupType::class, [
             'label' => t('Company data'),
-            'attr' => [
-                'id' => 'customer_form_billingAddressData',
-            ],
         ]);
 
         $builderCompanyDataGroup
