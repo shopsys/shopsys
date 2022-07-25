@@ -8,6 +8,8 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useReloadCart } from 'hooks/cart/UseReloadCart';
 import i18nConfig from 'i18n';
+import 'lightgallery/css/lg-thumbnail.css';
+import 'lightgallery/css/lightgallery.css';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps } from 'next/app';

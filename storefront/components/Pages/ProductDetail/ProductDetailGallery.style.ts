@@ -11,6 +11,7 @@ export const ProductDetailGalleryThumbnailsStyled = styled.div`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
+            order: 0;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -70,6 +71,7 @@ export const ProductDetailGalleryMainImageStyled = styled.div`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
+            order: 1;
             display: block;
             padding: 15px;
             position: relative;

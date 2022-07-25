@@ -42,6 +42,7 @@
         "js-base64": "^3.7.2",
         "jwt-decode": "^3.1.2",
         "keen-slider": "^5.5.1",
+        "lightgallery": "^2.5.0",
         "next": "^11.0.0",
         "next-redux-cookie-wrapper": "^2.1.1",
         "next-redux-wrapper": "^7.0.5",
