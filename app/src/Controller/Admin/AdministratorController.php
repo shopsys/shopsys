@@ -72,7 +72,7 @@ class AdministratorController extends BaseAdministratorController
      */
     public function editAction(Request $request, int $id)
     {
-        $this->denyAccessUnlessHimselfOrGranted($id);
+        $this->denyAccessUnlessHimselfOrGranted($request, $id);
 
         return parent::editAction($request, $id);
     }
@@ -296,14 +296,23 @@ class AdministratorController extends BaseAdministratorController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $administratorId
      */
-    private function denyAccessUnlessHimselfOrGranted(int $administratorId): void
+    private function denyAccessUnlessHimselfOrGranted(Request $request, int $administratorId): void
     {
         /** @var \App\Model\Administrator\Administrator $currentAdministrator */
         $currentAdministrator = $this->getUser();
-        if ($currentAdministrator->getId() !== $administratorId) {
+
+        // always allow admin to edit himself
+        if ($currentAdministrator->getId() === $administratorId) {
+            return;
+        }
+
+        if ($request->getMethod() === Request::METHOD_GET) {
             $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_VIEW);
+        } else {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_FULL);
         }
     }
 }
