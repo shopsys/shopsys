@@ -736,11 +736,11 @@ msgstr "relevance"
 msgid "to"
 msgstr "do"
 
-msgid "{0} No product found | {1} 1 product found | [2,Inf] %totalProductCount% product found"
-msgstr "{0} Nebyl nalezen žádný produkt | {1} Celkem nalezen 1 produkt | [2,4] Celkem nalezeny %totalProductCount% produkty | [5,Inf] Celkem nalezeno %totalProductCount% produktů"
+msgid "{0} No product found | {1} 1 product found | [2,Inf] %count% product found"
+msgstr "{0} Nebyl nalezen žádný produkt | {1} Celkem nalezen 1 produkt | [2,4] Celkem nalezeny %count% produkty | [5,Inf] Celkem nalezeno %count% produktů"
 
-msgid "{1} <strong class=\"cart__state\">%itemsCount%</strong> item for <strong class=\"cart__state\">%priceWithVat%</strong>|[2,Inf] <strong class=\"cart__state\">%itemsCount%</strong> items for <strong class=\"cart__state\">%priceWithVat%</strong>"
-msgstr "{1} <strong class=\"cart__state\">%itemsCount%</strong> položka za <strong class=\"cart__state\">%priceWithVat%</strong> |[2,4] <strong class=\"cart__state\">%itemsCount%</strong> položky za <strong class=\"cart__state\">%priceWithVat%</strong> |[5,Inf] <strong class=\"cart__state\">%itemsCount%</strong> položek za <strong class=\"cart__state\">%priceWithVat%</strong>"
+msgid "{1} <strong class=\"cart__state\">%count%</strong> item for <strong class=\"cart__state\">%priceWithVat%</strong>|[2,Inf] <strong class=\"cart__state\">%count%</strong> items for <strong class=\"cart__state\">%priceWithVat%</strong>"
+msgstr "{1} <strong class=\"cart__state\">%count%</strong> položka za <strong class=\"cart__state\">%priceWithVat%</strong> |[2,4] <strong class=\"cart__state\">%count%</strong> položky za <strong class=\"cart__state\">%priceWithVat%</strong> |[5,Inf] <strong class=\"cart__state\">%count%</strong> položek za <strong class=\"cart__state\">%priceWithVat%</strong>"
 
 msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
 msgstr "{1}Načíst další položku|[2,4]Načíst další %loadNextCount% položky|[5,Inf]Načíst dalších %loadNextCount% položek"

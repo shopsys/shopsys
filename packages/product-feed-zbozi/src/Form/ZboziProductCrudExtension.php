@@ -6,12 +6,12 @@ use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     private $translator;
 
@@ -26,7 +26,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     private $zboziProductDomainDataFactory;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
      */

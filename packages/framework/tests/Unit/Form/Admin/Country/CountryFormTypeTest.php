@@ -124,7 +124,6 @@ class CountryFormTypeTest extends TypeTestCase
     {
         $translator = $this->createMock(Translator::class);
         $translator->method('staticTrans')->willReturnArgument(0);
-        $translator->method('staticTransChoice')->willReturnArgument(0);
         Translator::injectSelf($translator);
 
         $this->localization = $this->createMock(Localization::class);

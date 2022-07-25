@@ -68,9 +68,6 @@ services:
         tags:
             - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
 
-    Symfony\Component\Translation\MessageSelector:
-        alias: translator.selector
-
     Doctrine\Common\Annotations\DocParser:
         alias: jms_translation.doc_parser
 

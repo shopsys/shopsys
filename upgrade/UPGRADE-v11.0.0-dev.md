@@ -847,6 +847,23 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     - see the list of filters and update your code if you use any – https://github.com/twigphp/Twig-extensions
         - `trans` filter is already used from symfony/twig-bridge package
+- resolve `symfony/translations` deprecations ([#2487](https://github.com/shopsys/shopsys/pull/2487))
+    - see #project-base-diff
+    - replace usage of `Symfony\Component\Translation\TranslatorInterface` with `Symfony\Contracts\Translation\TranslatorInterface`
+    - remove usage of deprecated `Symfony\Component\Translation\MessageSelector`
+    - replace `transchoice` filter with `trans` filter and count parameter
+        - example:
+        ```diff
+        -    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
+        -        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
+        -    {% endtranschoice %}
+        +    {% trans with { '%count%': cart.itemsCount, '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
+        +        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
+        +    {% endtrans %}
+        ```
+    - `transchoice()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `trans()` with `count` parameter instead
+    - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
+    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead 
 
 ## Composer dependencies
 
