@@ -30,7 +30,7 @@ export const ProductDetailImageStyled = styled.div`
             width: calc(100% - ${localVariables.detailInfoWidth});
         }
 
-        /* this div is added automatically by simple-react-lightbox */
+        /* this styled is used to style the div inserted by the lightbox gallery package */
         > div {
             position: relative;
             display: flex;
