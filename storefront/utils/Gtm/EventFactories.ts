@@ -150,7 +150,8 @@ export const getGtmProductDetailEvent = (
     currencyCode: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
-    value: product.price.priceWithVat,
+    value: product.price.priceWithoutVat,
+    valueWithTax: product.price.priceWithVat,
     products: [mapGtmProductDetailType(product)],
 });
 

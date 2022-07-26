@@ -244,6 +244,7 @@ export type GtmProductsListEventType = {
 export type GtmProductDetailEventType = {
     currency: string;
     value: number;
+    valueWithTax: number;
     products: GtmProductInterface[];
 };
 
