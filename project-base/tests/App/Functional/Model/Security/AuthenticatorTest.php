@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Model\Security;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\App\Test\FunctionalTestCase;
@@ -27,6 +28,12 @@ class AuthenticatorTest extends FunctionalTestCase
      * @inject
      */
     private CustomerUserFacade $customerUserFacade;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\RequestStack
+     * @inject
+     */
+    private RequestStack $requestStack;
 
     public function testSessionIdIsChangedAfterLogin(): void
     {
@@ -53,6 +60,8 @@ class AuthenticatorTest extends FunctionalTestCase
         $session->setId('abc');
 
         $request->setSession($session);
+
+        $this->requestStack->push($request);
 
         return $request;
     }
