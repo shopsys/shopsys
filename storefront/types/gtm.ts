@@ -225,6 +225,14 @@ export type GtmSuggestClickType = {
 
 export type GtmChangeCartItemEventType = {
     listName: GtmListNameType;
+    currency: string;
+    /**
+     * value of the event, depending on the context 
+     * for addToCart it is the value of added products
+     * for removeFromCart it is the value of removed products
+     */
+    value: number;
+    valueWithTax: number; // same as above but with tax
     products: GtmCartItemType[];
 };
 

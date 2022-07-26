@@ -75,9 +75,15 @@ export const getGtmChangeCartItemEvent = (
     cartItem: CartItemType,
     listIndex: number,
     quantity: number,
+    currencyCode: string,
+    eventValue: number,
+    eventValueWithTax: number,
     listName: GtmListNameType,
 ): GtmChangeCartItemEventType => ({
     listName,
+    value: eventValue,
+    valueWithTax: eventValueWithTax,
+    currency: currencyCode,
     products: [mapGtmCartItemType(cartItem, listIndex, quantity)],
 });
 

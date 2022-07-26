@@ -8,6 +8,7 @@ import { onRemoveCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const [, removeItemFromCart] = useRemoveFromCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
 
     const removeItemFromCartAction = async (
@@ -21,9 +22,19 @@ export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
 
         if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
             dispatch(userActions.setCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid));
-        }
 
-        onRemoveCartItemGtmEventHandler(cartItem, listIndex, gtmListName);
+            const absoluteEventValue = cartItem.product.price.priceWithoutVat * cartItem.quantity;
+            const absoluteEventValueWithTax = cartItem.product.price.priceWithVat * cartItem.quantity;
+
+            onRemoveCartItemGtmEventHandler(
+                cartItem,
+                currencyCode,
+                absoluteEventValue,
+                absoluteEventValueWithTax,
+                listIndex,
+                gtmListName,
+            );
+        }
 
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;
     };
