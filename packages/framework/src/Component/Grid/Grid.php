@@ -588,8 +588,7 @@ class Grid
 
     protected function loadFromRequest()
     {
-        /** @var array $queryData */
-        $queryData = $this->requestStack->getMasterRequest()->query->get(self::GET_PARAMETER, []);
+        $queryData = $this->requestStack->getMainRequest()->query->all(self::GET_PARAMETER);
         if (array_key_exists($this->id, $queryData)) {
             $gridQueryData = $queryData[$this->id];
             if (array_key_exists('limit', $gridQueryData)) {
@@ -604,7 +603,8 @@ class Grid
                 $this->isOrderFromRequest = true;
             }
         }
-        $requestData = $this->requestStack->getMasterRequest()->request->get(self::GET_PARAMETER, []);
+
+        $requestData = $this->requestStack->getMainRequest()->request->all(self::GET_PARAMETER);
         if (!array_key_exists($this->id, $requestData)) {
             return;
         }
