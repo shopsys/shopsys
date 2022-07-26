@@ -43,7 +43,7 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
 
         $this->buildViolation('myMessage')
             ->setParameter('{{ value }}', '"' . $file->getExtension() . '"')
-            ->setParameter('{{ limit }}', 3)
+            ->setParameter('{{ limit }}', '3')
             ->assertRaised();
     }
 }
