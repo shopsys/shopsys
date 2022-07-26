@@ -24,7 +24,6 @@ return [
     Shopsys\ProductFeed\ZboziBundle\ShopsysProductFeedZboziBundle::class => ['all' => true],
     Shopsys\ProductFeed\GoogleBundle\ShopsysProductFeedGoogleBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
-    Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],

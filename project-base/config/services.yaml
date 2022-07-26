@@ -25,6 +25,18 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+    Redis:
+        # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
+        class: Redis
+        calls:
+            -   connect:
+                    - '%env(REDIS_HOST)%'
+                    - 6379
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface:
