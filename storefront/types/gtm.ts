@@ -161,7 +161,7 @@ export type GtmProductInterface = {
     sku: string;
     brand: string;
     categories: string[];
-    listIndex: number;
+    listIndex?: number;
     collection?: string;
     coupon?: string;
     size?: string;
@@ -227,7 +227,7 @@ export type GtmChangeCartItemEventType = {
     listName: GtmListNameType;
     currency: string;
     /**
-     * value of the event, depending on the context 
+     * value of the event, depending on the context
      * for addToCart it is the value of added products
      * for removeFromCart it is the value of removed products
      */
