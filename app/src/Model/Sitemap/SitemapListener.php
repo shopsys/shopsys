@@ -6,7 +6,6 @@ namespace App\Model\Sitemap;
 
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\AbstractGenerator;
-use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -20,12 +19,10 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener as BaseSitemapListener
  */
 class SitemapListener extends BaseSitemapListener
 {
-    private const PRIORITY_CATEGORY_SEO_MIX = 0.9;
-
     /**
      * @var \App\Model\Sitemap\SitemapRepository
      */
-    private $sitemapRepository;
+    private SitemapRepository $sitemapRepository;
 
     /**
      * @param \App\Model\Sitemap\SitemapFacade $sitemapFacade
@@ -47,7 +44,7 @@ class SitemapListener extends BaseSitemapListener
     /**
      * @param \Presta\SitemapBundle\Event\SitemapPopulateEvent $event
      */
-    public function populateSitemap(SitemapPopulateEvent $event)
+    public function populateSitemap(SitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
         $domainId = (int)$section;
@@ -56,41 +53,59 @@ class SitemapListener extends BaseSitemapListener
         $generator = $event->getUrlContainer();
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-        $this->addHomepageUrl($generator, $domainConfig, $section, static::PRIORITY_HOMEPAGE);
+        $this->addUrlForHomepage($generator, $domainConfig, $section);
 
         $categorySitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategories($domainConfig);
-        $this->addUrlsBySitemapItems($categorySitemapItems, $generator, $domainConfig, 'categories', static::PRIORITY_CATEGORIES);
+        $this->addUrlsForSitemapItems($categorySitemapItems, $generator, $domainConfig, 'categories');
 
         $categorySeoMixSitemapItems = $this->sitemapRepository->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
-        // @phpstan-ignore-next-line Wrong annotation in parent class
-        $this->addUrlsBySitemapItems($categorySeoMixSitemapItems, $generator, $domainConfig, 'filtersCategories', self::PRIORITY_CATEGORY_SEO_MIX);
+        $this->addUrlsForSitemapItems($categorySeoMixSitemapItems, $generator, $domainConfig, 'filtersCategories');
 
         $productSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleProducts($domainConfig);
-        $this->addUrlsBySitemapItems($productSitemapItems, $generator, $domainConfig, 'sellableProducts', static::PRIORITY_PRODUCTS);
+        $this->addUrlsForSitemapItems($productSitemapItems, $generator, $domainConfig, 'sellableProducts');
 
         $productSoldOutSitemapItems = $this->sitemapFacade->getSitemapItemsForSoldOutProducts($domainConfig);
-        $this->addUrlsBySitemapItems($productSoldOutSitemapItems, $generator, $domainConfig, 'soldOutProducts', static::PRIORITY_PRODUCTS);
+        $this->addUrlsForSitemapItems($productSoldOutSitemapItems, $generator, $domainConfig, 'soldOutProducts');
 
         $articleSitemapItems = $this->sitemapFacade->getSitemapItemsForArticlesOnDomain($domainConfig);
-        $this->addUrlsBySitemapItems($articleSitemapItems, $generator, $domainConfig, 'articles', static::PRIORITY_ARTICLES);
+        $this->addUrlsForSitemapItems($articleSitemapItems, $generator, $domainConfig, 'articles');
 
         $blogArticleSitemapItems = $this->sitemapFacade->getSitemapItemsForBlogArticlesOnDomain($domainConfig);
-        $this->addUrlsBySitemapItems($blogArticleSitemapItems, $generator, $domainConfig, 'articles', static::PRIORITY_ARTICLES);
+        $this->addUrlsForSitemapItems($blogArticleSitemapItems, $generator, $domainConfig, 'articles');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[] $sitemapItems
+     * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string $section
+     */
+    private function addUrlsForSitemapItems(
+        array $sitemapItems,
+        AbstractGenerator $generator,
+        DomainConfig $domainConfig,
+        string $section
+    ): void {
+        foreach ($sitemapItems as $sitemapItem) {
+            $absoluteUrl = $this->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
+            $urlConcrete = new UrlConcrete($absoluteUrl);
+
+            $generator->addUrl($urlConcrete, $section);
+        }
     }
 
     /**
      * @param \Presta\SitemapBundle\Service\AbstractGenerator $generator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $section
-     * @param int $elementPriority
      */
-    protected function addHomepageUrl(
+    private function addUrlForHomepage(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        $section,
-        $elementPriority
-    ) {
-        $urlConcrete = new UrlConcrete($domainConfig->getUrl(), null, null, $elementPriority);
+        string $section
+    ): void {
+        $urlConcrete = new UrlConcrete($domainConfig->getUrl());
+
         $generator->addUrl($urlConcrete, $section);
     }
 }
