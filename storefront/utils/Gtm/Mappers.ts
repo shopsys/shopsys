@@ -1,4 +1,5 @@
 import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import { canUseDom } from 'helpers/canUseDom';
 import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -37,7 +38,7 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType): GtmProd
     price: productInterface.price.priceWithoutVat,
     priceWithTax: productInterface.price.priceWithVat,
     tax: productInterface.price.vatAmount,
-    url: productInterface.slug,
+    url: canUseDom() ? window.location.href : productInterface.slug,
     sku: productInterface.catalogNumber,
     brand: productInterface.brand?.name ?? '',
     categories: productInterface.categoryNames,
