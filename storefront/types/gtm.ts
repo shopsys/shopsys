@@ -128,6 +128,7 @@ export type GtmUserInfoType = {
     group?: string;
     id?: string;
     email?: string;
+    emailHash?: string;
     name?: string;
     surname?: string;
     phoneNumber?: string; // phone number in intl. format (+420777123456)

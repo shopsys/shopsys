@@ -204,6 +204,7 @@ export const getGtmUserInfo = (
         userInfo.type = 'customer';
         userInfo.id = currentCustomer.uuid;
         userInfo.email = currentCustomer.email;
+        userInfo.emailHash = MD5(currentCustomer.email).toString();
         userInfo.phoneNumber = currentCustomer.telephone;
         userInfo.name = currentCustomer.firstName;
         userInfo.surname = currentCustomer.lastName;
