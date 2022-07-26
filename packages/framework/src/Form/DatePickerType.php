@@ -35,6 +35,7 @@ class DatePickerType extends AbstractType
         $defaults = [
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
+            'html5' => false,
         ];
 
         if ($this->displayTimeZoneProvider !== null) {
