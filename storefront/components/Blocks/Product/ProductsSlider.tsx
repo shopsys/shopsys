@@ -1,6 +1,7 @@
 import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
 import SliderProductItem from './SliderProductItem';
 import { theme } from 'components/Theme/main';
+import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { useKeenSlider } from 'keen-slider/react';
 import { FC, useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
@@ -46,6 +47,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
             setAreControlsVisible(slider.options().controls);
         },
     });
+    useGtmSliderProductListView(props.products, props.gtmListName);
 
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);
