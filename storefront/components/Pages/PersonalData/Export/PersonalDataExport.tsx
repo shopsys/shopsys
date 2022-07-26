@@ -20,16 +20,17 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PersonalDataExportFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const PersonalDataExport: FC = () => {
+type PersonalDataExportProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const PersonalDataExport: FC<PersonalDataExportProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
     const [personalDataExportResult, personalDataExport] = usePersonalDataRequestMutationApi();
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], url);
     const [formProviderMethods] = usePersonalDataExportForm();
     const formMeta = usePersonalDataExportFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
@@ -57,10 +58,7 @@ const PersonalDataExport: FC = () => {
 
     return (
         <>
-            <SimpleLayout
-                heading={t('Personal Data Export')}
-                breadcrumb={[{ name: t('Personal Data Export'), slug: personalDataExportUrl }]}
-            >
+            <SimpleLayout heading={t('Personal Data Export')} breadcrumb={breadcrumbs}>
                 {contentSiteText !== undefined && (
                     <ContentTextStyled>
                         <UserText htmlContent={contentSiteText} />

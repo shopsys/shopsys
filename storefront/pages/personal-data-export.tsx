@@ -7,21 +7,27 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const PersonalDataExportPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], domainUrl);
+    const breadcrumbs = useMemo(
+        () => [{ name: t('Personal Data Export'), slug: personalDataExportUrl }],
+        [personalDataExportUrl, t],
+    );
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Export')}>
-                <PersonalDataExport />
+                <PersonalDataExport breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { initialState, userActions } from 'redux/slices/user';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
@@ -34,7 +35,9 @@ const Search: FC<ServerSidePropsType> = () => {
     const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
     const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, searchParametersFilter);
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search');
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
+    const breadcrumbs = useMemo(() => [{ name: t('Search'), slug: searchUrl }], [t, searchUrl]);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
     useGtmSearchResultsListView(searchResults, searchQuery);
 
@@ -50,7 +53,7 @@ const Search: FC<ServerSidePropsType> = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={t('Search')}>
-                <SearchPage searchResults={searchResults} />
+                <SearchPage searchResults={searchResults} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

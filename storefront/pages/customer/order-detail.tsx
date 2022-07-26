@@ -10,7 +10,7 @@ import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
@@ -22,7 +22,8 @@ const Index: FC = () => {
     const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], domainConfig.url);
     const router = useRouter();
     const order = useOrderDetail(getStringFromUrlQuery(router.query.orderNumber), domainConfig);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const breadcrumbs = useMemo(() => [{ name: t('My orders'), slug: customerOrdersUrl }], [customerOrdersUrl, t]);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
@@ -30,7 +31,7 @@ const Index: FC = () => {
             <MetaRobots content="noindex" />
             <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
                 <CommonLayout title={`${t('Order number')} ${order?.number}`}>
-                    <OrderDetail order={order!} />
+                    <OrderDetail order={order!} breadcrumbs={breadcrumbs} />
                 </CommonLayout>
             </PageGuard>
         </StaticUrlGuard>

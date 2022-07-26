@@ -5,6 +5,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { CartItemType } from 'types/cart';
 import {
     GtmCartInfoType,
@@ -28,9 +29,12 @@ import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProd
 import { AutocompleteSearchType } from 'types/search';
 import { TransportType } from 'types/transport';
 
-export const useGtmStaticPageViewEvent = (pageType: GtmPageType): GtmPageViewEventType => {
+export const useGtmStaticPageViewEvent = (
+    pageType: GtmPageType,
+    breadcrumbs?: BreadcrumbItemType[],
+): GtmPageViewEventType => {
     const path = useRouter().asPath;
-    const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path), [pageType, path]);
+    const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path, breadcrumbs), [pageType, path, breadcrumbs]);
     return useGtmPageViewEvent(gtmPageInfo);
 };
 

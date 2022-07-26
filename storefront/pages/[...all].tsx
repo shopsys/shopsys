@@ -54,7 +54,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const slug = getUrlWithoutGetParameters(router.asPath);
     const data = useFriendlyUrlResolvedData(slug);
 
-    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug));
+    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug, data?.breadcrumb));
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
     useGtmCategoryProductListView(data, slug);
     useGtmProductDetailView(data, slug);

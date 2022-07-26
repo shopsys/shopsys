@@ -19,13 +19,15 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import { FC, useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ListedStoreType } from 'types/store';
 
 type StoresProps = {
     stores: ListedStoreType[];
+    breadcrumbs: BreadcrumbItemType[];
 };
 
-const Stores: FC<StoresProps> = ({ stores }) => {
+const Stores: FC<StoresProps> = ({ stores, breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
     const [activeInfoBox, setActiveInfoBox] = useState(-1);
@@ -43,11 +45,7 @@ const Stores: FC<StoresProps> = ({ stores }) => {
     };
 
     return (
-        <SimpleLayout
-            standardWidth={true}
-            heading={t('Stores')}
-            breadcrumb={[{ name: t('Department stores'), slug: '' }]}
-        >
+        <SimpleLayout standardWidth={true} heading={t('Stores')} breadcrumb={breadcrumbs}>
             <StoresStyled>
                 <MapStyled>
                     <GoogleMap markers={stores} activeMarkerHandler={activeMarkerHandler} closeMarkers={closeInfoBox} />

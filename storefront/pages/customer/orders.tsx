@@ -7,8 +7,9 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC = () => {
@@ -16,14 +17,25 @@ const Index: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const ordersData = useOrders(currentDomainConfig);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(
+        ['/customer', '/customer/orders'],
+        domainUrl,
+    );
+    const breadcrumbs = useMemo(
+        () => [
+            { name: t('Customer'), slug: customerUrl },
+            { name: t('My orders'), slug: customerOrdersUrl },
+        ],
+        [customerUrl, customerOrdersUrl, t],
+    );
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('My orders')}>
-                <Orders orders={ordersData?.orders} totalCount={ordersData?.totalCount} />
+                <Orders orders={ordersData?.orders} totalCount={ordersData?.totalCount} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

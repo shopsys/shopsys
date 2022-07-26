@@ -6,6 +6,7 @@ import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { CartItemType, CartType } from 'types/cart';
 import { CategoryDetailType } from 'types/category';
 import { CurrentCustomerType } from 'types/customer';
@@ -68,11 +69,13 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
 export const getGtmPageInfoForFriendlyUrl = (
     data: FriendlyUrlPageType | null | undefined,
     slug: string,
+    breadcrumbs: BreadcrumbItemType[] | undefined,
 ): GtmPageInfoType => {
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
         path: slug,
         pageId: getRandomPageId(),
+        breadcrumbs: breadcrumbs ?? [],
     };
 
     if (data === null || data === undefined) {
@@ -115,10 +118,15 @@ export const getGtmPageInfoForFriendlyUrl = (
     return defaultPageInfo;
 };
 
-export const getGtmPageInfoType = (pageType: GtmPageType, path: string): GtmPageInfoType => ({
+export const getGtmPageInfoType = (
+    pageType: GtmPageType,
+    path: string,
+    breadcrumbs: BreadcrumbItemType[] | undefined,
+): GtmPageInfoType => ({
     type: pageType,
     path,
     pageId: getRandomPageId(),
+    breadcrumbs: breadcrumbs ?? [],
 });
 
 const getGtmCategoryInfo = (category: CategoryDetailType) => {

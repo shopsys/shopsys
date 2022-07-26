@@ -15,7 +15,7 @@ import { Translate } from 'next-translate';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import * as Yup from 'yup';
 
 const getLoginFormResolver = (t: Translate) => {
@@ -27,11 +27,14 @@ const getLoginFormResolver = (t: Translate) => {
     );
 };
 
-const Login: FC = () => {
+type LoginProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const Login: FC<LoginProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { url } = useShopsysSelector((state) => state.domain);
-    const [loginUrl] = getInternationalizedStaticUrls(['/login'], url);
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const [[loginResult, login]] = useAuth();
 
@@ -46,7 +49,7 @@ const Login: FC = () => {
     const testIdentifier = 'pages-login-submit';
 
     return (
-        <SimpleLayout heading={t('Login')} breadcrumb={[{ name: t('Login'), slug: loginUrl }]}>
+        <SimpleLayout heading={t('Login')} breadcrumb={breadcrumbs}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                     <Controller

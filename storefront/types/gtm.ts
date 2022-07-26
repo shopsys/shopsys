@@ -1,3 +1,5 @@
+import { BreadcrumbItemType } from './breadcrumb';
+
 export type GtmPageType =
     | 'home'
     | 'crossroad'
@@ -100,7 +102,7 @@ export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
     pageId: string; // random string generated for every page load
-    breadcrumbs?: GtmBreadcrumbInfoType[];
+    breadcrumbs: BreadcrumbItemType[];
     category?: string[]; // name from root
     categoryId?: number[];
     categoryLevel?: number;
@@ -139,12 +141,6 @@ export type GtmConsentInfoType = {
     statistics: GtmConsent;
     marketing: GtmConsent;
     preferences: GtmConsent;
-};
-
-export type GtmBreadcrumbInfoType = {
-    id: number;
-    name: string;
-    link: string;
 };
 
 /** product data types for category list, detail, cart item and order item */
