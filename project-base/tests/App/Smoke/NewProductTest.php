@@ -58,8 +58,9 @@ class NewProductTest extends FunctionalTestCase
 
         $em2->rollback();
 
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $client2->getContainer()->get('session')->getFlashBag();
+        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+        $session = $client2->getContainer()->get('request_stack')->getSession();
+        $flashBag = $session->getFlashBag();
 
         $this->assertSame(302, $client2->getResponse()->getStatusCode());
         $this->assertNotEmpty($flashBag->get(FlashMessage::KEY_SUCCESS));
