@@ -90,9 +90,8 @@ class LoginAsUserFacade
 
         $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());
 
-        $password = '';
         $firewallName = 'frontend';
-        $token = new UsernamePasswordToken($freshUser, $password, $firewallName, $freshUser->getRoles());
+        $token = new UsernamePasswordToken($freshUser, $firewallName, $freshUser->getRoles());
         $this->tokenStorage->setToken($token);
 
         $event = new InteractiveLoginEvent($request, $token);

@@ -92,9 +92,8 @@ class AdministratorLoginFacade
     {
         $administrator = $this->administratorRepository->getByValidMultidomainLoginToken($multidomainLoginToken);
         $administrator->setMultidomainLogin(true);
-        $password = '';
         $firewallName = 'administration';
-        $token = new UsernamePasswordToken($administrator, $password, $firewallName, $administrator->getRoles());
+        $token = new UsernamePasswordToken($administrator, $firewallName, $administrator->getRoles());
         $this->tokenStorage->setToken($token);
 
         $event = new InteractiveLoginEvent($request, $token);

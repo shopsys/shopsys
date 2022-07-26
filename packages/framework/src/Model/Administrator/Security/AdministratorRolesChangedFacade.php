@@ -36,7 +36,7 @@ class AdministratorRolesChangedFacade
      */
     public function refreshAdministratorToken(Administrator $administrator): void
     {
-        $token = new UsernamePasswordToken($administrator, null, 'administration', $administrator->getRoles());
+        $token = new UsernamePasswordToken($administrator, 'administration', $administrator->getRoles());
         $this->tokenStorage->setToken($token);
         $this->administratorFacade->setRolesChangedNow($administrator);
     }
