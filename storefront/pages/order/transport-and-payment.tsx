@@ -29,7 +29,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const currentCart = useCurrentCart();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
 
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step2');
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('transport pay');
     useGtmStaticPageView(gtmStaticPageViewEvent);
     useGtmPaymentShippingView(gtmStaticPageViewEvent);
 

@@ -5,8 +5,8 @@ export type GtmPageType =
     | 'seo category' // prepared SEO category - friendly URL
     | 'product' // product - friendly URL
     | 'cart' // /cart
-    | 'step2' // /transport-and-payment
-    | 'step3' // /contact-information
+    | 'transport pay' // /transport-and-payment
+    | 'shipping data' // /contact-information
     | 'purchase' // /order-confirmation
     | 'search' // /search
     | 'blog' // blog - friendly URL
@@ -31,11 +31,11 @@ export type GtmListNameType =
     | 'flag'
     | 'accessory'
     | 'variants'
-    | 'search'
+    | 'search result'
     | 'homepage promo products'
     | 'cart'
     | 'detail'
-    | 'autocomplete';
+    | 'suggest';
 
 export type GtmEventType =
     | 'page_ready' // page view event
@@ -185,9 +185,9 @@ export type GtmCartItemType = GtmProductInterface & {
 export type GtmPurchaseType = {
     currency: string;
     id: string;
-    revenue: number; // order price without shipping and payment price
-    revenueWithTax: number;
-    revenueTax: number;
+    value: number; // order price without shipping and payment price
+    valueWithTax: number;
+    valueTax: number;
     coupons: string[];
     discountAmount: number;
     paymentType: string;

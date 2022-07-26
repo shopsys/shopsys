@@ -18,7 +18,7 @@ export const useGtmSearchResultsListView = (data: SearchType | undefined, search
             lastSearchQuery.current = searchQuery;
             lastViewedSearchPageStartCursor.current = data.productsSearch.pageInfo.startCursor;
             const event = getNewGtmEcommerceEvent('ec.products_list', true);
-            event.ecommerce = getGtmProductsListEvent(data.productsSearch.products, 'search', currentPage, pageSize);
+            event.ecommerce = getGtmProductsListEvent(data.productsSearch.products, 'search result', currentPage, pageSize);
             gtmSafePushEvent(event);
         }
     }, [data, searchQuery, currentPage, pageSize]);

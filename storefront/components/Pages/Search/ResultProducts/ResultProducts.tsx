@@ -16,7 +16,7 @@ const ResultProducts: FC<ResultProductsProps> = (props) => {
 
     return (
         <>
-            {props.areProductsShowed && <ProductsList products={props.products} gtmListName="search" />}
+            {props.areProductsShowed && <ProductsList products={props.products} gtmListName="search result" />}
             {props.areProductsShowed === false && props.noProductsFound === false && (
                 <ResultProductsStyled>
                     <div>

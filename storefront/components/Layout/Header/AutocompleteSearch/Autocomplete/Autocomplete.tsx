@@ -99,7 +99,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                                                 onClick={() =>
                                                                     onProductDetailRedirectHandler(
                                                                         product,
-                                                                        'autocomplete',
+                                                                        'suggest',
                                                                         index,
                                                                     )
                                                                 }
