@@ -68,18 +68,6 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         )
                         AND 
                         (pd.domain_hidden = FALSE)
-                        AND (
-                            p.variant_type = :variantTypeVariant
-                            OR
-                            EXISTS (
-                                SELECT 1
-                                FROM product_domains AS pdom1
-                                WHERE pdom1.domain_id = :domainId
-                                    AND pdom1.description IS NOT NULL 
-                                    AND pdom1.description <> \'\'
-                                    AND pdom1.product_id = p.id
-                            )
-                        )
                     )
                     THEN TRUE
                     ELSE FALSE
@@ -102,7 +90,6 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                     'domainId' => $domain->getId(),
                     'pricingGroupId' => $pricingGroup->getId(),
                     'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-                    'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
                 ],
                 [
                     'now' => Types::DATETIME_IMMUTABLE,
@@ -110,7 +97,6 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                     'domainId' => Types::INTEGER,
                     'pricingGroupId' => Types::INTEGER,
                     'variantTypeMain' => Types::STRING,
-                    'variantTypeVariant' => Types::STRING,
                 ]
             );
         }
