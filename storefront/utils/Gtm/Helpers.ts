@@ -1,6 +1,7 @@
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { canUseDom } from 'helpers/canUseDom';
 import { GtmDeviceTypes as GtmDeviceType } from 'types/gtm';
+import { v4 as uuidV4 } from 'uuid';
 
 export const getGtmDeviceType = (): GtmDeviceType => {
     if (typeof navigator === 'undefined') {
@@ -15,3 +16,5 @@ export const getGtmDeviceType = (): GtmDeviceType => {
 
     return 'unknown';
 };
+
+export const getRandomPageId = (): string => uuidV4();

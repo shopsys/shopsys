@@ -99,11 +99,12 @@ export type GtmSearchEventType = {
 export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
+    pageId: string; // random string generated for every page load
     breadcrumbs?: GtmBreadcrumbInfoType[];
     category?: string[]; // name from root
     categoryId?: number[];
     categoryLevel?: number;
-    id?: string; // for article page type (UUID used)
+    articleId?: string; // for article page type (UUID used)
 };
 
 export type GtmCartInfoType = {

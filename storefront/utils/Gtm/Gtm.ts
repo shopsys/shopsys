@@ -1,3 +1,4 @@
+import { getRandomPageId } from './Helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { canUseDom } from 'helpers/canUseDom';
@@ -71,6 +72,7 @@ export const getGtmPageInfoForFriendlyUrl = (
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
         path: slug,
+        pageId: getRandomPageId(),
     };
 
     if (data === null || data === undefined) {
@@ -95,7 +97,7 @@ export const getGtmPageInfoForFriendlyUrl = (
             break;
         case 'BlogArticle':
             defaultPageInfo.type = 'article';
-            defaultPageInfo.id = data.uuid;
+            defaultPageInfo.articleId = data.uuid;
             break;
         case 'Brand':
             defaultPageInfo.type = 'brand';
@@ -116,6 +118,7 @@ export const getGtmPageInfoForFriendlyUrl = (
 export const getGtmPageInfoType = (pageType: GtmPageType, path: string): GtmPageInfoType => ({
     type: pageType,
     path,
+    pageId: getRandomPageId(),
 });
 
 const getGtmCategoryInfo = (category: CategoryDetailType) => {
