@@ -96,6 +96,8 @@ export const getGtmShippingInfoEvent = (
     const { shippingDetail, shippingExtra } = mapGtmShippingInfo(pickupPlace);
 
     return {
+        value: cartInfoType.value,
+        valueWithTax: cartInfoType.valueWithTax,
         coupons: cartInfoType.coupons,
         products: cartInfoType.products ?? [],
         currency: cartInfoType.currency,
@@ -112,6 +114,8 @@ export const getGtmPaymentInfoEvent = (
     cartInfoType: GtmCartInfoType,
     payment: PaymentType,
 ): GtmPaymentInfoEventType => ({
+    value: cartInfoType.value,
+    valueWithTax: cartInfoType.valueWithTax,
     coupons: cartInfoType.coupons,
     products: cartInfoType.products ?? [],
     currency: cartInfoType.currency,

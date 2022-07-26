@@ -54,8 +54,8 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             cart: {
                 urlCart,
                 currency: domain.currencyCode,
-                value: cart.totalPrice.priceWithoutVat,
-                valueWithTax: cart.totalPrice.priceWithVat,
+                value: cart.totalItemsPrice.priceWithoutVat,
+                valueWithTax: cart.totalItemsPrice.priceWithVat,
                 products,
                 coupons,
             },

@@ -248,6 +248,8 @@ export type GtmProductDetailEventType = {
 };
 
 export type GtmShippingInfoEventType = {
+    value: number; // value of all products
+    valueWithTax: number; // value of all products with tax
     currency: string;
     coupons: string[];
     paymentType?: string;
@@ -260,6 +262,8 @@ export type GtmShippingInfoEventType = {
 };
 
 export type GtmPaymentInfoEventType = {
+    value: number; // value of all products
+    valueWithTax: number; // value of all products with tax
     currency: string;
     coupons: string[];
     paymentType: string;
