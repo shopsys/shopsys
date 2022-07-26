@@ -21,7 +21,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class CustomerUserMutation extends BaseTokenMutation implements MutationInterface, AliasedInterface
 {
@@ -113,7 +113,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
 
         try {
             $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
-        } catch (UsernameNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             throw new UserError('This account doesn\'t exist or password is incorrect');
         }
 

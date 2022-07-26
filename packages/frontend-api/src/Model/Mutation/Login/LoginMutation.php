@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class LoginMutation implements MutationInterface, AliasedInterface
 {
@@ -56,7 +56,7 @@ class LoginMutation implements MutationInterface, AliasedInterface
 
         try {
             $user = $this->frontendUserProvider->loadUserByUsername($input['email']);
-        } catch (UsernameNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             throw new UserError('Log in failed.');
         }
 
