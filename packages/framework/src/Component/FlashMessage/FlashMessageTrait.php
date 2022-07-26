@@ -3,6 +3,10 @@
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
 use LogicException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
+use Symfony\Component\HttpFoundation\Session\Session as Session;
 
 /**
  * @property \Psr\Container\ContainerInterface $container
@@ -66,13 +70,7 @@ trait FlashMessageTrait
      */
     protected function addFlashMessage(string $type, string $message): void
     {
-        if (!$this->container->has('session')) {
-            throw new LogicException(
-                'You can not use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".'
-            );
-        }
-
-        $this->container->get('session')->getFlashBag()->add($type, $message);
+        $this->getSession()->getFlashBag()->add($type, $message);
     }
 
     /**
@@ -92,10 +90,9 @@ trait FlashMessageTrait
     /**
      * @return bool
      */
-    public function isFlashMessageBagEmpty()
+    public function isFlashMessageBagEmpty(): bool
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $this->container->get('session')->getFlashBag();
+        $flashBag = $this->getSession()->getFlashBag();
 
         return !$flashBag->has(FlashMessage::KEY_ERROR)
             && !$flashBag->has(FlashMessage::KEY_INFO)
@@ -132,10 +129,26 @@ trait FlashMessageTrait
      */
     protected function getMessages($key)
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $this->container->get('session')->getFlashBag();
+        $flashBag = $this->getSession()->getFlashBag();
         $messages = $flashBag->get($key);
 
         return array_unique($messages);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Session
+     */
+    protected function getSession(): Session
+    {
+        try {
+            /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+            $session = $this->container->get('request_stack')->getSession();
+
+            return $session;
+        } catch (SessionNotFoundException|NotFoundExceptionInterface|ContainerExceptionInterface) {
+            throw new LogicException(
+                'You can not work with flash messages if sessions are disabled. Enable them in "config/packages/framework.yaml".'
+            );
+        }
     }
 }
