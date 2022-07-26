@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures;
 
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
-use Symfony\Component\Intl\Exception\MethodNotImplementedException;
 
 class CategoryIndex extends AbstractIndex
 {
@@ -22,7 +22,7 @@ class CategoryIndex extends AbstractIndex
      */
     public function getTotalCount(int $domainId): int
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 
     /**
@@ -38,6 +38,6 @@ class CategoryIndex extends AbstractIndex
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
-        throw new MethodNotImplementedException(__METHOD__);
+        throw new RuntimeException(sprintf('The %s() is not implemented.', __METHOD__));
     }
 }
