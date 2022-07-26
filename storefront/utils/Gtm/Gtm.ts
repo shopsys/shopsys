@@ -1,6 +1,7 @@
 import { getRandomPageId } from './Helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { MD5 } from 'crypto-js';
 import { canUseDom } from 'helpers/canUseDom';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -192,15 +193,12 @@ export const getGtmConsentInfo = (): GtmConsentInfoType => {
     };
 };
 
-export const getGtmUserInfo = (
-    currentCustomer: CurrentCustomerType | null | undefined,
-    isUserLoggedIn: boolean,
-): GtmUserInfoType => {
+export const getGtmUserInfo = (currentCustomer: CurrentCustomerType | null | undefined): GtmUserInfoType => {
     const userInfo: GtmUserInfoType = {
         type: 'visitor',
     };
 
-    if (isUserLoggedIn && currentCustomer !== undefined && currentCustomer !== null) {
+    if (currentCustomer !== undefined && currentCustomer !== null) {
         userInfo.type = 'customer';
         userInfo.id = currentCustomer.uuid;
         userInfo.email = currentCustomer.email;

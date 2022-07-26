@@ -40,7 +40,6 @@ export const useGtmStaticPageViewEvent = (
 
 export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEventType => {
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const { isUserLoggedIn } = useCurrentUserData();
     const { user } = useCurrentUserData();
     const cartEventInfo = useGtmCartEventInfo();
 
@@ -48,7 +47,7 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
         () => ({
             event: 'page_ready',
             page: pageInfo,
-            user: getGtmUserInfo(user, isUserLoggedIn),
+            user: getGtmUserInfo(user),
             device: getGtmDeviceType(),
             consent: getGtmConsentInfo(),
             currency: domainConfig.currencyCode,
@@ -62,7 +61,6 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
             cartEventInfo.isLoaded,
             domainConfig.currencyCode,
             domainConfig.defaultLocale,
-            isUserLoggedIn,
             pageInfo,
             user,
         ],
