@@ -70,9 +70,9 @@ export type GtmConsentUpdateType = {
 export type GtmEcommerceEventType = {
     event: GtmEventType;
     ecommerce: unknown;
-    _clear?: boolean;
     eventTimeout?: number;
     eventCallback?: (id: string) => void;
+    _clear?: boolean;
 };
 
 export type GtmPageViewEventType = {
@@ -83,9 +83,9 @@ export type GtmPageViewEventType = {
     page: GtmPageInfoType;
     user: GtmUserInfoType;
     device: GtmDeviceTypes;
-    _clear: boolean;
     _isLoaded: boolean;
     cart?: GtmCartInfoType | null;
+    _clear: boolean;
 };
 
 export type GtmSearchEventType = {

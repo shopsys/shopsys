@@ -67,8 +67,8 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
 
 export const getNewGtmEcommerceEvent = (eventType: GtmEventType, clear = false): GtmEcommerceEventType => ({
     event: eventType,
-    _clear: clear,
     ecommerce: undefined,
+    _clear: clear,
 });
 
 export const getGtmChangeCartItemEvent = (
