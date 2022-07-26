@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\FlashMessage;
 
 use LogicException;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 
 /**
  * @property \Psr\Container\ContainerInterface $container
@@ -66,13 +67,16 @@ trait FlashMessageTrait
      */
     protected function addFlashMessage(string $type, string $message): void
     {
-        if (!$this->container->has('session')) {
+        try {
+            /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+            $session = $this->container->get('request_stack')->getSession();
+        } catch (SessionNotFoundException) {
             throw new LogicException(
                 'You can not use the addFlash method if sessions are disabled. Enable them in "config/packages/framework.yaml".'
             );
         }
 
-        $this->container->get('session')->getFlashBag()->add($type, $message);
+        $session->getFlashBag()->add($type, $message);
     }
 
     /**
@@ -92,10 +96,11 @@ trait FlashMessageTrait
     /**
      * @return bool
      */
-    public function isFlashMessageBagEmpty()
+    public function isFlashMessageBagEmpty(): bool
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $this->container->get('session')->getFlashBag();
+        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+        $session = $this->container->get('request_stack')->getSession();
+        $flashBag = $session->getFlashBag();
 
         return !$flashBag->has(FlashMessage::KEY_ERROR)
             && !$flashBag->has(FlashMessage::KEY_INFO)
@@ -132,8 +137,9 @@ trait FlashMessageTrait
      */
     protected function getMessages($key)
     {
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $this->container->get('session')->getFlashBag();
+        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
+        $session = $this->container->get('request_stack')->getSession();
+        $flashBag = $session->getFlashBag();
         $messages = $flashBag->get($key);
 
         return array_unique($messages);
