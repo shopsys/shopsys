@@ -7,7 +7,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -49,7 +49,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
                 'Unable to find an active CustomerUser entity identified by email "%s".',
                 $email
             );
-            throw new UsernameNotFoundException($message, 0);
+            throw new UserNotFoundException($message, 0);
         }
 
         return $customerUser;
@@ -72,7 +72,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
 
         if ($customerUser instanceof TimelimitLoginInterface) {
             if (time() - $customerUser->getLastActivity()->getTimestamp() > 3600 * 24) {
-                throw new UsernameNotFoundException('User was too long unactive');
+                throw new UserNotFoundException('User was too long unactive');
             }
             $customerUser->setLastActivity(new DateTime());
         }
@@ -87,7 +87,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
         }
 
         if ($freshCustomerUser === null) {
-            throw new UsernameNotFoundException('Unable to find an active user');
+            throw new UserNotFoundException('Unable to find an active user');
         }
 
         return $freshCustomerUser;

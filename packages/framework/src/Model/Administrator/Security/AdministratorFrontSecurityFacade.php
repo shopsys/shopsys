@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorFrontSecurityFacade
@@ -142,7 +142,7 @@ class AdministratorFrontSecurityFacade
         } catch (UnsupportedUserException $e) {
             $message = 'AdministratorUserProvider does not support user in this token.';
             throw new InvalidTokenException($message, $e);
-        } catch (UsernameNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             $message = 'Username not found.';
             throw new InvalidTokenException($message, $e);
         }
