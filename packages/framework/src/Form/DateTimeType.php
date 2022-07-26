@@ -32,6 +32,7 @@ class DateTimeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'html5' => false,
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZone()->getName(),
