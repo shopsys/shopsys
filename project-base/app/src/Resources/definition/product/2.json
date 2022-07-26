@@ -111,6 +111,9 @@
   },
   "mappings": {
     "properties": {
+      "id": {
+        "type": "integer"
+      },
       "searching_names": {
         "type": "text",
         "analyzer": "stemming",

@@ -12,6 +12,7 @@ class ProductElasticsearchConverterTest extends TestCase
     public function testFillEmptyFields(): void
     {
         $product = [
+            'id' => 1,
             'name' => '47" LG 47LA790V (FHD)',
             'catnum' => '5965879P',
             'partno' => '47LA790V',
@@ -21,6 +22,7 @@ class ProductElasticsearchConverterTest extends TestCase
         ];
 
         $expected = [
+            'id' => 1,
             'name' => '47" LG 47LA790V (FHD)',
             'catnum' => '5965879P',
             'partno' => '47LA790V',
@@ -59,6 +61,7 @@ class ProductElasticsearchConverterTest extends TestCase
     public function testFillEmptyParameterFields(): void
     {
         $product = [
+            'id' => 1,
             'name' => '47" LG 47LA790V (FHD)',
             'catnum' => '5965879P',
             'partno' => '47LA790V',
@@ -74,6 +77,7 @@ class ProductElasticsearchConverterTest extends TestCase
         ];
 
         $expected = [
+            'id' => 1,
             'name' => '47" LG 47LA790V (FHD)',
             'catnum' => '5965879P',
             'partno' => '47LA790V',

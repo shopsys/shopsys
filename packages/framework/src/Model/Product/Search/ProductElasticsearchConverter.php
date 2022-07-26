@@ -14,6 +14,7 @@ class ProductElasticsearchConverter
     {
         $result = $product;
 
+        $result['id'] = $product['id'] ?? 0;
         $result['availability'] = $product['availability'] ?? '';
         $result['catnum'] = $product['catnum'] ?? '';
         $result['description'] = $product['description'] ?? '';
