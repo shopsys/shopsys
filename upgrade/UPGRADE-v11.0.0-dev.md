@@ -865,6 +865,25 @@ There you can find links to upgrade notes for other versions too.
     - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
     - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead 
 
+- avoid the session starting in the frontend API ([#2497](https://github.com/shopsys/shopsys/pull/2497))
+    - beware, the changes might affect you even if you do not use the FE API in your project
+    - class `Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber`:
+        - property `$flashBag` was removed, you can use `$this->flashBagProvider->getFlashBag()` to access the implementation of `FlashBagInterface` instead
+        - the constructor changed the interface:
+        ```diff
+            public function __construct(
+        -        FlashBagInterface $flashBag,
+        +        FlashBagProvider $flashBagProvider,
+        ```
+    - class `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade`:
+        - property `$flashBag` was removed, you can use `$this->flashBagProvider->getFlashBag()` to access the implementation of `FlashBagInterface` instead
+        - the constructor changed the interface:
+        ```diff
+            public function __construct(
+        -        FlashBagInterface $flashBag,
+        +        FlashBagProvider $flashBagProvider,
+        ```
+
 ## Composer dependencies
 
 - replace swiftmailer with symfony/mailer ([#2470](https://github.com/shopsys/shopsys/pull/2470))
