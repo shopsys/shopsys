@@ -180,7 +180,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
     /**
      * {@inheritDoc}
      */
-    public function get($currencyCode, $locale = null)
+    public function get($currencyCode, $locale = null): Currency
     {
         if (!$this->isSupportedCurrency($currencyCode)) {
             throw new UnsupportedCurrencyException($currencyCode);
