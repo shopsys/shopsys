@@ -452,17 +452,11 @@ class ProductFormType extends AbstractType
         $builderDisplayAvailabilityGroup
             ->add('sellingFrom', DatePickerType::class, [
                 'required' => false,
-                'constraints' => [
-                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
-                ],
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
                 'label' => t('Selling start date'),
             ])
             ->add('sellingTo', DatePickerType::class, [
                 'required' => false,
-                'constraints' => [
-                    new Constraints\Date(['message' => 'Enter date in DD.MM.YYYY format']),
-                ],
                 'invalid_message' => 'Enter date in DD.MM.YYYY format',
                 'label' => t('Selling end date'),
             ])
