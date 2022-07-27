@@ -125,14 +125,14 @@ class TokenFacade
             $token = $this->jwtConfiguration->parser()->parse($tokenString);
 
             if (!($token instanceof UnencryptedToken)) {
-                throw new InvalidTokenUserMessageException('Token is not valid.');
+                throw new InvalidTokenUserMessageException();
             }
 
             $this->validateToken($token);
 
             return $token;
         } catch (Throwable $throwable) {
-            throw new InvalidTokenUserMessageException('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
     }
 
@@ -157,7 +157,7 @@ class TokenFacade
             new PermittedFor($this->domain->getUrl())
         )
         ) {
-            throw new InvalidTokenUserMessageException('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
     }
 

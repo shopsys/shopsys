@@ -11,7 +11,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidTokenUserError;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 
@@ -63,7 +62,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
         try {
             $customerUser = $this->customerUserFacade->getByUuid($userUuid);
         } catch (CustomerUserNotFoundException $customerUserNotFoundException) {
-            throw new InvalidTokenUserMessageException('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
 
         $tokenSecretChain = $token->claims()->get('secretChain');
@@ -73,7 +72,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
-            throw new InvalidTokenUserError('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
 
         return [
@@ -94,7 +93,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
     protected function assertClaimsExists(DataSet $claims): void
     {
         if (!$claims->has('uuid') || !$claims->has('secretChain')) {
-            throw new InvalidTokenUserError('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
     }
 

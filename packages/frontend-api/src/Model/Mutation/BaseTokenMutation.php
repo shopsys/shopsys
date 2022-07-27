@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Mutation;
 
-use Shopsys\FrontendApiBundle\Model\Error\InvalidTokenUserError;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -31,14 +31,14 @@ class BaseTokenMutation
         $token = $this->tokenStorage->getToken();
 
         if ($token === null) {
-            throw new InvalidTokenUserError('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
 
         /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $user */
         $user = $token->getUser();
 
         if (!($user instanceof FrontendApiUser)) {
-            throw new InvalidTokenUserError('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
 
         return $user;
