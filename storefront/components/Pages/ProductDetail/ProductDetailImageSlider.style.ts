@@ -90,3 +90,29 @@ export const ImageSliderControlPreviousStyled = styled(ImageSliderControlStyled)
 export const ImageSliderControlNextStyled = styled(ImageSliderControlStyled)`
     right: 0;
 `;
+
+export const ProductDetailImageSliderBulletsWrapperStyled = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px 8px;
+`;
+
+export const ProductDetailImageSliderBulletStyled = styled.button(
+    ({ theme }) => css`
+        flex: 0 0 12px;
+        width: 12px;
+        height: 12px;
+        border: 0;
+        margin: 0 4px;
+        padding: 0;
+
+        border-radius: 50%;
+        background-color: ${theme.color.greyLighter};
+        cursor: pointer;
+
+        &.isActive {
+            background-color: ${theme.color.primaryLight};
+        }
+    `,
+);

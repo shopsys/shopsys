@@ -3,6 +3,8 @@ import {
     ImageSliderControlNextStyled,
     ImageSliderControlPreviousStyled,
     ProductDetailImageSliderBoxStyled,
+    ProductDetailImageSliderBulletStyled,
+    ProductDetailImageSliderBulletsWrapperStyled,
     ProductDetailImageSliderItemStyled,
     ProductDetailImageSliderStyled,
     SliderItemImageStyled,
@@ -11,7 +13,9 @@ import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import { FC, useEffect, useState } from 'react';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import LightGallery from 'lightgallery/react';
+import { FC, useState } from 'react';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
 
@@ -20,9 +24,8 @@ type ProductDetailImageSliderProps = {
     flags: SimpleFlagType[];
 };
 
-const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
+const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ galleryItems, flags }) => {
     const [areControlsVisible, setAreControlsVisible] = useState<boolean | undefined>(false);
-    const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
         loop: false,
@@ -36,38 +39,10 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
         slideChanged(slider) {
             setCurrentSlide(slider.details().relativeSlide);
         },
-        created(slider) {
-            setLoadedImageUrls((currentLoadedImageUrls) => {
-                const newLoadedImageUrls = { ...currentLoadedImageUrls };
-                const slidesPerView = slider.options().slidesPerView;
-                if (slidesPerView !== undefined) {
-                    for (let i = 0; i < slidesPerView; i++) {
-                        newLoadedImageUrls[i] = true;
-                    }
-
-                    if (slider.options().centered) {
-                        newLoadedImageUrls[props.galleryItems.length - 1] = true;
-                    }
-                }
-                return newLoadedImageUrls;
-            });
-        },
         move(slider) {
             setAreControlsVisible(slider.options().controls);
         },
     });
-    useEffect(() => {
-        setLoadedImageUrls((currentLoadedImageUrls) => {
-            const newLoadedImageUrls = { ...currentLoadedImageUrls };
-            newLoadedImageUrls[currentSlide] = true;
-
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (slider !== null && slider.options().centered) {
-                newLoadedImageUrls[Math.min(currentSlide + 1, props.galleryItems.length - 1)] = true;
-            }
-            return newLoadedImageUrls;
-        });
-    }, [currentSlide, props.galleryItems.length, slider]);
 
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);
@@ -78,33 +53,47 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
     };
 
     return (
-        <ProductDetailImageSliderBoxStyled>
-            <ProductDetailImageSliderStyled ref={sliderRef} className="keen-slider">
-                {props.galleryItems.map((galleryItem, index) => (
-                    <ProductDetailImageSliderItemStyled key={index} className="keen-slider__slide">
-                        <SliderItemImageStyled
-                            src={
-                                loadedImageUrls[index]
-                                    ? galleryItem.sizes?.find((size) => size.size === 'default')?.url
-                                    : ''
-                            }
+        <LightGallery mode="lg-fade" thumbnail plugins={[lgThumbnail]} selector=".lightboxItem">
+            <ProductDetailImageSliderBoxStyled>
+                <ProductDetailImageSliderStyled ref={sliderRef} className="keen-slider">
+                    {galleryItems.map((galleryItem, index) => (
+                        <ProductDetailImageSliderItemStyled
+                            key={index}
+                            className="keen-slider__slide lightboxItem"
+                            data-src={galleryItem.sizes?.find((size) => size.size === 'default')?.url}
+                        >
+                            <SliderItemImageStyled
+                                loading="lazy"
+                                src={galleryItem.sizes?.find((size) => size.size === 'default')?.url}
+                            />
+                        </ProductDetailImageSliderItemStyled>
+                    ))}
+                </ProductDetailImageSliderStyled>
+                <ProductDetailImageSliderBulletsWrapperStyled>
+                    {galleryItems.map((galleryItem, index) => (
+                        <ProductDetailImageSliderBulletStyled
+                            key={index}
+                            className={currentSlide === index ? 'isActive' : undefined}
+                            onClick={() => slider.moveToSlide(index)}
                         />
-                    </ProductDetailImageSliderItemStyled>
-                ))}
-            </ProductDetailImageSliderStyled>
-            {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
-            {slider !== null && areControlsVisible ? (
-                <>
-                    <ImageSliderControlPreviousStyled onClick={onMoveToPreviousSlideHandler}>
-                        p
-                    </ImageSliderControlPreviousStyled>
-                    <ImageSliderControlNextStyled onClick={onMoveToNextSlideHandler}>n</ImageSliderControlNextStyled>
-                </>
-            ) : null}
-            <ProductDetailGalleryFlagsStyled>
-                <ProductFlags flags={props.flags} />
-            </ProductDetailGalleryFlagsStyled>
-        </ProductDetailImageSliderBoxStyled>
+                    ))}
+                </ProductDetailImageSliderBulletsWrapperStyled>
+                {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
+                {slider !== null && areControlsVisible ? (
+                    <>
+                        <ImageSliderControlPreviousStyled onClick={onMoveToPreviousSlideHandler}>
+                            p
+                        </ImageSliderControlPreviousStyled>
+                        <ImageSliderControlNextStyled onClick={onMoveToNextSlideHandler}>
+                            n
+                        </ImageSliderControlNextStyled>
+                    </>
+                ) : null}
+                <ProductDetailGalleryFlagsStyled>
+                    <ProductFlags flags={flags} />
+                </ProductDetailGalleryFlagsStyled>
+            </ProductDetailImageSliderBoxStyled>
+        </LightGallery>
     );
 };
 
