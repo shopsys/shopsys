@@ -11,6 +11,7 @@ framework:
     validation: { enable_annotations: true }
     trusted_hosts: ~
     session:
+        storage_factory_id: session.storage.factory.native
         handler_id: snc_redis.session.handler
         cookie_httponly: true
         # Disable the default PHP session garbage collection.
