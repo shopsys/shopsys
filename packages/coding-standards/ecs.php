@@ -126,6 +126,7 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturn
 use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
+use SlevomatCodingStandard\Sniffs\PHP\ForbiddenClassesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
@@ -166,6 +167,12 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->rule(InlineDocCommentDeclarationSniff::class);
     $ecsConfig->rule(NullableTypeForNullDefaultValueSniff::class);
     $ecsConfig->rule(ReturnTypeHintSpacingSniff::class);
+    $ecsConfig->ruleWithConfiguration(ForbiddenClassesSniff::class, [
+        'forbiddenClasses' => [
+            'Overblog\GraphQLBundle\Error\UserError' => null,
+            'GraphQL\Error\UserError' => null,
+        ],
+    ]);
 
     // Shopsys Checkers
     $ecsConfig->rule(ForbiddenDumpFixer::class);
