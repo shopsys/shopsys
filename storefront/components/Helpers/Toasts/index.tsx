@@ -1,4 +1,6 @@
 import { toast } from 'react-toastify';
+import { getGtmMessageEvent } from 'utils/Gtm/EventFactories';
+import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
@@ -20,9 +22,13 @@ const showMessage = (message: string, type: 'info' | 'error' | 'success'): void 
 
 export const showErrorMessage = (message: string): void => {
     showMessage(message, 'error');
+    const event = getGtmMessageEvent('error', message);
+    gtmSafePushEvent(event);
 };
 export const showInfoMessage = (message: string): void => {
     showMessage(message, 'info');
+    const event = getGtmMessageEvent('information', message);
+    gtmSafePushEvent(event);
 };
 export const showSuccessMessage = (message: string): void => {
     showMessage(message, 'success');

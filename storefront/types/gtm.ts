@@ -55,7 +55,8 @@ export type GtmEventType =
     | 'ec.shipping_info'
     | 'ec.shipping_data'
     | 'ec.payment_info'
-    | 'ec.purchase'; // order confirmation page view event
+    | 'ec.purchase' // order confirmation page view event
+    | 'ec.message';
 
 export type GtmSectionType = 'category' | 'product' | 'brand' | 'article';
 
@@ -275,4 +276,16 @@ export type GtmPaymentInfoEventType = {
 export type GtmShippingInfoType = {
     shippingDetail: string;
     shippingExtra: string[];
+};
+
+export type GtmMessageType = 'error' | 'information';
+
+export type GtmMessageEventType = {
+    event: GtmEventType;
+    eventParameters: {
+        type: GtmMessageType;
+        message: string;
+        origin?: string;
+        detail?: string;
+    };
 };
