@@ -83,9 +83,9 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param \PhpParser\Node $node
+     * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): int|Node|null
     {
         if ($this->isTransMethodOrFuncCall($node)) {
             if (!$this->isIgnored($node)) {
@@ -240,25 +240,25 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param array $nodes
+     * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
 
     /**
-     * @param \PhpParser\Node $node
+     * @inheritdoc
      */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): int|Node|null
     {
         return null;
     }
 
     /**
-     * @param array $nodes
+     * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
