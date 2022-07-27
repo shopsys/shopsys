@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -112,13 +111,5 @@ class OrderItemsType extends AbstractType
                 'inherit_data' => true,
                 'render_form_row' => false,
             ]);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getParent()
-    {
-        return FormType::class;
     }
 }

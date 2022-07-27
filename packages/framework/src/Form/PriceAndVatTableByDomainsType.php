@@ -106,12 +106,4 @@ class PriceAndVatTableByDomainsType extends AbstractType
         $builder->add($vatsIndexedByDomainId);
         $builder->add($entityPricesByDomainId);
     }
-
-    /**
-     * @return string
-     */
-    public function getParent(): string
-    {
-        return FormType::class;
-    }
 }

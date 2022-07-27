@@ -7,7 +7,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ColorPickerType extends AbstractType
 {
-    public function getParent()
+    /**
+     * @inheritDoc
+     */
+    public function getParent(): ?string
     {
         return TextType::class;
     }

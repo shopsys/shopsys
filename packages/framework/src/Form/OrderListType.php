@@ -5,7 +5,6 @@ namespace Shopsys\FrameworkBundle\Form;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -47,13 +46,5 @@ class OrderListType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars['orders'] = $this->orderFacade->getCustomerUserOrderList($options['customerUser']);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getParent()
-    {
-        return FormType::class;
     }
 }

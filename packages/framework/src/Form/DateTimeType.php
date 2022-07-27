@@ -40,9 +40,9 @@ class DateTimeType extends AbstractType
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getParent(): string
+    public function getParent(): ?string
     {
         return SymfonyDateTimeType::class;
     }
