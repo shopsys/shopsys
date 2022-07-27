@@ -29,17 +29,16 @@ class GenerateFriendlyUrlCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate friendly urls for supported entities.');
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln(
             '<fg=green>Start of generating missing friendly urls from routing_friendly_url.yaml file.</fg=green>'

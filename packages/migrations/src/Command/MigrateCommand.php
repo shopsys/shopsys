@@ -52,7 +52,7 @@ class MigrateCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription(
@@ -61,9 +61,7 @@ class MigrateCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
+     * @inheritdoc
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

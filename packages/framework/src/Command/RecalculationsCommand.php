@@ -75,17 +75,16 @@ class RecalculationsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Run all recalculations.');
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Running recalculations:');
         $output->writeln('<fg=green>Categories visibility.</fg=green>');
