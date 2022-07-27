@@ -24,7 +24,7 @@
         "php": "^8.1",
         "lcobucci/jwt": "^4.1.5",
         "overblog/graphql-bundle": "^0.14.3",
-        "overblog/graphiql-bundle": "^0.2",
+        "overblog/graphiql-bundle": "^0.3",
         "shopsys/form-types-bundle": "11.0.x-dev",
         "shopsys/framework": "11.0.x-dev",
         "shopsys/migrations": "11.0.x-dev",
