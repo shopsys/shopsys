@@ -44,7 +44,7 @@
                     </a>
 
                     <div class="list-products__item__action">
-                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
+                        {{ render(controller('App\\Controller\\Front\\CartController::productActionAction', { productActionView: productView.action } )) }}
                     </div>
                 </div>
             </li>

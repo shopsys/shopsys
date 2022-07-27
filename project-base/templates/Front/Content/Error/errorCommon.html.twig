@@ -8,7 +8,7 @@
     <div class="web__line">
         <div class="web__container">
             <div class="row">
-                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController::indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
 
                 <div class="box-error-page">
                     {% block error_content %}{% endblock %}

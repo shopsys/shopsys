@@ -14,7 +14,7 @@
         </div>
 
         <div class="header__middle dont-print">
-            {{ render(controller('App\\Controller\\Front\\SearchController:boxAction')) }}
+            {{ render(controller('App\\Controller\\Front\\SearchController::boxAction')) }}
             {% if shopInfoPhoneNumber is not null or shopInfoPhoneHours is not null or shopInfoEmail is not null %}
                 <div class="contact-us">
                     {% if shopInfoPhoneNumber is not null %}
@@ -82,7 +82,7 @@
 
         <div class="header__top dont-print">
             <div class="header__top__left">
-                {{ render(controller('App\\Controller\\Front\\ArticleController:menuAction')) }}
+                {{ render(controller('App\\Controller\\Front\\ArticleController::menuAction')) }}
             </div>
 
             <div class="header__top__right">
@@ -137,9 +137,9 @@
         </div>
 
         <div class="header__cart dont-print">
-            {{ render(controller('App\\Controller\\Front\\CartController:boxAction')) }}
+            {{ render(controller('App\\Controller\\Front\\CartController::boxAction')) }}
         </div>
     </header>
 
-    {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'header'})) }}
+    {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'header'})) }}
 {% endblock %}

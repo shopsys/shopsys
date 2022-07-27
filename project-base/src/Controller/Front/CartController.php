@@ -327,7 +327,7 @@ class CartController extends FrontBaseController
             );
         }
 
-        return $this->forward(FlashMessageController::class . ':indexAction');
+        return $this->forward(FlashMessageController::class . '::indexAction');
     }
 
     /**

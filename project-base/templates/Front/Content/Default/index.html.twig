@@ -30,7 +30,7 @@
         </div>
     {% endif %}
 
-    {{ render(controller('App\\Controller\\Front\\CategoryController:topAction')) }}
+    {{ render(controller('App\\Controller\\Front\\CategoryController::topAction')) }}
 
     {% if topProducts is not empty %}
         <div class="web__line">

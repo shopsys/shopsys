@@ -19,14 +19,14 @@
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
+            {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'productList'})) }}
             <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
             {% if visibleChildren is not empty %}
                 <h2>{{ 'List of subcategories'|trans }}</h2>
 
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
+                {{ render(controller('App\\Controller\\Front\\CategoryController::categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
 
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}

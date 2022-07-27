@@ -15,7 +15,7 @@
         <div class="web__container">
             <h1>{{ 'Search results for "%searchText%"'|trans({ '%searchText%': searchText }) }}</h1>
 
-            {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
+            {{ render(controller('App\\Controller\\Front\\CategoryController::categoryListAction', {categories: foundCategories})) }}
 
             <div class="box-list js-product-list-with-filter">
                 {% if paginationResult.results|length > 0 or filterFormSubmitted %}
