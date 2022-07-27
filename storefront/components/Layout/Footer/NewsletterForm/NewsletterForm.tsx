@@ -36,7 +36,7 @@ const NewsletterForm: FC = () => {
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, 'footer', formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
         subscribeToNewsletterResult,
         formProviderMethods,
@@ -130,6 +130,7 @@ const NewsletterForm: FC = () => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="footer"
             />
         </>
     );

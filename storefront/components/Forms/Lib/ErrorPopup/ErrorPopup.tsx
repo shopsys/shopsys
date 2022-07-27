@@ -3,6 +3,7 @@ import Heading from 'components/Basic/Heading';
 import Popup from 'components/Layout/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, ReactElement, useEffect } from 'react';
+import { GtmMessageOriginType } from 'types/gtm';
 import { getGtmMessageEvent } from 'utils/Gtm/EventFactories';
 import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
@@ -16,6 +17,7 @@ type ErrorPopupProps = {
             errorMessage?: string | undefined;
         };
     };
+    origin: GtmMessageOriginType;
 };
 
 const ErrorPopup: FC<ErrorPopupProps> = (props) => {
@@ -23,15 +25,15 @@ const ErrorPopup: FC<ErrorPopupProps> = (props) => {
 
     useEffect(() => {
         if (props.isVisible) {
-            for (const field in props.fields) {
-                const errorMessage = props.fields[field].errorMessage;
+            for (const fieldName in props.fields) {
+                const errorMessage = props.fields[fieldName].errorMessage;
                 if (errorMessage !== undefined) {
-                    const event = getGtmMessageEvent('error', errorMessage);
+                    const event = getGtmMessageEvent('error', errorMessage, fieldName, props.origin);
                     gtmSafePushEvent(event);
                 }
             }
         }
-    }, [props.isVisible, props.fields]);
+    }, [props.isVisible, props.fields, props.origin]);
 
     return (
         <Popup wrapperComponent={ErrorPopupStyled} isVisible={props.isVisible} onCloseCallback={props.onCloseCallback}>

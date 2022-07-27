@@ -58,6 +58,17 @@ export type GtmEventType =
     | 'ec.purchase' // order confirmation page view event
     | 'ec.message';
 
+export type GtmMessageOriginType =
+    | GtmListNameType
+    | 'product'
+    | 'cart'
+    | 'transport pay'
+    | 'shipping data'
+    | 'purchase'
+    | 'other'
+    | 'footer'
+    | 'login popup';
+
 export type GtmSectionType = 'category' | 'product' | 'brand' | 'article';
 
 export type GtmUserType = 'visitor' | 'customer';

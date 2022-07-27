@@ -31,10 +31,10 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
             if (changePaymentResult.error !== undefined) {
                 const { userError } = getUserFriendlyErrors(changePaymentResult.error, t);
                 if (userError?.validation?.payment !== undefined) {
-                    showErrorMessage(userError.validation.payment.message);
+                    showErrorMessage(userError.validation.payment.message, 'transport pay');
                 }
                 if (userError?.validation?.goPaySwift !== undefined) {
-                    showErrorMessage(userError.validation.goPaySwift.message);
+                    showErrorMessage(userError.validation.goPaySwift.message, 'transport pay');
                 }
 
                 return null;

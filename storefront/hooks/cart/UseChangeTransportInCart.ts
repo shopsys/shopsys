@@ -36,10 +36,10 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
             if (changeTransportResult.error !== undefined) {
                 const { userError } = getUserFriendlyErrors(changeTransportResult.error, t);
                 if (userError?.validation?.transport !== undefined) {
-                    showErrorMessage(userError.validation.transport.message);
+                    showErrorMessage(userError.validation.transport.message, 'transport pay');
                 }
                 if (userError?.validation?.pickupPlaceIdentifier !== undefined) {
-                    showErrorMessage(userError.validation.pickupPlaceIdentifier.message);
+                    showErrorMessage(userError.validation.pickupPlaceIdentifier.message, 'transport pay');
                 }
 
                 return null;

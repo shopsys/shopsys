@@ -43,7 +43,7 @@ const Contact: FC = () => {
         () => showSuccessMessage(formMeta.messages.success),
         { reset: true },
     );
-    useHandleFormErrors(contactResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(contactResult.error, formProviderMethods, 'other', formMeta.messages.error);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
     const onSubmitHandler: SubmitHandler<ContactFormType> = async (values, event) => {
@@ -174,6 +174,7 @@ const Contact: FC = () => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </StaticUrlGuard>
     );

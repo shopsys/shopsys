@@ -14,6 +14,7 @@ import {
     GtmEventType,
     GtmListNameType,
     GtmMessageEventType,
+    GtmMessageOriginType,
     GtmMessageType,
     GtmPageInfoType,
     GtmPageType,
@@ -200,8 +201,8 @@ export const getGtmSearchClickEvent = (
 export const getGtmMessageEvent = (
     type: GtmMessageType,
     message: string,
-    origin?: string,
-    detail?: string,
+    detail: string,
+    origin?: GtmMessageOriginType,
 ): GtmMessageEventType => ({
     event: 'ec.message',
     eventParameters: {

@@ -4,11 +4,13 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffect } from 'react';
 import { Path, UseFormReturn } from 'react-hook-form';
+import { GtmMessageOriginType } from 'types/gtm';
 
 // TODO: předělat z hooku na normální handler
 export const useHandleFormErrors = <T>(
     error: CombinedError | undefined,
     formProviderMethods: UseFormReturn<T>,
+    origin: GtmMessageOriginType,
     errorMessage?: string,
     fields?: Record<string, { name: string }>,
 ): void => {
@@ -21,7 +23,7 @@ export const useHandleFormErrors = <T>(
         const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
         if (applicationError !== undefined) {
-            showErrorMessage(errorMessage !== undefined ? errorMessage : applicationError.message);
+            showErrorMessage(errorMessage !== undefined ? errorMessage : applicationError.message, origin);
         }
 
         if (userError?.validation !== undefined) {
@@ -33,7 +35,7 @@ export const useHandleFormErrors = <T>(
                     formProviderMethods.setError(fieldName as Path<T>, userError.validation[fieldName]);
                     continue;
                 }
-                showErrorMessage(userError.validation[fieldName].message);
+                showErrorMessage(userError.validation[fieldName].message, origin);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

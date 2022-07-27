@@ -85,6 +85,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, 
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="transport pay"
             />
         </>
     );

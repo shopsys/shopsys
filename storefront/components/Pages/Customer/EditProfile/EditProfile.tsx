@@ -130,7 +130,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
         const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
         if (applicationError !== undefined) {
-            showErrorMessage(messages.error);
+            showErrorMessage(messages.error, 'other');
             if (callbacks?.error !== undefined) {
                 callbacks.error();
             }
@@ -502,6 +502,7 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

@@ -69,7 +69,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         defaultValues,
         onSuccessfullyCreatedOrderHandler,
     );
-    useHandleFormErrors(createOrderResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(createOrderResult.error, formProviderMethods, 'shipping data', formMeta.messages.error);
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     const onCreateOrderHandler: SubmitHandler<typeof defaultValues> = async (formValues, event) => {
@@ -166,6 +166,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="shipping data"
             />
         </StaticUrlGuard>
     );

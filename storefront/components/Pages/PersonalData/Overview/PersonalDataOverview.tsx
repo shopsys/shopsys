@@ -35,7 +35,7 @@ const PersonalDataOverview: FC<PersonalDataOverviewProps> = ({ breadcrumbs }) =>
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
-    useHandleFormErrors(personalDataOverviewResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(personalDataOverviewResult.error, formProviderMethods, 'other', formMeta.messages.error);
     useHandleFormSuccessfulSubmit(personalDataOverviewResult, formProviderMethods, { email: '' }, undefined, {
         blur: true,
         reset: true,
@@ -103,6 +103,7 @@ const PersonalDataOverview: FC<PersonalDataOverviewProps> = ({ breadcrumbs }) =>
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

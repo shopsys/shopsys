@@ -17,9 +17,9 @@ export const useApplyPromoCodeToCart = (): typeof applyPromoCodeHandler => {
         if (applyPromoCodeResult.error !== undefined) {
             const { userError } = getUserFriendlyErrors(applyPromoCodeResult.error, t);
             if (userError?.validation?.promoCode !== undefined) {
-                showErrorMessage(userError.validation.promoCode.message);
+                showErrorMessage(userError.validation.promoCode.message, 'cart');
             } else {
-                showErrorMessage(messages.error);
+                showErrorMessage(messages.error, 'cart');
             }
 
             return null;

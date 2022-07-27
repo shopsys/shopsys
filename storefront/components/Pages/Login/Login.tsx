@@ -38,7 +38,7 @@ const Login: FC<LoginProps> = ({ breadcrumbs }) => {
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const [[loginResult, login]] = useAuth();
 
-    useHandleFormErrors(loginResult.error, formProviderMethods);
+    useHandleFormErrors(loginResult.error, formProviderMethods, 'other');
     useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' });
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data, event) => {
