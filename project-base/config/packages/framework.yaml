@@ -4,6 +4,7 @@ framework:
         file_cache_dir: '%kernel.cache_dir%/annotations'
     secret: "%env(APP_SECRET)%"
     router:
+        utf8: true
         strict_requirements: true
     form: ~
     csrf_protection: ~
