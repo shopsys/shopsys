@@ -28,9 +28,9 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // Check for access URL with script file has to be done after setting Domain in DomainSubscriber

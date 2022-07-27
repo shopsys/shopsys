@@ -56,7 +56,10 @@ class LocalizationListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             // must be registered before the default Locale listener

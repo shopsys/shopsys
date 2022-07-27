@@ -22,7 +22,10 @@ class TranslatableListener extends PrezentTranslatableListener
         $this->setCurrentLocale(null);
     }
 
-    public function getSubscribedEvents()
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubscribedEvents(): array
     {
         return [
             Events::loadClassMetadata,
