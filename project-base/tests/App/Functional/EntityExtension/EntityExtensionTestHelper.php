@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
+use Doctrine\Bundle\DoctrineBundle\Mapping\MappingDriver;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
@@ -56,11 +57,16 @@ class EntityExtensionTestHelper
         $driver = new AnnotationDriver(new AnnotationReader(), __DIR__ . '/Model');
 
         $configuration = $this->em->getConfiguration();
-        $metadataDriverChain = $configuration->getMetadataDriverImpl();
-        if ($metadataDriverChain instanceof MappingDriverChain) {
-            $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
+        $mappingDriver = $configuration->getMetadataDriverImpl();
+        if ($mappingDriver instanceof MappingDriver) {
+            $metadataDriverChain = $mappingDriver->getDriver();
+            if ($metadataDriverChain instanceof MappingDriverChain) {
+                $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
+            } else {
+                Assert::fail(sprintf('Metadata driver must be type of %s', MappingDriverChain::class));
+            }
         } else {
-            Assert::fail(sprintf('Metadata driver must be type of %s', MappingDriverChain::class));
+            Assert::fail(sprintf('Mapping driver must be type of %s, null given', MappingDriver::class));
         }
     }
 }
