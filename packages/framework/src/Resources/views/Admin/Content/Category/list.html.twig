@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block main_content %}
-    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategoryController:listDomainTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategoryController::listDomainTabsAction')) }}
 
     {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel) %}
         {% import _self as self %}

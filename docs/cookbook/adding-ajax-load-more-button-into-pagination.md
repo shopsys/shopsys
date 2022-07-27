@@ -197,7 +197,7 @@ We will add twig code into `main_content` block.
 
 ```twig
 {# templates/Front/Content/Product/list.html.twig #}
-{{ render(controller('App\\Controller\\Front\\BrandController:listAction')) }}
+{{ render(controller('App\\Controller\\Front\\BrandController::listAction')) }}
 ```
 
 ## Conclusion
