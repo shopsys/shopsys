@@ -36,7 +36,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
      */
     public function initStartTime(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $this->startTime = microtime(true);
         }
     }

@@ -58,7 +58,7 @@ class RequestExtension extends AbstractExtension
      */
     public function getRoute()
     {
-        return $this->requestStack->getMasterRequest()->attributes->get('_route');
+        return $this->requestStack->getMainRequest()->attributes->get('_route');
     }
 
     /**
@@ -66,7 +66,7 @@ class RequestExtension extends AbstractExtension
      */
     protected function getParamsFromRequest()
     {
-        return $this->requestStack->getMasterRequest()->query->all();
+        return $this->requestStack->getMainRequest()->query->all();
     }
 
     /**
@@ -74,7 +74,7 @@ class RequestExtension extends AbstractExtension
      */
     public function getRouteParams()
     {
-        return $this->requestStack->getMasterRequest()->attributes->get('_route_params');
+        return $this->requestStack->getMainRequest()->attributes->get('_route_params');
     }
 
     /**

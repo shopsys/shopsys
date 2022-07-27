@@ -137,4 +137,4 @@ services:
 
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory', 'createRequest']
-        arguments: ['@=service("request_stack").getMasterRequest()']
+        arguments: ['@=service("request_stack").getMainRequest()']

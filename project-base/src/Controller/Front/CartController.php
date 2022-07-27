@@ -425,7 +425,7 @@ class CartController extends FrontBaseController
      */
     private function isCartHoverEnable(): bool
     {
-        $masterRequest = $this->requestStack->getMasterRequest();
+        $masterRequest = $this->requestStack->getMainRequest();
         if ($masterRequest === null) {
             return false;
         }

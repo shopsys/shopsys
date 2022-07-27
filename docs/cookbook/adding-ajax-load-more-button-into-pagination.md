@@ -165,9 +165,9 @@ public function __construct(
 public function listAction(Request $request)
 {
     // check whether request is called directly via route or via Twig template
-    $isMasterRequest = $this->requestStack->getMasterRequest() === $request;
+    $isMainRequest = $this->requestStack->getMainRequest() === $request;
 
-    if ($request->isXmlHttpRequest() || !$isMasterRequest) {
+    if ($request->isXmlHttpRequest() || !$isMainRequest) {
         $template = 'Front/Content/Brand/ajaxList.html.twig';
     } else {
         $template = 'Front/Content/Brand/list.html.twig';

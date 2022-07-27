@@ -25,7 +25,7 @@ class SubRequestListener
      */
     public function onKernelController(ControllerEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $this->masterRequest = $event->getRequest();
         } elseif ($this->masterRequest !== null) {
             $this->fillSubRequestFromMasterRequest($event->getRequest());
@@ -51,7 +51,7 @@ class SubRequestListener
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             if ($this->redirectResponse !== null) {
                 $this->redirectResponse->send();
             }

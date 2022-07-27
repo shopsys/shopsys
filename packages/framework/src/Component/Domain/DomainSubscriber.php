@@ -27,7 +27,7 @@ class DomainSubscriber implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             try {
                 $this->domain->getId();
             } catch (NoDomainSelectedException $exception) {

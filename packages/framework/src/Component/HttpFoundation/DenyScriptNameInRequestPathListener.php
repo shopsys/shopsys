@@ -14,7 +14,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $request = $event->getRequest();
             if ($request->getBasePath() !== $request->getBaseUrl()) {
                 throw new NotFoundHttpException(
