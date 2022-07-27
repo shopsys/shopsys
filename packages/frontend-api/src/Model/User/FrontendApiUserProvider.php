@@ -34,8 +34,9 @@ class FrontendApiUserProvider implements UserProviderInterface
 
     /**
      * @param mixed $username
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): UserInterface
     {
         throw new NotImplementedException(
             'Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"'
@@ -44,8 +45,9 @@ class FrontendApiUserProvider implements UserProviderInterface
 
     /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         throw new NotImplementedException('Method "refreshUser" is not implement.');
     }
@@ -54,7 +56,7 @@ class FrontendApiUserProvider implements UserProviderInterface
      * @param mixed $frontendApiUser
      * @return bool
      */
-    public function supportsClass($frontendApiUser)
+    public function supportsClass($frontendApiUser): bool
     {
         return $frontendApiUser instanceof FrontendApiUser;
     }
