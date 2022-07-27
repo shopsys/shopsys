@@ -29,6 +29,10 @@ export const ProductDetailGalleryThumbnailsItemStyled = styled.div`
         position: relative;
         cursor: pointer;
 
+        &.isHidden {
+            display: none;
+        }
+
         @media ${theme.mediaQueries.queryLg} {
             height: 65px;
             padding: 6px;

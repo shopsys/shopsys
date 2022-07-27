@@ -5,6 +5,7 @@ import {
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
+import clsx from 'clsx';
 import Image from 'components/Basic/Image';
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
@@ -60,7 +61,7 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                         index > 0 && (
                             <ProductDetailGalleryThumbnailsItemStyled
                                 key={index}
-                                className="lightboxItem"
+                                className={clsx('lightboxItem', index > 6 && 'isHidden')}
                                 data-src={image.sizes?.find((size) => size.size === 'default')?.url}
                             >
                                 <Image image={image} alt={props.productName} type="default" />
