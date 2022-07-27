@@ -19,7 +19,10 @@ class PaymentTransportRelation extends Constraint
         self::INVALID_COMBINATION_ERROR => 'INVALID_COMBINATION_ERROR',
     ];
 
-    public function getTargets()
+    /**
+     * {@inheritdoc}
+     */
+    public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;
     }
