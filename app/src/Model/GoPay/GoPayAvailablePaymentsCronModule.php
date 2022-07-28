@@ -76,9 +76,9 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
             $this->downloadAndUpdatePaymentMethodsForAllDomains();
             $this->em->commit();
         } catch (GoPayNotConfiguredException $exception) {
-            $this->logger->addAlert('GoPay configuration is not set.');
+            $this->logger->alert('GoPay configuration is not set.');
         } catch (Exception $exception) {
-            $this->logger->addError($exception->getMessage(), ['exception' => $exception]);
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
             $this->em->rollback();
             throw $exception;
         }
@@ -92,11 +92,11 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
                 continue;
             }
 
-            $this->logger->addInfo(sprintf('downloading for %s locale', $domain->getLocale()));
+            $this->logger->info(sprintf('downloading for %s locale', $domain->getLocale()));
             try {
                 $this->paymentMethodFacade->downloadAndUpdatePaymentMethods($domain);
             } catch (GoPayPaymentDownloadException $ex) {
-                $this->logger->addError($ex->getMessage());
+                $this->logger->error($ex->getMessage());
             }
         }
     }
