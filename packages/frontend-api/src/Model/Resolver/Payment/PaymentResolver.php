@@ -6,11 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Payment;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Payment\Exception\PaymentNotFoundUserError;
 
 class PaymentResolver implements ResolverInterface, AliasedInterface
 {
@@ -43,7 +43,7 @@ class PaymentResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->paymentFacade->getEnabledOnDomainByUuid($uuid, $this->domain->getId());
         } catch (PaymentNotFoundException $paymentNotFoundException) {
-            throw new UserError($paymentNotFoundException->getMessage());
+            throw new PaymentNotFoundUserError($paymentNotFoundException->getMessage());
         }
     }
 

@@ -7,11 +7,11 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 
 class OrdersResolver implements ResolverInterface, AliasedInterface
 {
@@ -55,7 +55,7 @@ class OrdersResolver implements ResolverInterface, AliasedInterface
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if (!$customerUser) {
-            throw new UserError('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
 
         $paginator = new Paginator(function ($offset, $limit) use ($customerUser) {

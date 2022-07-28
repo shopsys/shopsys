@@ -39,7 +39,7 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             !$claims->has(FrontendApiUser::CLAIM_DEVICE_ID) ||
             !$claims->has(FrontendApiUser::CLAIM_ROLES)
         ) {
-            throw new InvalidTokenUserMessageException('Token is not valid.');
+            throw new InvalidTokenUserMessageException();
         }
     }
 }

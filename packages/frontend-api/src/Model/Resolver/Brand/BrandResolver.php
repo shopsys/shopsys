@@ -6,13 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Exception\BrandNotFoundUserError;
 
 class BrandResolver implements ResolverInterface, AliasedInterface
 {
@@ -61,7 +62,7 @@ class BrandResolver implements ResolverInterface, AliasedInterface
             return $this->getByUrlSlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -83,7 +84,7 @@ class BrandResolver implements ResolverInterface, AliasedInterface
         try {
             return $this->brandFacade->getByUuid($uuid);
         } catch (BrandNotFoundException $brandNotFoundException) {
-            throw new UserError($brandNotFoundException->getMessage());
+            throw new BrandNotFoundUserError($brandNotFoundException->getMessage());
         }
     }
 
@@ -102,7 +103,7 @@ class BrandResolver implements ResolverInterface, AliasedInterface
 
             return $this->brandFacade->getById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | BrandNotFoundException $brandNotFoundException) {
-            throw new UserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
+            throw new BrandNotFoundUserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }

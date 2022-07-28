@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Customer\User;
 
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -18,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -114,11 +114,11 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         try {
             $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
         } catch (UsernameNotFoundException $e) {
-            throw new UserError('This account doesn\'t exist or password is incorrect');
+            throw new InvalidAccountOrPasswordUserError('This account doesn\'t exist or password is incorrect');
         }
 
         if (!$this->userPasswordEncoder->isPasswordValid($customerUser, $input['oldPassword'])) {
-            throw new UserError('This account doesn\'t exist or password is incorrect');
+            throw new InvalidAccountOrPasswordUserError('This account doesn\'t exist or password is incorrect');
         }
 
         $this->customerUserPasswordFacade->changePassword($customerUser, $input['newPassword']);
