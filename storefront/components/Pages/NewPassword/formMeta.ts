@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewPasswordFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -60,25 +61,32 @@ export const useRecoveryPasswordFormMeta = (
 ): NewPasswordFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'new-password-form',
-        messages: {
-            error: t('Error occured while changing your password'),
-            success: t('Your password has been changed and you are now logged in'),
-        },
-        fields: {
-            newPassword: {
-                name: 'newPassword' as const,
-                label: t('New password'),
-                errorMessage: formProviderMethods.formState.errors.newPassword?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'new-password-form',
+            messages: {
+                error: t('Error occured while changing your password'),
+                success: t('Your password has been changed and you are now logged in'),
             },
-            newPasswordAgain: {
-                name: 'newPasswordAgain' as const,
-                label: t('New password again'),
-                errorMessage: formProviderMethods.formState.errors.newPasswordAgain?.message,
+            fields: {
+                newPassword: {
+                    name: 'newPassword' as const,
+                    label: t('New password'),
+                    errorMessage: formProviderMethods.formState.errors.newPassword?.message,
+                },
+                newPasswordAgain: {
+                    name: 'newPasswordAgain' as const,
+                    label: t('New password again'),
+                    errorMessage: formProviderMethods.formState.errors.newPasswordAgain?.message,
+                },
             },
-        },
-    };
+        }),
+        [
+            formProviderMethods.formState.errors.newPassword?.message,
+            formProviderMethods.formState.errors.newPasswordAgain?.message,
+            t,
+        ],
+    );
 
     return formMeta;
 };

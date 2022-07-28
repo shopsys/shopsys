@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -44,26 +45,29 @@ type PromoCodeFormMeta = {
 export const usePromoCodeFormMeta = (formProviderMethods: UseFormReturn<PromoCodeFormType>): PromoCodeFormMeta => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'promo-code-form',
-        messages: {
-            addPromoCode: {
-                success: t('Promo code was added to the order.'),
-                error: t('There was an error while adding a promo code to the order.'),
+    const formMeta = useMemo(
+        () => ({
+            formName: 'promo-code-form',
+            messages: {
+                addPromoCode: {
+                    success: t('Promo code was added to the order.'),
+                    error: t('There was an error while adding a promo code to the order.'),
+                },
+                removePromoCode: {
+                    success: t('Promo code was removed from the order.'),
+                    error: t('There was an error while removing the promo code from the order.'),
+                },
             },
-            removePromoCode: {
-                success: t('Promo code was removed from the order.'),
-                error: t('There was an error while removing the promo code from the order.'),
+            fields: {
+                promoCode: {
+                    name: 'promoCode' as const,
+                    label: t('Coupon'),
+                    errorMessage: formProviderMethods.formState.errors.promoCode?.message,
+                },
             },
-        },
-        fields: {
-            promoCode: {
-                name: 'promoCode' as const,
-                label: t('Coupon'),
-                errorMessage: formProviderMethods.formState.errors.promoCode?.message,
-            },
-        },
-    };
+        }),
+        [formProviderMethods.formState.errors.promoCode?.message, t],
+    );
 
     return formMeta;
 };

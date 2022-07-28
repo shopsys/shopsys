@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PasswordResetFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -37,20 +38,23 @@ export const usePasswordResetFormMeta = (
 ): PasswordResetFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'password-reset-form',
-        messages: {
-            error: t('Could not reset password'),
-            success: t('We sent an email with further steps to your address'),
-        },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: formProviderMethods.formState.errors.email?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'password-reset-form',
+            messages: {
+                error: t('Could not reset password'),
+                success: t('We sent an email with further steps to your address'),
             },
-        },
-    };
+            fields: {
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: formProviderMethods.formState.errors.email?.message,
+                },
+            },
+        }),
+        [formProviderMethods.formState.errors.email?.message, t],
+    );
 
     return formMeta;
 };

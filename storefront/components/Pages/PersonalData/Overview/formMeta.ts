@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataOverviewFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -40,20 +41,23 @@ export const usePersonalDataOverviewFormMeta = (
 ): PersonalDataOverviewFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'personal-data-overview-form',
-        messages: {
-            error: t('Could not sent personal data request'),
-            success: t('We sent an email with link to your personal data'),
-        },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: formProviderMethods.formState.errors.email?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'personal-data-overview-form',
+            messages: {
+                error: t('Could not sent personal data request'),
+                success: t('We sent an email with link to your personal data'),
             },
-        },
-    };
+            fields: {
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: formProviderMethods.formState.errors.email?.message,
+                },
+            },
+        }),
+        [formProviderMethods.formState.errors.email?.message, t],
+    );
 
     return formMeta;
 };

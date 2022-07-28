@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -117,94 +118,114 @@ export const useCustomerChangeProfileFormMeta = (
     const companyCustomer = formProviderMethods.formState.dirtyFields.companyCustomer;
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = {
-        formName: 'customer-change-profile-form',
-        messages: {
-            error: t('Error occured while saving your profile'),
-            success: t('Your profile has been changed successfully'),
-        },
-        fields: {
-            companyCustomer: {
-                name: 'companyCustomer' as const,
-                label: '',
+    const formMeta = useMemo(
+        () => ({
+            formName: 'customer-change-profile-form',
+            messages: {
+                error: t('Error occured while saving your profile'),
+                success: t('Your profile has been changed successfully'),
             },
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
+            fields: {
+                companyCustomer: {
+                    name: 'companyCustomer' as const,
+                    label: '',
+                },
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: errors.email?.message,
+                },
+                passwordOld: {
+                    name: 'passwordOld' as const,
+                    label: t('Current password'),
+                    errorMessage: errors.passwordOld?.message,
+                },
+                passwordFirst: {
+                    name: 'passwordFirst' as const,
+                    label: t('New password'),
+                    errorMessage: errors.passwordFirst?.message,
+                },
+                passwordSecond: {
+                    name: 'passwordSecond' as const,
+                    label: t('New password again'),
+                    errorMessage: errors.passwordSecond?.message,
+                },
+                telephone: {
+                    name: 'telephone' as const,
+                    label: t('Phone'),
+                    errorMessage: errors.telephone?.message,
+                },
+                firstName: {
+                    name: 'firstName' as const,
+                    label: t('First name'),
+                    errorMessage: errors.firstName?.message,
+                },
+                lastName: {
+                    name: 'lastName' as const,
+                    label: t('Last name'),
+                    errorMessage: errors.lastName?.message,
+                },
+                companyName: {
+                    name: 'companyName' as const,
+                    label: t('Company name'),
+                    errorMessage: companyCustomer ? errors.companyName?.message : undefined,
+                },
+                companyNumber: {
+                    name: 'companyNumber' as const,
+                    label: t('Company number'),
+                    errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
+                },
+                companyTaxNumber: {
+                    name: 'companyTaxNumber' as const,
+                    label: t('Tax number'),
+                    errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
+                },
+                street: {
+                    name: 'street' as const,
+                    label: t('Street and house number'),
+                    errorMessage: errors.street?.message,
+                },
+                city: {
+                    name: 'city' as const,
+                    label: t('City'),
+                    errorMessage: errors.city?.message,
+                },
+                postcode: {
+                    name: 'postcode' as const,
+                    label: t('Postcode'),
+                    errorMessage: errors.postcode?.message,
+                },
+                country: {
+                    name: 'country' as const,
+                    label: t('Country'),
+                    errorMessage: (errors.country as FieldError | undefined)?.message,
+                },
+                newsletterSubscription: {
+                    name: 'newsletterSubscription' as const,
+                    label: t('I agree to receive the newsletter'),
+                    errorMessage: errors.newsletterSubscription?.message,
+                },
             },
-            passwordOld: {
-                name: 'passwordOld' as const,
-                label: t('Current password'),
-                errorMessage: errors.passwordOld?.message,
-            },
-            passwordFirst: {
-                name: 'passwordFirst' as const,
-                label: t('New password'),
-                errorMessage: errors.passwordFirst?.message,
-            },
-            passwordSecond: {
-                name: 'passwordSecond' as const,
-                label: t('New password again'),
-                errorMessage: errors.passwordSecond?.message,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone'),
-                errorMessage: errors.telephone?.message,
-            },
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: errors.firstName?.message,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: errors.lastName?.message,
-            },
-            companyName: {
-                name: 'companyName' as const,
-                label: t('Company name'),
-                errorMessage: companyCustomer ? errors.companyName?.message : undefined,
-            },
-            companyNumber: {
-                name: 'companyNumber' as const,
-                label: t('Company number'),
-                errorMessage: companyCustomer ? errors.companyNumber?.message : undefined,
-            },
-            companyTaxNumber: {
-                name: 'companyTaxNumber' as const,
-                label: t('Tax number'),
-                errorMessage: companyCustomer ? errors.companyTaxNumber?.message : undefined,
-            },
-            street: {
-                name: 'street' as const,
-                label: t('Street and house number'),
-                errorMessage: errors.street?.message,
-            },
-            city: {
-                name: 'city' as const,
-                label: t('City'),
-                errorMessage: errors.city?.message,
-            },
-            postcode: {
-                name: 'postcode' as const,
-                label: t('Postcode'),
-                errorMessage: errors.postcode?.message,
-            },
-            country: {
-                name: 'country' as const,
-                label: t('Country'),
-                errorMessage: (errors.country as FieldError | undefined)?.message,
-            },
-            newsletterSubscription: {
-                name: 'newsletterSubscription' as const,
-                label: t('I agree to receive the newsletter'),
-                errorMessage: errors.newsletterSubscription?.message,
-            },
-        },
-    };
-
+        }),
+        [
+            errors.email?.message,
+            errors.passwordOld?.message,
+            errors.passwordFirst?.message,
+            errors.passwordSecond?.message,
+            errors.telephone?.message,
+            errors.firstName?.message,
+            errors.lastName?.message,
+            errors.companyName?.message,
+            errors.companyNumber?.message,
+            errors.companyTaxNumber?.message,
+            errors.street?.message,
+            errors.city?.message,
+            errors.postcode?.message,
+            errors.country,
+            errors.newsletterSubscription?.message,
+            companyCustomer,
+            t,
+        ],
+    );
     return formMeta;
 };

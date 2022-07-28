@@ -49,28 +49,33 @@ export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFor
     const t = useTypedTranslationFunction();
     const errors = formProviderMethods.formState.errors;
 
-    return {
-        formName: 'contact-form',
-        messages: {
-            error: t('The message could not be sent'),
-            success: t('Thank you! Your message was successfully sent.'),
-        },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'contact-form',
+            messages: {
+                error: t('The message could not be sent'),
+                success: t('Thank you! Your message was successfully sent.'),
             },
-            name: {
-                name: 'name' as const,
-                label: t('Your name'),
-                errorMessage: errors.name?.message,
+            fields: {
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: errors.email?.message,
+                },
+                name: {
+                    name: 'name' as const,
+                    label: t('Your name'),
+                    errorMessage: errors.name?.message,
+                },
+                message: {
+                    name: 'message' as const,
+                    label: t('Message'),
+                    errorMessage: errors.message?.message,
+                },
             },
-            message: {
-                name: 'message' as const,
-                label: t('Message'),
-                errorMessage: errors.message?.message,
-            },
-        },
-    };
+        }),
+        [errors.email?.message, errors.name?.message, errors.message?.message, t],
+    );
+
+    return formMeta;
 };
