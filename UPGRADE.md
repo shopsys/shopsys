@@ -43,6 +43,7 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides
+* ### [From v10.0.2 to v10.0.3-dev](/upgrade/UPGRADE-v10.0.3-dev.md)
 * ### [From v10.0.1 to v10.0.2](/upgrade/UPGRADE-v10.0.2.md)
 * ### [From v9.1.2 to v10.0.0](/upgrade/UPGRADE-v10.0.0.md)
 * ### [From v9.1.1 to v9.1.2](/upgrade/UPGRADE-v9.1.2.md)
