@@ -8,7 +8,6 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\DomCrawler\Form;
@@ -58,13 +57,8 @@ class NewProductTest extends FunctionalTestCase
 
         $em2->rollback();
 
-        /** @var \Symfony\Component\HttpFoundation\Session\Session $session */
-        $session = $client2->getContainer()->get('request_stack')->getSession();
-        $flashBag = $session->getFlashBag();
-
         $this->assertSame(302, $client2->getResponse()->getStatusCode());
-        $this->assertNotEmpty($flashBag->get(FlashMessage::KEY_SUCCESS));
-        $this->assertEmpty($flashBag->get(FlashMessage::KEY_ERROR));
+        $this->assertStringStartsWith($domainUrl . '/admin/product/list', $client2->followRedirect()->getUri());
     }
 
     /**
@@ -110,7 +104,7 @@ class NewProductTest extends FunctionalTestCase
      */
     private function fillManualInputPrices(Form $form)
     {
-        $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);
+        $pricingGroupFacade = self::getContainer()->get(PricingGroupFacade::class);
         foreach ($pricingGroupFacade->getAll() as $pricingGroup) {
             $inputName = sprintf(
                 'product_form[pricesGroup][productCalculatedPricesGroup][manualInputPricesByPricingGroupId][%s]',
