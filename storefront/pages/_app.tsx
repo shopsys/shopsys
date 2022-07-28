@@ -25,6 +25,7 @@ import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
 
 extend(LocalizedFormat);
 
@@ -87,6 +88,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
                 <link rel="preload" href="/fonts/dmSans500.woff2" as="font" type="font/woff2" crossOrigin="" />
                 <link rel="preload" href="/fonts/dmSans700ext.woff2" as="font" type="font/woff2" crossOrigin="" />
                 <link rel="preload" href="/fonts/dmSans700.woff2" as="font" type="font/woff2" crossOrigin="" />
+                {getGtmHeadScript()}
             </Head>
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />

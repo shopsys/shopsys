@@ -823,3 +823,35 @@
   - other changes
     - all `sortingMode` occurences have been renamed to `orderingMode`
     - best practices have been applied to all "touched" files
+
+### Multi-domain GTM support
+  - [FWCC-1074](https://shopsys.atlassian.net/browse/FWCC-1074)
+  - [FWCC-1074 added GTM support for multiple domains](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/714/diffs)
+  - most significant changes
+    - multiple GTM API keys are now supported on a domain basis
+  - tips on how to implement them
+    - currently, only 1 GTM key is present in the application (`GTM_ID`)
+    - if you need multiple keys, you have to add them everywhere, where `GTM_ID` is present
+      - deploy script `deploy-project.sh`
+      - file with environmental variables `.env`
+      - GitLab environmental variables
+    - after creating another API key, you can now fill it according to your need in `next.config.js`
+    ```ts
+      publicRuntimeConfig: {
+        ...
+        domains: [
+            {
+                ...
+                gtmId: process.env.GTM_ID,
+            },
+            {
+                ...
+                gtmId: process.env.GTM_ID_2,
+            },
+            {
+                ...
+                gtmId: process.env.GTM_ID_3,
+            },
+        ],
+    },
+    ```

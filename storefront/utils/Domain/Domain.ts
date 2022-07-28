@@ -13,6 +13,7 @@ export type DomainConfigType = {
         longitude: number;
         zoom: number;
     };
+    gtmId: string;
 };
 
 function getCurrentDomainFromWindow(): string {

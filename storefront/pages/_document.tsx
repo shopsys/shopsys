@@ -2,8 +2,6 @@ import { logException } from 'helpers/errors/logException';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import { ReactElement } from 'react';
 import { ServerStyleSheet } from 'styled-components';
-import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
-import { GTM_ID } from 'utils/Gtm/Helpers';
 
 process.on('unhandledRejection', (err) => {
     logException(err);
@@ -48,7 +46,6 @@ export default class MyDocument extends Document {
             <Html>
                 <Head>
                     <script src="https://widget.packeta.com/v6/www/js/library.js" />
-                    {getGtmHeadScript(GTM_ID)}
                 </Head>
                 <body>
                     <Main />

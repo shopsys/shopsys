@@ -1,5 +1,12 @@
-export default function getGtmHeadScript(GTM_ID: string | undefined): JSX.Element | null {
-    if (GTM_ID === undefined || GTM_ID.length === 0) {
+import { getDomainConfig } from 'utils/Domain/Domain';
+
+export default function getGtmHeadScript(): JSX.Element | null {
+    if (typeof window === 'undefined') {
+        return null;
+    }
+
+    const GTM_ID = getDomainConfig(window.location.host).gtmId;
+    if (GTM_ID.length === 0) {
         return null;
     }
 
