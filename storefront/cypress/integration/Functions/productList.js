@@ -1,8 +1,8 @@
-export function addProductToCartFromProductList(product_catnum) {
+export function addProductToCartFromProductList(productCatnum) {
     const productSelector =
         '[data-testid="blocks-product-list-listeditem-' +
-        product_catnum +
+        productCatnum +
         '"] ' +
         '[data-testid="blocks-product-addtocart"]';
-    cy.get(productSelector).contains('Do košíku').click();
+    cy.get(productSelector).click();
 }

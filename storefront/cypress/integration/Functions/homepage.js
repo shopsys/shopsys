@@ -1,16 +1,16 @@
-export function productClickFromPromotedProductsOnHomepage(product_catnum, product_name) {
+export function productClickFromPromotedProductsOnHomepage(productCatnum, productName) {
     const sliderProductItemSelector =
         '[data-testid="blocks-product-sliderproductitem-' +
-        product_catnum +
+        productCatnum +
         '"] ' +
         '[data-testid="blocks-product-sliderproductitem-name"]';
-    cy.get(sliderProductItemSelector).contains(product_name).click();
+    cy.get(sliderProductItemSelector).contains(productName).click();
 }
 
-export function addProductToCartFromPromotedProductsOnHomepage(product_catnum) {
+export function addProductToCartFromPromotedProductsOnHomepage(productCatnum) {
     const sliderProductItemSelector =
         '[data-testid="blocks-product-sliderproductitem-' +
-        product_catnum +
+        productCatnum +
         '"] ' +
         'button[data-testid="blocks-product-addtocart"]';
     cy.get(sliderProductItemSelector).click();

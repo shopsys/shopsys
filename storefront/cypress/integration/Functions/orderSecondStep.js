@@ -1,4 +1,4 @@
-import { currency, quantityUnit, transport } from '../../fixtures/demodata';
+import { quantityUnit, transport } from '../../fixtures/demodata';
 
 export function continueToSecondStep() {
     cy.get('[data-testid="blocks-orderaction-next"]').click();
@@ -43,11 +43,10 @@ export function checkOrderSummaryWithOneItem(
     paymentPrice,
     totalOrderPrice,
 ) {
-    const product_quantity_with_unit = productQuantity + ' ' + quantityUnit;
-    const product_price_with_currency = productPrice + ' ' + currency;
-    cy.get('[data-testid="blocks-ordersummary-singleproduct-count"]').contains(product_quantity_with_unit);
+    const productQuantityWithUnit = productQuantity + ' ' + quantityUnit;
+    cy.get('[data-testid="blocks-ordersummary-singleproduct-count"]').contains(productQuantityWithUnit);
     cy.get('[data-testid="blocks-ordersummary-singleproduct-name"]').contains(productName);
-    cy.get('[data-testid="blocks-ordersummary-singleproduct-price"]').contains(product_price_with_currency);
+    cy.get('[data-testid="blocks-ordersummary-singleproduct-price"]').contains(productPrice);
     cy.get('[data-testid="blocks-ordersummary-transport-name"]').contains(transportName);
     cy.get('[data-testid="blocks-ordersummary-transport-price"]').contains(transportPrice);
     cy.get('[data-testid="blocks-ordersummary-payment-name"]').contains(paymentName);
