@@ -2,10 +2,10 @@ export function addProductToCartFromProductDetail() {
     cy.get('[data-testid="pages-productdetail-addtocart-button"]').contains('Do košíku').click();
 }
 
-export function addProductVariantToCartFromProductDetail(product_catnum) {
+export function addProductVariantToCartFromProductDetail(productCatnum) {
     const productVariantItemSelector =
         '[data-testid="pages-productdetail-variant-' +
-        product_catnum +
+        productCatnum +
         '"] ' +
         '[data-testid="blocks-product-addtocart"]';
     cy.get(productVariantItemSelector).contains('Do košíku').click();
