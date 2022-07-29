@@ -143,3 +143,7 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserResolver:
         alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserResolver
         public: true
+
+    App\FrontendApi\Component\SessionChecker\SessionChecker:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -999 } # must be run before the session is closed (in Symfony\Component\HttpKernel\EventListener\SessionListener::onKernelResponse)
