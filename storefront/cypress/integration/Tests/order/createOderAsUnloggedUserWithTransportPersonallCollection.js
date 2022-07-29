@@ -12,10 +12,10 @@ import {
     url,
     zeroRate,
 } from '../../../fixtures/demodata';
-import { checkProductInCart } from '../../Functions/CartPage';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
+import { checkProductInCart } from '../../Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
 import { saveCookiesOptionsInCookiesBar } from '../../Functions/cookies';
-import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/HomepagePage';
+import { addProductToCartFromPromotedProductsOnHomepage } from '../../Functions/homepage';
 import {
     checkBasicInformationAndNoteInOrderDetail,
     checkBillingAdressInOrderDetail,
