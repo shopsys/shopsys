@@ -1,4 +1,4 @@
-import { url_cart } from '../../fixtures/demodata';
+import { url } from '../../fixtures/demodata';
 
 export function checkProductInCart(catnum, product_name) {
     const cartProductItemSelector =
@@ -6,7 +6,7 @@ export function checkProductInCart(catnum, product_name) {
     const productCatnum = 'Kód' + ': ' + catnum;
     cy.get(cartProductItemSelector).contains(product_name);
     cy.get(cartProductItemSelector).contains(productCatnum);
-    cy.url().should('contain', url_cart);
+    cy.url().should('contain', url.cart);
 }
 
 export function checkTotalPriceInCart(total_price) {

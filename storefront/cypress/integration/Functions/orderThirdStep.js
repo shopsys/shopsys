@@ -7,17 +7,19 @@ export function fillEmailInThirdStep(email) {
 export function fillCustomerInformationInThirdStep(phone, firstName, lastName) {
     cy.get('#contact-information-form-telephone').should('have.attr', 'placeholder', placeholder.phone).type(phone);
     cy.get('#contact-information-form-firstName')
-        .should('have.attr', 'placeholder', placeholder.first_name)
+        .should('have.attr', 'placeholder', placeholder.firstName)
         .type(firstName);
     cy.get('#contact-information-form-lastName')
-        .should('have.attr', 'placeholder', placeholder.last_name)
+        .should('have.attr', 'placeholder', placeholder.lastName)
         .type(lastName);
 }
 
 export function fillBillingAdressInThirdStep(street, city, postCode) {
     cy.get('#contact-information-form-street').should('have.attr', 'placeholder', placeholder.street).type(street);
     cy.get('#contact-information-form-city').should('have.attr', 'placeholder', placeholder.city).type(city);
-    cy.get('#contact-information-form-postcode').should('have.attr', 'placeholder', placeholder.zip).type(postCode);
+    cy.get('#contact-information-form-postcode')
+        .should('have.attr', 'placeholder', placeholder.postCode)
+        .type(postCode);
 }
 
 export function clickOnSendOrderButton() {

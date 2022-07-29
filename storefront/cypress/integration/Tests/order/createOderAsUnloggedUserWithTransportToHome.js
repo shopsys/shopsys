@@ -1,19 +1,14 @@
 /// <reference types="Cypress" />
 import {
-    cart_total_price3,
     countryCZ,
     customer1,
     orderNote,
     payment,
-    product1_catnum,
-    product1_name_prefix_suffix,
-    product1_price,
-    product1_price_without_vat,
+    products,
     standartRate,
+    totalPrice,
     transport,
-    url_cart,
-    urlOrderSecondStep,
-    urlOrderThirdStep,
+    url,
     zeroRate,
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/CartPage';
@@ -49,44 +44,44 @@ import {
 it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
     cy.visit('/');
     saveCookiesOptionsInCookiesBar();
-    addProductToCartFromPromotedProductsOnHomepage(product1_catnum);
-    checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
-    checkProductInCart(product1_catnum, product1_name_prefix_suffix);
-    cy.url().should('contain', url_cart);
+    addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
+    checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.namePrefixSuffix);
+    checkProductInCart(products.helloKitty.catnum, products.helloKitty.namePrefixSuffix);
+    cy.url().should('contain', url.cart);
     continueToSecondStep();
 
     // second step
-    cy.url().should('contain', urlOrderSecondStep);
+    cy.url().should('contain', url.order.secondStep);
     checkTransportPrice('0', transport.czechPost.priceWithVat); // fist argument = position of transport list (start from id 0)
     chooseTransportToHome(transport.czechPost.name);
     choosePayment(payment.onDelivery.name);
     checkOrderSummaryWithOneItem(
-        product1_name_prefix_suffix,
-        '1', // product quantity
-        product1_price,
+        products.helloKitty.namePrefixSuffix,
+        '1', // item quantity
+        products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
-        cart_total_price3,
+        totalPrice.order1,
     );
     continueToThirdStep();
 
     // third step
-    cy.url().should('contain', urlOrderThirdStep);
+    cy.url().should('contain', url.order.thirdStep);
     fillEmailInThirdStep(customer1.email);
-    fillCustomerInformationInThirdStep(customer1.phone, customer1.first_name, customer1.last_name);
-    fillBillingAdressInThirdStep(customer1.billing_street, customer1.billing_city, customer1.billing_zip);
+    fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
+    fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
     fillInNoteInThirdStep(orderNote);
     checkOrderSummaryWithOneItem(
-        product1_name_prefix_suffix,
-        '1', // product quantity
-        product1_price,
+        products.helloKitty.namePrefixSuffix,
+        '1', // item quantity
+        products.helloKitty.priceWithVat,
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
-        cart_total_price3,
+        totalPrice.order1,
     );
     clickOnSendOrderButton();
 
@@ -97,32 +92,32 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     // ordet detail
     checkBasicInformationAndNoteInOrderDetail(orderNote);
     checkBillingAdressInOrderDetail(
-        customer1.first_name,
-        customer1.last_name,
+        customer1.firstName,
+        customer1.lastName,
         customer1.email,
         customer1.phone,
-        customer1.billing_street,
-        customer1.billing_city,
-        customer1.billing_zip,
+        customer1.billingStreet,
+        customer1.billingCity,
+        customer1.billingPostCode,
         countryCZ,
     );
     checkDeliveryAdressInOrderDetail(
-        customer1.first_name,
-        customer1.last_name,
+        customer1.firstName,
+        customer1.lastName,
         customer1.phone,
-        customer1.billing_street,
-        customer1.billing_city,
-        customer1.billing_zip,
+        customer1.billingStreet,
+        customer1.billingCity,
+        customer1.billingPostCode,
         countryCZ,
     );
     checkOneItemInOrderDetail(
-        '0',
-        product1_name_prefix_suffix,
-        product1_price,
-        '1',
+        '0', // row number
+        products.helloKitty.namePrefixSuffix,
+        products.helloKitty.priceWithVat,
+        '1', // item qunatity
         standartRate,
-        product1_price_without_vat,
-        product1_price,
+        products.helloKitty.priceWithoutVat,
+        products.helloKitty.priceWithVat,
     );
     checkOneItemInOrderDetail(
         '1',

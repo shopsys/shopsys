@@ -1,23 +1,16 @@
-import {
-    brand_name1,
-    cart_total_price1,
-    product1_catnum,
-    product1_name_prefix_suffix,
-    url_brand_overview,
-    url_cart,
-} from '../../../fixtures/demodata';
-import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/CartPage';
-import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/CartPopupWindow';
-import { addProductToCartFromProductList } from '../../Functions/ProductListPage';
+import { brandSencor, products, totalPrice, url } from '../../../fixtures/demodata';
+import { checkProductInCart, checkTotalPriceInCart } from '../../Functions/cart';
+import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
+import { addProductToCartFromProductList } from '../../Functions/productList';
 
 describe('Test for adding product to cart from brand list', () => {
     it('Brand list - Adding product to cart from brand list and check product in cart', () => {
-        cy.visit(url_brand_overview);
-        cy.get('[data-testid="blocks-simplenavigation-22"]').contains(brand_name1).click();
-        addProductToCartFromProductList(product1_catnum);
-        checkProductAndGoToCartFromCartPopupWindow(product1_name_prefix_suffix);
-        checkProductInCart(product1_catnum, product1_name_prefix_suffix);
-        checkTotalPriceInCart(cart_total_price1);
-        cy.url().should('contain', url_cart);
+        cy.visit(url.brandOverwiev);
+        cy.get('[data-testid="blocks-simplenavigation-22"]').contains(brandSencor).click();
+        addProductToCartFromProductList(products.helloKitty.catnum);
+        checkProductAndGoToCartFromCartPopupWindow(products.helloKitty.namePrefixSuffix);
+        checkProductInCart(products.helloKitty.catnum, products.helloKitty.namePrefixSuffix);
+        checkTotalPriceInCart(totalPrice.cart1);
+        cy.url().should('contain', url.cart);
     });
 });

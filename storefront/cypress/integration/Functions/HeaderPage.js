@@ -1,4 +1,4 @@
-import { url_search } from '../../fixtures/demodata';
+import { url } from '../../fixtures/demodata';
 
 export function clickOnCategoryFromMenu(category_name) {
     cy.get('[data-testid="layout-header-navigation"] [data-testid="layout-header-navigation-navigationitem"]')
@@ -12,7 +12,7 @@ export function searchProductByNameTypeEnterAndCheckResult(product_name, product
     typeToSearchInput(product_name);
     cy.get('[data-testid="layout-header-search-autocomplete-products"]').contains(product_name);
     cy.get('[data-testid="layout-header-search-autocomplete-input"]').type('{enter}');
-    cy.url().should('contain', url_search);
+    cy.url().should('contain', url.search);
     cy.get('[data-testid="basic-heading-h1"]').contains(product_name);
     cy.get(productListSelector).contains(product_name);
 }
