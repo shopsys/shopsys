@@ -4,5 +4,5 @@ export function addProductToCartFromProductList(productCatnum) {
         productCatnum +
         '"] ' +
         '[data-testid="blocks-product-addtocart"]';
-    cy.get(productSelector).contains('Do košíku').click();
+    cy.get(productSelector).click();
 }
