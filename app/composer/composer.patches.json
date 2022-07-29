@@ -1,0 +1,7 @@
+{
+  "patches": {
+    "overblog/dataloader-bundle": {
+      "Fix deprecation in OverblogDataLoaderExtension. Can be resolved after update to Symfony 5": "composer/overblog-dataloader.patch"
+    }
+  }
+}

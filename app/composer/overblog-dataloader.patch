@@ -1,0 +1,13 @@
+--- a/vendor/overblog/dataloader-bundle/DependencyInjection/OverblogDataLoaderExtension.php
++++ b/vendor/overblog/dataloader-bundle/DependencyInjection/OverblogDataLoaderExtension.php
+@@ -90,6 +90,10 @@
+     {
+         $matches = null;
+ 
++        if (null === $scalar) {
++            return null;
++        }
++
+         if (preg_match(Configuration::SERVICE_CALLABLE_NOTATION_REGEX, $scalar, $matches)) {
+             $function = new Reference($matches['service_id']);
+             if (empty($matches['method'])) {
