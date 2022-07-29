@@ -59,10 +59,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'label' => t('Osobní odběr Commerce Cloud'),
             ])
-            ->add('isOverLimitTransport', YesNoType::class, [
-                'label' => t('Doprava pro nadlimitní množství'),
-                'required' => false,
-            ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => false,
                 'constraints' => [

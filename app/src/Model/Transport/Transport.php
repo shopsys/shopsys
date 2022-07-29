@@ -35,12 +35,6 @@ class Transport extends BaseTransport
     private $personalPickup;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $isOverLimitTransport;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -101,7 +95,6 @@ class Transport extends BaseTransport
         parent::setData($transportData);
 
         $this->personalPickup = $transportData->personalPickup;
-        $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
@@ -128,14 +121,6 @@ class Transport extends BaseTransport
     public function isPersonalPickup(): bool
     {
         return $this->personalPickup;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOverLimitTransport(): bool
-    {
-        return $this->isOverLimitTransport;
     }
 
     /**

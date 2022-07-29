@@ -23,11 +23,6 @@ class TransportData extends BaseTransportData
     public string $type;
 
     /**
-     * @var bool
-     */
-    public $isOverLimitTransport;
-
-    /**
      * @var int|null
      */
     public ?int $daysUntilDelivery;
@@ -67,7 +62,6 @@ class TransportData extends BaseTransportData
         parent::__construct();
 
         $this->personalPickup = false;
-        $this->isOverLimitTransport = false;
         $this->maxWeight = null;
     }
 }
