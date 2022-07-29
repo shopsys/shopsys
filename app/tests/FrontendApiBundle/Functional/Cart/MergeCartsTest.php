@@ -47,6 +47,11 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $anonymouslyAddedProductQuantity = 6;
         $this->addProductToCustomerCart($anonymouslyAddedProduct, $anonymouslyAddedProductQuantity);
 
+        /** @var \App\Model\Product\Product $anonymouslyAddedProduct2 */
+        $anonymouslyAddedProduct2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $anonymouslyAddedProductQuantity2 = 1;
+        $this->addProductToCustomerCart($anonymouslyAddedProduct2, $anonymouslyAddedProductQuantity2);
+
         $testCartUuid = CartDataFixture::CART_UUID;
 
         $loginMutationWithCartUuid = 'mutation {
@@ -78,18 +83,18 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cartItems = $cart->getItems();
         self::assertCount(3, $cartItems);
 
-        self::assertEquals($anonymouslyAddedProduct->getFullname(), $cartItems[0]->getName(), 'First product name mismatch');
-        self::assertEquals($anonymouslyAddedProductQuantity, $cartItems[0]->getQuantity(), 'First product quantity mismatch');
+        /** @var \App\Model\Product\Product $firstProduct */
+        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        self::assertEquals($firstProduct->getFullname(), $cartItems[0]->getName(), 'Third product name mismatch');
+        self::assertEquals(3, $cartItems[0]->getQuantity(), 'Third product quantity mismatch');
+
+        self::assertEquals($anonymouslyAddedProduct->getFullname(), $cartItems[1]->getName(), 'First product name mismatch');
+        self::assertEquals($anonymouslyAddedProductQuantity, $cartItems[1]->getQuantity(), 'First product quantity mismatch');
 
         /** @var \App\Model\Product\Product $secondProduct */
         $secondProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
-        self::assertEquals($secondProduct->getFullname(), $cartItems[1]->getName(), 'Second product name mismatch');
-        self::assertEquals(2, $cartItems[1]->getQuantity(), 'Second product quantity mismatch');
-
-        /** @var \App\Model\Product\Product $firstProduct */
-        $firstProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        self::assertEquals($firstProduct->getFullname(), $cartItems[2]->getName(), 'Third product name mismatch');
-        self::assertEquals(2, $cartItems[2]->getQuantity(), 'Third product quantity mismatch');
+        self::assertEquals($secondProduct->getFullname(), $cartItems[2]->getName(), 'Second product name mismatch');
+        self::assertEquals(2, $cartItems[2]->getQuantity(), 'Second product quantity mismatch');
 
         $oldCart = $this->cartFacade->findCartByCartIdentifier($testCartUuid);
         self::assertNull($oldCart);
