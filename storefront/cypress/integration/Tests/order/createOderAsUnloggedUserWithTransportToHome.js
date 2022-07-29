@@ -120,19 +120,19 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         products.helloKitty.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        '1',
+        '1', // row mumber
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
-        '1',
+        '1', // item quantity
         zeroRate,
         payment.onDelivery.priceWithoutVat,
         payment.onDelivery.priceWithVat,
     );
     checkOneItemInOrderDetail(
-        '2',
+        '2', // row number
         transport.czechPost.name,
         transport.czechPost.priceWithVat,
-        '1',
+        '1', // item quantity
         standartRate,
         transport.czechPost.priceWithoutVat,
         transport.czechPost.priceWithVat,

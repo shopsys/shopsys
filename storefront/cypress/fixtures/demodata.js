@@ -53,6 +53,7 @@ export const standartRate = '21 %';
 export const zeroRate = '0 %';
 export const orderNote = 'poznámka v objednávce';
 export const linkToOrderDetail = 'zde';
+export const textCode = 'Kód';
 
 export const transport = {
     personalCollection: {

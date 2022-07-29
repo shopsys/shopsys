@@ -28,7 +28,7 @@ export function checkOneItemInOrderDetail(
     rowNumber,
     itemName,
     itemUnitPrice,
-    itemQuantityQithUnit,
+    itemQuantity,
     vat,
     itemPriceWithoutVat,
     itemPriceVat,
@@ -66,7 +66,7 @@ export function checkOneItemInOrderDetail(
 
     cy.get(itemNameSelector).contains(itemName);
     cy.get(itemUnitPriceSelector).contains(itemUnitPrice);
-    cy.get(itemQuantitySelector).contains(itemQuantityQithUnit);
+    cy.get(itemQuantitySelector).contains(itemQuantity);
     cy.get(itemVatSelector).contains(vat);
     cy.get(itemPriceWithoutVatSelector).contains(itemPriceWithoutVat);
     cy.get(itemPriceVatSelector).contains(itemPriceVat);

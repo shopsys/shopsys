@@ -124,10 +124,10 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
     );
     checkOneItemInOrderDetail('1', payment.cash, freePrice, '1', zeroRate, freePrice, freePrice);
     checkOneItemInOrderDetail(
-        '2',
+        '2', // row number
         transport.personalCollection.name,
         freePrice,
-        '1',
+        '1', // item quantity
         standartRate,
         freePrice,
         freePrice,
