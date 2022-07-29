@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
-use App\FrontendApi\Exception\DeprecatedMethodException;
+use App\Component\Deprecation\DeprecatedMethodException;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
 use App\Component\Breadcrumb\BreadcrumbFacade;
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Parameter\ParameterWithValuesFactory;
 use App\Model\Category\Category;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
