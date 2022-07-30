@@ -18,7 +18,7 @@ class GeneratorResult
      * @param string $migrationFilePath
      * @param int|false $writtenBytes
      */
-    public function __construct($migrationFilePath, $writtenBytes)
+    public function __construct(string $migrationFilePath, $writtenBytes)
     {
         $this->migrationFilePath = $migrationFilePath;
         $this->writtenBytes = $writtenBytes;
@@ -27,7 +27,7 @@ class GeneratorResult
     /**
      * @return string
      */
-    public function getMigrationFilePath()
+    public function getMigrationFilePath(): string
     {
         return $this->migrationFilePath;
     }
@@ -35,7 +35,7 @@ class GeneratorResult
     /**
      * @return false|int
      */
-    public function getWrittenBytes()
+    public function getWrittenBytes(): int|false
     {
         return $this->writtenBytes;
     }
@@ -43,7 +43,7 @@ class GeneratorResult
     /**
      * @return bool
      */
-    public function hasError()
+    public function hasError(): bool
     {
         return $this->writtenBytes === false || $this->writtenBytes === 0;
     }

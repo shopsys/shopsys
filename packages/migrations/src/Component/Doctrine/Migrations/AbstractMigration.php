@@ -3,6 +3,7 @@
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Result;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
@@ -30,7 +31,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
      * @return \Doctrine\DBAL\Result
      */
-    public function sql($query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null)
+    public function sql(string $query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null): Result
     {
         $this->sqlQueries[] = new Query($query, $params, $types);
 

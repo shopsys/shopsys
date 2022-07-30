@@ -63,7 +63,7 @@ class GenerateMigrationCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate a new migration if need it');
@@ -74,7 +74,7 @@ class GenerateMigrationCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking database schema...');
 
