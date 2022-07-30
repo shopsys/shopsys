@@ -20,6 +20,9 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
      */
     private $router;
 
+    /**
+     * @var \Doctrine\Common\Annotations\AnnotationReader
+     */
     private $annotationsReader;
 
     /**
@@ -49,7 +52,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param \Symfony\Component\Routing\Route $route
-     * @return array
+     * @return array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)>
      */
     private function extractAnnotationsForRoute(Route $route): array
     {
@@ -62,7 +65,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param string $controller
-     * @return array
+     * @return array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)>
      */
     private function extractAnnotationForController(string $controller): array
     {
@@ -77,7 +80,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 
     /**
      * @param \ReflectionMethod $reflectionMethod
-     * @return array
+     * @return array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)>
      */
     private function getControllerMethodAnnotations(ReflectionMethod $reflectionMethod): array
     {

@@ -45,7 +45,7 @@ class RequestDataSetGeneratorTest extends TestCase
     /**
      * @param string $routePath
      * @param string $routeName
-     * @param array $annotations
+     * @param array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)> $annotations
      * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
     private function createRequestDataSetGenerator($routePath, $routeName, array $annotations = [])
@@ -60,7 +60,7 @@ class RequestDataSetGeneratorTest extends TestCase
     /**
      * @param \Shopsys\HttpSmokeTesting\Annotation\DataSet $dataSet
      * @param int $statusCode
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @dataProvider getDataSets
      */
     public function testGeneratorGenerateRequestDataSetFromDataSetAnnotation(
@@ -118,7 +118,7 @@ class RequestDataSetGeneratorTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: \Shopsys\HttpSmokeTesting\Annotation\DataSet, int, array<string, mixed>}>
      */
     public function getDataSets(): array
     {

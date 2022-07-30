@@ -17,14 +17,14 @@ class RouteInfo
     private $route;
 
     /**
-     * @var array
+     * @var array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)>
      */
     private $annotations;
 
     /**
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
-     * @param array $annotations
+     * @param array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)> $annotations
      */
     public function __construct($routeName, Route $route, array $annotations = [])
     {
@@ -78,7 +78,7 @@ class RouteInfo
     }
 
     /**
-     * @return string[]
+     * @return array<string, mixed>
      */
     public function getRouteParameterNames()
     {
@@ -88,7 +88,7 @@ class RouteInfo
     }
 
     /**
-     * @return array
+     * @return array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)>
      */
     public function getAnnotations(): array
     {

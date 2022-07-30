@@ -94,6 +94,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      */
     protected function getRouterAdapter()
     {
+        /** @var \Symfony\Component\Routing\RouterInterface $router */
         $router = static::$kernel->getContainer()->get('router');
 
         return new SymfonyRouterAdapter($router);

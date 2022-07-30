@@ -31,7 +31,7 @@ class RequestDataSet implements RequestDataSetConfig
     private $expectedStatusCode;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $parameters;
 
@@ -98,7 +98,7 @@ class RequestDataSet implements RequestDataSetConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getParameters()
     {
