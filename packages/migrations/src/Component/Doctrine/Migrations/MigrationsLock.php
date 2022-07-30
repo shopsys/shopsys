@@ -15,7 +15,7 @@ class MigrationsLock
     protected string $migrationsLockFilePath;
 
     /**
-     * @var array|null
+     * @var array<array{'skip': bool}>|null
      */
     protected ?array $parsedMigrationsLock = null;
 
@@ -95,7 +95,7 @@ class MigrationsLock
     }
 
     /**
-     * @return array
+     * @return array<array{'skip': bool}>
      */
     protected function load(): array
     {

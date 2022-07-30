@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 abstract class AbstractMigrationTestCase extends TestCase
 {
     /**
-     * @param string $className
+     * @param class-string $className
      * @return \Doctrine\Migrations\Metadata\AvailableMigration
      */
     protected function createMockedAvailableMigration(string $className): AvailableMigration

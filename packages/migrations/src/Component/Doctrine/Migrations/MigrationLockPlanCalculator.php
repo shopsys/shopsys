@@ -49,7 +49,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
     }
 
     /**
-     * @param array $versions
+     * @param \Doctrine\Migrations\Version\Version[] $versions
      * @param string $direction
      * @return \Doctrine\Migrations\Metadata\MigrationPlanList
      */

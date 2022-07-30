@@ -37,7 +37,7 @@ class MigrationsGenerator
     }
 
     /**
-     * @param array $sqlCommands
+     * @param string[] $sqlCommands
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation $migrationsLocation
      * @return \Shopsys\MigrationBundle\Component\Generator\GeneratorResult
      */

@@ -25,8 +25,8 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
 
     /**
      * @param string $query
-     * @param array $params
-     * @param array $types
+     * @param list<mixed>|array<string, mixed> $params
+     * @param array<int, (int|string|\Doctrine\DBAL\Types\Type|null)>|array<string, (int|string|\Doctrine\DBAL\Types\Type|null)> $types
      * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
      * @return \Doctrine\DBAL\Result
      */

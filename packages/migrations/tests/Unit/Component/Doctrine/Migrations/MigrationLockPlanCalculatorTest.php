@@ -25,9 +25,9 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
 {
     /**
      * @dataProvider getMigrationsDataProvider
-     * @param string[] $availableMigrationClasses
-     * @param string[] $orderedMigrationClassesFromLock
-     * @param string[] $expectedMigrationClasses
+     * @param class-string[] $availableMigrationClasses
+     * @param class-string[] $orderedMigrationClassesFromLock
+     * @param class-string[] $expectedMigrationClasses
      */
     public function testGetMigrations(array $availableMigrationClasses, array $orderedMigrationClassesFromLock, array $expectedMigrationClasses): void
     {
@@ -65,9 +65,9 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
 
     /**
      * @dataProvider getPlanUntilVersionDataProvider
-     * @param string[] $availableMigrationClasses
-     * @param string[] $orderedMigrationClassesFromLock
-     * @param string[] $executedMigrationClasses
+     * @param class-string[] $availableMigrationClasses
+     * @param class-string[] $orderedMigrationClassesFromLock
+     * @param class-string[] $executedMigrationClasses
      * @param \Doctrine\Migrations\Version\Version $toVersion
      * @param string[] $expectedMigrationClasses
      */
@@ -147,9 +147,9 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     }
 
     /**
-     * @param string[] $availableMigrationClasses
-     * @param string[] $orderedMigrationClassesFromLock
-     * @param string[] $executedMigrationClasses
+     * @param class-string[] $availableMigrationClasses
+     * @param class-string[] $orderedMigrationClassesFromLock
+     * @param class-string[] $executedMigrationClasses
      * @return \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
      */
     private function getMigrationLockPlanCalculator(
@@ -188,7 +188,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     }
 
     /**
-     * @param string[] $availableMigrationClasses
+     * @param class-string[] $availableMigrationClasses
      * @return \Doctrine\Migrations\Metadata\AvailableMigrationsSet
      */
     private function getAvailableMigrationsSet(array $availableMigrationClasses): AvailableMigrationsSet
