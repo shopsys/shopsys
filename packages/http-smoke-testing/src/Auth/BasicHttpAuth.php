@@ -18,9 +18,9 @@ class BasicHttpAuth implements AuthInterface
 
     /**
      * @param string $username
-     * @param string|null $password
+     * @param ?string $password
      */
-    public function __construct($username, $password = null)
+    public function __construct(string $username, ?string $password)
     {
         $this->username = $username;
         $this->password = $password;
@@ -29,7 +29,7 @@ class BasicHttpAuth implements AuthInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function authenticateRequest(Request $request)
+    public function authenticateRequest(Request $request): void
     {
         $request->server->set('PHP_AUTH_USER', $this->username);
         if ($this->password !== null) {

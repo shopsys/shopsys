@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Router;
 
 class SymfonyRouterAdapterTest extends TestCase
 {
-    public function testGetAllRouteInfoExtractsInformationFromRouteCollection()
+    public function testGetAllRouteInfoExtractsInformationFromRouteCollection(): void
     {
         $router = new Router(
             new AnnotatedRouteControllerLoader(new AnnotationReader()),

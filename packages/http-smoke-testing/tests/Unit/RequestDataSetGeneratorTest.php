@@ -5,13 +5,14 @@ namespace Tests\HttpSmokeTesting\Unit;
 use PHPUnit\Framework\TestCase;
 use Shopsys\HttpSmokeTesting\Annotation\DataSet;
 use Shopsys\HttpSmokeTesting\Annotation\Parameter;
+use Shopsys\HttpSmokeTesting\RequestDataSetGenerator;
 use Shopsys\HttpSmokeTesting\RequestDataSetGeneratorFactory;
 use Shopsys\HttpSmokeTesting\RouteInfo;
 use Symfony\Component\Routing\Route;
 
 class RequestDataSetGeneratorTest extends TestCase
 {
-    public function testGeneratorGeneratesExactlyOneRequestDataSet()
+    public function testGeneratorGeneratesExactlyOneRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -20,7 +21,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(1, $requestDataSets);
     }
 
-    public function testGeneratorCanAddExtraRequestDataSet()
+    public function testGeneratorCanAddExtraRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -31,7 +32,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertCount(3, $requestDataSets);
     }
 
-    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet()
+    public function testGeneratorGeneratesUniqueInstancesOfEqualRequestDataSet(): void
     {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator('test_route_path', 'test_route_name');
 
@@ -48,7 +49,7 @@ class RequestDataSetGeneratorTest extends TestCase
      * @param array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)> $annotations
      * @return \Shopsys\HttpSmokeTesting\RequestDataSetGenerator
      */
-    private function createRequestDataSetGenerator($routePath, $routeName, array $annotations = [])
+    private function createRequestDataSetGenerator(string $routePath, string $routeName, array $annotations = []): RequestDataSetGenerator
     {
         $route = new Route($routePath);
         $routeInfo = new RouteInfo($routeName, $route, $annotations);
@@ -67,7 +68,7 @@ class RequestDataSetGeneratorTest extends TestCase
         DataSet $dataSet,
         int $statusCode,
         array $parameters
-    ) {
+    ): void {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator(
             'test_route_path',
             'test_route_name',
@@ -80,7 +81,7 @@ class RequestDataSetGeneratorTest extends TestCase
         self::assertEquals($parameters, $requestDataSets[0]->getParameters());
     }
 
-    public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations()
+    public function testGeneratorGeneratesRequestDataSetsFromDataSetAnnotations(): void
     {
         $parameter1 = new Parameter();
         $parameter1->name = 'name';

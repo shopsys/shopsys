@@ -14,7 +14,7 @@ interface RequestDataSetConfig
      * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */
-    public function setAuth(AuthInterface $auth);
+    public function setAuth(AuthInterface $auth): self;
 
     /**
      * Sets expected HTTP response status code for this request data set.
@@ -22,7 +22,7 @@ interface RequestDataSetConfig
      * @param int $code
      * @return $this
      */
-    public function setExpectedStatusCode($code);
+    public function setExpectedStatusCode(int $code): self;
 
     /**
      * Sets a value of a specified route parameter for this request data set.
@@ -31,7 +31,7 @@ interface RequestDataSetConfig
      * @param mixed $value
      * @return $this
      */
-    public function setParameter($name, $value);
+    public function setParameter(string $name, $value): self;
 
     /**
      * Adds a custom debug note for this request data set. Debug notes are shown on test failure for this data set.
@@ -39,7 +39,7 @@ interface RequestDataSetConfig
      * @param string $debugNote
      * @return $this
      */
-    public function addDebugNote($debugNote);
+    public function addDebugNote(string $debugNote): self;
 
     /**
      * Provided $callback will be called with instance of this and ContainerInterface as arguments.
@@ -49,5 +49,5 @@ interface RequestDataSetConfig
      * @param callable $callback
      * @return $this
      */
-    public function addCallDuringTestExecution($callback);
+    public function addCallDuringTestExecution(callable $callback): self;
 }

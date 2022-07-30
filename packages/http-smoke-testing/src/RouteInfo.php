@@ -26,7 +26,7 @@ class RouteInfo
      * @param \Symfony\Component\Routing\Route $route
      * @param array<(\Shopsys\HttpSmokeTesting\Annotation\DataSet|\Shopsys\HttpSmokeTesting\Annotation\Skipped)> $annotations
      */
-    public function __construct($routeName, Route $route, array $annotations = [])
+    public function __construct(string $routeName, Route $route, array $annotations = [])
     {
         $this->routeName = $routeName;
         $this->route = $route;
@@ -36,7 +36,7 @@ class RouteInfo
     /**
      * @return string
      */
-    public function getRouteName()
+    public function getRouteName(): string
     {
         return $this->routeName;
     }
@@ -44,7 +44,7 @@ class RouteInfo
     /**
      * @return string
      */
-    public function getRoutePath()
+    public function getRoutePath(): string
     {
         return $this->route->getPath();
     }
@@ -52,7 +52,7 @@ class RouteInfo
     /**
      * @return string
      */
-    public function getRouteCondition()
+    public function getRouteCondition(): string
     {
         return $this->route->getCondition();
     }
@@ -61,7 +61,7 @@ class RouteInfo
      * @param string $method
      * @return bool
      */
-    public function isHttpMethodAllowed($method)
+    public function isHttpMethodAllowed(string $method): bool
     {
         $methods = $this->route->getMethods();
 
@@ -72,7 +72,7 @@ class RouteInfo
      * @param string $name
      * @return bool
      */
-    public function isRouteParameterRequired($name)
+    public function isRouteParameterRequired(string $name): bool
     {
         return !$this->route->hasDefault($name) && in_array($name, $this->getRouteParameterNames(), true);
     }
@@ -80,11 +80,9 @@ class RouteInfo
     /**
      * @return array<string, mixed>
      */
-    public function getRouteParameterNames()
+    public function getRouteParameterNames(): array
     {
-        $compiledRoute = $this->route->compile();
-
-        return $compiledRoute->getVariables();
+        return $this->route->compile()->getVariables();
     }
 
     /**

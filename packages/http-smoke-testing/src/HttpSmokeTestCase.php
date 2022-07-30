@@ -2,6 +2,7 @@
 
 namespace Shopsys\HttpSmokeTesting;
 
+use Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @dataProvider httpResponseTestDataProvider
      */
-    final public function testHttpResponse(RequestDataSet $requestDataSet)
+    final public function testHttpResponse(RequestDataSet $requestDataSet): void
     {
         $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
 
@@ -60,7 +61,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[][]
      */
-    final public function httpResponseTestDataProvider()
+    final public function httpResponseTestDataProvider(): array
     {
         $this->setUp();
         $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
@@ -92,7 +93,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     /**
      * @return \Shopsys\HttpSmokeTesting\RouterAdapter\RouterAdapterInterface
      */
-    protected function getRouterAdapter()
+    protected function getRouterAdapter(): RouterAdapterInterface
     {
         /** @var \Symfony\Component\Routing\RouterInterface $router */
         $router = static::$kernel->getContainer()->get('router');
@@ -105,13 +106,13 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      *
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer);
+    abstract protected function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void;
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createRequest(RequestDataSet $requestDataSet)
+    protected function createRequest(RequestDataSet $requestDataSet): Request
     {
         $uri = $this->getRouterAdapter()->generateUri($requestDataSet);
 
@@ -127,7 +128,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function handleRequest(Request $request)
+    protected function handleRequest(Request $request): Response
     {
         return static::$kernel->handle($request);
     }
@@ -136,7 +137,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * @param \Symfony\Component\HttpFoundation\Response $response
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      */
-    protected function assertResponse(Response $response, RequestDataSet $requestDataSet)
+    protected function assertResponse(Response $response, RequestDataSet $requestDataSet): void
     {
         $failMessage = sprintf(
             'Failed asserting that status code %d for route "%s" is identical to expected %d',
@@ -156,7 +157,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * @param string $message
      * @return string
      */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message)
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

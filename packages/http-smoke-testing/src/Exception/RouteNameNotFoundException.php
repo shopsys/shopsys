@@ -9,7 +9,7 @@ class RouteNameNotFoundException extends Exception
     /**
      * @param string|string[] $routeName
      */
-    public function __construct($routeName)
+    public function __construct(string|array $routeName)
     {
         $routeNames = (array)$routeName;
 
