@@ -1,4 +1,5 @@
 parameters:
+    tmpDir: var/phpstan
     # limit maximum concurrent job count to prevent server overload
     parallel:
         maximumNumberOfProcesses: 5
