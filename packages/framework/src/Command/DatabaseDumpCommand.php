@@ -101,7 +101,7 @@ class DatabaseDumpCommand extends Command
     }
 
     /**
-     * @return array
+     * @return array<array{0: string, 1: string}>
      */
     private function getDescriptorSpec()
     {

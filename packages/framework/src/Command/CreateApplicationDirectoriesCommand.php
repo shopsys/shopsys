@@ -13,22 +13,22 @@ use Symfony\Component\Filesystem\Filesystem;
 class CreateApplicationDirectoriesCommand extends Command
 {
     /**
-     * @var array
+     * @var string[]
      */
     private $defaultInternalDirectories;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $defaultPublicDirectories;
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
     private $internalDirectories;
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
     private $publicDirectories;
 
@@ -58,10 +58,10 @@ class CreateApplicationDirectoriesCommand extends Command
     private $uploadedFileDirectoryStructureCreator;
 
     /**
-     * @param array $defaultInternalDirectories
-     * @param array $defaultPublicDirectories
-     * @param array|null $internalDirectories
-     * @param array|null $publicDirectories
+     * @param string[] $defaultInternalDirectories
+     * @param string[] $defaultPublicDirectories
+     * @param string[]|null $internalDirectories
+     * @param string[]|null $publicDirectories
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
@@ -146,7 +146,7 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * return array
+     * return string[]
      */
     private function getPublicDirectories()
     {
@@ -160,7 +160,7 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function getInternalDirectories()
     {

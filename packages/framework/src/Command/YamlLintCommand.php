@@ -119,7 +119,7 @@ EOF
      * @param string $content
      * @param int $flags
      * @param \SplFileInfo|null $file
-     * @return array
+     * @return array{file: ?\SplFileInfo, valid: bool, line?: int, message?: string}
      */
     protected function validate(string $content, int $flags, ?SplFileInfo $file = null): array
     {
@@ -144,7 +144,7 @@ EOF
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $files
+     * @param array<array{file: ?\SplFileInfo, valid: bool, line?: int, message?: string}> $files
      * @return int
      */
     protected function display(SymfonyStyle $io, array $files): int
@@ -161,7 +161,7 @@ EOF
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
+     * @param array<array{file: ?\SplFileInfo, valid: bool, line?: int, message?: string}> $filesInfo
      * @return int
      */
     protected function displayTxt(SymfonyStyle $io, array $filesInfo): int
@@ -196,7 +196,7 @@ EOF
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
-     * @param array $filesInfo
+     * @param array<array{file: ?\SplFileInfo, valid: bool, line?: int, message?: string}> $filesInfo
      * @return int
      */
     protected function displayJson(SymfonyStyle $io, array $filesInfo): int
@@ -218,7 +218,7 @@ EOF
     /**
      * @param string $fileOrDirectory
      * @param string|null $excludeRegex
-     * @return \Traversable
+     * @return \Traversable<\SplFileInfo>
      */
     protected function getFiles(string $fileOrDirectory, ?string $excludeRegex = null): Traversable
     {
@@ -284,9 +284,9 @@ EOF
 
     /**
      * @param string $directory
-     * @return \RecursiveIteratorIterator
+     * @return \Iterator<\SplFileInfo>
      */
-    protected function getDirectoryIterator(string $directory): RecursiveIteratorIterator
+    protected function getDirectoryIterator(string $directory): \Iterator
     {
         $default = function (string $directory) {
             return new RecursiveIteratorIterator(
