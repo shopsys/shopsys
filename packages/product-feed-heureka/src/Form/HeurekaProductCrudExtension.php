@@ -42,7 +42,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return HeurekaProductFormType::class;
     }
@@ -50,7 +50,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
@@ -59,7 +59,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @return array{cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>}
      */
-    public function getData($productId)
+    public function getData($productId): array
     {
         $heurekaProductDomains = $this->heurekaProductDomainFacade->findByProductId($productId);
 
@@ -76,7 +76,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @param array{cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>} $data
      */
-    public function saveData($productId, $data)
+    public function saveData($productId, $data): void
     {
         $heurekaProductDomainsData = [];
         if (array_key_exists('cpc', $data)) {
@@ -97,7 +97,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $productId
      */
-    public function removeData($productId)
+    public function removeData($productId): void
     {
         $this->heurekaProductDomainFacade->delete($productId);
     }

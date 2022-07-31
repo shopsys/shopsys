@@ -40,7 +40,7 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
         $this->heurekaCategoryDataFactory = $heurekaCategoryDataFactory;
     }
 
-    public function load()
+    public function load(): void
     {
         $heurekaCategoriesData = [];
 

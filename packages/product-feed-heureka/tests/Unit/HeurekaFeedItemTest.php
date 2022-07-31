@@ -110,7 +110,7 @@ class HeurekaFeedItemTest extends TestCase
         return $domainConfigMock;
     }
 
-    public function testMinimalHeurekaFeedItemIsCreatable()
+    public function testMinimalHeurekaFeedItemIsCreatable(): void
     {
         $heurekaFeedItem = $this->heurekaFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -133,7 +133,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertNull($heurekaFeedItem->getCpc());
     }
 
-    public function testHeurekaFeedItemWithGroupId()
+    public function testHeurekaFeedItemWithGroupId(): void
     {
         $mainVariantMock = $this->createMock(Product::class);
         $mainVariantMock->method('getId')->willReturn(2);
@@ -145,7 +145,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals(2, $heurekaFeedItem->getGroupId());
     }
 
-    public function testHeurekaFeedItemWithDescription()
+    public function testHeurekaFeedItemWithDescription(): void
     {
         $this->defaultProduct->method('getDescription')
             ->with(1)->willReturn('product description');
@@ -155,7 +155,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals('product description', $heurekaFeedItem->getDescription());
     }
 
-    public function testHeurekaFeedItemWithImgUrl()
+    public function testHeurekaFeedItemWithImgUrl(): void
     {
         $this->heurekaProductDataBatchLoaderMock->method('getProductImageUrl')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/img/product/1');
@@ -165,7 +165,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals('https://example.com/img/product/1', $heurekaFeedItem->getImgUrl());
     }
 
-    public function testHeurekaFeedItemWithEan()
+    public function testHeurekaFeedItemWithEan(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
 
@@ -174,7 +174,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals('1234567890123', $heurekaFeedItem->getEan());
     }
 
-    public function testHeurekaFeedItemWithManufacturer()
+    public function testHeurekaFeedItemWithManufacturer(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand = $this->createMock(Brand::class);
@@ -186,7 +186,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals('manufacturer name', $heurekaFeedItem->getManufacturer());
     }
 
-    public function testHeurekaFeedItemWithCategoryText()
+    public function testHeurekaFeedItemWithCategoryText(): void
     {
         /** @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|\PHPUnit\Framework\MockObject\MockObject $heurekaCategoryMock */
         $heurekaCategoryMock = $this->createMock(HeurekaCategory::class);
@@ -207,7 +207,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals('heureka category full text', $heurekaFeedItem->getCategoryText());
     }
 
-    public function testHeurekaFeedItemWithParams()
+    public function testHeurekaFeedItemWithParams(): void
     {
         $this->heurekaProductDataBatchLoaderMock->method('getProductParametersByName')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(['color' => 'black']);
@@ -217,7 +217,7 @@ class HeurekaFeedItemTest extends TestCase
         self::assertEquals(['color' => 'black'], $heurekaFeedItem->getParams());
     }
 
-    public function testHeurekaFeedItemWithCpc()
+    public function testHeurekaFeedItemWithCpc(): void
     {
         $this->heurekaProductDataBatchLoaderMock->method('getProductCpc')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(Money::create(5));

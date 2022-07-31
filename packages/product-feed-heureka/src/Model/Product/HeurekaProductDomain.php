@@ -4,6 +4,7 @@ namespace Shopsys\ProductFeed\HeurekaBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(
@@ -51,7 +52,7 @@ class HeurekaProductDomain
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainData $heurekaProductDomainData
      */
-    public function edit(HeurekaProductDomainData $heurekaProductDomainData)
+    public function edit(HeurekaProductDomainData $heurekaProductDomainData): void
     {
         $this->setData($heurekaProductDomainData);
     }
@@ -69,7 +70,7 @@ class HeurekaProductDomain
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -77,7 +78,7 @@ class HeurekaProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -93,7 +94,7 @@ class HeurekaProductDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

@@ -34,7 +34,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return CategoryFormType::class;
     }
@@ -42,7 +42,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Heureka.cz product feed');
     }
@@ -51,7 +51,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param int $categoryId
      * @return array{'heureka_category': \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory}
      */
-    public function getData($categoryId)
+    public function getData($categoryId): array
     {
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
@@ -67,7 +67,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
      * @param int $categoryId
      * @param array{'heureka_category': \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory} $data
      */
-    public function saveData($categoryId, $data)
+    public function saveData($categoryId, $data): void
     {
         if (isset($data['heureka_category']) && $data['heureka_category'] instanceof HeurekaCategory) {
             $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId($categoryId, $data['heureka_category']);
@@ -79,7 +79,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $categoryId
      */
-    public function removeData($categoryId)
+    public function removeData($categoryId): void
     {
         $this->heurekaCategoryFacade->removeHeurekaCategoryForCategoryId($categoryId);
     }

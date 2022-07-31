@@ -3,6 +3,7 @@
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class HeurekaCategoryRepository
 {
@@ -22,7 +23,7 @@ class HeurekaCategoryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository<\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory>
      */
-    protected function getHeurekaCategoryRepository()
+    protected function getHeurekaCategoryRepository(): EntityRepository
     {
         return $this->em->getRepository(HeurekaCategory::class);
     }
@@ -30,7 +31,7 @@ class HeurekaCategoryRepository
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory[]
      */
-    public function getAllIndexedById()
+    public function getAllIndexedById(): array
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -44,7 +45,7 @@ class HeurekaCategoryRepository
      * @param int $categoryId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory|null
      */
-    public function findByCategoryId($categoryId)
+    public function findByCategoryId($categoryId): ?HeurekaCategory
     {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('hc')
@@ -58,20 +59,20 @@ class HeurekaCategoryRepository
     }
 
     /**
-     * @param int $id
+     * @param int $categoryId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory
      */
-    public function getOneById($id)
+    public function getOneById($categoryId): HeurekaCategory
     {
         $queryBuilder = $this->getHeurekaCategoryRepository()
             ->createQueryBuilder('hc')
             ->andWhere('hc.id = :id')
-            ->setParameter('id', $id);
+            ->setParameter('id', $categoryId);
         $heurekaCategory = $queryBuilder->getQuery()->getOneOrNullResult();
 
         if ($heurekaCategory === null) {
             throw new HeurekaCategoryNotFoundException(
-                'Heureka category with ID ' . $id . ' does not exist.'
+                'Heureka category with ID ' . $categoryId . ' does not exist.'
             );
         }
 

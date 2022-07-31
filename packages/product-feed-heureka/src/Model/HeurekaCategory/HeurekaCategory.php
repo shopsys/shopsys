@@ -57,7 +57,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData $heurekaCategoryData
      */
-    public function edit(HeurekaCategoryData $heurekaCategoryData)
+    public function edit(HeurekaCategoryData $heurekaCategoryData): void
     {
         $this->editCategories($heurekaCategoryData->categories);
         $this->setData($heurekaCategoryData);
@@ -75,7 +75,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[] $categories
      */
-    protected function editCategories(array $categories)
+    protected function editCategories(array $categories): void
     {
         $this->categories->clear();
         foreach ($categories as $category) {
@@ -86,7 +86,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->add($category);
     }
@@ -94,7 +94,7 @@ class HeurekaCategory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function removeCategory(Category $category)
+    public function removeCategory(Category $category): void
     {
         $this->categories->removeElement($category);
     }
@@ -102,7 +102,7 @@ class HeurekaCategory
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -110,7 +110,7 @@ class HeurekaCategory
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -118,7 +118,7 @@ class HeurekaCategory
     /**
      * @return string|null
      */
-    public function getFullName()
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
@@ -126,7 +126,7 @@ class HeurekaCategory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->categories->getValues();
     }
