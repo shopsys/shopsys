@@ -4,7 +4,6 @@ namespace Tests\ProductFeed\HeurekaDeliveryBundle\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataMissingException;
-use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItem;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFactory;
 
 class HeurekaDeliveryFeedItemTest extends TestCase

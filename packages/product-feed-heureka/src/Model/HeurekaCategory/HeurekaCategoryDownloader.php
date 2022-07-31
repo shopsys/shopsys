@@ -42,7 +42,7 @@ class HeurekaCategoryDownloader
     /**
      * @return \SimpleXMLElement
      */
-    protected function loadXml(): \SimpleXMLElement
+    protected function loadXml(): SimpleXMLElement
     {
         try {
             return new SimpleXMLElement($this->heurekaCategoryFeedUrl, LIBXML_NOERROR | LIBXML_NOWARNING, true);

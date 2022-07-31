@@ -124,13 +124,7 @@ class OrderDataFactory
     }
 
     /**
-     * @param array{
-     *     payment: array{uuid: string},
-     *     transport: array{uuid: string},
-     *     country: string,
-     *     differentDeliveryAddress: bool,
-     *     deliveryCountry?: string
-     * } $input
+     * @param array{payment: array{uuid: string}, transport: array{uuid: string}, country: string, differentDeliveryAddress: bool, deliveryCountry?: string} $input
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
      */
