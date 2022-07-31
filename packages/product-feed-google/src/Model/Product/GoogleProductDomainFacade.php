@@ -39,9 +39,9 @@ class GoogleProductDomainFacade
 
     /**
      * @param int $productId
-     * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain[]|null
+     * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomain[]
      */
-    public function findByProductId($productId)
+    public function findByProductId(int $productId): array
     {
         return $this->googleProductDomainRepository->findByProductId($productId);
     }
@@ -50,7 +50,7 @@ class GoogleProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData[] $googleProductDomainsData
      */
-    public function saveGoogleProductDomainsForProductId($productId, array $googleProductDomainsData)
+    public function saveGoogleProductDomainsForProductId(int $productId, array $googleProductDomainsData): void
     {
         $existingGoogleProductDomains = $this->googleProductDomainRepository->findByProductId($productId);
 
@@ -68,7 +68,7 @@ class GoogleProductDomainFacade
     protected function removeOldGoogleProductDomains(
         array $existingGoogleProductDomains,
         array $newGoogleProductDomainsData
-    ) {
+    ): void {
         $domainsIdsWithNewGoogleProductDomains = [];
         foreach ($newGoogleProductDomainsData as $newGoogleProductDomainData) {
             $domainsIdsWithNewGoogleProductDomains[$newGoogleProductDomainData->domainId] = $newGoogleProductDomainData->domainId;
@@ -87,7 +87,7 @@ class GoogleProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      */
-    public function saveGoogleProductDomain($productId, GoogleProductDomainData $googleProductDomainData)
+    public function saveGoogleProductDomain(int $productId, GoogleProductDomainData $googleProductDomainData): void
     {
         $product = $this->productRepository->getById($productId);
         $googleProductDomainData->product = $product;
@@ -110,7 +110,7 @@ class GoogleProductDomainFacade
     /**
      * @param int $productId
      */
-    public function delete($productId)
+    public function delete(int $productId): void
     {
         $googleProductDomains = $this->googleProductDomainRepository->findByProductId($productId);
 

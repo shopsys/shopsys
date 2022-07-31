@@ -156,7 +156,7 @@ class GoogleFeedItemTest extends TestCase
             ->with($product, $domain)->willReturn($url);
     }
 
-    public function testMinimalGoogleFeedItemIsCreatable()
+    public function testMinimalGoogleFeedItemIsCreatable(): void
     {
         $googleFeedItem = $this->googleFeedItemFactory->create($this->defaultProduct, $this->defaultDomain);
 
@@ -176,7 +176,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals([], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithBrand()
+    public function testGoogleFeedItemWithBrand(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|\PHPUnit\Framework\MockObject\MockObject $brand */
         $brand = $this->createMock(Brand::class);
@@ -188,7 +188,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('brand name', $googleFeedItem->getBrand());
     }
 
-    public function testGoogleFeedItemWithDescription()
+    public function testGoogleFeedItemWithDescription(): void
     {
         $this->defaultProduct->method('getDescription')
             ->with(1)->willReturn('product description');
@@ -198,7 +198,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('product description', $googleFeedItem->getDescription());
     }
 
-    public function testGoogleFeedItemWithImageLink()
+    public function testGoogleFeedItemWithImageLink(): void
     {
         $this->mockProductImageUrl($this->defaultProduct, $this->defaultDomain, 'https://example.com/img/product/1');
 
@@ -207,7 +207,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('https://example.com/img/product/1', $googleFeedItem->getImageLink());
     }
 
-    public function testGoogleFeedItemWithSellingDenied()
+    public function testGoogleFeedItemWithSellingDenied(): void
     {
         $product = $this->createMock(Product::class);
         $product->method('getId')->willReturn(1);
@@ -219,7 +219,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals('out of stock', $googleFeedItem->getAvailability());
     }
 
-    public function testGoogleFeedItemWithEan()
+    public function testGoogleFeedItemWithEan(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
 
@@ -228,7 +228,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['gtin' => '1234567890123'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithPartno()
+    public function testGoogleFeedItemWithPartno(): void
     {
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');
 
@@ -237,7 +237,7 @@ class GoogleFeedItemTest extends TestCase
         self::assertEquals(['mpn' => 'HSC0424PP'], $googleFeedItem->getIdentifiers());
     }
 
-    public function testGoogleFeedItemWithEanAndPartno()
+    public function testGoogleFeedItemWithEanAndPartno(): void
     {
         $this->defaultProduct->method('getEan')->willReturn('1234567890123');
         $this->defaultProduct->method('getPartno')->willReturn('HSC0424PP');

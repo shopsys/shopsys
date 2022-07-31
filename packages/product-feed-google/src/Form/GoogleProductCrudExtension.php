@@ -43,7 +43,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormTypeClass()
+    public function getFormTypeClass(): string
     {
         return GoogleProductFormType::class;
     }
@@ -51,7 +51,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @return string
      */
-    public function getFormLabel()
+    public function getFormLabel(): string
     {
         return $this->translator->trans('Google Shopping product feed');
     }
@@ -60,7 +60,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @return array{show: array<int, bool>}
      */
-    public function getData($productId)
+    public function getData($productId): array
     {
         $googleProductDomains = $this->googleProductDomainFacade->findByProductId($productId);
 
@@ -77,7 +77,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      * @param int $productId
      * @param array<string, array<int, bool>> $data
      */
-    public function saveData($productId, $data)
+    public function saveData($productId, $data): void
     {
         $googleProductDomainsDataIndexedByDomainId = [];
         foreach ($data as $productAttributeName => $productAttributeValuesByDomainIds) {
@@ -110,9 +110,9 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
      */
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
-        $propertyName,
-        $propertyValue
-    ) {
+        string $propertyName,
+        bool $propertyValue
+    ): void {
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
@@ -123,7 +123,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param int $productId
      */
-    public function removeData($productId)
+    public function removeData($productId): void
     {
         $this->googleProductDomainFacade->delete($productId);
     }

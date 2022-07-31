@@ -50,7 +50,7 @@ class GoogleProductDomain
     /**
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData $googleProductDomainData
      */
-    public function edit(GoogleProductDomainData $googleProductDomainData)
+    public function edit(GoogleProductDomainData $googleProductDomainData): void
     {
         $this->setData($googleProductDomainData);
     }
@@ -68,7 +68,7 @@ class GoogleProductDomain
     /**
      * @return bool
      */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -76,7 +76,7 @@ class GoogleProductDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
