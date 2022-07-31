@@ -58,7 +58,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @return array
+     * @return array{show: array<int, bool>}
      */
     public function getData($productId)
     {
@@ -75,7 +75,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @param array $data
+     * @param array<string, array<int, bool>> $data
      */
     public function saveData($productId, $data)
     {
