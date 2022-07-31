@@ -39,7 +39,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
         $this->zboziProductDomainDataFactory = $zboziProductDomainDataFactory;
     }
 
-    public function load()
+    public function load(): void
     {
         $firstZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
         $firstZboziProductDomainData->domainId = static::DOMAIN_ID_FIRST;

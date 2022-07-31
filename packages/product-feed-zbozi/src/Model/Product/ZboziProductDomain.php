@@ -4,6 +4,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(
@@ -63,7 +64,7 @@ class ZboziProductDomain
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      */
-    public function edit(ZboziProductDomainData $zboziProductDomainData)
+    public function edit(ZboziProductDomainData $zboziProductDomainData): void
     {
         $this->setData($zboziProductDomainData);
     }
@@ -83,7 +84,7 @@ class ZboziProductDomain
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -91,7 +92,7 @@ class ZboziProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -99,7 +100,7 @@ class ZboziProductDomain
     /**
      * @return bool
      */
-    public function getShow()
+    public function getShow(): bool
     {
         return $this->show;
     }
@@ -107,7 +108,7 @@ class ZboziProductDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
