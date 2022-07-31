@@ -115,7 +115,7 @@ class ExtendedClassesAnnotationsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $isDryRun = (bool)$input->getOption(static::DRY_RUN);
@@ -163,7 +163,7 @@ class ExtendedClassesAnnotationsCommand extends Command
 
     /**
      * @param bool $isDryRun
-     * @return string[]
+     * @return array<string|false>
      */
     protected function replaceFrameworkWithProjectAnnotations(bool $isDryRun): array
     {
@@ -201,7 +201,7 @@ class ExtendedClassesAnnotationsCommand extends Command
 
     /**
      * @param bool $isDryRun
-     * @return string[]
+     * @return array<string|bool>
      */
     protected function addPropertyAndMethodAnnotationsToProjectClasses(bool $isDryRun): array
     {

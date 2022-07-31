@@ -34,7 +34,7 @@ class CheckRedisCommand extends Command
         $this->redisFacade = $redisFacade;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Checks availability of Redis');
     }
@@ -44,7 +44,7 @@ class CheckRedisCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

@@ -59,7 +59,7 @@ class CronCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
@@ -76,8 +76,9 @@ class CronCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);
@@ -98,7 +99,7 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      */
-    private function listAllCronModulesSortedByServiceId(InputInterface $input, OutputInterface $output, CronFacade $cronFacade)
+    private function listAllCronModulesSortedByServiceId(InputInterface $input, OutputInterface $output, CronFacade $cronFacade): void
     {
         $instanceNames = $cronFacade->getInstanceNames();
         $io = new SymfonyStyle($input, $output);
@@ -127,7 +128,7 @@ class CronCommand extends Command
     {
         uasort(
             $cronModuleConfigs,
-            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
+            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB): int {
                 return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
             }
         );
@@ -158,7 +159,7 @@ class CronCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param string $instanceName
      */
-    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory, string $instanceName)
+    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory, string $instanceName): void
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
@@ -184,7 +185,7 @@ class CronCommand extends Command
     /**
      * @return \DateTimeImmutable
      */
-    private function getCurrentRoundedTime()
+    private function getCurrentRoundedTime(): DateTimeImmutable
     {
         $time = new DateTime('now', $this->getCronTimeZone());
         $time->modify('-' . $time->format('s') . ' sec');

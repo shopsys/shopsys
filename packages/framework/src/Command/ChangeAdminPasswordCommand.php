@@ -38,7 +38,7 @@ class ChangeAdminPasswordCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Set new password for administrator.')
@@ -48,7 +48,7 @@ class ChangeAdminPasswordCommand extends Command
     /**
      * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -67,7 +67,7 @@ class ChangeAdminPasswordCommand extends Command
      * @param \Symfony\Component\Console\Style\SymfonyStyle $io
      * @return string
      */
-    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io)
+    private function askRepeatedlyForNewPassword(InputInterface $input, SymfonyStyle $io): string
     {
         $question = new Question('Enter new password');
         $question->setHidden(true);

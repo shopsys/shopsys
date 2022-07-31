@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use FilesystemIterator;
+use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -203,7 +204,7 @@ EOF
     {
         $errors = 0;
 
-        array_walk($filesInfo, function (&$v) use (&$errors) {
+        array_walk($filesInfo, function (&$v) use (&$errors): void {
             $v['file'] = (string)$v['file'];
             if (!$v['valid']) {
                 ++$errors;
@@ -286,9 +287,9 @@ EOF
      * @param string $directory
      * @return \Iterator<\SplFileInfo>
      */
-    protected function getDirectoryIterator(string $directory): \Iterator
+    protected function getDirectoryIterator(string $directory): Iterator
     {
-        $default = function (string $directory) {
+        $default = function (string $directory): RecursiveIteratorIterator {
             return new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator(
                     $directory,
@@ -307,7 +308,7 @@ EOF
      */
     protected function isReadable(string $fileOrDirectory): bool
     {
-        $default = function ($fileOrDirectory) {
+        $default = function ($fileOrDirectory): bool {
             return is_readable($fileOrDirectory);
         };
 

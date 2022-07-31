@@ -48,7 +48,7 @@ class ReplaceDomainsUrlsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Replace domains urls in database by urls in domains config');
@@ -57,8 +57,9 @@ class ReplaceDomainsUrlsCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainConfigUrl = $domainConfig->getUrl();

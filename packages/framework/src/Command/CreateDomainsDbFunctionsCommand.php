@@ -37,7 +37,7 @@ class CreateDomainsDbFunctionsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create new domains DB functions');
@@ -46,10 +46,11 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->em->wrapInTransaction(function () use ($output) {
+        $this->em->wrapInTransaction(function () use ($output): void {
             $this->doExecute($output);
         });
 
@@ -59,7 +60,7 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function doExecute(OutputInterface $output)
+    private function doExecute(OutputInterface $output): void
     {
         $output->writeln('Start of creating db functions.');
 

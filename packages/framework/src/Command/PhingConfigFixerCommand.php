@@ -120,7 +120,7 @@ class PhingConfigFixerCommand extends Command
 
     /**
      * @param string $content
-     * @return string[]
+     * @return array<string|bool>
      */
     protected function extractTargetBlocksIndexedByName(string $content): array
     {

@@ -29,7 +29,7 @@ class CreateDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create database public schema');
@@ -38,8 +38,9 @@ class CreateDatabaseSchemaCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Initializing database schema');
         $this->databaseSchemaFacade->createSchema('public');

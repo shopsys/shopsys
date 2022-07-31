@@ -89,7 +89,7 @@ class CreateApplicationDirectoriesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Create application directories for locks, docs, content, images, uploaded files, etc.');
@@ -98,8 +98,9 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->createMiscellaneousDirectories($output);
         $this->createImageDirectories($output);
@@ -111,7 +112,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createMiscellaneousDirectories(OutputInterface $output)
+    private function createMiscellaneousDirectories(OutputInterface $output): void
     {
         $publicDirectories = $this->getPublicDirectories();
         $internalDirectories = $this->getInternalDirectories();
@@ -128,7 +129,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createImageDirectories(OutputInterface $output)
+    private function createImageDirectories(OutputInterface $output): void
     {
         $this->imageDirectoryStructureCreator->makeImageDirectories();
 
@@ -138,7 +139,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    private function createUploadedFileDirectories(OutputInterface $output)
+    private function createUploadedFileDirectories(OutputInterface $output): void
     {
         $this->uploadedFileDirectoryStructureCreator->makeUploadedFileDirectories();
 
@@ -146,9 +147,9 @@ class CreateApplicationDirectoriesCommand extends Command
     }
 
     /**
-     * return string[]
+     * @return string[]
      */
-    private function getPublicDirectories()
+    private function getPublicDirectories(): array
     {
         $directories = $this->defaultPublicDirectories;
 
@@ -162,7 +163,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @return string[]
      */
-    private function getInternalDirectories()
+    private function getInternalDirectories(): array
     {
         $directories = $this->defaultInternalDirectories;
 
