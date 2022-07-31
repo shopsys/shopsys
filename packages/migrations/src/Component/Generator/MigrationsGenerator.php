@@ -122,7 +122,7 @@ class MigrationsGenerator
      */
     protected function escapeSqlCommands(array $sqlCommands): array
     {
-        return array_map(function ($sqlCommand) {
+        return array_map(function (string $sqlCommand): string {
             return str_replace('\'', "\\'", $sqlCommand);
         }, $sqlCommands);
     }
