@@ -5,7 +5,7 @@ namespace Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem;
 class HeurekaDeliveryFeedItemFactory
 {
     /**
-     * @param array $dataRow
+     * @param array{id: int, stockQuantity: ?int} $dataRow
      * @return \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItem
      */
     public function create(array $dataRow): HeurekaDeliveryFeedItem

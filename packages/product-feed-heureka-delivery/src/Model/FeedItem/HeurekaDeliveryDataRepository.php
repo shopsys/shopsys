@@ -26,7 +26,7 @@ class HeurekaDeliveryDataRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param int|null $lastSeekId
      * @param int $maxResults
-     * @return array[]
+     * @return array<array{id: int, stockQuantity: ?int}>
      */
     public function getDataRows(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): array
     {
