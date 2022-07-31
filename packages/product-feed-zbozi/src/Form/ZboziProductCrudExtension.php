@@ -64,11 +64,11 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     {
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
-        return $zboziProductDomains !== null && count(
-            $zboziProductDomains
-        ) > 0 ? $this->getZboziProductDomainsAsPluginDataArray(
-            $zboziProductDomains
-        ) : [];
+        if (count($zboziProductDomains) === 0) {
+            return [];
+        }
+
+        return $this->getZboziProductDomainsAsPluginDataArray($zboziProductDomains);
     }
 
     /**

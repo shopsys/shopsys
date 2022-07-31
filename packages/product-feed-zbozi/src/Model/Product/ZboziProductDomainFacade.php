@@ -40,7 +40,7 @@ class ZboziProductDomainFacade
 
     /**
      * @param int $productId
-     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]|null
+     * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
     public function findByProductId($productId)
     {
