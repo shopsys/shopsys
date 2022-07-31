@@ -57,7 +57,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @return array
+     * @return array{cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>}
      */
     public function getData($productId)
     {
@@ -74,7 +74,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @param array $data
+     * @param array{cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>} $data
      */
     public function saveData($productId, $data)
     {

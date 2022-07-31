@@ -49,7 +49,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $categoryId
-     * @return array
+     * @return array{'heureka_category': \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory}
      */
     public function getData($categoryId)
     {
@@ -65,7 +65,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $categoryId
-     * @param array $data
+     * @param array{'heureka_category': \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory} $data
      */
     public function saveData($categoryId, $data)
     {

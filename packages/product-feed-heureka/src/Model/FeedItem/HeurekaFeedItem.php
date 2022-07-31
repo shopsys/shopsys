@@ -64,7 +64,7 @@ class HeurekaFeedItem implements FeedItemInterface
     protected $heurekaCategoryFullName;
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     protected $parametersByName;
 
@@ -85,7 +85,7 @@ class HeurekaFeedItem implements FeedItemInterface
      * @param int|null $availabilityDispatchTime
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param string|null $heurekaCategoryFullName
-     * @param array $parametersByName
+     * @param array<string, string> $parametersByName
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpc
      */
     public function __construct(
@@ -215,7 +215,7 @@ class HeurekaFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public function getParams(): array
     {

@@ -20,7 +20,7 @@ class HeurekaCategoryRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory>
      */
     protected function getHeurekaCategoryRepository()
     {

@@ -55,7 +55,7 @@ class HeurekaProductDomainRepository
     }
 
     /**
-     * @param array $productsIds
+     * @param int[] $productsIds
      * @param int $domainId
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
