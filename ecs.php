@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**

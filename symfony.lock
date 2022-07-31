@@ -366,9 +366,6 @@
             "project-base/config/packages/nyholm_psr7.yaml"
         ]
     },
-    "object-calisthenics/phpcs-calisthenics-rules": {
-        "version": "v3.4.0"
-    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
