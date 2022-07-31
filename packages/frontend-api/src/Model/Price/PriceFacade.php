@@ -33,7 +33,7 @@ class PriceFacade
     }
 
     /**
-     * @param array $pricesArray
+     * @param array<string, mixed> $pricesArray
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ProductPrice

@@ -34,7 +34,7 @@ class FriendlyUrlRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl>
      */
     protected function getFriendlyUrlRepository(): EntityRepository
     {

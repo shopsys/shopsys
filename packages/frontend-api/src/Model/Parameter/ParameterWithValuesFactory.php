@@ -65,8 +65,15 @@ class ParameterWithValuesFactory
     }
 
     /**
-     * @param array $productData
-     * @return array
+     * @param array{
+     *     parameters: array<array{
+     *         parameter_uuid: string,
+     *         parameter_name: string,
+     *         parameter_value_uuid: string,
+     *         parameter_value_text: string
+     *     }>
+     * } $productData
+     * @return array<int, mixed>
      */
     public function createParametersArrayFromProductArray(array $productData): array
     {
@@ -80,8 +87,13 @@ class ParameterWithValuesFactory
     }
 
     /**
-     * @param array $product
-     * @return array
+     * @param array{
+     *     parameter_uuid: string,
+     *     parameter_name: string,
+     *     parameter_value_uuid: string,
+     *     parameter_value_text: string
+     * } $product
+     * @return array<string, mixed>
      */
     protected function mapParameterArray(array $product): array
     {

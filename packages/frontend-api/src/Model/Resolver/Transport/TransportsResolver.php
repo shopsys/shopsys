@@ -32,7 +32,7 @@ class TransportsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
     public function resolve(): array
     {
@@ -40,7 +40,7 @@ class TransportsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public static function getAliases(): array
     {

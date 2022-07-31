@@ -15,7 +15,7 @@ class StringType extends BaseStringType
      *
      * @phpstan-param \GraphQL\Language\AST\IntValueNode|\GraphQL\Language\AST\FloatValueNode|\GraphQL\Language\AST\StringValueNode|\GraphQL\Language\AST\BooleanValueNode|\GraphQL\Language\AST\NullValueNode $valueNode
      * @param \GraphQL\Language\AST\Node $valueNode
-     * @param array|null $variables
+     * @param array<mixed>|null $variables
      * @return string
      */
     public function parseLiteral(Node $valueNode, ?array $variables = null)

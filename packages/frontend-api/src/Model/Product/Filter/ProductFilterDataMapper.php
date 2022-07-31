@@ -53,7 +53,17 @@ class ProductFilterDataMapper
     }
 
     /**
-     * @param array $frontendApiFilter
+     * @param array{
+     *     minimalPrice?: ?\Shopsys\FrameworkBundle\Component\Money\Money,
+     *     maximalPrice?: ?\Shopsys\FrameworkBundle\Component\Money\Money,
+     *     parameters?: array<array{
+     *         parameter: string,
+     *         values?: string[]
+     *     }>,
+     *     onlyInStock?: bool,
+     *     brands: string[],
+     *     flags: string[],
+     * } $frontendApiFilter
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
      */
     public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData
@@ -78,7 +88,10 @@ class ProductFilterDataMapper
     }
 
     /**
-     * @param array $parameterAndValueUuids
+     * @param array<array{
+     *     parameter: string,
+     *     values?: string[]
+     * }> $parameterAndValueUuids
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[]
      */
     protected function getParametersAndValuesByUuids(array $parameterAndValueUuids): array
@@ -115,7 +128,10 @@ class ProductFilterDataMapper
     }
 
     /**
-     * @param array $parameterAndValueUuids
+     * @param array<array{
+     *     parameter: string,
+     *     values: string[]
+     * }> $parameterAndValueUuids
      */
     protected function loadParametersAndValuesFromArray(array $parameterAndValueUuids): void
     {

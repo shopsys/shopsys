@@ -77,7 +77,7 @@ class ProductFacade
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
-     * @return array
+     * @return array<mixed>
      */
     public function getFilteredProductsOnCurrentDomain(
         int $limit,
@@ -109,7 +109,7 @@ class ProductFacade
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
-     * @return array
+     * @return array<mixed>
      */
     public function getFilteredProductsByCategory(
         Category $category,
@@ -164,7 +164,7 @@ class ProductFacade
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $search
-     * @return array
+     * @return array<mixed>
      */
     public function getFilteredProductsByBrand(
         Brand $brand,

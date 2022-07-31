@@ -32,7 +32,7 @@ class BrandsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function resolve(): array
     {

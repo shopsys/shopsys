@@ -60,7 +60,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{short_description: ?string} $data
      * @return string|null
      */
     public function getShortDescription(array $data): ?string
@@ -69,7 +69,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{detail_url: string} $data
      * @return string
      */
     public function getLink(array $data): string
@@ -78,7 +78,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{categories: int[]} $data
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function getCategories(array $data): array
@@ -87,7 +87,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{flags: int[]} $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getFlags(array $data): array
@@ -96,8 +96,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return string[]
+     * @param array{availability: string} $data
+     * @return array{name: string}
      */
     public function getAvailability(array $data): array
     {
@@ -105,8 +105,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return string[]
+     * @param array{unit: string} $data
+     * @return array{name: string}
      */
     public function getUnit(array $data): array
     {
@@ -114,7 +114,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{stock_quantity: ?int} $data
      * @return int|null
      */
     public function getStockQuantity(array $data): ?int
@@ -123,7 +123,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{is_using_stock: bool} $data
      * @return bool
      */
     public function isUsingStock(array $data): bool
@@ -132,7 +132,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{brand: int|numeric-string} $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
     public function getBrand(array $data): ?Brand
@@ -145,7 +145,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{calculated_selling_denied: bool} $data
      * @return bool
      */
     public function isSellingDenied(array $data): bool
@@ -154,8 +154,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array{accessories: int[]} $data
+     * @return array<int, mixed>
      */
     public function getAccessories(array $data): array
     {
@@ -163,7 +163,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{description: ?string} $data
      * @return string|null
      */
     public function getDescription(array $data): ?string
@@ -172,8 +172,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array{parameters: mixed} $data
+     * @return array<int, mixed>
      */
     public function getParameters(array $data): array
     {
@@ -181,7 +181,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{seo_h1: ?string} $data
      * @return string|null
      */
     public function getSeoH1(array $data): ?string
@@ -190,7 +190,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{seo_title: ?string} $data
      * @return string|null
      */
     public function getSeoTitle(array $data): ?string
@@ -199,7 +199,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{seo_meta_description: ?string} $data
      * @return string|null
      */
     public function getSeoMetaDescription(array $data): ?string
@@ -208,7 +208,7 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
+     * @param array{ordering_priority: int} $data
      * @return int
      */
     public function getOrderingPriority(array $data): int
@@ -217,8 +217,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array{variants: int[]} $data
+     * @return array<int, mixed>
      */
     public function getVariants(array $data): array
     {
@@ -226,8 +226,8 @@ class ProductArrayFieldMapper
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @param array{main_variant_id: int} $data
+     * @return array<int, mixed>
      */
     public function getMainVariant(array $data): array
     {

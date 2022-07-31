@@ -24,7 +24,7 @@ class AdvertPositionsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return array
+     * @return array<int, mixed>
      */
     public function resolve(): array
     {
@@ -39,7 +39,7 @@ class AdvertPositionsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public static function getAliases(): array
     {

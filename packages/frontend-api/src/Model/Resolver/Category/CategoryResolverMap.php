@@ -24,7 +24,7 @@ class CategoryResolverMap extends ResolverMap
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function map(): array
     {

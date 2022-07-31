@@ -12,8 +12,8 @@ class PaginatorArgumentsBuilder implements MappingInterface
     protected const CONFIG_ORDER_TYPE_KEY = 'orderingModeType';
 
     /**
-     * @param array $config
-     * @return array
+     * @param array{orderingModeType: string} $config
+     * @return array<string, array{type: string}>
      */
     public function toMappingDefinition(array $config): array
     {
@@ -45,7 +45,7 @@ class PaginatorArgumentsBuilder implements MappingInterface
     }
 
     /**
-     * @param array $config
+     * @param array{orderingModeType: string} $config
      * @throws \Shopsys\FrontendApiBundle\Component\Arguments\Exception\MandatoryArgumentMissingException
      */
     protected function checkMandatoryFields(array $config): void

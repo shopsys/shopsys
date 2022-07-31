@@ -49,7 +49,7 @@ class RefreshTokensMutation implements MutationInterface, AliasedInterface
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array
+     * @return array{accessToken: string, refreshToken: string}
      */
     public function refreshTokens(Argument $argument): array
     {

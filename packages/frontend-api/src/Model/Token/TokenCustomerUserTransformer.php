@@ -11,7 +11,7 @@ class TokenCustomerUserTransformer
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $user
-     * @return array
+     * @return array<string, mixed>
      */
     public static function transform(CustomerUser $user): array
     {

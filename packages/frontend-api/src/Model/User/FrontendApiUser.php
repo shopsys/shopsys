@@ -57,7 +57,7 @@ class FrontendApiUser implements UserInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array
     {

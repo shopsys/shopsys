@@ -29,7 +29,7 @@ class LogoutMutation extends BaseTokenMutation implements MutationInterface, Ali
     }
 
     /**
-     * @return array
+     * @return bool[]
      */
     public function logout(): array
     {
@@ -45,7 +45,7 @@ class LogoutMutation extends BaseTokenMutation implements MutationInterface, Ali
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public static function getAliases(): array
     {

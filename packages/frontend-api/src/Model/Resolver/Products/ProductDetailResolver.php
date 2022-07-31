@@ -48,7 +48,7 @@ class ProductDetailResolver implements QueryInterface, AliasedInterface
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return array
+     * @return array<mixed>
      */
     public function resolver(?string $uuid = null, ?string $urlSlug = null): array
     {
@@ -75,7 +75,7 @@ class ProductDetailResolver implements QueryInterface, AliasedInterface
 
     /**
      * @param string $uuid
-     * @return array
+     * @return array<mixed>
      */
     protected function getVisibleProductArrayByUuid(string $uuid): array
     {
@@ -88,7 +88,7 @@ class ProductDetailResolver implements QueryInterface, AliasedInterface
 
     /**
      * @param string $urlSlug
-     * @return array
+     * @return array<mixed>
      */
     protected function getVisibleProductArrayOnDomainBySlug(string $urlSlug): array
     {

@@ -35,7 +35,7 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function load(array $config, ContainerBuilder $container): void

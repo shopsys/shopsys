@@ -41,7 +41,7 @@ class TokenFacadeTest extends TestCase
     }
 
     /**
-     * @return iterable
+     * @return iterable<array{0: \Lcobucci\JWT\UnencryptedToken, 1: ?class-string}>
      */
     public function tokensDataProvider(): iterable
     {

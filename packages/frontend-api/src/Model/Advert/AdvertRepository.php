@@ -43,7 +43,7 @@ class AdvertRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Model\Advert\Advert>
      */
     protected function getAdvertRepository()
     {

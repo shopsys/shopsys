@@ -24,7 +24,7 @@ class PaymentsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
     public function resolve(): array
     {
@@ -32,7 +32,7 @@ class PaymentsResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public static function getAliases(): array
     {

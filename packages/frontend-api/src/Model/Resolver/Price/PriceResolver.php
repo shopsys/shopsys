@@ -84,7 +84,7 @@ class PriceResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array{prices: array<string, mixed>} $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     public function resolveByProduct($data): ProductPrice
@@ -123,7 +123,7 @@ class PriceResolver implements QueryInterface, AliasedInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, string>
      */
     public static function getAliases(): array
     {

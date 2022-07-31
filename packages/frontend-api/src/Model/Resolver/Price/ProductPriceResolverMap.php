@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 class ProductPriceResolverMap extends ResolverMap
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function map(): array
     {
