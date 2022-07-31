@@ -112,7 +112,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return int[]
      */
-    public function getAllIds()
+    public function getAllIds(): array
     {
         $ids = [];
         foreach ($this->getAll() as $domainConfig) {
