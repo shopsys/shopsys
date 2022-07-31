@@ -58,7 +58,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @return array
+     * @return array<string, mixed>|array{show: array<int, bool>, cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>, cpc_search: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>}
      */
     public function getData($productId)
     {
@@ -73,7 +73,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param int $productId
-     * @param array $data
+     * @param array<string, array<int, mixed>> $data
      */
     public function saveData($productId, $data)
     {
@@ -105,7 +105,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData
      * @param string $propertyName
-     * @param mixed $propertyValue
+     * @param bool|\Shopsys\FrameworkBundle\Component\Money\Money|null $propertyValue
      */
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
@@ -127,7 +127,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[] $zboziProductDomains
-     * @return array
+     * @return array{show: array<int, bool>, cpc: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>, cpc_search: array<int, ?\Shopsys\FrameworkBundle\Component\Money\Money>}
      */
     private function getZboziProductDomainsAsPluginDataArray(array $zboziProductDomains)
     {

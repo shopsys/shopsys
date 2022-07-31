@@ -71,7 +71,7 @@ class ZboziFeedItem implements FeedItemInterface
     protected $pathToMainCategory;
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     protected $parametersByName;
 
@@ -97,8 +97,8 @@ class ZboziFeedItem implements FeedItemInterface
      * @param string|null $partno
      * @param int|null $availabilityDispatchTime
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param array $pathToMainCategory
-     * @param array $parametersByName
+     * @param string[] $pathToMainCategory
+     * @param array<string, string> $parametersByName
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpc
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpcSearch
      */
@@ -241,7 +241,7 @@ class ZboziFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, string>
      */
     public function getParams(): array
     {

@@ -55,7 +55,7 @@ class ZboziProductDomainRepository
     }
 
     /**
-     * @param array $productsIds
+     * @param int[] $productsIds
      * @param int $domainId
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain[]
      */
