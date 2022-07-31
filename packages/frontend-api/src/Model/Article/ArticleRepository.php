@@ -66,7 +66,7 @@ class ArticleRepository
      * @param int $domainId
      * @return int
      */
-    public function getAllVisibleArticlesCountByDomainId($domainId): int
+    public function getAllVisibleArticlesCountByDomainId(int $domainId): int
     {
         $queryBuilder = $this->articleRepository->getArticlesByDomainIdQueryBuilder($domainId)
             ->select('COUNT(a)')

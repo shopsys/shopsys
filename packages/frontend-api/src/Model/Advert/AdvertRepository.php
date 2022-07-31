@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Advert;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 
@@ -45,7 +46,7 @@ class AdvertRepository
     /**
      * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Model\Advert\Advert>
      */
-    protected function getAdvertRepository()
+    protected function getAdvertRepository(): EntityRepository
     {
         return $this->em->getRepository(Advert::class);
     }
@@ -55,7 +56,7 @@ class AdvertRepository
      * @param string $positionName
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName)
+    protected function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName): QueryBuilder
     {
         return $this->getVisibleAdvertsQueryBuilder($domainId)
             ->andWhere('a.positionName = :positionName')

@@ -16,7 +16,7 @@ class ProductPriceResolverMap extends ResolverMap
     {
         return [
             'ProductPrice' => [
-                'isPriceFrom' => function (ProductPrice $productPrice) {
+                'isPriceFrom' => function (ProductPrice $productPrice): bool {
                     return $productPrice->isPriceFrom();
                 },
             ],

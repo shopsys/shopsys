@@ -81,7 +81,7 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    protected function sendEmail(Order $order)
+    protected function sendEmail(Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
             $order->getStatus(),

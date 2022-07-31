@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
+use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -31,22 +32,22 @@ class OrderResolverMap extends ResolverMap
     {
         return [
             'Order' => [
-                'country' => function (Order $order) {
+                'country' => function (Order $order): ?string {
                     return $order->getCountry()->getCode();
                 },
-                'creationDate' => function (Order $order) {
+                'creationDate' => function (Order $order): DateTime {
                     return $order->getCreatedAt();
                 },
-                'deliveryCountry' => function (Order $order) {
+                'deliveryCountry' => function (Order $order): string {
                     return $order->getDeliveryCountry() === null ? '' : $order->getDeliveryCountry()->getCode();
                 },
-                'differentDeliveryAddress' => function (Order $order) {
+                'differentDeliveryAddress' => function (Order $order): bool {
                     return !$order->isDeliveryAddressSameAsBillingAddress();
                 },
-                'status' => function (Order $order) {
+                'status' => function (Order $order): string {
                     return $order->getStatus()->getName($this->domain->getLocale());
                 },
-                'totalPrice' => function (Order $order) {
+                'totalPrice' => function (Order $order): Price {
                     return new Price($order->getTotalPriceWithoutVat(), $order->getTotalPriceWithVat());
                 },
             ],

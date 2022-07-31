@@ -12,7 +12,7 @@ class TokenUserMessageException extends CustomUserMessageAuthenticationException
     /**
      * @return bool
      */
-    public function isClientSafe()
+    public function isClientSafe(): bool
     {
         return true;
     }

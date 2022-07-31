@@ -31,16 +31,16 @@ class OrderItemResolverMap extends ResolverMap
     {
         return [
             'OrderItem' => [
-                'totalPrice' => function (OrderItem $orderItem) {
+                'totalPrice' => function (OrderItem $orderItem): Price {
                     return $this->orderItemPriceCalculation->calculateTotalPrice($orderItem);
                 },
-                'unitPrice' => function (OrderItem $orderItem) {
+                'unitPrice' => function (OrderItem $orderItem): Price {
                     return new Price($orderItem->getPriceWithoutVat(), $orderItem->getPriceWithVat());
                 },
-                'unit' => function (OrderItem $orderItem) {
+                'unit' => function (OrderItem $orderItem): ?string {
                     return $orderItem->getUnitName();
                 },
-                'vatRate' => function (OrderItem $orderItem) {
+                'vatRate' => function (OrderItem $orderItem): string {
                     return $orderItem->getVatPercent();
                 },
             ],

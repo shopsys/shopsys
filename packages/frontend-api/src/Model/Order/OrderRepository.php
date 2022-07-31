@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -28,7 +29,7 @@ class OrderRepository
      * @return \Doctrine\ORM\QueryBuilder
      * @internal This will be replaced by \Shopsys\FrameworkBundle\Model\Order::getOrderRepository() with visibility set to public
      */
-    protected function createOrderQueryBuilder()
+    protected function createOrderQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o')
@@ -41,7 +42,7 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser)
+    protected function findByUuidAndCustomerUser(string $uuid, CustomerUser $customerUser): ?Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)
@@ -55,7 +56,7 @@ class OrderRepository
      * @param string $urlHash
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    protected function findByUuidAndUrlHash(string $uuid, string $urlHash)
+    protected function findByUuidAndUrlHash(string $uuid, string $urlHash): ?Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.uuid = :uuid')->setParameter(':uuid', $uuid)

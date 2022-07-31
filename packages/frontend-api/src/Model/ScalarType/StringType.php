@@ -18,7 +18,7 @@ class StringType extends BaseStringType
      * @param array<mixed>|null $variables
      * @return string
      */
-    public function parseLiteral(Node $valueNode, ?array $variables = null)
+    public function parseLiteral(Node $valueNode, ?array $variables = null): string
     {
         return trim(parent::parseLiteral($valueNode, $variables));
     }
@@ -27,7 +27,7 @@ class StringType extends BaseStringType
      * @param mixed $value
      * @return string
      */
-    public function parseValue($value)
+    public function parseValue($value): string
     {
         return trim(parent::parseValue($value));
     }
