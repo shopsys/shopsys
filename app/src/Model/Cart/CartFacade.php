@@ -268,8 +268,6 @@ class CartFacade extends BaseCartFacade
         $cart->clean();
         $this->em->remove($cart);
         $this->em->flush();
-
-        $this->cleanAdditionalData();
     }
 
     /**
