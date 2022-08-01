@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Cart\Cart;
 use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use App\Model\Order\PromoCode\Exception\LimitNotReachedException;
@@ -12,16 +13,13 @@ use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @property \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
- * @method \App\Model\Order\PromoCode\PromoCode|null getValidEnteredPromoCodeOrNull()
  */
 class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 {
@@ -34,16 +32,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
-     */
-    private $customerUserIdentifierFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
-     */
-    private $cartRepository;
 
     /**
      * @var \App\Model\Order\PromoCode\ProductPromoCodeFiller
@@ -70,8 +58,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -82,8 +68,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         SessionInterface $session,
         PromoCodeProductRepository $promoCodeProductRepository,
         Domain $domain,
-        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        CartRepository $cartRepository,
         ProductPromoCodeFiller $productPromoCodeFiller,
         PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
         CurrentCustomerUser $currentCustomerUser,
@@ -96,8 +80,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->domain = $domain;
-        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
-        $this->cartRepository = $cartRepository;
         $this->productPromoCodeFiller = $productPromoCodeFiller;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
         $this->currentCustomerUser = $currentCustomerUser;
@@ -106,18 +88,28 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
     /**
      * @param string $enteredCode
+     * @deprecated use App\Model\Cart\CartPromoCodeFacade::applyPromoCodeByCode() instead
      */
     public function setEnteredPromoCode($enteredCode)
     {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
-        /** @var \App\Model\Cart\Cart|null $cart */
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-        if ($cart === null) {
-            return;
-        }
-        $this->getValidatedPromoCode($enteredCode, $cart);
+        throw new DeprecatedMethodException();
+    }
 
-        $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
+    /**
+     * @deprecated use App\Model\Cart\Cart::getFirstAppliedPromoCode
+     * @return \App\Model\Order\PromoCode\PromoCode|null
+     */
+    public function getValidEnteredPromoCodeOrNull()
+    {
+        throw new DeprecatedMethodException();
+    }
+
+    /**
+     * @deprecated use App\Model\Cart\CartPromoCodeFacade::removePromoCode() instead
+     */
+    public function removeEnteredPromoCode()
+    {
+        throw new DeprecatedMethodException();
     }
 
     /**
@@ -235,9 +227,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      */
     public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, ?PromoCode $promoCode = null): array
     {
-        if ($promoCode === null) {
-            $promoCode = $this->getValidEnteredPromoCodeOrNull();
-        }
         if ($promoCode === null) {
             return [];
         }

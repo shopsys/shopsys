@@ -15,6 +15,7 @@ use App\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -112,7 +113,13 @@ class OrderFacadeTest extends FunctionalTestCase
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $orderData->isOverLimit = false;
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $orderPreview = $this->orderPreviewFactory->create(
+            $orderData->currency,
+            $orderData->domainId,
+            [new QuantifiedProduct($product, 1)],
+            $transport,
+            $payment
+        );
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
