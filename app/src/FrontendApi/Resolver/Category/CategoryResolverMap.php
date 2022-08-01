@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
 
 class CategoryResolverMap extends BaseCategoryResolverMap
@@ -38,18 +39,25 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private DataLoaderInterface $linkedCategoriesBatchLoader;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private CategoryFacade $categoryFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
         DataLoaderInterface $readyCategorySeoMixesBatchLoader,
         DataLoaderInterface $categoryChildrenBatchLoader,
-        DataLoaderInterface $linkedCategoriesBatchLoader
+        DataLoaderInterface $linkedCategoriesBatchLoader,
+        CategoryFacade $categoryFacade
     ) {
         parent::__construct($domain);
 
@@ -57,6 +65,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
         $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
         $this->categoryChildrenBatchLoader = $categoryChildrenBatchLoader;
         $this->linkedCategoriesBatchLoader = $linkedCategoriesBatchLoader;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -137,6 +146,8 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $this->readyCategorySeoMixesBatchLoader->load($category->getId());
             case 'linkedCategories':
                 return $this->linkedCategoriesBatchLoader->load($category);
+            case 'categoryHierarchy':
+                return $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId());
             default:
                 throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
