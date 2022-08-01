@@ -487,6 +487,8 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   bestsellers: Array<ProductApi>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<LinkApi>;
+  /** All parent category names with their UUIDs */
+  categoryHierarchy: Array<CategoryHierarchyItemApi>;
   /** Descendant categories */
   children: Array<CategoryApi>;
   /** Localized category description (domain dependent) */
@@ -558,6 +560,14 @@ export type CategoryEdgeApi = {
   cursor: Scalars['String'];
   /** The item at the end of the edge. */
   node: Maybe<CategoryApi>;
+};
+
+export type CategoryHierarchyItemApi = {
+  __typename?: 'CategoryHierarchyItem';
+  /** Localized category name (domain dependent) */
+  name: Scalars['String'];
+  /** UUID */
+  uuid: Scalars['Uuid'];
 };
 
 export type ChangePasswordInputApi = {

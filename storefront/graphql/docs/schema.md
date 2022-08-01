@@ -32,6 +32,7 @@
     * [Category](#category)
     * [CategoryConnection](#categoryconnection)
     * [CategoryEdge](#categoryedge)
+    * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
     * [Country](#country)
     * [DeliveryAddress](#deliveryaddress)
@@ -2778,6 +2779,15 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>categoryHierarchy</strong></td>
+<td valign="top">[<a href="#categoryhierarchyitem">CategoryHierarchyItem</a>!]!</td>
+<td>
+
+All parent category names with their UUIDs
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>children</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
@@ -3030,6 +3040,39 @@ A cursor for use in pagination.
 <td>
 
 The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CategoryHierarchyItem
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized category name (domain dependent)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
 
 </td>
 </tr>

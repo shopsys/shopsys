@@ -397,6 +397,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   bestsellers: [Product!]!
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
+  """All parent category names with their UUIDs"""
+  categoryHierarchy: [CategoryHierarchyItem!]!
   """Descendant categories"""
   children: [Category!]!
   """Localized category description (domain dependent)"""
@@ -446,6 +448,13 @@ type CategoryEdge {
   cursor: String!
   """The item at the end of the edge."""
   node: Category
+}
+
+type CategoryHierarchyItem {
+  """Localized category name (domain dependent)"""
+  name: String!
+  """UUID"""
+  uuid: Uuid!
 }
 
 input ChangePasswordInput {
