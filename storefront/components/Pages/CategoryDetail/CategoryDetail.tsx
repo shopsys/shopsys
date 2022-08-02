@@ -74,7 +74,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
                 <CategoryDetailContentStyled>
                     <CategoryDetailAdvertsStyled positionName="productList" />
                     <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
-                    {category.description !== null && category.description !== '' && (
+                    {category.description !== null && category.description !== '' && (query.page ?? 1) === 1 && (
                         <CategoryDetailDescriptionStyled
                             dangerouslySetInnerHTML={{ __html: category.description }}
                         ></CategoryDetailDescriptionStyled>
