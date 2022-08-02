@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 
 class AggregationResultToProductFilterCountDataTransformer
@@ -23,6 +24,7 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
+     * @deprecated This method visibility will be changed to public in next major version
      * @param array $aggregationResult
      * @return int[]
      */
@@ -40,6 +42,7 @@ class AggregationResultToProductFilterCountDataTransformer
     }
 
     /**
+     * @deprecated This method visibility will be changed to public in next major version
      * @param array $aggregationResult
      * @return int[]
      */
@@ -54,6 +57,28 @@ class AggregationResultToProductFilterCountDataTransformer
             $result[$brandId] = $brandCount;
         }
         return $result;
+    }
+
+    /**
+     * @deprecated This method will be replaced by getFlagCount() in next major version
+     * @param array $aggregationResult
+     * @return int[]
+     */
+    public function translateFlagsPlusNumbers(array $aggregationResult): array
+    {
+        return $this->getFlagCount($aggregationResult);
+    }
+
+    /**
+     * @deprecated This method will be replaced by getBrandCount() in next major version
+     * @param array $aggregationResult
+     * @return int[]
+     */
+    public function translateBrandsPlusNumbers(array $aggregationResult): array
+    {
+        DeprecationHelper::triggerMethod(__METHOD__, 'getBrandCount');
+
+        return $this->getBrandCount($aggregationResult);
     }
 
     /**
@@ -107,38 +132,6 @@ class AggregationResultToProductFilterCountDataTransformer
             $values[$valueKey] = $valueCount;
         }
         return $values;
-    }
-
-    /**
-     * @param array $aggregationResult
-     * @return int[]
-     */
-    public function translateFlagsPlusNumbers(array $aggregationResult): array
-    {
-        $result = [];
-        $flagsBucket = $aggregationResult['aggregations']['flags']['buckets'];
-        foreach ($flagsBucket as $flagBucket) {
-            $flagId = $flagBucket['key'];
-            $flagCount = $flagBucket['doc_count'];
-            $result[$flagId] = $flagCount;
-        }
-        return $result;
-    }
-
-    /**
-     * @param array $aggregationResult
-     * @return int[]
-     */
-    public function translateBrandsPlusNumbers(array $aggregationResult): array
-    {
-        $result = [];
-        $brandsBucket = $aggregationResult['aggregations']['brands']['buckets'];
-        foreach ($brandsBucket as $flagBucket) {
-            $brandId = $flagBucket['key'];
-            $brandCount = $flagBucket['doc_count'];
-            $result[$brandId] = $brandCount;
-        }
-        return $result;
     }
 
     /**
