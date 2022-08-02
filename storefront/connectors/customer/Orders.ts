@@ -20,6 +20,7 @@ export const useOrders = (currentDomainConfig: DomainConfigType): ListedOrderCon
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
     const [{ data, error }] = useOrdersQueryApi({
         variables: { after: paginationCursor, first: initialState.pagination.pageSize },
+        requestPolicy: 'cache-and-network',
     });
     useQueryError(error);
 

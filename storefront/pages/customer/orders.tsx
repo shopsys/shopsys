@@ -3,12 +3,14 @@ import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import Orders from 'components/Pages/Customer/Orders';
 import { useOrders } from 'connectors/customer/Orders';
+import { OrdersQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { initialState } from 'redux/slices/user';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
@@ -43,7 +45,15 @@ const Index: FC = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, true);
+    return initServerSideProps(context, store, true, [
+        {
+            query: OrdersQueryDocumentApi,
+            variables: {
+                after: store.getState().user.pagination.paginationCursor,
+                first: initialState.pagination.pageSize,
+            },
+        },
+    ]);
 });
 
 export default Index;
