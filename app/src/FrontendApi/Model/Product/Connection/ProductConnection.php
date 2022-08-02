@@ -21,21 +21,29 @@ class ProductConnection extends Connection
     private string $orderingMode;
 
     /**
+     * @var string
+     */
+    private string $defaultOrderingMode;
+
+    /**
      * @param \Overblog\GraphQLBundle\Relay\Connection\EdgeInterface[] $edges
      * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
      * @param callable $productFilterOptionsClosure
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      */
     public function __construct(
         array $edges,
         ?PageInfoInterface $pageInfo,
         callable $productFilterOptionsClosure,
-        string $orderingMode
+        string $orderingMode,
+        string $defaultOrderingMode
     ) {
         parent::__construct($edges, $pageInfo);
 
         $this->productFilterOptionsClosure = $productFilterOptionsClosure;
         $this->orderingMode = $orderingMode;
+        $this->defaultOrderingMode = $defaultOrderingMode;
     }
 
     /**
@@ -52,5 +60,13 @@ class ProductConnection extends Connection
     public function getOrderingMode(): string
     {
         return $this->orderingMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultOrderingMode(): string
+    {
+        return $this->defaultOrderingMode;
     }
 }

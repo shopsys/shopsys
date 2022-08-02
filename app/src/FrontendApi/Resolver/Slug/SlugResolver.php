@@ -10,6 +10,7 @@ use App\FrontendApi\Resolver\Blog\Article\BlogArticleResolver;
 use App\FrontendApi\Resolver\Blog\Category\BlogCategoryResolver;
 use App\FrontendApi\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver;
 use App\FrontendApi\Resolver\Products\Flag\FlagResolver;
+use App\FrontendApi\Resolver\Products\ProductsResolver;
 use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\FrontendApi\Resolver\Store\StoreResolver;
 use App\Model\Article\Article;
@@ -226,7 +227,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             $category->getId(),
             $variableValues['filter']['parameters'] ?? [],
             $variableValues['filter']['flags'] ?? [],
-            $variableValues['orderingMode'] ?? null
+            $variableValues['orderingMode'] ?? ProductsResolver::getDefaultOrderingModeForListing()
         );
     }
 

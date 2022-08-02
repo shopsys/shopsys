@@ -5760,6 +5760,16 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>defaultOrderingMode</strong></td>
+<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
+<td>
+
+The default ordering mode that is set for the given connection (e.g. in a
+category, search page, or ready category SEO mix)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>edges</strong></td>
 <td valign="top">[<a href="#productedge">ProductEdge</a>]</td>
 <td>
@@ -5771,7 +5781,11 @@ Information to aid in pagination.
 <tr>
 <td colspan="2" valign="top"><strong>orderingMode</strong></td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a>!</td>
-<td></td>
+<td>
+
+The current ordering mode
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>pageInfo</strong></td>

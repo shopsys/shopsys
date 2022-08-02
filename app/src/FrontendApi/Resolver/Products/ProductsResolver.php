@@ -20,6 +20,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -86,11 +87,13 @@ class ProductsResolver extends BaseProductsResolver
                 $category
             );
             $orderingMode = $this->getOrderingModeFromArgument($argument);
+            $defaultOrderingMode = $this->getDefaultOrderingMode($argument);
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
             $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
             $productFilterData = $this->productFilterDataFactory->createProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix);
             $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
+            $defaultOrderingMode = $orderingMode;
         } else {
             throw new InvalidArgumentException(
                 sprintf(
@@ -101,7 +104,7 @@ class ProductsResolver extends BaseProductsResolver
             );
         }
 
-        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $readyCategorySeoMix);
+        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix);
     }
 
     /**
@@ -142,6 +145,7 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData,
             $this->getOrderingModeFromArgument($argument),
+            $this->getDefaultOrderingMode($argument),
             $batchLoadDataId
         );
     }
@@ -225,6 +229,7 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData,
             $this->getOrderingModeFromArgument($argument),
+            $this->getDefaultOrderingMode($argument),
             $batchLoadDataId
         );
     }
@@ -245,7 +250,8 @@ class ProductsResolver extends BaseProductsResolver
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string|null $orderingMode
+     * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -253,7 +259,8 @@ class ProductsResolver extends BaseProductsResolver
         Argument $argument,
         Category $category,
         ProductFilterData $productFilterData,
-        ?string $orderingMode,
+        string $orderingMode,
+        string $defaultOrderingMode,
         ?ReadyCategorySeoMix $readyCategorySeoMix
     ): Promise {
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -269,7 +276,7 @@ class ProductsResolver extends BaseProductsResolver
                         Category::class,
                         $limit,
                         $offset,
-                        $orderingMode ?? $this->getOrderingModeFromArgument($argument),
+                        $orderingMode,
                         $productFilterData,
                         $argument['search'] ?? ''
                     )
@@ -278,6 +285,7 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData,
             $orderingMode,
+            $defaultOrderingMode,
             $batchLoadDataId,
             $readyCategorySeoMix
         );
@@ -296,5 +304,26 @@ class ProductsResolver extends BaseProductsResolver
         }
 
         return $orderingMode;
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string
+     */
+    protected function getDefaultOrderingMode(Argument $argument): string
+    {
+        if (isset($argument['search'])) {
+            return ProductListOrderingConfig::ORDER_BY_RELEVANCE;
+        }
+
+        return self::getDefaultOrderingModeForListing();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDefaultOrderingModeForListing(): string
+    {
+        return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 }
