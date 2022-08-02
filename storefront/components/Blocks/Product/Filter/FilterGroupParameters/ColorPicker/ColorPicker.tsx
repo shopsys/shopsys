@@ -25,6 +25,7 @@ const ColorPicker: FC<ColorPickerProps> = ({ parameterParentIndex, dataItem, val
                         bgColor={dataItem.rgbHex ?? undefined}
                         fieldRef={field}
                         data-testid={TEST_IDENTIFIER(index)}
+                        label={dataItem.text}
                     />
                 </>
             )}

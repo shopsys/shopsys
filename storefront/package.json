@@ -23,6 +23,7 @@
         "check--fix": "concurrently \"npm run typecheck\" \"npm run stylelint\" \"npm run lint--fix\""
     },
     "dependencies": {
+        "@floating-ui/react-dom-interactions": "^0.9.1",
         "@graphql-codegen/cli": "^2.1.1",
         "@graphql-codegen/fragment-matcher": "^3.1.0",
         "@graphql-codegen/typescript-operations": "^2.1.2",
@@ -56,6 +57,7 @@
         "react-error-boundary": "^3.1.4",
         "react-hook-form": "^7.11.1",
         "react-is": "^17.0.2",
+        "react-merge-refs": "^2.0.1",
         "react-redux": "^7.2.4",
         "react-select": "^5.0.0",
         "react-tabs": "^3.2.2",

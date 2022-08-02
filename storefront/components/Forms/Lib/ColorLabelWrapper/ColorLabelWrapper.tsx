@@ -1,5 +1,6 @@
 import { ColorLabelWrapperStyled } from './ColorLabelWrapper.style';
-import { FC, LabelHTMLAttributes, ReactNode } from 'react';
+import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
+import { FC, LabelHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
@@ -8,7 +9,7 @@ type ColorLabelWrapperProps = NativeProps & {
     /**
      * Display Label of the given HTML element
      */
-    label: string | ReactNode | ReactNode[];
+    label?: string;
     /**
      * Determine if selected color is light then show dark tick icon
      */
@@ -30,7 +31,9 @@ const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
             isActive={props.isActive}
         >
             {props.children}
-            <label htmlFor={props.htmlFor} />
+            <Tooltip label={props.label}>
+                <label htmlFor={props.htmlFor} />
+            </Tooltip>
         </ColorLabelWrapperStyled>
     );
 };
