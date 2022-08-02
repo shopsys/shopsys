@@ -24,6 +24,7 @@ class GetAdvertsTest extends GraphQlTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
+     * @inject
      */
     private AdvertFacade $advertFacade;
 

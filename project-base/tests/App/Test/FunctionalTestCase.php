@@ -4,134 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
-use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
-use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
+use Psr\Container\ContainerInterface;
 
-abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
+abstract class FunctionalTestCase extends WebTestCase
 {
-    use SymfonyTestContainer;
-
     /**
-     * @var \Tests\App\Test\Client
+     * @return \Psr\Container\ContainerInterface
      */
-    private Client $client;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     * @inject
-     */
-    protected PersistentReferenceFacade $persistentReferenceFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     * @inject
-     */
-    protected Domain $domain;
-
-    protected function setUpDomain()
+    public function createContainer(): ContainerInterface
     {
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->setUpDomain();
-    }
-
-    /**
-     * @param bool $createNew
-     * @param string $username
-     * @param string $password
-     * @param array $kernelOptions
-     * @param array $clientOptions
-     * @return \Tests\App\Test\Client
-     */
-    protected function findClient(
-        $createNew = false,
-        $username = null,
-        $password = null,
-        $kernelOptions = [],
-        $clientOptions = []
-    ) {
-        $defaultKernelOptions = [
-            'environment' => EnvironmentType::TEST,
-            'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
-        ];
-
-        $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
-
-        if ($createNew) {
-            $this->client = self::createClient($kernelOptions, $clientOptions);
-            $this->setUpDomain();
-        } elseif (!isset($this->client)) {
-            $this->client = self::createClient($kernelOptions, $clientOptions);
-        }
-
-        if ($username !== null) {
-            $this->client->setServerParameters([
-                'PHP_AUTH_USER' => $username,
-                'PHP_AUTH_PW' => $password,
-            ]);
-        }
-
-        return $this->client;
-    }
-
-    /**
-     * @param string $referenceName
-     * @return object
-     */
-    protected function getReference($referenceName)
-    {
-        return $this->persistentReferenceFacade->getReference($referenceName);
-    }
-
-    /**
-     * @param string $referenceName
-     * @param int $domainId
-     * @return object
-     */
-    protected function getReferenceForDomain(string $referenceName, int $domainId)
-    {
-        return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
-    }
-
-    protected function skipTestIfFirstDomainIsNotInEnglish()
-    {
-        if ($this->getFirstDomainLocale() !== 'en') {
-            $this->markTestSkipped(
-                'Tests for product searching are run only when the first domain has English locale'
-            );
-        }
-    }
-
-    /**
-     * We can use the shorthand here as $this->domain->switchDomainById(1) is called in setUp()
-     *
-     * @return string
-     */
-    protected function getFirstDomainLocale(): string
-    {
-        return $this->domain->getLocale();
-    }
-
-    /**
-     * @param string $routeName
-     * @param array $parameters
-     * @return string
-     */
-    protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
-    {
-        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
-        $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
-
-        return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return self::getContainer()->get('test.service_container');
     }
 }

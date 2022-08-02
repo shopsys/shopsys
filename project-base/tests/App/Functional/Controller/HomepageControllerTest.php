@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Controller;
 
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\ApplicationTestCase;
 
-class HomepageControllerTest extends FunctionalTestCase
+class HomepageControllerTest extends ApplicationTestCase
 {
     public function testHomepageHttpStatus200(): void
     {
-        $client = $this->findClient();
+        $client = self::getCurrentClient();
 
         $client->get($this->domain->getUrl());
         $code = $client->getResponse()->getStatusCode();
@@ -20,7 +20,7 @@ class HomepageControllerTest extends FunctionalTestCase
 
     public function testHomepageHasBodyEnd(): void
     {
-        $client = $this->findClient();
+        $client = self::getCurrentClient();
 
         $client->get($this->domain->getUrl());
         $content = $client->getResponse()->getContent();

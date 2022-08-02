@@ -20,7 +20,7 @@ class LoginTest extends GraphQlTestCase
     public function testLoginMutation(): void
     {
         $graphQlType = 'Login';
-        $response = $this->getResponseContentForQuery($this->getLoginQuery());
+        $response = $this->getResponseContentForQuery(self::getLoginQuery());
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
@@ -37,11 +37,9 @@ class LoginTest extends GraphQlTestCase
             $this->fail('Token is not valid');
         }
 
-        $authorizationResponse = $this->getResponseContentForQuery(
-            $this->getLoginQuery(),
-            [],
-            ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])]
-        );
+        $clientOptions = ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])];
+        $this->configureCurrentClient(null, null, $clientOptions);
+        $authorizationResponse = $this->getResponseContentForQuery(self::getLoginQuery());
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($authorizationResponse, $graphQlType);
         $authorizationResponseData = $this->getResponseDataForGraphQlType($authorizationResponse, $graphQlType);
@@ -70,10 +68,10 @@ class LoginTest extends GraphQlTestCase
             ],
         ];
 
+        $this->configureCurrentClient(null, null, ['HTTP_Authorization' => 'Bearer 123']);
         $response = $this->getResponseContentForQuery(
-            $this->getLoginQuery(),
+            self::getLoginQuery(),
             [],
-            ['HTTP_Authorization' => 'Bearer 123']
         );
         $this->assertSame($expectedError, $response);
     }
