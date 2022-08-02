@@ -18,7 +18,7 @@ class ProductTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
+        $productFacade = self::getContainer()->get(ProductFacade::class);
 
         /** @var \App\Model\Product\Product $product */
         $product = $productFacade->getById(1);

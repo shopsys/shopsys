@@ -17,7 +17,7 @@ class CategoryTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $categoryFacade = $this->getContainer()->get(CategoryFacade::class);
+        $categoryFacade = self::getContainer()->get(CategoryFacade::class);
         $this->category = $categoryFacade->getById(2);
 
         parent::setUp();

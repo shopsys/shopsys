@@ -15,7 +15,7 @@ class FilesystemLoaderTest extends FunctionalTestCase
 {
     public function testLoadingMultiDesignTemplate(): void
     {
-        $twigFilesystemLoader = $this->getContainer()->get('twig.loader.native_filesystem');
+        $twigFilesystemLoader = self::getContainer()->get('twig.loader.native_filesystem');
         $paths = $twigFilesystemLoader->getPaths();
         $setting = $this->createMock(Setting::class);
 

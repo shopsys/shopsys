@@ -291,7 +291,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsParametersFilterOptionsWithAppliedFilter(): void
     {
-        $parameterFacade = $this->getContainer()->get(ParameterFacade::class);
+        $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById(self::PARAMETER_HDMI);
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(

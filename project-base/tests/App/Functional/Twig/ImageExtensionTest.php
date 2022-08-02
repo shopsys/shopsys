@@ -24,7 +24,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
     public function testGetImageHtmlWithAdditional(): void
     {
-        $templating = $this->getContainer()->get('twig');
+        $templating = self::getContainer()->get('twig');
 
         $imageFacade = $this->createMock(ImageFacade::class);
 

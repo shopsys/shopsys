@@ -208,7 +208,7 @@ class ImageExtensionTest extends FunctionalTestCase
         ?ImageFacade $imageFacade = null,
         bool $enableLazyLoad = false
     ): ImageExtension {
-        $templating = $this->getContainer()->get('twig');
+        $templating = self::getContainer()->get('twig');
         $imageFacade = $imageFacade ?: $this->imageFacade;
 
         return new ImageExtension(

@@ -49,7 +49,6 @@ class GetAdvertsTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->advertFacade = $this->getContainer()->get(AdvertFacade::class);
         $this->loadTestAdverts();
     }
 
@@ -200,7 +199,7 @@ class GetAdvertsTest extends GraphQlTestCase
      */
     private function getExpectedAdverts(): array
     {
-        $imageFacade = $this->getContainer()->get(ImageFacade::class);
+        $imageFacade = self::getContainer()->get(ImageFacade::class);
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $testImage = $imageFacade->getImageByEntity($this->advertWithImage, null);
         return [
