@@ -16,8 +16,8 @@ import { UseMutationState } from 'urql';
 import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 export const useAuth = (): [
-    [UseMutationState<LoginApi, LoginVariablesApi>, (variables: LoginVariablesApi) => void],
-    [UseMutationState<LogoutApi, LogoutVariablesApi>, () => void],
+    [UseMutationState<LoginApi, LoginVariablesApi>, typeof loginHandler],
+    [UseMutationState<LogoutApi, LogoutVariablesApi>, typeof logoutHandler],
 ] => {
     const [loginUseMutationResponse, login] = useLoginApi();
     const [logoutUseMutationResponse, logout] = useLogoutApi();
@@ -26,7 +26,7 @@ export const useAuth = (): [
 
     const router = useRouter();
 
-    const loginHandler = async (variables: LoginVariablesApi) => {
+    const loginHandler = async (variables: LoginVariablesApi, rewriteUrl?: string) => {
         const loginResult = await login(variables);
 
         if (loginResult.error !== undefined) {
@@ -42,7 +42,7 @@ export const useAuth = (): [
             showSuccessMessage(t('Successfully logged in'));
 
             if (canUseDom()) {
-                window.location.href = router.asPath;
+                window.location.href = rewriteUrl ?? router.asPath;
             }
         }
     };
@@ -55,7 +55,7 @@ export const useAuth = (): [
             showSuccessMessage(t('Successfully logged out'));
 
             if (canUseDom()) {
-                window.location.href = router.asPath;
+                router.reload();
             }
         }
     };
