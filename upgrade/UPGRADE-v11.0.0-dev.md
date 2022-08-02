@@ -945,3 +945,5 @@ There you can find links to upgrade notes for other versions too.
 - remove mocked Events from your tests ([#2490](https://github.com/shopsys/shopsys/pull/2490))
     - see #project-base-diff
     - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
+- use logger methods as they're specified in PSR-3 ([#2483](https://github.com/shopsys/shopsys/pull/2483))
+    - replace any usages of `Logger::add<Emergency|Alert|Critical|Notice|Debug|Error|Warning|Info>` with corresponding call of `emergency|alert|critical|notice|debug|error|warning|info` method
