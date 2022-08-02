@@ -20,6 +20,8 @@ use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartModificationsResultTest extends GraphQlTestCase
@@ -70,6 +72,18 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
+     * @inject
+     */
+    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
+     * @inject
+     */
+    private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
     protected function setUp(): void
     {
@@ -578,9 +592,11 @@ class CartModificationsResultTest extends GraphQlTestCase
         foreach ($productData->stockProductData as $stockProductData) {
             $stockProductData->productQuantity = 0;
         }
-
-        $this->productFacade->edit($this->testingProduct->getId(), $productData);
-        $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+        $this->productFacade->editProductStockAndStoreRelation($productData, $this->testingProduct);
+        $this->productPriceRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $this->productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
+        $this->em->clear();
+        gc_collect_cycles();
     }
 
     /**

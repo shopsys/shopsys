@@ -443,7 +443,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
-    private function editProductStockAndStoreRelation(ProductData $productData, Product $product): void
+    public function editProductStockAndStoreRelation(ProductData $productData, Product $product): void
     {
         $this->editProductStockRelation($productData, $product);
         $this->editProductStoreRelation($productData, $product);
