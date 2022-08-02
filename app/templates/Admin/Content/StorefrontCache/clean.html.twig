@@ -1,0 +1,10 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Clean Storefront Query Cache'|trans }}{% endblock %}
+{% block h1 %}{{ 'Clean Storefront Query Cache'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div>
+        <a href="{{ url('admin_redis_clean') }}" class="btn btn--light btn--small">{{ 'Clean Storefront Query Cache'|trans }}</a>
+    </div>
+{% endblock %}

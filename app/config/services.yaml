@@ -737,6 +737,10 @@ services:
                 - '@snc_redis.session'
                 - '@snc_redis.blog_article_export_queue'
 
+    App\Component\Redis\CleanStorefrontCacheFacade:
+        arguments:
+            $storefrontGraphqlQueryClient: '@snc_redis.storefront_graphql_query'
+
     Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         alias: App\Component\Redis\RedisFacade
 

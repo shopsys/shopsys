@@ -261,6 +261,20 @@ class RouteConfigCustomization
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
             })
+            ->customizeByRouteName('admin_redis_clean', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Only superadmin can clean the storefront query cache.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('You can clean the storefront query cache when logged in as superadmin.')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_redis_show', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('You are not allowed to access storefront cache clean. Log in as superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('As superadmin, you are allowed to access storefront cache clean.')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
+            })
             ->customizeByRouteName('admin_currency_list', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
                     ->setExpectedStatusCode(302);

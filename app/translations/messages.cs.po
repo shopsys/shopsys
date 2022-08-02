@@ -301,6 +301,12 @@ msgstr ""
 msgid "City"
 msgstr "Město"
 
+msgid "Clean Storefront Cache"
+msgstr "Vymazat Storefront cache"
+
+msgid "Clean Storefront Query Cache"
+msgstr "Vymazat cache s graphql dotazy na FE"
+
 msgid "Code"
 msgstr ""
 
@@ -1291,6 +1297,9 @@ msgstr "Procenta"
 msgid "Perex"
 msgstr ""
 
+msgid "Permission denied. Login as superadmin to be able to clean the queries cache."
+msgstr "Přístup odmítnut. Přihlašte se jako superadmin, abyste mohli smazat cache."
+
 msgid "Personal data access"
 msgstr ""
 
@@ -1770,6 +1779,9 @@ msgstr "Prodejna neexistuje"
 
 msgid "Store list"
 msgstr "Seznam prodejen"
+
+msgid "Storefront queries cache has been cleaned."
+msgstr "Cache s dotazy na FE byla smazána."
 
 msgid "Stores"
 msgstr "Prodejny"

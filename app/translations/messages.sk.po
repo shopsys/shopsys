@@ -301,6 +301,15 @@ msgstr "Názov zvolenej dopravy"
 msgid "City"
 msgstr "Mesto"
 
+msgid "Clean Storefront Cache"
+msgstr ""
+
+msgid "Clean Storefront Queries Cache"
+msgstr ""
+
+msgid "Clean Storefront Query Cache"
+msgstr ""
+
 msgid "Code"
 msgstr ""
 
@@ -1769,6 +1778,9 @@ msgid "Store does not exist"
 msgstr ""
 
 msgid "Store list"
+msgstr ""
+
+msgid "Storefront queries cache has been cleaned."
 msgstr ""
 
 msgid "Stores"
