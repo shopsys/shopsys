@@ -158,10 +158,12 @@ class ProductFilterCountDataElasticsearchRepository
             $flagIds[] = $flag->getId();
         }
         $flagsPlusNumberResult = $this->client->search($plusFlagsQuery->getFlagsPlusNumbersQuery($flagIds));
+
         return $this->aggregationResultToCountDataTransformer->translateFlagsPlusNumbers($flagsPlusNumberResult);
     }
 
     /**
+     * @deprecated Parameter $plusFlagsQuery will be renamed to $plusBrandsQuery in next major
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusFlagsQuery
      * @return int[]
@@ -173,6 +175,7 @@ class ProductFilterCountDataElasticsearchRepository
             $brandsIds[] = $brand->getId();
         }
         $brandsPlusNumberResult = $this->client->search($plusFlagsQuery->getBrandsPlusNumbersQuery($brandsIds));
+
         return $this->aggregationResultToCountDataTransformer->translateBrandsPlusNumbers($brandsPlusNumberResult);
     }
 
@@ -221,6 +224,7 @@ class ProductFilterCountDataElasticsearchRepository
         $currentQueryResult = $this->client->search(
             $parameterFilterQuery->getParametersPlusNumbersQuery($parameterId, $valuesIds)
         );
+
         return $this->aggregationResultToCountDataTransformer->translateParameterValuesPlusNumbers(
             $currentQueryResult
         );
