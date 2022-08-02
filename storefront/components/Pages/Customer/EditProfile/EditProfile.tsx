@@ -19,7 +19,6 @@ import {
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
-import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -48,7 +47,6 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
     const [, changePassword] = useChangePasswordMutationApi();
-    const [, [, logout]] = useAuth();
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
         data,
@@ -102,22 +100,26 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
             changePasswordResult.error,
             formProviderMethods,
             {
-                success: t('Your password has been changed. You will be signed out.'),
+                success: t('Your password has been changed.'),
                 error: t('There was an error while changing your password'),
             },
-            { success: () => setTimeout(() => logout(), 2000) },
         );
     };
 
     const handleUpdateResult = (
         isResultOk: boolean,
         error: CombinedError | undefined,
-        formProviderMethods: UseFormReturn<any>,
-        messages: { success: string; error: string },
+        formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
+        messages: { success?: string; error?: string },
         callbacks?: { success?: () => void; error?: () => void },
     ) => {
         if (isResultOk) {
-            showSuccessMessage(messages.success);
+            if (messages.success !== undefined) {
+                showSuccessMessage(messages.success);
+                formProviderMethods.setValue('passwordOld', '');
+                formProviderMethods.setValue('passwordFirst', '');
+                formProviderMethods.setValue('passwordSecond', '');
+            }
             if (callbacks?.success !== undefined) {
                 callbacks.success();
             }
@@ -130,7 +132,9 @@ const EditProfile: FC<EditProfilePageProps> = (props) => {
         const { userError, applicationError } = getUserFriendlyErrors(error, t);
 
         if (applicationError !== undefined) {
-            showErrorMessage(messages.error, 'other');
+            if (messages.error !== undefined) {
+                showErrorMessage(messages.error, 'other');
+            }
             if (callbacks?.error !== undefined) {
                 callbacks.error();
             }
