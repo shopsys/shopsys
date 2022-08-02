@@ -19,7 +19,7 @@ CustomerUserMutation:
                             -   App\FrontendApi\Model\Component\Constraints\ExistingEmail: ~
                 resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
             RecoverPassword:
-                type: Token!
+                type: "LoginResult!"
                 description: "Recover password using hash required from RequestPasswordRecovery"
                 args:
                     input:

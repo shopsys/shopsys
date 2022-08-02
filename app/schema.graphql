@@ -763,6 +763,11 @@ input LoginInput {
   password: Password!
 }
 
+type LoginResult {
+  showCartMergeInfo: Boolean!
+  tokens: Token!
+}
+
 """Represents a product"""
 type MainVariant implements Product & Breadcrumb & Slug {
   accessories: [Product!]!
@@ -860,8 +865,8 @@ type Mutation {
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
   """Edit delivery address by Uuid"""
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
-  """Login user and return access and refresh tokens"""
-  Login(input: LoginInput!): Token!
+  """Login customer user"""
+  Login(input: LoginInput!): LoginResult!
   """Logout user"""
   Logout: Boolean!
   """Subscribe for e-mail newsletter"""
@@ -872,11 +877,11 @@ type Mutation {
   """
   PayOrder(orderUuid: Uuid!): PaymentSetupCreationData!
   """Recover password using hash required from RequestPasswordRecovery"""
-  RecoverPassword(input: RecoverPasswordInput!): Token!
+  RecoverPassword(input: RecoverPasswordInput!): LoginResult!
   """Refreshes access and refresh tokens"""
   RefreshTokens(input: RefreshTokenInput!): Token!
   """Register new customer user"""
-  Register(input: RegistrationDataInput!): Token!
+  Register(input: RegistrationDataInput!): LoginResult!
   """Remove product from cart"""
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
   """Remove already used promo code from cart"""

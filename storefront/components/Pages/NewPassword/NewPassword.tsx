@@ -59,7 +59,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
         defaultValues,
         () => {
             showSuccessMessage(formMeta.messages.success);
-            if (newPasswordResult.data?.RecoverPassword.accessToken !== undefined) {
+            if (newPasswordResult.data?.RecoverPassword.tokens.accessToken !== undefined) {
                 login({
                     email: props.email,
                     password: formProviderMethods.getValues('newPassword'),

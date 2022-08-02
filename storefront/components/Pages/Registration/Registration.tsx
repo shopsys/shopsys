@@ -49,8 +49,8 @@ const Registration: FC<RegistrationProps> = ({ breadcrumbs }) => {
         formProviderMethods,
         defaultValues,
         () => {
-            const accessToken = registerResult.data?.Register.accessToken;
-            const refreshToken = registerResult.data?.Register.refreshToken;
+            const accessToken = registerResult.data?.Register.tokens.accessToken;
+            const refreshToken = registerResult.data?.Register.tokens.refreshToken;
 
             if (accessToken !== undefined && refreshToken !== undefined) {
                 setTokensToCookie(accessToken, refreshToken);

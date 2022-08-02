@@ -904,6 +904,12 @@ export type LoginInputApi = {
   password: Scalars['Password'];
 };
 
+export type LoginResultApi = {
+  __typename?: 'LoginResult';
+  showCartMergeInfo: Scalars['Boolean'];
+  tokens: TokenApi;
+};
+
 /** Represents a product */
 export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   __typename?: 'MainVariant';
@@ -1008,8 +1014,8 @@ export type MutationApi = {
   DeleteDeliveryAddress: Array<DeliveryAddressApi>;
   /** Edit delivery address by Uuid */
   EditDeliveryAddress: Array<DeliveryAddressApi>;
-  /** Login user and return access and refresh tokens */
-  Login: TokenApi;
+  /** Login customer user */
+  Login: LoginResultApi;
   /** Logout user */
   Logout: Scalars['Boolean'];
   /** Subscribe for e-mail newsletter */
@@ -1020,11 +1026,11 @@ export type MutationApi = {
    */
   PayOrder: PaymentSetupCreationDataApi;
   /** Recover password using hash required from RequestPasswordRecovery */
-  RecoverPassword: TokenApi;
+  RecoverPassword: LoginResultApi;
   /** Refreshes access and refresh tokens */
   RefreshTokens: TokenApi;
   /** Register new customer user */
-  Register: TokenApi;
+  Register: LoginResultApi;
   /** Remove product from cart */
   RemoveFromCart: CartApi;
   /** Remove already used promo code from cart */
@@ -2638,7 +2644,7 @@ export type LoginVariablesApi = Exact<{
 }>;
 
 
-export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 export type LogoutVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -2988,7 +2994,7 @@ export type RecoverPasswordMutationVariablesApi = Exact<{
 }>;
 
 
-export type RecoverPasswordMutationApi = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type RecoverPasswordMutationApi = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 export type SimplePaymentFragmentApi = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
 
@@ -3143,7 +3149,7 @@ export type RegistrationMutationVariablesApi = Exact<{
 }>;
 
 
-export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
@@ -4666,8 +4672,10 @@ export function useBlogArticlesQueryApi(options: Omit<Urql.UseQueryArgs<BlogArti
 export const LoginDocumentApi = gql`
     mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
   Login(input: {email: $email, password: $password, cartUuid: $previousCartUuid}) {
-    accessToken
-    refreshToken
+    tokens {
+      accessToken
+      refreshToken
+    }
   }
 }
     `;
@@ -5059,8 +5067,10 @@ export function usePasswordRecoveryMutationApi() {
 export const RecoverPasswordMutationDocumentApi = gql`
     mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {
   RecoverPassword(input: {email: $email, hash: $hash, newPassword: $newPassword}) {
-    accessToken
-    refreshToken
+    tokens {
+      accessToken
+      refreshToken
+    }
   }
 }
     `;
@@ -5186,8 +5196,10 @@ export const RegistrationMutationDocumentApi = gql`
   Register(
     input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription, cartUuid: $previousCartUuid}
   ) {
-    accessToken
-    refreshToken
+    tokens {
+      accessToken
+      refreshToken
+    }
   }
 }
     `;

@@ -20,6 +20,11 @@ class MergeCartFacade
     private CartMigrationFacade $cartMigrationFacade;
 
     /**
+     * @var bool
+     */
+    private bool $showCartMergeInfo = false;
+
+    /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Cart\CartMigrationFacade $cartMigrationFacade
      */
@@ -40,6 +45,18 @@ class MergeCartFacade
         $oldCart = $this->cartFacade->getCartCreateIfNotExists(null, $cartUuid);
         $customerCart = $this->cartFacade->getCartCreateIfNotExists($customerUser, null);
 
+        if (!$oldCart->isEmpty() && !$customerCart->isEmpty()) {
+            $this->showCartMergeInfo = true;
+        }
+
         $this->cartMigrationFacade->mergeCarts($oldCart, $customerCart);
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldShowCartMergeInfo(): bool
+    {
+        return $this->showCartMergeInfo;
     }
 }

@@ -114,8 +114,11 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         $deviceId = Uuid::uuid4()->toString();
 
         return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+            'tokens' => [
+                'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+                'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+            ],
+            'showCartMergeInfo' => $this->mergeCartFacade->shouldShowCartMergeInfo(),
         ];
     }
 

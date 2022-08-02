@@ -19,7 +19,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
                 static::DEFAULT_USER_PASSWORD
             )
         );
-        $accessToken = $responseData['data']['Login']['accessToken'];
+        $accessToken = $responseData['data']['Login']['tokens']['accessToken'];
 
         $this->configureCurrentClient(
             null,
@@ -47,8 +47,10 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
                     email: "' . $customerUserEmail . '"
                     password: "' . $customerUserPassword . '"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken    
+                    }
                 }
             }
         ';

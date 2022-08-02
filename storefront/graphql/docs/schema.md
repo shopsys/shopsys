@@ -46,6 +46,7 @@
     * [ImageSize](#imagesize)
     * [LanguageConstant](#languageconstant)
     * [Link](#link)
+    * [LoginResult](#loginresult)
     * [MainVariant](#mainvariant)
     * [NavigationItem](#navigationitem)
     * [NavigationItemCategoriesByColumns](#navigationitemcategoriesbycolumns)
@@ -1107,10 +1108,10 @@ Edit delivery address by Uuid
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>Login</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
+<td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
-Login user and return access and refresh tokens
+Login customer user
 
 </td>
 </tr>
@@ -1159,7 +1160,7 @@ data for redirect or creating JS payment gateway layer
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>RecoverPassword</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
+<td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
 Recover password using hash required from RequestPasswordRecovery
@@ -1187,7 +1188,7 @@ Refreshes access and refresh tokens
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>Register</strong></td>
-<td valign="top"><a href="#token">Token</a>!</td>
+<td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
 Register new customer user
@@ -3907,6 +3908,31 @@ Clickable text for a hyperlink
 Target URL slug
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### LoginResult
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>showCartMergeInfo</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>tokens</strong></td>
+<td valign="top"><a href="#token">Token</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

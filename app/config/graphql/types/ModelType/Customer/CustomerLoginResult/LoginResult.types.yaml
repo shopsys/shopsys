@@ -1,0 +1,6 @@
+LoginResult:
+    type: object
+    config:
+        fields:
+            tokens: "Token!"
+            showCartMergeInfo: "Boolean!"

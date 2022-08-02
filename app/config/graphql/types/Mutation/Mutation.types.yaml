@@ -11,3 +11,5 @@ Mutation:
         - 'PaymentMutation'
         - 'PaymentInCartMutation'
         - 'TransportMutation'
+        - 'RegisterMutation'
+        - 'LoginMutation'

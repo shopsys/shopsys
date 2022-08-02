@@ -22,8 +22,10 @@ class RecoverPasswordTest extends GraphQlTestCase
                     hash: "' . $customerUser->getResetPasswordHash() . '"
                     newPassword: "password123"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
                 }
             }';
 
@@ -31,11 +33,11 @@ class RecoverPasswordTest extends GraphQlTestCase
 
         $recoverPasswordData = $this->getResponseDataForGraphQlType($response, 'RecoverPassword');
 
-        $this->assertArrayHasKey('accessToken', $recoverPasswordData);
-        $this->assertIsString($recoverPasswordData['accessToken']);
+        $this->assertArrayHasKey('tokens', $recoverPasswordData);
+        $this->assertIsString($recoverPasswordData['tokens']['accessToken']);
 
-        $this->assertArrayHasKey('refreshToken', $recoverPasswordData);
-        $this->assertIsString($recoverPasswordData['refreshToken']);
+        $this->assertArrayHasKey('tokens', $recoverPasswordData);
+        $this->assertIsString($recoverPasswordData['tokens']['refreshToken']);
     }
 
     public function testRequestPasswordRecoveryWithInvalidHash(): void
@@ -49,8 +51,10 @@ class RecoverPasswordTest extends GraphQlTestCase
                     hash: "Lorem ipsum dolor sit amet, consectetur tincidunt."
                     newPassword: "password123"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
                 }
             }';
 
@@ -73,8 +77,10 @@ class RecoverPasswordTest extends GraphQlTestCase
                     hash: "' . $customerUser->getResetPasswordHash() . '"
                     newPassword: "password123"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
                 }
             }';
 

@@ -21,11 +21,11 @@ class RegisterTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        $this->assertArrayHasKey('accessToken', $responseData);
-        $this->assertIsString($responseData['accessToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['accessToken']);
 
-        $this->assertArrayHasKey('refreshToken', $responseData);
-        $this->assertIsString($responseData['refreshToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['refreshToken']);
     }
 
     public function testRegisterAlreadyRegisteredCustomerUser(): void
@@ -131,8 +131,10 @@ class RegisterTest extends GraphQlTestCase
                     companyCustomer: false
                     country: "CZ"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens{
+                      accessToken
+                      refreshToken
+                    }
                 }
             }';
     }

@@ -309,8 +309,10 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                     password: "user123"
                     cartUuid: "' . $testCartUuid . '"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
                 }
             }
         ';

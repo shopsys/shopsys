@@ -33,8 +33,8 @@ export const useAuth = (): [
             return;
         }
 
-        const accessToken = loginResult.data?.Login.accessToken;
-        const refreshToken = loginResult.data?.Login.refreshToken;
+        const accessToken = loginResult.data?.Login.tokens.accessToken;
+        const refreshToken = loginResult.data?.Login.tokens.refreshToken;
 
         if (accessToken !== undefined && refreshToken !== undefined) {
             dispatch(userActions.setCartUuid(null));

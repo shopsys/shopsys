@@ -55,13 +55,16 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
                     password: "user123"
                     cartUuid: "' . $testCartUuid . '"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
+                    showCartMergeInfo
                 }
             }
         ';
 
-        $this->getResponseDataForGraphQlType(
+        $response = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($loginMutationWithCartUuid),
             'Login'
         );
@@ -69,6 +72,8 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cart = $this->findCartOfCurrentCustomer();
 
         self::assertNotNull($cart);
+
+        self::assertTrue($response['showCartMergeInfo']);
 
         $cartItems = $cart->getItems();
         self::assertCount(3, $cartItems);
@@ -109,12 +114,15 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
                         country: "CZ"
                         cartUuid: "' . CartDataFixture::CART_UUID . '"
                     }) {
-                        accessToken
-                        refreshToken
+                        tokens{
+                          accessToken
+                          refreshToken
+                        }
+                        showCartMergeInfo
                     }
                 }';
 
-        $this->getResponseDataForGraphQlType(
+        $response = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($registerMutationWithCartUuid),
             'Register'
         );
@@ -122,6 +130,8 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
         $cart = $this->findCartOfCustomerByEmail('test@example.com');
 
         self::assertNotNull($cart);
+
+        self::assertFalse($response['showCartMergeInfo']);
 
         $cartItems = $cart->getItems();
         self::assertCount(2, $cartItems);

@@ -42,7 +42,9 @@ class LoginMutation extends BaseLoginMutation
     }
 
     /**
-     * {@inheritDoc}
+     * @phpstan-ignore-next-line
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return array<string, array<string, string>|bool>
      */
     public function login(Argument $argument): array
     {
@@ -66,8 +68,11 @@ class LoginMutation extends BaseLoginMutation
         $deviceId = Uuid::uuid4()->toString();
 
         return [
-            'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),
-            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId),
+            'tokens' => [
+                'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),
+                'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId),
+            ],
+            'showCartMergeInfo' => $this->mergeCartFacade->shouldShowCartMergeInfo(),
         ];
     }
 }
