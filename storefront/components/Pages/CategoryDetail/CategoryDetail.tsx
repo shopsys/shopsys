@@ -67,6 +67,7 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
                             slug={category.slug}
                             originalSlug={category.originalCategorySlug}
                             orderingMode={category.productConnection.orderingMode}
+                            defaultOrderingMode={category.productConnection.defaultOrderingMode}
                         />
                     )}
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />

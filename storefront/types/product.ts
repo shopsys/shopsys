@@ -37,6 +37,7 @@ export type ListedProductConnectionType = {
     totalCount: number;
     pageInfo: PageInfoType;
     orderingMode: ProductOrderingModeEnumApi | null;
+    defaultOrderingMode: ProductOrderingModeEnumApi | null;
 };
 
 export type ListedProductType = {

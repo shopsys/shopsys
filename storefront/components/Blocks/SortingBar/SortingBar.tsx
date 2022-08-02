@@ -16,6 +16,8 @@ import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/canUseDom';
 import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/GetFilterUrlQueryForSortingInSeoCategory';
+import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWithoutAllParameter';
+import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -74,8 +76,8 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
             }
 
             const pathname = router.asPath.split('?')[0];
-            const queryParams = router.query;
-            delete queryParams.all;
+            const queryParams = getQueryWithoutAllParameter(router);
+
             queryParams.sort = sort;
 
             const filterUrlQuery =
@@ -86,35 +88,41 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
                 queryParams.filter = filterUrlQuery;
             }
 
-            router.replace({ pathname, query: queryParams }, undefined, { shallow: true, scroll: false });
+            shallowReplaceIfDifferent(router, { pathname, query: queryParams });
         },
         [router, deepComparedProductFilterOptions],
     );
 
     const onSelectSortMenu = useCallback(
-        (value: ProductOrderingModeEnumApi) => () => {
-            setToggleSortMenu((prev) => !prev);
-            updateUrlWithCurrentSort(value);
-            setSelectedSort(value);
+        (currentSort: ProductOrderingModeEnumApi | null, newSort: ProductOrderingModeEnumApi) => () => {
+            if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
+                setToggleSortMenu((prev) => !prev);
+                updateUrlWithCurrentSort(newSort);
+                setSelectedSort(newSort);
+            }
         },
         [updateUrlWithCurrentSort],
     );
 
     const onMobileSort = useCallback(
-        (value: ProductOrderingModeEnumApi) => () => {
-            setToggleSortMenu((prev) => !prev);
-            updateUrlWithCurrentSort(value);
-            setSelectedSort(value);
-            dispatch(userActions.setPagination({ ...initialState.pagination }));
+        (currentSort: ProductOrderingModeEnumApi | null, newSort: ProductOrderingModeEnumApi) => () => {
+            if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
+                setToggleSortMenu((prev) => !prev);
+                updateUrlWithCurrentSort(newSort);
+                setSelectedSort(newSort);
+                dispatch(userActions.setPagination({ ...initialState.pagination }));
+            }
         },
         [dispatch, updateUrlWithCurrentSort],
     );
 
     const onSort = useCallback(
-        (value: ProductOrderingModeEnumApi) => () => {
-            updateUrlWithCurrentSort(value);
-            setSelectedSort(value);
-            dispatch(userActions.setPagination({ ...initialState.pagination }));
+        (currentSort: ProductOrderingModeEnumApi | null, newSort: ProductOrderingModeEnumApi) => () => {
+            if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
+                updateUrlWithCurrentSort(newSort);
+                setSelectedSort(newSort);
+                dispatch(userActions.setPagination({ ...initialState.pagination }));
+            }
         },
         [dispatch, updateUrlWithCurrentSort],
     );
@@ -129,7 +137,7 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
                             .map((value) => (
                                 <SortingBarSelectedSortStyled
                                     key={value.stateValue}
-                                    onClick={onSelectSortMenu(value.stateValue)}
+                                    onClick={onSelectSortMenu(selectedSort, value.stateValue)}
                                     data-testid={TEST_IDENTIFIER + '-selected'}
                                 >
                                     <SortingBarSortIconStyled iconType="icon" icon="Sort" />
@@ -150,7 +158,7 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
                                     <SortingBarItemStyled key={value.stateValue}>
                                         <SortingBarItemLinkStyled
                                             isActive={selectedSort === value.stateValue}
-                                            onClick={onMobileSort(value.stateValue)}
+                                            onClick={onMobileSort(selectedSort, value.stateValue)}
                                             data-testid={TEST_IDENTIFIER + '-' + index}
                                         >
                                             {value.displayValue}
@@ -166,7 +174,7 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
                             return (
                                 <SortingBarItemStyled
                                     key={value.stateValue}
-                                    onClick={onSort(value.stateValue)}
+                                    onClick={onSort(selectedSort, value.stateValue)}
                                     data-testid={TEST_IDENTIFIER + '-' + index}
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
@@ -187,5 +195,10 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
         </SortingBarStyled>
     );
 };
+
+const isNewSortDifferentThanCurrent = (
+    currentSort: ProductOrderingModeEnumApi | null,
+    newSort: ProductOrderingModeEnumApi,
+) => currentSort !== newSort;
 
 export default SortingBar;
