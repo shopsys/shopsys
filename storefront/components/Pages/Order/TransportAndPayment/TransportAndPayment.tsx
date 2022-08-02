@@ -5,7 +5,8 @@ import {
     useTransportAndPaymentFormMeta,
 } from 'components/Pages/Order/TransportAndPayment/formMeta';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
-import { LastOrderFragmentApi } from 'graphql/generated';
+import { LastOrderFragmentApi, useLastOrderQueryApi, useStoreQueryApi } from 'graphql/generated';
+import { getPacketeryCookie } from 'helpers/packetery';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -17,6 +18,7 @@ import { TransportAndPaymentFormType } from 'types/form';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'utils/Gtm/Mappers';
 
 type TransportAndPaymentProps = {
     transports: TransportType[];
@@ -31,35 +33,37 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ transports, 
         ['/cart', '/order/contact-information'],
         domainUrl,
     );
-
+    const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only' });
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useTransportAndPaymentForm(currentCart, lastOrder);
     const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [{ data: pickupPlaceData }] = useStoreQueryApi({
+        pause: data?.lastOrder?.pickupPlaceIdentifier === undefined || data.lastOrder.pickupPlaceIdentifier === null,
+        variables: { uuid: data?.lastOrder?.pickupPlaceIdentifier ?? null },
+    });
 
     const onSelectTransportAndPaymentHandler: SubmitHandler<TransportAndPaymentFormType> = () => {
         router.push(contactInformationUrl);
     };
 
-    const pickupPlace: PickupPlaceType | null = useMemo(
-        () =>
-            lastOrder?.pickupPlaceIdentifier !== undefined && lastOrder.pickupPlaceIdentifier !== null
-                ? {
-                      identifier: lastOrder.pickupPlaceIdentifier,
-                      name: '', // pickup place from the last order
-                      city: '',
-                      country: {
-                          name: '',
-                          code: '',
-                      },
-                      description: '',
-                      openingHoursHtml: '',
-                      postcode: '',
-                      street: '',
-                  }
-                : null,
-        [lastOrder?.pickupPlaceIdentifier],
-    );
+    const pickupPlace: PickupPlaceType | null = useMemo(() => {
+        if (data?.lastOrder?.pickupPlaceIdentifier === undefined || data.lastOrder.pickupPlaceIdentifier === null) {
+            return null;
+        }
+
+        const packeteryCookie = getPacketeryCookie();
+
+        if (packeteryCookie?.identifier === data.lastOrder.pickupPlaceIdentifier) {
+            return packeteryCookie;
+        }
+
+        if (pickupPlaceData?.store !== undefined && pickupPlaceData.store !== null) {
+            return getGtmPickupPlaceFromStore(data.lastOrder.pickupPlaceIdentifier, pickupPlaceData.store);
+        }
+
+        return getGtmPickupPlaceFromLastOrder(data.lastOrder.pickupPlaceIdentifier, data.lastOrder);
+    }, [data?.lastOrder, pickupPlaceData?.store]);
 
     return (
         <>

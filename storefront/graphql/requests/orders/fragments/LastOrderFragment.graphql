@@ -7,4 +7,11 @@ fragment LastOrderFragment on Order {
         ...SimplePaymentFragment
     }
     pickupPlaceIdentifier
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+        name
+        code
+    }
 }

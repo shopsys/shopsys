@@ -1,0 +1,5 @@
+query StoreQuery($uuid: Uuid) {
+    store(uuid: $uuid) {
+        ...ListedStoreFragment
+    }
+}

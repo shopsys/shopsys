@@ -1,3 +1,4 @@
+import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -63,3 +64,37 @@ export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShip
         shippingExtra,
     };
 };
+
+export const getGtmPickupPlaceFromStore = (
+    pickupPlaceIdentifier: string,
+    store: ListedStoreFragmentApi,
+): PickupPlaceType => ({
+    identifier: pickupPlaceIdentifier,
+    name: store.name,
+    city: store.city,
+    country: {
+        name: store.country.name,
+        code: store.country.code,
+    },
+    description: store.description ?? '',
+    openingHoursHtml: store.openingHoursHtml ?? '',
+    postcode: store.postcode,
+    street: store.street,
+});
+
+export const getGtmPickupPlaceFromLastOrder = (
+    pickupPlaceIdentifier: string,
+    lastOrder: LastOrderFragmentApi,
+): PickupPlaceType => ({
+    identifier: pickupPlaceIdentifier,
+    name: '',
+    city: lastOrder.deliveryCity ?? '',
+    country: {
+        name: lastOrder.deliveryCountry?.name ?? '',
+        code: lastOrder.deliveryCountry?.code ?? '',
+    },
+    description: '',
+    openingHoursHtml: '',
+    postcode: lastOrder.deliveryPostcode ?? '',
+    street: lastOrder.deliveryStreet ?? '',
+});
