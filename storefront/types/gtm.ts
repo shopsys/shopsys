@@ -23,7 +23,8 @@ export type GtmPageType =
     | 'about'
     | '404'
     | 'other' // fallback for new/unknown pages.
-    | 'cookie consent';
+    | 'cookie consent'
+    | 'contact';
 
 export type GtmListNameType =
     | 'blog article'
