@@ -538,3 +538,5 @@ App\Migrations\Version20220628185551:
     skip: false
 App\Migrations\Version20220713071440:
     skip: false
+App\Migrations\Version20220803200612:
+    skip: false

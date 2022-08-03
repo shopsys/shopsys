@@ -27,7 +27,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=1024)
+     * @ORM\Column(type="text")
      */
     private string $key;
 
