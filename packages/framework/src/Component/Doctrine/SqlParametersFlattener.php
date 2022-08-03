@@ -14,7 +14,7 @@ class SqlParametersFlattener
      *
      * @param string $dql
      * @param array<string, mixed> $parameters
-     * @return array
+     * @return mixed[]
      */
     public static function flattenArrayParameters(string $dql, array $parameters): array
     {

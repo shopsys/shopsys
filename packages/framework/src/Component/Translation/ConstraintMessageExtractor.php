@@ -58,7 +58,10 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * @param \SplFileInfo $file
+     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
+     * @param \PhpParser\Node[] $ast
+     * @return void
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {

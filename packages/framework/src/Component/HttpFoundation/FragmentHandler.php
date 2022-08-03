@@ -35,6 +35,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      * This leads to inconsistent error handling in development and production environment.
      *
      * {@inheritdoc}
+     * @param array<string, mixed> $options
      */
     public function render($uri, $renderer = 'inline', array $options = [])
     {

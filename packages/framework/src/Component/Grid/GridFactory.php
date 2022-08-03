@@ -48,9 +48,10 @@ class GridFactory
     }
 
     /**
+     * @template T of array<string, mixed>
      * @param string $gridId
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T> $dataSource
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<T>
      */
     public function create($gridId, DataSourceInterface $dataSource)
     {

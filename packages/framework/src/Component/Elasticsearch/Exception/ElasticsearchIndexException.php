@@ -36,7 +36,7 @@ class ElasticsearchIndexException extends Exception
 
     /**
      * @param string $indexName
-     * @param array $error
+     * @param mixed[] $error
      * @return static
      */
     public static function createIndexError(string $indexName, array $error): self
@@ -50,7 +50,7 @@ class ElasticsearchIndexException extends Exception
 
     /**
      * @param string $alias
-     * @param array $error
+     * @param mixed[] $error
      * @return static
      */
     public static function createAliasError(string $alias, array $error): self
@@ -64,7 +64,7 @@ class ElasticsearchIndexException extends Exception
 
     /**
      * @param string $indexName
-     * @param array $error
+     * @param mixed[] $error
      * @return static
      */
     public static function deleteIndexError(string $indexName, array $error): self
@@ -90,7 +90,7 @@ class ElasticsearchIndexException extends Exception
 
     /**
      * @param string $indexName
-     * @param array $errors
+     * @param mixed[] $errors
      * @return static
      */
     public static function bulkUpdateError(string $indexName, array $errors): self
@@ -116,7 +116,7 @@ class ElasticsearchIndexException extends Exception
 
     /**
      * @param string $alias
-     * @param array $indexesFound
+     * @param string[] $indexesFound
      * @return static
      */
     public static function moreThanOneIndexFoundForAlias(string $alias, array $indexesFound): self

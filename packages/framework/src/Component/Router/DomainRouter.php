@@ -49,7 +49,7 @@ class DomainRouter extends ChainRouter
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */

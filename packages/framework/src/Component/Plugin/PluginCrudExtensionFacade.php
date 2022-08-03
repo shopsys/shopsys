@@ -46,7 +46,7 @@ class PluginCrudExtensionFacade
     /**
      * @param string $type
      * @param int $id
-     * @return array
+     * @return array<string, mixed>
      */
     public function getAllData($type, $id)
     {
@@ -61,7 +61,7 @@ class PluginCrudExtensionFacade
     /**
      * @param string $type
      * @param int $id
-     * @param array $allData
+     * @param array<string, mixed> $allData
      */
     public function saveAllData($type, $id, array $allData)
     {

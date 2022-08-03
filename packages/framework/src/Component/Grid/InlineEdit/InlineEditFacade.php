@@ -6,15 +6,18 @@ use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @template T of array<string, mixed>
+ */
 class InlineEditFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry
+     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry<T>
      */
     protected $gridInlineEditRegistry;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry $gridInlineEditRegistry
+     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry<T> $gridInlineEditRegistry
      */
     public function __construct(GridInlineEditRegistry $gridInlineEditRegistry)
     {
@@ -55,8 +58,6 @@ class InlineEditFacade
     public function getRenderedRowHtml($serviceName, $rowId)
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
-
-        /** @var \Shopsys\FrameworkBundle\Component\Grid\Grid $grid */
         $grid = $gridInlineEdit->getGrid();
         $gridView = $grid->createViewWithOneRow($rowId);
         $rows = $grid->getRows();
@@ -69,7 +70,7 @@ class InlineEditFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $gridInlineEditService
+     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T> $gridInlineEditService
      * @param mixed $rowId
      * @param \Symfony\Component\Form\Form $form
      * @return string
@@ -87,9 +88,15 @@ class InlineEditFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
+     * @template GridRowType as array<string, mixed>
+     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid<GridRowType> $grid
      * @param \Symfony\Component\Form\Form $form
-     * @return array
+     * @return array{
+     *     loopIndex: int,
+     *     lastRow: bool,
+     *     row: GridRowType,
+     *     form: \Symfony\Component\Form\FormView
+     * }
      */
     protected function getFormRowTemplateParameters(Grid $grid, Form $form)
     {

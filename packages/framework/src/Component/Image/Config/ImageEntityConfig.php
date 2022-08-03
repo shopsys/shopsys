@@ -21,7 +21,7 @@ class ImageEntityConfig
     protected $entityClass;
 
     /**
-     * @var array
+     * @var array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]>
      */
     protected $sizeConfigsByType;
 
@@ -31,16 +31,16 @@ class ImageEntityConfig
     protected $sizeConfigs;
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     protected $multipleByType;
 
     /**
      * @param string $entityName
      * @param string $entityClass
-     * @param array $sizeConfigsByType
+     * @param array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]> $sizeConfigsByType
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @param array $multipleByType
+     * @param array<string, bool> $multipleByType
      */
     public function __construct($entityName, $entityClass, array $sizeConfigsByType, array $sizeConfigs, array $multipleByType)
     {
@@ -68,7 +68,7 @@ class ImageEntityConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getTypes()
     {
@@ -84,7 +84,7 @@ class ImageEntityConfig
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
+     * @return array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]>
      */
     public function getSizeConfigsByTypes()
     {

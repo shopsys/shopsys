@@ -139,7 +139,7 @@ class IndexRepository
 
     /**
      * @param string $indexAlias
-     * @param array $data
+     * @param mixed[] $data
      * @param bool $createIfNotExists
      */
     public function bulkUpdate(string $indexAlias, array $data, bool $createIfNotExists = true): void
@@ -169,7 +169,7 @@ class IndexRepository
 
     /**
      * @param string $aliasName
-     * @return array
+     * @return string[]
      */
     protected function findIndexNamesForAlias(string $aliasName): array
     {

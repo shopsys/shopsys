@@ -7,12 +7,12 @@ use Exception;
 class InvalidFormDataException extends Exception implements InlineEditException
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $formErrors;
 
     /**
-     * @param array $formErrors
+     * @param string[] $formErrors
      * @param \Exception|null $previous
      */
     public function __construct(array $formErrors, ?Exception $previous = null)
@@ -23,7 +23,7 @@ class InvalidFormDataException extends Exception implements InlineEditException
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFormErrors()
     {

@@ -140,8 +140,8 @@ class UploadedFileFacade
      * @param object $entity
      * @param string $entityName
      * @param string $type
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
+     * @param string[] $temporaryFilenames
+     * @param string[] $uploadedFilenames
      * @param int $existingFilesCount
      */
     protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, array $uploadedFilenames, int $existingFilesCount): void
@@ -282,7 +282,7 @@ class UploadedFileFacade
     }
 
     /**
-     * @param array $fileNamesIndexedByFileId
+     * @param array<int, string> $fileNamesIndexedByFileId
      */
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {

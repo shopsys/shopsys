@@ -6,6 +6,10 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
+/**
+ * @template T of array<string, mixed>
+ * @implements \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T>
+ */
 class QueryBuilderDataSource implements DataSourceInterface
 {
     /**
@@ -33,7 +37,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows(
         $limit = null,
@@ -53,7 +57,7 @@ class QueryBuilderDataSource implements DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return array
+     * @return T
      */
     public function getOneRow($rowId)
     {

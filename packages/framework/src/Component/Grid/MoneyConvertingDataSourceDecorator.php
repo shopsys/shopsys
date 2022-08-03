@@ -7,21 +7,25 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
+/**
+ * @template T of array<string, mixed>
+ * @implements \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T>
+ */
 class MoneyConvertingDataSourceDecorator implements DataSourceInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     * @var \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T>
      */
     protected $innerDataSource;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $moneyColumnNames;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $innerDataSource
-     * @param array $moneyColumnNames
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T> $innerDataSource
+     * @param string[] $moneyColumnNames
      */
     public function __construct(DataSourceInterface $innerDataSource, array $moneyColumnNames)
     {
@@ -34,7 +38,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows(
         $limit = null,
@@ -54,17 +58,19 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
             $results[$key] = $this->convertRow($result);
         }
 
-        return new PaginationResult(
+        /** @var \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T> $convertedPaginationResult */
+        $convertedPaginationResult = new PaginationResult(
             $paginationResult->getPage(),
             $paginationResult->getPageSize(),
             $paginationResult->getTotalCount(),
             $results
         );
+        return $convertedPaginationResult;
     }
 
     /**
      * @param int $rowId
-     * @return array
+     * @return T
      */
     public function getOneRow($rowId): array
     {
@@ -90,8 +96,8 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     }
 
     /**
-     * @param array $row
-     * @return array
+     * @param T $row
+     * @return T
      */
     protected function convertRow(array $row): array
     {

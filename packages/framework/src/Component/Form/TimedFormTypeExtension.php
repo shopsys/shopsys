@@ -46,7 +46,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
@@ -68,6 +68,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritDoc}
+     * @return iterable<class-string>
      */
     public static function getExtendedTypes(): iterable
     {

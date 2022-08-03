@@ -60,7 +60,7 @@ class CurrentDomainRouter implements ChainRouterInterface
 
     /**
      * @param string $routeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -71,7 +71,7 @@ class CurrentDomainRouter implements ChainRouterInterface
 
     /**
      * @param string $pathinfo
-     * @return array
+     * @return array<string, mixed>
      */
     public function match($pathinfo)
     {
@@ -105,7 +105,7 @@ class CurrentDomainRouter implements ChainRouterInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return array
+     * @return array<string, mixed>
      */
     public function matchRequest(Request $request)
     {

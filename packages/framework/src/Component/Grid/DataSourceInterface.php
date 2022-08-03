@@ -2,6 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+/**
+ * @template T of array<string, mixed>
+ */
 interface DataSourceInterface
 {
     public const ORDER_ASC = 'asc';
@@ -12,7 +15,7 @@ interface DataSourceInterface
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows(
         $limit = null,
@@ -23,7 +26,7 @@ interface DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return array
+     * @return T
      */
     public function getOneRow($rowId);
 

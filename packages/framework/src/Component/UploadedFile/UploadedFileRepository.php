@@ -24,7 +24,7 @@ class UploadedFileRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile>
      */
     protected function getUploadedFileRepository(): EntityRepository
     {

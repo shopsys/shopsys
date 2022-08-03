@@ -15,13 +15,13 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     protected $formTimeProvider;
 
     /**
-     * @var string[]
+     * @var array<string, mixed>
      */
     protected $options;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(FormTimeProvider $formTimeProvider, array $options)
     {
@@ -53,7 +53,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public static function getSubscribedEvents()
     {

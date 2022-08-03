@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Throwable;
 
+/**
+ * @phpstan-import-type CollectedDataArray from \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection
+ */
 class ElasticsearchCollector extends DataCollector
 {
     /**
@@ -50,7 +53,11 @@ class ElasticsearchCollector extends DataCollector
     }
 
     /**
-     * @return array
+     * @return array{
+     *     requests: CollectedDataArray[],
+     *     requestsCount: int,
+     *     totalRequestsTime: float|int
+     * }
      */
     public function getData(): array
     {

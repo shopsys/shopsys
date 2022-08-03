@@ -16,6 +16,26 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * @phpstan-type AdditionalSizeArray array{
+ *     media: string,
+ *     height: int|null,
+ *     width: int|null,
+ * }
+ * @phpstan-type SizeConfigArray array{
+ *     name: string|null,
+ *     additionalSizes: AdditionalSizeArray[],
+ *     width: int|null,
+ *     height: int|null,
+ *     crop: bool,
+ *     occurrence: string|null,
+ * }
+ * @phpstan-type TypeConfigArray array{
+ *     name: string,
+ *     sizes: SizeConfigArray[],
+ *     multiple: bool,
+ * }
+ */
 class ImageConfigLoader
 {
     /**
@@ -29,7 +49,7 @@ class ImageConfigLoader
     protected $foundEntityConfigs;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $foundEntityNames;
 
@@ -74,7 +94,7 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $outputConfig
+     * @param mixed[] $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
     public function loadFromArray($outputConfig)
@@ -97,7 +117,13 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
+     * @param array{
+     *     class: class-string,
+     *     name: string,
+     *     types: TypeConfigArray[],
+     *     sizes: SizeConfigArray[],
+     *     multiple: bool,
+     * } $entityConfig
      */
     protected function processEntityConfig($entityConfig)
     {
@@ -120,7 +146,7 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $sizesConfig
+     * @param SizeConfigArray[] $sizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
     protected function prepareSizes($sizesConfig)
@@ -162,7 +188,7 @@ class ImageConfigLoader
 
     /**
      * @param string $sizeName
-     * @param array $additionalSizesConfig
+     * @param AdditionalSizeArray[] $additionalSizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[]
      */
     protected function prepareAdditionalSizes(string $sizeName, array $additionalSizesConfig): array
@@ -191,8 +217,8 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $typesConfig
-     * @return array
+     * @param TypeConfigArray[] $typesConfig
+     * @return array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]>
      */
     protected function prepareTypes($typesConfig)
     {
@@ -210,8 +236,11 @@ class ImageConfigLoader
     }
 
     /**
-     * @param array $entityConfig
-     * @return array
+     * @param array{
+     *     multiple: bool,
+     *     types: TypeConfigArray[],
+     * } $entityConfig
+     * @return array<string, bool>
      */
     protected function getMultipleByType(array $entityConfig)
     {

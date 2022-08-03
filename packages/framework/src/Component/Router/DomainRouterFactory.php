@@ -166,7 +166,7 @@ class DomainRouterFactory
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getRouterOptions(): array
     {

@@ -70,7 +70,7 @@ class ImageFacade
     protected LoggerInterface $logger;
 
     /**
-     * @param mixed $imageUrlPrefix
+     * @param string $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
@@ -132,7 +132,7 @@ class ImageFacade
 
     /**
      * @param object $entity
-     * @param array $temporaryFilenames
+     * @param string[] $temporaryFilenames
      * @param string|null $type
      */
     protected function uploadImage($entity, $temporaryFilenames, $type): void
@@ -176,7 +176,7 @@ class ImageFacade
 
     /**
      * @param object $entity
-     * @param array|null $temporaryFilenames
+     * @param string[]|null $temporaryFilenames
      * @param string|null $type
      */
     protected function uploadImages($entity, $temporaryFilenames, $type): void
@@ -508,7 +508,7 @@ class ImageFacade
 
     /**
      * @param int[] $entityIds
-     * @param string $entityClass FQCN
+     * @param class-string $entityClass FQCN
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function getImagesByEntitiesIndexedByEntityId(array $entityIds, string $entityClass): array
@@ -520,7 +520,7 @@ class ImageFacade
 
     /**
      * @param int $id
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function getImagesByEntityId(int $id, string $entityClass): array

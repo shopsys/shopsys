@@ -32,7 +32,7 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     /**
      * @inheritDoc
      */
-    protected function logException(Throwable $exception, $message): void
+    protected function logException(Throwable $exception, string $message): void
     {
         if (!$exception instanceof FakeHttpException) {
             $message .= sprintf(' Error ID: %s', $this->errorIdProvider->getErrorId());

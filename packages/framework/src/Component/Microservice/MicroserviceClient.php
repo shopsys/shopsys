@@ -22,7 +22,7 @@ class MicroserviceClient
 
     /**
      * @param string $resource
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return mixed
      */
     public function get(string $resource, array $parameters = [])
@@ -39,7 +39,7 @@ class MicroserviceClient
 
     /**
      * @param string $resource
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return mixed
      */
     public function post(string $resource, array $parameters = [])
@@ -52,7 +52,7 @@ class MicroserviceClient
 
     /**
      * @param string $resource
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return mixed
      */
     public function delete(string $resource, array $parameters = [])
@@ -65,7 +65,7 @@ class MicroserviceClient
 
     /**
      * @param string $resource
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return mixed
      */
     public function patch(string $resource, array $parameters = [])
@@ -77,7 +77,7 @@ class MicroserviceClient
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function createDefaultOptions(): array
     {
@@ -89,8 +89,8 @@ class MicroserviceClient
     }
 
     /**
-     * @param array $jsonData
-     * @return array
+     * @param mixed[] $jsonData
+     * @return mixed[]
      */
     protected function createJsonOptions(array $jsonData): array
     {

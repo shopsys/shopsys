@@ -57,9 +57,9 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     }
 
     /**
-     * @param array $yamlContent
+     * @param mixed[] $yamlContent
      * @param string $pattern
-     * @return array
+     * @return mixed[]
      */
     protected function getAllValuesOfArrayKeysByPattern(array $yamlContent, string $pattern): array
     {
@@ -77,7 +77,10 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     }
 
     /**
-     * @inheritdoc
+     * @param \SplFileInfo $file
+     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
+     * @param \PhpParser\Node[] $ast
+     * @return void
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {

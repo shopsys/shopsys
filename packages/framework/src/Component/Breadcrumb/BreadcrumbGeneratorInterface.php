@@ -6,7 +6,7 @@ interface BreadcrumbGeneratorInterface
 {
     /**
      * @param string $routeName
-     * @param array $routeParameters
+     * @param array<string, mixed> $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = []);

@@ -95,7 +95,7 @@ class LocalizedRouterFactory
 
     /**
      * @param string $locale
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getRouterOptions(string $locale): array
     {

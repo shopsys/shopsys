@@ -21,7 +21,7 @@ class FriendlyUrlUniqueResultFactory
      * @param int $attempt
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
-     * @param array|null $matchedRouteData
+     * @param array<string, mixed>|null $matchedRouteData
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResult
      */
     public function create(

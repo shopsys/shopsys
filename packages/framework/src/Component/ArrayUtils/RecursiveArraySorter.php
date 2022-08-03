@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\ArrayUtils;
 class RecursiveArraySorter
 {
     /**
-     * @param array $array
+     * @param array<mixed> $array
      * @return bool
      */
     public function recursiveArrayKsort(array &$array): bool

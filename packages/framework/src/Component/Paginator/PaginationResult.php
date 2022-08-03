@@ -2,6 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Paginator;
 
+/**
+ * @template T
+ */
 class PaginationResult
 {
     /**
@@ -20,7 +23,7 @@ class PaginationResult
     protected $totalCount;
 
     /**
-     * @var array
+     * @var T[]
      */
     protected $results;
 
@@ -43,7 +46,7 @@ class PaginationResult
      * @param int $page
      * @param int|null $pageSize
      * @param int $totalCount
-     * @param array $results
+     * @param T[] $results
      */
     public function __construct($page, $pageSize, $totalCount, $results)
     {
@@ -96,7 +99,7 @@ class PaginationResult
     }
 
     /**
-     * @return array
+     * @return T[]
      */
     public function getResults()
     {

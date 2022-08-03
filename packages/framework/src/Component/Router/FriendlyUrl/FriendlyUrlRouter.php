@@ -113,7 +113,7 @@ class FriendlyUrlRouter implements RouterInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -139,7 +139,8 @@ class FriendlyUrlRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $pathinfo
+     * @return array<string, mixed>
      */
     public function match($pathinfo)
     {

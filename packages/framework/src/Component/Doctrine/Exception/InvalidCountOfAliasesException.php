@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Utils\Debug;
 class InvalidCountOfAliasesException extends Exception
 {
     /**
-     * @param array|null $rootAliases
+     * @param string[]|null $rootAliases
      * @param \Exception|null $previous
      */
     public function __construct(?array $rootAliases = null, ?Exception $previous = null)

@@ -21,7 +21,7 @@ class ResizeFormListener implements EventSubscriberInterface
     protected $type;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $options;
 
@@ -42,7 +42,7 @@ class ResizeFormListener implements EventSubscriberInterface
 
     /**
      * @param string|null $type
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param bool $allowAdd
      * @param bool $allowDelete
      * @param bool $deleteEmpty
@@ -62,7 +62,7 @@ class ResizeFormListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public static function getSubscribedEvents()
     {

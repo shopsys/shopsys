@@ -37,12 +37,12 @@ class ActionColumn
     protected $route;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $bindingRouteParams;
 
     /**
-     * @var array
+     * @var array<string, string|int|float|bool|null>
      */
     protected $additionalRouteParams;
 
@@ -67,8 +67,8 @@ class ActionColumn
      * @param string $type
      * @param string $title
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, string|int|float|bool|null> $additionalRouteParams
      */
     public function __construct(
         RouterInterface $router,
@@ -162,7 +162,7 @@ class ActionColumn
     }
 
     /**
-     * @param array $row
+     * @param array<string, mixed> $row
      * @return string
      */
     public function getTargetUrl(array $row)

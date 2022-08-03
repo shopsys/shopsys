@@ -58,7 +58,12 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     /**
      * Passes trans() call to original translator for logging purposes.
-     * {@inheritdoc}
+     *
+     * @param string $id
+     * @param array<string, mixed> $parameters
+     * @param string|null $domain
+     * @param string|null $locale
+     * @return string
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
@@ -144,7 +149,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
 
     /**
      * @param string $id
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param string|null $domain
      * @param string|null $locale
      * @return string

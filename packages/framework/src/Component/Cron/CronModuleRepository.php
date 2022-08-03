@@ -27,7 +27,7 @@ class CronModuleRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\Cron\CronModule>
      */
     protected function getCronModuleRepository()
     {

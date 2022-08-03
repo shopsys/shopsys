@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
+/**
+ * @template T of array<string, mixed>
+ */
 class Grid
 {
     public const GET_PARAMETER = 'g';
@@ -42,7 +45,7 @@ class Grid
     protected $enableSelecting = false;
 
     /**
-     * @var array
+     * @var int[]
      */
     protected $allowedLimits = [30, 100, 200, 500];
 
@@ -87,7 +90,7 @@ class Grid
     protected $isOrderFromRequest = false;
 
     /**
-     * @var array
+     * @var array<array<string, mixed>>
      */
     protected $rows = [];
 
@@ -112,7 +115,7 @@ class Grid
     protected $twig;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
+     * @var \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T>
      */
     protected $dataSource;
 
@@ -122,17 +125,17 @@ class Grid
     protected $actionColumnClassAttribute = '';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface|null
+     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>|null
      */
     protected $inlineEditService;
 
     /**
-     * @var string|null
+     * @var class-string|null
      */
     protected $orderingEntityClass;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @var \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     protected $paginationResults;
 
@@ -142,12 +145,12 @@ class Grid
     protected $viewTheme;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $viewTemplateParameters;
 
     /**
-     * @var array
+     * @var array<int|string>
      */
     protected $selectedRowIds;
 
@@ -158,7 +161,7 @@ class Grid
 
     /**
      * @param string $id
-     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $dataSource
+     * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T> $dataSource
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
@@ -173,8 +176,7 @@ class Grid
         Environment $twig
     ) {
         if ($id === '') {
-            $message = 'Grid id cannot be empty.';
-            throw new EmptyGridIdException($message);
+            throw new EmptyGridIdException('Grid id cannot be empty.');
         }
 
         $this->id = $id;
@@ -219,8 +221,8 @@ class Grid
      * @param string $type
      * @param string $name
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, string|int|float|bool|null> $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addActionColumn(
@@ -246,8 +248,8 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, string|int|float|bool|null> $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -263,8 +265,8 @@ class Grid
 
     /**
      * @param string $route
-     * @param array $bindingRouteParams
-     * @param array $additionalRouteParams
+     * @param array<string, string> $bindingRouteParams
+     * @param array<string, string|int|float|bool|null> $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
@@ -279,7 +281,7 @@ class Grid
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $inlineEditService
+     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T> $inlineEditService
      */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService)
     {
@@ -295,7 +297,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface|null
+     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>|null
      */
     public function getInlineEditService()
     {
@@ -303,7 +305,7 @@ class Grid
     }
 
     /**
-     * @param array $row
+     * @param array<string, mixed> $row
      * @return mixed
      */
     public function getRowId($row)
@@ -321,7 +323,7 @@ class Grid
 
     /**
      * @param string|string[] $viewTheme
-     * @param array $viewParameters
+     * @param array<string, mixed> $viewParameters
      */
     public function setTheme($viewTheme, array $viewParameters = [])
     {
@@ -330,7 +332,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
     public function createView()
     {
@@ -345,7 +347,7 @@ class Grid
 
     /**
      * @param int $rowId
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
     public function createViewWithOneRow($rowId)
     {
@@ -356,7 +358,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
     public function createViewWithoutRows()
     {
@@ -437,7 +439,7 @@ class Grid
     }
 
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function getRows()
     {
@@ -461,7 +463,7 @@ class Grid
     }
 
     /**
-     * @param array $row
+     * @param array<string, mixed> $row
      * @return bool
      */
     public function isRowSelected(array $row)
@@ -471,7 +473,7 @@ class Grid
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getSelectedRowIds()
     {
@@ -497,7 +499,7 @@ class Grid
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getAllowedLimits()
     {
@@ -566,7 +568,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginationResults()
     {
@@ -588,7 +590,7 @@ class Grid
 
     protected function loadFromRequest()
     {
-        /** @var array $queryData */
+        /** @var array<string, mixed> $queryData */
         $queryData = $this->requestStack->getMasterRequest()->query->get(self::GET_PARAMETER, []);
         if (array_key_exists($this->id, $queryData)) {
             $gridQueryData = $queryData[$this->id];
@@ -616,8 +618,8 @@ class Grid
     }
 
     /**
-     * @param array|string $removeParameters
-     * @return array
+     * @param string|string[]|null $removeParameters
+     * @return array<string, mixed>
      */
     public function getGridParameters($removeParameters = [])
     {
@@ -642,9 +644,9 @@ class Grid
     }
 
     /**
-     * @param array|string|null $parameters
-     * @param array|string|null $removeParameters
-     * @return array
+     * @param string|string[]|null $parameters
+     * @param string|string[]|null $removeParameters
+     * @return array<string, mixed>
      */
     public function getUrlGridParameters($parameters = null, $removeParameters = null)
     {
@@ -657,9 +659,9 @@ class Grid
     }
 
     /**
-     * @param array|string|null $parameters
-     * @param array|string|null $removeParameters
-     * @return array
+     * @param string|string[]|null $parameters
+     * @param string|string[]|null $removeParameters
+     * @return array<string, mixed>
      */
     public function getUrlParameters($parameters = null, $removeParameters = null)
     {
@@ -713,7 +715,7 @@ class Grid
     }
 
     /**
-     * @param array $row
+     * @param array<string, mixed> $row
      * @param string $sourceColumnName
      * @return mixed
      */
@@ -742,7 +744,7 @@ class Grid
     }
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      */
     public function enableDragAndDrop($entityClass)
     {
@@ -763,7 +765,7 @@ class Grid
     }
 
     /**
-     * @return string|null
+     * @return class-string|null
      */
     public function getOrderingEntityClass()
     {

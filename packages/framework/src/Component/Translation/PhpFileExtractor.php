@@ -73,7 +73,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
+     * @param \PhpParser\Node[] $ast
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
@@ -240,7 +240,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param array $nodes
+     * @param \PhpParser\Node[] $nodes
      */
     public function beforeTraverse(array $nodes)
     {
@@ -256,7 +256,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @param array $nodes
+     * @param \PhpParser\Node[] $nodes
      */
     public function afterTraverse(array $nodes)
     {

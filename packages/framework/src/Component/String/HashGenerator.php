@@ -4,7 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\String;
 
 class HashGenerator
 {
-    protected $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+    protected string $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
 
     /**
      * @param int $length

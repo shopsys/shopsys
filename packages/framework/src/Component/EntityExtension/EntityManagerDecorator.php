@@ -113,8 +113,9 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     }
 
     /**
-     * @param string $className
-     * @return \Doctrine\Persistence\ObjectRepository
+     * @template T of object
+     * @param class-string<T> $className
+     * @return \Doctrine\Persistence\ObjectRepository<T>
      */
     public function getRepository($className)
     {

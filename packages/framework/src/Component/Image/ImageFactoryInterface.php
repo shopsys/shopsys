@@ -24,7 +24,7 @@ interface ImageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
      * @param string|null $type
-     * @param array $temporaryFilenames
+     * @param string[] $temporaryFilenames
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function createMultiple(

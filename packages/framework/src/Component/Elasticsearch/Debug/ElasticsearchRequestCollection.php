@@ -4,15 +4,27 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
+/**
+ * @phpstan-type CollectedDataArray array{
+ *     requestCurl: string,
+ *     requestJson: ?string,
+ *     requestData: mixed,
+ *     method: string,
+ *     uri: string,
+ *     statusCode: ?int,
+ *     response: mixed,
+ *     duration: float,
+ * }
+ */
 class ElasticsearchRequestCollection
 {
     /**
-     * @var array
+     * @var CollectedDataArray[]
      */
     protected $collectedData = [];
 
     /**
-     * @return array
+     * @return CollectedDataArray[]
      */
     public function getCollectedData(): array
     {

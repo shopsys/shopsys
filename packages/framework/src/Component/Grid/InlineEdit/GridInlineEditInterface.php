@@ -4,6 +4,9 @@ namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @template T of array<string, mixed>
+ */
 interface GridInlineEditInterface
 {
     /**
@@ -20,7 +23,7 @@ interface GridInlineEditInterface
     public function saveForm(Request $request, $rowId);
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<T>
      */
     public function getGrid();
 

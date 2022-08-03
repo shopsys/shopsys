@@ -62,7 +62,7 @@ class PersistentReference
     }
 
     /**
-     * @return string
+     * @return class-string
      */
     public function getEntityName()
     {

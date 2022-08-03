@@ -50,7 +50,10 @@ class TwigFileExtractor implements FileVisitorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \SplFileInfo $file
+     * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
+     * @param \PhpParser\Node[] $ast
+     * @return void
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {

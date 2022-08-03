@@ -27,7 +27,7 @@ class UploadedFileConfigLoader
     protected $uploadedFileEntityConfigsByClass;
 
     /**
-     * @var string[]
+     * @var array<string, string>
      */
     protected $entityNamesByEntityNames;
 
@@ -64,7 +64,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $outputConfig
+     * @param array<class-string, array{class: class-string, name: string, types: array<array{name: string|null, multiple: bool}>}> $outputConfig
      */
     protected function loadFileEntityConfigsFromArray(array $outputConfig): void
     {
@@ -86,7 +86,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $typesConfig
+     * @param array<array{name: string|null, multiple: bool}> $typesConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[]
      */
     protected function prepareTypes(array $typesConfig): array
@@ -111,7 +111,7 @@ class UploadedFileConfigLoader
     }
 
     /**
-     * @param array $entityConfig
+     * @param array{class: class-string, name: string, types: array<array{name: string|null, multiple: bool}>} $entityConfig
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig
      */
     protected function processEntityConfig(array $entityConfig): UploadedFileEntityConfig

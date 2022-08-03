@@ -21,7 +21,7 @@ class SettingValueRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\Setting\SettingValue>
      */
     protected function getSettingValueRepository()
     {

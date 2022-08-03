@@ -54,7 +54,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $routeName
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -97,7 +97,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -129,7 +129,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      * @param string $slug
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param int $referenceType
      * @return string
      */
@@ -165,9 +165,10 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     /**
      * Not supported method
      *
-     * @param mixed $routeName
-     * @param mixed $parameters
-     * @param mixed $referenceType
+     * @param string $routeName
+     * @param array<string, mixed> $parameters
+     * @param int $referenceType
+     * @return never-returns
      */
     public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

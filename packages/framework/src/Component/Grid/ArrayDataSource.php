@@ -6,23 +6,27 @@ use Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedExcepti
 use Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
+/**
+ * @template T of array<string, mixed>
+ * @implements \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface<T>
+ */
 class ArrayDataSource implements DataSourceInterface
 {
     /**
-     * @var array
+     * @var T[]
      */
     protected $data;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $rowIdSourceColumnName;
 
     /**
-     * @param array $data
-     * @param string $rowIdSourceColumnName
+     * @param T[] $data
+     * @param string|null $rowIdSourceColumnName
      */
-    public function __construct(array $data, $rowIdSourceColumnName = null)
+    public function __construct(array $data, ?string $rowIdSourceColumnName = null)
     {
         $this->data = $data;
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
@@ -33,12 +37,16 @@ class ArrayDataSource implements DataSourceInterface
      */
     public function getRowIdSourceColumnName()
     {
+        if ($this->rowIdSourceColumnName === null) {
+            throw new \RuntimeException(self::class . ' has not set `RowIdSourceColumnName`');
+        }
+
         return $this->rowIdSourceColumnName;
     }
 
     /**
      * @param int $rowId
-     * @return mixed
+     * @return T
      */
     public function getOneRow($rowId)
     {
@@ -57,7 +65,7 @@ class ArrayDataSource implements DataSourceInterface
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows($limit = null, $page = 1, $orderSourceColumnName = null, $orderDirection = self::ORDER_ASC)
     {

@@ -6,15 +6,19 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @template T of array<string, mixed>
+ * @implements \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>
+ */
 abstract class AbstractGridInlineEdit implements GridInlineEditInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface<T>
      */
     protected $gridFactory;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface<T> $gridFactory
      */
     public function __construct(GridFactoryInterface $gridFactory)
     {
@@ -52,7 +56,7 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<T>
      */
     public function getGrid()
     {

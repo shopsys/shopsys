@@ -21,7 +21,7 @@ class ImageRepository
     }
 
     /**
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\Image\Image>
      */
     protected function getImageRepository()
     {
@@ -120,7 +120,7 @@ class ImageRepository
     }
 
     /**
-     * @param array $entitiesOrEntityIds
+     * @param array<object|int> $entitiesOrEntityIds
      * @param string $entityName
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */

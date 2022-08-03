@@ -60,8 +60,8 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
      * @param string $entityName
      * @param int $entityId
      * @param string $type
-     * @param array $temporaryFilenames
-     * @param array $uploadedFilenames
+     * @param string[] $temporaryFilenames
+     * @param string[] $uploadedFilenames
      * @param int $existingFilesCount
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */

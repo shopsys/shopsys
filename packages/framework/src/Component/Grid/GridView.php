@@ -9,15 +9,18 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
 
+/**
+ * @template T of array<string, mixed>
+ */
 class GridView
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @var \Shopsys\FrameworkBundle\Component\Grid\Grid<T>
      */
     protected $grid;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $templateParameters;
 
@@ -47,12 +50,12 @@ class GridView
     protected $twig;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
+     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid<T> $grid
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Twig\Environment $twig
      * @param string|string[] $theme
-     * @param array $templateParameters
+     * @param array<string, mixed> $templateParameters
      */
     public function __construct(
         Grid $grid,
@@ -76,7 +79,7 @@ class GridView
     }
 
     /**
-     * @param array|null $removeParameters
+     * @param string|string[]|null $removeParameters
      */
     public function renderHiddenInputs($removeParameters = null)
     {
@@ -87,7 +90,7 @@ class GridView
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * @param bool $echo
      * @return string|null
      */
@@ -121,7 +124,7 @@ class GridView
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     * @param array|null $row
+     * @param array<string, mixed>|null $row
      * @param \Symfony\Component\Form\FormView|null $formView
      */
     public function renderCell(Column $column, ?array $row = null, ?FormView $formView = null)
@@ -162,7 +165,7 @@ class GridView
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn $actionColumn
-     * @param array $row
+     * @param array<string, mixed> $row
      */
     public function renderActionCell(ActionColumn $actionColumn, array $row)
     {
@@ -196,8 +199,8 @@ class GridView
     }
 
     /**
-     * @param array $parameters
-     * @param array|string|null $removeParameters
+     * @param array<string, mixed> $parameters
+     * @param string|string[]|null $removeParameters
      * @return string
      */
     public function getUrl(?array $parameters = null, $removeParameters = null)
@@ -228,7 +231,7 @@ class GridView
     }
 
     /**
-     * @return string|array
+     * @return string|string[]
      */
     public function getTheme()
     {
@@ -237,7 +240,7 @@ class GridView
 
     /**
      * @param string|string[] $theme
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      */
     protected function setTheme($theme, array $parameters = [])
     {
@@ -275,7 +278,7 @@ class GridView
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Column $column
-     * @param array $row
+     * @param array<string, mixed> $row
      * @return mixed
      */
     protected function getCellValue(Column $column, $row)

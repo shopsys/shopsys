@@ -94,7 +94,7 @@ class CronConfig
 
     /**
      * @param string $instanceName
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getCronModuleConfigsForInstance(string $instanceName): array
     {

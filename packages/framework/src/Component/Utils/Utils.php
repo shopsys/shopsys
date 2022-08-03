@@ -5,9 +5,11 @@ namespace Shopsys\FrameworkBundle\Component\Utils;
 class Utils
 {
     /**
-     * @param mixed $testVariable
-     * @param mixed $default
-     * @return mixed
+     * @template VariableType
+     * @template DefaultType
+     * @param VariableType|null $testVariable
+     * @param DefaultType $default
+     * @return VariableType|DefaultType
      */
     public static function ifNull($testVariable, $default)
     {
@@ -15,7 +17,7 @@ class Utils
     }
 
     /**
-     * @param array $array
+     * @param mixed[] $array
      * @param string|int $key
      * @param mixed $defaultValue
      */
@@ -27,7 +29,7 @@ class Utils
     }
 
     /**
-     * @param array $array
+     * @param mixed[] $array
      * @param string|int $key
      * @param mixed $defaultValue
      * @return mixed
@@ -39,7 +41,7 @@ class Utils
 
     /**
      * @param mixed $value
-     * @return array
+     * @return mixed[]
      */
     public static function mixedToArray($value)
     {

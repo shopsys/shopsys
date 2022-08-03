@@ -56,7 +56,7 @@ class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
-     * @param array $uploadedFiles
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      */
     protected function fillByUploadedFiles(UploadedFileData $uploadedFileData, array $uploadedFiles): void
     {

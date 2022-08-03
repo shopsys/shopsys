@@ -14,8 +14,9 @@ class EncodingConverter
     }
 
     /**
-     * @param array $array
-     * @return array
+     * @template T
+     * @param T[] $array
+     * @return T[]
      */
     protected static function arrayCp1250ToUtf8(array $array)
     {
@@ -31,8 +32,9 @@ class EncodingConverter
     }
 
     /**
-     * @param mixed $value
-     * @return mixed
+     * @template T
+     * @param T $value
+     * @return T
      */
     public static function cp1250ToUtf8($value)
     {

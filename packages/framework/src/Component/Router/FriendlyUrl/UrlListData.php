@@ -18,17 +18,7 @@ class UrlListData
     public $mainFriendlyUrlsByDomainId;
 
     /**
-     * @var array[]
-     *
-     * Format:
-     * [
-     *     [
-     *         'domain' => 1,
-     *         'slug' => 'slug-for-the-first-domain',
-     *     ],
-     *     ...
-     * ]
-     * @see \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::saveUrlListFormData()
+     * @var array<array{domain: int, slug: string}>
      */
     public $newUrls;
 

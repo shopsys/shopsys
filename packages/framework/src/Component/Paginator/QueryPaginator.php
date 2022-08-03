@@ -8,6 +8,10 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
+/**
+ * @template T
+ * @implements \Shopsys\FrameworkBundle\Component\Paginator\PaginatorInterface<T>
+ */
 class QueryPaginator implements PaginatorInterface
 {
     /**
@@ -33,7 +37,7 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @param int $page
      * @param int $pageSize
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getResult($page = 1, $pageSize = null)
     {

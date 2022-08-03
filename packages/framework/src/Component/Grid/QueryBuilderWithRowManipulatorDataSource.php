@@ -6,6 +6,10 @@ use Closure;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
+/**
+ * @template T of array<string, mixed>
+ * @extends \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource<T>
+ */
 class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
 {
     /**
@@ -27,7 +31,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
 
     /**
      * @param int $rowId
-     * @return array
+     * @return T
      */
     public function getOneRow($rowId)
     {
@@ -40,7 +44,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @param int $page
      * @param string|null $orderSourceColumnName
      * @param string $orderDirection
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows($limit = null, $page = 1, $orderSourceColumnName = null, $orderDirection = self::ORDER_ASC)
     {

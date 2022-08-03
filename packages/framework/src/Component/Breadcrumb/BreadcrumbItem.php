@@ -15,14 +15,14 @@ class BreadcrumbItem
     protected $routeName;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $routeParameters;
 
     /**
      * @param string $name
      * @param string|null $routeName
-     * @param array $routeParameters
+     * @param array<string, mixed> $routeParameters
      */
     public function __construct($name, $routeName = null, array $routeParameters = [])
     {
@@ -48,7 +48,7 @@ class BreadcrumbItem
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRouteParameters()
     {

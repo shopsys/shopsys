@@ -63,7 +63,7 @@ class JsFileExtractor implements FileVisitorInterface
     /**
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
-     * @param array $ast
+     * @param \PhpParser\Node[] $ast
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {

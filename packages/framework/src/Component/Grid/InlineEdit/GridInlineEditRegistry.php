@@ -4,15 +4,18 @@ namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit;
 
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidServiceException;
 
+/**
+ * @template T of array<string, mixed>
+ */
 class GridInlineEditRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface[]
+     * @var array<\Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>>
      */
     protected $gridInlineEdits;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface[] $gridInlineEdits
+     * @param array<\Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>> $gridInlineEdits
      */
     public function __construct(iterable $gridInlineEdits)
     {
@@ -21,7 +24,7 @@ class GridInlineEditRegistry
 
     /**
      * @param string $serviceName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface
+     * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>
      */
     public function getGridInlineEdit($serviceName)
     {

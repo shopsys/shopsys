@@ -9,6 +9,16 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * @phpstan-type DomainConfigArray array{
+ *     id: int,
+ *     url: string,
+ *     name: string,
+ *     locale: string,
+ *     styles_directory: string,
+ *     design_id: ?string,
+ * }
+ */
 class DomainsConfigLoader
 {
     /**
@@ -69,7 +79,7 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $processedConfigsByDomainId
+     * @param DomainConfigArray[] $processedConfigsByDomainId
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
     protected function loadDomainConfigsFromArray($processedConfigsByDomainId)
@@ -84,7 +94,7 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $domainConfig
+     * @param DomainConfigArray $domainConfig
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
     protected function processDomainConfigArray(array $domainConfig)
@@ -100,9 +110,9 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
-     * @return array
+     * @param array<int, DomainConfigArray> $domainConfigsByDomainId
+     * @param array<int, array{url: string}> $domainUrlsConfigsByDomainId
+     * @return array<int, DomainConfigArray>
      */
     protected function addUrlsToProcessedConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId)
     {
@@ -118,7 +128,7 @@ class DomainsConfigLoader
     /**
      * @param string $filepath
      * @param \Symfony\Component\Config\Definition\ConfigurationInterface $configDefinition
-     * @return array
+     * @return mixed[]
      */
     protected function getProcessedConfig($filepath, ConfigurationInterface $configDefinition)
     {
@@ -137,8 +147,8 @@ class DomainsConfigLoader
     }
 
     /**
-     * @param array $domainConfigsByDomainId
-     * @param array $domainUrlsConfigsByDomainId
+     * @param array<int, DomainConfigArray> $domainConfigsByDomainId
+     * @param array<int, array{url: string}> $domainUrlsConfigsByDomainId
      * @return bool
      */
     protected function isConfigMatchingUrlsConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId)
