@@ -138,7 +138,6 @@ class ImageFacade
     protected function uploadImage($entity, $temporaryFilenames, $type): void
     {
         if (count($temporaryFilenames) > 0) {
-            $entitiesForFlush = [];
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
             $entityId = $this->getEntityId($entity);
             $oldImage = $this->imageRepository->findImageByEntity(
@@ -149,7 +148,6 @@ class ImageFacade
 
             if ($oldImage !== null) {
                 $this->em->remove($oldImage);
-                $entitiesForFlush[] = $oldImage;
             }
 
             $newImage = $this->imageFactory->create(
@@ -159,7 +157,6 @@ class ImageFacade
                 array_pop($temporaryFilenames)
             );
             $this->em->persist($newImage);
-            $entitiesForFlush[] = $newImage;
 
             $this->em->flush();
         }
