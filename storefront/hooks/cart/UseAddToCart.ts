@@ -57,7 +57,9 @@ export const useAddToCart = (): typeof addToCartAction => {
             );
         }
 
-        const quantityDifference = addToCartResult.addProductResult.addedQuantity - initialQuantity;
+        const quantityDifference = isAbsoluteQuantity
+            ? addToCartResult.addProductResult.addedQuantity - initialQuantity
+            : addToCartResult.addProductResult.addedQuantity;
         const absoluteEventValue =
             Number.parseFloat(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
         const absoluteEventValueWithTax =
