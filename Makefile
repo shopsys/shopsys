@@ -7,7 +7,7 @@ generate-schema:
 	docker-compose exec storefront rm -rf /home/node/app/schema.graphql
 
 generate-schema-native:
-	cd app; phing frontend-api-generate-graphql-schema
+	cd app; php phing frontend-api-generate-graphql-schema
 	cp app/schema.graphql storefront/schema.graphql
 	cd storefront; npm run gql
 	rm -rf storefront/schema.graphql

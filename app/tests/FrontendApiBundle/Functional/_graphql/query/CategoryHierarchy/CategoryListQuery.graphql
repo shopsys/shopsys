@@ -1,0 +1,9 @@
+query CategoryListQuery {
+    categories {
+        name
+        categoryHierarchy {
+            name
+            uuid
+        }
+    }
+}
