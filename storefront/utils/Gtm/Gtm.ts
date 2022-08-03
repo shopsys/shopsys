@@ -31,14 +31,14 @@ import { TransportType } from 'types/transport';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
-    const { cart, promoCode, isLoaded } = useCurrentCart();
+    const { cart, promoCode, isInitiallyLoaded } = useCurrentCart();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { isUserLoggedIn } = useCurrentUserData();
     const { domain } = useShopsysSelector((state) => state);
 
     return useMemo(() => {
         if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-            return { cart: null, isLoaded };
+            return { cart: null, isLoaded: isInitiallyLoaded };
         }
 
         const [urlCart] = getInternationalizedStaticUrls(['/cart'], domain.url);
@@ -62,9 +62,9 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
                 products,
                 coupons,
             },
-            isLoaded,
+            isLoaded: isInitiallyLoaded,
         };
-    }, [cart, cartUuid, domain.currencyCode, domain.url, isLoaded, isUserLoggedIn, promoCode]);
+    }, [cart, cartUuid, domain.currencyCode, domain.url, isInitiallyLoaded, isUserLoggedIn, promoCode]);
 };
 
 export const getGtmPageInfoForFriendlyUrl = (
