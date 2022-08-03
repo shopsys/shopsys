@@ -9,6 +9,7 @@ export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undef
     const event = getNewGtmEcommerceEvent('ec.product_view', true);
     const currencyCode = useShopsysSelector((state) => state.domain.currencyCode);
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
+    const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
         if (
@@ -20,8 +21,8 @@ export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undef
             lastViewedProductDetailSlug.current !== slug
         ) {
             lastViewedProductDetailSlug.current = slug;
-            event.ecommerce = getGtmProductDetailEvent(data, currencyCode);
+            event.ecommerce = getGtmProductDetailEvent(data, currencyCode, url);
             gtmSafePushEvent(event);
         }
-    }, [data, currencyCode, event, slug]);
+    }, [data, currencyCode, event, slug, url]);
 };

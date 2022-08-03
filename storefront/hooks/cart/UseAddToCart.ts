@@ -10,7 +10,7 @@ import { onChangeCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 export const useAddToCart = (): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const { cart } = useCurrentCart();
@@ -73,6 +73,7 @@ export const useAddToCart = (): typeof addToCartAction => {
             listIndex,
             quantityDifference,
             gtmListName,
+            url,
         );
 
         return addToCartResult;

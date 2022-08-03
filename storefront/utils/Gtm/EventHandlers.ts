@@ -21,9 +21,10 @@ export const onClickProductDetailGtmEventHandler = (
     product: ListedProductType | SimpleProductType,
     listName: GtmListNameType,
     index: number,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.product_click', true);
-    event.ecommerce = getGtmProductDetailOnClickEvent(product, listName, index);
+    event.ecommerce = getGtmProductDetailOnClickEvent(product, listName, index, domainUrl);
     gtmSafePushEvent(event);
 };
 
@@ -34,6 +35,7 @@ export const onRemoveCartItemGtmEventHandler = (
     eventValueWithTax: number,
     listIndex: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.remove_from_cart', true);
     event.ecommerce = getGtmChangeCartItemEvent(
@@ -44,6 +46,7 @@ export const onRemoveCartItemGtmEventHandler = (
         eventValue,
         eventValueWithTax,
         listName,
+        domainUrl,
     );
     gtmSafePushEvent(event);
 };
@@ -56,6 +59,7 @@ export const onChangeCartItemGtmEventHandler = (
     listIndex: number,
     quantityDifference: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.add_to_cart', true);
     if (quantityDifference < 0) {
@@ -70,6 +74,7 @@ export const onChangeCartItemGtmEventHandler = (
         eventValue,
         eventValueWithTax,
         listName,
+        domainUrl,
     );
     gtmSafePushEvent(event);
 };
@@ -109,9 +114,10 @@ export const onPurchaseOrderGtmEventHandler = (
     payment: PaymentType,
     promoCode: string | null,
     orderNumber: string,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.purchase', true);
-    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber);
+    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber, domainUrl);
     gtmSafePushEvent(event);
 };
 

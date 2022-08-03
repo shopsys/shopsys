@@ -81,12 +81,13 @@ export const getGtmChangeCartItemEvent = (
     eventValue: number,
     eventValueWithTax: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): GtmChangeCartItemEventType => ({
     listName,
     value: eventValue,
     valueWithTax: eventValueWithTax,
     currency: currencyCode,
-    products: [mapGtmCartItemType(cartItem, listIndex, quantity)],
+    products: [mapGtmCartItemType(cartItem, listIndex, domainUrl, quantity)],
 });
 
 export const getGtmShippingInfoEvent = (
@@ -131,30 +132,37 @@ export const getGtmProductsListEvent = (
     listName: GtmListNameType,
     currentPage: number,
     pageSize: number,
-): GtmProductsListEventType => ({
-    listName,
-    products: products.map((product: ListedProductType, index) => {
-        return mapGtmListedProductType(product, (currentPage - 1) * pageSize + index);
-    }),
-});
+    domainUrl: string,
+): GtmProductsListEventType => {
+    return {
+        listName,
+        products: products.map((product: ListedProductType, index) => {
+            const listedProductIndex = (currentPage - 1) * pageSize + index;
+
+            return mapGtmListedProductType(product, listedProductIndex, domainUrl);
+        }),
+    };
+};
 
 export const getGtmProductDetailOnClickEvent = (
     product: ListedProductType | SimpleProductType,
     listName: GtmListNameType,
     index: number,
+    domainUrl: string,
 ): GtmProductsListEventType => ({
     listName,
-    products: [mapGtmListedProductType(product, index)],
+    products: [mapGtmListedProductType(product, index, domainUrl)],
 });
 
 export const getGtmProductDetailEvent = (
     product: ProductDetailType | MainVariantDetailType,
     currencyCode: string,
+    domainUrl: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
     value: product.price.priceWithoutVat,
     valueWithTax: product.price.priceWithVat,
-    products: [mapGtmProductDetailType(product)],
+    products: [mapGtmProductDetailType(product, domainUrl)],
 });
 
 export const getGtmSearchResultEvent = (searchResult: AutocompleteSearchType, keyword: string): GtmSearchEventType => {

@@ -8,7 +8,7 @@ import { onRemoveCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const [, removeItemFromCart] = useRemoveFromCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
 
     const removeItemFromCartAction = async (
@@ -33,6 +33,7 @@ export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
                 absoluteEventValueWithTax,
                 listIndex,
                 gtmListName,
+                url,
             );
         }
 

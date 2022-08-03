@@ -135,6 +135,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                 payment,
                 promoCode,
                 order.data.CreateOrder.number,
+                domainUrl,
             );
         }
     };

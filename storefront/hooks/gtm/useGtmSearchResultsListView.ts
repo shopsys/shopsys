@@ -8,6 +8,7 @@ export const useGtmSearchResultsListView = (data: SearchType | undefined, search
     const lastSearchQuery = useRef<string | undefined>(undefined);
     const lastViewedSearchPageStartCursor = useRef<string | undefined>(undefined);
     const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
         if (
@@ -23,8 +24,9 @@ export const useGtmSearchResultsListView = (data: SearchType | undefined, search
                 'search result',
                 currentPage,
                 pageSize,
+                url,
             );
             gtmSafePushEvent(event);
         }
-    }, [data, searchQuery, currentPage, pageSize]);
+    }, [data, searchQuery, currentPage, pageSize, url]);
 };

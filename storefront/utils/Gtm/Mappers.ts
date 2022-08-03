@@ -1,5 +1,4 @@
 import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
-import { canUseDom } from 'helpers/canUseDom';
 import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -11,8 +10,13 @@ import {
     SimpleProductType,
 } from 'types/product';
 
-export const mapGtmCartItemType = (cartItem: CartItemType, listIndex: number, quantity?: number): GtmCartItemType => ({
-    ...mapGtmProductInterface(cartItem.product),
+export const mapGtmCartItemType = (
+    cartItem: CartItemType,
+    listIndex: number,
+    domainUrl: string,
+    quantity?: number,
+): GtmCartItemType => ({
+    ...mapGtmProductInterface(cartItem.product, domainUrl),
     listIndex: listIndex + 1,
     quantity: quantity ?? cartItem.quantity,
 });
@@ -20,29 +24,43 @@ export const mapGtmCartItemType = (cartItem: CartItemType, listIndex: number, qu
 export const mapGtmListedProductType = (
     product: ListedProductType | SimpleProductType,
     listIndex: number,
+    domainUrl: string,
 ): GtmListedProductType => ({
-    ...mapGtmProductInterface(product),
+    ...mapGtmProductInterface(product, domainUrl),
     listIndex: listIndex + 1,
 });
 
-export const mapGtmProductDetailType = (product: ProductDetailType | MainVariantDetailType): GtmProductInterface =>
-    mapGtmProductInterface(product);
+export const mapGtmProductDetailType = (
+    product: ProductDetailType | MainVariantDetailType,
+    domainUrl: string,
+): GtmProductInterface => mapGtmProductInterface(product, domainUrl);
 
-const mapGtmProductInterface = (productInterface: ProductInterfaceType): GtmProductInterface => ({
-    id: productInterface.id,
-    name: productInterface.fullName,
-    availability: productInterface.availability.name,
-    imageUrl: mapGtmProductInterfaceImageUrl(productInterface),
-    labels: productInterface.flags.map((simpleFlagType) => simpleFlagType.name),
-    uuid: productInterface.uuid,
-    price: productInterface.price.priceWithoutVat,
-    priceWithTax: productInterface.price.priceWithVat,
-    tax: productInterface.price.vatAmount,
-    url: canUseDom() ? window.location.href : productInterface.slug,
-    sku: productInterface.catalogNumber,
-    brand: productInterface.brand?.name ?? '',
-    categories: productInterface.categoryNames,
-});
+const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUrl: string): GtmProductInterface => {
+    let productUrl;
+
+    if (domainUrl.endsWith('/')) {
+        const domainUrlWithoutTrailingSlash = domainUrl.slice(0, domainUrl.length - 1);
+        productUrl = domainUrlWithoutTrailingSlash + productInterface.slug;
+    } else {
+        productUrl = domainUrl + productInterface.slug;
+    }
+
+    return {
+        id: productInterface.id,
+        name: productInterface.fullName,
+        availability: productInterface.availability.name,
+        imageUrl: mapGtmProductInterfaceImageUrl(productInterface),
+        labels: productInterface.flags.map((simpleFlagType) => simpleFlagType.name),
+        uuid: productInterface.uuid,
+        price: productInterface.price.priceWithoutVat,
+        priceWithTax: productInterface.price.priceWithVat,
+        tax: productInterface.price.vatAmount,
+        url: productUrl,
+        sku: productInterface.catalogNumber,
+        brand: productInterface.brand?.name ?? '',
+        categories: productInterface.categoryNames,
+    };
+};
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {
     if ('image' in productInterface) {

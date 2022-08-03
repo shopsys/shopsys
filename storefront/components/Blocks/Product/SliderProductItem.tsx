@@ -16,6 +16,7 @@ import {
 import Image from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
+import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
 import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
@@ -28,6 +29,7 @@ type ProductItemProps = {
 
 const ProductItem: FC<ProductItemProps> = (props) => {
     const testIdentifier = 'blocks-product-sliderproductitem-';
+    const { url } = useShopsysSelector((state) => state.domain);
 
     return (
         <SliderProductItemStyled
@@ -38,7 +40,7 @@ const ProductItem: FC<ProductItemProps> = (props) => {
                 <NextLink href={props.product.slug} passHref>
                     <SliderProductItemLinkStyled
                         onClick={() =>
-                            onClickProductDetailGtmEventHandler(props.product, props.gtmListName, props.listIndex)
+                            onClickProductDetailGtmEventHandler(props.product, props.gtmListName, props.listIndex, url)
                         }
                     >
                         <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>

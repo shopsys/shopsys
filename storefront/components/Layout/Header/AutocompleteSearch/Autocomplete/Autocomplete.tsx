@@ -21,7 +21,7 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType, SimpleProductType } from 'types/product';
@@ -49,14 +49,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainConfig.url);
 
-    const onProductDetailRedirectHandler = (
-        product: SimpleProductType | ListedProductType,
-        listName: GtmListNameType,
-        index: number,
-    ) => {
-        onClickProductDetailGtmEventHandler(product, listName, index);
-        onClickSuggestResultGtmEventHandler(props.autocompleteSearchQueryValue, 'product', product.fullName);
-    };
+    const onProductDetailRedirectHandler = useCallback(
+        (product: SimpleProductType | ListedProductType, listName: GtmListNameType, index: number) => {
+            onClickProductDetailGtmEventHandler(product, listName, index, domainConfig.url);
+            onClickSuggestResultGtmEventHandler(props.autocompleteSearchQueryValue, 'product', product.fullName);
+        },
+        [props.autocompleteSearchQueryValue, domainConfig.url],
+    );
 
     return (
         <AutocompleteStyled isActive={props.isAutocompleteActive} data-testid={testIdentifier}>

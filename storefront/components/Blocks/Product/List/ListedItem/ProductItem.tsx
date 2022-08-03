@@ -15,7 +15,8 @@ import ProductExposedStoresCount from 'components/Blocks/Product/Availability/Pr
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 import NextLink from 'next/link';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
+import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
 import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
@@ -28,14 +29,14 @@ type ProductItemProps = {
 
 const ProductItem: FC<ProductItemProps> = (props) => {
     const testIdentifier = 'blocks-product-list-listeditem-' + props.product.catalogNumber;
+    const { url } = useShopsysSelector((state) => state.domain);
 
-    const onProductDetailRedirectHandler = async (
-        product: ListedProductType,
-        listName: GtmListNameType,
-        index: number,
-    ) => {
-        await onClickProductDetailGtmEventHandler(product, listName, index);
-    };
+    const onProductDetailRedirectHandler = useCallback(
+        async (product: ListedProductType, listName: GtmListNameType, index: number) => {
+            await onClickProductDetailGtmEventHandler(product, listName, index, url);
+        },
+        [url],
+    );
 
     return (
         <ProductItemStyled data-testid={testIdentifier}>
