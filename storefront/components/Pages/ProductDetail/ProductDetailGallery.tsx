@@ -5,14 +5,16 @@ import {
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
+import clsx from 'clsx';
 import Image from 'components/Basic/Image';
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
+import LightGallery from 'lightgallery/react';
 import { FC, useState } from 'react';
-import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
 
@@ -46,44 +48,28 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
     return isSliderVisible ? (
         <ProductDetailImageSlider galleryItems={props.images} flags={props.flags} />
     ) : (
-        <SimpleReactLightbox>
-            <SRLWrapper
-                options={{
-                    settings: {
-                        overlayColor: 'rgba(11,11,11,0.65)',
-                    },
-                    buttons: {
-                        showDownloadButton: false,
-                        showAutoplayButton: false,
-                        showThumbnailsButton: false,
-                    },
-                    thumbnails: {
-                        showThumbnails: false,
-                    },
-                }}
-            >
-                <ProductDetailGalleryThumbnailsStyled>
-                    {props.images.map(
-                        (image, index) =>
-                            index > 0 && (
-                                <ProductDetailGalleryThumbnailsItemStyled key={index}>
-                                    <a href={image.sizes?.find((size) => size.size === 'default')?.url}>
-                                        <Image image={image} alt={props.productName} type="default" />
-                                    </a>
-                                </ProductDetailGalleryThumbnailsItemStyled>
-                            ),
-                    )}
-                </ProductDetailGalleryThumbnailsStyled>
-                <ProductDetailGalleryMainImageStyled>
-                    <a href={mainImageUrl}>
-                        <Image image={mainImage} alt={props.productName} type="default" maxHeight="400px" />
-                    </a>
-                    <ProductDetailGalleryFlagsStyled>
-                        <ProductFlags flags={props.flags} />
-                    </ProductDetailGalleryFlagsStyled>
-                </ProductDetailGalleryMainImageStyled>
-            </SRLWrapper>
-        </SimpleReactLightbox>
+        <LightGallery mode="lg-fade" thumbnail plugins={[lgThumbnail]} selector=".lightboxItem">
+            <ProductDetailGalleryMainImageStyled data-src={mainImageUrl} className="lightboxItem">
+                <Image image={mainImage} alt={props.productName} type="default" maxHeight="400px" />
+                <ProductDetailGalleryFlagsStyled>
+                    <ProductFlags flags={props.flags} />
+                </ProductDetailGalleryFlagsStyled>
+            </ProductDetailGalleryMainImageStyled>
+            <ProductDetailGalleryThumbnailsStyled>
+                {props.images.map(
+                    (image, index) =>
+                        index > 0 && (
+                            <ProductDetailGalleryThumbnailsItemStyled
+                                key={index}
+                                className={clsx('lightboxItem', index > 6 && 'isHidden')}
+                                data-src={image.sizes?.find((size) => size.size === 'default')?.url}
+                            >
+                                <Image image={image} alt={props.productName} type="default" />
+                            </ProductDetailGalleryThumbnailsItemStyled>
+                        ),
+                )}
+            </ProductDetailGalleryThumbnailsStyled>
+        </LightGallery>
     );
 };
 
