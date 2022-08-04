@@ -28,15 +28,17 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const Registration: FC = () => {
+type RegistrationProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const Registration: FC<RegistrationProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [registerResult, register] = useRegistrationMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [RegistrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
@@ -77,7 +79,7 @@ const Registration: FC = () => {
 
     return (
         <>
-            <SimpleLayout heading={t('Registration')} breadcrumb={[{ name: t('Registration'), slug: RegistrationUrl }]}>
+            <SimpleLayout heading={t('Registration')} breadcrumb={breadcrumbs}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
                         <ContentSectionStyled>

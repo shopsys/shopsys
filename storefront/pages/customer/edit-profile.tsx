@@ -8,7 +8,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
@@ -21,20 +21,21 @@ const EditProfilePage: FC = () => {
         domainUrl,
     );
     const currentCustomerUserData = useCurrentCustomerData();
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const breadcrumbs = useMemo(
+        () => [
+            { name: t('Customer'), slug: customerUrl },
+            { name: t('Edit profile'), slug: customerEditProfileUrl },
+        ],
+        [customerEditProfileUrl, customerUrl, t],
+    );
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Edit profile')}>
-                <SimpleLayout
-                    heading={t('Edit profile')}
-                    breadcrumb={[
-                        { name: t('Customer'), slug: customerUrl },
-                        { name: t('Edit profile'), slug: customerEditProfileUrl },
-                    ]}
-                >
+                <SimpleLayout heading={t('Edit profile')} breadcrumb={breadcrumbs}>
                     {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
                         <EditProfile currentCustomerUser={currentCustomerUserData} />
                     )}

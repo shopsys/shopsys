@@ -21,12 +21,14 @@ import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { NewPasswordFormType } from 'types/form';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type NewPasswordPageProps = {
     hash: string;
     email: string;
+    breadcrumbs: BreadcrumbItemType[];
 };
 
 const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
@@ -81,10 +83,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
 
     if (props.hash === '' || props.email === '') {
         return (
-            <SimpleLayout
-                heading={t('Set new password')}
-                breadcrumb={[{ name: t('Set new password'), slug: newPasswordUrl }]}
-            >
+            <SimpleLayout heading={t('Set new password')} breadcrumb={props.breadcrumbs}>
                 <Trans
                     i18nKey="ResendRecoveryLink"
                     defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."

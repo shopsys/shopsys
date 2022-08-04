@@ -5,6 +5,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { CartItemType } from 'types/cart';
 import {
     GtmCartInfoType,
@@ -28,15 +29,17 @@ import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProd
 import { AutocompleteSearchType } from 'types/search';
 import { TransportType } from 'types/transport';
 
-export const useGtmStaticPageViewEvent = (pageType: GtmPageType): GtmPageViewEventType => {
+export const useGtmStaticPageViewEvent = (
+    pageType: GtmPageType,
+    breadcrumbs?: BreadcrumbItemType[],
+): GtmPageViewEventType => {
     const path = useRouter().asPath;
-    const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path), [pageType, path]);
+    const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path, breadcrumbs), [pageType, path, breadcrumbs]);
     return useGtmPageViewEvent(gtmPageInfo);
 };
 
 export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEventType => {
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const { isUserLoggedIn } = useCurrentUserData();
     const { user } = useCurrentUserData();
     const cartEventInfo = useGtmCartEventInfo();
 
@@ -44,7 +47,7 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
         () => ({
             event: 'page_ready',
             page: pageInfo,
-            user: getGtmUserInfo(user, isUserLoggedIn),
+            user: getGtmUserInfo(user),
             device: getGtmDeviceType(),
             consent: getGtmConsentInfo(),
             currency: domainConfig.currencyCode,
@@ -58,7 +61,6 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
             cartEventInfo.isLoaded,
             domainConfig.currencyCode,
             domainConfig.defaultLocale,
-            isUserLoggedIn,
             pageInfo,
             user,
         ],
@@ -67,18 +69,25 @@ export const useGtmPageViewEvent = (pageInfo: GtmPageInfoType): GtmPageViewEvent
 
 export const getNewGtmEcommerceEvent = (eventType: GtmEventType, clear = false): GtmEcommerceEventType => ({
     event: eventType,
-    _clear: clear,
     ecommerce: undefined,
+    _clear: clear,
 });
 
 export const getGtmChangeCartItemEvent = (
     cartItem: CartItemType,
     listIndex: number,
     quantity: number,
+    currencyCode: string,
+    eventValue: number,
+    eventValueWithTax: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): GtmChangeCartItemEventType => ({
     listName,
-    products: [mapGtmCartItemType(cartItem, listIndex, quantity)],
+    value: eventValue,
+    valueWithTax: eventValueWithTax,
+    currency: currencyCode,
+    products: [mapGtmCartItemType(cartItem, listIndex, domainUrl, quantity)],
 });
 
 export const getGtmShippingInfoEvent = (
@@ -90,6 +99,8 @@ export const getGtmShippingInfoEvent = (
     const { shippingDetail, shippingExtra } = mapGtmShippingInfo(pickupPlace);
 
     return {
+        value: cartInfoType.value,
+        valueWithTax: cartInfoType.valueWithTax,
         coupons: cartInfoType.coupons,
         products: cartInfoType.products ?? [],
         currency: cartInfoType.currency,
@@ -106,6 +117,8 @@ export const getGtmPaymentInfoEvent = (
     cartInfoType: GtmCartInfoType,
     payment: PaymentType,
 ): GtmPaymentInfoEventType => ({
+    value: cartInfoType.value,
+    valueWithTax: cartInfoType.valueWithTax,
     coupons: cartInfoType.coupons,
     products: cartInfoType.products ?? [],
     currency: cartInfoType.currency,
@@ -119,29 +132,37 @@ export const getGtmProductsListEvent = (
     listName: GtmListNameType,
     currentPage: number,
     pageSize: number,
-): GtmProductsListEventType => ({
-    listName,
-    products: products.map((product: ListedProductType, index) => {
-        return mapGtmListedProductType(product, (currentPage - 1) * pageSize + index);
-    }),
-});
+    domainUrl: string,
+): GtmProductsListEventType => {
+    return {
+        listName,
+        products: products.map((product: ListedProductType, index) => {
+            const listedProductIndex = (currentPage - 1) * pageSize + index;
+
+            return mapGtmListedProductType(product, listedProductIndex, domainUrl);
+        }),
+    };
+};
 
 export const getGtmProductDetailOnClickEvent = (
     product: ListedProductType | SimpleProductType,
     listName: GtmListNameType,
     index: number,
+    domainUrl: string,
 ): GtmProductsListEventType => ({
     listName,
-    products: [mapGtmListedProductType(product, index)],
+    products: [mapGtmListedProductType(product, index, domainUrl)],
 });
 
 export const getGtmProductDetailEvent = (
     product: ProductDetailType | MainVariantDetailType,
     currencyCode: string,
+    domainUrl: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
-    value: product.price.priceWithVat,
-    products: [mapGtmProductDetailType(product)],
+    value: product.price.priceWithoutVat,
+    valueWithTax: product.price.priceWithVat,
+    products: [mapGtmProductDetailType(product, domainUrl)],
 });
 
 export const getGtmSearchResultEvent = (searchResult: AutocompleteSearchType, keyword: string): GtmSearchEventType => {

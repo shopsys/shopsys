@@ -15,15 +15,17 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PasswordResetFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
+import 'utils/getInternationalizedStaticUrls';
 
-const ResetPassword: FC = () => {
+type ResetPasswordProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const ResetPassword: FC<ResetPasswordProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [resetPasswordResult, resetPassword] = usePasswordRecoveryMutationApi();
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
@@ -43,10 +45,7 @@ const ResetPassword: FC = () => {
 
     return (
         <>
-            <SimpleLayout
-                heading={t('Forgotten password')}
-                breadcrumb={[{ name: t('Forgotten password'), slug: resetPasswordUrl }]}
-            >
+            <SimpleLayout heading={t('Forgotten password')} breadcrumb={breadcrumbs}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)} noValidate>
                         <Controller

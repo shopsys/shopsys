@@ -9,21 +9,19 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { OrderDetailType } from 'types/orders';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type OrderDetailPageProps = {
     order: OrderDetailType;
+    breadcrumbs: BreadcrumbItemType[];
 };
 
 const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
 
-const OrderDetailPage: FC<OrderDetailPageProps> = ({ order }) => {
+const OrderDetailPage: FC<OrderDetailPageProps> = ({ order, breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const currentDomainConfig = useShopsysSelector((state) => state.domain);
-    const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], currentDomainConfig.url);
 
     return (
         <>
@@ -33,7 +31,7 @@ const OrderDetailPage: FC<OrderDetailPageProps> = ({ order }) => {
                         {t('Order number')} {order.number}
                     </Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('My orders'), slug: customerOrdersUrl }]} />
+                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <Webline>
                 <TableGrid>

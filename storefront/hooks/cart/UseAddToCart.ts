@@ -10,7 +10,7 @@ import { onChangeCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 export const useAddToCart = (): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const { cart } = useCurrentCart();
@@ -42,7 +42,7 @@ export const useAddToCart = (): typeof addToCartAction => {
             return null;
         }
 
-        const cartItem = addToCartResult.addProductResult.cartItem;
+        const addedCartItem = addToCartResult.addProductResult.cartItem;
         const notOnStockQuantity = addToCartResult.addProductResult.notOnStockQuantity;
 
         if (notOnStockQuantity > 0) {
@@ -50,18 +50,30 @@ export const useAddToCart = (): typeof addToCartAction => {
                 t(
                     'You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})',
                     {
-                        quantity: cartItem.quantity,
-                        unitName: cartItem.product.unit.name,
+                        quantity: addedCartItem.quantity,
+                        unitName: addedCartItem.product.unit.name,
                     },
                 ),
             );
         }
 
+        const quantityDifference = isAbsoluteQuantity
+            ? addToCartResult.addProductResult.addedQuantity - initialQuantity
+            : addToCartResult.addProductResult.addedQuantity;
+        const absoluteEventValue =
+            Number.parseFloat(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
+        const absoluteEventValueWithTax =
+            Number.parseFloat(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
+
         onChangeCartItemGtmEventHandler(
-            mapCartItem(cartItem, currencyCode),
+            mapCartItem(addedCartItem, currencyCode),
+            currencyCode,
+            absoluteEventValue,
+            absoluteEventValueWithTax,
             listIndex,
-            addToCartResult.addProductResult.addedQuantity - initialQuantity,
+            quantityDifference,
             gtmListName,
+            url,
         );
 
         return addToCartResult;

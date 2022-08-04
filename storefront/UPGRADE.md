@@ -855,3 +855,11 @@
         ],
     },
     ```
+
+### GTM polishing
+  - [FWCC-1079](https://shopsys.atlassian.net/browse/FWCC-1079)
+  - [FWCC-1079 GTM polishing](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/716/diffs)
+  - most significant changes
+    - implemented changes according to new/updated GTM specification
+      - all changes are split into commits with descriptive commit names
+    - removed duplicit product list view from homepage promoted products

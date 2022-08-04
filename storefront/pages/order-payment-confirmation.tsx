@@ -60,6 +60,15 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     initDomainConfig(context, store);
     const orderUuid = getOrderUuid(context.query.orderIdentifier);
 
+    if (orderUuid === '') {
+        return {
+            redirect: {
+                destination: '/',
+                statusCode: 301,
+            },
+        };
+    }
+
     return initServerSideProps(context, store, false, [
         { query: OrderSentPageContentDocumentApi, variables: { orderUuid } },
     ]);

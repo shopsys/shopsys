@@ -7,14 +7,17 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const Index: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const [newPasswordUrl] = getInternationalizedStaticUrls(['/new-password'], domainUrl);
+    const breadcrumbs = useMemo(() => [{ name: t('Set new password'), slug: newPasswordUrl }], [newPasswordUrl, t]);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     const router = useRouter();
@@ -42,7 +45,7 @@ const Index: FC<ServerSidePropsType> = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Set new password')}>
-                <NewPassword hash={hashParam} email={emailParam} />
+                <NewPassword hash={hashParam} email={emailParam} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

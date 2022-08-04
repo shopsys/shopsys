@@ -20,16 +20,17 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PersonalDataOverviewFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const PersonalDataOverview: FC = () => {
+type PersonalDataOverviewProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const PersonalDataOverview: FC<PersonalDataOverviewProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
     const [personalDataOverviewResult, personalDataOverview] = usePersonalDataRequestMutationApi();
-    const { url } = useShopsysSelector((state) => state.domain);
-    const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], url);
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
@@ -57,10 +58,7 @@ const PersonalDataOverview: FC = () => {
 
     return (
         <>
-            <SimpleLayout
-                heading={t('Personal Data Overview')}
-                breadcrumb={[{ name: t('Personal Data Overview'), slug: personalDataOverviewUrl }]}
-            >
+            <SimpleLayout heading={t('Personal Data Overview')} breadcrumb={breadcrumbs}>
                 {contentSiteText !== undefined && (
                     <ContentTextStyled>
                         <UserText htmlContent={contentSiteText} />

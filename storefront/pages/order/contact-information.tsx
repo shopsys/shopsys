@@ -50,7 +50,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('step3');
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('shipping data');
     useGtmStaticPageView(gtmStaticPageViewEvent);
     useGtmShippingDataView(transport, pickupPlace, payment?.name, gtmStaticPageViewEvent);
 
@@ -135,6 +135,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                 payment,
                 promoCode,
                 order.data.CreateOrder.number,
+                domainUrl,
             );
         }
     };

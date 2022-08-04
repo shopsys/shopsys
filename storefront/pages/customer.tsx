@@ -6,21 +6,24 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const CustomerPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
+    const [customerUrl] = getInternationalizedStaticUrls(['/customer'], domainUrl);
+    const breadcrumbs = useMemo(() => [{ name: t('Customer'), slug: customerUrl }], [customerUrl, t]);
+    const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Customer')}>
-                <Customer />
+                <Customer breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

@@ -21,34 +21,61 @@ export const onClickProductDetailGtmEventHandler = (
     product: ListedProductType | SimpleProductType,
     listName: GtmListNameType,
     index: number,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.product_click', true);
-    event.ecommerce = getGtmProductDetailOnClickEvent(product, listName, index);
+    event.ecommerce = getGtmProductDetailOnClickEvent(product, listName, index, domainUrl);
     gtmSafePushEvent(event);
 };
 
 export const onRemoveCartItemGtmEventHandler = (
     removedCartItem: CartItemType,
+    currencyCode: string,
+    eventValue: number,
+    eventValueWithTax: number,
     listIndex: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.remove_from_cart', true);
-    event.ecommerce = getGtmChangeCartItemEvent(removedCartItem, listIndex, removedCartItem.quantity, listName);
+    event.ecommerce = getGtmChangeCartItemEvent(
+        removedCartItem,
+        listIndex,
+        removedCartItem.quantity,
+        currencyCode,
+        eventValue,
+        eventValueWithTax,
+        listName,
+        domainUrl,
+    );
     gtmSafePushEvent(event);
 };
 
 export const onChangeCartItemGtmEventHandler = (
     addedCartItem: CartItemType,
+    currencyCode: string,
+    eventValue: number,
+    eventValueWithTax: number,
     listIndex: number,
     quantityDifference: number,
     listName: GtmListNameType,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.add_to_cart', true);
     if (quantityDifference < 0) {
         event.event = 'ec.remove_from_cart';
     }
     const absoluteQuantity = Math.abs(quantityDifference);
-    event.ecommerce = getGtmChangeCartItemEvent(addedCartItem, listIndex, absoluteQuantity, listName);
+    event.ecommerce = getGtmChangeCartItemEvent(
+        addedCartItem,
+        listIndex,
+        absoluteQuantity,
+        currencyCode,
+        eventValue,
+        eventValueWithTax,
+        listName,
+        domainUrl,
+    );
     gtmSafePushEvent(event);
 };
 
@@ -87,9 +114,10 @@ export const onPurchaseOrderGtmEventHandler = (
     payment: PaymentType,
     promoCode: string | null,
     orderNumber: string,
+    domainUrl: string,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.purchase', true);
-    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber);
+    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber, domainUrl);
     gtmSafePushEvent(event);
 };
 

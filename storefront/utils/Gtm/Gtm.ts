@@ -1,10 +1,13 @@
+import { getRandomPageId } from './Helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { MD5 } from 'crypto-js';
 import { canUseDom } from 'helpers/canUseDom';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { CartItemType, CartType } from 'types/cart';
 import { CategoryDetailType } from 'types/category';
 import { CurrentCustomerType } from 'types/customer';
@@ -28,21 +31,21 @@ import { TransportType } from 'types/transport';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
-    const { cart, promoCode, isLoaded } = useCurrentCart();
+    const { cart, promoCode, isInitiallyLoaded } = useCurrentCart();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { isUserLoggedIn } = useCurrentUserData();
     const { domain } = useShopsysSelector((state) => state);
 
     return useMemo(() => {
         if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-            return { cart: null, isLoaded };
+            return { cart: null, isLoaded: isInitiallyLoaded };
         }
 
         const [urlCart] = getInternationalizedStaticUrls(['/cart'], domain.url);
 
         let products: GtmCartItemType[] | undefined = undefined;
         if (cart.items.length > 0) {
-            products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index));
+            products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index, domain.url));
         }
 
         const coupons: string[] = [];
@@ -54,23 +57,26 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             cart: {
                 urlCart,
                 currency: domain.currencyCode,
-                value: cart.totalPrice.priceWithoutVat,
-                valueWithTax: cart.totalPrice.priceWithVat,
+                value: cart.totalItemsPrice.priceWithoutVat,
+                valueWithTax: cart.totalItemsPrice.priceWithVat,
                 products,
                 coupons,
             },
-            isLoaded,
+            isLoaded: isInitiallyLoaded,
         };
-    }, [cart, cartUuid, domain.currencyCode, domain.url, isLoaded, isUserLoggedIn, promoCode]);
+    }, [cart, cartUuid, domain.currencyCode, domain.url, isInitiallyLoaded, isUserLoggedIn, promoCode]);
 };
 
 export const getGtmPageInfoForFriendlyUrl = (
     data: FriendlyUrlPageType | null | undefined,
     slug: string,
+    breadcrumbs: BreadcrumbItemType[] | undefined,
 ): GtmPageInfoType => {
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
         path: slug,
+        pageId: getRandomPageId(),
+        breadcrumbs: breadcrumbs ?? [],
     };
 
     if (data === null || data === undefined) {
@@ -95,7 +101,7 @@ export const getGtmPageInfoForFriendlyUrl = (
             break;
         case 'BlogArticle':
             defaultPageInfo.type = 'article';
-            defaultPageInfo.id = data.uuid;
+            defaultPageInfo.articleId = data.uuid;
             break;
         case 'Brand':
             defaultPageInfo.type = 'brand';
@@ -113,9 +119,15 @@ export const getGtmPageInfoForFriendlyUrl = (
     return defaultPageInfo;
 };
 
-export const getGtmPageInfoType = (pageType: GtmPageType, path: string): GtmPageInfoType => ({
+export const getGtmPageInfoType = (
+    pageType: GtmPageType,
+    path: string,
+    breadcrumbs: BreadcrumbItemType[] | undefined,
+): GtmPageInfoType => ({
     type: pageType,
     path,
+    pageId: getRandomPageId(),
+    breadcrumbs: breadcrumbs ?? [],
 });
 
 const getGtmCategoryInfo = (category: CategoryDetailType) => {
@@ -136,6 +148,7 @@ export const getGtmPurchaseData = (
     payment: PaymentType,
     promoCode: string | null,
     orderNumber: string,
+    domainUrl: string,
 ): GtmPurchaseType => {
     const coupons: string[] = [];
     if (promoCode !== null) {
@@ -149,11 +162,11 @@ export const getGtmPurchaseData = (
         id: orderNumber,
         coupons: coupons,
         discountAmount: cart.totalDiscountPrice.priceWithVat,
-        revenue: cart.totalPrice.priceWithoutVat,
-        revenueWithTax: cart.totalPrice.priceWithVat,
-        revenueTax: cart.totalPrice.vatAmount,
+        value: cart.totalPrice.priceWithoutVat,
+        valueWithTax: cart.totalPrice.priceWithVat,
+        valueTax: cart.totalPrice.vatAmount,
         currency: cart.totalPrice.currencyCode,
-        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, index)),
+        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, index, domainUrl)),
         paymentType: payment.name,
         paymentPrice: payment.price.priceWithoutVat,
         paymentPriceWithTax: payment.price.priceWithVat,
@@ -181,18 +194,16 @@ export const getGtmConsentInfo = (): GtmConsentInfoType => {
     };
 };
 
-export const getGtmUserInfo = (
-    currentCustomer: CurrentCustomerType | null | undefined,
-    isUserLoggedIn: boolean,
-): GtmUserInfoType => {
+export const getGtmUserInfo = (currentCustomer: CurrentCustomerType | null | undefined): GtmUserInfoType => {
     const userInfo: GtmUserInfoType = {
         type: 'visitor',
     };
 
-    if (isUserLoggedIn && currentCustomer !== undefined && currentCustomer !== null) {
+    if (currentCustomer !== undefined && currentCustomer !== null) {
         userInfo.type = 'customer';
         userInfo.id = currentCustomer.uuid;
         userInfo.email = currentCustomer.email;
+        userInfo.emailHash = MD5(currentCustomer.email).toString();
         userInfo.phoneNumber = currentCustomer.telephone;
         userInfo.name = currentCustomer.firstName;
         userInfo.surname = currentCustomer.lastName;

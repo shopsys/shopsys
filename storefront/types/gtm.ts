@@ -1,3 +1,5 @@
+import { BreadcrumbItemType } from './breadcrumb';
+
 export type GtmPageType =
     | 'home'
     | 'crossroad'
@@ -5,8 +7,8 @@ export type GtmPageType =
     | 'seo category' // prepared SEO category - friendly URL
     | 'product' // product - friendly URL
     | 'cart' // /cart
-    | 'step2' // /transport-and-payment
-    | 'step3' // /contact-information
+    | 'transport pay' // /transport-and-payment
+    | 'shipping data' // /contact-information
     | 'purchase' // /order-confirmation
     | 'search' // /search
     | 'blog' // blog - friendly URL
@@ -21,7 +23,8 @@ export type GtmPageType =
     | 'about'
     | '404'
     | 'other' // fallback for new/unknown pages.
-    | 'cookie consent';
+    | 'cookie consent'
+    | 'contact';
 
 export type GtmListNameType =
     | 'blog article'
@@ -31,11 +34,11 @@ export type GtmListNameType =
     | 'flag'
     | 'accessory'
     | 'variants'
-    | 'search'
+    | 'search result'
     | 'homepage promo products'
     | 'cart'
     | 'detail'
-    | 'autocomplete';
+    | 'suggest';
 
 export type GtmEventType =
     | 'page_ready' // page view event
@@ -70,9 +73,9 @@ export type GtmConsentUpdateType = {
 export type GtmEcommerceEventType = {
     event: GtmEventType;
     ecommerce: unknown;
-    _clear?: boolean;
     eventTimeout?: number;
     eventCallback?: (id: string) => void;
+    _clear?: boolean;
 };
 
 export type GtmPageViewEventType = {
@@ -83,9 +86,9 @@ export type GtmPageViewEventType = {
     page: GtmPageInfoType;
     user: GtmUserInfoType;
     device: GtmDeviceTypes;
-    _clear: boolean;
     _isLoaded: boolean;
     cart?: GtmCartInfoType | null;
+    _clear: boolean;
 };
 
 export type GtmSearchEventType = {
@@ -99,11 +102,12 @@ export type GtmSearchEventType = {
 export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
-    breadcrumbs?: GtmBreadcrumbInfoType[];
+    pageId: string; // random string generated for every page load
+    breadcrumbs: BreadcrumbItemType[];
     category?: string[]; // name from root
     categoryId?: number[];
     categoryLevel?: number;
-    id?: string; // for article page type (UUID used)
+    articleId?: string; // for article page type (UUID used)
 };
 
 export type GtmCartInfoType = {
@@ -125,6 +129,7 @@ export type GtmUserInfoType = {
     group?: string;
     id?: string;
     email?: string;
+    emailHash?: string;
     name?: string;
     surname?: string;
     phoneNumber?: string; // phone number in intl. format (+420777123456)
@@ -138,12 +143,6 @@ export type GtmConsentInfoType = {
     statistics: GtmConsent;
     marketing: GtmConsent;
     preferences: GtmConsent;
-};
-
-export type GtmBreadcrumbInfoType = {
-    id: number;
-    name: string;
-    link: string;
 };
 
 /** product data types for category list, detail, cart item and order item */
@@ -161,7 +160,7 @@ export type GtmProductInterface = {
     sku: string;
     brand: string;
     categories: string[];
-    listIndex: number;
+    listIndex?: number;
     collection?: string;
     coupon?: string;
     size?: string;
@@ -185,9 +184,9 @@ export type GtmCartItemType = GtmProductInterface & {
 export type GtmPurchaseType = {
     currency: string;
     id: string;
-    revenue: number; // order price without shipping and payment price
-    revenueWithTax: number;
-    revenueTax: number;
+    value: number; // order price without shipping and payment price
+    valueWithTax: number;
+    valueTax: number;
     coupons: string[];
     discountAmount: number;
     paymentType: string;
@@ -225,6 +224,14 @@ export type GtmSuggestClickType = {
 
 export type GtmChangeCartItemEventType = {
     listName: GtmListNameType;
+    currency: string;
+    /**
+     * value of the event, depending on the context
+     * for addToCart it is the value of added products
+     * for removeFromCart it is the value of removed products
+     */
+    value: number;
+    valueWithTax: number; // same as above but with tax
     products: GtmCartItemType[];
 };
 
@@ -236,10 +243,13 @@ export type GtmProductsListEventType = {
 export type GtmProductDetailEventType = {
     currency: string;
     value: number;
+    valueWithTax: number;
     products: GtmProductInterface[];
 };
 
 export type GtmShippingInfoEventType = {
+    value: number; // value of all products
+    valueWithTax: number; // value of all products with tax
     currency: string;
     coupons: string[];
     paymentType?: string;
@@ -252,6 +262,8 @@ export type GtmShippingInfoEventType = {
 };
 
 export type GtmPaymentInfoEventType = {
+    value: number; // value of all products
+    valueWithTax: number; // value of all products with tax
     currency: string;
     coupons: string[];
     paymentType: string;

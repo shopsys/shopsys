@@ -9,6 +9,7 @@ export const useGtmCategoryProductListView = (data: Maybe<FriendlyUrlPageType> |
     const lastViewedCategorySlug = useRef<string | undefined>(undefined);
     const lastViewedCategoryPageStartCursor = useRef<string | undefined>(undefined);
     const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
         if (
@@ -27,8 +28,9 @@ export const useGtmCategoryProductListView = (data: Maybe<FriendlyUrlPageType> |
                 getCategoryOrSeoCategoryGtmListName(data, slug),
                 currentPage,
                 pageSize,
+                url,
             );
             gtmSafePushEvent(event);
         }
-    }, [data, slug, currentPage, pageSize]);
+    }, [data, slug, currentPage, pageSize, url]);
 };

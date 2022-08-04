@@ -11,10 +11,15 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import NextLink from 'next/link';
 import { FC, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ListedOrderType } from 'types/orders';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-type ListedOrdersProps = { orders: ListedOrderType[] | undefined; totalCount: number | undefined };
+type ListedOrdersProps = {
+    orders: ListedOrderType[] | undefined;
+    totalCount: number | undefined;
+    breadcrumbs: BreadcrumbItemType[];
+};
 
 const Orders: FC<ListedOrdersProps> = (props) => {
     const testIdentifier = 'pages-customer-orders-';
@@ -24,10 +29,7 @@ const Orders: FC<ListedOrdersProps> = (props) => {
     const { url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
-    const [customerUrl, customerOrdersUrl, customerOrderDetailUrl] = getInternationalizedStaticUrls(
-        ['/customer', '/customer/orders', '/customer/order-detail'],
-        url,
-    );
+    const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
     const orders = props.orders;
 
     return (
@@ -36,13 +38,7 @@ const Orders: FC<ListedOrdersProps> = (props) => {
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('My orders')}</Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs
-                    key="breadcrumb"
-                    breadcrumb={[
-                        { name: t('Customer'), slug: customerUrl },
-                        { name: t('My orders'), slug: customerOrdersUrl },
-                    ]}
-                />
+                <Breadcrumbs key="breadcrumb" breadcrumb={props.breadcrumbs} />
             </Webline>
             <div ref={containerWrapRef}>
                 <Webline>

@@ -24,6 +24,7 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SearchType } from 'types/search';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
@@ -36,9 +37,10 @@ enum NUMBER_OF_VISIBLE_ITEMS {
 
 type SearchProps = {
     searchResults: SearchType | undefined;
+    breadcrumbs: BreadcrumbItemType[];
 };
 
-const Search: FC<SearchProps> = ({ searchResults }) => {
+const Search: FC<SearchProps> = ({ searchResults, breadcrumbs }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -115,7 +117,7 @@ const Search: FC<SearchProps> = ({ searchResults }) => {
 
     return (
         <>
-            <Breadcrumbs breadcrumb={[{ name: t('Search'), slug: searchUrl }]} />
+            <Breadcrumbs breadcrumb={breadcrumbs} />
             <Webline>
                 <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             </Webline>

@@ -8,14 +8,19 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const Customer: FC = () => {
+type CustomerProps = {
+    breadcrumbs: BreadcrumbItemType[];
+};
+
+const Customer: FC<CustomerProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [, [, logout]] = useAuth();
     const { url } = useShopsysSelector((state) => state.domain);
-    const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer', '/customer/orders', '/customer/edit-profile'],
+    const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
+        ['/customer/orders', '/customer/edit-profile'],
         url,
     );
 
@@ -29,7 +34,7 @@ const Customer: FC = () => {
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('Customer')}</Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={[{ name: t('Customer'), slug: customerUrl }]} />
+                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <Webline>
                 <CustomerListStyled>

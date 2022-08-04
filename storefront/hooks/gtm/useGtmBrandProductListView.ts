@@ -9,6 +9,7 @@ export const useGtmBrandProductListView = (data: Maybe<FriendlyUrlPageType> | un
     const lastViewedBrandSlug = useRef<string | undefined>(undefined);
     const lastViewedBrandPageStartCursor = useRef<string | undefined>(undefined);
     const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
         if (
@@ -21,8 +22,14 @@ export const useGtmBrandProductListView = (data: Maybe<FriendlyUrlPageType> | un
             lastViewedBrandSlug.current = slug;
             lastViewedBrandPageStartCursor.current = data.productConnection.pageInfo.startCursor;
             const event = getNewGtmEcommerceEvent('ec.products_list', true);
-            event.ecommerce = getGtmProductsListEvent(data.productConnection.products, 'brand', currentPage, pageSize);
+            event.ecommerce = getGtmProductsListEvent(
+                data.productConnection.products,
+                'brand',
+                currentPage,
+                pageSize,
+                url,
+            );
             gtmSafePushEvent(event);
         }
-    }, [data, slug, currentPage, pageSize]);
+    }, [data, slug, currentPage, pageSize, url]);
 };
