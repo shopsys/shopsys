@@ -16,6 +16,8 @@ class NotYetValidPromoCodeDateTimeException extends Exception implements PromoCo
      */
     public function __construct($invalidPromoCode, ?Exception $previous = null)
     {
-        parent::__construct('Promo code "' . $invalidPromoCode . '" is not yet valid.', 0, $previous);
+        parent::__construct(t('Promo code "%promoCode%" is not yet valid.', [
+            '%promoCode%' => $invalidPromoCode,
+        ], 'validators'), 0, $previous);
     }
 }

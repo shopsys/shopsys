@@ -16,7 +16,9 @@ class AvailableForRegisteredCustomerUserOnly extends Exception implements PromoC
     public function __construct(string $invalidPromoCode, ?Exception $previous = null)
     {
         parent::__construct(
-            sprintf('Promo code "%s" is available for registered customer user only.', $invalidPromoCode),
+            t('Promo code "%promoCode%" is available for registered customer user only.', [
+                '%promoCode' => $invalidPromoCode,
+            ], 'validators'),
             0,
             $previous
         );

@@ -16,6 +16,8 @@ class LimitNotReachedException extends Exception implements PromoCodeException
      */
     public function __construct(PromoCode $promoCode, ?Exception $previous = null)
     {
-        parent::__construct('Promo code "' . $promoCode->getCode() . '" is not applicable with current cart total price.', 0, $previous);
+        parent::__construct(t('Promo code "%promoCode%" is not applicable with current cart total price.', [
+            '%promoCode%' => $promoCode->getCode(),
+        ], 'validators'), 0, $previous);
     }
 }

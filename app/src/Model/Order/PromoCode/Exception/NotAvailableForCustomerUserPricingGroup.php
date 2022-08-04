@@ -17,10 +17,13 @@ class NotAvailableForCustomerUserPricingGroup extends Exception implements Promo
     public function __construct(string $invalidPromoCode, int $pricingGroupId, ?Exception $previous = null)
     {
         parent::__construct(
-            sprintf(
-                'Promo code "%s" is not available for pricing group ID "%d".',
-                $invalidPromoCode,
-                $pricingGroupId
+            t(
+                'Promo code "%invalidPromoCode%" is not available for pricing group ID "%pricingGroupId%".',
+                [
+                    '%invalidPromoCode%' => $invalidPromoCode,
+                    '%pricingGroupId%' => $pricingGroupId,
+                ],
+                'validators'
             ),
             0,
             $previous
