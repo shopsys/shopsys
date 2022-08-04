@@ -10,6 +10,7 @@ import {
     BrandDetailStyled,
     BrandDetailTextStyled,
 } from 'components/Pages/BrandDetail/BrandDetail.style';
+import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
 import { FC, useRef } from 'react';
 import { BrandDetailType } from 'types/brand';
 
@@ -21,6 +22,7 @@ const TEST_IDENTIFIER = 'pages-branddetail-';
 
 const BrandDetail: FC<BrandDetailProps> = ({ brand }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    useRemoveSortFromUrlIfDefault(brand.productConnection.orderingMode, brand.productConnection.defaultOrderingMode);
 
     return (
         <>
