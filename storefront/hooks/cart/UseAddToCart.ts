@@ -4,10 +4,10 @@ import { useAddToCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { GtmListNameType } from 'types/gtm';
+import { GtmListNameType, GtmMessageOriginType } from 'types/gtm';
 import { onChangeCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
-export const useAddToCart = (): typeof addToCartAction => {
+export const useAddToCart = (origin: GtmMessageOriginType): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode, url } = useShopsysSelector((state) => state.domain);
@@ -32,7 +32,7 @@ export const useAddToCart = (): typeof addToCartAction => {
         // EXTEND ADDING TO CART HERE
 
         if (addToCartActionResult.error !== undefined) {
-            showErrorMessage(t('Unable to add product to cart'));
+            showErrorMessage(t('Unable to add product to cart'), origin);
             return null;
         }
 
@@ -54,6 +54,7 @@ export const useAddToCart = (): typeof addToCartAction => {
                         unitName: addedCartItem.product.unit.name,
                     },
                 ),
+                origin,
             );
         }
 

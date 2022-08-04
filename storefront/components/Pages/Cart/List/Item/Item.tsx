@@ -34,7 +34,7 @@ const Item: FC<ItemProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const changeCartItemQuantity = useAddToCart();
+    const changeCartItemQuantity = useAddToCart('cart');
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {

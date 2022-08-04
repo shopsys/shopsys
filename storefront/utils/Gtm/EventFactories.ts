@@ -13,6 +13,9 @@ import {
     GtmEcommerceEventType,
     GtmEventType,
     GtmListNameType,
+    GtmMessageEventType,
+    GtmMessageOriginType,
+    GtmMessageType,
     GtmPageInfoType,
     GtmPageType,
     GtmPageViewEventType,
@@ -192,5 +195,20 @@ export const getGtmSearchClickEvent = (
         keyword,
         itemName,
         section,
+    },
+});
+
+export const getGtmMessageEvent = (
+    type: GtmMessageType,
+    message: string,
+    detail: string,
+    origin?: GtmMessageOriginType,
+): GtmMessageEventType => ({
+    event: 'ec.message',
+    eventParameters: {
+        type,
+        origin,
+        detail,
+        message,
     },
 });

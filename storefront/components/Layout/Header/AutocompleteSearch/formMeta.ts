@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { AutocompleteSearchFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -35,16 +36,19 @@ export const useAutocompleteSearchFormMeta = (
 ): SearchFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'search-query-form',
-        fields: {
-            autocompleteSearchQuery: {
-                name: 'autocompleteSearchQuery' as const,
-                label: t("Type what you're looking for"),
-                errorMessage: formProviderMethods.formState.errors.autocompleteSearchQuery?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'search-query-form',
+            fields: {
+                autocompleteSearchQuery: {
+                    name: 'autocompleteSearchQuery' as const,
+                    label: t("Type what you're looking for"),
+                    errorMessage: formProviderMethods.formState.errors.autocompleteSearchQuery?.message,
+                },
             },
-        },
-    };
+        }),
+        [formProviderMethods.formState.errors.autocompleteSearchQuery?.message, t],
+    );
 
     return formMeta;
 };

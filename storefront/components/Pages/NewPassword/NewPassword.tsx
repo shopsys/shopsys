@@ -46,7 +46,13 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
     const router = useRouter();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
 
-    useHandleFormErrors(newPasswordResult.error, formProviderMethods, formMeta.messages.error, formMeta.fields);
+    useHandleFormErrors(
+        newPasswordResult.error,
+        formProviderMethods,
+        'other',
+        formMeta.messages.error,
+        formMeta.fields,
+    );
     useHandleFormSuccessfulSubmit(
         newPasswordResult,
         formProviderMethods,
@@ -171,6 +177,7 @@ const NewPasswordPage: FC<NewPasswordPageProps> = (props) => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

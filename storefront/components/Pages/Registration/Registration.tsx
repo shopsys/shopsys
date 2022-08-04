@@ -43,7 +43,7 @@ const Registration: FC<RegistrationProps> = ({ breadcrumbs }) => {
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
-    useHandleFormErrors(registerResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(registerResult.error, formProviderMethods, 'other', formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
         registerResult,
         formProviderMethods,
@@ -166,6 +166,7 @@ const Registration: FC<RegistrationProps> = ({ breadcrumbs }) => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

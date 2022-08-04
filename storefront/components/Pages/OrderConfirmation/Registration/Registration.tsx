@@ -64,7 +64,7 @@ const Registration: FC = () => {
         if (registerResult.error !== undefined) {
             const validationErrors = getUserFriendlyErrors(registerResult.error, t).userError?.validation;
             for (const fieldName in validationErrors) {
-                showErrorMessage(validationErrors[fieldName].message);
+                showErrorMessage(validationErrors[fieldName].message, 'purchase');
             }
         }
     };
@@ -174,6 +174,7 @@ const Registration: FC = () => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="purchase"
             />
         </>
     );

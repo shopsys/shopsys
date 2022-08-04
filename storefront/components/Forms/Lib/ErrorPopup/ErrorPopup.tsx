@@ -2,7 +2,10 @@ import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled, ErrorPopupSty
 import Heading from 'components/Basic/Heading';
 import Popup from 'components/Layout/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useEffect } from 'react';
+import { GtmMessageOriginType } from 'types/gtm';
+import { getGtmMessageEvent } from 'utils/Gtm/EventFactories';
+import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 type ErrorPopupProps = {
     isVisible: boolean;
@@ -14,10 +17,23 @@ type ErrorPopupProps = {
             errorMessage?: string | undefined;
         };
     };
+    origin: GtmMessageOriginType;
 };
 
 const ErrorPopup: FC<ErrorPopupProps> = (props) => {
     const t = useTypedTranslationFunction();
+
+    useEffect(() => {
+        if (props.isVisible) {
+            for (const fieldName in props.fields) {
+                const errorMessage = props.fields[fieldName].errorMessage;
+                if (errorMessage !== undefined) {
+                    const event = getGtmMessageEvent('error', errorMessage, fieldName, props.origin);
+                    gtmSafePushEvent(event);
+                }
+            }
+        }
+    }, [props.isVisible, props.fields, props.origin]);
 
     return (
         <Popup wrapperComponent={ErrorPopupStyled} isVisible={props.isVisible} onCloseCallback={props.onCloseCallback}>

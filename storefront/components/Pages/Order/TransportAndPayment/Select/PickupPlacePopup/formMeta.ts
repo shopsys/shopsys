@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PickupPlaceFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -32,16 +33,19 @@ export const usePickupPlaceFormMeta = (
 ): PickupPlaceFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'pickup-place-form',
-        fields: {
-            pickupPlace: {
-                name: 'pickupPlace' as const,
-                label: t('Choose the store where you are going to pick up your order'),
-                errorMessage: formProviderMethods.formState.errors.pickupPlace?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'pickup-place-form',
+            fields: {
+                pickupPlace: {
+                    name: 'pickupPlace' as const,
+                    label: t('Choose the store where you are going to pick up your order'),
+                    errorMessage: formProviderMethods.formState.errors.pickupPlace?.message,
+                },
             },
-        },
-    };
+        }),
+        [formProviderMethods.formState.errors.pickupPlace?.message, t],
+    );
 
     return formMeta;
 };

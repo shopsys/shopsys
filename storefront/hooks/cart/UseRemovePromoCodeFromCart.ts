@@ -22,9 +22,9 @@ export const useRemovePromoCodeFromCart = (): typeof removePromoCodeHandler => {
         if (removePromoCodeResult.error !== undefined) {
             const { userError } = getUserFriendlyErrors(removePromoCodeResult.error, t);
             if (userError?.validation?.promoCode !== undefined) {
-                showErrorMessage(userError.validation.promoCode.message);
+                showErrorMessage(userError.validation.promoCode.message, 'cart');
             } else {
-                showErrorMessage(messages.error);
+                showErrorMessage(messages.error, 'cart');
             }
 
             return null;

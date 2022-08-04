@@ -35,7 +35,7 @@ const PersonalDataExport: FC<PersonalDataExportProps> = ({ breadcrumbs }) => {
     const formMeta = usePersonalDataExportFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
-    useHandleFormErrors(personalDataExportResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(personalDataExportResult.error, formProviderMethods, 'other', formMeta.messages.error);
     useHandleFormSuccessfulSubmit(personalDataExportResult, formProviderMethods, { email: '' }, undefined, {
         blur: true,
         reset: true,
@@ -103,6 +103,7 @@ const PersonalDataExport: FC<PersonalDataExportProps> = ({ breadcrumbs }) => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

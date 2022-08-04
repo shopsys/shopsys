@@ -4,6 +4,7 @@ import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
+import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { SelectOptionType } from 'types/selectOptions';
@@ -161,107 +162,133 @@ export const useRegistrationFormMeta = (
 
     const errors = formProviderMethods.formState.errors;
 
-    const formMeta = {
-        formName: 'registration-form',
-        messages: {
-            error: t('Could not create account'),
-            success: t('Your account has been created'),
-            successAndLogged: t('Your account has been created and you are logged in now'),
-        },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: errors.email?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'registration-form',
+            messages: {
+                error: t('Could not create account'),
+                success: t('Your account has been created'),
+                successAndLogged: t('Your account has been created and you are logged in now'),
             },
-            passwordFirst: {
-                name: 'passwordFirst' as const,
-                label: t('Password'),
-                errorMessage: errors.passwordFirst?.message,
+            fields: {
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: errors.email?.message,
+                },
+                passwordFirst: {
+                    name: 'passwordFirst' as const,
+                    label: t('Password'),
+                    errorMessage: errors.passwordFirst?.message,
+                },
+                passwordSecond: {
+                    name: 'passwordSecond' as const,
+                    label: t('Password again'),
+                    errorMessage: errors.passwordSecond?.message,
+                },
+                [customerFieldName]: {
+                    name: customerFieldName,
+                    label: t('You will shop with us as'),
+                    errorMessage: errors.customer?.message,
+                },
+                telephone: {
+                    name: 'telephone' as const,
+                    label: t('Phone'),
+                    errorMessage: errors.telephone?.message,
+                },
+                firstName: {
+                    name: 'firstName' as const,
+                    label: t('First name'),
+                    errorMessage: errors.firstName?.message,
+                },
+                lastName: {
+                    name: 'lastName' as const,
+                    label: t('Last name'),
+                    errorMessage: errors.lastName?.message,
+                },
+                companyName: {
+                    name: 'companyName' as const,
+                    label: t('Company name'),
+                    errorMessage:
+                        customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyName?.message : undefined,
+                },
+                companyNumber: {
+                    name: 'companyNumber' as const,
+                    label: t('Company number'),
+                    errorMessage:
+                        customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyNumber?.message : undefined,
+                },
+                companyTaxNumber: {
+                    name: 'companyTaxNumber' as const,
+                    label: t('Tax number'),
+                    errorMessage:
+                        customerValue === CustomerTypeEnum.CompanyCustomer
+                            ? errors.companyTaxNumber?.message
+                            : undefined,
+                },
+                street: {
+                    name: 'street' as const,
+                    label: t('Street and house no.'),
+                    errorMessage: errors.street?.message,
+                },
+                city: {
+                    name: 'city' as const,
+                    label: t('City'),
+                    errorMessage: errors.city?.message,
+                },
+                postcode: {
+                    name: 'postcode' as const,
+                    label: t('Postcode'),
+                    errorMessage: errors.postcode?.message,
+                },
+                country: {
+                    name: 'country' as const,
+                    label: t('Country'),
+                    errorMessage: (errors.country as FieldError | undefined)?.message,
+                },
+                gdprAgreement: {
+                    name: 'gdprAgreement' as const,
+                    label: (
+                        <Trans
+                            i18nKey="GdprAgreementCheckbox"
+                            defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
+                            components={{
+                                lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                            }}
+                        />
+                    ),
+                    errorMessage: errors.gdprAgreement?.message,
+                },
+                newsletterSubscription: {
+                    name: 'newsletterSubscription' as const,
+                    label: t('I want to subscribe to the newsletter'),
+                    errorMessage: isEmailValid ? errors.newsletterSubscription?.message : undefined,
+                },
             },
-            passwordSecond: {
-                name: 'passwordSecond' as const,
-                label: t('Password again'),
-                errorMessage: errors.passwordSecond?.message,
-            },
-            [customerFieldName]: {
-                name: customerFieldName,
-                label: t('You will shop with us as'),
-                errorMessage: errors.customer?.message,
-            },
-            telephone: {
-                name: 'telephone' as const,
-                label: t('Phone'),
-                errorMessage: errors.telephone?.message,
-            },
-            firstName: {
-                name: 'firstName' as const,
-                label: t('First name'),
-                errorMessage: errors.firstName?.message,
-            },
-            lastName: {
-                name: 'lastName' as const,
-                label: t('Last name'),
-                errorMessage: errors.lastName?.message,
-            },
-            companyName: {
-                name: 'companyName' as const,
-                label: t('Company name'),
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyName?.message : undefined,
-            },
-            companyNumber: {
-                name: 'companyNumber' as const,
-                label: t('Company number'),
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyNumber?.message : undefined,
-            },
-            companyTaxNumber: {
-                name: 'companyTaxNumber' as const,
-                label: t('Tax number'),
-                errorMessage:
-                    customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyTaxNumber?.message : undefined,
-            },
-            street: {
-                name: 'street' as const,
-                label: t('Street and house no.'),
-                errorMessage: errors.street?.message,
-            },
-            city: {
-                name: 'city' as const,
-                label: t('City'),
-                errorMessage: errors.city?.message,
-            },
-            postcode: {
-                name: 'postcode' as const,
-                label: t('Postcode'),
-                errorMessage: errors.postcode?.message,
-            },
-            country: {
-                name: 'country' as const,
-                label: t('Country'),
-                errorMessage: (errors.country as FieldError | undefined)?.message,
-            },
-            gdprAgreement: {
-                name: 'gdprAgreement' as const,
-                label: (
-                    <Trans
-                        i18nKey="GdprAgreementCheckbox"
-                        defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
-                        components={{
-                            lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
-                        }}
-                    />
-                ),
-                errorMessage: errors.gdprAgreement?.message,
-            },
-            newsletterSubscription: {
-                name: 'newsletterSubscription' as const,
-                label: t('I want to subscribe to the newsletter'),
-                errorMessage: isEmailValid ? errors.newsletterSubscription?.message : undefined,
-            },
-        },
-    };
+        }),
+        [
+            errors.country,
+            errors.gdprAgreement?.message,
+            errors.newsletterSubscription?.message,
+            errors.email?.message,
+            errors.passwordFirst?.message,
+            errors.passwordSecond?.message,
+            errors.customer?.message,
+            errors.telephone?.message,
+            errors.firstName?.message,
+            errors.lastName?.message,
+            errors.companyName?.message,
+            errors.companyNumber?.message,
+            errors.companyTaxNumber?.message,
+            errors.street?.message,
+            errors.city?.message,
+            errors.postcode?.message,
+            isEmailValid,
+            customerValue,
+            gdprUrl,
+            t,
+        ],
+    );
 
     return formMeta;
 };

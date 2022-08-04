@@ -59,7 +59,7 @@ const Login: FC = () => {
     useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' }, undefined, {
         blur: true,
     });
-    useHandleFormErrors(loginResult.error, formProviderMethods);
+    useHandleFormErrors(loginResult.error, formProviderMethods, 'login popup');
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = (data, event) => {
         event?.preventDefault();

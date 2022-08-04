@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LastOrderFragmentApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { CurrentCartType } from 'types/cart';
 import { TransportAndPaymentFormType } from 'types/form';
@@ -62,26 +63,34 @@ export const useTransportAndPaymentFormMeta = (
 ): TransportAndPaymentFormMetaType => {
     const t = useTypedTranslationFunction();
 
-    const formMeta = {
-        formName: 'transport-and-payment-form',
-        fields: {
-            transport: {
-                name: 'transport' as const,
-                label: t('Choose transport type'),
-                errorMessage: formProviderMethods.formState.errors.transport?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'transport-and-payment-form',
+            fields: {
+                transport: {
+                    name: 'transport' as const,
+                    label: t('Choose transport type'),
+                    errorMessage: formProviderMethods.formState.errors.transport?.message,
+                },
+                payment: {
+                    name: 'payment' as const,
+                    label: t('Choose payment type'),
+                    errorMessage: formProviderMethods.formState.errors.payment?.message,
+                },
+                goPaySwift: {
+                    name: 'goPaySwift' as const,
+                    label: t('Choose your bank'),
+                    errorMessage: formProviderMethods.formState.errors.goPaySwift?.message,
+                },
             },
-            payment: {
-                name: 'payment' as const,
-                label: t('Choose payment type'),
-                errorMessage: formProviderMethods.formState.errors.payment?.message,
-            },
-            goPaySwift: {
-                name: 'goPaySwift' as const,
-                label: t('Choose your bank'),
-                errorMessage: formProviderMethods.formState.errors.goPaySwift?.message,
-            },
-        },
-    };
+        }),
+        [
+            formProviderMethods.formState.errors.transport?.message,
+            formProviderMethods.formState.errors.payment?.message,
+            formProviderMethods.formState.errors.goPaySwift?.message,
+            t,
+        ],
+    );
 
     return formMeta;
 };

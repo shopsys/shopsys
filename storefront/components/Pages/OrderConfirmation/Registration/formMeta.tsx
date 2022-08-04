@@ -4,6 +4,7 @@ import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -48,29 +49,37 @@ export const useRegistrationAfterOrderFormMeta = (
     const t = useTypedTranslationFunction();
     const termsAndConditionUrl = useGetTermsAndConditionsUrl();
 
-    const formMeta = {
-        formName: 'registration-after-order-form',
-        fields: {
-            password: {
-                name: 'password' as const,
-                label: t('Password'),
-                errorMessage: formProviderMethods.formState.errors.password?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'registration-after-order-form',
+            fields: {
+                password: {
+                    name: 'password' as const,
+                    label: t('Password'),
+                    errorMessage: formProviderMethods.formState.errors.password?.message,
+                },
+                privacyPolicy: {
+                    name: 'privacyPolicy' as const,
+                    label: (
+                        <Trans
+                            i18nKey="I agree with terms and conditions and privacy policy"
+                            defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
+                            components={{
+                                lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
+                            }}
+                        />
+                    ),
+                    errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
+                },
             },
-            privacyPolicy: {
-                name: 'privacyPolicy' as const,
-                label: (
-                    <Trans
-                        i18nKey="I agree with terms and conditions and privacy policy"
-                        defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
-                        components={{
-                            lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
-                        }}
-                    />
-                ),
-                errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
-            },
-        },
-    };
+        }),
+        [
+            formProviderMethods.formState.errors.password?.message,
+            formProviderMethods.formState.errors.privacyPolicy?.message,
+            termsAndConditionUrl,
+            t,
+        ],
+    );
 
     return formMeta;
 };

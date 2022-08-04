@@ -29,7 +29,7 @@ const ResetPassword: FC<ResetPasswordProps> = ({ breadcrumbs }) => {
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(resetPasswordResult.error, formProviderMethods, formMeta.messages.error);
+    useHandleFormErrors(resetPasswordResult.error, formProviderMethods, 'other', formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
         resetPasswordResult,
         formProviderMethods,
@@ -87,6 +87,7 @@ const ResetPassword: FC<ResetPasswordProps> = ({ breadcrumbs }) => {
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
                 fields={formMeta.fields}
+                origin="other"
             />
         </>
     );

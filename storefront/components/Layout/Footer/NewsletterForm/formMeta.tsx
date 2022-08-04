@@ -4,6 +4,7 @@ import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
+import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 import * as Yup from 'yup';
@@ -42,33 +43,41 @@ export const useNewsletterFormMeta = (
     const t = useTypedTranslationFunction();
     const gdprUrl = useGetPrivacyPolicyUrl();
 
-    const formMeta = {
-        formName: 'newsletter-form',
-        messages: {
-            error: t('Could not subscribe to newsletter'),
-            success: t('You have successfully subscribed to our newsletter'),
-        },
-        fields: {
-            email: {
-                name: 'email' as const,
-                label: t('Your email'),
-                errorMessage: formProviderMethods.formState.errors.email?.message,
+    const formMeta = useMemo(
+        () => ({
+            formName: 'newsletter-form',
+            messages: {
+                error: t('Could not subscribe to newsletter'),
+                success: t('You have successfully subscribed to our newsletter'),
             },
-            privacyPolicy: {
-                name: 'privacyPolicy' as const,
-                label: (
-                    <Trans
-                        i18nKey="PrivacyPolicyCheckbox"
-                        defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
-                        components={{
-                            lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
-                        }}
-                    />
-                ),
-                errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
+            fields: {
+                email: {
+                    name: 'email' as const,
+                    label: t('Your email'),
+                    errorMessage: formProviderMethods.formState.errors.email?.message,
+                },
+                privacyPolicy: {
+                    name: 'privacyPolicy' as const,
+                    label: (
+                        <Trans
+                            i18nKey="PrivacyPolicyCheckbox"
+                            defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
+                            components={{
+                                lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                            }}
+                        />
+                    ),
+                    errorMessage: formProviderMethods.formState.errors.privacyPolicy?.message,
+                },
             },
-        },
-    };
+        }),
+        [
+            formProviderMethods.formState.errors.privacyPolicy?.message,
+            formProviderMethods.formState.errors.email?.message,
+            gdprUrl,
+            t,
+        ],
+    );
 
     return formMeta;
 };

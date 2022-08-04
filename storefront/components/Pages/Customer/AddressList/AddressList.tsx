@@ -44,7 +44,7 @@ const AddressList: FC<AddressListProps> = (props) => {
         const deleteDeliveryAddressResult = await deleteDeliveryAddress({ deliveryAddressUuid });
 
         if (deleteDeliveryAddressResult.error !== undefined) {
-            showErrorMessage(t('There was an error while deleting your delivery address'));
+            showErrorMessage(t('There was an error while deleting your delivery address'), 'other');
             return;
         }
 
@@ -55,7 +55,7 @@ const AddressList: FC<AddressListProps> = (props) => {
         const result = await setDefaultDeliveryAddress({ deliveryAddressUuid });
 
         if (result.error !== undefined) {
-            showErrorMessage(t('There was an error while setting your delivery address as the default one'));
+            showErrorMessage(t('There was an error while setting your delivery address as the default one'), 'other');
             return;
         }
 

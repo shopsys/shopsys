@@ -117,13 +117,13 @@ const handleCartError = (error: CombinedError, t: Translate) => {
         case ApplicationErrors['cart-not-found']:
             break;
         case ApplicationErrors.default:
-            showErrorMessage(applicationError.message);
+            showErrorMessage(applicationError.message, 'cart');
             break;
     }
 
     if (userError?.validation !== undefined) {
         for (const invalidFieldName in userError.validation) {
-            showErrorMessage(userError.validation[invalidFieldName].message);
+            showErrorMessage(userError.validation[invalidFieldName].message, 'cart');
         }
     }
 };
@@ -188,17 +188,17 @@ const handleCartTransportModifications = (
     changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
 ): void => {
     if (transportModifications.transportPriceChanged) {
-        showInfoMessage(t('The price of the transport you selected has changed.'));
+        showInfoMessage(t('The price of the transport you selected has changed.'), 'cart');
     }
     if (transportModifications.transportUnavailable) {
         changePaymentInCart(null, null);
-        showInfoMessage(t('The transport you selected is no longer available.'));
-        showInfoMessage(t('Your payment selection has been removed.'));
+        showInfoMessage(t('The transport you selected is no longer available.'), 'cart');
+        showInfoMessage(t('Your payment selection has been removed.'), 'cart');
     }
     if (transportModifications.transportWeightLimitExceeded) {
         changePaymentInCart(null, null);
-        showInfoMessage(t('You have exceeded the weight limit of the selected transport.'));
-        showInfoMessage(t('Your payment selection has been removed.'));
+        showInfoMessage(t('You have exceeded the weight limit of the selected transport.'), 'cart');
+        showInfoMessage(t('Your payment selection has been removed.'), 'cart');
     }
 };
 
@@ -207,10 +207,10 @@ const handleCartPaymentModifications = (
     t: Translate,
 ): void => {
     if (paymentModifications.paymentPriceChanged) {
-        showInfoMessage(t('The price of the payment you selected has changed.'));
+        showInfoMessage(t('The price of the payment you selected has changed.'), 'cart');
     }
     if (paymentModifications.paymentUnavailable) {
-        showInfoMessage(t('The payment you selected is no longer available.'));
+        showInfoMessage(t('The payment you selected is no longer available.'), 'cart');
     }
 };
 
@@ -220,6 +220,7 @@ const handleCartItemModifications = (itemModifications: CartItemModificationsFra
             t('The quantity of item {{ itemName }} has changed.', {
                 itemName: cartItemWithChangedQuantity.product.fullName,
             }),
+            'cart',
         );
     }
     for (const cartItemWithModifiedPrice of itemModifications.cartItemsWithModifiedPrice) {
@@ -227,14 +228,19 @@ const handleCartItemModifications = (itemModifications: CartItemModificationsFra
             t('The price of item {{ itemName }} has changed.', {
                 itemName: cartItemWithModifiedPrice.product.fullName,
             }),
+            'cart',
         );
     }
     for (const soldOutCartItem of itemModifications.noLongerAvailableCartItemsDueToQuantity) {
-        showInfoMessage(t('Item {{ itemName }} has been sold out.', { itemName: soldOutCartItem.product.fullName }));
+        showInfoMessage(
+            t('Item {{ itemName }} has been sold out.', { itemName: soldOutCartItem.product.fullName }),
+            'cart',
+        );
     }
     for (const nonListableCartItem of itemModifications.noLongerListableCartItems) {
         showInfoMessage(
             t('Item {{ itemName }} can no longer be bought.', { itemName: nonListableCartItem.product.fullName }),
+            'cart',
         );
     }
 };
@@ -246,6 +252,7 @@ const handleCartPromoCodeModifications = (
     for (const nonApplicablePromoCode of promoCodeModifications.noLongerApplicablePromoCode) {
         showInfoMessage(
             t('The promo code {{ promoCode }} is no longer applicable.', { promoCode: nonApplicablePromoCode }),
+            'cart',
         );
     }
 };

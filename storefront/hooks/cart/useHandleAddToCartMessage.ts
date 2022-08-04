@@ -5,12 +5,14 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
+import { GtmMessageOriginType } from 'types/gtm';
 import { UseMutationState } from 'urql';
 
 // TODO:
 export const useHandleAddToCartMessage = (
     result: UseMutationState<AddToCartMutationApi, AddToCartMutationVariablesApi>,
     productUuid: string,
+    origin: GtmMessageOriginType,
 ): [AddToCartPopupDataType | null, Dispatch<SetStateAction<AddToCartPopupDataType | null>>] => {
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
     const t = useTypedTranslationFunction();
@@ -18,7 +20,7 @@ export const useHandleAddToCartMessage = (
 
     useEffect(() => {
         if (result.error !== undefined) {
-            showErrorMessage(t('Unable to add product to cart'));
+            showErrorMessage(t('Unable to add product to cart'), origin);
             setPopupData(null);
             return;
         }
@@ -43,6 +45,7 @@ export const useHandleAddToCartMessage = (
                         unitName: cartItem.product.unit.name,
                     },
                 ),
+                origin,
             );
         } else {
             const mappedPopupData = {

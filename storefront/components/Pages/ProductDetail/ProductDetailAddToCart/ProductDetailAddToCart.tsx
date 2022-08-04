@@ -28,7 +28,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const changeCartItemQuantity = useAddToCart();
+    const changeCartItemQuantity = useAddToCart('product');
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
