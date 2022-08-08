@@ -19,6 +19,32 @@ export const useContactInformationForm = (): [
     const resolver = yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')).min(5),
+            register: Yup.boolean(),
+            passwordFirst: Yup.string().when('register', {
+                is: true,
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            count: 6,
+                        }),
+                    ),
+                otherwise: Yup.string(),
+            }),
+            passwordSecond: Yup.string().when('register', {
+                is: true,
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            count: 6,
+                        }),
+                    )
+                    .oneOf([Yup.ref('passwordFirst'), null], t('Passwords must match')),
+                otherwise: Yup.string(),
+            }),
             customer: Yup.string().oneOf(['commonCustomer', 'companyCustomer']),
             telephone: Yup.string()
                 .required(t('Please enter phone number'))
@@ -162,9 +188,10 @@ export const useContactInformationFormMeta = (
 
     const differentDeliveryAddressFieldName = 'differentDeliveryAddress' as const;
     const customerFieldName = 'customer' as const;
+    const registerFieldName = 'register' as const;
 
-    const [differentDeliveryAddressValue, customerValue] = useWatch({
-        name: [differentDeliveryAddressFieldName, customerFieldName],
+    const [differentDeliveryAddressValue, customerValue, registerValue] = useWatch({
+        name: [differentDeliveryAddressFieldName, customerFieldName, registerFieldName],
         control: formProviderMethods.control,
     });
 
@@ -181,6 +208,21 @@ export const useContactInformationFormMeta = (
                     name: 'email' as const,
                     label: t('Your email'),
                     errorMessage: errors.email?.message,
+                },
+                [registerFieldName]: {
+                    name: registerFieldName,
+                    label: t('I want to register with an order'),
+                    errorMessage: registerValue ? errors.register?.message : undefined,
+                },
+                passwordFirst: {
+                    name: 'passwordFirst' as const,
+                    label: t('Password'),
+                    errorMessage: registerValue ? errors.passwordFirst?.message : undefined,
+                },
+                passwordSecond: {
+                    name: 'passwordSecond' as const,
+                    label: t('Password again'),
+                    errorMessage: registerValue ? errors.passwordSecond?.message : undefined,
                 },
                 [customerFieldName]: {
                     name: customerFieldName,
@@ -307,6 +349,9 @@ export const useContactInformationFormMeta = (
             },
         }),
         [
+            errors.register?.message,
+            errors.passwordFirst?.message,
+            errors.passwordSecond?.message,
             errors.customer?.message,
             errors.telephone?.message,
             errors.firstName?.message,
@@ -333,6 +378,7 @@ export const useContactInformationFormMeta = (
             customerValue,
             differentDeliveryAddressValue,
             isEmailValid,
+            registerValue,
             t,
         ],
     );

@@ -6,6 +6,9 @@ import { SelectOptionType } from 'types/selectOptions';
 
 export const initialState = {
     email: '',
+    register: false,
+    passwordFirst: '',
+    passwordSecond: '',
     customer: CustomerTypeEnum.CommonCustomer,
     telephone: '',
     firstName: '',
@@ -39,6 +42,9 @@ export const contactInformationSlice = createSlice({
         },
         setContactInformation(state, action: PayloadAction<ContactInformationFormType>) {
             state.email = action.payload.email;
+            state.register = action.payload.register;
+            state.passwordFirst = action.payload.passwordFirst;
+            state.passwordSecond = action.payload.passwordSecond;
             state.customer = action.payload.customer;
             state.telephone = action.payload.telephone;
             state.firstName = action.payload.firstName;
@@ -63,6 +69,15 @@ export const contactInformationSlice = createSlice({
         },
         setEmail(state, action: PayloadAction<string>) {
             state.email = action.payload;
+        },
+        setRegister(state, action: PayloadAction<boolean>) {
+            state.register = action.payload;
+        },
+        setPasswordFirst(state, action: PayloadAction<string>) {
+            state.passwordFirst = action.payload;
+        },
+        setPasswordSecond(state, action: PayloadAction<string>) {
+            state.passwordSecond = action.payload;
         },
         setCustomer(state, action: PayloadAction<CustomerTypeEnum>) {
             state.customer = action.payload;
