@@ -18,18 +18,21 @@ import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
+import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
+import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
 
 type CategoryDetailProps = {
     category: CategoryDetailType;
+    fetching: boolean;
 };
 
-const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
+const CategoryDetail: FC<CategoryDetailProps> = ({ category, fetching }) => {
     const t = useTypedTranslationFunction();
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
@@ -37,6 +40,8 @@ const CategoryDetail: FC<CategoryDetailProps> = ({ category }) => {
     const buttonRef = useRef<null | HTMLDivElement>(null);
     const { query } = useRouter();
     const isFiltered = 'filter' in query;
+    const router = useRouter();
+    useGtmCategoryProductListView(category, getUrlWithoutGetParameters(router.asPath), fetching);
 
     const handlePanelOpenerClick = () => {
         setIsPanelOpen(!isPanelOpen);

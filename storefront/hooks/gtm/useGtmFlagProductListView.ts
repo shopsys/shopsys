@@ -5,7 +5,11 @@ import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
 import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
-export const useGtmFlagProductListView = (data: Maybe<FriendlyUrlPageType> | undefined, slug: string): void => {
+export const useGtmFlagProductListView = (
+    data: Maybe<FriendlyUrlPageType> | undefined,
+    slug: string,
+    fetching: boolean,
+): void => {
     const lastViewedFlagSlug = useRef<string | undefined>(undefined);
     const lastViewedFlagPageStartCursor = useRef<string | undefined>(undefined);
     const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
@@ -17,7 +21,8 @@ export const useGtmFlagProductListView = (data: Maybe<FriendlyUrlPageType> | und
             data !== undefined &&
             data.__typename === 'Flag' &&
             (lastViewedFlagSlug.current !== slug ||
-                lastViewedFlagPageStartCursor.current !== data.productConnection.pageInfo.startCursor)
+                lastViewedFlagPageStartCursor.current !== data.productConnection.pageInfo.startCursor) &&
+            !fetching
         ) {
             lastViewedFlagSlug.current = slug;
             lastViewedFlagPageStartCursor.current = data.productConnection.pageInfo.startCursor;
@@ -31,5 +36,5 @@ export const useGtmFlagProductListView = (data: Maybe<FriendlyUrlPageType> | und
             );
             gtmSafePushEvent(event);
         }
-    }, [data, slug, currentPage, pageSize, url]);
+    }, [data, slug, currentPage, pageSize, url, fetching]);
 };

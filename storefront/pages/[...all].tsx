@@ -22,11 +22,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
-import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
-import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
-import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
-import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
@@ -34,6 +30,7 @@ import { initialState, userActions } from 'redux/slices/user';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { ssrExchange } from 'urql';
+import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 import { useGtmPageViewEvent } from 'utils/Gtm/EventFactories';
 import { getGtmPageInfoForFriendlyUrl } from 'utils/Gtm/Gtm';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
@@ -52,26 +49,25 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     }, [dispatch, router.query.page]);
 
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const data = useFriendlyUrlResolvedData(slug);
+    const { data, fetching } = useFriendlyUrlResolvedData(slug);
 
     const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug, data?.breadcrumb));
-    useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug);
-    useGtmCategoryProductListView(data, slug);
-    useGtmProductDetailView(data, slug);
-    useGtmBrandProductListView(data, slug);
-    useGtmFlagProductListView(data, slug);
-    return renderContent(data);
+    useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug, fetching);
+    return renderContent(data, fetching);
 };
 
-const renderContent = (data: Maybe<FriendlyUrlPageType>) => {
+const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
     switch (data?.__typename) {
         case 'RegularProduct':
         case 'Variant':
-            return wrapContent(<ProductDetailPage product={data as ProductDetailType} />, data);
+            return wrapContent(<ProductDetailPage product={data as ProductDetailType} fetching={fetching} />, data);
         case 'MainVariant':
-            return wrapContent(<ProductDetailMainVariantPage product={data as MainVariantDetailType} />, data);
+            return wrapContent(
+                <ProductDetailMainVariantPage product={data as MainVariantDetailType} fetching={fetching} />,
+                data,
+            );
         case 'Category':
-            return wrapContent(<CategoryDetailPage category={data} />, data);
+            return wrapContent(<CategoryDetailPage category={data} fetching={fetching} />, data);
         case 'Store':
             return wrapContent(<StoreDetailPage store={data} />, data);
         case 'Article':
@@ -79,9 +75,9 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>) => {
         case 'BlogArticle':
             return wrapContent(<BlogArticlePage blogArticle={data} />, data);
         case 'Brand':
-            return wrapContent(<BrandDetailPage brand={data} />, data);
+            return wrapContent(<BrandDetailPage brand={data} fetching={fetching} />, data);
         case 'Flag':
-            return wrapContent(<FlagDetailPage flag={data} />, data);
+            return wrapContent(<FlagDetailPage flag={data} fetching={fetching} />, data);
         case 'BlogCategory':
             return wrapContent(<BlogCategoryPage blogCategory={data} />, data);
         default:
@@ -146,9 +142,5 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 
     return initServerSideData;
 });
-
-const getUrlWithoutGetParameters = (originalUrl: string) => {
-    return originalUrl.split(/(\?|#)/)[0];
-};
 
 export default FriendlyUrlPage;

@@ -4,16 +4,22 @@ import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import Webline from 'components/Layout/Webline';
 import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
+import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
+import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { FlagDetailType } from 'types/flag';
+import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 
 type FlagDetailProps = {
     flag: FlagDetailType;
+    fetching: boolean;
 };
 
-const FlagDetail: FC<FlagDetailProps> = ({ flag }) => {
+const FlagDetail: FC<FlagDetailProps> = ({ flag, fetching }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
     useRemoveSortFromUrlIfDefault(flag.productConnection.orderingMode, flag.productConnection.defaultOrderingMode);
+    const router = useRouter();
+    useGtmFlagProductListView(flag, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
         <>
