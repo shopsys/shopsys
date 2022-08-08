@@ -371,5 +371,6 @@
     "Default delivery address": "Default delivery address",
     "Download as XML": "Download as XML",
     "Pickup place": "Pickup place",
-    "adminLoggedInAsCustomerWarning": "Pozor! Jste přihlášen za uživatele s emailem {{ email }} <button>Odhlásit</button>"
+    "adminLoggedInAsCustomerWarning": "Pozor! Jste přihlášen za uživatele s emailem {{ email }} <button>Odhlásit</button>",
+    "Your cart has been modified. Please check the changes.": "Your cart has been modified. Please check the changes."
 }

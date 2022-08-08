@@ -35,8 +35,8 @@ mutation RegistrationMutation(
         }
     ) {
         tokens {
-            accessToken
-            refreshToken
+            ...TokenFragments
         }
+        showCartMergeInfo
     }
 }

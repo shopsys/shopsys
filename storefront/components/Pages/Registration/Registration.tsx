@@ -17,7 +17,7 @@ import Form from 'components/Forms/Form';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
@@ -55,6 +55,10 @@ const Registration: FC<RegistrationProps> = ({ breadcrumbs }) => {
             if (accessToken !== undefined && refreshToken !== undefined) {
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
+
+                if (registerResult.data?.Register.showCartMergeInfo === true) {
+                    showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+                }
             } else {
                 showSuccessMessage(formMeta.messages.success);
             }

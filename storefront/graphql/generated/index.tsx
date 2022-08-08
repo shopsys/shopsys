@@ -2643,6 +2643,8 @@ type SimpleArticleInterfaceFragment_BlogArticle_Api = { __typename: 'BlogArticle
 
 export type SimpleArticleInterfaceFragmentApi = SimpleArticleInterfaceFragment_Article_Api | SimpleArticleInterfaceFragment_BlogArticle_Api;
 
+export type TokenFragmentsApi = { __typename?: 'Token', accessToken: string, refreshToken: string };
+
 export type LoginVariablesApi = Exact<{
   email: Scalars['String'];
   password: Scalars['Password'];
@@ -2650,7 +2652,7 @@ export type LoginVariablesApi = Exact<{
 }>;
 
 
-export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 export type LogoutVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -3155,7 +3157,7 @@ export type RegistrationMutationVariablesApi = Exact<{
 }>;
 
 
-export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type RegistrationMutationApi = { __typename?: 'Mutation', Register: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 export type AutocompleteSearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
@@ -3529,6 +3531,12 @@ export const SimpleArticleInterfaceFragmentApi = gql`
 }
     ${SimpleArticleFragmentApi}
 ${SimpleBlogArticleFragmentApi}`;
+export const TokenFragmentsApi = gql`
+    fragment TokenFragments on Token {
+  accessToken
+  refreshToken
+}
+    `;
 export const PageInfoFragmentApi = gql`
     fragment PageInfoFragment on PageInfo {
   __typename
@@ -4680,12 +4688,12 @@ export const LoginDocumentApi = gql`
     mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
   Login(input: {email: $email, password: $password, cartUuid: $previousCartUuid}) {
     tokens {
-      accessToken
-      refreshToken
+      ...TokenFragments
     }
+    showCartMergeInfo
   }
 }
-    `;
+    ${TokenFragmentsApi}`;
 
 export function useLoginApi() {
   return Urql.useMutation<LoginApi, LoginVariablesApi>(LoginDocumentApi);
@@ -4702,11 +4710,10 @@ export function useLogoutApi() {
 export const RefreshTokensDocumentApi = gql`
     mutation RefreshTokens($refreshToken: String!) {
   RefreshTokens(input: {refreshToken: $refreshToken}) {
-    accessToken
-    refreshToken
+    ...TokenFragments
   }
 }
-    `;
+    ${TokenFragmentsApi}`;
 
 export function useRefreshTokensApi() {
   return Urql.useMutation<RefreshTokensApi, RefreshTokensVariablesApi>(RefreshTokensDocumentApi);
@@ -5075,12 +5082,11 @@ export const RecoverPasswordMutationDocumentApi = gql`
     mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {
   RecoverPassword(input: {email: $email, hash: $hash, newPassword: $newPassword}) {
     tokens {
-      accessToken
-      refreshToken
+      ...TokenFragments
     }
   }
 }
-    `;
+    ${TokenFragmentsApi}`;
 
 export function useRecoverPasswordMutationApi() {
   return Urql.useMutation<RecoverPasswordMutationApi, RecoverPasswordMutationVariablesApi>(RecoverPasswordMutationDocumentApi);
@@ -5204,12 +5210,12 @@ export const RegistrationMutationDocumentApi = gql`
     input: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, telephone: $telephone, street: $street, city: $city, postcode: $postcode, country: $country, companyCustomer: $companyCustomer, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, newsletterSubscription: $newsletterSubscription, cartUuid: $previousCartUuid}
   ) {
     tokens {
-      accessToken
-      refreshToken
+      ...TokenFragments
     }
+    showCartMergeInfo
   }
 }
-    `;
+    ${TokenFragmentsApi}`;
 
 export function useRegistrationMutationApi() {
   return Urql.useMutation<RegistrationMutationApi, RegistrationMutationVariablesApi>(RegistrationMutationDocumentApi);
