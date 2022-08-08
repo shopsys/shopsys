@@ -127,7 +127,6 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         });
 
         if (order.data !== undefined && cart !== null && transport !== null && payment !== null) {
-            dispatch(contactInformationActions.reset());
             onPurchaseOrderGtmEventHandler(
                 cart,
                 transport,
