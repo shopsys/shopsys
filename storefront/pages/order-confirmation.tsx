@@ -2,7 +2,7 @@ import MetaRobots from 'components/Basic/Head/MetaRobots';
 import PageGuard from 'components/Helpers/PageGuard';
 import CommonLayout from 'components/Layout/CommonLayout';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
-import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
+import Registration from 'components/Pages/OrderConfirmation/Registration';
 import { OrderSentPageContentDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';

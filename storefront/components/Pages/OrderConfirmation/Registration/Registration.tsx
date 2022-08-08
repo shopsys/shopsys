@@ -32,9 +32,7 @@ import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
-const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
-
-export const Registration: FC = () => {
+const Registration: FC = () => {
     const dispatch = useShopsysDispatch();
     const contactInformation = useCurrentUserContactInformation();
     const [, register] = useRegistrationMutationApi();
@@ -73,6 +71,7 @@ export const Registration: FC = () => {
             }
         }
     };
+    const testIdentifier = 'pages-orderconfirmation-registration-create-account';
 
     return (
         <>
@@ -159,7 +158,7 @@ export const Registration: FC = () => {
                                         )}
                                     />
                                     <Button
-                                        data-testid={TEST_IDENTIFIER}
+                                        data-testid={testIdentifier}
                                         type="submit"
                                         variant="primary"
                                         borderRadius="big"
@@ -183,3 +182,5 @@ export const Registration: FC = () => {
         </>
     );
 };
+
+export default Registration;
