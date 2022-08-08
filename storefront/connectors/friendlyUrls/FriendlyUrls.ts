@@ -42,7 +42,6 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
 
     switch (data.slug.__typename) {
         case 'RegularProduct':
-        case 'Variant':
             return { data: mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'MainVariant':
             return { data: mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
