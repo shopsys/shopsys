@@ -11,7 +11,6 @@ export const useHandleContactInformationNonTextChanges = (
 ): void => {
     const dispatch = useShopsysDispatch();
     const [
-        registerValue,
         customerValue,
         countryValue,
         differentDeliveryAddressValue,
@@ -19,7 +18,6 @@ export const useHandleContactInformationNonTextChanges = (
         newsletterSubscriptionValue,
     ] = useWatch({
         name: [
-            formMeta.fields.register.name,
             formMeta.fields.customer.name,
             formMeta.fields.country.name,
             formMeta.fields.differentDeliveryAddress.name,
@@ -29,9 +27,6 @@ export const useHandleContactInformationNonTextChanges = (
         control,
     });
 
-    useEffect(() => {
-        dispatch(contactInformationActions.setRegister(registerValue));
-    }, [dispatch, registerValue]);
     useEffect(() => {
         dispatch(contactInformationActions.setCustomer(customerValue));
     }, [customerValue, dispatch]);

@@ -55,9 +55,6 @@ const mapCurrentCustomerContactInformationApiData = (
             label: apiCurrentCustomerUserData.defaultDeliveryAddress?.country?.name ?? '',
         },
         deliveryAddressUuid: apiCurrentCustomerUserData.defaultDeliveryAddress?.uuid ?? null,
-        register: false,
-        passwordFirst: '',
-        passwordSecond: '',
         customer:
             apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
