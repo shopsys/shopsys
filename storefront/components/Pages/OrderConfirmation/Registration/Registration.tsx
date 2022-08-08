@@ -16,7 +16,7 @@ import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import Webline from 'components/Layout/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
@@ -25,14 +25,15 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 const Registration: FC = () => {
+    const router = useRouter();
     const dispatch = useShopsysDispatch();
     const contactInformation = useCurrentUserContactInformation();
     const [, register] = useRegistrationMutationApi();
@@ -57,14 +58,10 @@ const Registration: FC = () => {
         });
 
         if (registerResult.data !== undefined && registerResult.error === undefined) {
-            const accessToken = registerResult.data.Register.tokens.accessToken;
-            const refreshToken = registerResult.data.Register.tokens.refreshToken;
-
-            setTokensToCookie(accessToken, refreshToken);
-            showSuccessMessage(t('Your account has been created and you are logged in now'));
-
-            window.location.href = '/';
-        } else if (registerResult.error !== undefined) {
+            router.push('/');
+            return;
+        }
+        if (registerResult.error !== undefined) {
             const validationErrors = getUserFriendlyErrors(registerResult.error, t).userError?.validation;
             for (const fieldName in validationErrors) {
                 showErrorMessage(validationErrors[fieldName].message, 'purchase');
