@@ -41,8 +41,6 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             return { cart: null, isLoaded: isInitiallyLoaded };
         }
 
-        const [urlCart] = getInternationalizedStaticUrls(['/cart'], domain.url);
-
         let products: GtmCartItemType[] | undefined = undefined;
         if (cart.items.length > 0) {
             products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index, domain.url));
@@ -51,6 +49,20 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
         const coupons: string[] = [];
         if (promoCode !== null) {
             coupons.push(promoCode);
+        }
+
+        let urlCart;
+        if (isUserLoggedIn) {
+            const [loginRelativeUrl, cartRelativeUrl] = getInternationalizedStaticUrls(['/login', '/cart'], domain.url);
+            const loginAbsoluteUrlWithoutLeadingSlash = loginRelativeUrl.slice(1);
+            urlCart = domain.url + loginAbsoluteUrlWithoutLeadingSlash + '?r=' + cartRelativeUrl;
+        } else {
+            const [abandonedCartRelativeUrl] = getInternationalizedStaticUrls(
+                [{ url: '/abandoned-cart/:cartUuid', param: cartUuid }],
+                domain.url,
+            );
+            const abandonedCartRelativeUrlWithoutLeadingSlash = abandonedCartRelativeUrl.slice(1);
+            urlCart = domain.url + abandonedCartRelativeUrlWithoutLeadingSlash;
         }
 
         return {
