@@ -27,7 +27,7 @@ class FriendlyUrlMatcher
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array<string, mixed>
      */
-    public function match($pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig)
+    public function match(string $pathinfo, RouteCollection $routeCollection, DomainConfig $domainConfig): array
     {
         $pathWithoutSlash = substr($pathinfo, 1);
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $pathWithoutSlash);

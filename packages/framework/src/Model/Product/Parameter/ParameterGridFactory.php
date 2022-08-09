@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -44,7 +45,7 @@ class ParameterGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(): Grid
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $adminLocale = $this->localization->getAdminLocale();
@@ -91,7 +92,7 @@ class ParameterGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource
      */
-    protected function getParametersDataSource()
+    protected function getParametersDataSource(): QueryBuilderDataSource
     {
         $locales = $this->localization->getLocalesOfAllDomains();
         $queryBuilder = $this->em->createQueryBuilder();

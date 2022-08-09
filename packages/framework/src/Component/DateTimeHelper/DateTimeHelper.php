@@ -10,7 +10,7 @@ class DateTimeHelper
     /**
      * @return \DateTime
      */
-    public static function createTodayMidnightDateTime()
+    public static function createTodayMidnightDateTime(): DateTime
     {
         $todayMidnight = new DateTime();
         $todayMidnight->setTime(0, 0, 0);
@@ -23,7 +23,7 @@ class DateTimeHelper
      * @param string $time
      * @return \DateTime
      */
-    public static function createFromFormat($format, $time)
+    public static function createFromFormat(string $format, string $time): DateTime
     {
         $dateTime = DateTime::createFromFormat($format, $time);
 

@@ -10,5 +10,5 @@ interface GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<T>
      */
-    public function create();
+    public function create(): Grid;
 }

@@ -11,7 +11,7 @@ class Utils
      * @param DefaultType $default
      * @return VariableType|DefaultType
      */
-    public static function ifNull($testVariable, $default)
+    public static function ifNull(mixed $testVariable, mixed $default): mixed
     {
         return $testVariable !== null ? $testVariable : $default;
     }
@@ -21,7 +21,7 @@ class Utils
      * @param string|int $key
      * @param mixed $defaultValue
      */
-    public static function setArrayDefaultValue(&$array, $key, $defaultValue = null)
+    public static function setArrayDefaultValue(array &$array, string|int $key, mixed $defaultValue = null): void
     {
         if (!array_key_exists($key, $array)) {
             $array[$key] = $defaultValue;
@@ -34,7 +34,7 @@ class Utils
      * @param mixed $defaultValue
      * @return mixed
      */
-    public static function getArrayValue($array, $key, $defaultValue = null)
+    public static function getArrayValue(array $array, string|int $key, mixed $defaultValue = null): mixed
     {
         return array_key_exists($key, $array) ? $array[$key] : $defaultValue;
     }
@@ -43,7 +43,7 @@ class Utils
      * @param mixed $value
      * @return mixed[]
      */
-    public static function mixedToArray($value)
+    public static function mixedToArray(mixed $value): array
     {
         if ($value === null) {
             $value = [];

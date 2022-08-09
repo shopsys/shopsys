@@ -65,7 +65,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
      * @param string|null $locale
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         $normalizedId = $this->messageIdNormalizer->normalizeMessageId($id);
         $resolvedLocale = $this->resolveLocale($locale);

@@ -9,7 +9,7 @@ class FriendlyUrlRouteNotSupportedException extends Exception implements Friendl
     /**
      * @param string $routeName
      */
-    public function __construct($routeName)
+    public function __construct(string $routeName)
     {
         parent::__construct('Generating friendly URL for route "' . $routeName . '" is not yet supported.');
     }

@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -29,7 +30,10 @@ class AdminDomainTabsFacade
         $this->session = $session;
     }
 
-    public function getSelectedDomainId()
+    /**
+     * @return int
+     */
+    public function getSelectedDomainId(): int
     {
         return $this->getSelectedDomainConfig()->getId();
     }
@@ -37,7 +41,7 @@ class AdminDomainTabsFacade
     /**
      * @param int $domainId
      */
-    public function setSelectedDomainId($domainId)
+    public function setSelectedDomainId(int $domainId): void
     {
         $domainConfig = $this->domain->getDomainConfigById($domainId);
         $this->session->set(static::SESSION_SELECTED_DOMAIN, $domainConfig->getId());
@@ -46,7 +50,7 @@ class AdminDomainTabsFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getSelectedDomainConfig()
+    public function getSelectedDomainConfig(): DomainConfig
     {
         try {
             $domainId = $this->session->get(static::SESSION_SELECTED_DOMAIN);

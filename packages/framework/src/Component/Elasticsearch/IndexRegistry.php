@@ -54,7 +54,7 @@ class IndexRegistry
     }
 
     /**
-     * @return string[]
+     * @return int[]|string[]
      */
     public function getRegisteredIndexNames(): array
     {

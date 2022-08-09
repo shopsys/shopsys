@@ -11,7 +11,7 @@ class MessageIdNormalizer
      * @param string $messageId
      * @return string
      */
-    public function normalizeMessageId($messageId)
+    public function normalizeMessageId(string $messageId): string
     {
         return trim(preg_replace('~\s+~u', ' ', $messageId));
     }
@@ -20,7 +20,7 @@ class MessageIdNormalizer
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @return \JMS\TranslationBundle\Model\MessageCatalogue
      */
-    public function getNormalizedCatalogue(MessageCatalogue $catalogue)
+    public function getNormalizedCatalogue(MessageCatalogue $catalogue): MessageCatalogue
     {
         $normalizedCatalogue = new MessageCatalogue();
         $normalizedCatalogue->setLocale($catalogue->getLocale());
@@ -40,7 +40,7 @@ class MessageIdNormalizer
      * @param string $domain
      * @return \JMS\TranslationBundle\Model\Message
      */
-    protected function getNormalizedMessage(Message $message, $domain)
+    protected function getNormalizedMessage(Message $message, string $domain): Message
     {
         $normalizedMessageId = $this->normalizeMessageId($message->getId());
 

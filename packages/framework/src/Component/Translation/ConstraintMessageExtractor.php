@@ -61,9 +61,8 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param \PhpParser\Node[] $ast
-     * @return void
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -73,7 +72,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): null|int|Node
     {
         if ($node instanceof New_) {
             if ($this->isConstraintClass($node->class) && count($node->args) > 0) {
@@ -88,7 +87,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return bool
      */
-    protected function isConstraintClass(Node $node)
+    protected function isConstraintClass(Node $node): bool
     {
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
@@ -96,7 +95,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \PhpParser\Node $optionsNode
      */
-    protected function extractMessagesFromOptions(Node $optionsNode)
+    protected function extractMessagesFromOptions(Node $optionsNode): void
     {
         if ($optionsNode instanceof Array_) {
             foreach ($optionsNode->items as $optionItemNode) {
@@ -116,7 +115,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node\Expr\ArrayItem $node
      * @return bool
      */
-    protected function isMessageOptionItem(ArrayItem $node)
+    protected function isMessageOptionItem(ArrayItem $node): bool
     {
         return $node->key instanceof String_ && strtolower(substr($node->key->value, -7)) === 'message';
     }
@@ -124,7 +123,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -132,7 +131,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): null|int|Node|array
     {
         return null;
     }
@@ -140,7 +139,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -148,16 +147,14 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
-        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast): void
     {
-        return null;
     }
 }

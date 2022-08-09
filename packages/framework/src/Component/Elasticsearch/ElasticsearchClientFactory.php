@@ -24,7 +24,7 @@ class ElasticsearchClientFactory
 
     /**
      * @param string $hosts
-     * @return string[]
+     * @return mixed[]|string[]
      */
     protected static function parseHosts(string $hosts): array
     {

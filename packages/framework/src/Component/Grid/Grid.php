@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -168,7 +169,7 @@ class Grid
      * @param \Twig\Environment $twig
      */
     public function __construct(
-        $id,
+        string $id,
         DataSourceInterface $dataSource,
         RequestStack $requestStack,
         RouterInterface $router,
@@ -205,7 +206,7 @@ class Grid
      * @param bool $sortable
      * @return \Shopsys\FrameworkBundle\Component\Grid\Column
      */
-    public function addColumn($id, $sourceColumnName, $title, $sortable = false)
+    public function addColumn(string $id, string $sourceColumnName, string $title, bool $sortable = false): Column
     {
         if (array_key_exists($id, $this->columnsById)) {
             throw new DuplicateColumnIdException(
@@ -226,12 +227,12 @@ class Grid
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
     public function addActionColumn(
-        $type,
-        $name,
-        $route,
+        string $type,
+        string $name,
+        string $route,
         array $bindingRouteParams = [],
         array $additionalRouteParams = []
-    ) {
+    ): ActionColumn {
         $actionColumn = new ActionColumn(
             $this->router,
             $this->routeCsrfProtector,
@@ -252,7 +253,7 @@ class Grid
      * @param array<string, string|int|float|bool|null> $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
+    public function addEditActionColumn(string $route, array $bindingRouteParams = [], array $additionalRouteParams = []): ActionColumn
     {
         return $this->addActionColumn(
             ActionColumn::TYPE_EDIT,
@@ -269,7 +270,7 @@ class Grid
      * @param array<string, string|int|float|bool|null> $additionalRouteParams
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
+    public function addDeleteActionColumn(string $route, array $bindingRouteParams = [], array $additionalRouteParams = []): ActionColumn
     {
         return $this->addActionColumn(
             ActionColumn::TYPE_DELETE,
@@ -283,7 +284,7 @@ class Grid
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T> $inlineEditService
      */
-    public function setInlineEditService(GridInlineEditInterface $inlineEditService)
+    public function setInlineEditService(GridInlineEditInterface $inlineEditService): void
     {
         $this->inlineEditService = $inlineEditService;
     }
@@ -291,7 +292,7 @@ class Grid
     /**
      * @return bool
      */
-    public function isInlineEdit()
+    public function isInlineEdit(): bool
     {
         return $this->inlineEditService !== null;
     }
@@ -299,7 +300,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T>|null
      */
-    public function getInlineEditService()
+    public function getInlineEditService(): ?GridInlineEditInterface
     {
         return $this->inlineEditService;
     }
@@ -308,7 +309,7 @@ class Grid
      * @param array<string, mixed> $row
      * @return mixed
      */
-    public function getRowId($row)
+    public function getRowId(array $row): mixed
     {
         return self::getValueFromRowBySourceColumnName($row, $this->dataSource->getRowIdSourceColumnName());
     }
@@ -316,7 +317,7 @@ class Grid
     /**
      * @param string $classAttribute
      */
-    public function setActionColumnClassAttribute($classAttribute)
+    public function setActionColumnClassAttribute(string $classAttribute): void
     {
         $this->actionColumnClassAttribute = $classAttribute;
     }
@@ -325,7 +326,7 @@ class Grid
      * @param string|string[] $viewTheme
      * @param array<string, mixed> $viewParameters
      */
-    public function setTheme($viewTheme, array $viewParameters = [])
+    public function setTheme(string|array $viewTheme, array $viewParameters = []): void
     {
         $this->viewTheme = $viewTheme;
         $this->viewTemplateParameters = $viewParameters;
@@ -334,7 +335,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
-    public function createView()
+    public function createView(): GridView
     {
         $gridView = $this->createViewWithoutRows();
         if ($this->isEnabledPaging()) {
@@ -349,7 +350,7 @@ class Grid
      * @param int $rowId
      * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
-    public function createViewWithOneRow($rowId)
+    public function createViewWithOneRow(int $rowId): GridView
     {
         $gridView = $this->createViewWithoutRows();
         $this->loadRowsWithOneRow($rowId);
@@ -360,7 +361,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<T>
      */
-    public function createViewWithoutRows()
+    public function createViewWithoutRows(): GridView
     {
         $this->rows = [];
         return new GridView(
@@ -373,12 +374,12 @@ class Grid
         );
     }
 
-    public function enablePaging()
+    public function enablePaging(): void
     {
         $this->enablePaging = true;
     }
 
-    public function enableSelecting()
+    public function enableSelecting(): void
     {
         $this->enableSelecting = true;
     }
@@ -386,7 +387,7 @@ class Grid
     /**
      * @param int $limit
      */
-    public function setDefaultLimit($limit)
+    public function setDefaultLimit(int $limit): void
     {
         if (!$this->isLimitFromRequest) {
             $this->setLimit((int)$limit);
@@ -397,7 +398,7 @@ class Grid
      * @param string $columnId
      * @param string $direction
      */
-    public function setDefaultOrder($columnId, $direction = DataSourceInterface::ORDER_ASC)
+    public function setDefaultOrder(string $columnId, string $direction = DataSourceInterface::ORDER_ASC): void
     {
         if (!$this->isOrderFromRequest) {
             $prefix = $direction === DataSourceInterface::ORDER_DESC ? '-' : '';
@@ -408,7 +409,7 @@ class Grid
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -416,7 +417,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Column[]
      */
-    public function getColumnsById()
+    public function getColumnsById(): array
     {
         return $this->columnsById;
     }
@@ -425,7 +426,7 @@ class Grid
      * @param string $columnId
      * @return bool
      */
-    public function existsColumn($columnId)
+    public function existsColumn(string $columnId): bool
     {
         return array_key_exists($columnId, $this->columnsById);
     }
@@ -433,7 +434,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
      */
-    public function getActionColumns()
+    public function getActionColumns(): array
     {
         return $this->actionColumns;
     }
@@ -441,7 +442,7 @@ class Grid
     /**
      * @return array<array<string, mixed>>
      */
-    public function getRows()
+    public function getRows(): array
     {
         return $this->rows;
     }
@@ -449,7 +450,7 @@ class Grid
     /**
      * @return bool
      */
-    public function isEnabledPaging()
+    public function isEnabledPaging(): bool
     {
         return $this->enablePaging;
     }
@@ -457,7 +458,7 @@ class Grid
     /**
      * @return bool
      */
-    public function isEnabledSelecting()
+    public function isEnabledSelecting(): bool
     {
         return $this->enableSelecting;
     }
@@ -466,16 +467,16 @@ class Grid
      * @param array<string, mixed> $row
      * @return bool
      */
-    public function isRowSelected(array $row)
+    public function isRowSelected(array $row): bool
     {
         $rowId = $this->getRowId($row);
         return in_array($rowId, $this->selectedRowIds, true);
     }
 
     /**
-     * @return int[]
+     * @return int[]|string[]
      */
-    public function getSelectedRowIds()
+    public function getSelectedRowIds(): array
     {
         return $this->selectedRowIds;
     }
@@ -483,7 +484,7 @@ class Grid
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -491,7 +492,7 @@ class Grid
     /**
      * @param int $limit
      */
-    protected function setLimit($limit)
+    protected function setLimit(int $limit): void
     {
         if (in_array($limit, $this->allowedLimits, true)) {
             $this->limit = $limit;
@@ -501,7 +502,7 @@ class Grid
     /**
      * @return int[]
      */
-    public function getAllowedLimits()
+    public function getAllowedLimits(): array
     {
         return $this->allowedLimits;
     }
@@ -509,7 +510,7 @@ class Grid
     /**
      * @return int|null
      */
-    public function getTotalCount()
+    public function getTotalCount(): ?int
     {
         return $this->totalCount;
     }
@@ -517,15 +518,15 @@ class Grid
     /**
      * @return int
      */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPageCount()
+    public function getPageCount(): ?int
     {
         return $this->pageCount;
     }
@@ -533,7 +534,7 @@ class Grid
     /**
      * @return string|null
      */
-    public function getOrderSourceColumnName()
+    public function getOrderSourceColumnName(): ?string
     {
         return $this->orderSourceColumnName;
     }
@@ -541,7 +542,7 @@ class Grid
     /**
      * @return string|null
      */
-    public function getOrderSourceColumnNameWithDirection()
+    public function getOrderSourceColumnNameWithDirection(): ?string
     {
         $prefix = '';
         if ($this->getOrderDirection() === DataSourceInterface::ORDER_DESC) {
@@ -554,7 +555,7 @@ class Grid
     /**
      * @return string|null
      */
-    public function getOrderDirection()
+    public function getOrderDirection(): ?string
     {
         return $this->orderDirection;
     }
@@ -562,7 +563,7 @@ class Grid
     /**
      * @return string
      */
-    public function getActionColumnClassAttribute()
+    public function getActionColumnClassAttribute(): string
     {
         return $this->actionColumnClassAttribute;
     }
@@ -570,7 +571,7 @@ class Grid
     /**
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
-    public function getPaginationResults()
+    public function getPaginationResults(): PaginationResult
     {
         return $this->paginationResults;
     }
@@ -578,7 +579,7 @@ class Grid
     /**
      * @param string $orderString
      */
-    protected function setOrderingByOrderString($orderString)
+    protected function setOrderingByOrderString(string $orderString): void
     {
         if (substr($orderString, 0, 1) === '-') {
             $this->orderDirection = DataSourceInterface::ORDER_DESC;
@@ -588,7 +589,7 @@ class Grid
         $this->orderSourceColumnName = trim($orderString, '-');
     }
 
-    protected function loadFromRequest()
+    protected function loadFromRequest(): void
     {
         /** @var array<string, mixed> $queryData */
         $queryData = $this->requestStack->getMasterRequest()->query->get(self::GET_PARAMETER, []);
@@ -619,9 +620,9 @@ class Grid
 
     /**
      * @param string|string[]|null $removeParameters
-     * @return array<string, mixed>
+     * @return int[]|string[]|null[]
      */
-    public function getGridParameters($removeParameters = [])
+    public function getGridParameters(string|array|null $removeParameters = []): array
     {
         $gridParameters = [];
         if ($this->isEnabledPaging()) {
@@ -648,7 +649,7 @@ class Grid
      * @param string|string[]|null $removeParameters
      * @return array<string, mixed>
      */
-    public function getUrlGridParameters($parameters = null, $removeParameters = null)
+    public function getUrlGridParameters(string|array|null $parameters = null, string|array|null $removeParameters = null): array
     {
         $gridParameters = array_replace_recursive(
             $this->getGridParameters($removeParameters),
@@ -663,7 +664,7 @@ class Grid
      * @param string|string[]|null $removeParameters
      * @return array<string, mixed>
      */
-    public function getUrlParameters($parameters = null, $removeParameters = null)
+    public function getUrlParameters(string|array|null $parameters = null, string|array|null $removeParameters = null): array
     {
         return array_replace_recursive(
             $this->requestStack->getMasterRequest()->query->all(),
@@ -672,7 +673,7 @@ class Grid
         );
     }
 
-    protected function loadRows()
+    protected function loadRows(): void
     {
         if (array_key_exists($this->orderSourceColumnName, $this->columnsById)
             && $this->columnsById[$this->orderSourceColumnName]->isSortable()
@@ -702,12 +703,12 @@ class Grid
     /**
      * @param int $rowId
      */
-    protected function loadRowsWithOneRow($rowId)
+    protected function loadRowsWithOneRow(int $rowId): void
     {
         $this->rows = [$this->dataSource->getOneRow($rowId)];
     }
 
-    protected function executeTotalQuery()
+    protected function executeTotalQuery(): void
     {
         $this->totalCount = $this->dataSource->getTotalRowsCount();
         $this->pageCount = max(ceil($this->totalCount / $this->limit), 1);
@@ -719,7 +720,7 @@ class Grid
      * @param string $sourceColumnName
      * @return mixed
      */
-    public static function getValueFromRowBySourceColumnName(array $row, $sourceColumnName)
+    public static function getValueFromRowBySourceColumnName(array $row, string $sourceColumnName): mixed
     {
         $sourceColumnNameParts = explode('.', $sourceColumnName);
 
@@ -746,12 +747,12 @@ class Grid
     /**
      * @param class-string $entityClass
      */
-    public function enableDragAndDrop($entityClass)
+    public function enableDragAndDrop(string $entityClass): void
     {
         $this->orderingEntityClass = $entityClass;
     }
 
-    public function enableMultipleDragAndDrop()
+    public function enableMultipleDragAndDrop(): void
     {
         $this->multipleDragAndDrop = true;
     }
@@ -759,7 +760,7 @@ class Grid
     /**
      * @return bool
      */
-    public function isDragAndDrop()
+    public function isDragAndDrop(): bool
     {
         return $this->orderingEntityClass !== null;
     }
@@ -767,7 +768,7 @@ class Grid
     /**
      * @return class-string|null
      */
-    public function getOrderingEntityClass()
+    public function getOrderingEntityClass(): ?string
     {
         return $this->orderingEntityClass;
     }
@@ -775,7 +776,7 @@ class Grid
     /**
      * @return bool
      */
-    public function isMultipleDragAndDrop()
+    public function isMultipleDragAndDrop(): bool
     {
         return $this->multipleDragAndDrop;
     }

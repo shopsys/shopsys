@@ -33,10 +33,10 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param \DateTime $value
      * @param int $dateType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
      * @param int $timeType @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @param string|null $locale
+     * @param string $locale
      * @return string|bool
      */
-    public function format(DateTime $value, $dateType, $timeType, $locale)
+    public function format(DateTime $value, int $dateType, int $timeType, string $locale): string|bool
     {
         $intlDateFormatter = new IntlDateFormatter(
             $locale,
@@ -56,7 +56,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param int|null $timeType
      * @return string|null
      */
-    protected function getCustomPattern($locale, $dateType, $timeType)
+    protected function getCustomPattern(string $locale, ?int $dateType, ?int $timeType): ?string
     {
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern(
             $locale,

@@ -31,7 +31,7 @@ class DuplicateSizeNameException extends Exception implements ImageConfigExcepti
     /**
      * @return string|null
      */
-    public function getSizeName()
+    public function getSizeName(): ?string
     {
         return $this->sizeName;
     }

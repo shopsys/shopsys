@@ -57,7 +57,7 @@ class MultidomainEntityClassFinderFacade
     /**
      * @return string[]
      */
-    public function getMultidomainEntitiesNames()
+    public function getMultidomainEntitiesNames(): array
     {
         return $this->multidomainEntityClassFinder->getMultidomainEntitiesNames(
             $this->em->getMetadataFactory()->getAllMetadata(),
@@ -69,7 +69,7 @@ class MultidomainEntityClassFinderFacade
     /**
      * @return string[][]
      */
-    public function getAllNotNullableColumnNamesIndexedByTableName()
+    public function getAllNotNullableColumnNamesIndexedByTableName(): array
     {
         $multidomainClassesMetadata = [];
         foreach ($this->getMultidomainEntitiesNames() as $multidomainEntityName) {

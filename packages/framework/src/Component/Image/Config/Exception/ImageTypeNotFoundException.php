@@ -7,7 +7,7 @@ use Exception;
 class ImageTypeNotFoundException extends Exception implements ImageConfigException
 {
     /**
-     * @var string
+     * @var class-string
      */
     protected $entityClass;
 
@@ -17,11 +17,11 @@ class ImageTypeNotFoundException extends Exception implements ImageConfigExcepti
     protected $imageType;
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @param string $imageType
      * @param \Exception|null $previous
      */
-    public function __construct($entityClass, $imageType, ?Exception $previous = null)
+    public function __construct(string $entityClass, string $imageType, ?Exception $previous = null)
     {
         $this->entityClass = $entityClass;
         $this->imageType = $imageType;
@@ -34,9 +34,9 @@ class ImageTypeNotFoundException extends Exception implements ImageConfigExcepti
     }
 
     /**
-     * @return string
+     * @return class-string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -44,7 +44,7 @@ class ImageTypeNotFoundException extends Exception implements ImageConfigExcepti
     /**
      * @return string
      */
-    public function getImageType()
+    public function getImageType(): string
     {
         return $this->imageType;
     }

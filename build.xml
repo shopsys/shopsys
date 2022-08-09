@@ -232,13 +232,7 @@
             <arg value="analyze"/>
             <arg value="-c"/>
             <arg path="./phpstan.neon"/>
-            <arg path="${path.packages}/*/src"/>
-            <arg path="${path.packages}/*/tests"/>
-            <arg path="${path.app}"/>
-            <arg path="${path.root}/src"/>
-            <arg path="${path.root}/tests"/>
-            <arg path="${path.utils}/*/src"/>
-            <arg path="${path.utils}/*/tests"/>
+            <arg path="${path.packages}/framework/src/Controller"/>
             <arg value="--level=${phpstan.level}"/>
             <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>

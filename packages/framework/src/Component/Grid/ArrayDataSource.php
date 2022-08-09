@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Exception;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\OrderingNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\PaginationNotSupportedException;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -35,10 +37,10 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         if ($this->rowIdSourceColumnName === null) {
-            throw new \RuntimeException(self::class . ' has not set `RowIdSourceColumnName`');
+            throw new RuntimeException(self::class . ' has not set `RowIdSourceColumnName`');
         }
 
         return $this->rowIdSourceColumnName;
@@ -46,9 +48,9 @@ class ArrayDataSource implements DataSourceInterface
 
     /**
      * @param int $rowId
-     * @return T
+     * @return array<string, mixed>
      */
-    public function getOneRow($rowId)
+    public function getOneRow(int $rowId): array
     {
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
@@ -58,16 +60,18 @@ class ArrayDataSource implements DataSourceInterface
                 return $item;
             }
         }
+
+        throw new Exception('Row does not found.');
     }
 
     /**
      * @param int|null $limit
      * @param int $page
      * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
+     * @param string|null $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
-    public function getPaginatedRows($limit = null, $page = 1, $orderSourceColumnName = null, $orderDirection = self::ORDER_ASC)
+    public function getPaginatedRows(?int $limit = null, int $page = 1, ?string $orderSourceColumnName = null, ?string $orderDirection = self::ORDER_ASC): PaginationResult
     {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
@@ -85,7 +89,7 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         return count($this->data);
     }

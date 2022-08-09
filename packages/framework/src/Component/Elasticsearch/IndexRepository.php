@@ -169,7 +169,7 @@ class IndexRepository
 
     /**
      * @param string $aliasName
-     * @return string[]
+     * @return int[]|string[]
      */
     protected function findIndexNamesForAlias(string $aliasName): array
     {

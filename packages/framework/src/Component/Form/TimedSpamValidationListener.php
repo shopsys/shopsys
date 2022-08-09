@@ -32,7 +32,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         if ($form->isRoot() &&

@@ -26,10 +26,10 @@ class InlineEditFacade
 
     /**
      * @param string $serviceName
-     * @param mixed $rowId
+     * @param int|string|null $rowId
      * @return string
      */
-    public function getRenderedFormRow($serviceName, $rowId)
+    public function getRenderedFormRow(string $serviceName, int|string|null $rowId): string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         /** @var \Symfony\Component\Form\Form $form */
@@ -41,10 +41,10 @@ class InlineEditFacade
     /**
      * @param string $serviceName
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $rowId
+     * @param string|int $rowId
      * @return mixed
      */
-    public function saveFormData($serviceName, Request $request, $rowId)
+    public function saveFormData(string $serviceName, Request $request, string|int $rowId): mixed
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         return $gridInlineEdit->saveForm($request, $rowId);
@@ -52,10 +52,10 @@ class InlineEditFacade
 
     /**
      * @param string $serviceName
-     * @param mixed $rowId
+     * @param int|string|null $rowId
      * @return string|null
      */
-    public function getRenderedRowHtml($serviceName, $rowId)
+    public function getRenderedRowHtml(string $serviceName, int|string|null $rowId): ?string
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
         $grid = $gridInlineEdit->getGrid();
@@ -71,11 +71,11 @@ class InlineEditFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface<T> $gridInlineEditService
-     * @param mixed $rowId
+     * @param int|string|null $rowId
      * @param \Symfony\Component\Form\Form $form
      * @return string
      */
-    protected function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form)
+    protected function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, int|string|null $rowId, Form $form): string
     {
         $grid = $gridInlineEditService->getGrid();
         if ($rowId === null) {

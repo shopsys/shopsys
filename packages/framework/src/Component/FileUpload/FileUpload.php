@@ -62,9 +62,9 @@ class FileUpload
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
     public function __construct(
-        $temporaryDir,
-        $uploadedFileDir,
-        $imageDir,
+        string $temporaryDir,
+        string $uploadedFileDir,
+        string $imageDir,
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
         FilesystemInterface $filesystem,
@@ -83,7 +83,7 @@ class FileUpload
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @return string
      */
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file): string
     {
         if ($file->getError()) {
             throw new UploadFailedException($file->getErrorMessage());
@@ -102,7 +102,7 @@ class FileUpload
      * @param string $filename
      * @return bool
      */
-    public function tryDeleteTemporaryFile($filename)
+    public function tryDeleteTemporaryFile(string $filename): bool
     {
         if ($filename !== '') {
             $filepath = $this->getTemporaryFilepath($filename);
@@ -119,7 +119,7 @@ class FileUpload
      * @param string $filename
      * @return string
      */
-    protected function getTemporaryFilename($filename)
+    protected function getTemporaryFilename(string $filename): string
     {
         return TransformString::safeFilename(uniqid('', true) . '__' . $filename);
     }
@@ -128,7 +128,7 @@ class FileUpload
      * @param string $temporaryFilename
      * @return string
      */
-    public function getTemporaryFilepath($temporaryFilename)
+    public function getTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->getTemporaryDirectory() . '/' . TransformString::safeFilename($temporaryFilename);
     }
@@ -137,7 +137,7 @@ class FileUpload
      * @param string $temporaryFilename
      * @return string
      */
-    public function getAbsoluteTemporaryFilepath($temporaryFilename)
+    public function getAbsoluteTemporaryFilepath(string $temporaryFilename): string
     {
         return $this->parameterBag->get(
             'kernel.project_dir'
@@ -149,7 +149,7 @@ class FileUpload
     /**
      * @return string
      */
-    public function getTemporaryDirectory()
+    public function getTemporaryDirectory(): string
     {
         return $this->temporaryDir . '/' . static::TEMPORARY_DIRECTORY;
     }
@@ -160,7 +160,7 @@ class FileUpload
      * @param string|null $targetDirectory
      * @return string
      */
-    public function getUploadDirectory($isImage, $category, $targetDirectory)
+    public function getUploadDirectory(bool $isImage, string $category, ?string $targetDirectory): string
     {
         return ($isImage ? $this->imageDir : $this->uploadedFileDir)
             . $category
@@ -174,7 +174,7 @@ class FileUpload
      * @param string|null $targetDirectory
      * @return string
      */
-    protected function getTargetFilepath($filename, $isImage, $category, $targetDirectory)
+    protected function getTargetFilepath(string $filename, bool $isImage, string $category, ?string $targetDirectory): string
     {
         return $this->getUploadDirectory($isImage, $category, $targetDirectory) . '/' . $filename;
     }
@@ -183,7 +183,7 @@ class FileUpload
      * @param string $temporaryFilename
      * @return string
      */
-    public function getOriginalFilenameByTemporary($temporaryFilename)
+    public function getOriginalFilenameByTemporary(string $temporaryFilename): string
     {
         $matches = [];
         if ($temporaryFilename && preg_match('/^.+?__(.+)$/', $temporaryFilename, $matches)) {
@@ -195,7 +195,7 @@ class FileUpload
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
      */
-    public function preFlushEntity(EntityFileUploadInterface $entity)
+    public function preFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
         foreach ($filesForUpload as $key => $fileForUpload) {
@@ -207,7 +207,7 @@ class FileUpload
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
      */
-    public function postFlushEntity(EntityFileUploadInterface $entity)
+    public function postFlushEntity(EntityFileUploadInterface $entity): void
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
 

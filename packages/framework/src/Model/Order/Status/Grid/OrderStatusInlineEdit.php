@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Order\Status\OrderStatusFormType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class OrderStatusInlineEdit extends AbstractGridInlineEdit
 {
@@ -45,30 +46,30 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($orderStatusData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $orderStatus = $this->orderStatusFacade->create($orderStatusData);
+        $orderStatus = $this->orderStatusFacade->create($formData);
 
         return $orderStatus->getId();
     }
 
     /**
-     * @param int $orderStatusId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($orderStatusId, $orderStatusData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);
+        $this->orderStatusFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $orderStatusId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($orderStatusId)
+    public function getForm($orderStatusId): FormInterface
     {
         if ($orderStatusId !== null) {
             $orderStatus = $this->orderStatusFacade->getById((int)$orderStatusId);

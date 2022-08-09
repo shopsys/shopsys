@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 /**
@@ -26,7 +27,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
-    public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName)
+    public function __construct(QueryBuilder $queryBuilder, string $rowIdSourceColumnName)
     {
         $this->queryBuilder = $queryBuilder;
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
@@ -36,15 +37,15 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param int|null $limit
      * @param int $page
      * @param string|null $orderSourceColumnName
-     * @param string $orderDirection
+     * @param string|null $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
     public function getPaginatedRows(
-        $limit = null,
-        $page = 1,
-        $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
-    ) {
+        ?int $limit = null,
+        int $page = 1,
+        ?string $orderSourceColumnName = null,
+        ?string $orderDirection = self::ORDER_ASC
+    ): PaginationResult {
         $queryBuilder = clone $this->queryBuilder;
         if ($orderSourceColumnName !== null) {
             $this->addQueryOrder($queryBuilder, $orderSourceColumnName, $orderDirection);
@@ -59,7 +60,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param int $rowId
      * @return T
      */
-    public function getOneRow($rowId)
+    public function getOneRow(int $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -70,7 +71,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return int
      */
-    public function getTotalRowsCount()
+    public function getTotalRowsCount(): int
     {
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
         return $queryPaginator->getTotalCount();
@@ -81,7 +82,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param string $orderSourceColumnName
      * @param string $orderDirection
      */
-    protected function addQueryOrder(QueryBuilder $queryBuilder, $orderSourceColumnName, $orderDirection)
+    protected function addQueryOrder(QueryBuilder $queryBuilder, string $orderSourceColumnName, string $orderDirection): void
     {
         $queryBuilder->orderBy($orderSourceColumnName, $orderDirection);
     }
@@ -90,7 +91,7 @@ class QueryBuilderDataSource implements DataSourceInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param int $rowId
      */
-    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, $rowId)
+    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int $rowId): void
     {
         $queryBuilder
             ->andWhere($this->rowIdSourceColumnName . ' = :rowId')
@@ -103,7 +104,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     /**
      * @return string
      */
-    public function getRowIdSourceColumnName()
+    public function getRowIdSourceColumnName(): string
     {
         return $this->rowIdSourceColumnName;
     }

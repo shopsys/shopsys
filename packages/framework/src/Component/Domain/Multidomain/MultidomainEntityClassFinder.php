@@ -10,13 +10,13 @@ class MultidomainEntityClassFinder
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $allClassesMetadata
      * @param string[] $ignoredEntitiesNames
      * @param string[] $manualMultidomainEntitiesNames
-     * @return string[]
+     * @return class-string<object>[]
      */
     public function getMultidomainEntitiesNames(
         array $allClassesMetadata,
         array $ignoredEntitiesNames,
         array $manualMultidomainEntitiesNames
-    ) {
+    ): array {
         $multidomainEntitiesNames = [];
         foreach ($allClassesMetadata as $classMetadata) {
             $entityName = $classMetadata->getName();
@@ -38,7 +38,7 @@ class MultidomainEntityClassFinder
      * @param \Doctrine\Persistence\Mapping\ClassMetadata $classMetadata
      * @return bool
      */
-    protected function isMultidomainEntity(ClassMetadata $classMetadata)
+    protected function isMultidomainEntity(ClassMetadata $classMetadata): bool
     {
         $identifierFieldNames = $classMetadata->getIdentifierFieldNames();
 

@@ -42,7 +42,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
             $yamlContent = Yaml::parseFile($file->getRealPath(), Yaml::PARSE_CUSTOM_TAGS);
             if ($yamlContent !== null) {
                 $validationArrays = $this->getAllValuesOfArrayKeysByPattern($yamlContent, '/^validation$/');
-                $validationArraysWithoutCascade = array_filter($validationArrays, static function ($value) {
+                $validationArraysWithoutCascade = array_filter($validationArrays, static function ($value): bool {
                     return $value !== 'cascade';
                 });
                 $messages = $this->getAllValuesOfArrayKeysByPattern($validationArraysWithoutCascade, '/.*message.*/i');
@@ -80,7 +80,6 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param \PhpParser\Node[] $ast
-     * @return void
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {

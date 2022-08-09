@@ -48,7 +48,7 @@ class PaginationResult
      * @param int $totalCount
      * @param T[] $results
      */
-    public function __construct($page, $pageSize, $totalCount, $results)
+    public function __construct(int $page, ?int $pageSize, int $totalCount, array $results)
     {
         $this->page = $page;
         $this->pageSize = $pageSize;
@@ -77,7 +77,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
@@ -85,7 +85,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getPageSize()
+    public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
@@ -93,7 +93,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }
@@ -101,7 +101,7 @@ class PaginationResult
     /**
      * @return T[]
      */
-    public function getResults()
+    public function getResults(): array
     {
         return $this->results;
     }
@@ -109,7 +109,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getPageCount()
+    public function getPageCount(): int
     {
         return $this->pageCount;
     }
@@ -117,7 +117,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getFromItem()
+    public function getFromItem(): float|int
     {
         return $this->fromItem;
     }
@@ -125,7 +125,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getToItem()
+    public function getToItem(): float|int
     {
         return $this->toItem;
     }

@@ -73,9 +73,9 @@ class ActionColumn
     public function __construct(
         RouterInterface $router,
         RouteCsrfProtector $routeCsrfProtector,
-        $type,
-        $title,
-        $route,
+        string $type,
+        string $title,
+        string $route,
         array $bindingRouteParams,
         array $additionalRouteParams
     ) {
@@ -92,7 +92,7 @@ class ActionColumn
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -100,7 +100,7 @@ class ActionColumn
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -108,7 +108,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getClassAttribute()
+    public function getClassAttribute(): ?string
     {
         return $this->classAttribute;
     }
@@ -116,7 +116,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getConfirmMessage()
+    public function getConfirmMessage(): ?string
     {
         return $this->confirmMessage;
     }
@@ -125,7 +125,7 @@ class ActionColumn
      * @param string $classAttribute
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setClassAttribute($classAttribute)
+    public function setClassAttribute(string $classAttribute): self
     {
         $this->classAttribute = $classAttribute;
 
@@ -136,7 +136,7 @@ class ActionColumn
      * @param string $confirmMessage
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setConfirmMessage($confirmMessage)
+    public function setConfirmMessage(string $confirmMessage): self
     {
         $this->confirmMessage = $confirmMessage;
 
@@ -146,7 +146,7 @@ class ActionColumn
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setAjaxConfirm()
+    public function setAjaxConfirm(): self
     {
         $this->isAjaxConfirm = true;
 
@@ -156,7 +156,7 @@ class ActionColumn
     /**
      * @return bool
      */
-    public function isAjaxConfirm()
+    public function isAjaxConfirm(): bool
     {
         return $this->isAjaxConfirm;
     }
@@ -165,7 +165,7 @@ class ActionColumn
      * @param array<string, mixed> $row
      * @return string
      */
-    public function getTargetUrl(array $row)
+    public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;
 

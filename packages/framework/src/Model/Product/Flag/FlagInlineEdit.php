@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Flag\FlagFormType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class FlagInlineEdit extends AbstractGridInlineEdit
 {
@@ -43,30 +44,30 @@ class FlagInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($flagData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $flag = $this->flagFacade->create($flagData);
+        $flag = $this->flagFacade->create($formData);
 
         return $flag->getId();
     }
 
     /**
-     * @param int $flagId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($flagId, $flagData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->flagFacade->edit($flagId, $flagData);
+        $this->flagFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $flagId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($flagId)
+    public function getForm($flagId): FormInterface
     {
         if ($flagId !== null) {
             $flag = $this->flagFacade->getById((int)$flagId);

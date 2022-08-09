@@ -14,7 +14,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
-    protected function deliver(Response $response)
+    protected function deliver(Response $response): bool|string|null
     {
         if (!$response->isRedirection()) {
             return parent::deliver($response);
@@ -35,9 +35,10 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      * This leads to inconsistent error handling in development and production environment.
      *
      * {@inheritdoc}
+     *
      * @param array<string, mixed> $options
      */
-    public function render($uri, $renderer = 'inline', array $options = [])
+    public function render($uri, $renderer = 'inline', array $options = []): ?string
     {
         if (!isset($options['ignore_errors'])) {
             $options['ignore_errors'] = false;

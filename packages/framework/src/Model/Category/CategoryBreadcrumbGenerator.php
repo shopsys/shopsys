@@ -33,7 +33,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $category = $this->categoryRepository->getById($routeParameters['id']);
 
@@ -63,7 +63,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_product_list'];
     }

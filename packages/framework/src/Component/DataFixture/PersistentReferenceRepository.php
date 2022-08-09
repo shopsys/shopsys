@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceRepository
@@ -23,7 +24,7 @@ class PersistentReferenceRepository
     /**
      * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference>
      */
-    protected function getReferenceRepository()
+    protected function getReferenceRepository(): EntityRepository
     {
         return $this->em->getRepository(PersistentReference::class);
     }
@@ -32,7 +33,7 @@ class PersistentReferenceRepository
      * @param string $referenceName
      * @return \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference|null
      */
-    public function findByReferenceName($referenceName)
+    public function findByReferenceName(string $referenceName): ?PersistentReference
     {
         return $this->getReferenceRepository()->find(['referenceName' => $referenceName]);
     }
@@ -41,7 +42,7 @@ class PersistentReferenceRepository
      * @param string $referenceName
      * @return \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference
      */
-    public function getByReferenceName($referenceName)
+    public function getByReferenceName(string $referenceName): PersistentReference
     {
         $reference = $this->findByReferenceName($referenceName);
         if ($reference === null) {

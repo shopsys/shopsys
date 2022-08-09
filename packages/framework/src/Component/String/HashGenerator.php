@@ -10,7 +10,7 @@ class HashGenerator
      * @param int $length
      * @return string
      */
-    public function generateHash($length)
+    public function generateHash(int $length): string
     {
         $numberOfChars = strlen($this->characters);
 

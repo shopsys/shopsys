@@ -24,7 +24,7 @@ class ElasticsearchRequestCollection
     protected $collectedData = [];
 
     /**
-     * @return CollectedDataArray[]
+     * @return array<mixed, array{requestCurl: string, requestJson: string|null, requestData: mixed, method: string, uri: string, statusCode: int|null, response: mixed, duration: float}>
      */
     public function getCollectedData(): array
     {
@@ -66,11 +66,11 @@ class ElasticsearchRequestCollection
     public function addRequest(
         string $requestCurl,
         ?string $requestJson,
-        $requestData,
+        mixed $requestData,
         string $method,
         string $uri,
         ?int $statusCode,
-        $response,
+        mixed $response,
         float $duration
     ): void {
         $this->collectedData[] = [

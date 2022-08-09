@@ -24,7 +24,11 @@ use Symfony\Component\Yaml\Parser;
  * }
  * @phpstan-type SizeConfigArray array{
  *     name: string|null,
- *     additionalSizes: AdditionalSizeArray[],
+ *     additionalSizes: array<array{
+ *         media: string,
+ *         height: int|null,
+ *         width: int|null,
+ *     }>,
  *     width: int|null,
  *     height: int|null,
  *     crop: bool,
@@ -32,7 +36,18 @@ use Symfony\Component\Yaml\Parser;
  * }
  * @phpstan-type TypeConfigArray array{
  *     name: string,
- *     sizes: SizeConfigArray[],
+ *     sizes: array<array{
+ *          name: string|null,
+ *          additionalSizes: array<array{
+ *              media: string,
+ *             height: int|null,
+ *              width: int|null,
+ *          }>,
+ *          width: int|null,
+ *          height: int|null,
+ *          crop: bool,
+ *          occurrence: string|null,
+ *     }>,
  *     multiple: bool,
  * }
  */
@@ -72,7 +87,7 @@ class ImageConfigLoader
      * @param string $filename
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    public function loadFromYaml($filename)
+    public function loadFromYaml(string $filename): ImageConfig
     {
         $yamlParser = new Parser();
 
@@ -97,7 +112,7 @@ class ImageConfigLoader
      * @param mixed[] $outputConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    public function loadFromArray($outputConfig)
+    public function loadFromArray(array $outputConfig): array
     {
         $this->foundEntityConfigs = [];
         $this->foundEntityNames = [];
@@ -125,7 +140,7 @@ class ImageConfigLoader
      *     multiple: bool,
      * } $entityConfig
      */
-    protected function processEntityConfig($entityConfig)
+    protected function processEntityConfig(array $entityConfig): void
     {
         $entityClass = $entityConfig[ImageConfigDefinition::CONFIG_CLASS];
         $entityName = $entityConfig[ImageConfigDefinition::CONFIG_ENTITY_NAME];
@@ -149,7 +164,7 @@ class ImageConfigLoader
      * @param SizeConfigArray[] $sizesConfig
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    protected function prepareSizes($sizesConfig)
+    protected function prepareSizes(array $sizesConfig): array
     {
         $result = [];
         foreach ($sizesConfig as $sizeConfig) {
@@ -220,7 +235,7 @@ class ImageConfigLoader
      * @param TypeConfigArray[] $typesConfig
      * @return array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]>
      */
-    protected function prepareTypes($typesConfig)
+    protected function prepareTypes(array $typesConfig): array
     {
         $result = [];
         foreach ($typesConfig as $typeConfig) {
@@ -242,7 +257,7 @@ class ImageConfigLoader
      * } $entityConfig
      * @return array<string, bool>
      */
-    protected function getMultipleByType(array $entityConfig)
+    protected function getMultipleByType(array $entityConfig): array
     {
         $multipleByType = [];
         $multipleByType[ImageEntityConfig::WITHOUT_NAME_KEY] = $entityConfig[ImageConfigDefinition::CONFIG_MULTIPLE];

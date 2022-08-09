@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFil
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Router as SymfonyRouter;
 
 class LocalizedRouterFactory
 {
@@ -38,7 +39,7 @@ class LocalizedRouterFactory
      * @param string $cacheDir
      */
     public function __construct(
-        $localeRoutersResourcesFilepathMask,
+        string $localeRoutersResourcesFilepathMask,
         ContainerInterface $container,
         string $cacheDir
     ) {
@@ -53,7 +54,7 @@ class LocalizedRouterFactory
      * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Symfony\Component\Routing\Router
      */
-    public function getRouter($locale, RequestContext $context)
+    public function getRouter(string $locale, RequestContext $context): SymfonyRouter
     {
         if (file_exists($this->getLocaleRouterResourceByLocale($locale)) === false) {
             $message = 'File with localized routes for locale `' . $locale . '` was not found. '

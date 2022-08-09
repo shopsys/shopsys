@@ -20,7 +20,7 @@ class CronModuleExecutor
     /**
      * @param int $secondsTimeout
      */
-    public function __construct($secondsTimeout)
+    public function __construct(int $secondsTimeout)
     {
         $this->canRunTo = new DateTimeImmutable('+' . $secondsTimeout . ' sec');
     }
@@ -30,7 +30,7 @@ class CronModuleExecutor
      * @param bool $suspended
      * @return string
      */
-    public function runModule($cronModuleService, $suspended)
+    public function runModule(SimpleCronModuleInterface|IteratedCronModuleInterface $cronModuleService, bool $suspended): string
     {
         if (!$this->canRun()) {
             return self::RUN_STATUS_TIMEOUT;
@@ -42,30 +42,37 @@ class CronModuleExecutor
             return self::RUN_STATUS_OK;
         }
 
-        if ($cronModuleService instanceof IteratedCronModuleInterface) {
-            if ($suspended) {
-                $cronModuleService->wakeUp();
-            }
-            $inProgress = true;
-            while ($this->canRun() && $inProgress === true) {
-                $inProgress = $cronModuleService->iterate();
-            }
-            if ($inProgress === true) {
-                $cronModuleService->sleep();
-                return self::RUN_STATUS_SUSPENDED;
-            }
-            return self::RUN_STATUS_OK;
-        }
-
-        return self::RUN_STATUS_OK;
+        return $this->runIteratedMocule($suspended, $cronModuleService);
     }
 
     /**
      * @phpstan-impure
      * @return bool
      */
-    public function canRun()
+    public function canRun(): bool
     {
         return $this->canRunTo > new DateTimeImmutable();
+    }
+
+    /**
+     * @param bool $suspended
+     * @param \Shopsys\Plugin\Cron\IteratedCronModuleInterface $cronModuleService
+     * @return string
+     */
+    protected function runIteratedMocule(bool $suspended, IteratedCronModuleInterface $cronModuleService): string
+    {
+        if ($suspended) {
+            $cronModuleService->wakeUp();
+        }
+        $inProgress = true;
+        while ($this->canRun() && $inProgress === true) {
+            $inProgress = $cronModuleService->iterate();
+        }
+        if ($inProgress === true) {
+            $cronModuleService->sleep();
+            return self::RUN_STATUS_SUSPENDED;
+        }
+
+        return self::RUN_STATUS_OK;
     }
 }

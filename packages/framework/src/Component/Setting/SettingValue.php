@@ -61,10 +61,10 @@ class SettingValue
 
     /**
      * @param string $name
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param float|\DateTime|bool|int|string|\Shopsys\FrameworkBundle\Component\Money\Money|null $value
      * @param int $domainId
      */
-    public function __construct($name, $value, $domainId)
+    public function __construct(string $name, float|DateTime|bool|int|string|Money|null $value, int $domainId)
     {
         $this->name = $name;
         $this->setValue($value);
@@ -72,9 +72,9 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param float|\DateTime|bool|int|string|\Shopsys\FrameworkBundle\Component\Money\Money|null $value
      */
-    public function edit($value)
+    public function edit(float|DateTime|bool|int|string|Money|null $value): void
     {
         $this->setValue($value);
     }
@@ -82,7 +82,7 @@ class SettingValue
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -90,7 +90,7 @@ class SettingValue
     /**
      * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
-    public function getValue()
+    public function getValue(): float|DateTime|bool|int|string|Money|null
     {
         if ($this->value === null && $this->type !== static::TYPE_NULL) {
             $message = 'Setting value type "' . $this->type . '" does not allow null value.';
@@ -116,15 +116,15 @@ class SettingValue
     /**
      * @return int|null
      */
-    public function getDomainId()
+    public function getDomainId(): ?int
     {
         return $this->domainId;
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param float|\DateTime|bool|int|string|\Shopsys\FrameworkBundle\Component\Money\Money|null $value
      */
-    protected function setValue($value)
+    protected function setValue(float|DateTime|bool|int|string|Money|null $value): void
     {
         $this->type = $this->getValueType($value);
         if ($this->type === static::TYPE_BOOLEAN) {
@@ -141,10 +141,10 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|mixed|null $value
+     * @param mixed $value
      * @return string
      */
-    protected function getValueType($value)
+    protected function getValueType(mixed $value): string
     {
         if (is_int($value)) {
             return static::TYPE_INTEGER;

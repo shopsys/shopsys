@@ -24,7 +24,7 @@ class JsFileExtractor implements FileVisitorInterface
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      */
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
         if ($this->isFileTranslationDump($file) === false) {
             return;
@@ -65,14 +65,14 @@ class JsFileExtractor implements FileVisitorInterface
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param \PhpParser\Node[] $ast
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
     }
 
     /**
      * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {
     }
 }

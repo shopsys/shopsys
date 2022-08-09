@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileExtractor;
 use JMS\TranslationBundle\Translation\ExtractorManager;
 use Psr\Log\LoggerInterface;
@@ -28,7 +29,7 @@ class NormalizingExtractorManager extends ExtractorManager
     /**
      * @inheritdoc
      */
-    public function extract()
+    public function extract(): MessageCatalogue
     {
         return $this->messageIdNormalizer->getNormalizedCatalogue(parent::extract());
     }

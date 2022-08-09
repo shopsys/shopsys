@@ -4,9 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Payment\Grid;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -72,7 +74,7 @@ class PaymentGridFactory implements GridFactoryInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create()
+    public function create(): Grid
     {
         $queryBuilder = $this->paymentRepository->getQueryBuilderForAll()
             ->addSelect('pt')
@@ -82,7 +84,7 @@ class PaymentGridFactory implements GridFactoryInterface
             $queryBuilder,
             'p.id',
             function ($row) {
-                $payment = $this->paymentRepository->findById($row['p']['id']);
+                $payment = $this->paymentRepository->getById($row['p']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
                 return $row;
             }
@@ -108,7 +110,7 @@ class PaymentGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getDisplayPrice(Payment $payment)
+    protected function getDisplayPrice(Payment $payment): Money
     {
         $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId(
             $payment

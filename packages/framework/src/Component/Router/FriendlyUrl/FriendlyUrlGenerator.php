@@ -61,10 +61,10 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
     public function generateFromRouteCollection(
         RouteCollection $routeCollection,
         DomainConfig $domainConfig,
-        $routeName,
+        string $routeName,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH
-    ) {
+        int $referenceType = self::ABSOLUTE_PATH
+    ): string {
         $route = $routeCollection->get($routeName);
         if ($route === null) {
             $message = 'Unable to generate a URL for the named route "' . $routeName . '" as such route does not exist.';
@@ -101,7 +101,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param int $referenceType
      * @return string
      */
-    public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType)
+    public function getGeneratedUrl(string $routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, int $referenceType): string
     {
         $compiledRoute = RouteCompiler::compile($route);
 
@@ -181,7 +181,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param int $entityId
      * @return string
      */
-    protected function getSlug(int $domainId, string $routeName, $entityId): string
+    protected function getSlug(int $domainId, string $routeName, int $entityId): string
     {
         try {
             $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(

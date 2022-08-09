@@ -91,7 +91,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @param string[] $namesByLocale
      */
-    public function createFriendlyUrls($routeName, $entityId, array $namesByLocale)
+    public function createFriendlyUrls(string $routeName, int $entityId, array $namesByLocale): void
     {
         $friendlyUrls = $this->friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
         foreach ($friendlyUrls as $friendlyUrl) {
@@ -106,7 +106,7 @@ class FriendlyUrlFacade
      * @param string $entityName
      * @param int $domainId
      */
-    public function createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId)
+    public function createFriendlyUrlForDomain(string $routeName, int $entityId, string $entityName, int $domainId): void
     {
         $friendlyUrl = $this->friendlyUrlFactory->createIfValid($routeName, $entityId, (string)$entityName, $domainId);
         if ($friendlyUrl !== null) {
@@ -118,7 +118,7 @@ class FriendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param string $entityName
      */
-    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName)
+    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, string $entityName): void
     {
         $attempt = 0;
         do {
@@ -160,7 +160,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */
-    public function getAllByRouteNameAndEntityId($routeName, $entityId)
+    public function getAllByRouteNameAndEntityId(string $routeName, int $entityId): array
     {
         return $this->friendlyUrlRepository->getAllByRouteNameAndEntityId($routeName, $entityId);
     }
@@ -171,7 +171,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
-    public function findMainFriendlyUrl($domainId, $routeName, $entityId)
+    public function findMainFriendlyUrl(int $domainId, string $routeName, int $entityId): ?FriendlyUrl
     {
         return $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
     }
@@ -208,7 +208,7 @@ class FriendlyUrlFacade
      * @param int $entityId
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      */
-    public function saveUrlListFormData($routeName, $entityId, UrlListData $urlListData)
+    public function saveUrlListFormData(string $routeName, int $entityId, UrlListData $urlListData): void
     {
         $toFlush = [];
 
@@ -244,7 +244,7 @@ class FriendlyUrlFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
      */
-    protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl)
+    protected function setFriendlyUrlAsMain(FriendlyUrl $mainFriendlyUrl): void
     {
         $friendlyUrls = $this->friendlyUrlRepository->getAllByRouteNameAndEntityIdAndDomainId(
             $mainFriendlyUrl->getRouteName(),

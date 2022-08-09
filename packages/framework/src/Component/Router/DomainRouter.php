@@ -53,7 +53,7 @@ class DomainRouter extends ChainRouter
      * @param int $referenceType
      * @return string
      */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlRouter->generateByFriendlyUrl($friendlyUrl, $parameters, $referenceType);
     }
@@ -61,7 +61,7 @@ class DomainRouter extends ChainRouter
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';

@@ -24,7 +24,7 @@ class FormTimeProvider
      * @param string $name
      * @return \DateTime
      */
-    public function generateFormTime($name)
+    public function generateFormTime(string $name): DateTime
     {
         $startTime = new DateTime();
         $key = $this->getSessionKey($name);
@@ -37,7 +37,7 @@ class FormTimeProvider
      * @param array{timed_spam_minimum_seconds: int|string|null} $options
      * @return bool
      */
-    public function isFormTimeValid($name, array $options)
+    public function isFormTimeValid(string $name, array $options): bool
     {
         $startTime = $this->findFormTime($name);
 
@@ -58,7 +58,7 @@ class FormTimeProvider
      * @param string $name
      * @return bool
      */
-    public function hasFormTime($name)
+    public function hasFormTime(string $name): bool
     {
         $key = $this->getSessionKey($name);
         return $this->session->has($key);
@@ -68,7 +68,7 @@ class FormTimeProvider
      * @param string $name
      * @return \DateTime|null
      */
-    public function findFormTime($name)
+    public function findFormTime(string $name): ?DateTime
     {
         $key = $this->getSessionKey($name);
         if ($this->hasFormTime($name)) {
@@ -80,7 +80,7 @@ class FormTimeProvider
     /**
      * @param string $name
      */
-    public function removeFormTime($name)
+    public function removeFormTime(string $name): void
     {
         $key = $this->getSessionKey($name);
         $this->session->remove($key);
@@ -90,7 +90,7 @@ class FormTimeProvider
      * @param string $name
      * @return string
      */
-    protected function getSessionKey($name)
+    protected function getSessionKey(string $name): string
     {
         return 'timedSpam-' . $name;
     }

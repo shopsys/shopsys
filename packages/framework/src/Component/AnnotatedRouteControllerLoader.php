@@ -13,12 +13,13 @@ class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
 {
     /**
      * Makes the default route name shorter by removing some obvious parts.
+     *
      * @template T of object
      * @param \ReflectionClass<T> $class
      * @param \ReflectionMethod $method
      * @return string The default route name
      */
-    protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method)
+    protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method): ?string
     {
         $routeName = parent::getDefaultRouteName($class, $method);
 

@@ -32,7 +32,7 @@ class SqlLoggerFacade
         $this->isLoggerTemporarilyDisabled = false;
     }
 
-    public function temporarilyDisableLogging()
+    public function temporarilyDisableLogging(): void
     {
         if ($this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to disable already disabled SQL logger.';
@@ -43,7 +43,7 @@ class SqlLoggerFacade
         $this->isLoggerTemporarilyDisabled = true;
     }
 
-    public function reenableLogging()
+    public function reenableLogging(): void
     {
         if (!$this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to reenable already enabled SQL logger.';

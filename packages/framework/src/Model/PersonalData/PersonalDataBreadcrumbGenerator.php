@@ -10,7 +10,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @inheritdoc
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         if (in_array($routeName, $this->getPersonalDataRouteNames(), true)) {
             $breadcrumbItem = new BreadcrumbItem(t('Personal information overview'));
@@ -24,7 +24,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @inheritdoc
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return [
             'front_personal_data',
@@ -35,9 +35,9 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getPersonalDataRouteNames()
+    protected function getPersonalDataRouteNames(): array
     {
         return [
             'front_personal_data',

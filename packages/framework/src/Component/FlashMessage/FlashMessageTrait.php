@@ -92,7 +92,7 @@ trait FlashMessageTrait
     /**
      * @return bool
      */
-    public function isFlashMessageBagEmpty()
+    public function isFlashMessageBagEmpty(): bool
     {
         /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
         $flashBag = $this->container->get('session')->getFlashBag();
@@ -105,7 +105,7 @@ trait FlashMessageTrait
     /**
      * @return array
      */
-    public function getErrorMessages()
+    public function getErrorMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_ERROR);
     }
@@ -113,7 +113,7 @@ trait FlashMessageTrait
     /**
      * @return array
      */
-    public function getInfoMessages()
+    public function getInfoMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_INFO);
     }
@@ -121,7 +121,7 @@ trait FlashMessageTrait
     /**
      * @return array
      */
-    public function getSuccessMessages()
+    public function getSuccessMessages(): array
     {
         return $this->getMessages(FlashMessage::KEY_SUCCESS);
     }
@@ -130,7 +130,7 @@ trait FlashMessageTrait
      * @param string $key
      * @return array
      */
-    protected function getMessages($key)
+    protected function getMessages(string $key): array
     {
         /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
         $flashBag = $this->container->get('session')->getFlashBag();

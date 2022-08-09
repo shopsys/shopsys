@@ -39,7 +39,7 @@ class DomainSubscriber implements EventSubscriberInterface
     /**
      * @return array<string, mixed>
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // Setting domain by request must be done before loading other services (eg.: routing, localization...)

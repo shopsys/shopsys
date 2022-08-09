@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Paginator;
 
+use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
@@ -28,7 +29,7 @@ class QueryPaginator implements PaginatorInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
      */
-    public function __construct(QueryBuilder $queryBuilder, $hydrationMode = null)
+    public function __construct(QueryBuilder $queryBuilder, ?string $hydrationMode = null)
     {
         $this->queryBuilder = $queryBuilder;
         $this->hydrationMode = $hydrationMode;
@@ -39,7 +40,7 @@ class QueryPaginator implements PaginatorInterface
      * @param int $pageSize
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<T>
      */
-    public function getResult($page = 1, $pageSize = null)
+    public function getResult($page = 1, $pageSize = null): PaginationResult
     {
         $queryBuilder = clone $this->queryBuilder;
 
@@ -75,7 +76,7 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @return int
      */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         $totalNativeQuery = $this->getTotalNativeQuery($this->queryBuilder);
 
@@ -86,7 +87,7 @@ class QueryPaginator implements PaginatorInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Doctrine\ORM\NativeQuery
      */
-    protected function getTotalNativeQuery(QueryBuilder $queryBuilder)
+    protected function getTotalNativeQuery(QueryBuilder $queryBuilder): NativeQuery
     {
         $em = $queryBuilder->getEntityManager();
 

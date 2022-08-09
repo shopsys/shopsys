@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Grid\Ordering;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 
 class GridOrderingFacade
@@ -24,7 +25,7 @@ class GridOrderingFacade
      * @param class-string $entityClass
      * @param array<int|string> $rowIds
      */
-    public function saveOrdering($entityClass, array $rowIds)
+    public function saveOrdering(string $entityClass, array $rowIds): void
     {
         $entityRepository = $this->getEntityRepository($entityClass);
         $position = 0;
@@ -42,7 +43,7 @@ class GridOrderingFacade
      * @param class-string<T> $entityClass
      * @return \Doctrine\Persistence\ObjectRepository<T>
      */
-    protected function getEntityRepository($entityClass)
+    protected function getEntityRepository(string $entityClass): ObjectRepository
     {
         $interfaces = class_implements($entityClass);
         if (array_key_exists(OrderableEntityInterface::class, $interfaces)) {

@@ -29,7 +29,7 @@ class FriendlyUrlUniqueResultFactory
         FriendlyUrl $friendlyUrl,
         string $entityName,
         ?array $matchedRouteData = null
-    ) {
+    ): FriendlyUrlUniqueResult {
         if ($matchedRouteData === null) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
         }

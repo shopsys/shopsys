@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 class CronModuleRepository
 {
@@ -29,7 +30,7 @@ class CronModuleRepository
     /**
      * @return \Doctrine\ORM\EntityRepository<\Shopsys\FrameworkBundle\Component\Cron\CronModule>
      */
-    protected function getCronModuleRepository()
+    protected function getCronModuleRepository(): EntityRepository
     {
         return $this->em->getRepository(CronModule::class);
     }
@@ -38,7 +39,7 @@ class CronModuleRepository
      * @param string $serviceId
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
      */
-    public function getCronModuleByServiceId($serviceId)
+    public function getCronModuleByServiceId(string $serviceId): CronModule
     {
         $cronModule = $this->getCronModuleRepository()->find($serviceId);
         if ($cronModule === null) {
@@ -53,7 +54,7 @@ class CronModuleRepository
     /**
      * @return string[]
      */
-    public function getAllScheduledCronModuleServiceIds()
+    public function getAllScheduledCronModuleServiceIds(): array
     {
         $query = $this->em->createQuery(
             'SELECT cm.serviceId FROM ' . CronModule::class . ' cm WHERE cm.scheduled = TRUE'

@@ -10,7 +10,7 @@ class FriendlyUrlRouteNotFoundException extends Exception implements FriendlyUrl
      * @param string $routeName
      * @param string $routerResourceFilepath
      */
-    public function __construct($routeName, $routerResourceFilepath)
+    public function __construct(string $routeName, string $routerResourceFilepath)
     {
         parent::__construct(
             sprintf('Friendly URL route "%s" not found in "%s".', $routeName, realpath($routerResourceFilepath))

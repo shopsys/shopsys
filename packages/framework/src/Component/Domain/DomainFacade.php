@@ -33,14 +33,14 @@ class DomainFacade
     protected $fileUpload;
 
     /**
-     * @param mixed $domainImagesDirectory
+     * @param string $domainImagesDirectory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer $domainIconResizer
      * @param \League\Flysystem\FilesystemInterface $fileSystem
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(
-        $domainImagesDirectory,
+        string $domainImagesDirectory,
         Domain $domain,
         DomainIconResizer $domainIconResizer,
         FilesystemInterface $fileSystem,
@@ -56,7 +56,7 @@ class DomainFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAllDomainConfigs()
+    public function getAllDomainConfigs(): array
     {
         return $this->domain->getAll();
     }
@@ -65,7 +65,7 @@ class DomainFacade
      * @param int $domainId
      * @param string $iconName
      */
-    public function editIcon($domainId, $iconName)
+    public function editIcon(int $domainId, string $iconName): void
     {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($iconName);
         $this->domainIconResizer->convertToDomainIconFormatAndSave(
@@ -79,7 +79,7 @@ class DomainFacade
      * @param int $domainId
      * @return bool
      */
-    public function existsDomainIcon($domainId)
+    public function existsDomainIcon(int $domainId): bool
     {
         return $this->filesystem->has($this->domainImagesDirectory . '/' . $domainId . '.png');
     }

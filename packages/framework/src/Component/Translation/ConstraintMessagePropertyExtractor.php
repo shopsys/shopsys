@@ -50,7 +50,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @var bool
      */
-    protected $isInsideConstraintClass = null;
+    protected $isInsideConstraintClass = false;
 
     public function __construct()
     {
@@ -63,9 +63,8 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param \PhpParser\Node[] $ast
-     * @return void
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -75,7 +74,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): null|int|Node
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = $this->isConstraintClass($node);
@@ -91,7 +90,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): null|int|Node|array
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = false;
@@ -104,7 +103,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \PhpParser\Node\Stmt\Class_ $node
      * @return bool
      */
-    protected function isConstraintClass(Class_ $node)
+    protected function isConstraintClass(Class_ $node): bool
     {
         return is_subclass_of((string)$node->namespacedName, Constraint::class);
     }
@@ -112,7 +111,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @param \PhpParser\Node\Stmt\Property $node
      */
-    protected function extractMessagesFromProperty(Property $node)
+    protected function extractMessagesFromProperty(Property $node): void
     {
         foreach ($node->props as $propertyProperty) {
             if ($this->isMessagePropertyProperty($propertyProperty)) {
@@ -130,7 +129,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      * @param \PhpParser\Node\Stmt\PropertyProperty $node
      * @return bool
      */
-    protected function isMessagePropertyProperty(PropertyProperty $node)
+    protected function isMessagePropertyProperty(PropertyProperty $node): bool
     {
         return strtolower(substr($node->name, -7)) === 'message';
     }
@@ -138,7 +137,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -146,7 +145,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -154,16 +153,14 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
-        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast): void
     {
-        return null;
     }
 }

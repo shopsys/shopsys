@@ -9,7 +9,6 @@ use JsonSerializable;
 use Litipk\BigNumbers\Decimal;
 use Litipk\BigNumbers\Errors\BigNumbersError;
 use Shopsys\FrameworkBundle\Component\Money\Exception\InvalidNumericArgumentException;
-use Shopsys\FrameworkBundle\Component\Money\Exception\UnsupportedTypeException;
 use function substr;
 
 class Money implements JsonSerializable
@@ -31,7 +30,7 @@ class Money implements JsonSerializable
      * @param int|string $value
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public static function create($value): self
+    public static function create(int|string $value): self
     {
         $decimal = self::createDecimal($value);
 
@@ -108,7 +107,7 @@ class Money implements JsonSerializable
      * @param int|string $multiplier
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function multiply($multiplier): self
+    public function multiply(int|string $multiplier): self
     {
         $decimalMultiplier = self::createDecimal($multiplier);
         $resultDecimal = $this->decimal->mul($decimalMultiplier);
@@ -121,7 +120,7 @@ class Money implements JsonSerializable
      * @param int $scale
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function divide($divisor, int $scale): self
+    public function divide(int|string $divisor, int $scale): self
     {
         $decimalDivisor = self::createDecimal($divisor);
 
@@ -229,20 +228,16 @@ class Money implements JsonSerializable
      * @param int|null $scale
      * @return \Litipk\BigNumbers\Decimal
      */
-    protected static function createDecimal($value, ?int $scale = null): Decimal
+    protected static function createDecimal(int|string $value, ?int $scale = null): Decimal
     {
         if (is_int($value)) {
             return Decimal::fromInteger($value);
         }
 
-        if (is_string($value)) {
-            try {
-                return Decimal::fromString($value, $scale);
-            } catch (BigNumbersError | InvalidArgumentException $e) {
-                throw new InvalidNumericArgumentException($value, $e);
-            }
+        try {
+            return Decimal::fromString($value, $scale);
+        } catch (BigNumbersError | InvalidArgumentException $e) {
+            throw new InvalidNumericArgumentException($value, $e);
         }
-
-        throw new UnsupportedTypeException($value, ['string', 'int']);
     }
 }

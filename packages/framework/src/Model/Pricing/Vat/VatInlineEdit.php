@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatFormType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class VatInlineEdit extends AbstractGridInlineEdit
 {
@@ -52,30 +53,30 @@ class VatInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($vatData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $vat = $this->vatFacade->create($vatData, $this->adminDomainTabsFacade->getSelectedDomainId());
+        $vat = $this->vatFacade->create($formData, $this->adminDomainTabsFacade->getSelectedDomainId());
 
         return $vat->getId();
     }
 
     /**
-     * @param int $vatId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($vatId, $vatData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->vatFacade->edit($vatId, $vatData);
+        $this->vatFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $vatId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($vatId)
+    public function getForm($vatId): FormInterface
     {
         if ($vatId !== null) {
             $vat = $this->vatFacade->getById((int)$vatId);

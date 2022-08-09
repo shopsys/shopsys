@@ -8,7 +8,7 @@ class EncodingConverter
      * @param string $stringCp1250
      * @return string
      */
-    protected static function stringCp1250ToUtf8($stringCp1250)
+    protected static function stringCp1250ToUtf8(string $stringCp1250): string|bool
     {
         return iconv('CP1250', 'UTF-8//TRANSLIT', $stringCp1250);
     }
@@ -18,7 +18,7 @@ class EncodingConverter
      * @param T[] $array
      * @return T[]
      */
-    protected static function arrayCp1250ToUtf8(array $array)
+    protected static function arrayCp1250ToUtf8(array $array): array
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -36,7 +36,7 @@ class EncodingConverter
      * @param T $value
      * @return T
      */
-    public static function cp1250ToUtf8($value)
+    public static function cp1250ToUtf8(mixed $value): mixed
     {
         if (is_array($value)) {
             $value = self::arrayCp1250ToUtf8($value);

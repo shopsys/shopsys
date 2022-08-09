@@ -59,7 +59,7 @@ class FriendlyUrlRouter implements RouterInterface
         FriendlyUrlGenerator $friendlyUrlGenerator,
         FriendlyUrlMatcher $friendlyUrlMatcher,
         DomainConfig $domainConfig,
-        $friendlyUrlRouterResourceFilepath
+        string $friendlyUrlRouterResourceFilepath
     ) {
         $this->context = $context;
         $this->configLoader = $configLoader;
@@ -72,7 +72,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -80,7 +80,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
@@ -100,7 +100,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlGenerator->generateFromRouteCollection(
             $this->getRouteCollection(),
@@ -117,7 +117,7 @@ class FriendlyUrlRouter implements RouterInterface
      * @param int $referenceType
      * @return string
      */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $routeName = $friendlyUrl->getRouteName();
         $route = $this->getRouteCollection()->get($routeName);
@@ -142,7 +142,7 @@ class FriendlyUrlRouter implements RouterInterface
      * @param string $pathinfo
      * @return array<string, mixed>
      */
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
         return $this->friendlyUrlMatcher->match($pathinfo, $this->getRouteCollection(), $this->domainConfig);
     }

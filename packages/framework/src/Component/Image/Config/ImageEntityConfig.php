@@ -16,7 +16,7 @@ class ImageEntityConfig
     protected $entityName;
 
     /**
-     * @var string
+     * @var class-string
      */
     protected $entityClass;
 
@@ -37,12 +37,12 @@ class ImageEntityConfig
 
     /**
      * @param string $entityName
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @param array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]> $sizeConfigsByType
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @param array<string, bool> $multipleByType
      */
-    public function __construct($entityName, $entityClass, array $sizeConfigsByType, array $sizeConfigs, array $multipleByType)
+    public function __construct(string $entityName, string $entityClass, array $sizeConfigsByType, array $sizeConfigs, array $multipleByType)
     {
         $this->entityName = $entityName;
         $this->entityClass = $entityClass;
@@ -54,15 +54,15 @@ class ImageEntityConfig
     /**
      * @return string
      */
-    public function getEntityName()
+    public function getEntityName(): string
     {
         return $this->entityName;
     }
 
     /**
-     * @return string
+     * @return class-string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }
@@ -70,7 +70,7 @@ class ImageEntityConfig
     /**
      * @return string[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return array_keys($this->sizeConfigsByType);
     }
@@ -78,7 +78,7 @@ class ImageEntityConfig
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    public function getSizeConfigs()
+    public function getSizeConfigs(): array
     {
         return $this->sizeConfigs;
     }
@@ -86,7 +86,7 @@ class ImageEntityConfig
     /**
      * @return array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]>
      */
-    public function getSizeConfigsByTypes()
+    public function getSizeConfigsByTypes(): array
     {
         return $this->sizeConfigsByType;
     }
@@ -95,7 +95,7 @@ class ImageEntityConfig
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    public function getSizeConfigsByType($type)
+    public function getSizeConfigsByType(string $type): array
     {
         if (array_key_exists($type, $this->sizeConfigsByType)) {
             return $this->sizeConfigsByType[$type];
@@ -107,7 +107,7 @@ class ImageEntityConfig
      * @param string|null $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    public function getSizeConfig($sizeName)
+    public function getSizeConfig(?string $sizeName): ImageSizeConfig
     {
         return $this->getSizeConfigFromSizeConfigs($this->sizeConfigs, $sizeName);
     }
@@ -117,7 +117,7 @@ class ImageEntityConfig
      * @param string|null $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    public function getSizeConfigByType($type, $sizeName)
+    public function getSizeConfigByType(?string $type, ?string $sizeName): ImageSizeConfig
     {
         if ($type === null) {
             $typeSizes = $this->sizeConfigs;
@@ -131,7 +131,7 @@ class ImageEntityConfig
      * @param string|null $type
      * @return bool
      */
-    public function isMultiple($type)
+    public function isMultiple(?string $type): bool
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $this->multipleByType)) {
@@ -145,7 +145,7 @@ class ImageEntityConfig
      * @param string $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    protected function getSizeConfigFromSizeConfigs($sizes, $sizeName)
+    protected function getSizeConfigFromSizeConfigs(array $sizes, string $sizeName): ImageSizeConfig
     {
         $key = Utils::ifNull($sizeName, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $sizes)) {

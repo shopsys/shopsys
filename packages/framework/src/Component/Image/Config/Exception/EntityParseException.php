@@ -8,15 +8,15 @@ use Throwable;
 class EntityParseException extends Exception implements ImageConfigException
 {
     /**
-     * @var string
+     * @var class-string
      */
     protected $entityClass;
 
     /**
-     * @param string $entityClass
+     * @param class-string $entityClass
      * @param \Throwable|null $previous
      */
-    public function __construct($entityClass, ?Throwable $previous = null)
+    public function __construct(string $entityClass, ?Throwable $previous = null)
     {
         $this->entityClass = $entityClass;
 
@@ -26,9 +26,9 @@ class EntityParseException extends Exception implements ImageConfigException
     }
 
     /**
-     * @return string
+     * @return class-string
      */
-    public function getEntityClass()
+    public function getEntityClass(): string
     {
         return $this->entityClass;
     }

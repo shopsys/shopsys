@@ -27,12 +27,12 @@ class QueryBuilderExtender
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param string $class
+     * @param class-string $class
      * @param string $alias
      * @param string $condition
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition)
+    public function addOrExtendJoin(QueryBuilder $queryBuilder, string $class, string $alias, string $condition): QueryBuilder
     {
         $joins = $this->getJoinsFromQueryBuilder($queryBuilder);
 
@@ -68,7 +68,7 @@ class QueryBuilderExtender
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return string
      */
-    protected function getRootAlias(QueryBuilder $queryBuilder)
+    protected function getRootAlias(QueryBuilder $queryBuilder): string|bool
     {
         $rootAliases = $queryBuilder->getRootAliases();
         if (count($rootAliases) !== static::REQUIRED_ALIASES_COUNT) {

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Availability\AvailabilityFormType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class AvailabilityInlineEdit extends AbstractGridInlineEdit
 {
@@ -43,30 +44,30 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($availabilityData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $availability = $this->availabilityFacade->create($availabilityData);
+        $availability = $this->availabilityFacade->create($formData);
 
         return $availability->getId();
     }
 
     /**
-     * @param int $availabilityId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($availabilityId, $availabilityData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->availabilityFacade->edit($availabilityId, $availabilityData);
+        $this->availabilityFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $availabilityId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($availabilityId)
+    public function getForm($availabilityId): FormInterface
     {
         if ($availabilityId !== null) {
             $availability = $this->availabilityFacade->getById((int)$availabilityId);

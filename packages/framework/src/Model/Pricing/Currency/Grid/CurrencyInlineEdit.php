@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class CurrencyInlineEdit extends AbstractGridInlineEdit
 {
@@ -45,30 +46,30 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($currencyData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $currency = $this->currencyFacade->create($currencyData);
+        $currency = $this->currencyFacade->create($formData);
 
         return $currency->getId();
     }
 
     /**
-     * @param int $currencyId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($currencyId, $currencyData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->currencyFacade->edit($currencyId, $currencyData);
+        $this->currencyFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $currencyId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($currencyId)
+    public function getForm($currencyId): FormInterface
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById((int)$currencyId);
@@ -86,7 +87,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param int|null $currencyId
      * @return bool
      */
-    protected function isDefaultCurrencyId($currencyId)
+    protected function isDefaultCurrencyId($currencyId): bool
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById($currencyId);

@@ -12,7 +12,7 @@ class TransformString
      * @param string $string
      * @return string
      */
-    public static function safeFilename($string)
+    public static function safeFilename(string $string): string
     {
         $string = preg_replace('~[^-\\.\\pL0-9_]+~u', '_', $string);
         $string = preg_replace('~[\\.]{2,}~u', '.', $string);
@@ -28,7 +28,7 @@ class TransformString
      * @param string $value
      * @return string|null
      */
-    public static function emptyToNull($value)
+    public static function emptyToNull(string $value): ?string
     {
         return $value === '' ? null : $value;
     }
@@ -51,7 +51,7 @@ class TransformString
      * @return string
      * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */
-    public static function stringToFriendlyUrlSlug($string)
+    public static function stringToFriendlyUrlSlug(string $string): string
     {
         $slug = $string;
         $slug = preg_replace('~[^\\pL0-9_]+~u', '-', $slug);
@@ -82,7 +82,7 @@ class TransformString
      * @param string $string
      * @return string
      */
-    public static function stringToCamelCase($string)
+    public static function stringToCamelCase(string $string): string
     {
         // convert everything apart from letters and numbers into spaces
         $string = preg_replace('~[^\\pL0-9]+~u', ' ', $string);
@@ -106,7 +106,7 @@ class TransformString
      * @param string $string
      * @return string
      */
-    protected static function toAscii($string)
+    protected static function toAscii(string $string): string
     {
         $transliteratorToLatin = Transliterator::create('Any-Latin');
         $transliteratorToAscii = Transliterator::create('Latin-ASCII');
@@ -121,7 +121,7 @@ class TransformString
      * @param string $path
      * @return string
      */
-    public static function removeDriveLetterFromPath($path)
+    public static function removeDriveLetterFromPath(string $path): ?string
     {
         return preg_replace('#^[A-Z]:#', '', $path);
     }

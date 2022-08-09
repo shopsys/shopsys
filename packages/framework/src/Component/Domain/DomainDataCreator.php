@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -98,7 +99,7 @@ class DomainDataCreator
     /**
      * @return int
      */
-    public function createNewDomainsData()
+    public function createNewDomainsData(): int
     {
         $newDomainsCount = 0;
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
@@ -136,7 +137,7 @@ class DomainDataCreator
      * @param string $locale
      * @return bool
      */
-    protected function isNewLocale($locale)
+    protected function isNewLocale(string $locale): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($domainConfig->getLocale() === $locale) {
@@ -150,7 +151,7 @@ class DomainDataCreator
     /**
      * @return string
      */
-    protected function getTemplateLocale()
+    protected function getTemplateLocale(): string
     {
         return $this->domain->getDomainConfigById(self::TEMPLATE_DOMAIN_ID)->getLocale();
     }
@@ -158,7 +159,7 @@ class DomainDataCreator
     /**
      * @param int $domainId
      */
-    protected function processDefaultPricingGroupForNewDomain(int $domainId)
+    protected function processDefaultPricingGroupForNewDomain(int $domainId): void
     {
         $pricingGroup = $this->createDefaultPricingGroupForNewDomain($domainId);
         $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $domainId);
@@ -168,7 +169,7 @@ class DomainDataCreator
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    protected function createDefaultPricingGroupForNewDomain(int $domainId)
+    protected function createDefaultPricingGroupForNewDomain(int $domainId): PricingGroup
     {
         $pricingGroupData = $this->pricingGroupDataFactory->create();
         $pricingGroupData->name = 'Default';

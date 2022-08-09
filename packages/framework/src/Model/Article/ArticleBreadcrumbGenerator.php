@@ -23,7 +23,7 @@ class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function getBreadcrumbItems($routeName, array $routeParameters = [])
+    public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         $article = $this->articleRepository->getById($routeParameters['id']);
 
@@ -35,7 +35,7 @@ class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * {@inheritDoc}
      */
-    public function getRouteNames()
+    public function getRouteNames(): array
     {
         return ['front_article_detail'];
     }

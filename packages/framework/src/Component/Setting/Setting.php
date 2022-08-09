@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 
@@ -54,7 +56,7 @@ class Setting
      * @param string $key
      * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
-    public function get($key)
+    public function get(string $key): float|DateTime|bool|int|string|Money|null
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -73,7 +75,7 @@ class Setting
      * @param int $domainId
      * @return \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null
      */
-    public function getForDomain($key, $domainId)
+    public function getForDomain(string $key, int $domainId): float|DateTime|bool|int|string|Money|null
     {
         $this->loadDomainValues($domainId);
 
@@ -89,9 +91,9 @@ class Setting
 
     /**
      * @param string $key
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param float|\DateTime|bool|int|string|\Shopsys\FrameworkBundle\Component\Money\Money|null $value
      */
-    public function set($key, $value)
+    public function set(string $key, float|DateTime|bool|int|string|Money|null $value): void
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
@@ -108,10 +110,10 @@ class Setting
 
     /**
      * @param string $key
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null $value
+     * @param float|\DateTime|bool|int|string|\Shopsys\FrameworkBundle\Component\Money\Money|null $value
      * @param int $domainId
      */
-    public function setForDomain($key, $value, $domainId)
+    public function setForDomain(string $key, float|DateTime|bool|int|string|Money|null $value, int $domainId): void
     {
         $this->loadDomainValues($domainId);
 
@@ -129,7 +131,7 @@ class Setting
     /**
      * @param int|null $domainId
      */
-    protected function loadDomainValues($domainId)
+    protected function loadDomainValues(?int $domainId): void
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
@@ -146,7 +148,7 @@ class Setting
         }
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         $this->values = [];
     }

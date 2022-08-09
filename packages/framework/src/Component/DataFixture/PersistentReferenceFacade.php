@@ -47,7 +47,7 @@ class PersistentReferenceFacade
      * @param string $name
      * @return object
      */
-    public function getReference($name)
+    public function getReference(string $name): object
     {
         $persistentReference = $this->persistentReferenceRepository->getByReferenceName($name);
         $entity = $this->em->find($persistentReference->getEntityName(), $persistentReference->getEntityId());
@@ -63,7 +63,7 @@ class PersistentReferenceFacade
      * @param string $name
      * @param object $object
      */
-    public function persistReference($name, $object)
+    public function persistReference(string $name, object $object): void
     {
         if (!is_object($object)) {
             throw new ObjectRequiredException($object);
@@ -97,7 +97,7 @@ class PersistentReferenceFacade
      * @param object $object
      * @param int $domainId
      */
-    public function persistReferenceForDomain(string $name, $object, int $domainId): void
+    public function persistReferenceForDomain(string $name, object $object, int $domainId): void
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
         $this->persistReference($referenceName, $object);
@@ -108,7 +108,7 @@ class PersistentReferenceFacade
      * @param int $domainId
      * @return object
      */
-    public function getReferenceForDomain(string $name, int $domainId)
+    public function getReferenceForDomain(string $name, int $domainId): object
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
         return $this->getReference($referenceName);

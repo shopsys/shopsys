@@ -52,11 +52,11 @@ abstract class AbstractExportCronModule implements SimpleCronModuleInterface
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(Logger $logger): void
     {
     }
 
-    public function run()
+    public function run(): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition($this->index::getName(), $domainId);

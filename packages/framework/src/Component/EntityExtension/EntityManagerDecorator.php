@@ -5,6 +5,8 @@ namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
@@ -37,7 +39,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function createQueryBuilder()
+    public function createQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this, $this->entityNameResolver);
     }
@@ -45,7 +47,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function createQuery($dql = '')
+    public function createQuery($dql = ''): Query
     {
         $resolvedDql = $this->entityNameResolver->resolveIn($dql);
 
@@ -85,7 +87,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function clear($objectName = null)
+    public function clear($objectName = null): void
     {
         if ($objectName !== null) {
             $objectName = $this->entityNameResolver->resolve($objectName);
@@ -95,7 +97,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     }
 
     /**
-     * @param string $className
+     * @param class-string $className
      */
     public function refreshLoadedEntitiesByClassName(string $className): void
     {
@@ -115,9 +117,9 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * @template T of object
      * @param class-string<T> $className
-     * @return \Doctrine\Persistence\ObjectRepository<T>
+     * @return \Doctrine\ORM\EntityRepository<T>
      */
-    public function getRepository($className)
+    public function getRepository($className): EntityRepository
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
 

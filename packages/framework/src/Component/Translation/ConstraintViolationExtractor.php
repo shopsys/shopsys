@@ -70,9 +70,8 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
      * @param \SplFileInfo $file
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $catalogue
      * @param \PhpParser\Node[] $ast
-     * @return void
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -82,7 +81,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): null|int|Node
     {
         if ($node instanceof ClassMethod) {
             $this->setCurrentExecutionContextVariableNamesFromNode($node);
@@ -96,7 +95,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod $node
      */
-    protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node)
+    protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node): void
     {
         $this->currentExecutionContextVariableNames = [];
         foreach ($node->getParams() as $parameter) {
@@ -110,7 +109,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node\Param $parameter
      * @return bool
      */
-    protected function isParameterExecutionContextInterfaceSubclass(Node\Param $parameter)
+    protected function isParameterExecutionContextInterfaceSubclass(Node\Param $parameter): bool
     {
         if ($parameter->type instanceof FullyQualified) {
             $fullyQualifiedName = implode('\\', $parameter->type->parts);
@@ -136,7 +135,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \PhpParser\Node\Expr\MethodCall $methodCall
      */
-    protected function extractMessage(MethodCall $methodCall)
+    protected function extractMessage(MethodCall $methodCall): void
     {
         $firstArgumentWithMessage = reset($methodCall->args);
         if (!($firstArgumentWithMessage->value instanceof String_)) {
@@ -154,7 +153,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -174,7 +173,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -182,16 +181,14 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
+    public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue): void
     {
-        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
+    public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast): void
     {
-        return null;
     }
 }

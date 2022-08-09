@@ -31,7 +31,7 @@ class DuplicateTypeNameException extends Exception implements ImageConfigExcepti
     /**
      * @return string|null
      */
-    public function getTypeName()
+    public function getTypeName(): ?string
     {
         return $this->typeName;
     }

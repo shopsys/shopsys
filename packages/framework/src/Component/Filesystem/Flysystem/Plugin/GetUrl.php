@@ -14,7 +14,7 @@ class GetUrl extends BaseGetUrl
     /**
      * @param mixed[] $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
         $this->options = $options;
     }
@@ -25,7 +25,7 @@ class GetUrl extends BaseGetUrl
      * @param  string $path
      * @return string
      */
-    protected function getFromMethod($path)
+    protected function getFromMethod($path): string
     {
         if (isset($this->options['URL'])) {
             return $this->options['URL'] . str_replace($this->options['path'], '', $path);

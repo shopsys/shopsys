@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class PricingGroupInlineEdit extends AbstractGridInlineEdit
 {
@@ -54,13 +55,13 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($pricingGroupData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
         $pricingGroup = $this->pricingGroupFacade->create(
-            $pricingGroupData,
+            $formData,
             $this->adminDomainTabsFacade->getSelectedDomainId()
         );
 
@@ -68,19 +69,19 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param int $pricingGroupId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($pricingGroupId, $pricingGroupData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->pricingGroupFacade->edit($pricingGroupId, $pricingGroupData);
+        $this->pricingGroupFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $pricingGroupId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($pricingGroupId)
+    public function getForm($pricingGroupId): FormInterface
     {
         if ($pricingGroupId !== null) {
             $pricingGroupId = (int)$pricingGroupId;

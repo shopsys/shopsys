@@ -31,7 +31,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (!$options[self::OPTION_ENABLED]) {
             return;
@@ -48,7 +48,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
      */
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options[self::OPTION_ENABLED] && !$view->parent && $options['compound']) {
             $this->formTimeProvider->generateFormTime($form->getName());
@@ -58,7 +58,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             self::OPTION_ENABLED => false,
@@ -68,6 +68,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritDoc}
+     *
      * @return iterable<class-string>
      */
     public static function getExtendedTypes(): iterable

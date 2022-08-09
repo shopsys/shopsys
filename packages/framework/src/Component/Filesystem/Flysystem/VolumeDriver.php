@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Filesystem\Flysystem\Plugin\GetUrl;
 
 class VolumeDriver extends Driver
 {
-    protected function configure()
+    protected function configure(): void
     {
         @parent::configure();
 
@@ -38,7 +38,7 @@ class VolumeDriver extends Driver
      * @param string $hash
      * @return false|string
      */
-    public function tmb($hash)
+    public function tmb($hash): bool|string
     {
         $thumbnailPath = $this->decode($hash);
         $stat = $this->_stat($thumbnailPath, $hash);
@@ -66,7 +66,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      * @return false|string
      */
-    protected function gettmb($thumbnailPath, $stat)
+    protected function gettmb($thumbnailPath, $stat): bool|string
     {
         if ($this->tmbURL && $this->tmbPath) {
             // file itself thumnbnail
@@ -87,7 +87,7 @@ class VolumeDriver extends Driver
      * @param string $name
      * @return string
      */
-    public function createThumbnailPath($name)
+    public function createThumbnailPath(string $name): string
     {
         return $this->tmbPath . DIRECTORY_SEPARATOR . $name;
     }
@@ -97,7 +97,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      * @return false|string
      */
-    protected function createTmb($thumbnailPath, $stat)
+    protected function createTmb($thumbnailPath, $stat): bool|string
     {
         @mkdir($this->tmbPath, 0777, true);
 
@@ -117,7 +117,7 @@ class VolumeDriver extends Driver
     /**
      * @param mixed[] $stat
      */
-    protected function rmTmb($stat)
+    protected function rmTmb($stat): void
     {
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
         if ($this->tmbURL) {
@@ -153,7 +153,7 @@ class VolumeDriver extends Driver
      * @param string $hash
      * @return false|mixed[]
      */
-    protected function _stat($path, $hash = '')
+    protected function _stat($path, string $hash = ''): array|bool
     {
         $stat = parent::_stat($path);
         if ($hash !== '') {

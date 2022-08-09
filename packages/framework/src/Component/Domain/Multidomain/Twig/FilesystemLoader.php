@@ -37,7 +37,7 @@ class FilesystemLoader extends BaseFilesystemLoader
      *
      * @inheritdoc
      */
-    protected function findTemplate($template, $throw = true)
+    protected function findTemplate($template, $throw = true): bool|string|null
     {
         $templateName = (string)$template;
         $multidesignTemplate = null;
@@ -52,7 +52,7 @@ class FilesystemLoader extends BaseFilesystemLoader
         return parent::findTemplate($templateName);
     }
 
-    protected function assertDomainDependency()
+    protected function assertDomainDependency(): void
     {
         if (!($this->domain instanceof Domain)) {
             $message = sprintf('Template loader needs an instance of %s class', Domain::class);
@@ -64,7 +64,7 @@ class FilesystemLoader extends BaseFilesystemLoader
      * @param string $templateName
      * @return string|null
      */
-    protected function findMultidesignTemplate($templateName)
+    protected function findMultidesignTemplate(string $templateName): ?string
     {
         try {
             $designId = $this->domain->getDesignId();

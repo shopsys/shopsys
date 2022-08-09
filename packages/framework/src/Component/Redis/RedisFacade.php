@@ -29,7 +29,7 @@ class RedisFacade
     }
 
     /**
-     * @return \Redis[]
+     * @return \Iterator<\Redis>
      */
     protected function getCacheClients(): iterable
     {

@@ -37,7 +37,7 @@ class ConfirmDeleteResponseFactory
      * @param mixed $entityId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createDeleteResponse($message, $route, $entityId)
+    public function createDeleteResponse(string $message, string $route, mixed $entityId): Response
     {
         $renderedTemplate = $this->twigEnvironment->render(
             '@ShopsysFramework/Components/ConfirmDelete/directDelete.html.twig',
@@ -63,7 +63,7 @@ class ConfirmDeleteResponseFactory
      * @param object[] $possibleReplacements
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createSetNewAndDeleteResponse($message, $route, $entityId, array $possibleReplacements)
+    public function createSetNewAndDeleteResponse(string $message, string $route, mixed $entityId, array $possibleReplacements): Response
     {
         foreach ($possibleReplacements as $object) {
             if (!is_object($object) || !method_exists($object, 'getName') || !method_exists($object, 'getId')) {

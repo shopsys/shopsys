@@ -254,7 +254,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param int $position
      */
-    public function setPosition($position)
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }

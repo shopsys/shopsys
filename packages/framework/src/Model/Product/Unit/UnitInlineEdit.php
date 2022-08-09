@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 class UnitInlineEdit extends AbstractGridInlineEdit
 {
@@ -43,30 +44,30 @@ class UnitInlineEdit extends AbstractGridInlineEdit
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
+     * @param mixed $formData
      * @return int
      */
-    protected function createEntityAndGetId($unitData)
+    protected function createEntityAndGetId(mixed $formData): int
     {
-        $unit = $this->unitFacade->create($unitData);
+        $unit = $this->unitFacade->create($formData);
 
         return $unit->getId();
     }
 
     /**
-     * @param int $unitId
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
+     * @param int|string $rowId
+     * @param mixed $formData
      */
-    protected function editEntity($unitId, $unitData)
+    protected function editEntity(int|string $rowId, mixed $formData): void
     {
-        $this->unitFacade->edit($unitId, $unitData);
+        $this->unitFacade->edit($rowId, $formData);
     }
 
     /**
      * @param int|null $unitId
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getForm($unitId)
+    public function getForm($unitId): FormInterface
     {
         if ($unitId !== null) {
             $unit = $this->unitFacade->getById((int)$unitId);

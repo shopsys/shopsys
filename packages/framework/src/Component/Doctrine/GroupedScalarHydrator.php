@@ -11,7 +11,7 @@ class GroupedScalarHydrator extends AbstractHydrator
     /**
      * {@inheritdoc}
      */
-    protected function hydrateAllData()
+    protected function hydrateAllData(): array
     {
         $result = [];
 
@@ -31,7 +31,7 @@ class GroupedScalarHydrator extends AbstractHydrator
     /**
      * {@inheritdoc}
      */
-    protected function hydrateRowData(array $data, array &$result)
+    protected function hydrateRowData(array $data, array &$result): void
     {
         $rowData = $this->gatherGroupedScalarRowData($data);
         $result[] = $rowData;
@@ -42,9 +42,9 @@ class GroupedScalarHydrator extends AbstractHydrator
      * as array of columns.
      *
      * @param mixed[] $data
-     * @return mixed[]
+     * @return array<int|string, mixed>
      */
-    protected function gatherGroupedScalarRowData(&$data)
+    protected function gatherGroupedScalarRowData(array &$data): array
     {
         $rowData = [];
 
