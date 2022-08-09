@@ -138,7 +138,8 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         slugQueryVariables,
     );
 
-    if (!slugQueryResult || slugQueryResult.data === undefined) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) {
         // eslint-disable-next-line require-atomic-updates
         context.res.statusCode = 404;
     }
