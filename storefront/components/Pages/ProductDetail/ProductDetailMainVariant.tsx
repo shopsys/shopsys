@@ -10,6 +10,7 @@ import ProductDetailAccessories from './ProductDetailAccessories';
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import ProductVariantsTable from './ProductVariantsTable';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
 import Webline from 'components/Layout/Webline';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -35,6 +36,7 @@ const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = ({ product, 
 
     return (
         <>
+            <ProductMetadata product={product} />
             <Webline>
                 <ProductDetailStyled>
                     <ProductDetailImageStyled data-testid={TEST_IDENTIFIER + 'gallery'}>

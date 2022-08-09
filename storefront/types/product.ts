@@ -75,6 +75,7 @@ export type ProductDetailInterfaceType = {
     fullName: string;
     breadcrumb: BreadcrumbItemType[];
     catalogNumber: string;
+    ean: string | null;
     description: string;
     images: ImageType[];
     price: ProductPriceType;
