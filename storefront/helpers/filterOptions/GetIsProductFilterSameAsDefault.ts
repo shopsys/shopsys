@@ -96,7 +96,15 @@ export const areParameterFiltersWithoutChanges = (
         }
 
         for (const value of checkedParameter.values) {
-            if (!defaultParameter.values.some((defaultValue) => defaultValue.uuid === value.uuid)) {
+            const matchingDefaultParameterValue = defaultParameter.values.find(
+                (defaultValue) => defaultValue.uuid === value.uuid,
+            );
+
+            if (matchingDefaultParameterValue === undefined) {
+                return false;
+            }
+
+            if (value.checked !== matchingDefaultParameterValue.isSelected) {
                 return false;
             }
         }
