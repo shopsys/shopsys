@@ -5,7 +5,11 @@ import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { getGtmProductDetailEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
 import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
-export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undefined, slug: string): void => {
+export const useGtmProductDetailView = (
+    data: Maybe<FriendlyUrlPageType> | undefined,
+    slug: string,
+    fetching: boolean,
+): void => {
     const event = getNewGtmEcommerceEvent('ec.product_view', true);
     const currencyCode = useShopsysSelector((state) => state.domain.currencyCode);
     const lastViewedProductDetailSlug = useRef<string | undefined>(undefined);
@@ -18,11 +22,12 @@ export const useGtmProductDetailView = (data: Maybe<FriendlyUrlPageType> | undef
             (data.__typename === 'MainVariant' ||
                 data.__typename === 'RegularProduct' ||
                 data.__typename === 'Variant') &&
-            lastViewedProductDetailSlug.current !== slug
+            lastViewedProductDetailSlug.current !== slug &&
+            !fetching
         ) {
             lastViewedProductDetailSlug.current = slug;
             event.ecommerce = getGtmProductDetailEvent(data, currencyCode, url);
             gtmSafePushEvent(event);
         }
-    }, [data, currencyCode, event, slug, url]);
+    }, [data, currencyCode, event, slug, url, fetching]);
 };

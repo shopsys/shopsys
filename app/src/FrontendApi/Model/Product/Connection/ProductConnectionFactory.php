@@ -32,6 +32,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
@@ -42,6 +43,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         ProductFilterData $productFilterData,
         string $orderingMode,
+        string $defaultOrderingMode,
         string $batchLoadDataId,
         ?ReadyCategorySeoMix $readyCategorySeoMix
     ): Promise {
@@ -56,7 +58,9 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode);
+
+
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
     }
 
     /**
@@ -65,6 +69,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -74,6 +79,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         ProductFilterData $productFilterData,
         string $orderingMode,
+        string $defaultOrderingMode,
         string $batchLoadDataId
     ): Promise {
         $searchText = $argument['search'] ?? '';
@@ -86,7 +92,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode);
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
     }
 
     /**
@@ -95,6 +101,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @param string $batchLoadDataId
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -104,6 +111,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         ProductFilterData $productFilterData,
         string $orderingMode,
+        string $defaultOrderingMode,
         string $batchLoadDataId
     ): Promise {
         $searchText = $argument['search'] ?? '';
@@ -116,7 +124,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode);
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
     }
 
     /**
@@ -163,6 +171,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param string $batchLoadDataId
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @return \GraphQL\Executor\Promise\Promise
      */
     private function getConnectionPromise(
@@ -170,9 +179,10 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         callable $productFilterOptionsClosure,
         Argument $argument,
         string $batchLoadDataId,
-        string $orderingMode
+        string $orderingMode,
+        string $defaultOrderingMode
     ): Promise {
-        $paginator = $this->createPaginator($retrieveProductClosure, $productFilterOptionsClosure, $orderingMode);
+        $paginator = $this->createPaginator($retrieveProductClosure, $productFilterOptionsClosure, $orderingMode, $defaultOrderingMode);
 
         /** @var \GraphQL\Executor\Promise\Promise $promise */
         $promise = $paginator->auto($argument, 0); // actual total count is set after the promise is fulfilled
@@ -188,22 +198,25 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param callable $retrieveProductClosure
      * @param callable $productFilterOptionsClosure
      * @param string $orderingMode
+     * @param string $defaultOrderingMode
      * @return \Overblog\GraphQLBundle\Relay\Connection\Paginator
      */
     private function createPaginator(
         callable $retrieveProductClosure,
         callable $productFilterOptionsClosure,
-        string $orderingMode
+        string $orderingMode,
+        string $defaultOrderingMode,
     ): Paginator {
         return new Paginator(
             $retrieveProductClosure,
             Paginator::MODE_PROMISE,
-            new ConnectionBuilder(function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode) {
+            new ConnectionBuilder(function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode, $defaultOrderingMode) {
                 return new ProductConnection(
                     $edges,
                     $pageInfo,
                     $productFilterOptionsClosure,
-                    $orderingMode
+                    $orderingMode,
+                    $defaultOrderingMode
                 );
             })
         );

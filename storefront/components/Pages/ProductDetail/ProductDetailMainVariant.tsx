@@ -11,19 +11,25 @@ import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import ProductVariantsTable from './ProductVariantsTable';
 import Webline from 'components/Layout/Webline';
+import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { MainVariantDetailType } from 'types/product';
+import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantProps = {
     product: MainVariantDetailType;
+    fetching: boolean;
 };
 
+const TEST_IDENTIFIER = 'pages-productdetail-';
 /**
  * Main Product Variant Detail page component
  */
-const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-';
+const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = ({ product, fetching }) => {
+    const router = useRouter();
+    useGtmProductDetailView(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     const t = useTypedTranslationFunction();
 
@@ -31,37 +37,34 @@ const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = (props) => {
         <>
             <Webline>
                 <ProductDetailStyled>
-                    <ProductDetailImageStyled data-testid={testIdentifier + 'gallery'}>
+                    <ProductDetailImageStyled data-testid={TEST_IDENTIFIER + 'gallery'}>
                         <ProductDetailGallery
-                            images={props.product.images}
-                            productName={props.product.name}
-                            flags={props.product.flags}
+                            images={product.images}
+                            productName={product.name}
+                            flags={product.flags}
                         />
                     </ProductDetailImageStyled>
                     <ProductDetailInfoStyled>
-                        <ProductDetailPrefixStyled data-testid={testIdentifier + 'prefix'}>
-                            {props.product.namePrefix}
+                        <ProductDetailPrefixStyled data-testid={TEST_IDENTIFIER + 'prefix'}>
+                            {product.namePrefix}
                         </ProductDetailPrefixStyled>
-                        <ProductDetailHeadingStyled data-testid={testIdentifier + 'name'}>
-                            {props.product.name} {props.product.nameSuffix}
+                        <ProductDetailHeadingStyled data-testid={TEST_IDENTIFIER + 'name'}>
+                            {product.name} {product.nameSuffix}
                         </ProductDetailHeadingStyled>
-                        <ProductDetailCodeStyled data-testid={testIdentifier + 'code'}>
-                            {t('Code')}: {props.product.catalogNumber}
+                        <ProductDetailCodeStyled data-testid={TEST_IDENTIFIER + 'code'}>
+                            {t('Code')}: {product.catalogNumber}
                         </ProductDetailCodeStyled>
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
             </Webline>
-            <Webline data-testid={testIdentifier + 'variants'}>
-                <ProductVariantsTable
-                    variants={props.product.variants}
-                    isSellingDenied={props.product.isSellingDenied}
-                />
+            <Webline data-testid={TEST_IDENTIFIER + 'variants'}>
+                <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />
             </Webline>
-            <Webline data-testid={testIdentifier + 'description'}>
-                <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />
+            <Webline data-testid={TEST_IDENTIFIER + 'description'}>
+                <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline data-testid={testIdentifier + 'accessories'}>
-                <ProductDetailAccessories accessories={props.product.accessories} />
+            <Webline data-testid={TEST_IDENTIFIER + 'accessories'}>
+                <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>
     );

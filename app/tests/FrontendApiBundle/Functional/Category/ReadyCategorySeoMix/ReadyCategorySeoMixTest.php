@@ -112,6 +112,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                     ... on Category {
                         products(first:1) {
                             orderingMode
+                            defaultOrderingMode
                             edges {
                                 node {
                                   name
@@ -128,6 +129,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 'slug' => [
                     'products' => [
                         'orderingMode' => 'PRICE_ASC',
+                        'defaultOrderingMode' => 'PRICE_ASC',
                         'edges' => [
                             ['node' => ['name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -151,6 +153,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 'slug' => [
                     'products' => [
                         'orderingMode' => 'PRIORITY',
+                        'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
                             ['node' => ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -174,6 +177,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 'slug' => [
                     'products' => [
                         'orderingMode' => 'PRIORITY',
+                        'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
                             ['node' => ['name' => t('Hyundai 32PFL4400', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
                         ],
@@ -196,7 +200,8 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 slug(slug: "' . $urlSlug . '") {
                     ... on Category {
                         products {
-                        orderingMode
+                            orderingMode
+                            defaultOrderingMode
                             edges {
                                 node {
                                   name
@@ -226,7 +231,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertSame($dataForCategorySeoMix, $dataForCategory);
     }
 
-    public function testReadyCategorySeoMixDataAreReturnedWhenSortingIsNull(): void
+    public function testReadyCategorySeoMixDataAreReturnedWhenOrderingIsNull(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
         $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
@@ -242,7 +247,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertSame($seoMixUrlSlug, $data['slug']);
     }
 
-    public function testReadyCategorySeoMixDataAreReturnedWhenSameSortingIsQueried(): void
+    public function testReadyCategorySeoMixDataAreReturnedWhenSameOrderingIsQueried(): void
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
         $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
@@ -258,7 +263,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertSame($seoMixUrlSlug, $data['slug']);
     }
 
-    public function testCategoryDataAreReturnedWhenSeoCategoryWithSortingIsQueried(): void
+    public function testCategoryDataAreReturnedWhenSeoCategoryWithOrderingIsQueried(): void
     {
         /** @var \App\Model\Category\Category $categoryPc */
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC);

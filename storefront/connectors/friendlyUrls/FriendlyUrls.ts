@@ -17,12 +17,12 @@ import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 
-export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageType> {
+export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<FriendlyUrlPageType>; fetching: boolean } {
     const router = useRouter();
     const categoryDetailSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
-    const [{ data, error }] = useSlugQueryApi({
+    const [{ data, error, fetching }] = useSlugQueryApi({
         variables: {
             slug,
             orderingMode: categoryDetailSort,
@@ -30,36 +30,37 @@ export function useFriendlyUrlResolvedData(slug: string): Maybe<FriendlyUrlPageT
             pageSize: pagination.pageSize,
             filter: mapParametersFilter(categoryParametersFilter),
         },
+        requestPolicy: 'network-only',
     });
 
     useQueryError(error);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     if (data?.slug?.__typename === undefined) {
-        return null;
+        return { data: null, fetching };
     }
 
     switch (data.slug.__typename) {
         case 'RegularProduct':
         case 'Variant':
-            return mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode);
+            return { data: mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'MainVariant':
-            return mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode);
+            return { data: mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Category':
-            return mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode);
+            return { data: mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Store':
-            return mapStoreDetailApiData(data.slug);
+            return { data: mapStoreDetailApiData(data.slug), fetching };
         case 'Article':
-            return mapArticleDetail(data.slug);
+            return { data: mapArticleDetail(data.slug), fetching };
         case 'BlogArticle':
-            return mapBlogArticleDetail(data.slug, currentDomainConfig);
+            return { data: mapBlogArticleDetail(data.slug, currentDomainConfig), fetching };
         case 'Brand':
-            return mapBrandDetail(data.slug, currentDomainConfig.currencyCode);
+            return { data: mapBrandDetail(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Flag':
-            return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
+            return { data: mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'BlogCategory':
-            return mapBlogCategoryDetail(data.slug);
+            return { data: mapBlogCategoryDetail(data.slug), fetching };
         default:
-            return null;
+            return { data: null, fetching };
     }
 }

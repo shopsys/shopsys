@@ -10,17 +10,25 @@ import {
     BrandDetailStyled,
     BrandDetailTextStyled,
 } from 'components/Pages/BrandDetail/BrandDetail.style';
+import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
+import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
+import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { BrandDetailType } from 'types/brand';
+import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 
 type BrandDetailProps = {
     brand: BrandDetailType;
+    fetching: boolean;
 };
 
 const TEST_IDENTIFIER = 'pages-branddetail-';
 
-const BrandDetail: FC<BrandDetailProps> = ({ brand }) => {
+const BrandDetail: FC<BrandDetailProps> = ({ brand, fetching }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
+    useRemoveSortFromUrlIfDefault(brand.productConnection.orderingMode, brand.productConnection.defaultOrderingMode);
+    const router = useRouter();
+    useGtmBrandProductListView(brand, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
         <>

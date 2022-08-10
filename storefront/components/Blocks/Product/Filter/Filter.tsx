@@ -29,11 +29,18 @@ type FilterProps = {
     slug: string;
     originalSlug: string | null;
     orderingMode: ProductOrderingModeEnumApi | null;
+    defaultOrderingMode?: ProductOrderingModeEnumApi | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, originalSlug, orderingMode }) => {
+export const ProductFilter: FC<FilterProps> = ({
+    productFilterOptions,
+    slug,
+    originalSlug,
+    orderingMode,
+    defaultOrderingMode,
+}) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
@@ -120,8 +127,13 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
             deepComparedProductFilterOptions,
         );
 
+        if (orderingMode === defaultOrderingMode) {
+            delete routerQueryWithoutAllParameter.sort;
+        }
+
         if (isProductFilterSameAsDefault) {
             delete routerQueryWithoutAllParameter.filter;
+
             shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
             return;
         }
@@ -152,9 +164,10 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
             );
         }
 
-        if (sortingFromQuery === null) {
-            routerQueryWithoutAllParameter.sort = orderingMode ?? ProductOrderingModeEnumApi.PriorityApi;
+        if (sortingFromQuery === null && originalSlug !== null && orderingMode !== null) {
+            routerQueryWithoutAllParameter.sort = orderingMode;
         }
+
         shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -167,6 +180,8 @@ export const ProductFilter: FC<FilterProps> = ({ productFilterOptions, slug, ori
         deepComparedProductFilterOptions,
         originalSlug,
         slug,
+        orderingMode,
+        defaultOrderingMode,
     ]);
 
     return (
