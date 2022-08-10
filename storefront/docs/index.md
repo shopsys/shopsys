@@ -33,19 +33,6 @@ npm run dev
 ```
 After this command open http://127.0.0.1:3000/ in your browser.
 
-#### Run styleguide generator, which will watch your files and compiles changes and displays it with hot-reload
-After start and first compile you can usually find your online styleguide on http://127.0.0.1:6060/
-
-#### You may restart styleguide-server when adding new component or new md file.
-```plain
-npm run styleguide-server
-```
-
-#### One-time compile all stand alone styleguide files as static page. You can find generated files in /docs/styleguide/ folder
-```plain
-npm run styleguide-build
-```
-
 ### Additional commands available for both ways (in Docker way they need to be run inside the storefront container)
 
 #### Build the app for production.
@@ -73,7 +60,3 @@ npm run lint--fix
 npm run format 
 ```
 
-#### Run translation files generator. You can find generated files in /public/locales/ folder.
-```plain
-npm run translate
-```

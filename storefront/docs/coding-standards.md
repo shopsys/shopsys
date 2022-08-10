@@ -4,12 +4,14 @@
 ```plain
 - .eslintignore, .eslintrc.json
 ```
+
 ### Prettier 
 - can format you code on save or can be fired by key shortcut - and I have to install editor plugin to use it
 - rules are defined in file:
 ```plain
 - .prettierrc
 ```
+
 ### Editorconfig 
 - adds coding standards into your IDE even if you don't have any plugin installed
 - rules are defined in file:
@@ -18,13 +20,8 @@
 ```
 
 ### Babel
-
 - rules are defined in file:
 ```plain
 - .babelrc
-```
 
-This part was added to resolve error when SSR vs Browser has different component classes (they generated different hash code)
-```plain
-"plugins": [["styled-components", { "ssr": true }]]
 ```
