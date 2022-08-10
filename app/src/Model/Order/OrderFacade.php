@@ -12,6 +12,7 @@ use App\Model\Payment\Service\PaymentServiceFacade;
 use App\Model\Payment\Transaction\PaymentTransaction;
 use App\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use App\Model\Payment\Transaction\PaymentTransactionFacade;
+use App\Model\Security\LoginAsUserFacade;
 use App\Model\Transport\Type\TransportType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
+use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface;
@@ -73,7 +75,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
- * @method setOrderDataAdministrator(\App\Model\Order\OrderData $orderData)
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
@@ -83,6 +84,11 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  */
 class OrderFacade extends BaseOrderFacade
 {
+    /**
+     * @var \App\Model\Security\LoginAsUserFacade
+     */
+    private LoginAsUserFacade $loginAsUserFacade;
+
     /**
      * @var \App\Model\Order\Item\OrderItemDataFactory
      */
@@ -140,6 +146,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \App\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \App\Model\Security\LoginAsUserFacade $loginAsUserFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -172,7 +179,8 @@ class OrderFacade extends BaseOrderFacade
         OrderDataFactory $orderDataFactory,
         PaymentTransactionFacade $paymentTransactionFacade,
         PaymentServiceFacade $paymentServiceFacade,
-        PaymentTransactionDataFactory $paymentTransactionDataFactory
+        PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        LoginAsUserFacade $loginAsUserFacade
     ) {
         parent::__construct(
             $em,
@@ -208,6 +216,7 @@ class OrderFacade extends BaseOrderFacade
         $this->paymentTransactionFacade = $paymentTransactionFacade;
         $this->paymentServiceFacade = $paymentServiceFacade;
         $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
+        $this->loginAsUserFacade = $loginAsUserFacade;
     }
 
     /**
@@ -217,6 +226,20 @@ class OrderFacade extends BaseOrderFacade
     public function createOrderFromFront(BaseOrderData $orderData, ?DeliveryAddress $deliveryAddress)
     {
         throw new DeprecatedMethodException();
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     */
+    protected function setOrderDataAdministrator(OrderData $orderData)
+    {
+        $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
+        if ($currentAdministratorLoggedAsCustomer === null) {
+            return;
+        }
+
+        $orderData->createdAsAdministrator = $currentAdministratorLoggedAsCustomer;
+        $orderData->createdAsAdministratorName = $currentAdministratorLoggedAsCustomer->getRealName();
     }
 
     /**

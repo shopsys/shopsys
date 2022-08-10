@@ -31,4 +31,18 @@ class TokenAuthenticator extends BaseTokenAuthenticator
 
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
     }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return string|null
+     */
+    public function getCredentials(Request $request): ?string
+    {
+        $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+        if ($authorizationHeader === null) {
+            return null;
+        }
+
+        return substr($authorizationHeader, strlen(static::BEARER));
+    }
 }

@@ -47,4 +47,13 @@ class AdministratorRepository extends BaseAdministratorRepository
             return $item['realName'];
         }, $administrators);
     }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Administrator\Administrator|null
+     */
+    public function findByUuid(string $uuid): ?Administrator
+    {
+        return $this->getAdministratorRepository()->findOneBy(['uuid' => $uuid]);
+    }
 }
