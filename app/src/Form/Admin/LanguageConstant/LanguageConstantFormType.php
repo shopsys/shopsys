@@ -38,7 +38,6 @@ class LanguageConstantFormType extends AbstractType
                 'label' => t('User translation'),
                 'constraints' => [
                     new Constraints\NotBlank(),
-                    new Constraints\Length(['max' => 1024]),
                 ],
                 'attr' => [
                     'class' => 'form-full__field__input',

@@ -78,19 +78,19 @@ class LanguageConstantController extends AdminBaseController
         }
 
         return $this->render('Admin/Content/LanguageConstant/list.html.twig', [
-            'gridView' => $grid ? $grid->createView() : null,
+            'gridView' => $grid?->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
     }
 
     /**
-     * @Route("/constant/edit/{key}")
+     * @Route("/constant/edit/")
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $key
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, string $key): Response
+    public function editAction(Request $request): Response
     {
+        $key = $request->query->get('key');
         $locale = $this->getSelectedLocale();
         $translation = $this->languageConstantFacade->getOriginalTranslationsByLocaleIndexedByKey($locale)[$key] ?? null;
 
@@ -146,13 +146,14 @@ class LanguageConstantController extends AdminBaseController
     }
 
     /**
-     * @Route("/constant/delete/{key}")
+     * @Route("/constant/delete/")
      * @CsrfProtection
-     * @param string $key
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(string $key): Response
+    public function deleteAction(Request $request): Response
     {
+        $key = $request->query->get('key');
         $constant = $this->languageConstantFacade->findByKey($key);
 
         if ($constant !== null) {

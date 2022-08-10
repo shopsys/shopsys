@@ -21,7 +21,7 @@ class LanguageConstantTranslation extends AbstractTranslation
     protected $translatable;
 
     /**
-     * @ORM\Column(type="string", length=1024)
+     * @ORM\Column(type="text")
      */
     private string $translation = '';
 
