@@ -5,8 +5,11 @@ COPY package.json package-lock.json ./
 
 RUN npm ci
 COPY . .
+
+ARG SENTRY_RELEASE
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV SENTRY_RELEASE $SENTRY_RELEASE
 
 RUN npm run build
 RUN npm ci --production

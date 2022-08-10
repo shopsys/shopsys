@@ -41,7 +41,7 @@ build-storefront:
         - build
     script:
         - cp ./app/schema.graphql ./storefront/schema.graphql
-        - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} ./storefront
+        - docker build -f ./storefront/docker/Dockerfile --target production --compress --build-arg SENTRY_RELEASE=${CI_COMMIT_SHORT_SHA} -t ${STOREFRONT_TAG} ./storefront
         - docker push ${STOREFRONT_TAG}
     interruptible: true
 
