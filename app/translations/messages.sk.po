@@ -304,9 +304,6 @@ msgstr "Mesto"
 msgid "Clean Storefront Cache"
 msgstr ""
 
-msgid "Clean Storefront Queries Cache"
-msgstr ""
-
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
@@ -1307,9 +1304,6 @@ msgid "Personal data access pages setting - view"
 msgstr ""
 
 msgid "Platba"
-msgstr ""
-
-msgid "Platba pro nadlimitní množství"
 msgstr ""
 
 msgid "Platba předautorizována"

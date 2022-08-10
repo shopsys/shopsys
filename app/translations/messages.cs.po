@@ -1309,9 +1309,6 @@ msgstr "Nastavení zobrazení osobních údajů - zobrazení"
 msgid "Platba"
 msgstr ""
 
-msgid "Platba pro nadlimitní množství"
-msgstr ""
-
 msgid "Platba předautorizována"
 msgstr ""
 
