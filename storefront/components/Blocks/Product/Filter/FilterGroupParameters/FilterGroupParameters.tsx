@@ -1,4 +1,3 @@
-import ColorPicker from './ColorPicker';
 import SliderFilter from './SliderFilter';
 import {
     FilterGroupArrowStyled,
@@ -9,6 +8,7 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
+import CheckboxColor from 'components/Forms/CheckboxColor';
 import { FC, useCallback, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';
@@ -95,12 +95,22 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 {data?.__typename === 'ParameterColorFilterOption' && (
                     <FilterGroupColorStyled>
                         {data.values.map((dataItem, index) => (
-                            <ColorPicker
+                            <Controller
                                 key={dataItem.uuid}
-                                parameterParentIndex={parameterParentIndex}
-                                dataItem={dataItem}
-                                valueIndex={index}
-                                isDisabled={data.values[index]?.count === 0}
+                                name={`parameters.${parameterParentIndex}.values.${index}.checked`}
+                                render={({ field }) => (
+                                    <>
+                                        <CheckboxColor
+                                            name={field.name}
+                                            id={field.name}
+                                            bgColor={dataItem.rgbHex ?? undefined}
+                                            onChange={onChangeParameterValueHandler(dataItem, index)}
+                                            value={parameterValue[index].checked}
+                                            data-testid={TEST_IDENTIFIER(index)}
+                                            label={dataItem.text}
+                                        />
+                                    </>
+                                )}
                             />
                         ))}
                     </FilterGroupColorStyled>

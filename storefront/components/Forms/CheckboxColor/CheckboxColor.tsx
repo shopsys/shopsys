@@ -7,8 +7,8 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'disabled',
-    'id' | 'required'
+    'name',
+    'id' | 'required' | 'disabled'
 >;
 
 type CheckboxColorProps = NativeProps & {
@@ -23,9 +23,36 @@ type CheckboxColorProps = NativeProps & {
     /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
-    fieldRef?: ControllerRenderProps<any, any>;
-};
-
+} & (
+        | {
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              value: unknown;
+              /**
+               * a ref of the controlled field element used for hooking onto the field events/changes
+               */
+              fieldRef?: never;
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              onChange: (...event: any[]) => void;
+          }
+        | {
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              value?: never;
+              /**
+               * a ref of the controlled field element used for hooking onto the field events/changes
+               */
+              fieldRef: ControllerRenderProps<any, any>;
+              /**
+               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
+               */
+              onChange?: never;
+          }
+    );
 /**
  * CheckboxColor - circle color with invisible checkbox, selected color will display tick
  */
@@ -37,21 +64,25 @@ const CheckboxColor: FC<CheckboxColorProps> = ({
     name,
     disabled,
     required,
+    value,
+    onChange,
 }) => {
     return (
         <ColorLabelWrapper
-            htmlFor={id === undefined ? name + 'checkbox_color-id' : id}
             label={label}
+            htmlFor={id === undefined ? name + 'checkbox_color-id' : id}
             bgColor={bgColor}
             isLightColor={tinycolor(bgColor).isLight()}
             isDisabled={disabled}
-            isActive={fieldRef?.value ?? false}
+            isActive={fieldRef ? fieldRef.value : value}
         >
             <CheckboxColorStyled
-                {...fieldRef}
                 disabled={disabled}
                 required={required}
                 id={id === undefined ? name + 'checkbox_color-id' : id}
+                {...(fieldRef ?? {})}
+                checked={fieldRef ? fieldRef.value : value}
+                onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
             />
         </ColorLabelWrapper>

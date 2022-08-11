@@ -18,7 +18,7 @@ type ColorLabelWrapperProps = NativeProps & {
      * Set background color for checkbox color
      */
     bgColor: string;
-    isDisabled: boolean;
+    isDisabled?: boolean;
     isActive: boolean;
 };
 
