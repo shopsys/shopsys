@@ -5,6 +5,7 @@ import {
     AdvertsQueryDocumentApi,
     ArticlePlacementTypeEnumApi,
     ArticlesQueryDocumentApi,
+    CurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
@@ -82,8 +83,14 @@ export async function initServerSideProps(
             }
 
             if (authenticationRequired) {
-                const customerResult = resolvedQueries.find((query) => query.data?.currentCustomerUser !== undefined);
-                const isLogged = customerResult?.data.currentCustomerUser !== undefined;
+                const customerQueryResult = currentClient.readQuery<CurrentCustomerUserQueryApi>(
+                    CurrentCustomerUserQueryDocumentApi,
+                );
+
+                const isLogged =
+                    customerQueryResult?.data?.currentCustomerUser !== undefined &&
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    customerQueryResult?.data?.currentCustomerUser !== null;
 
                 if (!isLogged) {
                     return {
