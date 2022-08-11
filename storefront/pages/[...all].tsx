@@ -142,8 +142,11 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) {
+    if (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) &&
+        !(context.res.statusCode === 503)
+    ) {
         // eslint-disable-next-line require-atomic-updates
         context.res.statusCode = 404;
     }

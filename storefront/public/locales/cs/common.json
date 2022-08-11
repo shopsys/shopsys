@@ -374,5 +374,6 @@
     "Download as XML": "Stáhnout ve formátu XML",
     "Pickup place": "Odběrné místo",
     "adminLoggedInAsCustomerWarning": "Pozor! Jste přihlášen za uživatele s emailem {{ email }} <button>Odhlásit</button>",
-    "Your cart has been modified. Please check the changes.": "Váš košík byl upraven. Prosím, zkontrolujte si změny."
+    "Your cart has been modified. Please check the changes.": "Váš košík byl upraven. Prosím, zkontrolujte si změny.",
+    "The page is currently under maintenance.": "Stránka je aktuálně v režimu údržby."
 }

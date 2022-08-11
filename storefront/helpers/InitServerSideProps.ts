@@ -19,6 +19,7 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
+    isMaintenance: boolean;
 };
 
 export async function initServerSideProps(
@@ -93,11 +94,16 @@ export async function initServerSideProps(
                     };
                 }
             }
+            const isMaintenance = resolvedQueries.some((query) => query.error?.response.status === 503);
+            if (isMaintenance) {
+                context.res.statusCode = 503;
+            }
 
             return {
                 props: {
                     ...(await loadNamespaces({ locale: domainConfig.defaultLocale, pathname: trimmedUrl })),
                     urqlState: currentSsrCache.extractData(),
+                    isMaintenance,
                 },
             };
         }
