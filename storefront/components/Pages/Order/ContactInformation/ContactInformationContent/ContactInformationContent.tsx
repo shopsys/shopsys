@@ -9,11 +9,9 @@ import ContactInformationAddress from 'components/Pages/Order/ContactInformation
 import ContactInformationCompany from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
 import ContactInformationCustomer from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
 import ContactInformationDeliveryAddress from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
-import ContactInformationRegister from 'components/Pages/Order/ContactInformation/ContactInformationRegister';
 import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { FC, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
@@ -31,7 +29,6 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
-    const { isUserLoggedIn } = useCurrentUserData();
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -52,9 +49,6 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
             >
                 <div ref={cssTransitionRef}>
                     <div ref={contentElement}>
-                        <ContactInformationContentSectionStyled>
-                            {!isUserLoggedIn && <ContactInformationRegister />}
-                        </ContactInformationContentSectionStyled>
                         <ContactInformationContentSectionStyled>
                             <ContactInformationCustomer />
                         </ContactInformationContentSectionStyled>

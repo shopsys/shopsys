@@ -18,9 +18,6 @@ export type AutocompleteSearchFormType = {
 // EXTEND CUSTOMER CONTACT INFORMATION FORM HERE
 export type ContactInformationFormType = {
     email: string;
-    register: boolean;
-    passwordFirst: string;
-    passwordSecond: string;
     customer: CustomerTypeEnum;
     telephone: string;
     firstName: string;
