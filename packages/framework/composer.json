@@ -51,7 +51,7 @@
         "doctrine/dbal": "^3.3.3",
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "~2.11.2|~2.12.0",
         "doctrine/persistence": "^2.4",
         "elasticsearch/elasticsearch": "^7.6.1",
         "fakerphp/faker": "^1.19.0",

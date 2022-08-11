@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^8.1",
-        "doctrine/orm": "^2.11.2",
+        "doctrine/orm": "~2.11.2|~2.12.0",
         "shopsys/form-types-bundle": "10.0.3",
         "shopsys/framework": "10.0.3",
         "shopsys/migrations": "10.0.3",
