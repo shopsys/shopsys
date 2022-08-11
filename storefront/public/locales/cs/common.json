@@ -372,5 +372,6 @@
     "Subscribed from": "Odebíráno od",
     "Default delivery address": "Výchozí dodací adresa",
     "Download as XML": "Stáhnout ve formátu XML",
-    "Pickup place": "Odběrné místo"
+    "Pickup place": "Odběrné místo",
+    "adminLoggedInAsCustomerWarning": "Pozor! Jste přihlášen za uživatele s emailem {{ email }} <button>Odhlásit</button>"
 }
