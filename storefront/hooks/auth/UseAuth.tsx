@@ -1,4 +1,4 @@
-import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import {
     LoginApi,
     LoginVariablesApi,
@@ -40,6 +40,10 @@ export const useAuth = (): [
             dispatch(userActions.setCartUuid(null));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
+
+            if (loginResult.data?.Login.showCartMergeInfo === true) {
+                showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+            }
 
             if (canUseDom()) {
                 window.location.href = rewriteUrl ?? router.asPath;
