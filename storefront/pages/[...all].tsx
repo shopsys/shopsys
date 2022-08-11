@@ -59,7 +59,6 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
     switch (data?.__typename) {
         case 'RegularProduct':
-        case 'Variant':
             return wrapContent(<ProductDetailPage product={data as ProductDetailType} fetching={fetching} />, data);
         case 'MainVariant':
             return wrapContent(
@@ -115,7 +114,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         filter: mapParametersFilter(optionsFilter),
     };
 
-    const initServerSideData = await initServerSideProps(
+    let initServerSideData = await initServerSideProps(
         context,
         store,
         false,
@@ -133,6 +132,15 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         SlugQueryDocumentApi,
         slugQueryVariables,
     );
+
+    if (slugQueryResult?.data?.slug?.__typename === 'Variant') {
+        initServerSideData = {
+            redirect: {
+                statusCode: 301,
+                destination: slugQueryResult.data.slug.mainVariant?.slug ?? '/',
+            },
+        };
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) {
