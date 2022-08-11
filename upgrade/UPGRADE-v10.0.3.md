@@ -1,6 +1,6 @@
-# [Upgrade from v10.0.2 to v10.0.3-dev](https://github.com/shopsys/shopsys/compare/v10.0.2...10.0)
+# [Upgrade from v10.0.2 to v10.0.3](https://github.com/shopsys/shopsys/compare/v10.0.2...v10.0.3)
 
-This guide contains instructions to upgrade from version v10.0.2 to v10.0.3-dev.
+This guide contains instructions to upgrade from version v10.0.2 to v10.0.3.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
