@@ -36,7 +36,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const exchange = ssrExchange({ isClient: false });
     const client = await createClient(context, store, exchange);
 
-    const serverSideProps = initServerSideProps(context, store, false, [], client, exchange);
+    const serverSideProps = await initServerSideProps(context, store, false, [], client, exchange);
 
     const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi);
     const isLogged =
