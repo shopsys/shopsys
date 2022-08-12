@@ -187,7 +187,7 @@ class GoPayClient
      */
     public function urlToEmbedJs(): string
     {
-        return $this->goPay->buildUrl('gp-gw/js/embed.js');
+        return $this->goPay->buildEmbedUrl();
     }
 
     /**
