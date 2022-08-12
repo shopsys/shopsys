@@ -1,6 +1,6 @@
 import { ImageWrapperStyled, MessageStyled, MessageTextStyled, MessageWrapperStyled } from './OrderConfirmation.style';
 import Webline from 'components/Layout/Webline';
-import GoPayGateway from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPay';
+import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { FC } from 'react';
