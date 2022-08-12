@@ -28,7 +28,7 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
      */
     protected function getBranchName(): string
     {
-        return $this->releasingBranchName;
+        return 'v' . $this->releasingBranchName;
     }
 
     /**
