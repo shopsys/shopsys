@@ -18,6 +18,9 @@ class CleanStorefrontQueryCacheCommand extends Command
      */
     protected static $defaultName = 'shopsys:redis:clean-storefront-query-cache';
 
+    /**
+     * @var \App\Component\Redis\CleanStorefrontCacheFacade
+     */
     private CleanStorefrontCacheFacade $cleanStorefrontCacheFacade;
 
     /**
