@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Component\Redis\CleanStorefrontCacheFacade;
-use RedisException;
 use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,11 +44,7 @@ class CleanStorefrontQueryCacheCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        try {
-            $this->cleanStorefrontCacheFacade->cleanStorefrontCache();
-        } catch (RedisException $exception) {
-            // skip silently – when redis is not available, no cache take place
-        }
+        $this->cleanStorefrontCacheFacade->cleanStorefrontCache();
 
         return CommandResultCodes::RESULT_OK;
     }

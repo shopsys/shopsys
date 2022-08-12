@@ -41,7 +41,7 @@
 
     <target name="db-demo" depends="production-protection,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,frontend-api-generate-new-keys,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data"/>
 
-    <target name="build-version-generate" depends="shopsys_framework.build-version-generate,clean-storefront-query-cache" description="Generates parameters_version.yaml config file with a new build version number and clean query cache"/>
+    <target name="build-deploy-part-2-db-dependent" depends="shopsys_framework.build-deploy-part-2-db-dependent,clean-storefront-query-cache" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
     <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
 
