@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Category\CategorySeo;
 
+use App\FrontendApi\Resolver\Category\Exception\ReadyCategorySeoMixNotFoundUserError;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\Cdn\Component\Domain\Domain;
@@ -61,7 +61,7 @@ class ReadyCategorySeoMixResolver implements ResolverInterface, AliasedInterface
 
             return $this->readyCategorySeoMixFacade->getById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | ReadyCategorySeoMixNotFoundException $exception) {
-            throw new UserError(sprintf('ReadyCategorySeoMix with URL slug "%s" does not exist.', $urlSlug));
+            throw new ReadyCategorySeoMixNotFoundUserError(sprintf('ReadyCategorySeoMix with URL slug "%s" does not exist.', $urlSlug));
         }
     }
 

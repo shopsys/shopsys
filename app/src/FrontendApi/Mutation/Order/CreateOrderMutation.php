@@ -7,13 +7,13 @@ namespace App\FrontendApi\Mutation\Order;
 use App\FrontendApi\Exception\ValidationError;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\FrontendApi\Mutation\Order\Exception\DeprecatedFieldUserError;
 use App\FrontendApi\Mutation\Order\Exception\OrderEmailsNotSentUserError;
 use App\FrontendApi\Mutation\Order\Exception\OrderEmptyCartUserError;
 use App\Model\Customer\DeliveryAddress;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -152,13 +152,13 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     private function handleDeprecatedFields(array $input): void
     {
         if (array_key_exists('products', $input) && $input['products'] !== null) {
-            throw new UserError('Usage of "products" input is deprecated, we do not work with this field anymore, the products are taken from the server cart instead.');
+            throw new DeprecatedFieldUserError('Usage of "products" input is deprecated, we do not work with this field anymore, the products are taken from the server cart instead.');
         }
         if (array_key_exists('transport', $input) && $input['transport'] !== null) {
-            throw new UserError('Usage of "transport" input is deprecated, we do not work with this field anymore, the transport is taken from the server cart instead.');
+            throw new DeprecatedFieldUserError('Usage of "transport" input is deprecated, we do not work with this field anymore, the transport is taken from the server cart instead.');
         }
         if (array_key_exists('payment', $input) && $input['payment'] !== null) {
-            throw new UserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
+            throw new DeprecatedFieldUserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
         }
     }
 }

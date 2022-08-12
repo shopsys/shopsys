@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Order;
 
-use App\FrontendApi\Resolver\Order\Exception\OrderNotFoundUserError;
 use GraphQL\Server\RequestError;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver as BaseOrderResolver;
 
 /**

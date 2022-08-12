@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\PersonalData\Exception;
 
-use App\FrontendApi\Error\UserErrorWithCodeInterface;
 use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class PersonalDataHashInvalidUserError extends UserError implements UserErrorWithCodeInterface
 {

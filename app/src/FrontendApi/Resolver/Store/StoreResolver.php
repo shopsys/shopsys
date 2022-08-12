@@ -11,9 +11,9 @@ use App\Model\Store\Store;
 use App\Model\Store\StoreFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
 class StoreResolver implements ResolverInterface, AliasedInterface
@@ -59,7 +59,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
             try {
                 return $this->storeFacade->getByUuidEnabledOnDomain($uuid, $this->domain->getId());
             } catch (StoreByUuidNotFoundException $storeNotFoundException) {
-                throw new UserError($storeNotFoundException->getMessage());
+                throw new StoreNotFoundUserError($storeNotFoundException->getMessage());
             }
         }
 
@@ -69,7 +69,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleByDomainIdAndSlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -96,7 +96,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
             );
 
             return $this->storeFacade->getByIdEnabledOnDomain($friendlyUrl->getEntityId(), $this->domain->getId());
-        } catch (FriendlyUrlNotFoundException | StoreNotFoundException $exception) {
+        } catch (FriendlyUrlNotFoundException|StoreNotFoundException $exception) {
             throw new StoreNotFoundUserError(sprintf('Store with URL slug "%s" does not exist.', $urlSlug));
         }
     }

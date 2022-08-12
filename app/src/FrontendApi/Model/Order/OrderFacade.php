@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Order;
 
+use App\FrontendApi\Model\Order\Exception\OrderSentPageNotAvailableUserError;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use App\Model\Order\OrderFacade as AppOrderFacade;
 use DateTime;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as BaseOrderFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderRepository;
 
@@ -82,7 +82,7 @@ class OrderFacade extends BaseOrderFacade
         $fiveMinutesAgo = new DateTime('-5 minutes');
 
         if ($order->getCreatedAt() < $fiveMinutesAgo) {
-            throw new UserError('You cannot request page content for order older than 5 minutes.');
+            throw new OrderSentPageNotAvailableUserError('You cannot request page content for order older than 5 minutes.');
         }
 
         return $this->appOrderFacade->getOrderSentPageContent($order->getId());

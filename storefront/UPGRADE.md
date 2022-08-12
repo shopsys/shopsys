@@ -874,3 +874,15 @@
       - if the user is already signed in, he is immediately redirected to the specified URL (or to HP if no URL is specified)
     - abandoned cart URL is now sent to GTM
      
+### Upgrade to Shopsys Framework v10.0.3
+  - [FWCC-1148](https://shopsys.atlassian.net/browse/FWCC-1148)
+  - [FWCC-1148 GTM polishing](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/750/diffs)
+  - most significant changes
+    - there is a new sniff enabled (ForbiddenClassesSniff) that disallows direct usage of the following classes:
+      - `Overblog\GraphQLBundle\Error\UserError`
+      - `GraphQL\Error\UserError`
+    - instead of these classes, you should use suitable implementations of `Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface`
+    - following classes can be replaced with classes from shopsys/frontend-api package
+      - `App\FrontendApi\Error\ErrorCodeSubscriber`
+      - `App\FrontendApi\Error\UserErrorWithCodeInterface`
+      - `App\FrontendApi\Error\UserEntityNotFoundError`
