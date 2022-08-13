@@ -1,18 +1,20 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import Error500 from 'components/Pages/ErrorPage/500';
+import { Error503 } from 'components/Pages/ErrorPage/503/Error503';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useReloadCart } from 'hooks/cart/UseReloadCart';
 import i18nConfig from 'i18n';
 import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lightgallery.css';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
-import { AppProps } from 'next/app';
+import { AppProps as NextAppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -31,11 +33,14 @@ import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
 
 extend(LocalizedFormat);
 
-type AppPropsWithError = AppProps & {
-    err?: any;
-};
+type ErrorProps = { err?: any };
 
-function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
+type AppProps = {
+    pageProps: ServerSidePropsType;
+} & Omit<NextAppProps<ErrorProps>, 'pageProps'> &
+    ErrorProps;
+
+function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
     const router = useRouter();
     const { url, defaultLocale } = useShopsysSelector((state) => state.domain);
     const userConsentCookie = getUserConsentCookie();
@@ -97,7 +102,7 @@ function MyApp({ Component, pageProps, err }: AppPropsWithError): ReactElement {
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <ErrorBoundary FallbackComponent={Error500}>
                     {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
-                    <Component {...pageProps} err={err} />
+                    {pageProps.isMaintenance ? <Error503 /> : <Component {...pageProps} err={err} />}
                 </ErrorBoundary>
             </ShopsysGlobalProvider>
         </>
