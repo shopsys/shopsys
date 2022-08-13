@@ -8,6 +8,7 @@ import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType, ProductPriceType } from 'types/price';
 import { SimpleProductType } from 'types/product';
 import { TransportType } from 'types/transport';
+import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
     cart: CartType | null;
@@ -20,6 +21,7 @@ export type CurrentCartType = {
     isLoaded: boolean;
     isInitiallyLoaded: boolean;
     modifications: CartModificationsFragmentApi | null;
+    refetchCart: (opts?: Partial<OperationContext> | undefined) => void;
 };
 
 export type ProductCartItemType = {
