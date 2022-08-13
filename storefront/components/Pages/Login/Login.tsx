@@ -12,6 +12,7 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessf
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { Translate } from 'next-translate';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
@@ -35,6 +36,7 @@ const Login: FC<LoginProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { url } = useShopsysSelector((state) => state.domain);
+    const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
     const [[loginResult, login]] = useAuth();
 
@@ -43,7 +45,14 @@ const Login: FC<LoginProps> = ({ breadcrumbs }) => {
 
     const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data, event) => {
         event?.preventDefault();
-        await login({ email: data.email, password: data.password, previousCartUuid: cartUuid }, url);
+
+        let redirectUrl = url;
+
+        if (typeof router.query.r === 'string') {
+            redirectUrl = router.query.r;
+        }
+
+        await login({ email: data.email, password: data.password, previousCartUuid: cartUuid }, redirectUrl);
     };
 
     const testIdentifier = 'pages-login-submit';

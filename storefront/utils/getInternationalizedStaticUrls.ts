@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 
 export const getInternationalizedStaticUrls = (
-    urls: (string | { url: string; param: string | undefined })[],
+    urls: (string | { url: string; param: string | undefined | null })[],
     domainUrl: string,
 ): string[] => {
     const { publicRuntimeConfig } = getConfig();

@@ -863,3 +863,14 @@
     - implemented changes according to new/updated GTM specification
       - all changes are split into commits with descriptive commit names
     - removed duplicit product list view from homepage promoted products
+
+### Abandoned cart
+  - [FWCC-1138](https://shopsys.atlassian.net/browse/FWCC-1138)
+  - [FWCC-1138 added abandoned cart functionality on SF](https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/742/diffs)
+  - most significant changes
+    - added page which adds the cart UUID to a cookie and then redirects the anonymous user to HP
+    - login page takes an optional query parameter `r` where you can specify where the user should be redirected after login
+      - `127.0.0.1:8000/prihlaseni?r=/kosik` takes you to cart page after the user is successfully logged in
+      - if the user is already signed in, he is immediately redirected to the specified URL (or to HP if no URL is specified)
+    - abandoned cart URL is now sent to GTM
+     
