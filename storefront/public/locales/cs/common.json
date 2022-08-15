@@ -366,7 +366,7 @@
     "Item {{ itemName }} has been sold out.": "Položka {{ itemName }} byla vyprodána.",
     "Item {{ itemName }} can no longer be bought.": "Položku {{ itemName }} již nelze zakoupit.",
     "The promo code {{ promoCode }} is no longer applicable.": "Slevový kupón {{ promoCode }} již nelze uplatnit.",
-    "Your payment selection has been removed.": "Vaše volba dopravy byla zrušena.",
+    "Your transport and payment selection has been removed.": "Vaše volba dopravy a platby byla zrušena.",
     "Newsletter subscription": "Odběr newsletteru",
     "Subscribed from": "Odebíráno od",
     "Default delivery address": "Výchozí dodací adresa",

@@ -193,12 +193,12 @@ const handleCartTransportModifications = (
     if (transportModifications.transportUnavailable) {
         changePaymentInCart(null, null);
         showInfoMessage(t('The transport you selected is no longer available.'), 'cart');
-        showInfoMessage(t('Your payment selection has been removed.'), 'cart');
+        showInfoMessage(t('Your transport and payment selection has been removed.'), 'cart');
     }
     if (transportModifications.transportWeightLimitExceeded) {
         changePaymentInCart(null, null);
         showInfoMessage(t('You have exceeded the weight limit of the selected transport.'), 'cart');
-        showInfoMessage(t('Your payment selection has been removed.'), 'cart');
+        showInfoMessage(t('Your transport and payment selection has been removed.'), 'cart');
     }
 };
 
