@@ -56,6 +56,7 @@
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
     * [OrderItem](#orderitem)
+    * [OrderStepsAccessibility](#orderstepsaccessibility)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
     * [ParameterCheckboxFilterOption](#parametercheckboxfilteroption)
@@ -667,6 +668,20 @@ Returns HTML content for order sent page.
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderStepsAccessibility</strong></td>
+<td valign="top"><a href="#orderstepsaccessibility">OrderStepsAccessibility</a>!</td>
+<td>
+
+Checks whether user can access the transport and payment or the contact info steps
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">cartInput</td>
+<td valign="top"><a href="#cartinput">CartInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -4915,6 +4930,39 @@ Order item price per unit
 <td>
 
 Applied VAT rate percentage applied to the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderStepsAccessibility
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>canAccessContactInformation</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Check whether the user can access the contact information step
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>canAccessTransportAndPayment</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Check whether the user can access the transport and payment step
 
 </td>
 </tr>
