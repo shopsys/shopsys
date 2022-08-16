@@ -26,6 +26,18 @@ const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, bord
         'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
 
     if (linkType === 'external') {
+        if (isButton === true) {
+            <ButtonStyled
+                {...restProps}
+                size={size}
+                variant={variant}
+                borderRadius={borderRadius}
+                data-testid={testIdentifier}
+            >
+                {children}
+            </ButtonStyled>;
+        }
+
         return (
             <LinkStyled {...restProps} data-testid={testIdentifier}>
                 {children}
