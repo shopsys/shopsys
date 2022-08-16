@@ -9,6 +9,7 @@ fragment ProductDetailInterfaceFragment on Product {
     nameSuffix
     ...BreadcrumbFragment
     catalogNumber
+    ean
     description
     ...ProductDetailImagesFragment
     ...ProductPriceFragment

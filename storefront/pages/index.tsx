@@ -1,3 +1,4 @@
+import { SearchMetadata } from 'components/Basic/Head/SearchMetadata/SearchMetadata';
 import Heading from 'components/Basic/Heading';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
@@ -27,23 +28,26 @@ const Index: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout>
-            <Webline>
-                <Banners />
-            </Webline>
-            <Webline>
-                <Heading type="h2">{t('Promoted categories')}</Heading>
-                <PromotedCategories />
-            </Webline>
-            <Webline>
-                <Heading type="h2">{t('Promoted products')}</Heading>
-                <PromotedProducts />
-            </Webline>
+        <>
+            <SearchMetadata />
+            <CommonLayout>
+                <Webline>
+                    <Banners />
+                </Webline>
+                <Webline>
+                    <Heading type="h2">{t('Promoted categories')}</Heading>
+                    <PromotedCategories />
+                </Webline>
+                <Webline>
+                    <Heading type="h2">{t('Promoted products')}</Heading>
+                    <PromotedProducts />
+                </Webline>
 
-            <Webline type="blog">
-                <BlogPreview />
-            </Webline>
-        </CommonLayout>
+                <Webline type="blog">
+                    <BlogPreview />
+                </Webline>
+            </CommonLayout>
+        </>
     );
 };
 

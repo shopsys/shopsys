@@ -13,6 +13,7 @@ import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailTabs from './ProductDetailTabs';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
 import Webline from 'components/Layout/Webline';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -38,6 +39,7 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, fetching }) => {
 
     return (
         <>
+            <ProductMetadata product={product} />
             <Webline>
                 <ProductDetailStyled>
                     <ProductDetailImageStyled data-testid={TEST_IDENTIFIER + 'gallery'}>

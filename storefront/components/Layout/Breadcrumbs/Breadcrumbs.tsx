@@ -4,6 +4,7 @@ import {
     BreadcrumbsStyled,
     LeftArrowIconStyled,
 } from './Breadcrumbs.style';
+import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
 import Webline from 'components/Layout/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -25,6 +26,7 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
 
     return (
         <Webline>
+            <BreadcrumbsMetadata breadcrumbs={props.breadcrumb} />
             <BreadcrumbsStyled data-testid={testIdentifier}>
                 <LeftArrowIconStyled iconType="icon" icon="Arrow" />
                 <NextLink href="/" passHref>
