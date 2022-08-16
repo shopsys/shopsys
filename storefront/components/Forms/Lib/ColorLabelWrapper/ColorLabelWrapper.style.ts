@@ -8,7 +8,7 @@ const localVariables = {
 type ColorLabelWrapperStyledProps = {
     isLightColor: boolean;
     bgColor: string;
-    isDisabled: boolean;
+    isDisabled?: boolean;
     isActive: boolean;
 };
 
