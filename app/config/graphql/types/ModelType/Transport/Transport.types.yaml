@@ -33,3 +33,6 @@ Transport:
                     sizes:
                         type: "[String!]"
                         defaultValue: null
+            isPersonalPickup:
+                type: "Boolean!"
+                description: "Pointer telling if the transport is of type personal pickup"

@@ -30,9 +30,6 @@ export const mapTransport = (
         instruction: apiData.instruction !== null ? apiData.instruction : '',
         image: getFirstImage(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
-        isPersonalPickup:
-            (apiData.stores?.edges !== undefined && apiData.stores.edges !== null && apiData.stores.edges.length > 0) ||
-            apiData.transportType.code === 'packetery',
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores: apiData.stores !== null ? mapPickupPlacesApiData(apiData.stores) : [],
     };
