@@ -42,11 +42,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
                 {currentCart.isInitiallyLoaded && (
-                    <TransportAndPayment
-                        transports={transports}
-                        lastOrder={data?.lastOrder ?? null}
-                        currentCart={currentCart}
-                    />
+                    <TransportAndPayment transports={transports} lastOrder={data?.lastOrder ?? null} />
                 )}
             </OrderLayout>
             <Webline type="dark">

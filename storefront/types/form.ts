@@ -47,12 +47,6 @@ export type PickupPlaceFormType = {
     pickupPlace: string;
 };
 
-export type TransportAndPaymentFormType = {
-    transport: string | null;
-    payment: string | null;
-    goPaySwift: string | null;
-};
-
 export type RegistrationAfterOrderFormType = {
     password: string;
     privacyPolicy: boolean;
