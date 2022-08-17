@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Twig\Environment;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -49,11 +48,6 @@ class CartFacade extends BaseCartFacade
     private $categoryFacade;
 
     /**
-     * @var \Twig\Environment
-     */
-    protected $twigEnvironment;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \App\Model\Product\ProductRepository $productRepository
@@ -66,7 +60,6 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Twig\Environment $twigEnvironment
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
@@ -82,7 +75,6 @@ class CartFacade extends BaseCartFacade
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        Environment $twigEnvironment,
         CategoryFacade $categoryFacade
     ) {
         parent::__construct(
@@ -100,7 +92,6 @@ class CartFacade extends BaseCartFacade
         );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->twigEnvironment = $twigEnvironment;
         $this->categoryFacade = $categoryFacade;
     }
 
@@ -277,8 +268,6 @@ class CartFacade extends BaseCartFacade
         $cart->clean();
         $this->em->remove($cart);
         $this->em->flush();
-
-        $this->cleanAdditionalData();
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\FrontendApi\Exception\DeprecatedMethodException;
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Administrator\Administrator;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;

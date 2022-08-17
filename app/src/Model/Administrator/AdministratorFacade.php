@@ -38,4 +38,13 @@ class AdministratorFacade extends BaseAdministratorFacade
     {
         return $this->administratorRepository->findAdministratorNamesWithRoleGroup($roleGroupId);
     }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Administrator\Administrator|null
+     */
+    public function findByUuid(string $uuid): ?Administrator
+    {
+        return $this->administratorRepository->findByUuid($uuid);
+    }
 }

@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use App\Model\Cart\CartFacade;
+use App\Model\Cart\Watcher\CartWatcherFacade;
+use App\Model\Category\CategoryFacade;
+use App\Model\Customer\User\CustomerUserIdentifierFactory;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\FunctionalTestCase;
 
 class CartFacadeTest extends FunctionalTestCase
@@ -30,7 +32,7 @@ class CartFacadeTest extends FunctionalTestCase
     private CartFactory $cartFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     * @var \App\Model\Product\ProductRepository
      * @inject
      */
     private ProductRepository $productRepository;
@@ -42,7 +44,7 @@ class CartFacadeTest extends FunctionalTestCase
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
      * @inject
      */
     private CurrentPromoCodeFacade $currentPromoCodeFacade;
@@ -66,16 +68,28 @@ class CartFacadeTest extends FunctionalTestCase
     private CartRepository $cartRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade
+     * @var \App\Model\Cart\Watcher\CartWatcherFacade
      * @inject
      */
     private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacadeFromContainer;
+
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     * @inject
+     */
+    private ProductAvailabilityFacade $productAvailabilityFacade;
+
+    /**
+     * @var \App\Model\Category\CategoryFacade
+     * @inject
+     */
+    private CategoryFacade $categoryFacade;
 
     public function testAddProductToCartAddsItemsOnlyToCurrentCart()
     {
@@ -207,7 +221,9 @@ class CartFacadeTest extends FunctionalTestCase
             $this->productPriceCalculationForCustomerUser,
             $this->cartItemFactoryInterface,
             $this->cartRepository,
-            $this->cartWatcherFacade
+            $this->cartWatcherFacade,
+            $this->productAvailabilityFacade,
+            $this->categoryFacade
         );
     }
 
@@ -243,7 +259,7 @@ class CartFacadeTest extends FunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\App\Model\Customer\User\CustomerUserIdentifierFactory
      */
     private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier)
     {

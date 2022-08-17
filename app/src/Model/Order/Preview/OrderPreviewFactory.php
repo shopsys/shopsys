@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
-use App\Model\Cart\CartFacade;
-use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use App\Model\Store\Store;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory as BaseOrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -23,45 +18,12 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @method __construct(\App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Cart\CartFacade $cartFacade, \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade)
  */
 class OrderPreviewFactory extends BaseOrderPreviewFactory
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
-     */
-    private $promoCodeLimitResolver;
-
-    /**
-     * @param \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
-     */
-    public function __construct(
-        OrderPreviewCalculation $orderPreviewCalculation,
-        Domain $domain,
-        CurrencyFacade $currencyFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        PromoCodeLimitResolver $promoCodeLimitResolver
-    ) {
-        parent::__construct(
-            $orderPreviewCalculation,
-            $domain,
-            $currencyFacade,
-            $currentCustomerUser,
-            $cartFacade,
-            $currentPromoCodeFacade
-        );
-
-        $this->promoCodeLimitResolver = $promoCodeLimitResolver;
-    }
-
-    /**
+     * @deprecated use create() method instead
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Store\Store|null $personalPickupStore
@@ -72,34 +34,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         ?Payment $payment = null,
         ?Store $personalPickupStore = null
     ): OrderPreview {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
-        $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
-        $validEnteredPromoCodePercent = null;
-        $quantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
-        if ($validEnteredPromoCode !== null) {
-            $limit = $this->promoCodeLimitResolver->getLimitByPromoCode(
-                $validEnteredPromoCode,
-                $quantifiedProducts
-            );
-            if ($limit !== null) {
-                $validEnteredPromoCodePercent = $limit->getDiscount();
-            }
-        }
-
-        /** @var \App\Model\Customer\User\CustomerUser $currentCustomerUser */
-        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        return $this->create(
-            $currency,
-            $this->domain->getId(),
-            $quantifiedProducts,
-            $transport,
-            $payment,
-            $currentCustomerUser,
-            $validEnteredPromoCodePercent,
-            $personalPickupStore,
-            $validEnteredPromoCode
-        );
+        throw new DeprecatedMethodException();
     }
 
     /**

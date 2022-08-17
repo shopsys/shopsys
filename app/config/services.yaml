@@ -669,12 +669,7 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
         alias: App\Model\Customer\User\CustomerUserPasswordFacade
 
-    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
-        alias: App\Model\Cart\CartMigrationFacade
-
-    App\Model\Cart\CartMigrationFacade:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade: ~
 
     Endroid\QrCode\Writer\PngWriter: ~
 

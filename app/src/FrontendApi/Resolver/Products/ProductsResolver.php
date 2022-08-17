@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products;
 
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\FrontendApi\Component\Validation\PageSizeValidator;
-use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;

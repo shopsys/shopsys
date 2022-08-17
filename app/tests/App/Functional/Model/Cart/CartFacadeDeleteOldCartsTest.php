@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\FunctionalTestCase;
-use Twig\Environment;
 
 class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 {
@@ -92,12 +91,6 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
-
-    /**
-     * @var \Twig\Environment
-     * @inject
-     */
-    private Environment $twigEnvironment;
 
     /**
      * @var \App\Model\Category\CategoryFacade
@@ -212,7 +205,6 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
             $this->cartRepository,
             $this->cartWatcherFacade,
             $this->productAvailabilityFacade,
-            $this->twigEnvironment,
             $this->categoryFacade
         );
     }

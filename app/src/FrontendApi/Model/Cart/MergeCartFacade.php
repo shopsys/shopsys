@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart;
 
-use App\Model\Cart\CartMigrationFacade;
+use App\Model\Cart\Cart;
 use App\Model\Customer\User\CustomerUser;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 
 class MergeCartFacade
 {
@@ -15,9 +18,14 @@ class MergeCartFacade
     private CartFacade $cartFacade;
 
     /**
-     * @var \App\Model\Cart\CartMigrationFacade
+     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
      */
-    private CartMigrationFacade $cartMigrationFacade;
+    private CartItemFactory $cartItemFactory;
+
+    /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private EntityManagerInterface $entityManager;
 
     /**
      * @var bool
@@ -26,14 +34,17 @@ class MergeCartFacade
 
     /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \App\Model\Cart\CartMigrationFacade $cartMigrationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         CartFacade $cartFacade,
-        CartMigrationFacade $cartMigrationFacade
+        CartItemFactory $cartItemFactory,
+        EntityManagerInterface $entityManager
     ) {
         $this->cartFacade = $cartFacade;
-        $this->cartMigrationFacade = $cartMigrationFacade;
+        $this->cartItemFactory = $cartItemFactory;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -49,7 +60,41 @@ class MergeCartFacade
             $this->showCartMergeInfo = true;
         }
 
-        $this->cartMigrationFacade->mergeCarts($oldCart, $customerCart);
+        $this->mergeCarts($oldCart, $customerCart);
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     * @param \App\Model\Cart\Cart $currentCart
+     */
+    private function mergeCarts(Cart $cart, Cart $currentCart): void
+    {
+        foreach ($cart->getItems() as $itemToMerge) {
+            $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
+            if ($similarItem instanceof CartItem) {
+                $similarItem->changeQuantity($similarItem->getQuantity() + $itemToMerge->getQuantity());
+            } else {
+                /** @var \App\Model\Cart\Item\CartItem $newCartItem */
+                $newCartItem = $this->cartItemFactory->create(
+                    $currentCart,
+                    $itemToMerge->getProduct(),
+                    $itemToMerge->getQuantity(),
+                    $itemToMerge->getWatchedPrice()
+                );
+                $currentCart->addItem($newCartItem);
+                $this->entityManager->persist($newCartItem);
+            }
+        }
+
+        foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
+            $currentCart->applyPromoCode($promoCode);
+        }
+
+        $currentCart->setModifiedNow();
+
+        $this->entityManager->flush();
+
+        $this->cartFacade->deleteCart($cart);
     }
 
     /**

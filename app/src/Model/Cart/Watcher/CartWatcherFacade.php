@@ -4,114 +4,77 @@ declare(strict_types=1);
 
 namespace App\Model\Cart\Watcher;
 
-use App\Model\Product\Availability\ProductAvailabilityFacade;
-use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
+use App\Component\Deprecation\DeprecatedMethodException;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade as BaseCartWatcherFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Twig\Environment;
 
 /**
- * @method checkModifiedPrices(\App\Model\Cart\Cart $cart)
- * @method checkNotListableItems(\App\Model\Cart\Cart $cart)
- * @method checkCartModifications(\App\Model\Cart\Cart $cart)
+ * @deprecated the original framework class requires FlashBagInterface in the constructor which causes unnecessary session start.
+ * Since we use FE API with JS storefront, we do not need the original Twig implementation anymore,
+ * however, we are not able to get rid of it completely because it is required in Shopsys\FrameworkBundle\Model\Cart\CartFacade
+ * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
+ * @see https://github.com/shopsys/shopsys/pull/2497
  */
 class CartWatcherFacade extends BaseCartWatcherFacade
 {
-    /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $productAvailabilityFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Twig\Environment $twigEnvironment
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
-    public function __construct(
-        FlashBagInterface $flashBag,
-        EntityManagerInterface $em,
-        CartWatcher $cartWatcher,
-        CurrentCustomerUser $currentCustomerUser,
-        Environment $twigEnvironment,
-        ProductAvailabilityFacade $productAvailabilityFacade,
-        Domain $domain
-    ) {
-        parent::__construct($flashBag, $em, $cartWatcher, $currentCustomerUser, $twigEnvironment);
-
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->domain = $domain;
+    public function __construct()
+    {
     }
 
     /**
      * @param \App\Model\Cart\Cart $cart
-     * @property \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
-     * @return \App\Model\Cart\Item\CartItem[]|null[]
+     * @deprecated see the class description
+     * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
-    public function checkUnavailableStockQuantityItems(Cart $cart): array
+    public function checkCartModifications(Cart $cart)
     {
-        $cartItemsToDelete = [];
-        foreach ($cart->getItems() as $item) {
-            $product = $item->getProduct();
-            $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
-            if ($maximumOrderQuantity === 0) {
-                $cartItemsToDelete[] = $item;
+        throw new DeprecatedMethodException();
+    }
 
-                continue;
-            }
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     * @deprecated see the class description
+     * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
+     */
+    protected function checkModifiedPrices(Cart $cart)
+    {
+        throw new DeprecatedMethodException();
+    }
 
-            if ($item->getQuantity() <= $maximumOrderQuantity) {
-                continue;
-            }
-
-            $item->changeQuantity($maximumOrderQuantity);
-            $item->changeAddedAt(new DateTime());
-            $this->em->persist($item);
-            $this->em->flush();
-
-            $messageTemplate = $this->twigEnvironment->createTemplate(
-                t('Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku.')
-            );
-            $this->flashBag->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $product->getName()]));
-        }
-        return $cartItemsToDelete;
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     * @deprecated see the class description
+     * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
+     */
+    protected function checkNotListableItems(Cart $cart)
+    {
+        throw new DeprecatedMethodException();
     }
 
     /**
      * @return string
+     * @deprecated see the class description
      */
     protected function getMessageForNoLongerAvailableExistingProduct(): string
     {
-        return t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.');
+        throw new DeprecatedMethodException();
     }
 
     /**
      * @return string
+     * @deprecated see the class description
      */
     protected function getMessageForNoLongerAvailableProduct(): string
     {
-        return t('Product you had in cart is no longer in available. Please check your order.');
+        throw new DeprecatedMethodException();
     }
 
     /**
      * @return string
+     * @deprecated see the class description
      */
     protected function getMessageForChangedProduct(): string
     {
-        return t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.');
+        throw new DeprecatedMethodException();
     }
 }

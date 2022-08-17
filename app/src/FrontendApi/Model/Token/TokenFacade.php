@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Token;
 
-use App\FrontendApi\Exception\DeprecatedMethodException;
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\Model\Administrator\Administrator;
 use App\Model\User\FrontendApi\FrontendApiUser;
 use DateTime;
