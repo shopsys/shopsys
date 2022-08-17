@@ -15,16 +15,15 @@ type NativeProps = ExtractNativePropsFromDefault<
 type RadiobuttonProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
     image?: ImageType | null;
+    checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
 } & (
         | {
               onChangeCallback: (newValue: string | null) => void;
               fieldRef?: never;
-              checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
           }
         | {
               onChangeCallback?: never;
               fieldRef: ControllerRenderProps<any, any>;
-              checked?: never;
           }
     );
 
