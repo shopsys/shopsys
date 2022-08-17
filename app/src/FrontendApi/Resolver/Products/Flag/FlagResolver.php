@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products\Flag;
 
+use App\FrontendApi\Resolver\Products\Flag\Exception\FlagNotFoundUserError;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
 class FlagResolver implements ResolverInterface, AliasedInterface
@@ -54,7 +55,7 @@ class FlagResolver implements ResolverInterface, AliasedInterface
             try {
                 return $this->flagFacade->getVisibleByUuid($uuid, $this->domain->getLocale());
             } catch (FlagNotFoundException $flagNotFoundException) {
-                throw new UserError($flagNotFoundException->getMessage());
+                throw new FlagNotFoundUserError($flagNotFoundException->getMessage());
             }
         }
 
@@ -62,7 +63,7 @@ class FlagResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleOnDomainBySlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -81,8 +82,8 @@ class FlagResolver implements ResolverInterface, AliasedInterface
             );
 
             return $this->flagFacade->getVisibleFlagById($friendlyUrl->getEntityId(), $this->domain->getLocale());
-        } catch (FriendlyUrlNotFoundException | FlagNotFoundException $flagNotFoundException) {
-            throw new UserError(sprintf('Flag with URL slug "%s" does not exist.', $urlSlug));
+        } catch (FriendlyUrlNotFoundException|FlagNotFoundException $flagNotFoundException) {
+            throw new FlagNotFoundUserError(sprintf('Flag with URL slug "%s" does not exist.', $urlSlug));
         }
     }
 

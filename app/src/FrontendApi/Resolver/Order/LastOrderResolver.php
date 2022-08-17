@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Order;
 
 use App\FrontendApi\Model\Order\OrderFacade;
+use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use App\Model\Order\Order;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
 class LastOrderResolver implements ResolverInterface, AliasedInterface
@@ -43,7 +43,7 @@ class LastOrderResolver implements ResolverInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null) {
-            throw new UserError('You need to be logged in.');
+            throw new InvalidCredentialsUserError('You need to be logged in.');
         }
 
         return $this->orderFacade->findLastOrderByCustomerUser($customerUser);

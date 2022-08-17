@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store\Exception;
 
-use App\FrontendApi\Error\UserEntityNotFoundError;
-use App\FrontendApi\Error\UserErrorWithCodeInterface;
+use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class StoreNotFoundUserError extends UserEntityNotFoundError implements UserErrorWithCodeInterface
 {

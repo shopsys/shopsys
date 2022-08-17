@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Slug\Exception;
+namespace App\FrontendApi\Resolver\Category\Exception;
 
 use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class NoResultFoundForSlugUserError extends UserEntityNotFoundError implements UserErrorWithCodeInterface
+class ReadyCategorySeoMixNotFoundUserError extends UserEntityNotFoundError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'no-result-found-for-slug';
+    private const CODE = 'ready-category-seo-mix-not-found';
 
     /**
      * {@inheritDoc}

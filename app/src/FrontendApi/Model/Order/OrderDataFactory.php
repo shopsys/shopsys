@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Order;
 
 use App\FrontendApi\Model\Order\Exception\InvalidPacketeryAddressIdUserError;
+use App\FrontendApi\Resolver\Store\Exception\StoreNotFoundUserError;
 use App\Model\Cart\Cart;
 use App\Model\Order\OrderData;
 use App\Model\Store\Exception\StoreByUuidNotFoundException;
 use App\Model\Store\Store;
 use App\Model\Store\StoreFacade;
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -98,7 +98,7 @@ class OrderDataFactory extends BaseOrderDataFactory
                 );
                 $this->setOrderDataByStore($orderData, $store);
             } catch (StoreByUuidNotFoundException $exception) {
-                throw new UserError($exception->getMessage());
+                throw new StoreNotFoundUserError($exception->getMessage());
             }
         }
 

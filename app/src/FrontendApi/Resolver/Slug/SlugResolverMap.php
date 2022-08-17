@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Slug;
 
+use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\Model\Article\Article;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
@@ -11,7 +12,6 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Store\Store;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class SlugResolverMap extends ResolverMap
@@ -61,7 +61,7 @@ class SlugResolverMap extends ResolverMap
                         }
                     }
 
-                    throw new UserError('Requested content does not exist.');
+                    throw new NoResultFoundForSlugUserError('Requested content does not exist.');
                 },
             ],
         ];

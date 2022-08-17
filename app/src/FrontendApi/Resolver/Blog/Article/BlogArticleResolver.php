@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Blog\Article;
 
+use App\FrontendApi\Resolver\Blog\Article\Exception\BlogArticleNotFoundUserError;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 
 class BlogArticleResolver implements ResolverInterface, AliasedInterface
 {
@@ -39,10 +40,10 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
                 $urlSlug = ltrim($urlSlug, '/');
                 $blogArticleData = $this->blogArticleElasticsearchFacade->getBySlug($urlSlug);
             } else {
-                throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }
         } catch (BlogArticleNotFoundException $blogArticleNotFoundException) {
-            throw new UserError($blogArticleNotFoundException->getMessage());
+            throw new BlogArticleNotFoundUserError($blogArticleNotFoundException->getMessage());
         }
 
         return $blogArticleData;

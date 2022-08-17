@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Customer;
 
+use App\FrontendApi\Mutation\Customer\Exception\DeliveryAddressNotFoundUserError;
+use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
@@ -12,7 +14,6 @@ use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -79,7 +80,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null) {
-            throw new UserError('You need to be logged in.');
+            throw new InvalidCredentialsUserError('You need to be logged in.');
         }
 
         $this->deliveryAddressFacade->deleteByUuidAndCustomer($deliveryAddressUuid, $customerUser->getCustomer());
@@ -100,7 +101,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         if ($customerUser === null) {
-            throw new UserError('You need to be logged in.');
+            throw new InvalidCredentialsUserError('You need to be logged in.');
         }
 
         $deliveryAddress = $this->deliveryAddressDataFactory
@@ -124,7 +125,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         if ($customerUser === null) {
-            throw new UserError('You need to be logged in.');
+            throw new InvalidCredentialsUserError('You need to be logged in.');
         }
 
         try {
@@ -133,7 +134,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
                 $customerUser->getCustomer()
             );
         } catch (DeliveryAddressNotFoundException $exception) {
-            throw new UserError($exception->getMessage());
+            throw new DeliveryAddressNotFoundUserError($exception->getMessage());
         }
 
         $customerData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);

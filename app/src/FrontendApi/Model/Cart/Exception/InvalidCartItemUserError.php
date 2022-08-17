@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart\Exception;
 
-use App\FrontendApi\Error\UserErrorWithCodeInterface;
 use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class InvalidCartItemUserError extends UserError implements UserErrorWithCodeInterface
 {

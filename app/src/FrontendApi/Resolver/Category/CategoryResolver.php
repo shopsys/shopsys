@@ -7,10 +7,10 @@ namespace App\FrontendApi\Resolver\Category;
 use App\FrontendApi\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver as BaseCategoryResolver;
 
@@ -61,7 +61,7 @@ class CategoryResolver extends BaseCategoryResolver
             return $this->getVisibleOnDomainAndSlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**

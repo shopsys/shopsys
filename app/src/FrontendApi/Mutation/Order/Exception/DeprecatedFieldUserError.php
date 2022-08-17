@@ -7,9 +7,9 @@ namespace App\FrontendApi\Mutation\Order\Exception;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class OrderEmailsNotSentUserError extends UserError implements UserErrorWithCodeInterface
+class DeprecatedFieldUserError extends UserError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'order-emails-not-sent';
+    private const CODE = 'deprecated-field';
 
     /**
      * {@inheritDoc}
