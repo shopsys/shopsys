@@ -112,6 +112,7 @@ class TransportsTest extends GraphQlTestCase
                         ],
                         'payments' => [
                             ['name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],
@@ -137,7 +138,8 @@ class TransportsTest extends GraphQlTestCase
                         ],
                         'payments' => [
                             ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Payment By Card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],
@@ -169,7 +171,8 @@ class TransportsTest extends GraphQlTestCase
                         'payments' => [
                             ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Payment By Card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => [
                             'edges' => [
@@ -204,6 +207,7 @@ class TransportsTest extends GraphQlTestCase
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [],
                         'payments' => [
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,

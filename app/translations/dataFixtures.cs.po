@@ -316,11 +316,11 @@ msgstr "80x70x70 mm"
 msgid "9 Mpix"
 msgstr "9 Mpix"
 
+msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
+msgstr "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
+
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr "<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>"
-
-msgid "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
-msgstr ""
 
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
 msgstr "<h2>Kuchařka</h2><br /><p>Co vše lze vařit v parní troubě?<br />Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty.<br />75 stran kuchařky Concept – Vaříme zdravě, vaříme v páře - obsahuje recepty s praktickými postupy. Každý recept obsahuje:</p><br /><br /><p>Seznam ingrediencí</p><br />Postup<br /><p>Pro kolik osob</p><br /><p>Doba přípravy</p><br /><p>Stupeň obtížnosti</p><br /><p> Funkce + doba + teplota</p><br /><ul><li>Z pod pokličky prozradíme pár tipů – Chřest s tuňákovou omáčkou, Losos ve vermutové omáčce, Polévka minestrone, Kuřecí mátové překvapení, Zelné listy plněné mletým masem, Grilovaná kotleta se zeleninou, Brambory zapékané s nivou, Hruška s čokoládovou omáčkou, praženými mandelimi a zmrzlinou atd.</li></ul><br />"
@@ -892,8 +892,11 @@ msgstr "Genius repro SP-M120 černá"
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických desek ( 4019786908123 )"
 
-msgid "GoPay - Platba kartou"
+msgid "GoPay - Payment By Card"
 msgstr "GoPay - Platba kartou"
+
+msgid "GoPay - Quick Bank Account Transfer"
+msgstr "GoPay - Rychlý bankovní převod"
 
 msgid "Growing"
 msgstr "Pěstování"
@@ -1377,6 +1380,9 @@ msgstr "Kvalitní digitální zrcadlovka s CMOS snímačem s rozlišením 18 meg
 
 msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
 msgstr "klávesnice s myší, multimediální, bezdrátová rádiová 2.4GHz, nano přijímač na USB, 15 multimediálních kláves, dosah až 5m, napájení klávesnice a myši 4x AAA, hmotnost 518 a 60 gramů, klávesnice obsahuje české znaky"
+
+msgid "Quick and Safe payment via bank account transfer."
+msgstr "Rychlá a bezpečná platba převodem mezi účty."
 
 msgid "Quick, cheap and reliable!"
 msgstr "Rychle, levně a spolehlivě!"

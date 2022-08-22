@@ -21,6 +21,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
     public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
+    public const PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
     public const PAYMENT_OVER_LIMIT = 'payment_over_limit';
 
     /**
@@ -116,9 +117,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Platba kartou', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('GoPay - Payment By Card', [], 'dataFixtures', $locale);
             $paymentData->description[$locale] = '';
-            $paymentData->instructions[$locale] = t('<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>', [], 'dataFixtures', $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], 'dataFixtures', $locale);
         }
         $paymentData->czkRounding = false;
 
@@ -128,6 +129,23 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(self::PAYMENT_GOPAY, $paymentData, [
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_PPL,
+        ]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = self::PAYMENT_GOPAY;
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $locale);
+            $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], 'dataFixtures', $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], 'dataFixtures', $locale);
+        }
+        $paymentData->czkRounding = false;
+        $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::BANK_ACCOUNT_METHOD);
+        $paymentData->hidden = false;
+        $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT, $paymentData, [
+            TransportDataFixture::TRANSPORT_PERSONAL,
+            TransportDataFixture::TRANSPORT_CZECH_POST,
+            TransportDataFixture::TRANSPORT_PPL,
+            TransportDataFixture::TRANSPORT_OVER_LIMIT,
         ]);
 
         $paymentData = $this->paymentDataFactory->create();

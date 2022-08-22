@@ -316,6 +316,9 @@ msgstr ""
 msgid "9 Mpix"
 msgstr ""
 
+msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
+msgstr ""
+
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr ""
 
@@ -889,8 +892,11 @@ msgstr ""
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr ""
 
-msgid "GoPay - Platba kartou"
-msgstr "GoPay - Platba kartou"
+msgid "GoPay - Payment By Card"
+msgstr ""
+
+msgid "GoPay - Quick Bank Account Transfer"
+msgstr ""
 
 msgid "Growing"
 msgstr ""
@@ -1373,6 +1379,9 @@ msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixel
 msgstr ""
 
 msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
+msgstr ""
+
+msgid "Quick and Safe payment via bank account transfer."
 msgstr ""
 
 msgid "Quick, cheap and reliable!"
