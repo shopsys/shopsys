@@ -8,7 +8,7 @@ import { ImageType } from 'types/image';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'value' | 'checked',
+    'name' | 'value',
     'disabled' | 'id'
 >;
 
@@ -19,10 +19,12 @@ type RadiobuttonProps = NativeProps & {
         | {
               onChangeCallback: (newValue: string | null) => void;
               fieldRef?: never;
+              checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
           }
         | {
               onChangeCallback?: never;
               fieldRef: ControllerRenderProps<any, any>;
+              checked?: never;
           }
     );
 

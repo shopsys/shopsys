@@ -198,7 +198,6 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             name={formMeta.fields.deliveryAddressUuid.name}
                                                             fieldRef={field}
                                                             value={address.uuid}
-                                                            checked={deliveryAddressUuidValue === address.uuid}
                                                         />
                                                     </ListItemStyled>
                                                 )}
@@ -223,7 +222,6 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         name={formMeta.fields.deliveryAddressUuid.name}
                                                         fieldRef={field}
                                                         value={''}
-                                                        checked={deliveryAddressUuidValue === ''}
                                                     />
                                                 </ListItemStyled>
                                             )}

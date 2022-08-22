@@ -6,14 +6,13 @@ import TextInput from 'components/Forms/TextInput';
 import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 
 const User: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 
     return (
         <>
@@ -127,7 +126,6 @@ const User: FC = () => {
                                     value={CustomerTypeEnum.CommonCustomer}
                                     label={t('Private person')}
                                     fieldRef={field}
-                                    checked={customerValue === CustomerTypeEnum.CommonCustomer}
                                 />
                             </FormLine>
                             <FormLine bottomGap={true} width="100%" lg="50%">
@@ -137,7 +135,6 @@ const User: FC = () => {
                                     value={CustomerTypeEnum.CompanyCustomer}
                                     label={t('Company')}
                                     fieldRef={field}
-                                    checked={customerValue === CustomerTypeEnum.CompanyCustomer}
                                 />
                             </FormLine>
                         </FormColumn>
