@@ -7,8 +7,8 @@ With Docker, you have everything running already.
 If Docker way is too robust for you or you do not need whole application running, you can run Shopsys Storefront natively.
 
 ### Docker way
-With Docker, you have already Shopsys Storefront and its styleguide already running.
-Storefront is running on http://127.0.0.1:3000 and styleguide on http://127.0.0.1:6060.
+With Docker, you have Shopsys Storefront already running.
+Storefront is running on http://127.0.0.1:3000
 
 #### Restart NPM
 When you change `next.config.js` file, and you want new settings to be applied, you need to restart NPM.

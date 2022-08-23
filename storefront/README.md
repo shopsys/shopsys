@@ -46,21 +46,6 @@ Run translation files generator. You can find generated files in /public/locales
 npm run translate
 ```
 
-Run styleguide generator, which will watch your files and compiles changes and displays it with hot-reload. 
-After start and first compile you can usually find your online styleguide on http://localhost:6060/
-
-You may restart stuleguide-server when adding new component or new md file.
-```plain
-npm run styleguide-server
-```
-
-One-time compile all stand alone styleguide files as static page. You can find generated files in /docs/styleguide/ folder.
-```plain
-npm run styleguide-build
-```
-
-For full documentation please visit /docs/ folder or after styleguide-build you can visit /docs/styleguide/index.html
-
 ## Development
 
 ### Generated GraphQL requests
