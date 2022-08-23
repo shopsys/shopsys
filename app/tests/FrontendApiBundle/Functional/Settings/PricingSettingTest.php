@@ -25,6 +25,6 @@ class PricingSettingTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'settings');
 
         self::assertEquals('CZK', $data['pricing']['defaultCurrencyCode']);
-        self::assertEquals(2, $data['pricing']['minimumFractionDigits']);
+        self::assertEquals(0, $data['pricing']['minimumFractionDigits']);
     }
 }

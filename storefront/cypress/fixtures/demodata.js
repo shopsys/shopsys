@@ -25,8 +25,8 @@ export const payment = {
     cash: 'Hotově',
     onDelivery: {
         name: 'Dobírka',
-        priceWithVat: '50,00 Kč',
-        priceWithoutVat: '50,00 Kč',
+        priceWithVat: '50 Kč',
+        priceWithoutVat: '50 Kč',
     },
 };
 export const placeholder = {
@@ -47,7 +47,7 @@ export const products = {
         namePrefixSuffix: 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová',
         catnum: '9177759',
         urlPrefixSuffix: '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
-        priceWithVat: '3 499,00 Kč',
+        priceWithVat: '3 499 Kč',
         priceWithoutVat: '2 891,74 Kč',
     },
     philips32PFL4308: {
@@ -66,9 +66,9 @@ export const standartRate = '21 %';
 export const textCode = 'Kód';
 
 export const totalPrice = {
-    cart1: '3 499,00 Kč',
-    cart2: '12 310,00 Kč',
-    order1: '3 670,00 Kč',
+    cart1: '3 499 Kč',
+    cart2: '12 310 Kč',
+    order1: '3 670 Kč',
 };
 export const transport = {
     personalCollection: {
@@ -82,8 +82,8 @@ export const transport = {
     },
     czechPost: {
         name: 'Česká pošta - balík do ruky',
-        priceWithVat: '121,00 Kč',
-        priceWithoutVat: '100,00 Kč',
+        priceWithVat: '121 Kč',
+        priceWithoutVat: '100 Kč',
     },
 };
 export const url = {
