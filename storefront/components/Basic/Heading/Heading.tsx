@@ -5,16 +5,10 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style' | 'onClick'>;
 
 type HeadingProps = NativeProps & {
-    /**
-     * A enumerator-like list of all available types of the custom Heading element
-     */
     type: 'h1' | 'h2' | 'h3' | 'h4';
     'data-testid'?: string;
 };
 
-/**
- * A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
- */
 const Heading: FC<HeadingProps> = (props) => {
     const testIdentifier = 'basic-heading-' + props.type;
 
@@ -41,5 +35,4 @@ const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
     throw new Error('Wrong type provided for Heading.');
 };
 
-/* @component */
 export default Heading;

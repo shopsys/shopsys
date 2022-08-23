@@ -13,56 +13,19 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type TextInputProps = NativeProps & {
-    /**
-     * Display Label of the HTML input element
-     */
     label: string | JSX.Element;
-    /**
-     * A enumerator-like list of all available types of the custom TextInput element
-     * @see https://www.w3schools.com/html/html_form_input_types.asp
-     */
     type: 'text' | 'password' | 'email' | 'tel' | 'search' | 'number';
-    /**
-     * A prop to decide if the input has errors
-     */
     hasError?: boolean;
-    /**
-     * A prop to decide if the input is touched
-     */
     isTouched?: boolean;
-    /**
-     * A enumerator-like list of all available sizes of the custom TextInput element
-     */
     inputSize?: 'small';
-    /**
-     * Type of placeholder for check if the placeholder is static or adaptive.
-     */
     placeholderType?: 'static';
-    /**
-     * Type for change variant of input.
-     */
     variant?: 'searchInHeader';
-    /**
-     * A prop to define if the HTML textarea element should receive the .success CSS class when the input is correct
-     */
     markSuccessfulWhenValid?: boolean;
-    /**
-     * a ref of the controlled field element used for hooking onto the field events/changes
-     */
     fieldRef?: ControllerRenderProps<any, any>;
-    /**
-     * a prop to define if the search button should be disabled
-     */
     isSearchButtonDisabled?: boolean;
-    /**
-     * A prop to define custom value
-     */
     value?: number | string;
 };
 
-/**
- * An HTML Input element used for text inputs of types: text, password, email, tel,
- */
 const TextInput: FC<TextInputProps> = (props) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(props.type);
@@ -108,5 +71,4 @@ const TextInput: FC<TextInputProps> = (props) => {
     );
 };
 
-/* @component */
 export default TextInput;

@@ -18,5 +18,4 @@ const Webline: FC<WeblineProps> = (props) => {
     );
 };
 
-/* @component */
 export default Webline;

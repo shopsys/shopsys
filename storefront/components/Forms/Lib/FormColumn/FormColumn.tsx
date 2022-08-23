@@ -8,5 +8,4 @@ const FormColumn: FC<FormColumnProps> = (props) => {
     return <FormColumnStyled {...props}>{props.children}</FormColumnStyled>;
 };
 
-/* @component */
 export default FormColumn;

@@ -44,5 +44,4 @@ const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes
     );
 };
 
-/* @component */
 export default TertiaryList;

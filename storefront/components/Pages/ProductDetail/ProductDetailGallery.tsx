@@ -24,9 +24,6 @@ type ProductDetailGalleryProps = {
     flags: SimpleFlagType[];
 };
 
-/**
- * Product detail gallery with simple lightbox and beside thumbnails
- */
 const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
     const [isSliderVisible, setSliderVisibility] = useState(false);
     const { width } = useGetWindowSize();
@@ -73,5 +70,4 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
     );
 };
 
-/* @component */
 export default ProductDetailGallery;

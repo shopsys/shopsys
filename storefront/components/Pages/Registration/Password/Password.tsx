@@ -74,5 +74,4 @@ const Password: FC = () => {
     );
 };
 
-/* @component */
 export default Password;

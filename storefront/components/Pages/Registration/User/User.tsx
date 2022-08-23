@@ -148,5 +148,4 @@ const User: FC = () => {
     );
 };
 
-/* @component */
 export default User;

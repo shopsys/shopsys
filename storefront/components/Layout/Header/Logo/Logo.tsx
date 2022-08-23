@@ -16,5 +16,4 @@ const Logo = (): ReactElement => {
     );
 };
 
-/* @component */
 export default Logo;

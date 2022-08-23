@@ -147,5 +147,4 @@ const ContactInformationAddress: FC = () => {
     );
 };
 
-/* @component */
 export default ContactInformationAddress;

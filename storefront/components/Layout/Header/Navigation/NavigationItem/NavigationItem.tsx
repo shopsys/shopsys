@@ -92,5 +92,4 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
     );
 };
 
-/* @component */
 export default NavigationItem;

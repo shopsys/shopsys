@@ -158,5 +158,4 @@ const AutocompleteSearch: FC = () => {
     );
 };
 
-/* @component */
 export default AutocompleteSearch;

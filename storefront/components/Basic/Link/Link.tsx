@@ -16,11 +16,6 @@ type LinkProps = NativePropsAnchor &
         isButton?: boolean;
     };
 
-/**
- * Link element, which either uses wrapping Next.js Link element
- * or bare anchor tag depending on the "linkType" prop
- * or a button link when the "isButton" prop is true
- */
 const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, borderRadius, ...restProps }) => {
     const testIdentifier =
         'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
@@ -62,5 +57,4 @@ const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, bord
     );
 };
 
-/* @component */
 export default Link;

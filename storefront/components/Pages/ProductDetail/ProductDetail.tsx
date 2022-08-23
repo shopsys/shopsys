@@ -28,9 +28,7 @@ type ProductDetailProps = {
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-';
-/**
- * Product Detail page component
- */
+
 const ProductDetail: FC<ProductDetailProps> = ({ product, fetching }) => {
     const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
@@ -80,5 +78,4 @@ const ProductDetail: FC<ProductDetailProps> = ({ product, fetching }) => {
     );
 };
 
-/* @component */
 export default ProductDetail;

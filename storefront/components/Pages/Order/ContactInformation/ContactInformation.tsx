@@ -99,5 +99,4 @@ const ContactInformation: FC = () => {
     );
 };
 
-/* @component */
 export default ContactInformation;

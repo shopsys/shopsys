@@ -11,48 +11,21 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type CheckboxProps = NativeProps & {
-    /**
-     * Display Label of the HTML checkbox element
-     */
     label: string | ReactNode | ReactNode[];
-    /**
-     * Display count of items. This is an optional prop primary from the parameters filter.
-     */
     count?: number;
 } & (
         | {
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               value: unknown;
-              /**
-               * a ref of the controlled field element used for hooking onto the field events/changes
-               */
               fieldRef?: never;
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               onChange: (...event: any[]) => void;
           }
         | {
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               value?: never;
-              /**
-               * a ref of the controlled field element used for hooking onto the field events/changes
-               */
               fieldRef: ControllerRenderProps<any, any>;
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               onChange?: never;
           }
     );
 
-/**
- * An HTML Checkbox element of type checkbox
- */
 const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disabled, fieldRef, onChange, value }) => {
     return (
         <LabelWrapper
@@ -76,5 +49,4 @@ const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disable
     );
 };
 
-/* @component */
 export default Checkbox;

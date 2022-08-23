@@ -36,5 +36,4 @@ const SubMenu: FC = () => {
     );
 };
 
-/* @component */
 export default SubMenu;

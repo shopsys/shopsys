@@ -23,5 +23,4 @@ const FooterCopyright: FC = () => {
     );
 };
 
-/* @component */
 export default FooterCopyright;

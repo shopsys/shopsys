@@ -16,5 +16,4 @@ const ShopsysGlobalProvider: FC = ({ children }) => {
     );
 };
 
-/* @component */
 export default ShopsysGlobalProvider;

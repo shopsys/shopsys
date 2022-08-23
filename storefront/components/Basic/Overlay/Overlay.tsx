@@ -5,9 +5,7 @@ type OverlayProps = {
     onClick: MouseEventHandler;
     isHiddenOnDesktop?: boolean;
 };
-/**
- * A global overlay element
- */
+
 const Overlay: FC<OverlayProps> = (props) => {
     const testIdentifier = 'basic-overlay';
 

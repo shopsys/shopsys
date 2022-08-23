@@ -11,21 +11,9 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 
 type FilterGroupProps = {
-    /**
-     * Group title with arrow
-     */
     title: string;
-    /**
-     * Sets if group is default open
-     */
     isOpen: boolean;
-    /**
-     * Special type of parameters for separation
-     */
     filterField: 'flags' | 'brands';
-    /**
-     * Parameters data of product filter
-     */
     data?: FilterOptionFlagsType[] | BrandsType[];
 };
 

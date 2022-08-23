@@ -22,7 +22,7 @@ import {
 } from 'react';
 
 /*
- * Shopsys slider component inspired by
+ * Inspired by
  * @see: https://dev.to/sandra_lewis/building-a-multi-range-slider-in-react-from-scratch-4dl1
  */
 type RangeSliderProps = {

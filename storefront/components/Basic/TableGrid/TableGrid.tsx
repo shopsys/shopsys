@@ -1,9 +1,6 @@
 import { TableGridRootStyled, TableGridStyled } from './TableGrid.style';
 import { FC } from 'react';
 
-/**
- * Wrapping element for html table - it gives table styling.
- */
 const TableGrid: FC = (props) => {
     const testIdentifier = 'basic-tablegrid';
 
@@ -14,5 +11,4 @@ const TableGrid: FC = (props) => {
     );
 };
 
-/* @component */
 export default TableGrid;

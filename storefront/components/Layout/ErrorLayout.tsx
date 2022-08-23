@@ -17,5 +17,4 @@ const ErrorLayout: FC = ({ children }) => {
     );
 };
 
-/* @component */
 export default ErrorLayout;

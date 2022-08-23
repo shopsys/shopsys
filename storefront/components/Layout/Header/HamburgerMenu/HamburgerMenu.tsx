@@ -23,5 +23,4 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandl
     );
 };
 
-/* @component */
 export default HamburgerMenu;

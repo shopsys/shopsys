@@ -12,9 +12,6 @@ type SpinboxProps = {
     size?: 'default' | 'small';
 };
 
-/**
- * Global component for spinbox input.
- */
 const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
     ({ min, max, onChangeValueCallback, step, ...restProps }, spinboxForwardedRef) => {
         const testIdentifier = 'forms-spinbox-';
@@ -130,5 +127,4 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
 Spinbox.displayName = 'Spinbox';
 
-/* @component */
 export default Spinbox;

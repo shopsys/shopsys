@@ -89,7 +89,7 @@ async function doTryRefreshToken(
 }
 
 /**
- * Factory for getAuth function, so it's possible pass context
+ * Factory for getAuth function, so it's possible to pass context
  * Initial requests with refreshToken only are refreshed immediately
  * Subsequent requests are refreshed when necessary
  */

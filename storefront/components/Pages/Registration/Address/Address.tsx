@@ -131,5 +131,4 @@ const Address: FC = () => {
     );
 };
 
-/* @component */
 export default Address;

@@ -101,5 +101,4 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler
     );
 };
 
-/* @component */
 export default DropdownMenu;

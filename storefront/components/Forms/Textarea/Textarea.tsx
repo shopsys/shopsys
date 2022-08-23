@@ -12,31 +12,13 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type TextareaProps = NativeProps & {
-    /**
-     * Display Label of the HTML textarea element
-     */
     label: string;
-    /**
-     * A prop to decide if the input has errors
-     */
     hasError: boolean;
-    /**
-     * A prop to decide if the input is touched
-     */
     isTouched: boolean;
-    /**
-     * A prop to define if the HTML textarea element should receive the .success CSS class when the input is correct
-     */
     markSuccessfulWhenValid?: boolean;
-    /**
-     * a ref of the controlled field element used for hooking onto the field events/changes
-     */
     fieldRef?: ControllerRenderProps<any, any>;
 };
 
-/**
- * An HTML Textarea element
- */
 const Textarea: FC<TextareaProps> = (props) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
 
@@ -51,5 +33,4 @@ const Textarea: FC<TextareaProps> = (props) => {
     );
 };
 
-/* @component */
 export default Textarea;

@@ -2,9 +2,7 @@ import mediaQueries from './mediaQueries';
 import initialStyled, { ThemedStyledInterface } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
-/* Main theme */
 export const theme = {
-    /* Colors */
     color: {
         base: '#0d0d0d',
         primary: '#4c5bfd',
@@ -32,7 +30,6 @@ export const theme = {
         inStock: '#01946f',
     },
 
-    /* Fonts */
     fontSize: {
         bigger: '18px',
         default: '16px',
@@ -40,23 +37,19 @@ export const theme = {
         extraSmall: '12px',
     },
 
-    /* Fonts family */
     fontFamily: {
         base: 'DM Sans, Arial, Helvetica, sans-serif',
     },
 
-    /* Line heights */
     lineHeight: {
         default: 1.3,
     },
 
-    /* Layouts */
     layout: {
         width: '1240px',
         padding: '20px',
     },
 
-    /* Default border radius value */
     radius: {
         biggest: '13px',
         big: '11px',
@@ -81,7 +74,6 @@ export const theme = {
         green: '0 0 0 4px rgba(0, 236, 177, 0.12)',
     },
 
-    /* Buttons */
     button: {
         size: {
             default: {
@@ -125,7 +117,6 @@ export const theme = {
         },
     },
 
-    /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',
     transitionEffect: 'cubic-bezier(.8, .20, .48, 1.0)',
 
