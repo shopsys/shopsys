@@ -1,0 +1,10 @@
+OrderStepsAccessibility:
+    type: object
+    config:
+        fields:
+            canAccessTransportAndPayment:
+                type: "Boolean!"
+                description: "Check whether the user can access the transport and payment step"
+            canAccessContactInformation:
+                type: "Boolean!"
+                description: "Check whether the user can access the contact information step"

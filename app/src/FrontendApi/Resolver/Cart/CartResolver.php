@@ -50,9 +50,7 @@ class CartResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $argument): ?CartWithModificationsResult
     {
-        // default values are not properly propagated from configuration
-        // should be fixed after update to overblog/graphql-bundle 0.14
-        $input = $this->initializeDefaultValues($argument);
+        $input = CartInputDefaultValueInitializer::initializeDefaultValues($argument);
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -73,14 +71,5 @@ class CartResolver implements ResolverInterface, AliasedInterface
         return [
             'resolve' => 'getCart',
         ];
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @return array<string, array|string|null>
-     */
-    private function initializeDefaultValues(Argument $argument): array
-    {
-        return $argument['cartInput'] ?? ['cartUuid' => null];
     }
 }
