@@ -16,11 +16,11 @@
 	│   │   ├── gtm
 	│   │   │   ├── *.ts
 	```
-- event handlers used for sending events that are sent after a user action (on-click and on-event actions) can be found in `storefront/utils/Gtm`
+- event handlers used for sending events that are sent after a user action (on-click and on-event actions) can be found in `storefront/helpers/gtm`
 	```markdown
 	├── storefront
-	│   ├── utils
-	│   │   ├── Gtm
+	│   ├── helpers
+	│   │   ├── gtm
 	│   │   │   ├── *.{ts,tsx}
 	```
 - types of all GTM related events and enums can be found in `storefront/types/gtm.ts`
