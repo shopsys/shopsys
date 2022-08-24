@@ -154,6 +154,15 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
+        $quantifiedItemsPricesWithoutDiscount = $this->quantifiedProductPriceCalculation->calculatePricesWithoutDiscount(
+            $quantifiedProducts,
+            $domainId,
+            $customerUser
+        );
+        $totalPriceWithoutDiscountTransportAndPayment = $this->getTotalPriceWithoutDiscountTransportAndPayment(
+            $quantifiedItemsPricesWithoutDiscount
+        );
+
         return new OrderPreview(
             $quantifiedProducts,
             $quantifiedItemsPrices,
@@ -162,6 +171,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $totalPrice,
             $quantifiedItemsDiscountPrices,
             $totalPriceDiscount,
+            $totalPriceWithoutDiscountTransportAndPayment,
             $transport,
             $transportPrice,
             $payment,
@@ -209,5 +219,22 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         }
 
         return $totalDiscount;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsPrices
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function getTotalPriceWithoutDiscountTransportAndPayment(array $quantifiedItemsPrices): Price
+    {
+        $totalPriceWithoutDiscountTransportAndPayment = Price::zero();
+
+        foreach ($quantifiedItemsPrices as $quantifiedItemPrice) {
+            if ($quantifiedItemPrice !== null) {
+                $totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment->add($quantifiedItemPrice);
+            }
+        }
+
+        return $totalPriceWithoutDiscountTransportAndPayment;
     }
 }

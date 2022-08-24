@@ -2548,6 +2548,15 @@ Total price including transport and payment
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>totalPriceWithoutDiscountTransportAndPayment</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total price (exluding discount, transport and payment)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a></td>
 <td>

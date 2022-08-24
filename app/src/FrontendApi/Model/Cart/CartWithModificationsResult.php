@@ -80,6 +80,11 @@ class CartWithModificationsResult
     private ?Price $totalDiscountPrice = null;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private ?Price $totalPriceWithoutDiscountTransportAndPayment = null;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     private ?Money $remainingAmountWithVatForFreeTransport = null;
@@ -201,7 +206,7 @@ class CartWithModificationsResult
     public function getTotalPrice(): Price
     {
         if (!$this->totalPrice) {
-            throw new LogicException('Total price must me set before calling the getter.');
+            throw new LogicException('Total price must be set before calling the getter.');
         }
 
         return $this->totalPrice;
@@ -213,7 +218,7 @@ class CartWithModificationsResult
     public function getTotalItemsPrice(): Price
     {
         if (!$this->totalItemsPrice) {
-            throw new LogicException('Total items price must me set before calling the getter.');
+            throw new LogicException('Total items price must be set before calling the getter.');
         }
 
         return $this->totalItemsPrice;
@@ -241,7 +246,7 @@ class CartWithModificationsResult
     public function getTotalDiscountPrice(): Price
     {
         if (!$this->totalDiscountPrice) {
-            throw new LogicException('Total discount price must me set before calling the getter.');
+            throw new LogicException('Total discount price must be set before calling the getter.');
         }
         return $this->totalDiscountPrice;
     }
@@ -320,5 +325,25 @@ class CartWithModificationsResult
     public function addChangedPromoCode(string $promoCode): void
     {
         $this->promoCodeModifications['noLongerApplicablePromoCode'][] = $promoCode;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    {
+        if (!$this->totalPriceWithoutDiscountTransportAndPayment) {
+            throw new LogicException('Total price without discount, transport, and payment must be set before calling the getter.');
+        }
+
+        return $this->totalPriceWithoutDiscountTransportAndPayment;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceWithoutDiscountTransportAndPayment
+     */
+    public function setTotalPriceWithoutDiscountTransportAndPayment(Price $totalPriceWithoutDiscountTransportAndPayment): void
+    {
+        $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
     }
 }

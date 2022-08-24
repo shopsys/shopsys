@@ -72,6 +72,22 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
     }
 
     /**
+     * @param array $quantifiedProducts
+     * @param int $domainId
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @return array
+     */
+    public function calculatePricesWithoutDiscount(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null): array
+    {
+        $quantifiedItemsPrices = [];
+        foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
+            $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice($quantifiedProduct, $domainId, $customerUser)->getTotalPrice();
+        }
+
+        return $quantifiedItemsPrices;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser

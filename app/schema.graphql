@@ -323,6 +323,8 @@ type Cart implements CartInterface {
   totalItemsPrice: Price!
   """Total price including transport and payment"""
   totalPrice: Price!
+  """Total price (exluding discount, transport and payment)"""
+  totalPriceWithoutDiscountTransportAndPayment: Price!
   """Selected transport if transport provided"""
   transport: Transport
   """UUID of the cart, null for authenticated user"""

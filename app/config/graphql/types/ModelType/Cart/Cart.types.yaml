@@ -32,6 +32,9 @@ Cart:
                 description: "Total items price (excluding transport and payment)"
             totalDiscountPrice:
                 type: "Price!"
+            totalPriceWithoutDiscountTransportAndPayment:
+                type: "Price!"
+                description: "Total price (exluding discount, transport and payment)"
             remainingAmountWithVatForFreeTransport:
                 type: "Money"
                 description: "Remaining amount for free transport and payment; null = transport cannot be free"

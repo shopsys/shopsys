@@ -406,6 +406,8 @@ export type CartApi = CartInterfaceApi & {
   totalItemsPrice: PriceApi;
   /** Total price including transport and payment */
   totalPrice: PriceApi;
+  /** Total price (exluding discount, transport and payment) */
+  totalPriceWithoutDiscountTransportAndPayment: PriceApi;
   /** Selected transport if transport provided */
   transport: Maybe<TransportApi>;
   /** UUID of the cart, null for authenticated user */

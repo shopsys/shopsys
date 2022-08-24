@@ -29,6 +29,11 @@ class OrderPreview extends BaseOrderPreview
     private $totalPriceDiscount;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private Price $totalPriceWithoutDiscountTransportAndPayment;
+
+    /**
      * @var \App\Model\Order\PromoCode\PromoCode|null
      */
     private ?PromoCode $promoCode;
@@ -41,6 +46,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[] $quantifiedItemsDiscountPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceDiscount
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceWithoutDiscountTransportAndPayment
      * @param \App\Model\Transport\Transport|null $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $transportPrice
      * @param \App\Model\Payment\Payment|null $payment
@@ -58,6 +64,7 @@ class OrderPreview extends BaseOrderPreview
         Price $totalPrice,
         array $quantifiedItemsDiscountPricesByIndex,
         Price $totalPriceDiscount,
+        Price $totalPriceWithoutDiscountTransportAndPayment,
         ?Transport $transport = null,
         ?Price $transportPrice = null,
         ?Payment $payment = null,
@@ -84,6 +91,7 @@ class OrderPreview extends BaseOrderPreview
         $this->personalPickupStore = $personalPickupStore;
         $this->quantifiedItemsDiscountPricesByIndex = $quantifiedItemsDiscountPricesByIndex;
         $this->totalPriceDiscount = $totalPriceDiscount;
+        $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
         $this->promoCode = $promoCode;
     }
 
@@ -117,5 +125,13 @@ class OrderPreview extends BaseOrderPreview
     public function getPromoCode(): ?PromoCode
     {
         return $this->promoCode;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    {
+        return $this->totalPriceWithoutDiscountTransportAndPayment;
     }
 }
