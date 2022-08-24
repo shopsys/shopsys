@@ -1,0 +1,13 @@
+query CartQuery(
+    $cartUuid: Uuid
+) {
+    cart(cartInput: {
+        cartUuid: $cartUuid
+    }) {
+        totalPriceWithoutDiscountTransportAndPayment {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+        }
+    }
+}
