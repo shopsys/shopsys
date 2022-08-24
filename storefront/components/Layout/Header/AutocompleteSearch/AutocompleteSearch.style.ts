@@ -1,4 +1,4 @@
-import TextInput from 'components/Forms/TextInput';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 

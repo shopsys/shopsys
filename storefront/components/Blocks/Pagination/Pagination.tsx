@@ -22,7 +22,7 @@ const isDotKey = (prevPage: number | null, currentPage: number): boolean => {
 
 const TEST_IDENTIFIER = 'blocks-pagination';
 
-const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
+export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
@@ -111,5 +111,3 @@ const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
         </PaginationWrapperStyled>
     );
 };
-
-export default Pagination;

@@ -1,6 +1,6 @@
-import Table from 'components/Basic/Table';
-import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs';
-import UserText from 'components/Helpers/UserText';
+import { Table } from 'components/Basic/Table/Table';
+import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
+import { UserText } from 'components/Helpers/UserText/UserText';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { ProductParameterType } from 'types/parameter';
@@ -10,7 +10,7 @@ type ProductDetailTabsProps = {
     parameters: ProductParameterType[];
 };
 
-const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
+export const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     const testIdentifier = 'pages-productdetail-';
 
     const t = useTypedTranslationFunction();
@@ -51,5 +51,3 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
         </Tabs>
     );
 };
-
-export default ProductDetailTabs;

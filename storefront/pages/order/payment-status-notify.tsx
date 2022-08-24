@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
-const Index: FC<ServerSidePropsType> = () => {
+const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
     const [, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
     const router = useRouter();
     const { orderIdentifier } = router.query;
@@ -36,4 +36,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store);
 });
 
-export default Index;
+export default PaymentStatusNotifyPage;

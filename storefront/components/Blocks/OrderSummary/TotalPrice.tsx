@@ -14,7 +14,7 @@ type TotalPriceProps = {
     totalPrice: PriceType;
 };
 
-const TotalPrice: FC<TotalPriceProps> = (props) => {
+export const TotalPrice: FC<TotalPriceProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-totalprice';
 
     const t = useTypedTranslationFunction();
@@ -33,5 +33,3 @@ const TotalPrice: FC<TotalPriceProps> = (props) => {
         </OrderSummaryTotalPriceWrapperStyled>
     );
 };
-
-export default TotalPrice;

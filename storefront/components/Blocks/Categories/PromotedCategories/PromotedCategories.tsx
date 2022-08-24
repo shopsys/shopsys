@@ -2,7 +2,7 @@ import { PromotedCategoriesSimpleNavigationStyled } from './PromotedCategories.s
 import { usePromotedCategories } from 'connectors/categories/PromotedCategories';
 import { FC } from 'react';
 
-const PromotedCategories: FC = () => {
+export const PromotedCategories: FC = () => {
     const promotedCategories = usePromotedCategories();
 
     if (promotedCategories !== undefined) {
@@ -11,5 +11,3 @@ const PromotedCategories: FC = () => {
 
     return null;
 };
-
-export default PromotedCategories;

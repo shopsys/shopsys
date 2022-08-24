@@ -4,7 +4,7 @@ import {
     BlogSignpostItemStyled,
     BlogSignpostStyled,
 } from './BlogSignpost.style';
-import Children from './Children';
+import { Children } from './Children/Children';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
@@ -17,7 +17,7 @@ type BlogSingpostProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-';
 
-const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
+export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -47,5 +47,3 @@ const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) 
         </BlogSignpostStyled>
     );
 };
-
-export default BlogSignpost;

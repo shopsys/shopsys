@@ -1,10 +1,10 @@
-import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { usePromotedProducts } from 'connectors/products/Products';
 import { FC } from 'react';
 
 const GTM_LIST_NAME = 'homepage promo products' as const;
 
-const PromotedProducts: FC = () => {
+export const PromotedProducts: FC = () => {
     const promotedProducts = usePromotedProducts();
 
     if (promotedProducts !== undefined) {
@@ -13,5 +13,3 @@ const PromotedProducts: FC = () => {
 
     return null;
 };
-
-export default PromotedProducts;

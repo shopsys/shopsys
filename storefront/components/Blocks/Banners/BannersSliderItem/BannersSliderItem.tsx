@@ -8,7 +8,7 @@ type BannersSliderItemProps = {
     image: ImageSizeType | null;
 };
 
-const BannersSliderItem: FC<BannersSliderItemProps> = (props) => {
+export const BannersSliderItem: FC<BannersSliderItemProps> = (props) => {
     return (
         <a href={props.link} className="keen-slider__slide">
             {props.image === null ? (
@@ -24,5 +24,3 @@ const BannersSliderItem: FC<BannersSliderItemProps> = (props) => {
         </a>
     );
 };
-
-export default BannersSliderItem;

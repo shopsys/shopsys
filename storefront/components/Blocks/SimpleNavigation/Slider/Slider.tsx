@@ -1,4 +1,4 @@
-import ListItem from 'components/Blocks/SimpleNavigation/ListItem';
+import { ListItem } from 'components/Blocks/SimpleNavigation/ListItem/ListItem';
 import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
@@ -10,7 +10,7 @@ type SliderProps = {
     listedItems: ListedItemPropType[];
 };
 
-const Slider: FC<SliderProps> = (props) => {
+export const Slider: FC<SliderProps> = (props) => {
     const testIdentifier = 'blocks-simplenavigation-slider-';
 
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
@@ -40,5 +40,3 @@ const Slider: FC<SliderProps> = (props) => {
         </div>
     );
 };
-
-export default Slider;

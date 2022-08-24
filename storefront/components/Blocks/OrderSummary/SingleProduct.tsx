@@ -5,7 +5,7 @@ import {
     ListItemPriceStyled,
     ListItemStyled,
 } from './OrderSummary.style';
-import Image from 'components/Basic/Image/Image';
+import { Image } from 'components/Basic/Image/Image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';
@@ -14,7 +14,7 @@ type SingleProductProps = {
     item: CartItemType;
 };
 
-const SingleProduct: FC<SingleProductProps> = (props) => {
+export const SingleProduct: FC<SingleProductProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-singleproduct-';
 
     const formatPrice = useFormatPrice();
@@ -38,5 +38,3 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
         </ListItemStyled>
     );
 };
-
-export default SingleProduct;

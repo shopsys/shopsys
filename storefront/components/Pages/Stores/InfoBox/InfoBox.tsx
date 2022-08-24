@@ -13,7 +13,7 @@ type InfoBoxProps = ListedStoreType & {
     isClosed: () => void;
 };
 
-const InfoBox: FC<InfoBoxProps> = (props) => {
+export const InfoBox: FC<InfoBoxProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -38,5 +38,3 @@ const InfoBox: FC<InfoBoxProps> = (props) => {
         </InfoBoxStyled>
     );
 };
-
-export default InfoBox;

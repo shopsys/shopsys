@@ -1,9 +1,9 @@
-import Footer from './Footer';
-import Header from './Header';
-import Webline from './Webline';
+import { Footer } from './Footer/Footer';
+import { Header } from './Header/Header';
+import { Webline } from './Webline/Webline';
 import { FC } from 'react';
 
-const ErrorLayout: FC = ({ children }) => {
+export const ErrorLayout: FC = ({ children }) => {
     return (
         <>
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
@@ -16,5 +16,3 @@ const ErrorLayout: FC = ({ children }) => {
         </>
     );
 };
-
-export default ErrorLayout;

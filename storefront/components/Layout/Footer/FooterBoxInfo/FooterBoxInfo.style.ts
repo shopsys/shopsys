@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { ButtonStyled } from 'components/Basic/Link/Link.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';

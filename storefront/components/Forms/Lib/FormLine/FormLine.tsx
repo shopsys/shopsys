@@ -7,12 +7,10 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type FormLineProps = NativeProps & FormLinePropType;
 
-const FormLine: FC<FormLineProps> = (props) => {
+export const FormLine: FC<FormLineProps> = (props) => {
     return (
         <FormLineStyled style={props.style} {...props}>
             {props.children}
         </FormLineStyled>
     );
 };
-
-export default FormLine;

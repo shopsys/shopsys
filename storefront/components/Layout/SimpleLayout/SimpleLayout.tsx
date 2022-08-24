@@ -1,7 +1,7 @@
 import { HeadingWrapperStyled, SimpleLayoutContentStyled, SimpleLayoutStyled } from './SimpleLayout.style';
-import Heading from 'components/Basic/Heading';
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import Webline from 'components/Layout/Webline';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { FC } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
@@ -11,7 +11,7 @@ type SimpleLayoutProps = {
     standardWidth?: true;
 };
 
-const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
+export const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
     return (
         <>
             <Webline>
@@ -31,5 +31,3 @@ const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
         </>
     );
 };
-
-export default SimpleLayout;

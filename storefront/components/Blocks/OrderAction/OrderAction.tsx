@@ -6,7 +6,7 @@ import {
     OrderActionRightStyled,
     OrderActionStyled,
 } from './OrderAction.style';
-import Button from 'components/Forms/Button';
+import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -23,7 +23,7 @@ type OrderActionProps = {
     nextStepClickHandler?: () => void;
 };
 
-const OrderAction: FC<OrderActionProps> = (props) => {
+export const OrderAction: FC<OrderActionProps> = (props) => {
     const testIdentifier = 'blocks-orderaction-';
 
     const router = useRouter();
@@ -62,5 +62,3 @@ const OrderAction: FC<OrderActionProps> = (props) => {
         </OrderActionStyled>
     );
 };
-
-export default OrderAction;

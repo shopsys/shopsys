@@ -5,8 +5,8 @@ import {
     SideSliderItemStyled,
     SideSliderNameStyled,
 } from './SideSlider.style';
-import Flag from 'components/Basic/Flag';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Image } from 'components/Basic/Image/Image';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -18,7 +18,7 @@ type SideSliderProps = {
     blogSideItems: ListedBlogArticleType[];
 };
 
-const SideSlider: FC<SideSliderProps> = (props) => {
+export const SideSlider: FC<SideSliderProps> = (props) => {
     const testIdentifier = 'blocks-blogpreview-sideslider-';
 
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
@@ -74,5 +74,3 @@ const SideSlider: FC<SideSliderProps> = (props) => {
         </>
     );
 };
-
-export default SideSlider;

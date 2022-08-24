@@ -1,10 +1,10 @@
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { DropdownMenuContext } from './DropdownMenuContext';
-import PrimaryList from './PrimaryList';
-import SecondaryList from './SecondaryList';
-import DropdownSlideLeft from './SlideLeft';
-import SubMenu from './SubMenu';
-import TertiaryList from './TertiaryList';
+import { PrimaryList } from './PrimaryList/PrimaryList';
+import { SecondaryList } from './SecondaryList/SecondaryList';
+import { DropdownSlideLeft } from './SlideLeft/DropdownSlideLeft';
+import { SubMenu } from './SubMenu/SubMenu';
+import { TertiaryList } from './TertiaryList/TertiaryList';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
 import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -17,7 +17,7 @@ type DropdownMenuProps = {
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu';
 
-const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
+export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const navigationItems = useNavigationItems();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
@@ -100,5 +100,3 @@ const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler
         </DropdownMenuWrapperStyled>
     );
 };
-
-export default DropdownMenu;

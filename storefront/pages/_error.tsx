@@ -1,5 +1,5 @@
 import { flush } from '@sentry/nextjs';
-import Error500 from 'components/Pages/ErrorPage/500';
+import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
 import { logException } from 'helpers/errors/logException';
 import { ServerResponse } from 'http';
 import NextErrorComponent from 'next/error';
@@ -14,7 +14,7 @@ const ErrorPage = ({ hasGetInitialPropsRun, err }: { hasGetInitialPropsRun: bool
         // Flushing is not required in this case as it only happens on the client
     }
 
-    return <Error500 />;
+    return <Error500Content />;
 };
 
 ErrorPage.getInitialProps = async ({ res, err, asPath }: { res: ServerResponse; err?: any; asPath: string }) => {

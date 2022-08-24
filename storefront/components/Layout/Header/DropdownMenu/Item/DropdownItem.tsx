@@ -1,6 +1,6 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
-import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
+import { DropdownSlideRight } from 'components/Layout/Header/DropdownMenu/SlideRight/DropdownSlideRight';
 import NextLink from 'next/link';
 import { FC, useContext, useEffect, useState } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
@@ -20,7 +20,7 @@ type DropdownItemProps = DropdownItemType & {
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-item';
 
-const DropdownItem: FC<DropdownItemProps> = ({
+export const DropdownItem: FC<DropdownItemProps> = ({
     navigationItem,
     variant,
     columnCategory,
@@ -67,5 +67,3 @@ const DropdownItem: FC<DropdownItemProps> = ({
         </DropdownItemStyled>
     );
 };
-
-export default DropdownItem;

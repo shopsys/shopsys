@@ -1,4 +1,4 @@
-import Autocomplete from './Autocomplete';
+import { Autocomplete } from './Autocomplete/Autocomplete';
 import {
     AutocompleteSearchFormStyled,
     AutocompleteSearchInStyled,
@@ -9,12 +9,12 @@ import {
     AutocompleteSearchTextInputStyled,
 } from './AutocompleteSearch.style';
 import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './formMeta';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import { canUseDom } from 'helpers/canUseDom';
 import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
-import useDebounce from 'hooks/helpers/UseDebounce';
+import { useDebounce } from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -27,7 +27,7 @@ import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const AutocompleteSearch: FC = () => {
+export const AutocompleteSearch: FC = () => {
     const testIdentifier = 'layout-header-search-autocomplete-input';
 
     const router = useRouter();
@@ -157,5 +157,3 @@ const AutocompleteSearch: FC = () => {
         </>
     );
 };
-
-export default AutocompleteSearch;

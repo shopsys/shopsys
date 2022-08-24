@@ -8,8 +8,8 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
-import PromoCodeInfo from './PromoCodeInfo';
-import Form from 'components/Forms/Form';
+import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
+import { Form } from 'components/Forms/Form/Form';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
@@ -19,7 +19,7 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { PromoCodeFormType } from 'types/form';
 
-const PromoCode: FC = () => {
+export const PromoCode: FC = () => {
     const testIdentifier = 'blocks-promocode';
     const { promoCode } = useCurrentCart();
     const t = useTypedTranslationFunction();
@@ -116,5 +116,3 @@ const PromoCode: FC = () => {
         </PromoCodeStyled>
     );
 };
-
-export default PromoCode;

@@ -1,9 +1,9 @@
-import ProductAction from './Action/ProductAction';
+import { ProductAction } from './Action/ProductAction';
 import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
-import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCount';
-import ProductExposedStoresCount from './Availability/ProductExposedStoresCount';
-import ProductFlags from './Flags/ProductFlags';
-import ProductPrice from './Price/ProductPrice';
+import { ProductAvailableStoresCount } from './Availability/ProductAvailableStoresCount';
+import { ProductExposedStoresCount } from './Availability/ProductExposedStoresCount';
+import { ProductFlags } from './Flags/ProductFlags';
+import { ProductPrice } from './Price/ProductPrice';
 import {
     SliderProductItemFlagsStyled,
     SliderProductItemImageStyled,
@@ -13,7 +13,7 @@ import {
     SliderProductItemStyled,
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
-import Image from 'components/Basic/Image/Image';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
@@ -21,13 +21,13 @@ import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
 import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
-type ProductItemProps = {
+type SliderProductItemProps = {
     product: SliderProductItemType;
     gtmListName: GtmListNameType;
     listIndex: number;
 };
 
-const ProductItem: FC<ProductItemProps> = (props) => {
+export const SliderProductItem: FC<SliderProductItemProps> = (props) => {
     const testIdentifier = 'blocks-product-sliderproductitem-';
     const { url } = useShopsysSelector((state) => state.domain);
 
@@ -73,5 +73,3 @@ const ProductItem: FC<ProductItemProps> = (props) => {
         </SliderProductItemStyled>
     );
 };
-
-export default ProductItem;

@@ -4,7 +4,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import { FC } from 'react';
 import { ProductPriceType } from 'types/price';
 
-const ProductPrice: FC<ProductPriceType> = (props) => {
+export const ProductPrice: FC<ProductPriceType> = (props) => {
     const testIdentifier = 'blocks-product-price';
 
     const t = useTypedTranslationFunction();
@@ -19,5 +19,3 @@ const ProductPrice: FC<ProductPriceType> = (props) => {
         </ProductPriceStyled>
     );
 };
-
-export default ProductPrice;

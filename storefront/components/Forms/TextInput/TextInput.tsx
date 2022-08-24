@@ -1,7 +1,7 @@
 import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -26,7 +26,7 @@ type TextInputProps = NativeProps & {
     value?: number | string;
 };
 
-const TextInput: FC<TextInputProps> = (props) => {
+export const TextInput: FC<TextInputProps> = (props) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(props.type);
 
@@ -70,5 +70,3 @@ const TextInput: FC<TextInputProps> = (props) => {
         </LabelWrapper>
     );
 };
-
-export default TextInput;

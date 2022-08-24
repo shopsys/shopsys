@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import PersonalDataOverview from 'components/Pages/PersonalData/Overview';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
 import { PersonalDataPageTextQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
@@ -27,7 +27,7 @@ const PersonalDataOverviewPage: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Overview')}>
-                <PersonalDataOverview breadcrumbs={breadcrumbs} />
+                <PersonalDataOverviewContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';

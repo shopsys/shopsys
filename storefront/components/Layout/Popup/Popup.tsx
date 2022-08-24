@@ -5,8 +5,8 @@ import {
     PopupHeaderStyled,
     PopupStyled,
 } from './Popup.style';
-import Overlay from 'components/Basic/Overlay';
-import Portal from 'components/Basic/Portal';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { Portal } from 'components/Basic/Portal/Portal';
 import { canUseDom } from 'helpers/canUseDom';
 import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import { AnyStyledComponent } from 'styled-components';
@@ -18,7 +18,7 @@ type PopupProps = {
     hideCloseButton?: boolean;
 };
 
-const Popup: FC<PopupProps> = (props) => {
+export const Popup: FC<PopupProps> = (props) => {
     const testIdentifier = 'layout-popup';
 
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
@@ -67,5 +67,3 @@ const Popup: FC<PopupProps> = (props) => {
 
     return null;
 };
-
-export default Popup;

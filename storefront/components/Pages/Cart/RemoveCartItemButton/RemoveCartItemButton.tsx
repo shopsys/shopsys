@@ -1,5 +1,5 @@
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useRemoveFromCart } from 'hooks/cart/UseRemoveFromCart';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';
@@ -9,7 +9,7 @@ type RemoveCartItemButtonProps = {
     listIndex: number;
 };
 
-const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
+export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const testIdentifier = 'pages-cart-removecartitembutton';
 
     const removeItemFromCart = useRemoveFromCart();
@@ -24,5 +24,3 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
         </RemoveCartItemButtonStyled>
     );
 };
-
-export default RemoveCartItemButton;

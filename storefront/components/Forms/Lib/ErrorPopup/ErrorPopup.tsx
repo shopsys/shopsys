@@ -1,6 +1,6 @@
 import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled, ErrorPopupStyled } from './ErrorPopup.style';
-import Heading from 'components/Basic/Heading';
-import Popup from 'components/Layout/Popup';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, ReactElement, useEffect } from 'react';
 import { GtmMessageOriginType } from 'types/gtm';
@@ -20,7 +20,7 @@ type ErrorPopupProps = {
     origin: GtmMessageOriginType;
 };
 
-const ErrorPopup: FC<ErrorPopupProps> = (props) => {
+export const ErrorPopup: FC<ErrorPopupProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     useEffect(() => {
@@ -60,5 +60,3 @@ const ErrorPopup: FC<ErrorPopupProps> = (props) => {
         </Popup>
     );
 };
-
-export default ErrorPopup;

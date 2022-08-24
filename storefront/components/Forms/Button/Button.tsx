@@ -17,7 +17,7 @@ type ButtonProps = NativeProps &
         isLink?: boolean;
     };
 
-const Button: FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = (props) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
 
@@ -41,5 +41,3 @@ const Button: FC<ButtonProps> = (props) => {
         </>
     );
 };
-
-export default Button;

@@ -16,7 +16,7 @@ type FooterMenuItemProps = {
 
 const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
 
-const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
+export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
     return (
         <FooterMenuItemStyled data-testid={TEST_IDENTIFIER}>
             <FooterMenuHeadingStyled type="h4">{title}</FooterMenuHeadingStyled>
@@ -37,5 +37,3 @@ const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => {
         </FooterMenuItemStyled>
     );
 };
-
-export default FooterMenuItem;

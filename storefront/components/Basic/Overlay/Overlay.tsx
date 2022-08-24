@@ -6,7 +6,7 @@ type OverlayProps = {
     isHiddenOnDesktop?: boolean;
 };
 
-const Overlay: FC<OverlayProps> = (props) => {
+export const Overlay: FC<OverlayProps> = (props) => {
     const testIdentifier = 'basic-overlay';
 
     return (
@@ -15,5 +15,3 @@ const Overlay: FC<OverlayProps> = (props) => {
         </OverlayStyled>
     );
 };
-
-export default Overlay;

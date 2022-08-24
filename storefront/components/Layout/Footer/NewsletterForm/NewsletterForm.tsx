@@ -5,15 +5,15 @@ import {
     NewsletterFormInputWrapperStyled,
     NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
-import Checkbox from 'components/Forms/Checkbox';
-import Form from 'components/Forms/Form';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { Form } from 'components/Forms/Form/Form';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
@@ -24,7 +24,7 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
-const NewsletterForm: FC = () => {
+export const NewsletterForm: FC = () => {
     const testIdentifier = 'layout-footer-newsletterform';
 
     const t = useTypedTranslationFunction();
@@ -131,5 +131,3 @@ const NewsletterForm: FC = () => {
         </>
     );
 };
-
-export default NewsletterForm;

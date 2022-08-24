@@ -5,7 +5,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
 
-const FreeTransport: FC = () => {
+export const FreeTransport: FC = () => {
     const testIdentifier = 'blocks-freetransport';
 
     const { cart, isCartEmpty } = useCurrentCart();
@@ -39,5 +39,3 @@ const FreeTransport: FC = () => {
         </FreeTransportStyled>
     );
 };
-
-export default FreeTransport;

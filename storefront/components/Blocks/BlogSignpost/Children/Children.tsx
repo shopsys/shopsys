@@ -11,7 +11,7 @@ type ChildrenProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
 
-const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => {
+export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => {
     return (
         <>
             {blogCategory.children.map((blogCategoryChild, index) => (
@@ -38,5 +38,3 @@ const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) =>
         </>
     );
 };
-
-export default Children;

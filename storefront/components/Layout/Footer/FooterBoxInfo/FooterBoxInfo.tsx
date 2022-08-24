@@ -25,7 +25,7 @@ const dummyData = {
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
+export const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
     const testIdentifier = 'layout-footer-footerboxinfo';
 
     const t = useTypedTranslationFunction();
@@ -56,5 +56,3 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
         </FooterBoxInfoStyled>
     );
 };
-
-export default FooterBoxInfo;

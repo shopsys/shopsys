@@ -1,6 +1,6 @@
 import { TextareaStyled } from './Textarea.style';
 import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, TextareaHTMLAttributes, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -19,7 +19,7 @@ type TextareaProps = NativeProps & {
     fieldRef?: ControllerRenderProps<any, any>;
 };
 
-const Textarea: FC<TextareaProps> = (props) => {
+export const Textarea: FC<TextareaProps> = (props) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
 
     useEffect(() => {
@@ -32,5 +32,3 @@ const Textarea: FC<TextareaProps> = (props) => {
         </LabelWrapper>
     );
 };
-
-export default Textarea;

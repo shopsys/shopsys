@@ -5,7 +5,7 @@ import {
     ListItemNameStyled,
     ListItemNameWrapperStyled,
 } from './ListItem.style';
-import Image from 'components/Basic/Image';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -15,7 +15,7 @@ type ListItemProps = {
     imageType?: string;
 };
 
-const ListItem: FC<ListItemProps> = (props) => {
+export const ListItem: FC<ListItemProps> = (props) => {
     const testIdentifier = 'blocks-simplenavigation-listitem';
 
     return (
@@ -40,5 +40,3 @@ const ListItem: FC<ListItemProps> = (props) => {
         </NextLink>
     );
 };
-
-export default ListItem;

@@ -6,8 +6,6 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type ChoiceFormLineProps = NativeProps;
 
-const ChoiceFormLine: FC<ChoiceFormLineProps> = (props) => {
+export const ChoiceFormLine: FC<ChoiceFormLineProps> = (props) => {
     return <ChoiceFormLineStyled style={props.style}>{props.children}</ChoiceFormLineStyled>;
 };
-
-export default ChoiceFormLine;

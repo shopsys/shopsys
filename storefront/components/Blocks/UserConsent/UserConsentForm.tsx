@@ -1,7 +1,7 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
 import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './UserConsentForm.style';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';

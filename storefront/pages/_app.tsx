@@ -1,7 +1,7 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
-import Error500 from 'components/Pages/ErrorPage/500';
-import { Error503 } from 'components/Pages/ErrorPage/503/Error503';
-import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
+import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
+import { Error503Content } from 'components/Pages/ErrorPage/503/Error503Content';
+import { ShopsysGlobalProvider } from 'context/ShopsysGlobalProvider/ShopsysGlobalProvider';
 import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
@@ -29,7 +29,7 @@ import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import getGtmHeadScript from 'utils/Gtm/GtmHeadScript';
+import { GtmHeadScript } from 'utils/Gtm/GtmHeadScript';
 
 extend(LocalizedFormat);
 
@@ -95,14 +95,14 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
                 <link rel="preload" href="/fonts/dmSans500.woff2" as="font" type="font/woff2" crossOrigin="" />
                 <link rel="preload" href="/fonts/dmSans700ext.woff2" as="font" type="font/woff2" crossOrigin="" />
                 <link rel="preload" href="/fonts/dmSans700.woff2" as="font" type="font/woff2" crossOrigin="" />
-                {getGtmHeadScript()}
+                <GtmHeadScript />
             </Head>
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <ErrorBoundary FallbackComponent={Error500}>
+                <ErrorBoundary FallbackComponent={Error500Content}>
                     {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
-                    {pageProps.isMaintenance ? <Error503 /> : <Component {...pageProps} err={err} />}
+                    {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} err={err} />}
                 </ErrorBoundary>
             </ShopsysGlobalProvider>
         </>

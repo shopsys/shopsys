@@ -7,19 +7,19 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import Flag from 'components/Basic/Flag';
-import Heading from 'components/Basic/Heading';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BlogArticleConnectionType } from 'types/blogArticle';
 
-type ListProps = {
+type BlogArticlesListProps = {
     blogArticles: BlogArticleConnectionType;
 };
 
-const List: FC<ListProps> = (props) => {
+export const BlogArticlesList: FC<BlogArticlesListProps> = (props) => {
     const testIdentifier = 'pages-blogcategory-blogarticleslist-';
 
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
@@ -75,5 +75,3 @@ const List: FC<ListProps> = (props) => {
         </ListStyled>
     );
 };
-
-export default List;

@@ -1,8 +1,8 @@
-import BannersSlider from './BannersSlider';
+import { BannersSlider } from './BannersSlider/BannersSlider';
 import { useSliderItems } from 'connectors/sliderItems/SliderItems';
 import { FC } from 'react';
 
-const Banners: FC = () => {
+export const Banners: FC = () => {
     const testIdentifier = 'blocks-banners';
 
     const sliderItems = useSliderItems();
@@ -13,5 +13,3 @@ const Banners: FC = () => {
 
     return <BannersSlider sliderItems={sliderItems} data-testid={testIdentifier}></BannersSlider>;
 };
-
-export default Banners;

@@ -7,7 +7,7 @@ type ProductExposedStoresCountProps = {
     exposedStoresCount: number;
 };
 
-const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) => {
+export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) => {
     const testIdentifier = 'blocks-product-exposed';
 
     const t = useTypedTranslationFunction();
@@ -22,5 +22,3 @@ const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) =>
         </ProductExposedStoreCountStyled>
     );
 };
-
-export default ProductExposedStoresCount;

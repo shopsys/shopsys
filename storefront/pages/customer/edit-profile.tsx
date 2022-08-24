@@ -1,8 +1,8 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import SimpleLayout from 'components/Layout/SimpleLayout';
-import EditProfile from 'components/Pages/Customer/EditProfile';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
@@ -37,7 +37,7 @@ const EditProfilePage: FC = () => {
             <CommonLayout title={t('Edit profile')}>
                 <SimpleLayout heading={t('Edit profile')} breadcrumb={breadcrumbs}>
                     {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
-                        <EditProfile currentCustomerUser={currentCustomerUserData} />
+                        <EditProfileContent currentCustomerUser={currentCustomerUserData} />
                     )}
                 </SimpleLayout>
             </CommonLayout>

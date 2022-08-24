@@ -1,8 +1,8 @@
 import { CookieConsentLinkStyled, FooterBlockStyled, FooterBottomStyled, FooterStyled } from './Footer.style';
-import FooterBoxInfo from './FooterBoxInfo';
-import FooterContact from './FooterContact';
-import FooterCopyright from './FooterCopyright';
-import FooterMenu from './FooterMenu';
+import { FooterBoxInfo } from './FooterBoxInfo/FooterBoxInfo';
+import { FooterContact } from './FooterContact/FooterContact';
+import { FooterCopyright } from './FooterCopyright/FooterCopyright';
+import { FooterMenu } from './FooterMenu/FooterMenu';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -15,7 +15,7 @@ type FooterProps = {
 
 const FOOTER_TEST_IDENTIFIER = 'layout-footer';
 
-const Footer: FC<FooterProps> = ({ simpleFooter }) => {
+export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], domainUrl);
@@ -40,5 +40,3 @@ const Footer: FC<FooterProps> = ({ simpleFooter }) => {
         </FooterStyled>
     );
 };
-
-export default Footer;

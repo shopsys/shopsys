@@ -13,7 +13,7 @@ type ImageProps = {
     maxHeight?: CSSProperties['maxHeight'];
 };
 
-const Image: FC<ImageProps> = (props) => {
+export const Image: FC<ImageProps> = (props) => {
     const testIdentifier = props.testId ?? 'basic-image';
 
     const img: ImageSizeType | null = props.image?.sizes?.find((i) => i.size === props.type) ?? null;
@@ -38,5 +38,3 @@ const Image: FC<ImageProps> = (props) => {
         </picture>
     );
 };
-
-export default Image;

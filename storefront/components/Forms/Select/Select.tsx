@@ -1,6 +1,6 @@
 import { SelectStyled } from './Select.style';
-import Icon from 'components/Basic/Icon';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { components, Props } from 'react-select';
@@ -46,7 +46,7 @@ const Control = (props: any) => {
     );
 };
 
-const Select: FC<SelectProps> = (props) => {
+export const Select: FC<SelectProps> = (props) => {
     return (
         <SelectStyled
             {...props}
@@ -60,5 +60,3 @@ const Select: FC<SelectProps> = (props) => {
         />
     );
 };
-
-export default Select;

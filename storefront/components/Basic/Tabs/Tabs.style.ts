@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { css } from 'styled-components';

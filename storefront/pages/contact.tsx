@@ -1,5 +1,5 @@
-import CommonLayout from 'components/Layout/CommonLayout';
-import Contact from 'components/Pages/Contact';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { ContactContent } from 'components/Pages/Contact/ContactContent';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -13,7 +13,7 @@ const ContactPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout>
-            <Contact />
+            <ContactContent />
         </CommonLayout>
     );
 };

@@ -1,6 +1,6 @@
-import ListItem from './ListItem';
+import { ListItem } from './ListItem/ListItem';
 import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
-import Slider from './Slider';
+import { Slider } from './Slider/Slider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -13,7 +13,7 @@ type SimpleNavigationProps = {
     imageType?: string;
 };
 
-const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
+export const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
     const testIdentifier = 'blocks-simplenavigation';
 
     const { width } = useGetWindowSize();
@@ -44,5 +44,3 @@ const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
         </ul>
     );
 };
-
-export default SimpleNavigation;

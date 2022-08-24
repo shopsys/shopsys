@@ -15,8 +15,8 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
-import ListItem from './ListItem';
-import Button from 'components/Forms/Button';
+import { ListItem } from './ListItem/ListItem';
+import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -27,7 +27,7 @@ import { FC, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const Cart: FC = () => {
+export const Cart: FC = () => {
     const testIdentifier = 'layout-header-cart-';
 
     const router = useRouter();
@@ -101,5 +101,3 @@ const Cart: FC = () => {
         </CartStyled>
     );
 };
-
-export default Cart;

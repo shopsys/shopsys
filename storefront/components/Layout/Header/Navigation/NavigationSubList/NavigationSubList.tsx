@@ -14,7 +14,7 @@ type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategory[];
 };
 
-const NavigationSubList: FC<NavigationSubListProps> = (props) => {
+export const NavigationSubList: FC<NavigationSubListProps> = (props) => {
     const testIdentifier = 'layout-header-navigation-navigationsublist';
 
     const dispatch = useShopsysDispatch();
@@ -47,5 +47,3 @@ const NavigationSubList: FC<NavigationSubListProps> = (props) => {
         </NavigationSubListStyled>
     );
 };
-
-export default NavigationSubList;

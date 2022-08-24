@@ -1,15 +1,15 @@
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import Radiobutton from 'components/Forms/Radiobutton';
-import TextInput from 'components/Forms/TextInput';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 
-const User: FC = () => {
+export const User: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
@@ -144,5 +144,3 @@ const User: FC = () => {
         </>
     );
 };
-
-export default User;

@@ -5,7 +5,7 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import Checkbox from 'components/Forms/Checkbox';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { Controller } from 'react-hook-form';

@@ -5,7 +5,7 @@ import {
     BannersSliderThumbnailControlsIconStyled,
     BannersSliderThumbnailControlsStyled,
 } from './BannersSlider.style';
-import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
+import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -24,7 +24,7 @@ const DEVICE_BREAKPOINT_SIZE = {
     query: 'queryTablet',
 } as const;
 
-const BannersSlider: FC<BannersSliderProps> = (props) => {
+export const BannersSlider: FC<BannersSliderProps> = (props) => {
     const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
@@ -173,5 +173,3 @@ export const getBannersSliderItemImage = (
 
     return image.sizes.find((i) => i.size === 'default') ?? null;
 };
-
-export default BannersSlider;

@@ -1,6 +1,6 @@
 import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
-import Image from 'components/Basic/Image';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { Image } from 'components/Basic/Image/Image';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -27,10 +27,7 @@ type RadiobuttonProps = NativeProps & {
           }
     );
 
-/**
- * An HTML Radiobutton element of type radiobutton
- */
-const Radiobutton: FC<RadiobuttonProps> = ({
+export const Radiobutton: FC<RadiobuttonProps> = ({
     label,
     image,
     onChangeCallback,
@@ -91,5 +88,3 @@ const Radiobutton: FC<RadiobuttonProps> = ({
         </LabelWrapper>
     );
 };
-
-export default Radiobutton;

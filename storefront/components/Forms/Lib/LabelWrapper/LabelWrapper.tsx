@@ -14,7 +14,7 @@ type LabelWrapperProps = NativeProps & {
     selectBoxLabelIsFloated?: boolean;
 };
 
-const LabelWrapper: FC<LabelWrapperProps> = (props) => {
+export const LabelWrapper: FC<LabelWrapperProps> = (props) => {
     return (
         <LabelWrapperStyled inputType={props.inputType} selectBoxLabelIsFloated={props.selectBoxLabelIsFloated}>
             {props.children}
@@ -31,5 +31,3 @@ const LabelWrapper: FC<LabelWrapperProps> = (props) => {
         </LabelWrapperStyled>
     );
 };
-
-export default LabelWrapper;

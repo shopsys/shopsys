@@ -1,5 +1,5 @@
 import { ResultProductsStyled } from './ResultProducts.style';
-import ProductsList from 'components/Blocks/Product/List/ProductsList';
+import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
@@ -11,7 +11,7 @@ type ResultProductsProps = {
     noProductsFound: boolean;
 };
 
-const ResultProducts: FC<ResultProductsProps> = (props) => {
+export const ResultProducts: FC<ResultProductsProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -38,5 +38,3 @@ const ResultProducts: FC<ResultProductsProps> = (props) => {
         </>
     );
 };
-
-export default ResultProducts;

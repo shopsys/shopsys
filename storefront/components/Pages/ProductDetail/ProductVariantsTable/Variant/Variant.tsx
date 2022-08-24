@@ -8,12 +8,12 @@ import {
     VariantImageWrapperStyled,
     VariantPriceCellStyled,
 } from './Variant.style';
-import Image from 'components/Basic/Image';
-import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
-import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
-import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
-import Popup from 'components/Layout/Popup';
-import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
+import { Image } from 'components/Basic/Image/Image';
+import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
+import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
+import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
+import { Popup } from 'components/Layout/Popup/Popup';
+import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -28,7 +28,7 @@ type VariantProps = {
     listIndex: number;
 };
 
-const Variant: FC<VariantProps> = (props) => {
+export const Variant: FC<VariantProps> = (props) => {
     const testIdentifier = 'pages-productdetail-variant-';
 
     const formatPrice = useFormatPrice();
@@ -90,5 +90,3 @@ const Variant: FC<VariantProps> = (props) => {
         </>
     );
 };
-
-export default Variant;

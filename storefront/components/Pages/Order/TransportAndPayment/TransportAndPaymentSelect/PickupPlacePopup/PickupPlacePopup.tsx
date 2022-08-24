@@ -1,8 +1,8 @@
 import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
 import { StoreSelect } from './StoreSelect/StoreSelect';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
-import Popup from 'components/Layout/Popup';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';

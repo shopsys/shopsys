@@ -16,7 +16,7 @@ type LinkProps = NativePropsAnchor &
         isButton?: boolean;
     };
 
-const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, borderRadius, ...restProps }) => {
+export const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, borderRadius, ...restProps }) => {
     const testIdentifier =
         'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
 
@@ -56,5 +56,3 @@ const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, bord
         </NextLink>
     );
 };
-
-export default Link;

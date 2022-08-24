@@ -1,14 +1,14 @@
-import Heading from 'components/Basic/Heading';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const Password: FC = () => {
+export const Password: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
@@ -73,5 +73,3 @@ const Password: FC = () => {
         </>
     );
 };
-
-export default Password;

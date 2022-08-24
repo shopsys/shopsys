@@ -3,7 +3,7 @@ import {
     ProductDetailAvailabilityLinkStyled as AvailabilityLinkStyled,
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, RefObject, useEffect } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
@@ -14,7 +14,7 @@ type ProductDetailAvailabilityProps = {
     scrollTarget: RefObject<HTMLUListElement>;
 };
 
-const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) => {
+export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) => {
     const testIdentifier = 'pages-productdetail-productdetailavailability';
 
     const t = useTypedTranslationFunction();
@@ -50,5 +50,3 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
         </AvailabilityStyled>
     );
 };
-
-export default ProductDetailAvailability;

@@ -1,4 +1,4 @@
-import SliderFilter from './SliderFilter';
+import { SliderFilter } from './SliderFilter/SliderFilter';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,
@@ -7,8 +7,8 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import Checkbox from 'components/Forms/Checkbox';
-import CheckboxColor from 'components/Forms/CheckboxColor';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { FC, useCallback, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';

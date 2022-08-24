@@ -1,11 +1,11 @@
 import { SecondaryListTitleStyled } from './SecondaryList.style';
-import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
+import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
 import { FC, Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-secondarylist-';
 
-const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
+export const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
     return (
         <>
             {navigationItems
@@ -33,5 +33,3 @@ const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexe
         </>
     );
 };
-
-export default SecondaryList;

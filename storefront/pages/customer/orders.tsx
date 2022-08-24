@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Orders from 'components/Pages/Customer/Orders';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
 import { useOrders } from 'connectors/customer/Orders';
 import { OrdersQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -14,7 +14,7 @@ import { initialState } from 'redux/slices/user';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Index: FC = () => {
+const OrdersPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
@@ -37,7 +37,11 @@ const Index: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('My orders')}>
-                <Orders orders={ordersData?.orders} totalCount={ordersData?.totalCount} breadcrumbs={breadcrumbs} />
+                <OrdersContent
+                    orders={ordersData?.orders}
+                    totalCount={ordersData?.totalCount}
+                    breadcrumbs={breadcrumbs}
+                />
             </CommonLayout>
         </StaticUrlGuard>
     );
@@ -56,4 +60,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-export default Index;
+export default OrdersPage;

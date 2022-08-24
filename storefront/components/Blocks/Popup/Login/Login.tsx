@@ -14,12 +14,12 @@ import {
     LoginStyled,
 } from './Login.style';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'components/Basic/Link';
-import Button from 'components/Forms/Button';
-import Form from 'components/Forms/Form';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Link } from 'components/Basic/Link/Link';
+import { Button } from 'components/Forms/Button/Button';
+import { Form } from 'components/Forms/Form/Form';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -43,7 +43,7 @@ const getLoginFormResolver = (t: Translate) => {
     );
 };
 
-const Login: FC = () => {
+export const Login: FC = () => {
     const testIdentifier = 'blocks-popup-login';
 
     const t = useTypedTranslationFunction();
@@ -165,5 +165,3 @@ const Login: FC = () => {
         </LoginStyled>
     );
 };
-
-export default Login;

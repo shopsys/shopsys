@@ -4,7 +4,7 @@ import {
     MessageWrapperStyled,
     PaymentWrapperStyled,
 } from './PaymentConfirmation.style';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -13,7 +13,7 @@ import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 type PaymentSuccessProps = { orderUuid: string };
 
-const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
+export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
     const t = useTypedTranslationFunction();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('purchase success');
     useGtmStaticPageView(gtmStaticPageViewEvent);
@@ -35,5 +35,3 @@ const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
         </Webline>
     );
 };
-
-export default PaymentSuccess;

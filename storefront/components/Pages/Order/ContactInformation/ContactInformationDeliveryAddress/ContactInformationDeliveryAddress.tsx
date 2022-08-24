@@ -4,15 +4,15 @@ import {
     ListItemStyled,
     ListStyled,
 } from './ContactInformationDeliveryAddress.style';
-import Heading from 'components/Basic/Heading';
-import Checkbox from 'components/Forms/Checkbox';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import Radiobutton from 'components/Forms/Radiobutton';
-import Select from 'components/Forms/Select';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { Select } from 'components/Forms/Select/Select';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
@@ -26,7 +26,7 @@ import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 
-const ContactInformationDeliveryAddress: FC = () => {
+export const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
@@ -575,5 +575,3 @@ const ContactInformationDeliveryAddress: FC = () => {
         </>
     );
 };
-
-export default ContactInformationDeliveryAddress;

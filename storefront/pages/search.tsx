@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import SearchPage from 'components/Pages/Search';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useSearch } from 'connectors/search/Search';
 import { SearchQueryDocumentApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
@@ -24,7 +24,7 @@ import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
-const Search: FC<ServerSidePropsType> = () => {
+const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const dispatch = useShopsysDispatch();
@@ -53,7 +53,7 @@ const Search: FC<ServerSidePropsType> = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={t('Search')}>
-                <SearchPage searchResults={searchResults} breadcrumbs={breadcrumbs} />
+                <SearchContent searchResults={searchResults} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );
@@ -83,4 +83,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-export default Search;
+export default SearchPage;

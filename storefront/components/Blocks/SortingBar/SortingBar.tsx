@@ -37,7 +37,7 @@ type SortingBarProps = {
 
 const TEST_IDENTIFIER = 'blocks-sortingbar';
 
-const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
+export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -200,5 +200,3 @@ const isNewSortDifferentThanCurrent = (
     currentSort: ProductOrderingModeEnumApi | null,
     newSort: ProductOrderingModeEnumApi,
 ) => currentSort !== newSort;
-
-export default SortingBar;

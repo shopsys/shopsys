@@ -9,7 +9,7 @@ type HeadingProps = NativeProps & {
     'data-testid'?: string;
 };
 
-const Heading: FC<HeadingProps> = (props) => {
+export const Heading: FC<HeadingProps> = (props) => {
     const testIdentifier = 'basic-heading-' + props.type;
 
     const Component = renderHeading(props.type);
@@ -34,5 +34,3 @@ const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
 
     throw new Error('Wrong type provided for Heading.');
 };
-
-export default Heading;

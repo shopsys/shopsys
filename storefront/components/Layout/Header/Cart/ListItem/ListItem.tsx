@@ -6,8 +6,8 @@ import {
     ListItemStyled,
     ListItemTitleStyled,
 } from './ListItem.style';
-import Image from 'components/Basic/Image';
-import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
+import { Image } from 'components/Basic/Image/Image';
+import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -18,7 +18,7 @@ type ListItemProps = {
     listIndex: number;
 };
 
-const ListItem: FC<ListItemProps> = (props) => {
+export const ListItem: FC<ListItemProps> = (props) => {
     const testIdentifier = 'layout-header-cart-listitem';
 
     const formatPrice = useFormatPrice();
@@ -43,5 +43,3 @@ const ListItem: FC<ListItemProps> = (props) => {
         </ListItemStyled>
     );
 };
-
-export default ListItem;

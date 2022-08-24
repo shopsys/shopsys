@@ -12,7 +12,7 @@ type PromoCodeInfoProps = {
     onRemovePromoCodeCallback: (promoCode: string) => void;
 };
 
-const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
+export const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
     const testIdentifier = 'blocks-promocode-promocodeinfo';
 
     const t = useTypedTranslationFunction();
@@ -38,5 +38,3 @@ const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
         </PromoCodeInfoStyled>
     );
 };
-
-export default PromoCodeInfo;

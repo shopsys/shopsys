@@ -7,7 +7,7 @@ type SeoMetaProps = {
     description?: string | null;
 };
 
-const SeoMeta: FC<SeoMetaProps> = ({ title, description }) => {
+export const SeoMeta: FC<SeoMetaProps> = ({ title, description }) => {
     const [{ data }] = useSettingsQueryApi();
 
     const titleFromApi = data?.settings?.seo.title;
@@ -23,5 +23,3 @@ const SeoMeta: FC<SeoMetaProps> = ({ title, description }) => {
         </Head>
     );
 };
-
-export default SeoMeta;

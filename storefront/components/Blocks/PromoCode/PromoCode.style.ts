@@ -1,6 +1,6 @@
-import Icon from 'components/Basic/Icon';
-import Button from 'components/Forms/Button';
-import TextInput from 'components/Forms/TextInput';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Button } from 'components/Forms/Button/Button';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 

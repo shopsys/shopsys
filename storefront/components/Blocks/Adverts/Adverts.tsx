@@ -1,7 +1,7 @@
 import { AdvertsStyled } from './Adverts.style';
-import Image from 'components/Basic/Image/Image';
+import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -22,7 +22,7 @@ type AdvertsProps = {
     currentCategory?: CategoryDetailType;
 };
 
-const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
+export const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
     const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
@@ -103,5 +103,3 @@ const shouldBeShown = (advert: AdvertType, advertsProps: AdvertsProps): boolean 
     }
     return advertsProps.positionName !== 'productListMiddle' && advert.positionName === advertsProps.positionName;
 };
-
-export default Adverts;

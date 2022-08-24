@@ -1,5 +1,5 @@
 import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListStyled } from './OrderSteps.style';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -10,7 +10,7 @@ type OrderStepsProps = {
     domainUrl: string;
 };
 
-const OrderSteps: FC<OrderStepsProps> = (props) => {
+export const OrderSteps: FC<OrderStepsProps> = (props) => {
     const testIdentifier = 'blocks-ordersteps-';
 
     const t = useTypedTranslationFunction();
@@ -57,5 +57,3 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
         </Webline>
     );
 };
-
-export default OrderSteps;

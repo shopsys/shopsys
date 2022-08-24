@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'components/Basic/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

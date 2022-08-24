@@ -3,7 +3,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Image from 'next/image';
 import { FC } from 'react';
 
-const FooterCopyright: FC = () => {
+export const FooterCopyright: FC = () => {
     const testIdentifier = 'layout-footer-footercopyright';
 
     const t = useTypedTranslationFunction();
@@ -22,5 +22,3 @@ const FooterCopyright: FC = () => {
         </FooterCopyrightStyled>
     );
 };
-
-export default FooterCopyright;

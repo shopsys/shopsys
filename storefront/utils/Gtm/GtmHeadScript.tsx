@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { getDomainConfig } from 'utils/Domain/Domain';
 
-export default function getGtmHeadScript(): JSX.Element | null {
+export const GtmHeadScript: FC = () => {
     if (typeof window === 'undefined') {
         return null;
     }
@@ -23,4 +24,4 @@ export default function getGtmHeadScript(): JSX.Element | null {
             }}
         />
     );
-}
+};

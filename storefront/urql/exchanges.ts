@@ -5,8 +5,8 @@ import { authExchange } from '@urql/exchange-auth';
 import { GetServerSidePropsContext } from 'next';
 import { SSRExchange } from 'next-urql';
 import { CombinedError, errorExchange } from 'urql';
-import getAuthExchangeOptions from 'urql/authExchange';
-import cache from 'urql/cacheExchange';
+import { getAuthExchangeOptions } from 'urql/authExchange';
+import { cache } from 'urql/cacheExchange';
 import { removeTokensFromCookies } from 'utils/Auth/TokensFromCookies';
 
 export const getUrqlExchanges = (

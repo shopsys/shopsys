@@ -1,4 +1,4 @@
-import mediaQueries from './mediaQueries';
+import { mediaQueries } from './mediaQueries';
 import initialStyled, { ThemedStyledInterface } from 'styled-components';
 import tinycolor from 'tinycolor2';
 

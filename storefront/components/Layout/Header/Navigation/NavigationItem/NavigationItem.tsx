@@ -5,7 +5,7 @@ import {
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
-import NavigationLeaf from 'components/Layout/Header/Navigation/NavigationLeaf';
+import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf/NavigationLeaf';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -18,7 +18,7 @@ type NavigationItemProps = {
     navigationItem: NavigationItemType;
 };
 
-const NavigationItem: FC<NavigationItemProps> = (props) => {
+export const NavigationItem: FC<NavigationItemProps> = (props) => {
     const testIdentifier = 'layout-header-navigation-navigationitem';
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
     const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
@@ -91,5 +91,3 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
         </>
     );
 };
-
-export default NavigationItem;

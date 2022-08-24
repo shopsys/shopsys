@@ -10,7 +10,7 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 
-const CartPreview: FC = () => {
+export const CartPreview: FC = () => {
     const testIdentifier = 'pages-cart-cartpreview';
 
     const t = useTypedTranslationFunction();
@@ -46,5 +46,3 @@ const CartPreview: FC = () => {
         </CartPreviewStyled>
     );
 };
-
-export default CartPreview;

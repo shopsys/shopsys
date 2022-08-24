@@ -7,7 +7,7 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type WeblineProps = NativeProps & WeblinePropType;
 
-const Webline: FC<WeblineProps> = (props) => {
+export const Webline: FC<WeblineProps> = (props) => {
     const testIdentifier =
         props['data-testid'] ?? 'layout-webline' + (props.type !== undefined ? '-' + props.type : '');
 
@@ -17,5 +17,3 @@ const Webline: FC<WeblineProps> = (props) => {
         </WeblineStyled>
     );
 };
-
-export default Webline;

@@ -1,9 +1,9 @@
 import { LogoStyled } from './Logo.style';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata/LogoMetadata';
-import Link from 'components/Basic/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { ReactElement } from 'react';
 
-const Logo = (): ReactElement => {
+export const Logo = (): ReactElement => {
     const testIdentifier = 'layout-header-logo';
 
     return (
@@ -15,5 +15,3 @@ const Logo = (): ReactElement => {
         </>
     );
 };
-
-export default Logo;

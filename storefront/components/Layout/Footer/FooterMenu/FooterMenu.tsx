@@ -1,5 +1,5 @@
 import { FooterMenuStyled } from './FooterMenu.style';
-import FooterMenuItem from 'components/Layout/Footer/FooterMenuItem';
+import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useMemo } from 'react';
@@ -15,7 +15,7 @@ const filterArticlesByPlacement = (
         [] as SimpleArticleFragmentApi[],
     ) ?? [];
 
-const FooterMenu: FC = () => {
+export const FooterMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const [{ data }] = useArticlesQueryApi({
         variables: {
@@ -63,5 +63,3 @@ const FooterMenu: FC = () => {
         </FooterMenuStyled>
     );
 };
-
-export default FooterMenu;

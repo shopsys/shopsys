@@ -1,7 +1,7 @@
 import { TableGridRootStyled, TableGridStyled } from './TableGrid.style';
 import { FC } from 'react';
 
-const TableGrid: FC = (props) => {
+export const TableGrid: FC = (props) => {
     const testIdentifier = 'basic-tablegrid';
 
     return (
@@ -10,5 +10,3 @@ const TableGrid: FC = (props) => {
         </TableGridStyled>
     );
 };
-
-export default TableGrid;

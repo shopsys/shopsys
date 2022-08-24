@@ -8,7 +8,7 @@ import {
     VariantsTableRowStyled,
     VariantsTableStyled,
 } from './ProductVariantsTable.style';
-import Variant from './Variant';
+import { Variant } from './Variant/Variant';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedVariantType } from 'types/product';
@@ -18,7 +18,7 @@ type ProductVariantsTableProps = {
     isSellingDenied: boolean;
 };
 
-const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -48,5 +48,3 @@ const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
         </>
     );
 };
-
-export default ProductVariantsTable;

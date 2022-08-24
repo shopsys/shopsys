@@ -1,7 +1,7 @@
-import Heading from 'components/Basic/Heading';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import Radiobutton from 'components/Forms/Radiobutton';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -9,7 +9,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { ContactInformationFormType } from 'types/form';
 
-const ContactInformationCustomer: FC = () => {
+export const ContactInformationCustomer: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -47,5 +47,3 @@ const ContactInformationCustomer: FC = () => {
         </>
     );
 };
-
-export default ContactInformationCustomer;

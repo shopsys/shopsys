@@ -5,7 +5,7 @@ import { DropdownItemType } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideright';
 
-const DropdownSlideRight: FC<DropdownItemType> = (props) => {
+export const DropdownSlideRight: FC<DropdownItemType> = (props) => {
     const context = useContext(DropdownMenuContext);
 
     return (
@@ -14,5 +14,3 @@ const DropdownSlideRight: FC<DropdownItemType> = (props) => {
         </DropdownSlideRightStyled>
     );
 };
-
-export default DropdownSlideRight;

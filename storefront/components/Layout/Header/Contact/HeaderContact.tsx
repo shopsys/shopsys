@@ -18,7 +18,7 @@ const dummyData = {
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-const HeaderContact: FC = () => {
+export const HeaderContact: FC = () => {
     const testIdentifier = 'layout-header-contact';
 
     const { width } = useGetWindowSize();
@@ -43,5 +43,3 @@ const HeaderContact: FC = () => {
         </HeaderContactStyled>
     );
 };
-
-export default HeaderContact;

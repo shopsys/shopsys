@@ -6,7 +6,7 @@ import {
     OrderSummaryTextAndImageStyled,
     TransportAndPaymentImageWrapperStyled,
 } from './OrderSummary.style';
-import Image from 'components/Basic/Image';
+import { Image } from 'components/Basic/Image/Image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC } from 'react';
 import { PaymentType } from 'types/payment';
@@ -17,7 +17,7 @@ type TransportAndPaymentProps = {
     payment: PaymentType | null;
 };
 
-const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
+export const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary';
 
     const formatPrice = useFormatPrice();
@@ -55,5 +55,3 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
         </OrderSummaryRowWrapperStyled>
     );
 };
-
-export default TransportAndPayment;

@@ -1,6 +1,6 @@
 import { AddToCartUnavailableTextStyled, ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
-import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
-import Button from 'components/Forms/Button';
+import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
+import { Button } from 'components/Forms/Button/Button';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/dist/client/router';
 import { FC } from 'react';
@@ -13,7 +13,7 @@ type ProductActionProps = {
     listIndex: number;
 };
 
-const ProductAction: FC<ProductActionProps> = (props) => {
+export const ProductAction: FC<ProductActionProps> = (props) => {
     const testIdentifier = 'blocks-product-action';
 
     const router = useRouter();
@@ -61,5 +61,3 @@ const ProductAction: FC<ProductActionProps> = (props) => {
         </ProductActionWrapperStyled>
     );
 };
-
-export default ProductAction;

@@ -1,5 +1,5 @@
 import { OrderSummaryListStyled, ProductsPreviewStyled } from './OrderSummary.style';
-import SingleProduct from './SingleProduct';
+import { SingleProduct } from './SingleProduct';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';
 
@@ -7,7 +7,7 @@ type ProductsPreviewProps = {
     cartItems: CartItemType[];
 };
 
-const ProductsPreview: FC<ProductsPreviewProps> = (props) => {
+export const ProductsPreview: FC<ProductsPreviewProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-productspreview';
 
     return (
@@ -20,5 +20,3 @@ const ProductsPreview: FC<ProductsPreviewProps> = (props) => {
         </ProductsPreviewStyled>
     );
 };
-
-export default ProductsPreview;

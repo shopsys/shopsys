@@ -1,7 +1,7 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Link from 'components/Basic/Link';
-import Button from 'components/Forms/Button';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Link } from 'components/Basic/Link/Link';
+import { Button } from 'components/Forms/Button/Button';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css, keyframes } from 'styled-components';

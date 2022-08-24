@@ -9,7 +9,7 @@ type FormLineErrorProps = {
     'data-testid'?: string;
 };
 
-const FormLineError: FC<FormLineErrorProps> = (props) => {
+export const FormLineError: FC<FormLineErrorProps> = (props) => {
     const testIdentifier = props['data-testid'] ?? 'forms-error';
 
     if (props.error) {
@@ -28,5 +28,3 @@ const FormLineError: FC<FormLineErrorProps> = (props) => {
 
     return null;
 };
-
-export default FormLineError;

@@ -15,7 +15,7 @@ type PromoCodeProps = {
     discount: PriceType;
 };
 
-const PromoCode: FC<PromoCodeProps> = (props) => {
+export const PromoCode: FC<PromoCodeProps> = (props) => {
     const testIdentifier = 'blocks-ordersummary-promocode';
 
     const t = useTypedTranslationFunction();
@@ -36,5 +36,3 @@ const PromoCode: FC<PromoCodeProps> = (props) => {
         </OrderSummaryRowWrapperStyled>
     );
 };
-
-export default PromoCode;

@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import PageGuard from 'components/Helpers/PageGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import OrderConfirmation from 'components/Pages/OrderConfirmation';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { PageGuard } from 'components/Helpers/PageGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { OrderConfirmationContent } from 'components/Pages/OrderConfirmation/OrderConfirmationContent';
 import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
 import { OrderSentPageContentDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -14,7 +14,7 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Index: FC<ServerSidePropsType> = () => {
+const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -27,7 +27,7 @@ const Index: FC<ServerSidePropsType> = () => {
         <PageGuard accessCondition={canAccessOrderConfirmation} errorRedirectUrl={cartUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Thank you for your order')}>
-                <OrderConfirmation />
+                <OrderConfirmationContent />
                 {!isUserLoggedIn && <Registration />}
             </CommonLayout>
         </PageGuard>
@@ -41,4 +41,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-export default Index;
+export default OrderConfirmationPage;

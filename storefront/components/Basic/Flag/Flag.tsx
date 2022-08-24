@@ -10,7 +10,7 @@ type FlagProps = NativeProps & {
     'data-testid'?: string;
 };
 
-const Flag: FC<FlagProps> = (props) => {
+export const Flag: FC<FlagProps> = (props) => {
     const testIdentifier = props['data-testid'] ?? 'basic-flag';
 
     return (
@@ -21,5 +21,3 @@ const Flag: FC<FlagProps> = (props) => {
         </NextLink>
     );
 };
-
-export default Flag;

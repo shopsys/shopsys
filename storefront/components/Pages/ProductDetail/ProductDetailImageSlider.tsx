@@ -9,7 +9,7 @@ import {
     ProductDetailImageSliderStyled,
     SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
-import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -24,7 +24,7 @@ type ProductDetailImageSliderProps = {
     flags: SimpleFlagType[];
 };
 
-const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ galleryItems, flags }) => {
+export const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ galleryItems, flags }) => {
     const [areControlsVisible, setAreControlsVisible] = useState<boolean | undefined>(false);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
@@ -96,5 +96,3 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ galleryIt
         </LightGallery>
     );
 };
-
-export default ProductDetailImageSlider;

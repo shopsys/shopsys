@@ -1,11 +1,11 @@
 import { TertiaryListTitleStyled } from './TertiaryList.style';
-import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
+import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
 import { FC, Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-tertiarylist-';
 
-const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
+export const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes }) => {
     return (
         <>
             {navigationItems
@@ -43,5 +43,3 @@ const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexes
         </>
     );
 };
-
-export default TertiaryList;

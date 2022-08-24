@@ -13,5 +13,3 @@ export const UserText: FC<UserTextProps> = ({ ...props }) => {
 
     return <UserTextStyled dangerouslySetInnerHTML={{ __html: props.htmlContent }} {...attr}></UserTextStyled>;
 };
-
-export default UserText;

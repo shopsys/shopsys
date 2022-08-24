@@ -7,8 +7,8 @@ import {
     AddToCartUnavailableTextStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
-import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
-import Spinbox from 'components/Forms/Spinbox';
+import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
+import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/UseAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -22,7 +22,7 @@ type ProductDetailAddToCartProps = {
     product: ProductDetailType;
 };
 
-const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
+export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const testIdentifier = 'pages-productdetail-addtocart';
 
     const spinboxRef = useRef<HTMLInputElement | null>(null);
@@ -86,5 +86,3 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
         </>
     );
 };
-
-export default ProductDetailAddToCart;

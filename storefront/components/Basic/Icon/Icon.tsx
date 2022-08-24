@@ -1,5 +1,5 @@
-import { IconSvg } from './IconSvg';
 import { IconName } from './IconSvg/IconsSvgMap';
+import { IconSvg } from './IconSvg/IconSvg';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -19,7 +19,7 @@ type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & 
           }
     );
 
-const Icon: FC<IconProps> = (props) => {
+export const Icon: FC<IconProps> = (props) => {
     if (props.iconType === 'image') {
         const testIdentifier = 'basic-icon-' + props.icon;
 
@@ -37,5 +37,3 @@ const Icon: FC<IconProps> = (props) => {
 
     return <IconSvg {...props} icon={props.icon} />;
 };
-
-export default Icon;

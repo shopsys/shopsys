@@ -9,7 +9,7 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
-const SubMenu: FC = () => {
+export const SubMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const { isUserLoggedIn } = useCurrentUserData();
@@ -35,5 +35,3 @@ const SubMenu: FC = () => {
         </SubMenuStyled>
     );
 };
-
-export default SubMenu;

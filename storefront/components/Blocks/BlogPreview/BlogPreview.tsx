@@ -8,9 +8,9 @@ import {
     BlogPreviewHeadingTitleStyled,
     BlogPreviewStyled,
 } from './BlogPreview.style';
-import Main from './Main';
-import Side from './Side';
-import SideSlider from './SideSlider';
+import { Main } from './Main/Main';
+import { Side } from './Side/Side';
+import { SideSlider } from './SideSlider/SideSlider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
@@ -21,7 +21,7 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, useState } from 'react';
 
-const BlogPreview: FC = () => {
+export const BlogPreview: FC = () => {
     const testIdentifier = 'blocks-blogpreview';
 
     const t = useTypedTranslationFunction();
@@ -72,5 +72,3 @@ const BlogPreview: FC = () => {
         </BlogPreviewStyled>
     );
 };
-
-export default BlogPreview;

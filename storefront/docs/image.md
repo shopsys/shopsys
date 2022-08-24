@@ -31,7 +31,7 @@ images.yaml
 ```tsx
 yourComponent.tsx
 
-import Image from 'components/Basic/Image/Image';
+import { Image } from 'components/Basic/Image/Image';
 ...
 
 <div>

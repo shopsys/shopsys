@@ -1,5 +1,5 @@
 import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
-import SliderProductItem from './SliderProductItem';
+import { SliderProductItem } from './SliderProductItem';
 import { theme } from 'components/Theme/main';
 import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { useKeenSlider } from 'keen-slider/react';
@@ -12,7 +12,7 @@ type ProductsSliderProps = {
     gtmListName: GtmListNameType;
 };
 
-const ProductsSlider: FC<ProductsSliderProps> = (props) => {
+export const ProductsSlider: FC<ProductsSliderProps> = (props) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [areControlsVisible, setAreControlsVisible] = useState<boolean | undefined>(false);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
@@ -79,5 +79,3 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
         </ProductSliderWrapperStyled>
     );
 };
-
-export default ProductsSlider;

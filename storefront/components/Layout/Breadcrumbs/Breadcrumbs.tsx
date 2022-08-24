@@ -5,7 +5,7 @@ import {
     LeftArrowIconStyled,
 } from './Breadcrumbs.style';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
@@ -15,7 +15,7 @@ type BreadcrumbsProps = {
     breadcrumb: BreadcrumbItemType[];
 };
 
-const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
+export const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     const testIdentifier = 'layout-breadcrumbs';
 
     const t = useTypedTranslationFunction();
@@ -52,5 +52,3 @@ const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
         </Webline>
     );
 };
-
-export default Breadcrumbs;

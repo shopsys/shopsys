@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Customer from 'components/Pages/Customer';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -23,7 +23,7 @@ const CustomerPage: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Customer')}>
-                <Customer breadcrumbs={breadcrumbs} />
+                <CustomerContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

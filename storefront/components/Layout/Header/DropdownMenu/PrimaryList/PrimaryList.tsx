@@ -1,4 +1,4 @@
-import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
+import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
 import { FC } from 'react';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 
@@ -6,7 +6,7 @@ type PrimaryListProps = {
     navigationItems: NavigationItemType[];
 };
 
-const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
+export const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
     return (
         <>
             {navigationItems.map((navigationItem, index) => (
@@ -15,5 +15,3 @@ const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
         </>
     );
 };
-
-export default PrimaryList;

@@ -1,8 +1,8 @@
-import AutocompleteSearch from './AutocompleteSearch';
-import Cart from './Cart';
-import HeaderContact from './Contact/HeaderContact';
-import DropdownMenu from './DropdownMenu';
-import HamburgerMenu from './HamburgerMenu';
+import { AutocompleteSearch } from './AutocompleteSearch/AutocompleteSearch';
+import { Cart } from './Cart/Cart';
+import { HeaderContact } from './Contact/HeaderContact';
+import { DropdownMenu } from './DropdownMenu/DropdownMenu';
+import { HamburgerMenu } from './HamburgerMenu/HamburgerMenu';
 import {
     HeaderCartStyled,
     HeaderLinksStyled,
@@ -11,9 +11,9 @@ import {
     HeaderMiddleStyled,
     HeaderStyled,
 } from './Header.style';
-import Logo from './Logo';
-import MenuIconic from './MenuIconic';
-import Overlay from 'components/Layout/Overlay';
+import { Logo } from './Logo/Logo';
+import { MenuIconic } from './MenuIconic/MenuIconic';
+import { Overlay } from 'components/Layout/Overlay/Overlay';
 import { FC, useCallback, useState } from 'react';
 
 type HeaderProps = {
@@ -22,7 +22,7 @@ type HeaderProps = {
 
 const TEST_IDENTIFIER = 'layout-header';
 
-const Header: FC<HeaderProps> = ({ simpleHeader }) => {
+export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     const onMenuToggleHandler = useCallback(() => {
@@ -57,5 +57,3 @@ const Header: FC<HeaderProps> = ({ simpleHeader }) => {
         </HeaderStyled>
     );
 };
-
-export default Header;

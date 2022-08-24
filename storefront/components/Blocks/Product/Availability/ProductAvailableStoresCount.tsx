@@ -7,7 +7,7 @@ type ProductAvailableStoresCountProps = {
     availableStoresCount: number;
 };
 
-const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props) => {
+export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props) => {
     const testIdentifier = 'blocks-product-availability';
 
     const t = useTypedTranslationFunction();
@@ -22,5 +22,3 @@ const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props
         </ProductAvailableStoreCountStyled>
     );
 };
-
-export default ProductAvailableStoresCount;

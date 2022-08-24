@@ -5,7 +5,7 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
-import Checkbox from 'components/Forms/Checkbox';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { FC, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';

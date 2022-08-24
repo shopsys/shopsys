@@ -19,7 +19,7 @@ type GoogleMapProps = {
     closeMarkers?: boolean;
 };
 
-const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
+export const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
     const testIdentifier = 'basic-googlemap';
 
     const { publicRuntimeConfig } = getConfig();
@@ -78,5 +78,3 @@ const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
         </GoogleMapWrapStyled>
     );
 };
-
-export default GoogleMap;

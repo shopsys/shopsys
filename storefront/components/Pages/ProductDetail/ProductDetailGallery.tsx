@@ -4,10 +4,10 @@ import {
     ProductDetailGalleryThumbnailsItemStyled,
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
-import ProductDetailImageSlider from './ProductDetailImageSlider';
+import { ProductDetailImageSlider } from './ProductDetailImageSlider';
 import clsx from 'clsx';
-import Image from 'components/Basic/Image';
-import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import { Image } from 'components/Basic/Image/Image';
+import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -24,7 +24,7 @@ type ProductDetailGalleryProps = {
     flags: SimpleFlagType[];
 };
 
-const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
+export const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
     const [isSliderVisible, setSliderVisibility] = useState(false);
     const { width } = useGetWindowSize();
     useResizeWidthEffect(
@@ -69,5 +69,3 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
         </LightGallery>
     );
 };
-
-export default ProductDetailGallery;

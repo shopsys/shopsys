@@ -13,7 +13,7 @@ type ColorLabelWrapperProps = NativeProps & {
     isActive: boolean;
 };
 
-const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
+export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
     return (
         <ColorLabelWrapperStyled
             isLightColor={props.isLightColor}
@@ -28,5 +28,3 @@ const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
         </ColorLabelWrapperStyled>
     );
 };
-
-export default ColorLabelWrapper;

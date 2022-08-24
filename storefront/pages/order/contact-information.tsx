@@ -1,12 +1,12 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import OrderAction from 'components/Blocks/OrderAction';
-import Form from 'components/Forms/Form';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import Footer from 'components/Layout/Footer';
-import OrderLayout from 'components/Layout/OrderLayout';
-import Webline from 'components/Layout/Webline';
-import ContactInformationForm from 'components/Pages/Order/ContactInformation';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { Form } from 'components/Forms/Form/Form';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { Footer } from 'components/Layout/Footer/Footer';
+import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     useContactInformationForm,
     useContactInformationFormMeta,
@@ -35,7 +35,7 @@ import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStatic
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 import { onPurchaseOrderGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
-const ContactInformation: FC<ServerSidePropsType> = () => {
+const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -145,7 +145,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
-                        <ContactInformationForm />
+                        <ContactInformationContent />
                         <OrderAction
                             activeStep={3}
                             buttonBack={t('Back')}
@@ -179,4 +179,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return redirect === false ? initServerSideProps(context, store, false, [], client, ssrCache) : redirect;
 });
 
-export default ContactInformation;
+export default ContactInformationPage;

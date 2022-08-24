@@ -1,7 +1,7 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import PersonalDataExport from 'components/Pages/PersonalData/Export';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import { PersonalDataPageTextQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps } from 'helpers/InitServerSideProps';
@@ -27,7 +27,7 @@ const PersonalDataExportPage: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Export')}>
-                <PersonalDataExport breadcrumbs={breadcrumbs} />
+                <PersonalDataExportContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );

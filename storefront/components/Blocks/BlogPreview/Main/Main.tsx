@@ -6,8 +6,8 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import Flag from 'components/Basic/Flag';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -20,7 +20,7 @@ type MainProps = {
     blogMainItems: ListedBlogArticleType[];
 };
 
-const Main: FC<MainProps> = (props) => {
+export const Main: FC<MainProps> = (props) => {
     const testIdentifier = 'blocks-blogpreview-main-';
 
     const { width } = useGetWindowSize();
@@ -69,5 +69,3 @@ const Main: FC<MainProps> = (props) => {
         </>
     );
 };
-
-export default Main;

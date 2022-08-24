@@ -4,7 +4,7 @@ import { SimpleFlagType } from 'types/flag';
 
 type ProductFlagsProps = { flags: SimpleFlagType[] };
 
-const ProductFlags: FC<ProductFlagsProps> = (props) => {
+export const ProductFlags: FC<ProductFlagsProps> = (props) => {
     const testIdentifier = 'blocks-product-flags-';
 
     if (props.flags.length === 0) {
@@ -21,5 +21,3 @@ const ProductFlags: FC<ProductFlagsProps> = (props) => {
         </>
     );
 };
-
-export default ProductFlags;

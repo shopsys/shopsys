@@ -8,16 +8,16 @@ import {
     RegistrationMessageColumnStyled,
     RegistrationStyled,
 } from './Registration.style';
-import Button from 'components/Forms/Button';
-import Checkbox from 'components/Forms/Checkbox';
-import Form from 'components/Forms/Form';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Button } from 'components/Forms/Button/Button';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { Form } from 'components/Forms/Form/Form';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';

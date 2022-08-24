@@ -9,9 +9,9 @@ import {
     MenuIconicSubItemStyled,
     MenuIconicSubStyled,
 } from './MenuIconic.style';
-import Heading from 'components/Basic/Heading';
-import Login from 'components/Blocks/Popup/Login';
-import Popup from 'components/Layout/Popup';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Login } from 'components/Blocks/Popup/Login/Login';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -21,7 +21,7 @@ import { FC, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const MenuIconic: FC = () => {
+export const MenuIconic: FC = () => {
     const testIdentifier = 'layout-header-menuiconic';
 
     const t = useTypedTranslationFunction();
@@ -130,5 +130,3 @@ const MenuIconic: FC = () => {
         </>
     );
 };
-
-export default MenuIconic;

@@ -1,16 +1,16 @@
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Webline from 'components/Layout/Webline';
-import ArticleDetailPage from 'components/Pages/Article';
-import BlogArticlePage from 'components/Pages/BlogArticle';
-import BlogCategoryPage from 'components/Pages/BlogCategory';
-import BrandDetailPage from 'components/Pages/BrandDetail';
-import CategoryDetailPage from 'components/Pages/CategoryDetail';
-import Error404 from 'components/Pages/ErrorPage/404';
-import FlagDetailPage from 'components/Pages/FlagDetail';
-import ProductDetailPage from 'components/Pages/ProductDetail';
-import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
-import StoreDetailPage from 'components/Pages/StoreDetail';
+import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
+import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
+import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
+import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
+import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
+import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
+import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
+import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
+import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
+import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
 import { createClient } from 'helpers/createClient';
@@ -59,28 +59,28 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
     switch (data?.__typename) {
         case 'RegularProduct':
-            return wrapContent(<ProductDetailPage product={data as ProductDetailType} fetching={fetching} />, data);
+            return wrapContent(<ProductDetailContent product={data as ProductDetailType} fetching={fetching} />, data);
         case 'MainVariant':
             return wrapContent(
-                <ProductDetailMainVariantPage product={data as MainVariantDetailType} fetching={fetching} />,
+                <ProductDetailMainVariantContent product={data as MainVariantDetailType} fetching={fetching} />,
                 data,
             );
         case 'Category':
-            return wrapContent(<CategoryDetailPage category={data} fetching={fetching} />, data);
+            return wrapContent(<CategoryDetailContent category={data} fetching={fetching} />, data);
         case 'Store':
-            return wrapContent(<StoreDetailPage store={data} />, data);
+            return wrapContent(<StoreDetailContent store={data} />, data);
         case 'Article':
-            return wrapContent(<ArticleDetailPage article={data} />, data);
+            return wrapContent(<ArticleDetailContent article={data} />, data);
         case 'BlogArticle':
-            return wrapContent(<BlogArticlePage blogArticle={data} />, data);
+            return wrapContent(<BlogArticleDetailContent blogArticle={data} />, data);
         case 'Brand':
-            return wrapContent(<BrandDetailPage brand={data} fetching={fetching} />, data);
+            return wrapContent(<BrandDetailContent brand={data} fetching={fetching} />, data);
         case 'Flag':
-            return wrapContent(<FlagDetailPage flag={data} fetching={fetching} />, data);
+            return wrapContent(<FlagDetailContent flag={data} fetching={fetching} />, data);
         case 'BlogCategory':
-            return wrapContent(<BlogCategoryPage blogCategory={data} />, data);
+            return wrapContent(<BlogCategoryContent blogCategory={data} />, data);
         default:
-            return <Error404 />;
+            return <Error404Content />;
     }
 };
 

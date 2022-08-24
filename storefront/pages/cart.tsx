@@ -1,12 +1,10 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import OrderAction from 'components/Blocks/OrderAction';
-import OrderSteps from 'components/Blocks/OrderSteps';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Webline from 'components/Layout/Webline';
-import CartSummary from 'components/Pages/Cart/CartSummary';
-import List from 'components/Pages/Cart/List';
-import { useCurrentCart } from 'connectors/cart/Cart';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { CartContent } from 'components/Pages/Cart/CartContent';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useGtmCartView } from 'hooks/gtm/useGtmCartView';
@@ -17,8 +15,7 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Cart: FC<ServerSidePropsType> = () => {
-    const { cart } = useCurrentCart();
+const CartPage: FC<ServerSidePropsType> = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
     const t = useTypedTranslationFunction();
@@ -31,8 +28,7 @@ const Cart: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Cart')}>
                 <OrderSteps activeStep={1} domainUrl={domainUrl} />
-                <List items={cart?.items} />
-                <CartSummary />
+                <CartContent />
                 <Webline>
                     <OrderAction
                         activeStep={1}
@@ -55,4 +51,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store);
 });
 
-export default Cart;
+export default CartPage;

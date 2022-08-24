@@ -12,8 +12,8 @@ import {
     PriceStyled,
     ProductStyled,
 } from './AddToCartPopup.style';
-import Image from 'components/Basic/Image';
-import Popup from 'components/Layout/Popup';
+import { Image } from 'components/Basic/Image/Image';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -28,7 +28,7 @@ type AddToCartPopupProps = {
     product: AddToCartPopupDataType;
 };
 
-const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
+export const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
     const testIdentifier = 'blocks-product-addtocartpopup-product';
 
     const t = useTypedTranslationFunction();
@@ -82,5 +82,3 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
         </Popup>
     );
 };
-
-export default AddToCartPopup;

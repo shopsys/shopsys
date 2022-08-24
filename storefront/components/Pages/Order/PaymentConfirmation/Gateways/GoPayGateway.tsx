@@ -1,4 +1,4 @@
-import Link from 'components/Basic/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

@@ -1,7 +1,7 @@
-import Heading from 'components/Basic/Heading';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
@@ -10,7 +10,7 @@ import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
 
-const ContactInformationCompany: FC = () => {
+export const ContactInformationCompany: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
@@ -112,5 +112,3 @@ const ContactInformationCompany: FC = () => {
         </>
     );
 };
-
-export default ContactInformationCompany;

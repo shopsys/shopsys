@@ -6,7 +6,7 @@ type PageGuardProps = {
     errorRedirectUrl: string;
 };
 
-const PageGuard: FC<PageGuardProps> = (props) => {
+export const PageGuard: FC<PageGuardProps> = (props) => {
     const router = useRouter();
 
     if (props.accessCondition) {
@@ -19,5 +19,3 @@ const PageGuard: FC<PageGuardProps> = (props) => {
 
     return null;
 };
-
-export default PageGuard;

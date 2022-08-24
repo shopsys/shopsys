@@ -3,8 +3,8 @@ import {
     NavigationColumnCategoryLinkStyled,
     NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
-import Image from 'components/Basic/Image';
-import NavigationSubList from 'components/Layout/Header/Navigation/NavigationSubList';
+import { Image } from 'components/Basic/Image/Image';
+import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList/NavigationSubList';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { NavigationCategory } from 'types/navigation';
@@ -13,7 +13,7 @@ type NavigationColumnCategoryProps = {
     columnCategory: NavigationCategory;
 };
 
-const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
+export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
     const testIdentifier = 'layout-header-navigation-navigationcolumncategory';
 
     return (
@@ -32,5 +32,3 @@ const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
         </NavigationColumnCategoryStyled>
     );
 };
-
-export default NavigationColumnCategory;

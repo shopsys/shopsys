@@ -1,4 +1,4 @@
-import RangeSlider from 'components/Basic/RangeSlider';
+import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import {
     FilterGroupArrowStyled,
     FilterGroupContentStyled,

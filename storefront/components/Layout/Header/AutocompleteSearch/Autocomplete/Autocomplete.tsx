@@ -14,9 +14,9 @@ import {
     SearchResultLinkStyled,
     ShowAllResultsButtonWrapper,
 } from './Autocomplete.style';
-import Icon from 'components/Basic/Icon';
-import Image from 'components/Basic/Image';
-import Button from 'components/Forms/Button';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Image } from 'components/Basic/Image/Image';
+import { Button } from 'components/Forms/Button/Button';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -40,7 +40,7 @@ type AutocompleteProps = {
     autocompleteSearchQueryValue: string;
 };
 
-const Autocomplete: FC<AutocompleteProps> = (props) => {
+export const Autocomplete: FC<AutocompleteProps> = (props) => {
     const testIdentifier = 'layout-header-search-autocomplete';
 
     const router = useRouter();
@@ -257,5 +257,3 @@ const areAllResultsEmpty = (autocompleteSearchResults: AutocompleteSearchType | 
         autocompleteSearchResults.productsSearch.totalCount === 0
     );
 };
-
-export default Autocomplete;

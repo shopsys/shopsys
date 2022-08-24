@@ -1,9 +1,9 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import Footer from 'components/Layout/Footer';
-import OrderLayout from 'components/Layout/OrderLayout';
-import Webline from 'components/Layout/Webline';
-import { TransportAndPayment } from 'components/Pages/Order/TransportAndPayment/TransportAndPayment';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { Footer } from 'components/Layout/Footer/Footer';
+import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTransports } from 'connectors/transports/Transports';
 import { useLastOrderQueryApi } from 'graphql/generated';
@@ -42,7 +42,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
                 {currentCart.isInitiallyLoaded && (
-                    <TransportAndPayment transports={transports} lastOrder={data?.lastOrder ?? null} />
+                    <TransportAndPaymentContent transports={transports} lastOrder={data?.lastOrder ?? null} />
                 )}
             </OrderLayout>
             <Webline type="dark">

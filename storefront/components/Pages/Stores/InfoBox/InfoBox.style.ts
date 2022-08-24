@@ -1,6 +1,6 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Link from 'components/Basic/Link';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Link } from 'components/Basic/Link/Link';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';

@@ -9,9 +9,9 @@ import {
     ListPopupStyled,
     ListStyled,
 } from './AddressList.style';
-import Button from 'components/Forms/Button';
+import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import Popup from 'components/Layout/Popup';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, SyntheticEvent, useState } from 'react';
@@ -22,7 +22,7 @@ type AddressListProps = {
     deliveryAddresses: DeliveryAddressType[];
 };
 
-const AddressList: FC<AddressListProps> = (props) => {
+export const AddressList: FC<AddressListProps> = (props) => {
     const testIdentifier = 'list-addresses';
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
@@ -120,5 +120,3 @@ const AddressList: FC<AddressListProps> = (props) => {
         </>
     );
 };
-
-export default AddressList;
