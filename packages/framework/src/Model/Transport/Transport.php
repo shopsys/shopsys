@@ -367,7 +367,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
             }
         }
 
-        $message = 'Transport price with domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
+        $message = 'Transport price with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
         throw new PaymentPriceNotFoundException($message);
     }
 
