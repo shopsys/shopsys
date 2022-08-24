@@ -3,6 +3,8 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { LastOrderFragmentApi, useLastOrderQueryApi, useStoreQueryApi } from 'graphql/generated';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getPacketeryCookie } from 'helpers/packetery';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -10,8 +12,6 @@ import { FC, useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'utils/Gtm/Mappers';
 
 type TransportAndPaymentContentProps = {
     transports: TransportType[];

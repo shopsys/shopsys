@@ -5,8 +5,8 @@ import {
     getGtmSearchClickEvent,
     getGtmShippingInfoEvent,
     getNewGtmEcommerceEvent,
-} from './EventFactories';
-import { getGtmPurchaseData, gtmSafePushEvent } from './Gtm';
+} from './eventFactories';
+import { getGtmPurchaseData, gtmSafePushEvent } from './gtm';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transports';
 import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';

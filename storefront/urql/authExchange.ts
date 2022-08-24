@@ -8,9 +8,9 @@ import {
 } from '@urql/core';
 import { DocumentNode } from 'graphql';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
+import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { GetServerSidePropsContext } from 'next';
 import { TokenType } from 'urql/types';
-import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (

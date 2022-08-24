@@ -1,8 +1,8 @@
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const AbandonedCartPage: FC = () => {
     const router = useRouter();

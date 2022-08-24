@@ -3,11 +3,11 @@ import { FooterBoxInfo } from './FooterBoxInfo/FooterBoxInfo';
 import { FooterContact } from './FooterContact/FooterContact';
 import { FooterCopyright } from './FooterCopyright/FooterCopyright';
 import { FooterMenu } from './FooterMenu/FooterMenu';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type FooterProps = {
     simpleFooter?: boolean;

@@ -9,6 +9,7 @@ import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePasswordRecoveryMutationApi } from 'graphql/generated';
+import 'helpers//localization/getInternationalizedStaticUrls';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -17,7 +18,6 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PasswordResetFormType } from 'types/form';
-import 'utils/getInternationalizedStaticUrls';
 
 type ResetPasswordContentProps = {
     breadcrumbs: BreadcrumbItemType[];

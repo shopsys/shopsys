@@ -9,11 +9,11 @@ import {
     FooterBoxInfoStyled,
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type FooterBoxInfoProps = {
     orderStep?: boolean;

@@ -7,7 +7,7 @@ import {
 } from './Popup.style';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
-import { canUseDom } from 'helpers/canUseDom';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import { AnyStyledComponent } from 'styled-components';
 

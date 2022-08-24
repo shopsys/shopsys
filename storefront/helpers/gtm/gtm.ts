@@ -1,9 +1,10 @@
-import { getRandomPageId } from './Helpers';
-import { mapGtmCartItemType, mapGtmShippingInfo } from './Mappers';
+import { getRandomPageId } from './helpers';
+import { mapGtmCartItemType, mapGtmShippingInfo } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
-import { canUseDom } from 'helpers/canUseDom';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
@@ -28,7 +29,6 @@ import {
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     const { cart, promoCode, isInitiallyLoaded } = useCurrentCart();

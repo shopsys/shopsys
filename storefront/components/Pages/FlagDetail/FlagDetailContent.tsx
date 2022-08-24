@@ -3,12 +3,12 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
 import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { FlagDetailType } from 'types/flag';
-import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 
 type FlagDetailContentProps = {
     flag: FlagDetailType;

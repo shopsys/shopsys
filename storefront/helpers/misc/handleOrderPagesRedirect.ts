@@ -1,9 +1,9 @@
 import { MinimalCartQueryApi, MinimalCartQueryDocumentApi, MinimalCartQueryVariablesApi } from 'graphql/generated';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getDomainConfig } from 'helpers/domain/domain';
 import { GetServerSidePropsContext, Redirect } from 'next';
 import { AppStore } from 'redux/main';
 import { Client } from 'urql';
-import { getDomainConfig } from 'utils/Domain/Domain';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const handleOrderPagesRedirect = async (
     context: GetServerSidePropsContext,

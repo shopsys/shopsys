@@ -1,5 +1,5 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
-import { canUseDom } from 'helpers/canUseDom';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import nookies from 'nookies';
 import { PickupPlaceType } from 'types/pickupPlace';
 

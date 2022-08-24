@@ -10,6 +10,7 @@ import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
@@ -23,7 +24,6 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { NewPasswordFormType } from 'types/form';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type NewPasswordContentProps = {
     hash: string;

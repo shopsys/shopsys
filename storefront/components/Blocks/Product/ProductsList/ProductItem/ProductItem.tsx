@@ -14,12 +14,12 @@ import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availabil
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/Price/ProductPrice';
+import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
 import { FC, useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
-import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 type ProductItemProps = {
     product: ListedProductType;

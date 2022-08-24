@@ -17,6 +17,8 @@ import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -26,8 +28,6 @@ import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SearchType } from 'types/search';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,

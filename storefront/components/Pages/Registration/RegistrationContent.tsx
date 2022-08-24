@@ -20,6 +20,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError'
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRegistrationMutationApi } from 'graphql/generated';
+import { setTokensToCookie } from 'helpers/auth/tokens';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
@@ -29,7 +30,6 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 type RegistrationContentProps = {
     breadcrumbs: BreadcrumbItemType[];

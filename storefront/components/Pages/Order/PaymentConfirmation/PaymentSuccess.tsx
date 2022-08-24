@@ -6,10 +6,10 @@ import {
 } from './PaymentConfirmation.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useOrderSentPageContentApi } from 'graphql/generated';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 type PaymentSuccessProps = { orderUuid: string };
 

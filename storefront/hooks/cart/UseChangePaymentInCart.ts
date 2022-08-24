@@ -1,12 +1,12 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangePaymentInCartMutationApi } from 'graphql/generated';
+import { onPaymentChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { onPaymentChangeGtmEventHandler } from 'utils/Gtm/EventHandlers';
-import { useGtmCartEventInfo } from 'utils/Gtm/Gtm';
 
 export const useChangePaymentInCart = (): typeof changePaymentHandler => {
     const [, changePaymentInCart] = useChangePaymentInCartMutationApi();

@@ -1,6 +1,6 @@
-import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './Gtm';
-import { getGtmDeviceType } from './Helpers';
-import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './Mappers';
+import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './gtm';
+import { getGtmDeviceType } from './helpers';
+import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';

@@ -1,9 +1,9 @@
 import { Maybe } from 'graphql/generated';
+import { getGtmProductDetailEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { getGtmProductDetailEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmProductDetailView = (
     data: Maybe<FriendlyUrlPageType> | undefined,

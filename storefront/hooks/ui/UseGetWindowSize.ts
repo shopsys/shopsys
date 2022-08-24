@@ -1,4 +1,4 @@
-import { canUseDom } from 'helpers/canUseDom';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { useEffect, useState } from 'react';
 
 export const useGetWindowSize = (): { height: number; width: number } => {

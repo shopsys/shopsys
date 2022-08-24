@@ -14,12 +14,12 @@ import {
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
 import { Image } from 'components/Basic/Image/Image';
+import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
-import { onClickProductDetailGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 type SliderProductItemProps = {
     product: SliderProductItemType;

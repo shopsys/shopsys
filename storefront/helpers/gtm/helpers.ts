@@ -1,5 +1,5 @@
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { canUseDom } from 'helpers/canUseDom';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { GtmDeviceTypes as GtmDeviceType } from 'types/gtm';
 import { v4 as uuidV4 } from 'uuid';
 

@@ -1,7 +1,7 @@
 import { RedisClientType } from '@node-redis/client';
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
-import { isServer } from 'helpers/isServer';
+import { isServer } from 'helpers/misc/isServer';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();

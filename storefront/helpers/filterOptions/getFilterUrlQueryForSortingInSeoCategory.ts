@@ -1,4 +1,4 @@
-import { getActualUrlQueryWithoutDefaultPriceFilter } from './GetActualUrlQueryWithoutDefaultPriceFilter';
+import { getActualUrlQueryWithoutDefaultPriceFilter } from './getActualUrlQueryWithoutDefaultPriceFilter';
 import { FilterFormFlagType, FilterFormParameterType, FilterOptionsType } from 'types/productFilter';
 
 export const getFilterUrlQueryForSortingInSeoCategory = (productFilterOptions: FilterOptionsType): string | null => {

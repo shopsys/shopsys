@@ -2,14 +2,14 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const CustomerPage: FC = () => {
     const t = useTypedTranslationFunction();

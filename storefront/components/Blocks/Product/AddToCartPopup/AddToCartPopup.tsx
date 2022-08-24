@@ -14,13 +14,13 @@ import {
 } from './AddToCartPopup.style';
 import { Image } from 'components/Basic/Image/Image';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type AddToCartPopupProps = {
     isVisible: boolean;

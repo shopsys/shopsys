@@ -1,4 +1,4 @@
-import { isServer } from './isServer';
+import { isServer } from 'helpers/misc/isServer';
 import { GetServerSidePropsContext } from 'next';
 import { initUrqlClient, SSRExchange } from 'next-urql';
 import getConfig from 'next/config';

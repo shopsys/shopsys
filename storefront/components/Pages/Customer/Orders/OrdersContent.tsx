@@ -6,6 +6,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -13,7 +14,6 @@ import { FC, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ListedOrderType } from 'types/orders';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type OrdersContentProps = {
     orders: ListedOrderType[] | undefined;

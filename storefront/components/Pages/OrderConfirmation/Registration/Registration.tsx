@@ -20,6 +20,7 @@ import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts'
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
+import { setTokensToCookie } from 'helpers/auth/tokens';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
@@ -30,7 +31,6 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
-import { setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 const TEST_IDENTIFIER = 'pages-orderconfirmation-registration-create-account';
 

@@ -18,14 +18,14 @@ import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getCategoryOrSeoCategoryGtmListName } from 'helpers/gtm/gtm';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';
 import { CategoryDetailType } from 'types/category';
-import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
-import { getCategoryOrSeoCategoryGtmListName } from 'utils/Gtm/Gtm';
 
 type CategoryDetailContentProps = {
     category: CategoryDetailType;

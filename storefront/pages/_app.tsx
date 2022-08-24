@@ -1,4 +1,5 @@
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
+import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
 import { Error503Content } from 'components/Pages/ErrorPage/503/Error503Content';
 import { ShopsysGlobalProvider } from 'context/ShopsysGlobalProvider/ShopsysGlobalProvider';
@@ -6,8 +7,10 @@ import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
-import { ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { getDomainConfig } from 'helpers/domain/domain';
+import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useReloadCart } from 'hooks/cart/UseReloadCart';
 import i18nConfig from 'i18n';
 import 'lightgallery/css/lg-thumbnail.css';
@@ -27,9 +30,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
-import { getDomainConfig } from 'utils/Domain/Domain';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { GtmHeadScript } from 'utils/Gtm/GtmHeadScript';
 
 extend(LocalizedFormat);
 

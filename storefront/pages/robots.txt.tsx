@@ -1,7 +1,7 @@
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getDomainConfig } from 'helpers/domain/domain';
 import { GetServerSidePropsContext } from 'next';
 import { FC } from 'react';
-import { getDomainConfig } from 'utils/Domain/Domain';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const getRobotsTxtContent = (domain: string, domainId: number): string => {
     const staticUrlsToNoIndex = getInternationalizedStaticUrls(

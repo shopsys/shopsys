@@ -1,7 +1,7 @@
 import {
     isMaximalPriceFilterWithoutChanges,
     isMinimalPriceFilterWithoutChanges,
-} from './GetIsProductFilterSameAsDefault';
+} from './getIsProductFilterSameAsDefault';
 import {
     FilterFormBrandType,
     FilterFormFlagType,

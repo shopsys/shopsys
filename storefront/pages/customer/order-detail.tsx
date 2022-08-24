@@ -5,16 +5,16 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useOrderDetail } from 'connectors/customer/Orders';
 import { OrderDetailQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const OrderDetailPage: FC = () => {
     const t = useTypedTranslationFunction();

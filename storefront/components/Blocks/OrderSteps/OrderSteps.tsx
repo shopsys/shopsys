@@ -1,9 +1,9 @@
 import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListStyled } from './OrderSteps.style';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type OrderStepsProps = {
     activeStep: number;

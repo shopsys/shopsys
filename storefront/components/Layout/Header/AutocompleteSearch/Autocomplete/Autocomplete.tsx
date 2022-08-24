@@ -17,6 +17,8 @@ import {
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -26,8 +28,6 @@ import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;

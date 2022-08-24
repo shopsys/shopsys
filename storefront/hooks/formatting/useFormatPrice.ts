@@ -1,7 +1,7 @@
 import { useSettingsQueryApi } from 'graphql/generated';
+import { formatPrice } from 'helpers/formaters/formatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysSelector } from 'redux/main';
-import { formatPrice } from 'utils/formatting';
 
 type ReturnFunctionType = (price: number, options?: { explicitZero?: boolean }) => string;
 

@@ -1,6 +1,6 @@
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWithoutAllParameter';
-import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
+import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 

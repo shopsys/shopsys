@@ -1,6 +1,7 @@
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
@@ -9,7 +10,6 @@ import { useRouter } from 'next/router';
 import { FC, Fragment, RefObject, useCallback, useEffect, useState } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { initialState, userActions } from 'redux/slices/user';
-import { getNewPagination } from 'utils/Pagination/getNewPagination';
 
 type PaginationProps = {
     totalCount: number;

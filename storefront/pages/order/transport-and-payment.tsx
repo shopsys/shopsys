@@ -7,10 +7,11 @@ import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndP
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTransports } from 'connectors/transports/Transports';
 import { useLastOrderQueryApi } from 'graphql/generated';
-import { createClient } from 'helpers/createClient';
-import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { createClient } from 'helpers/urql/createClient';
 import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -18,7 +19,6 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import React, { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { ssrExchange } from 'urql';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

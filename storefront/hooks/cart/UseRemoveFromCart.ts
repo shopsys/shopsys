@@ -1,9 +1,9 @@
 import { useRemoveFromCartMutationApi } from 'graphql/generated';
+import { onRemoveCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { CartItemType } from 'types/cart';
 import { GtmListNameType } from 'types/gtm';
-import { onRemoveCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
     const [, removeItemFromCart] = useRemoveFromCartMutationApi();

@@ -18,6 +18,7 @@ import {
 import { ListItem } from './ListItem/ListItem';
 import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
@@ -25,7 +26,6 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const Cart: FC = () => {
     const testIdentifier = 'layout-header-cart-';

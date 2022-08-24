@@ -1,11 +1,11 @@
 import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 

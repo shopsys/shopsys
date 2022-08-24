@@ -1,9 +1,9 @@
+import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
-import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmSliderProductListView = (
     products: ListedProductType[] | undefined,

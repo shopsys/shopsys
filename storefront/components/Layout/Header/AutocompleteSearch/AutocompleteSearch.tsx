@@ -12,7 +12,8 @@ import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './form
 import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
-import { canUseDom } from 'helpers/canUseDom';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
 import { useDebounce } from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -25,7 +26,6 @@ import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-fo
 import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const AutocompleteSearch: FC = () => {
     const testIdentifier = 'layout-header-search-autocomplete-input';

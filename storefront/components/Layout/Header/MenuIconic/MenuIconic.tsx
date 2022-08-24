@@ -12,6 +12,7 @@ import {
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -19,7 +20,6 @@ import NextLink from 'next/link';
 import nookies from 'nookies';
 import { FC, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const MenuIconic: FC = () => {
     const testIdentifier = 'layout-header-menuiconic';

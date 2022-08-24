@@ -1,6 +1,6 @@
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { FC } from 'react';

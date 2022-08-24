@@ -13,10 +13,13 @@ import {
 } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { CreateOrderMutationApi, useCreateOrderMutationApi } from 'graphql/generated';
-import { createClient } from 'helpers/createClient';
-import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { onPurchaseOrderGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { createClient } from 'helpers/urql/createClient';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
@@ -31,9 +34,6 @@ import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
-import { onPurchaseOrderGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();

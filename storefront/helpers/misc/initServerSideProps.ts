@@ -1,5 +1,5 @@
-import { createClient } from './createClient';
-import { logException } from './errors/logException';
+import { logException } from '../errors/logException';
+import { createClient } from '../urql/createClient';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
@@ -11,12 +11,12 @@ import {
     NotificationBarsDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
 import { AppStore } from 'redux/main';
 import { Client, ssrExchange } from 'urql';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;

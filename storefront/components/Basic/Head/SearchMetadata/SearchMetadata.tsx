@@ -1,7 +1,7 @@
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import Head from 'next/head';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 export const SearchMetadata: FC = () => {
     const { url } = useShopsysSelector((state) => state.domain);

@@ -7,13 +7,13 @@ import {
     useLoginApi,
     useLogoutApi,
 } from 'graphql/generated';
-import { canUseDom } from 'helpers/canUseDom';
+import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { UseMutationState } from 'urql';
-import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
 export const useAuth = (): [
     [UseMutationState<LoginApi, LoginVariablesApi>, typeof loginHandler],

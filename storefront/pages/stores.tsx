@@ -3,13 +3,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
 import { useStores } from 'connectors/stores/Stores';
 import { StoresQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

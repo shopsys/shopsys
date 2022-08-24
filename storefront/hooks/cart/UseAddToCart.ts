@@ -1,11 +1,11 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { mapCartItem, useCurrentCart } from 'connectors/cart/Cart';
 import { useAddToCartMutationApi } from 'graphql/generated';
+import { onChangeCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { GtmListNameType, GtmMessageOriginType } from 'types/gtm';
-import { onChangeCartItemGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const useAddToCart = (origin: GtmMessageOriginType): typeof addToCartAction => {
     const [, addToCart] = useAddToCartMutationApi();

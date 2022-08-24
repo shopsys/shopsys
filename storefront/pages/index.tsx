@@ -13,13 +13,13 @@ import {
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const HomePage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

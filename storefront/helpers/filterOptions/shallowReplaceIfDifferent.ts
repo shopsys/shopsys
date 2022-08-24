@@ -1,4 +1,4 @@
-import { getQueryWithoutAllParameter } from './GetQueryWithoutAllParameter';
+import { getQueryWithoutAllParameter } from './getQueryWithoutAllParameter';
 import { NextRouter } from 'next/router';
 import { UrlObject } from 'url';
 

@@ -3,13 +3,13 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/UseAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type CustomerContentProps = {
     breadcrumbs: BreadcrumbItemType[];

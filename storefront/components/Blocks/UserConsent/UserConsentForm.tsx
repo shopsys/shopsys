@@ -5,14 +5,14 @@ import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
+import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getGtmConsentInfo } from 'helpers/gtm/gtm';
 import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC, useCallback } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
-import { onConsentUpdateGtmEventHandler } from 'utils/Gtm/EventHandlers';
-import { getGtmConsentInfo } from 'utils/Gtm/Gtm';
 
 type UserConsentFormProps = {
     onSetUserConsentVisibilityCallback?: (newValue: boolean) => void;

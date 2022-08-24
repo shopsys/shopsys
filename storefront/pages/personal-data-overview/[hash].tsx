@@ -3,8 +3,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
 import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { NextPage } from 'next';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 

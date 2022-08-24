@@ -1,8 +1,8 @@
+import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { SearchType } from 'types/search';
-import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmSearchResultsListView = (data: SearchType | undefined, searchQuery: string): void => {
     const lastSearchQuery = useRef<string | undefined>(undefined);

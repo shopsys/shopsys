@@ -1,14 +1,14 @@
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const CookieConsentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();

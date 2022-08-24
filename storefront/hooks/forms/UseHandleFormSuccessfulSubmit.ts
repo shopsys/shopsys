@@ -1,4 +1,4 @@
-import { canUseDom } from 'helpers/canUseDom';
+import { canUseDom } from 'helpers/misc/canUseDom';
 import { useEffect } from 'react';
 import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
 import { UseMutationState } from 'urql';

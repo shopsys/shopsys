@@ -15,12 +15,12 @@ import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { ProductDetailType } from 'types/product';
-import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
 
 type ProductDetailContentProps = {
     product: ProductDetailType;

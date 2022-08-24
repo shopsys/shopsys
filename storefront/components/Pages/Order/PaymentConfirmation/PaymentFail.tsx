@@ -6,10 +6,10 @@ import {
 } from './PaymentConfirmation.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 export const PaymentFail: FC = () => {
     const t = useTypedTranslationFunction();

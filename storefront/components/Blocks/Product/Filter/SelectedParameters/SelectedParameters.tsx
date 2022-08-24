@@ -11,7 +11,7 @@ import {
     SelectedParametersStyled,
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
-import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
+import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';

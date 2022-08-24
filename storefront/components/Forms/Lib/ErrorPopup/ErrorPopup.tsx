@@ -1,11 +1,11 @@
 import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled, ErrorPopupStyled } from './ErrorPopup.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, ReactElement, useEffect } from 'react';
 import { GtmMessageOriginType } from 'types/gtm';
-import { getGtmMessageEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 type ErrorPopupProps = {
     isVisible: boolean;
