@@ -5,8 +5,8 @@ type FlagStyledProps = {
     color?: string;
 };
 
-export const FlagStyled = styled.a<FlagStyledProps>`
-    ${({ theme, color }) => css`
+export const FlagStyled = styled.a<FlagStyledProps>(
+    ({ theme, color }) => css`
         display: inline-flex;
         line-height: 11px;
         margin-bottom: 7px;
@@ -25,5 +25,5 @@ export const FlagStyled = styled.a<FlagStyledProps>`
             color: ${theme.color.base};
             text-decoration: none;
         }
-    `}
-`;
+    `,
+);

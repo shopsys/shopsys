@@ -3,8 +3,8 @@ import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const LinkStyled = styled.a`
-    ${({ theme }) => css`
+export const LinkStyled = styled.a(
+    ({ theme }) => css`
         display: inline-flex;
         align-items: center;
 
@@ -23,11 +23,11 @@ export const LinkStyled = styled.a`
 
             font-size: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ButtonStyled = styled.a<ButtonDefaultPropType>`
-    ${({ theme, size, variant, borderRadius }) => css`
+export const ButtonStyled = styled.a<ButtonDefaultPropType>(
+    ({ theme, size, variant, borderRadius }) => css`
         ${buttonSettings(theme, size, variant, borderRadius)}
         display: inline-block;
         transition: ${theme.transition} background-color, ${theme.transition} color;
@@ -43,5 +43,5 @@ export const ButtonStyled = styled.a<ButtonDefaultPropType>`
         &:hover {
             text-decoration: none;
         }
-    `}
-`;
+    `,
+);

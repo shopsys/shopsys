@@ -22,16 +22,16 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem data-testid={testIdentifier + 'overview-link'}>{t('Overview')}</TabsListItem>
+                <TabsListItem testIdentifier={testIdentifier + 'overview-link'}>{t('Overview')}</TabsListItem>
                 {props.parameters.length > 0 && (
-                    <TabsListItem data-testid={testIdentifier + 'parameters-link'}>{t('Parameters')}</TabsListItem>
+                    <TabsListItem testIdentifier={testIdentifier + 'parameters-link'}>{t('Parameters')}</TabsListItem>
                 )}
             </TabsList>
-            <TabsContent headingTextMobile={t('Overview')} data-testid={testIdentifier + 'overview-content'}>
+            <TabsContent headingTextMobile={t('Overview')} testIdentifier={testIdentifier + 'overview-content'}>
                 <UserText htmlContent={props.description} />
             </TabsContent>
             {props.parameters.length > 0 && (
-                <TabsContent headingTextMobile={t('Parameters')} data-testid={testIdentifier + 'parameters-content'}>
+                <TabsContent headingTextMobile={t('Parameters')} testIdentifier={testIdentifier + 'parameters-content'}>
                     <Table>
                         <tbody>
                             {props.parameters.map((parameter) => (

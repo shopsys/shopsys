@@ -21,8 +21,8 @@ const baseStyleOfHeading = (theme: Theme) => {
     `;
 };
 
-export const Heading1Styled = styled.h1`
-    ${({ theme }) => css`
+export const Heading1Styled = styled.h1(
+    ({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -33,11 +33,11 @@ export const Heading1Styled = styled.h1`
 
             font-size: ${localVariables.h1FontSize};
         }
-    `}
-`;
+    `,
+);
 
-export const Heading2Styled = styled.h2`
-    ${({ theme }) => css`
+export const Heading2Styled = styled.h2(
+    ({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -46,11 +46,11 @@ export const Heading2Styled = styled.h2`
         @media ${theme.mediaQueries.queryLg} {
             font-size: ${localVariables.h2FontSize};
         }
-    `}
-`;
+    `,
+);
 
-export const Heading3Styled = styled.h3`
-    ${({ theme }) => css`
+export const Heading3Styled = styled.h3(
+    ({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -61,11 +61,11 @@ export const Heading3Styled = styled.h3`
 
             font-size: ${localVariables.h3FontSize};
         }
-    `}
-`;
+    `,
+);
 
-export const Heading4Styled = styled.h4`
-    ${({ theme }) => css`
+export const Heading4Styled = styled.h4(
+    ({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -74,5 +74,5 @@ export const Heading4Styled = styled.h4`
         @media ${theme.mediaQueries.queryLg} {
             font-size: ${localVariables.h4FontSize};
         }
-    `}
-`;
+    `,
+);

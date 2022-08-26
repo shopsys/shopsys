@@ -13,43 +13,38 @@ import React, { FC, useState } from 'react';
  * In background of styled tab parts we are using - react-tabs components
  * https://github.com/reactjs/react-tabs
  */
-type TabsProps = {
+type TabsContentProps = {
     headingTextMobile: string;
+    testIdentifier?: string;
+};
+
+type TabsListItemProps = {
+    testIdentifier?: string;
 };
 
 type TabFC<T = unknown> = FC<T> & { tabsRole: string };
 
-export const Tabs: TabFC = (props) => {
-    return <TabsStyled {...props}>{props.children}</TabsStyled>;
-};
+export const Tabs: TabFC = ({ children }) => <TabsStyled>{children}</TabsStyled>;
 
-export const TabsList: TabFC = (props) => {
-    return <TabsListStyled {...props}>{props.children}</TabsListStyled>;
-};
+export const TabsList: TabFC = ({ children }) => <TabsListStyled>{children}</TabsListStyled>;
 
-export const TabsListItem: TabFC = (props) => {
-    return (
-        <TabsListItemStyled selectedClassName="active" {...props}>
-            {props.children}
-        </TabsListItemStyled>
-    );
-};
+export const TabsListItem: TabFC<TabsListItemProps> = ({ children, testIdentifier }) => (
+    <TabsListItemStyled selectedClassName="active" data-testid={testIdentifier}>
+        {children}
+    </TabsListItemStyled>
+);
 
-export const TabsContent: TabFC<TabsProps> = (props) => {
+export const TabsContent: TabFC<TabsContentProps> = ({ children, headingTextMobile, testIdentifier }) => {
     const [isActiveOnMobile, setIsActiveOnMobile] = useState<boolean | undefined>(false);
-    const mobileTab = () => {
-        setIsActiveOnMobile(!isActiveOnMobile);
-    };
+    const mobileTab = () => setIsActiveOnMobile(!isActiveOnMobile);
 
     return (
-        <TabsContentStyled forceRender={true} selectedClassName="active" {...props}>
+        <TabsContentStyled forceRender selectedClassName="active" data-testid={testIdentifier}>
             <TabsContentMobileHeadingStyled onClick={mobileTab}>
-                {props.headingTextMobile}
-                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} />
+                {headingTextMobile}
+                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} alt="" />
             </TabsContentMobileHeadingStyled>
-            <TabsContentInStyled {...props} isActiveOnMobile={isActiveOnMobile}>
-                {props.children}
-            </TabsContentInStyled>
+            <TabsContentInStyled isActiveOnMobile={isActiveOnMobile}>{children}</TabsContentInStyled>
         </TabsContentStyled>
     );
 };

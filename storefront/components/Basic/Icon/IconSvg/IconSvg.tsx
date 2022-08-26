@@ -1,17 +1,18 @@
 import { IconName, IconsSvgMap } from './IconsSvgMap';
 import { IconSvgStyled } from './IconSvg.style';
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type IconSvgProps = {
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'onClick' | 'className'>;
+
+type IconSvgProps = NativeProps & {
     icon: IconName;
 };
 
-export const IconSvg: FC<IconSvgProps> = (props) => {
-    const testIdentifier = 'basic-icon-iconsvg-' + props.icon;
+const getTestIdentifier = (icon: IconName) => 'basic-icon-iconsvg-' + icon;
 
-    return (
-        <IconSvgStyled {...props} data-testid={testIdentifier}>
-            {IconsSvgMap[props.icon]}
-        </IconSvgStyled>
-    );
-};
+export const IconSvg: FC<IconSvgProps> = ({ icon, onClick, className }) => (
+    <IconSvgStyled className={className} data-testid={getTestIdentifier(icon)} onClick={onClick}>
+        {IconsSvgMap[icon]}
+    </IconSvgStyled>
+);

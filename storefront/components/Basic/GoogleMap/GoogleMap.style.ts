@@ -19,8 +19,8 @@ export const GoogleMapWrapStyled = styled.div`
     height: 100%;
 `;
 
-export const GoogleMapMarkerStyled = styled(Icon)<GoogleMapMarkerStyledProps>`
-    ${({ isActive, isDetail }) => css`
+export const GoogleMapMarkerStyled = styled(Icon)<GoogleMapMarkerStyledProps>(
+    ({ isActive, isDetail }) => css`
         position: absolute;
         width: ${isActive === true ? `40px` : `32px`};
         height: ${isActive === true ? `48px` : `38px`};
@@ -37,5 +37,5 @@ export const GoogleMapMarkerStyled = styled(Icon)<GoogleMapMarkerStyledProps>`
             height: 60px;
             cursor: default;
         `}
-    `}
-`;
+    `,
+);

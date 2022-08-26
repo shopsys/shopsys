@@ -43,7 +43,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = (props) => {
                                         <Flag
                                             href={blogArticleCategory.link}
                                             color="#cdb3ff"
-                                            data-testid={
+                                            testIdentifier={
                                                 testIdentifier +
                                                 blogArticleIndex +
                                                 '-section-' +

@@ -8,32 +8,38 @@ type ImageProps = {
     alt: string;
     type: string;
     loading?: ImgHTMLAttributes<HTMLImageElement>['loading'];
-    testId?: string;
+    testIdentifier?: string;
     maxWidth?: CSSProperties['maxWidth'];
     maxHeight?: CSSProperties['maxHeight'];
 };
 
-export const Image: FC<ImageProps> = (props) => {
-    const testIdentifier = props.testId ?? 'basic-image';
+const getTestIdentifier = (testIdentifier?: string) => testIdentifier ?? 'basic-image';
 
-    const img: ImageSizeType | null = props.image?.sizes?.find((i) => i.size === props.type) ?? null;
+export const Image: FC<ImageProps> = ({ image, alt, type, loading, testIdentifier, maxWidth, maxHeight }) => {
+    const img: ImageSizeType | null = image?.sizes?.find((i) => i.size === type) ?? null;
 
     if (img === null) {
-        return <img src={'/images/optimized-noimage.png'} alt={props.alt} data-testid={testIdentifier + '-empty'} />;
+        return (
+            <img
+                src={'/images/optimized-noimage.png'}
+                alt={alt}
+                data-testid={getTestIdentifier(testIdentifier) + '-empty'}
+            />
+        );
     }
 
     return (
-        <picture data-testid={testIdentifier}>
+        <picture data-testid={getTestIdentifier(testIdentifier)}>
             {img.additionalSizes.map((size) => (
                 <source key={size.url} srcSet={size.url} media={size.media} />
             ))}
             <Img
                 className="responsive-image"
                 src={img.url}
-                alt={props.alt}
-                loading={props.loading}
-                maxWidth={props.maxWidth ?? (img.width !== null ? `${img.width}px` : undefined)}
-                maxHeight={props.maxHeight ?? (img.height !== null ? `${img.height}px` : undefined)}
+                alt={alt}
+                loading={loading}
+                maxWidth={maxWidth ?? (img.width !== null ? `${img.width}px` : undefined)}
+                maxHeight={maxHeight ?? (img.height !== null ? `${img.height}px` : undefined)}
             />
         </picture>
     );
