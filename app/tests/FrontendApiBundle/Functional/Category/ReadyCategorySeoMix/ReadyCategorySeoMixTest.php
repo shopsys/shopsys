@@ -29,10 +29,10 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     public function testGetReadyCategorySeoMixDataBySlug()
     {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
-        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI, 1);
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION, 1);
         $query = '
             query slug {
-                slug(slug: "elektro-bez-hdmi") {
+                slug(slug: "elektro-bez-hdmi-akce") {
                     ... on Category {
                         name
                         slug
@@ -62,9 +62,9 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             'data' => [
                 'slug' => [
                     'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                    'slug' => '/elektro-bez-hdmi',
-                    'seoH1' => 'Elektro bez HDMI',
-                    'seoTitle' => 'Elektro bez HDMI',
+                    'slug' => '/elektro-bez-hdmi-akce',
+                    'seoH1' => 'Elektro bez HDMI v akci',
+                    'seoTitle' => 'Elektro bez HDMI v akci',
                     'seoMetaDescription' => t(
                         'All kind of electronic devices.',
                         [],
@@ -84,11 +84,30 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         ],
                     ],
                     'readyCategorySeoMixLinks' => [
-                        ['name' => 'Elektro Akce - od nejlevnějšího - 47 - bez hdmi', 'slug' => 'elektro-akce-od-nejlevnejsiho-47-bez-hdmi'],
-                        ['name' => 'Elektro bez HDMI', 'slug' => 'elektro-bez-hdmi'],
-                        ['name' => 'Elektro nejprodávanější - A-Z - 27" - bez HDMI', 'slug' => 'elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
-                        ['name' => 'Elektro Novinky - TOP - 27" - HDMI', 'slug' => 'elektro-novinky-top-27-hdmi'],
-                        ['name' => 'Elektro s HDMI', 'slug' => 'elektro-s-hdmi'],
+                        [
+                            'name' => t('Electronics without HDMI in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-bez-hdmi-akce',
+                        ],
+                        [
+                            'name' => t('Electronics from most expensive', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-od-nejdrazsiho',
+                        ],
+                        [
+                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-led-uhlopricka-30-akce',
+                        ],
+                        [
+                            'name' => t('Electronics in black', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-barva-cerna',
+                        ],
+                        [
+                            'name' => t('Electronics in red', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-barva-cervena',
+                        ],
+                        [
+                            'name' => t('Full HD Electronics with LED technology and USB', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-full-hd-led-usb',
+                        ],
                     ],
                     'linkedCategories' => [
                         ['name' => t('Food', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -220,7 +239,6 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
         $this->assertSelectedFlags($data['products']['productFilterOptions']['flags']);
         $this->assertSelectedParameterCheckboxFilterOptions($data['products']['productFilterOptions']['parameters']);
-        $this->assertSelectedParameterSliderFilterOptions($data['products']['productFilterOptions']['parameters']);
     }
 
     public function testReadyCategorySeoMixDataAreReturnedWhenMatchedFromCategory(): void
@@ -335,23 +353,6 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $parameters
-     */
-    private function assertSelectedParameterSliderFilterOptions(array $parameters): void
-    {
-        $firstDomainLocale = $this->getFirstDomainLocale();
-        /** @var \App\Model\Product\Parameter\Parameter $warrantyParameter */
-        $warrantyParameter = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
-        $fourValue = t('4', [], 'dataFixtures', $firstDomainLocale);
-
-        foreach ($parameters as $parameterData) {
-            if ($parameterData['uuid'] === $warrantyParameter->getUuid()) {
-                $this->assertSame($fourValue, (string)$parameterData['selectedValue']);
-            }
-        }
-    }
-
-    /**
      * @param string $graphQlFilePath
      * @param array $additionalVariables
      * @return array
@@ -379,10 +380,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         /** @var \App\Model\Product\Parameter\Parameter $parameterUsb */
         $parameterUsb = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
-        /** @var \App\Model\Product\Parameter\Parameter $parameterWarranty */
-        $parameterWarranty = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
-        $valueFour = t('4', [], 'dataFixtures', $firstDomainLocale);
         $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
             t('Yes', [], 'dataFixtures', $firstDomainLocale),
             $firstDomainLocale
@@ -394,10 +392,6 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                 'flags' => [$flagNew->getUuid()],
                 'parameters' => [
                     [
-                        'parameter' => $parameterWarranty->getUuid(),
-                        'minimalValue' => $valueFour,
-                        'maximalValue' => $valueFour,
-                    ], [
                         'parameter' => $parameterUsb->getUuid(),
                         'values' => [
                             $parameterValueYes->getUuid(),

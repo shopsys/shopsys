@@ -70,6 +70,9 @@ msgstr ""
 msgid "2 l"
 msgstr ""
 
+msgid "2 litre coffeemakers in sale"
+msgstr ""
+
 msgid "2.0"
 msgstr ""
 
@@ -182,9 +185,6 @@ msgid "380 g"
 msgstr ""
 
 msgid "3“"
-msgstr ""
-
-msgid "4"
 msgstr ""
 
 msgid "4 W"
@@ -808,6 +808,21 @@ msgstr ""
 msgid "Electronics"
 msgstr ""
 
+msgid "Electronics from most expensive"
+msgstr ""
+
+msgid "Electronics in black"
+msgstr ""
+
+msgid "Electronics in red"
+msgstr ""
+
+msgid "Electronics with LED technology and size 30 inch in sale"
+msgstr ""
+
+msgid "Electronics without HDMI in sale"
+msgstr ""
+
 msgid "Element arrangement"
 msgstr ""
 
@@ -854,6 +869,9 @@ msgid "Food"
 msgstr ""
 
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
+msgstr ""
+
+msgid "Full HD Electronics with LED technology and USB"
 msgstr ""
 
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."

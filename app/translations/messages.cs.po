@@ -955,9 +955,6 @@ msgstr "Přehled měrných jednotek"
 msgid "Meta description"
 msgstr ""
 
-msgid "Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku."
-msgstr ""
-
 msgid "Moewe - DeliveryCode"
 msgstr ""
 

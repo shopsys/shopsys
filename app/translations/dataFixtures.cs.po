@@ -76,6 +76,9 @@ msgstr "2"
 msgid "2 l"
 msgstr "2 l"
 
+msgid "2 litre coffeemakers in sale"
+msgstr "2 litrové kávovary v akci"
+
 msgid "2.0"
 msgstr "2.0"
 
@@ -189,9 +192,6 @@ msgstr "380 g"
 
 msgid "3“"
 msgstr "3“"
-
-msgid "4"
-msgstr ""
 
 msgid "4 W"
 msgstr "4 W"
@@ -814,6 +814,21 @@ msgstr "Elektrické věci"
 msgid "Electronics"
 msgstr "Elektro"
 
+msgid "Electronics from most expensive"
+msgstr "Elektro od nejdražšího"
+
+msgid "Electronics in black"
+msgstr "Elektro v černé barvě"
+
+msgid "Electronics in red"
+msgstr "Elektro v červené barvě"
+
+msgid "Electronics with LED technology and size 30 inch in sale"
+msgstr "Elektro s LED technologií a úhlopříčkou 30 palců v akci"
+
+msgid "Electronics without HDMI in sale"
+msgstr "Elektro bez HDMI v akci"
+
 msgid "Element arrangement"
 msgstr "Uspořádání prvků"
 
@@ -861,6 +876,9 @@ msgstr "Jídlo"
 
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr "Potravina je výrobek nebo látka určená pro výživu lidí a konzumovaná ústy v nezměněném nebo upraveném stavu. Potraviny se dělí na poživatiny a pochutiny. Potraviny mohou být rostlinného, živočišného nebo jiného původu."
+
+msgid "Full HD Electronics with LED technology and USB"
+msgstr "Elektro ve Full HD s technologií LED a USB"
 
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr "klávesnice s myší, bezdrátová, ultratenká, nano přijímač s konektorem USB, s bezdrátovou optickou myší s turborolováním, dosah až 10m, klávesnice obsahuje české znaky"

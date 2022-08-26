@@ -1408,12 +1408,6 @@ msgstr ""
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
-msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
-msgstr ""
-
-msgid "Product you had in cart is no longer in available. Please check your order."
-msgstr ""
-
 msgid "Products - full"
 msgstr ""
 
@@ -1820,9 +1814,6 @@ msgid "Text zobrazený pod bannerem"
 msgstr ""
 
 msgid "Text zprávy"
-msgstr ""
-
-msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr ""
 
 msgid "The selected flag cannot be deleted."
