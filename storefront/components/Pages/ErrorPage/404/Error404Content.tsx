@@ -9,11 +9,10 @@ import {
     ErrorPageTextStyled,
 } from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { NextPage } from 'next';
 import NextLink from 'next/link';
-import React from 'react';
+import React, { FC } from 'react';
 
-export const Error404Content: NextPage = () => {
+export const Error404Content: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (

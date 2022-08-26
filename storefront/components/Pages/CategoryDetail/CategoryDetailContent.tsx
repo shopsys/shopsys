@@ -14,7 +14,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
+import { Filter } from 'components/Blocks/Product/Filter/Filter';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -66,7 +66,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
             <CategoryDetailStyled ref={containerWrapRef}>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
                     {category.productConnection.productFilterOptions !== null && (
-                        <ProductFilter
+                        <Filter
                             key={category.slug}
                             productFilterOptions={category.productConnection.productFilterOptions}
                             slug={category.slug}

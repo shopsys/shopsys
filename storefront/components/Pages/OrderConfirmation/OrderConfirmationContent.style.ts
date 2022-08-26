@@ -40,7 +40,3 @@ export const MessageStyled = styled.div`
 export const MessageTextStyled = styled.div`
     margin-bottom: 32px;
 `;
-
-export const OrderEmailStyled = styled.p`
-    font-weight: 700;
-`;

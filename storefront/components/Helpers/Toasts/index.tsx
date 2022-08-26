@@ -26,11 +26,13 @@ export const showErrorMessage = (message: string, origin?: GtmMessageOriginType)
     const event = getGtmMessageEvent('error', message, 'flash message', origin);
     gtmSafePushEvent(event);
 };
+
 export const showInfoMessage = (message: string, origin?: GtmMessageOriginType): void => {
     showMessage(message, 'info');
     const event = getGtmMessageEvent('information', message, 'flash message', origin);
     gtmSafePushEvent(event);
 };
+
 export const showSuccessMessage = (message: string): void => {
     showMessage(message, 'success');
 };

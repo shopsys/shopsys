@@ -1,9 +1,9 @@
 import { NavigationStyled } from './Navigation.style';
 import { NavigationItem } from './NavigationItem/NavigationItem';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
-export const Navigation = (): ReactElement | null => {
+export const Navigation: FC = () => {
     const testIdentifier = 'layout-header-navigation';
 
     const navigationItems = useNavigationItems();

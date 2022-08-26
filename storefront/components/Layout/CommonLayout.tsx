@@ -8,9 +8,12 @@ import { SeoMeta } from 'components/Basic/Head/SeoMeta/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FC } from 'react';
 
-type LayoutProps = { title?: string | null; description?: string | null };
+type CommonLayoutProps = {
+    title?: string | null;
+    description?: string | null;
+};
 
-export const CommonLayout: FC<LayoutProps> = (props) => {
+export const CommonLayout: FC<CommonLayoutProps> = (props) => {
     return (
         <>
             <SeoMeta title={props.title} description={props.description} />

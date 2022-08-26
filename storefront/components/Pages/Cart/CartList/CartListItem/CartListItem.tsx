@@ -10,7 +10,7 @@ import {
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './CartListItem.style';
-import { CartListItemInfo } from './CartListItemInfo/CartListItem';
+import { CartListItemInfo } from './CartListItemInfo/CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';

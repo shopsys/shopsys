@@ -5,7 +5,7 @@ import {
     NameStyled,
     NameTitleStyled,
     NameTitleTextStyled,
-} from './CartListItem.style';
+} from './CartListItemInfo.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';

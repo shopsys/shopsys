@@ -178,6 +178,7 @@ export const ProductSearchResultNameStyled = styled.span`
     margin-right: 0;
     flex: 1;
 `;
+
 export const ProductSearchResultPriceStyled = styled.span`
     ${({ theme }) => css`
         color: ${theme.color.primary};

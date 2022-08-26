@@ -65,12 +65,6 @@ export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemSty
     `}
 `;
 
-export const FilterItemCheckboxStyled = styled.div`
-    position: relative;
-    display: inline-block;
-    width: 100%;
-`;
-
 export const FilterGroupColorStyled = styled.div`
     display: flex;
     flex-direction: row;

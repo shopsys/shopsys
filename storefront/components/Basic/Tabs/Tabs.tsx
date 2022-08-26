@@ -19,15 +19,15 @@ type TabsProps = {
 
 type TabFC<T = unknown> = FC<T> & { tabsRole: string };
 
-const TabsExtended: TabFC = (props) => {
+export const Tabs: TabFC = (props) => {
     return <TabsStyled {...props}>{props.children}</TabsStyled>;
 };
 
-const TabsListExtended: TabFC = (props) => {
+export const TabsList: TabFC = (props) => {
     return <TabsListStyled {...props}>{props.children}</TabsListStyled>;
 };
 
-const TabsListItemExtended: TabFC = (props) => {
+export const TabsListItem: TabFC = (props) => {
     return (
         <TabsListItemStyled selectedClassName="active" {...props}>
             {props.children}
@@ -35,7 +35,7 @@ const TabsListItemExtended: TabFC = (props) => {
     );
 };
 
-const TabsContentExtended: TabFC<TabsProps> = (props) => {
+export const TabsContent: TabFC<TabsProps> = (props) => {
     const [isActiveOnMobile, setIsActiveOnMobile] = useState<boolean | undefined>(false);
     const mobileTab = () => {
         setIsActiveOnMobile(!isActiveOnMobile);
@@ -55,14 +55,7 @@ const TabsContentExtended: TabFC<TabsProps> = (props) => {
 };
 
 // define element roles needed for react-tabs component
-TabsListItemExtended.tabsRole = 'Tab';
-TabsListExtended.tabsRole = 'TabList';
-TabsExtended.tabsRole = 'Tabs';
-TabsContentExtended.tabsRole = 'TabPanel';
-
-export {
-    TabsExtended as Tabs,
-    TabsListExtended as TabsList,
-    TabsListItemExtended as TabsListItem,
-    TabsContentExtended as TabsContent,
-};
+Tabs.tabsRole = 'Tab';
+TabsList.tabsRole = 'TabList';
+TabsListItem.tabsRole = 'Tabs';
+TabsContent.tabsRole = 'TabPanel';

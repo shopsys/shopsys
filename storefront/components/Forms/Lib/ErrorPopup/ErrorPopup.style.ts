@@ -17,6 +17,7 @@ export const ErrorListStyled = styled.ul`
     overflow-y: auto;
     max-height: 50vh;
 `;
+
 export const ErrorListItemStyled = styled.li`
     ${({ theme }) => css`
         margin-bottom: 6px;

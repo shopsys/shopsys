@@ -51,7 +51,3 @@ export const MessageStyled = styled.div`
         }
     `}
 `;
-
-export const PaymentEmailStyled = styled.p`
-    font-weight: 700;
-`;

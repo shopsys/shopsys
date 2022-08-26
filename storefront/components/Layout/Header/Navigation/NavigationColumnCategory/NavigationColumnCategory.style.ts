@@ -1,18 +1,6 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-const localVariables = {
-    navigationHeight: '64px',
-    navigationSubListItemGap: '45px',
-} as const;
-
-export const NavigationItemSubListStyled = styled.ul`
-    display: flex;
-    flex-direction: column;
-    width: calc(100% / 4);
-    padding-left: ${localVariables.navigationSubListItemGap};
-`;
-
 export const NavigationColumnCategoryStyled = styled.li`
     width: 100%;
     margin-bottom: 35px;

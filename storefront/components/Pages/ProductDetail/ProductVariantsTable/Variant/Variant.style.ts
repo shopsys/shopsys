@@ -23,6 +23,7 @@ export const VariantCellStyled = styled.td`
         }
     `}
 `;
+
 export const VariantImageCellStyled = styled(VariantCellStyled)`
     ${({ theme }) => css`
         @media ${theme.mediaQueries.queryTablet} {

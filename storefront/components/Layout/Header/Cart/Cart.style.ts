@@ -137,6 +137,7 @@ export const CartDetailStyled = styled.div<CartDetailStyledProps>`
         }
     `}
 `;
+
 export const CartDetailList = styled.ul`
     display: flex;
     flex-direction: column;

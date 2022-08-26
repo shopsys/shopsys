@@ -1,6 +1,6 @@
 import { Address } from './Address/Address';
 import { Company } from './Company/Company';
-import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
+import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { Password } from './Password/Password';
 import {
     ButtonWrapperStyled,
@@ -30,6 +30,7 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
+import { RegistrationFormType } from 'types/form';
 
 type RegistrationContentProps = {
     breadcrumbs: BreadcrumbItemType[];

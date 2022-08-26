@@ -34,7 +34,7 @@ type FilterProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-export const ProductFilter: FC<FilterProps> = ({
+export const Filter: FC<FilterProps> = ({
     productFilterOptions,
     slug,
     originalSlug,

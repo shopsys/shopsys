@@ -10,7 +10,7 @@ import {
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ProductFilter } from 'components/Blocks/Product/Filter/Filter';
+import { Filter } from 'components/Blocks/Product/Filter/Filter';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Button } from 'components/Forms/Button/Button';
@@ -198,7 +198,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                     {searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0 &&
                         searchResults.productsSearch.productFilterOptions !== null && (
                             <SearchResultsPanelStyled>
-                                <ProductFilter
+                                <Filter
                                     productFilterOptions={searchResults.productsSearch.productFilterOptions}
                                     slug={searchUrl}
                                     originalSlug={null}
