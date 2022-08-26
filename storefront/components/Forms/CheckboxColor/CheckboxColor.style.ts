@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const CheckboxColorStyled = styled.input`
-    ${({ theme }) => css`
+export const CheckboxColorStyled = styled.input(
+    ({ theme }) => css`
         position: absolute;
         height: 1px;
         width: 1px;
@@ -13,5 +13,5 @@ export const CheckboxColorStyled = styled.input`
 
         clip: rect(0 0 0 0);
         border: 0;
-    `}
-`;
+    `,
+);

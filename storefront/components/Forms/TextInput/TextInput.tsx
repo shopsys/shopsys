@@ -26,9 +26,29 @@ type TextInputProps = NativeProps & {
     value?: number | string;
 };
 
-export const TextInput: FC<TextInputProps> = (props) => {
+export const TextInput: FC<TextInputProps> = ({
+    label,
+    type,
+    disabled,
+    fieldRef,
+    hasError,
+    id,
+    inputSize,
+    isSearchButtonDisabled,
+    isTouched,
+    markSuccessfulWhenValid,
+    name,
+    onBlurCapture,
+    onChange,
+    onKeyPress,
+    placeholderType,
+    required,
+    style,
+    value,
+    variant,
+}) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
-    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(props.type);
+    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
 
     const togglePasswordVisibilityHandler = () => {
         setInputType((currentInputType) => {
@@ -43,27 +63,44 @@ export const TextInput: FC<TextInputProps> = (props) => {
     };
 
     useEffect(() => {
-        setInputState(getStateAfterValidation(props.hasError, props.isTouched, props.markSuccessfulWhenValid));
-    }, [props.hasError, props.isTouched, props.markSuccessfulWhenValid]);
+        setInputState(getStateAfterValidation(hasError, isTouched, markSuccessfulWhenValid));
+    }, [hasError, isTouched, markSuccessfulWhenValid]);
 
     return (
-        <LabelWrapper {...props} htmlFor={props.id} inputType="text-input">
+        <LabelWrapper
+            label={label}
+            placeholderType={placeholderType}
+            required={required}
+            htmlFor={id}
+            inputType="text-input"
+        >
             <TextInputStyled
-                {...props.fieldRef}
-                {...props}
+                disabled={disabled}
+                id={id}
+                inputSize={inputSize}
+                name={name}
+                onBlurCapture={onBlurCapture}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                placeholderType={placeholderType}
+                required={required}
+                style={style}
+                value={value}
+                variant={variant}
                 inputState={inputState}
                 type={inputType}
-                placeholder={typeof props.label === 'string' ? props.label : ' '}
+                placeholder={typeof label === 'string' ? label : ' '}
+                {...fieldRef}
             />
-            {props.type === 'password' && (
+            {type === 'password' && (
                 <PasswordVisibilityToggleStyled
                     src="/svg/eye.svg"
                     isVisible={inputType === 'text'}
                     onClick={togglePasswordVisibilityHandler}
                 />
             )}
-            {props.variant === 'searchInHeader' && (
-                <SearchButtonStyled type="submit" disabled={props.isSearchButtonDisabled}>
+            {variant === 'searchInHeader' && (
+                <SearchButtonStyled type="submit" disabled={isSearchButtonDisabled}>
                     <Icon iconType="icon" icon="Search" />
                 </SearchButtonStyled>
             )}

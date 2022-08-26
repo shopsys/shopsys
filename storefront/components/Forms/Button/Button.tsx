@@ -17,26 +17,45 @@ type ButtonProps = NativeProps &
         isLink?: boolean;
     };
 
-export const Button: FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = ({
+    type,
+    onClick,
+    style,
+    name,
+    isDisabled,
+    hasDisabledLook,
+    isLink,
+    size,
+    variant,
+    borderRadius,
+    children,
+}) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
 
-    if (props.isLink === true) {
+    if (isLink === true) {
         Component = ButtonAsLinkStyled;
     }
 
     return (
         <>
             <Component
-                {...props}
-                hasDisabledLook={props.hasDisabledLook}
+                type={type}
+                onClick={onClick}
+                style={style}
+                name={name}
+                hasDisabledLook={hasDisabledLook}
+                isLink={isLink}
+                size={size}
+                variant={variant}
+                borderRadius={borderRadius}
                 isDisabled={
                     // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    props.isDisabled || (props.type === 'submit' && formProviderMethods?.formState.isSubmitting)
+                    isDisabled || (type === 'submit' && formProviderMethods?.formState.isSubmitting)
                 }
             >
-                {props.children}
+                {children}
             </Component>
         </>
     );

@@ -94,23 +94,4 @@ export type ContactFormType = {
     message: string;
 };
 
-export type RegistrationFormType = {
-    email: string;
-    passwordFirst: string;
-    passwordSecond: string;
-    customer: CustomerTypeEnum;
-    telephone: string;
-    firstName: string;
-    lastName: string;
-    street: string;
-    city: string;
-    postcode: string;
-    country: SelectOptionType;
-    companyName: string;
-    companyNumber: string;
-    companyTaxNumber: string;
-    gdprAgreement: boolean;
-    newsletterSubscription: boolean;
-};
-
 export type UserConsentFormType = Record<keyof GtmConsentInfoType, boolean>;

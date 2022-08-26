@@ -13,8 +13,8 @@ type TextareaStyledProps = {
     inputState?: 'success' | 'error';
 };
 
-export const TextareaStyled = styled.textarea<TextareaStyledProps>`
-    ${({ theme, inputState }) => css`
+export const TextareaStyled = styled.textarea<TextareaStyledProps>(
+    ({ theme, inputState }) => css`
         resize: vertical;
         box-sizing: border-box;
         width: 100%;
@@ -71,5 +71,5 @@ export const TextareaStyled = styled.textarea<TextareaStyledProps>`
         &:focus {
             outline: 0;
         }
-    `}
-`;
+    `,
+);

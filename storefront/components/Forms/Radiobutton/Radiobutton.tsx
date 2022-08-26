@@ -1,6 +1,6 @@
+import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
 import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
 import { Image } from 'components/Basic/Image/Image';
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -69,6 +69,7 @@ export const Radiobutton: FC<RadiobuttonProps> = ({
                 <RadiobuttonStyled
                     {...fieldRef}
                     value={value}
+                    checked={checked}
                     disabled={disabled}
                     id={id === undefined ? name + 'radiobutton-id' : id}
                     type="radio"

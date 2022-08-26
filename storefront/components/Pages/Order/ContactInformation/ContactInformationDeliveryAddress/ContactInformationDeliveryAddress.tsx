@@ -261,7 +261,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <FormLineError
                                                             error={error}
                                                             inputType="text-input"
-                                                            data-testid={
+                                                            testIdentifier={
                                                                 formMeta.formName +
                                                                 '-' +
                                                                 formMeta.fields.deliveryFirstName.name +
@@ -301,7 +301,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <FormLineError
                                                             error={error}
                                                             inputType="text-input"
-                                                            data-testid={
+                                                            testIdentifier={
                                                                 formMeta.formName +
                                                                 '-' +
                                                                 formMeta.fields.deliveryLastName.name +
@@ -341,7 +341,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     <FormLineError
                                                         error={error}
                                                         inputType="text-input"
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.deliveryCompanyName.name +
@@ -380,7 +380,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     <FormLineError
                                                         error={error}
                                                         inputType="text-input"
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.deliveryTelephone.name +
@@ -422,7 +422,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             <FormLineError
                                                                 error={error}
                                                                 inputType="text-input"
-                                                                data-testid={
+                                                                testIdentifier={
                                                                     formMeta.formName +
                                                                     '-' +
                                                                     formMeta.fields.deliveryStreet.name +
@@ -466,7 +466,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                 <FormLineError
                                                                     error={error}
                                                                     inputType="text-input"
-                                                                    data-testid={
+                                                                    testIdentifier={
                                                                         formMeta.formName +
                                                                         '-' +
                                                                         formMeta.fields.deliveryCity.name +
@@ -509,7 +509,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                 <FormLineError
                                                                     error={error}
                                                                     inputType="text-input"
-                                                                    data-testid={
+                                                                    testIdentifier={
                                                                         formMeta.formName +
                                                                         '-' +
                                                                         formMeta.fields.deliveryPostcode.name +
@@ -547,7 +547,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             <FormLineError
                                                                 error={error}
                                                                 inputType="select"
-                                                                data-testid={
+                                                                testIdentifier={
                                                                     formMeta.formName +
                                                                     '-' +
                                                                     formMeta.fields.deliveryCountry.name +

@@ -81,7 +81,7 @@ export const ContactContent: FC = () => {
                                                 <FormLineError
                                                     error={error}
                                                     inputType="text-input"
-                                                    data-testid={
+                                                    testIdentifier={
                                                         formMeta.formName + '-' + formMeta.fields.name.name + '-error'
                                                     }
                                                 />
@@ -109,7 +109,7 @@ export const ContactContent: FC = () => {
                                                 <FormLineError
                                                     error={error}
                                                     inputType="text-input"
-                                                    data-testid={
+                                                    testIdentifier={
                                                         formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                                     }
                                                 />
@@ -137,7 +137,7 @@ export const ContactContent: FC = () => {
                                                 <FormLineError
                                                     error={error}
                                                     inputType="textarea"
-                                                    data-testid={
+                                                    testIdentifier={
                                                         formMeta.formName +
                                                         '-' +
                                                         formMeta.fields.message.name +

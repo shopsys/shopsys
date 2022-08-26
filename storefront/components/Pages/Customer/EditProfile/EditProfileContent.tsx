@@ -153,7 +153,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
     return (
         <>
             <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)} noValidate>
+                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}>
                     <Heading type="h2">{t('Personal data')}</Heading>
                     <FormLine bottomGap={true}>
                         <Controller

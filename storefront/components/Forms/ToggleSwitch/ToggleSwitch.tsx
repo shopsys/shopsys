@@ -7,11 +7,9 @@ type ToggleSwitchProps = {
     fieldRef?: ControllerRenderProps<any, any>;
 };
 
-export const ToggleSwitch: FC<ToggleSwitchProps> = ({ id, fieldRef }) => {
-    return (
-        <ToggleSwitchWrapper>
-            <ToggleSwitchStyled id={id} {...fieldRef} type="checkbox" checked={fieldRef?.value} />
-            <ToggleSwitchLabel htmlFor={fieldRef?.name} />
-        </ToggleSwitchWrapper>
-    );
-};
+export const ToggleSwitch: FC<ToggleSwitchProps> = ({ id, fieldRef }) => (
+    <ToggleSwitchWrapper>
+        <ToggleSwitchStyled id={id} type="checkbox" checked={fieldRef?.value} {...fieldRef} />
+        <ToggleSwitchLabel htmlFor={fieldRef?.name} />
+    </ToggleSwitchWrapper>
+);

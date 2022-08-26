@@ -3,18 +3,18 @@ import SelectReact from 'react-select';
 import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
-type SelectStyledProps = {
-    inputStateError: boolean;
-};
-
 const localVariables = {
     selectBorderWidth: '2px',
     selectScrollbarSize: '5px',
     selectScrollbarColor: '#828890',
 } as const;
 
-export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
-    ${({ theme, inputStateError }) => css`
+type SelectStyledProps = {
+    inputStateError: boolean;
+};
+
+export const SelectStyled = styled(SelectReact)<SelectStyledProps>(
+    ({ theme, inputStateError }) => css`
         .select__placeholder {
             display: none;
         }
@@ -122,5 +122,5 @@ export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
                 }
             }
         }
-    `}
-`;
+    `,
+);

@@ -82,7 +82,6 @@ export const PromoCode: FC = () => {
                                 <FormProvider {...formProviderMethods}>
                                     <Form
                                         onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                                        noValidate
                                         style={{ display: 'flex' }}
                                     >
                                         <Controller

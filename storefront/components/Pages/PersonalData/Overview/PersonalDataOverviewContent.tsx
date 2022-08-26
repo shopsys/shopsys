@@ -65,7 +65,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                     </ContentTextStyled>
                 )}
                 <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)} noValidate>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
                         <Controller
                             name={formMeta.fields.email.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -85,7 +85,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input"
-                                            data-testid={
+                                            testIdentifier={
                                                 formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                             }
                                         />

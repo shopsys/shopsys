@@ -34,7 +34,7 @@ export const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
                             />
                         </>
                     )}
@@ -59,7 +59,7 @@ export const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
                             />
                         </>
                     )}
@@ -83,7 +83,9 @@ export const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'}
+                                testIdentifier={
+                                    formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'
+                                }
                             />
                         </>
                     )}

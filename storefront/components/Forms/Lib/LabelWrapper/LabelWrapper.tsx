@@ -14,18 +14,25 @@ type LabelWrapperProps = NativeProps & {
     selectBoxLabelIsFloated?: boolean;
 };
 
-export const LabelWrapper: FC<LabelWrapperProps> = (props) => {
+export const LabelWrapper: FC<LabelWrapperProps> = ({
+    label,
+    count,
+    inputType,
+    required,
+    placeholderType,
+    checked,
+    selectBoxLabelIsFloated,
+    htmlFor,
+    children,
+}) => {
     return (
-        <LabelWrapperStyled inputType={props.inputType} selectBoxLabelIsFloated={props.selectBoxLabelIsFloated}>
-            {props.children}
-            {props.placeholderType !== 'static' && (
-                <label htmlFor={props.htmlFor}>
-                    {props.label}
-                    {props.count !== undefined &&
-                        props.checked === false &&
-                        props.count > 0 &&
-                        `\u00A0(${props.count})`}
-                    {props.required && <RequiredSymbolStyled>*</RequiredSymbolStyled>}
+        <LabelWrapperStyled inputType={inputType} selectBoxLabelIsFloated={selectBoxLabelIsFloated}>
+            {children}
+            {placeholderType !== 'static' && (
+                <label htmlFor={htmlFor}>
+                    {label}
+                    {count !== undefined && checked === false && count > 0 && `\u00A0(${count})`}
+                    {required && <RequiredSymbolStyled>*</RequiredSymbolStyled>}
                 </label>
             )}
         </LabelWrapperStyled>

@@ -19,16 +19,37 @@ type TextareaProps = NativeProps & {
     fieldRef?: ControllerRenderProps<any, any>;
 };
 
-export const Textarea: FC<TextareaProps> = (props) => {
+export const Textarea: FC<TextareaProps> = ({
+    label,
+    hasError,
+    isTouched,
+    markSuccessfulWhenValid,
+    fieldRef,
+    rows,
+    disabled,
+    required,
+    name,
+    id,
+    style,
+}) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
 
     useEffect(() => {
-        setInputState(getStateAfterValidation(props.hasError, props.isTouched, props.markSuccessfulWhenValid));
-    }, [props.hasError, props.isTouched, props.markSuccessfulWhenValid]);
+        setInputState(getStateAfterValidation(hasError, isTouched, markSuccessfulWhenValid));
+    }, [hasError, isTouched, markSuccessfulWhenValid]);
 
     return (
-        <LabelWrapper {...props} htmlFor={props.id} inputType="textarea">
-            <TextareaStyled {...props.fieldRef} {...props} inputState={inputState} placeholder={props.label} />
+        <LabelWrapper label={label} htmlFor={id} required={required} inputType="textarea">
+            <TextareaStyled
+                id={id}
+                rows={rows}
+                disabled={disabled}
+                name={name}
+                style={style}
+                inputState={inputState}
+                placeholder={label}
+                {...fieldRef}
+            />
         </LabelWrapper>
     );
 };

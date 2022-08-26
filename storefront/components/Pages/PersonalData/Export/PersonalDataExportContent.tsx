@@ -65,7 +65,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                     </ContentTextStyled>
                 )}
                 <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataExportHandler)} noValidate>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataExportHandler)}>
                         <Controller
                             name={formMeta.fields.email.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -85,7 +85,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input"
-                                            data-testid={
+                                            testIdentifier={
                                                 formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                             }
                                         />

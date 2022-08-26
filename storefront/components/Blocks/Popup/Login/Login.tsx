@@ -81,7 +81,7 @@ export const Login: FC = () => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input"
-                                            data-testid="login_form-email-error"
+                                            testIdentifier="login_form-email-error"
                                         />
                                     </FormLine>
                                 </>
@@ -106,7 +106,7 @@ export const Login: FC = () => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input-password"
-                                            data-testid="login_form-password-error"
+                                            testIdentifier="login_form-password-error"
                                         />
                                     </FormLine>
                                 </>

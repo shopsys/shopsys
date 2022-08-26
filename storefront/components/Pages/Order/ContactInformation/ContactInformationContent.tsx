@@ -63,7 +63,7 @@ export const ContactInformationContent: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
                             />
                         </>
                     )}

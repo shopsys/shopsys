@@ -102,7 +102,7 @@ export const Registration: FC = () => {
                     </RegistrationMessageColumnStyled>
                     <RegistrationFormColumnStyled>
                         <RegistrationFormStyled>
-                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)} noValidate>
+                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
                                 <FormProvider {...formProviderMethods}>
                                     <Controller
                                         name={formMeta.fields.password.name}
@@ -122,7 +122,7 @@ export const Registration: FC = () => {
                                                     <FormLineError
                                                         inputType="text-input-password"
                                                         error={error}
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.password.name +
@@ -147,7 +147,7 @@ export const Registration: FC = () => {
                                                     <FormLineError
                                                         inputType="checkbox"
                                                         error={error}
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.privacyPolicy.name +

@@ -17,16 +17,16 @@ export const FormFieldErrorStyled = styled.div`
     margin-top: 6px;
 `;
 
-export const ErrorMessageStyled = styled.span`
-    ${({ theme }) => css`
+export const ErrorMessageStyled = styled.span(
+    ({ theme }) => css`
         line-height: 21px;
         color: ${theme.color.red};
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
-    ${({ theme, inputType, textInputSize }) => css`
+export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>(
+    ({ theme, inputType, textInputSize }) => css`
         display: flex;
         position: absolute;
         width: 16px;
@@ -73,5 +73,5 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
             top: -40px;
             right: 45px;
         `}
-    `}
-`;
+    `,
+);

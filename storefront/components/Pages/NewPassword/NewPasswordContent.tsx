@@ -109,7 +109,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
                 breadcrumb={[{ name: t('Set new password'), slug: newPasswordUrl }]}
             >
                 <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)} noValidate>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>
                         <Controller
                             name={formMeta.fields.newPassword.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -128,7 +128,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
                                         textInputSize="small"
                                         error={error}
                                         inputType="text-input-password"
-                                        data-testid={
+                                        testIdentifier={
                                             formMeta.formName + '-' + formMeta.fields.newPassword.name + '-error'
                                         }
                                     />
@@ -154,7 +154,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input-password"
-                                            data-testid={
+                                            testIdentifier={
                                                 formMeta.formName +
                                                 '-' +
                                                 formMeta.fields.newPasswordAgain.name +

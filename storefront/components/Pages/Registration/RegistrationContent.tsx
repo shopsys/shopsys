@@ -138,7 +138,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                                     <FormLineError
                                         error={error}
                                         inputType="checkbox"
-                                        data-testid={
+                                        testIdentifier={
                                             formMeta.formName + '-' + formMeta.fields.gdprAgreement.name + '-error'
                                         }
                                     />

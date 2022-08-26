@@ -62,7 +62,7 @@ export const ContactInformationAddress: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
                             />
                         </>
                     )}
@@ -89,7 +89,7 @@ export const ContactInformationAddress: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
                                 />
                             </>
                         )}
@@ -114,7 +114,7 @@ export const ContactInformationAddress: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
                                 />
                             </>
                         )}
@@ -137,7 +137,7 @@ export const ContactInformationAddress: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="select"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                             />
                         </>
                     )}

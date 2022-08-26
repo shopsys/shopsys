@@ -36,7 +36,7 @@ export const Password: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input-password"
-                                    data-testid={
+                                    testIdentifier={
                                         formMeta.formName + '-' + formMeta.fields.passwordFirst.name + '-error'
                                     }
                                 />
@@ -62,7 +62,7 @@ export const Password: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input-password"
-                                    data-testid={
+                                    testIdentifier={
                                         formMeta.formName + '-' + formMeta.fields.passwordSecond.name + '-error'
                                     }
                                 />

@@ -35,7 +35,7 @@ export const User: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.email.name + '-error'}
                             />
                         </>
                     )}
@@ -60,7 +60,7 @@ export const User: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
                             />
                         </>
                     )}
@@ -84,7 +84,7 @@ export const User: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
                             />
                         </>
                     )}
@@ -108,7 +108,7 @@ export const User: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
                             />
                         </>
                     )}

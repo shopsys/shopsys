@@ -52,7 +52,7 @@ export const NewsletterForm: FC = () => {
                 <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
                 <NewsletterFormColumnStyled>
                     <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} noValidate>
+                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} >
                             <NewsletterFormInputWrapperStyled>
                                 <FormLine>
                                     <Controller
@@ -74,7 +74,7 @@ export const NewsletterForm: FC = () => {
                                                     textInputSize="small"
                                                     error={error}
                                                     inputType="text-input"
-                                                    data-testid={
+                                                    testIdentifier={
                                                         formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                                     }
                                                 />
@@ -107,7 +107,7 @@ export const NewsletterForm: FC = () => {
                                             <FormLineError
                                                 error={error}
                                                 inputType="checkbox"
-                                                data-testid={
+                                                testIdentifier={
                                                     formMeta.formName +
                                                     '-' +
                                                     formMeta.fields.privacyPolicy.name +

@@ -4,7 +4,7 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, ReactElement, useEffect } from 'react';
+import { FC, ReactElement, useEffect, useMemo } from 'react';
 import { GtmMessageOriginType } from 'types/gtm';
 
 type ErrorPopupProps = {
@@ -20,43 +20,44 @@ type ErrorPopupProps = {
     origin: GtmMessageOriginType;
 };
 
-export const ErrorPopup: FC<ErrorPopupProps> = (props) => {
+export const ErrorPopup: FC<ErrorPopupProps> = ({ isVisible, onCloseCallback, fields, origin }) => {
     const t = useTypedTranslationFunction();
 
     useEffect(() => {
-        if (props.isVisible) {
-            for (const fieldName in props.fields) {
-                const errorMessage = props.fields[fieldName].errorMessage;
+        if (isVisible) {
+            for (const fieldName in fields) {
+                const errorMessage = fields[fieldName].errorMessage;
                 if (errorMessage !== undefined) {
-                    const event = getGtmMessageEvent('error', errorMessage, fieldName, props.origin);
+                    const event = getGtmMessageEvent('error', errorMessage, fieldName, origin);
                     gtmSafePushEvent(event);
                 }
             }
         }
-    }, [props.isVisible, props.fields, props.origin]);
+    }, [isVisible, fields, origin]);
+
+    const mappedErrors = useMemo(() => {
+        const newMappedErrors = [];
+        for (const field in fields) {
+            if (fields[field].errorMessage === undefined) {
+                continue;
+            }
+
+            newMappedErrors.push(
+                <ErrorListItemStyled key={fields[field].name}>
+                    {fields[field].label}
+                    <br />
+                    <ErrorMessageStyled>{fields[field].errorMessage}</ErrorMessageStyled>
+                </ErrorListItemStyled>,
+            );
+        }
+
+        return newMappedErrors;
+    }, [fields]);
 
     return (
-        <Popup wrapperComponent={ErrorPopupStyled} isVisible={props.isVisible} onCloseCallback={props.onCloseCallback}>
+        <Popup wrapperComponent={ErrorPopupStyled} isVisible={isVisible} onCloseCallback={onCloseCallback}>
             <Heading type="h2">{t('Please check inserted details')}</Heading>
-            <ErrorListStyled>
-                {(() => {
-                    const mappedErrors = [];
-                    for (const field in props.fields) {
-                        if (props.fields[field].errorMessage === undefined) {
-                            continue;
-                        }
-
-                        mappedErrors.push(
-                            <ErrorListItemStyled key={props.fields[field].name}>
-                                {props.fields[field].label}
-                                <br />
-                                <ErrorMessageStyled>{props.fields[field].errorMessage}</ErrorMessageStyled>
-                            </ErrorListItemStyled>,
-                        );
-                    }
-                    return mappedErrors;
-                })()}
-            </ErrorListStyled>
+            <ErrorListStyled>{mappedErrors}</ErrorListStyled>
         </Popup>
     );
 };

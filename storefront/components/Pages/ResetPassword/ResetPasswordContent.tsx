@@ -47,7 +47,7 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
         <>
             <SimpleLayout heading={t('Forgotten password')} breadcrumb={breadcrumbs}>
                 <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)} noValidate>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
                         <Controller
                             name={formMeta.fields.email.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -67,7 +67,7 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input"
-                                            data-testid={
+                                            testIdentifier={
                                                 formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                             }
                                         />

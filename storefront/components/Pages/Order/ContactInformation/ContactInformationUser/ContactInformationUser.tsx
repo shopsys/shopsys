@@ -43,7 +43,7 @@ export const ContactInformationUser: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
                             />
                         </>
                     )}
@@ -72,7 +72,7 @@ export const ContactInformationUser: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
                                 />
                             </>
                         )}
@@ -97,7 +97,7 @@ export const ContactInformationUser: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
                                 />
                             </>
                         )}
