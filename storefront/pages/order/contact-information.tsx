@@ -147,7 +147,6 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
                         <ContactInformationContent />
                         <OrderAction
-                            activeStep={3}
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
                             hasDisabledLook={!formProviderMethods.formState.isValid}

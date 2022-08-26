@@ -97,6 +97,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                     </>
                                 )}
                                 <SelectedParametersListItemRemoveStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={onUncheckSliderParameter(filteredParameter.parameterUuid)}
@@ -118,6 +119,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                         >
                                             {value.text}
                                             <SelectedParametersListItemRemoveStyled
+                                                alt=""
                                                 iconType="icon"
                                                 icon="RemoveThin"
                                                 onClick={onUncheckParameter(

@@ -3,11 +3,12 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
+import { RegistrationFormType } from 'types/form';
 
 export const User: FC = () => {
     const t = useTypedTranslationFunction();

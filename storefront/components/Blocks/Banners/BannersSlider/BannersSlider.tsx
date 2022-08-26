@@ -15,16 +15,17 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ImageSizeType } from 'types/image';
 import { SliderItemType } from 'types/sliderItem';
 
-type BannersSliderProps = {
-    sliderItems: SliderItemType[];
-};
-
 const DEVICE_BREAKPOINT_SIZE = {
     size: 'tablet',
     query: 'queryTablet',
 } as const;
 
-export const BannersSlider: FC<BannersSliderProps> = (props) => {
+type BannersSliderProps = {
+    sliderItems: SliderItemType[];
+    testIdentifier: string;
+};
+
+export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentifier }) => {
     const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
@@ -60,7 +61,7 @@ export const BannersSlider: FC<BannersSliderProps> = (props) => {
                     }
 
                     if (slider.options().centered) {
-                        newLoadedImageUrls[props.sliderItems.length - 1] = true;
+                        newLoadedImageUrls[sliderItems.length - 1] = true;
                     }
                 }
                 return newLoadedImageUrls;
@@ -75,11 +76,11 @@ export const BannersSlider: FC<BannersSliderProps> = (props) => {
 
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (slider !== null && slider.options().centered) {
-                newLoadedImageUrls[Math.min(currentSlide + 1, props.sliderItems.length - 1)] = true;
+                newLoadedImageUrls[Math.min(currentSlide + 1, sliderItems.length - 1)] = true;
             }
             return newLoadedImageUrls;
         });
-    }, [currentSlide, props.sliderItems.length, slider]);
+    }, [currentSlide, sliderItems.length, slider]);
 
     useEffect(() => {
         const setPauseTrue = () => {
@@ -121,9 +122,9 @@ export const BannersSlider: FC<BannersSliderProps> = (props) => {
     };
 
     return (
-        <BannersSliderBoxStyled ref={sliderBoxRef}>
+        <BannersSliderBoxStyled ref={sliderBoxRef} data-testid={testIdentifier}>
             <BannersSliderStyled ref={sliderRef} className="keen-slider">
-                {props.sliderItems.map((sliderItem, index) => (
+                {sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
                         image={getBannersSliderItemImage(
@@ -136,22 +137,22 @@ export const BannersSlider: FC<BannersSliderProps> = (props) => {
                 ))}
             </BannersSliderStyled>
             <BannersSliderThumbnailControlsStyled>
-                {props.sliderItems.map((sliderItem, index) => (
+                {sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
-                        disabled={index === currentSlide % props.sliderItems.length}
+                        disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
                     >
-                        <BannersSliderThumbnailControlsIconStyled iconType="icon" icon="Triangle" />
+                        <BannersSliderThumbnailControlsIconStyled alt="" iconType="icon" icon="Triangle" />
                         {sliderItem.name}
                     </button>
                 ))}
             </BannersSliderThumbnailControlsStyled>
             <BannersSliderDotControlsStyled>
-                {props.sliderItems.map((sliderItem, index) => (
+                {sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
-                        disabled={index === currentSlide % props.sliderItems.length}
+                        disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
                     />
                 ))}

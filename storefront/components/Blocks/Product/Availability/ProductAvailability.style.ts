@@ -1,12 +1,12 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ProductAvailabilityStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductAvailabilityStyled = styled.div(
+    ({ theme }) => css`
         line-height: 18px;
         margin-bottom: 10px;
 
         font-size: 13px;
         color: ${theme.color.black};
-    `}
-`;
+    `,
+);

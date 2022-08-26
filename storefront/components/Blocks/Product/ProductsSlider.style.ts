@@ -13,8 +13,8 @@ export const ProductSliderStyled = styled.div`
     overflow: hidden;
 `;
 
-export const ProductSliderControlsStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductSliderControlsStyled = styled.div(
+    ({ theme }) => css`
         align-items: center;
         justify-content: center;
         position: absolute;
@@ -43,5 +43,5 @@ export const ProductSliderControlsStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             display: none;
         }
-    `}
-`;
+    `,
+);

@@ -6,8 +6,8 @@ const localVariables = {
     bannersSliderThumbnailControlsWidth: '307px',
 } as const;
 
-export const BannersSliderBoxStyled = styled.div`
-    ${({ theme }) => css`
+export const BannersSliderBoxStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         margin-bottom: 52px;
         padding-bottom: 0;
@@ -15,11 +15,11 @@ export const BannersSliderBoxStyled = styled.div`
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             flex-direction: column;
         }
-    `}
-`;
+    `,
+);
 
-export const BannersSliderStyled = styled.div`
-    ${({ theme }) => css`
+export const BannersSliderStyled = styled.div(
+    ({ theme }) => css`
         width: calc(100% - ${localVariables.bannersSliderThumbnailControlsWidth});
         height: 290px;
 
@@ -34,11 +34,11 @@ export const BannersSliderStyled = styled.div`
             height: 200px;
             width: 100%;
         }
-    `}
-`;
+    `,
+);
 
-export const BannersSliderThumbnailControlsStyled = styled.div`
-    ${({ theme }) => css`
+export const BannersSliderThumbnailControlsStyled = styled.div(
+    ({ theme }) => css`
         max-width: ${localVariables.bannersSliderThumbnailControlsWidth};
         min-width: ${localVariables.bannersSliderThumbnailControlsWidth};
         padding: 0 0 0 25px;
@@ -81,11 +81,11 @@ export const BannersSliderThumbnailControlsStyled = styled.div`
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const BannersSliderDotControlsStyled = styled.div`
-    ${({ theme }) => css`
+export const BannersSliderDotControlsStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         margin-top: 15px;
@@ -110,11 +110,11 @@ export const BannersSliderDotControlsStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const BannersSliderThumbnailControlsIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const BannersSliderThumbnailControlsIconStyled = styled(Icon)(
+    ({ theme }) => css`
         position: absolute;
         left: 14px;
         top: 50%;
@@ -122,5 +122,5 @@ export const BannersSliderThumbnailControlsIconStyled = styled(Icon)`
         width: 6px;
 
         color: ${theme.color.primary};
-    `}
-`;
+    `,
+);

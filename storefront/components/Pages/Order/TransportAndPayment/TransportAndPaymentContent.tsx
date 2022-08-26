@@ -129,7 +129,6 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                 />
             )}
             <OrderAction
-                activeStep={2}
                 buttonBack={t('Back')}
                 buttonNext={t('Contact information')}
                 hasDisabledLook={Object.keys(transportAndPaymentValidationMessages).length > 0}

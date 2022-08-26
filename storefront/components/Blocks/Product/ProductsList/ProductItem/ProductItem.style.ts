@@ -10,19 +10,19 @@ const localVariables = {
     productsItemTitleLineHeight: '20px',
 };
 
-export const ProductItemStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductItemStyled = styled.div(
+    ({ theme }) => css`
         padding-left: 8px;
         padding-top: 24px;
 
         @media ${theme.mediaQueries.queryVl} {
             border-top: 1px solid ${theme.color.greyLighter};
         }
-    `}
-`;
+    `,
+);
 
-export const ProductItemInStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductItemInStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -45,8 +45,8 @@ export const ProductItemInStyled = styled.div`
                 }
             }
         }
-    `}
-`;
+    `,
+);
 
 export const ProductItemLinkStyled = styled.a`
     position: relative;
@@ -98,8 +98,8 @@ export const ProductItemInfoStyled = styled.div`
     text-decoration: none;
 `;
 
-export const ProductItemTitleStyled = styled.h3`
-    ${({ theme }) => css`
+export const ProductItemTitleStyled = styled.h3(
+    ({ theme }) => css`
         display: block;
         height: ${`calc(${localVariables.productsItemTitleRows} *
             ${localVariables.productsItemTitleLineHeight})`};
@@ -111,5 +111,5 @@ export const ProductItemTitleStyled = styled.h3`
         font-size: ${theme.fontSize.bigger};
         font-weight: 700;
         word-wrap: break-word;
-    `}
-`;
+    `,
+);

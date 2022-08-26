@@ -20,7 +20,7 @@ type FilterGroupParametersProps = {
     data?: ParametersType;
 };
 
-const TEST_IDENTIFIER = (parameterParentIndex: number) =>
+const getTestIdentifier = (parameterParentIndex: number) =>
     'blocks-product-filter-filtergroup-parameters-' + parameterParentIndex;
 
 export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
@@ -51,10 +51,10 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     );
 
     return (
-        <FilterGroupStyled data-testid={TEST_IDENTIFIER(parameterParentIndex)}>
+        <FilterGroupStyled data-testid={getTestIdentifier(parameterParentIndex)}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
+                <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {data?.__typename === 'ParameterCheckboxFilterOption' &&
@@ -67,7 +67,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     key={dataItem.uuid}
                                     isDisabled={data.values[index]?.count === 0}
                                     isActive={field.value}
-                                    data-testid={TEST_IDENTIFIER(parameterParentIndex) + '-' + index}
+                                    data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
                                 >
                                     <Checkbox
                                         name={field.name}
@@ -94,7 +94,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             bgColor={dataItem.rgbHex ?? undefined}
                                             onChange={onChangeParameterValueHandler(dataItem, index)}
                                             value={parameterValue[index].checked}
-                                            data-testid={TEST_IDENTIFIER(index)}
+                                            data-testid={getTestIdentifier(index)}
                                             label={dataItem.text}
                                         />
                                     </>

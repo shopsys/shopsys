@@ -19,8 +19,9 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { PromoCodeFormType } from 'types/form';
 
+const TEST_IDENTIFIER = 'blocks-promocode';
+
 export const PromoCode: FC = () => {
-    const testIdentifier = 'blocks-promocode';
     const { promoCode } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
@@ -55,16 +56,16 @@ export const PromoCode: FC = () => {
     }, [promoCode, setValue]);
 
     return (
-        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
+        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
             {promoCode !== null ? (
                 <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
             ) : (
                 <>
                     <PromoCodeButtonStyled
                         onClick={() => setIsContentVisible(!isContentVisible)}
-                        data-testid={testIdentifier + '-add-button'}
+                        data-testid={TEST_IDENTIFIER + '-add-button'}
                     >
-                        <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
+                        <PromoCodeButtonIconStyled alt="" iconType="icon" icon="Plus" />
                         {t('I have a discount coupon')}
                     </PromoCodeButtonStyled>
                     <CSSTransition
@@ -99,7 +100,7 @@ export const PromoCode: FC = () => {
                                                     <PromoCodeContentButtonStyled
                                                         type="submit"
                                                         isDisabled={!formProviderMethods.formState.isValid}
-                                                        data-testid={testIdentifier + '-apply-button'}
+                                                        data-testid={TEST_IDENTIFIER + '-apply-button'}
                                                     >
                                                         {t('Apply')}
                                                     </PromoCodeContentButtonStyled>

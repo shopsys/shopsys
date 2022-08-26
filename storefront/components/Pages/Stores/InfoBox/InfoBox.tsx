@@ -18,7 +18,7 @@ export const InfoBox: FC<InfoBoxProps> = (props) => {
 
     return (
         <InfoBoxStyled>
-            <ButtonCloseStyled onClick={props.isClosed} iconType="icon" icon="Remove" />
+            <ButtonCloseStyled alt="" onClick={props.isClosed} iconType="icon" icon="Remove" />
             <HeadingStyled type="h2">{props.name}</HeadingStyled>
             <div>
                 {props.street}

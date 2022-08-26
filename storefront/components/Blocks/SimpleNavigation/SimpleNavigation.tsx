@@ -13,9 +13,9 @@ type SimpleNavigationProps = {
     imageType?: string;
 };
 
-export const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
-    const testIdentifier = 'blocks-simplenavigation';
+const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
+export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType }) => {
     const { width } = useGetWindowSize();
     const [isSliderVisible, setSliderVisible] = useState(true);
     useResizeWidthEffect(
@@ -29,12 +29,12 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
     return (
         <ul>
             {isSliderVisible ? (
-                <Slider listedItems={props.listedItems} />
+                <Slider listedItems={listedItems} />
             ) : (
-                <SimpleNavigationStyled data-testid={testIdentifier}>
-                    {props.listedItems.map((listedItem, key) => (
-                        <ListItemStyled key={key} data-testid={testIdentifier + '-' + key}>
-                            <ListItem listedItem={listedItem} imageType={props.imageType}>
+                <SimpleNavigationStyled data-testid={TEST_IDENTIFIER}>
+                    {listedItems.map((listedItem, key) => (
+                        <ListItemStyled key={key} data-testid={TEST_IDENTIFIER + '-' + key}>
+                            <ListItem listedItem={listedItem} imageType={imageType}>
                                 {listedItem.name}
                             </ListItem>
                         </ListItemStyled>

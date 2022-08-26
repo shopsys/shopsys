@@ -4,16 +4,16 @@ import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type PromoCodeStyledProps = {
-    contentElementHeight: number;
-};
-
 const localVariables = {
     promoCodeButtonBackgroundHover: '#ffeaaa',
 } as const;
 
-export const PromoCodeStyled = styled.div<PromoCodeStyledProps>`
-    ${({ theme, contentElementHeight }) => css`
+type PromoCodeStyledProps = {
+    contentElementHeight: number;
+};
+
+export const PromoCodeStyled = styled.div<PromoCodeStyledProps>(
+    ({ theme, contentElementHeight }) => css`
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;
         }
@@ -34,11 +34,11 @@ export const PromoCodeStyled = styled.div<PromoCodeStyledProps>`
             height: 0;
             transition: 0.3s all ease;
         }
-    `}
-`;
+    `,
+);
 
-export const PromoCodeButtonStyled = styled.div`
-    ${({ theme }) => css`
+export const PromoCodeButtonStyled = styled.div(
+    ({ theme }) => css`
         display: inline-flex;
         align-items: center;
         padding: 11px 16px;
@@ -62,8 +62,8 @@ export const PromoCodeButtonStyled = styled.div`
         &:hover {
             background-color: ${localVariables.promoCodeButtonBackgroundHover};
         }
-    `}
-`;
+    `,
+);
 
 export const PromoCodeButtonIconStyled = styled(Icon)`
     width: 12px;
@@ -79,14 +79,14 @@ export const PromoCodeContentStyled = styled.div`
     display: flex;
 `;
 
-export const PromoCodeContentButtonStyled = styled(Button)`
-    ${({ theme }) => css`
+export const PromoCodeContentButtonStyled = styled(Button)(
+    ({ theme }) => css`
         padding-left: 10px;
         padding-right: 10px;
 
         border-radius: 0 ${theme.radius.big} ${theme.radius.big} 0;
-    `}
-`;
+    `,
+);
 
 export const PromoCodeContentInputStyled = styled(TextInput)`
     border-top-right-radius: 0;

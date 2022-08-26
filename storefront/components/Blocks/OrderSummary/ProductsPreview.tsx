@@ -7,13 +7,13 @@ type ProductsPreviewProps = {
     cartItems: CartItemType[];
 };
 
-export const ProductsPreview: FC<ProductsPreviewProps> = (props) => {
-    const testIdentifier = 'blocks-ordersummary-productspreview';
+const TEST_IDENTIFIER = 'blocks-ordersummary-productspreview';
 
+export const ProductsPreview: FC<ProductsPreviewProps> = ({ cartItems }) => {
     return (
-        <ProductsPreviewStyled data-testid={testIdentifier}>
+        <ProductsPreviewStyled data-testid={TEST_IDENTIFIER}>
             <OrderSummaryListStyled>
-                {props.cartItems.map((item) => (
+                {cartItems.map((item) => (
                     <SingleProduct key={item.uuid} item={item} />
                 ))}
             </OrderSummaryListStyled>

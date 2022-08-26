@@ -9,8 +9,8 @@ export const SimpleNavigationStyled = styled.ul`
     padding: 0;
 `;
 
-export const ListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const ListItemStyled = styled.li(
+    ({ theme }) => css`
         margin-bottom: 12px;
         margin-left: 0;
         min-width: auto;
@@ -33,5 +33,5 @@ export const ListItemStyled = styled.li`
         @media ${theme.mediaQueries.queryXl} {
             width: 25%;
         }
-    `}
-`;
+    `,
+);

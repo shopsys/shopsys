@@ -13,9 +13,9 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 
-export const OrderSummary: FC = () => {
-    const testIdentifier = 'blocks-ordersummary';
+const TEST_IDENTIFIER = 'blocks-ordersummary';
 
+export const OrderSummary: FC = () => {
     const t = useTypedTranslationFunction();
     const { cart, transport, payment, promoCode } = useCurrentCart();
 
@@ -26,7 +26,7 @@ export const OrderSummary: FC = () => {
     return (
         <>
             <Adverts positionName="cartPreview" withGapBottom />
-            <OrderSummaryWrapperStyled data-testid={testIdentifier}>
+            <OrderSummaryWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <OrderSummaryTitleStyled>{t('Your order')}</OrderSummaryTitleStyled>
                 <OrderSummaryContentWrapperStyled>
                     <OrderSummaryContentStyled>

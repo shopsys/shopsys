@@ -34,18 +34,9 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import * as Yup from 'yup';
 
-const getLoginFormResolver = (t: Translate) => {
-    return yupResolver(
-        Yup.object().shape({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            password: Yup.string().required(t('This field is required')),
-        }),
-    );
-};
+const TEST_IDENTIFIER = 'blocks-popup-login';
 
 export const Login: FC = () => {
-    const testIdentifier = 'blocks-popup-login';
-
     const t = useTypedTranslationFunction();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
     const { url } = useShopsysSelector((state) => state.domain);
@@ -67,7 +58,7 @@ export const Login: FC = () => {
     };
 
     return (
-        <LoginStyled data-testid={testIdentifier}>
+        <LoginStyled data-testid={TEST_IDENTIFIER}>
             <LoginColumnStyled>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
@@ -128,7 +119,7 @@ export const Login: FC = () => {
                                 </Button>
                             </ButtonWrapperStyled>
                             <LoginLostPassStyled>
-                                <LoginLostPassIconStyled iconType="icon" icon="Warning" />
+                                <LoginLostPassIconStyled alt="" iconType="icon" icon="Warning" />
                                 <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
                                 <NextLink href={resetPasswordUrl} passHref>
                                     <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>
@@ -163,5 +154,14 @@ export const Login: FC = () => {
                 </Link>
             </LoginColumnStyled>
         </LoginStyled>
+    );
+};
+
+const getLoginFormResolver = (t: Translate) => {
+    return yupResolver(
+        Yup.object().shape({
+            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
+            password: Yup.string().required(t('This field is required')),
+        }),
     );
 };

@@ -6,8 +6,8 @@ type OrderStepsListItemLinkStyledProps = {
     cursor?: 'pointer';
 };
 
-export const OrderStepsListStyled = styled.ul`
-    ${({ theme }) => css`
+export const OrderStepsListStyled = styled.ul(
+    ({ theme }) => css`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -20,11 +20,11 @@ export const OrderStepsListStyled = styled.ul`
         @media ${theme.mediaQueries.queryLg} {
             margin: 0 0 12px;
         }
-    `}
-`;
+    `,
+);
 
-export const OrderStepsListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const OrderStepsListItemStyled = styled.li(
+    ({ theme }) => css`
         padding: 12px;
         position: relative;
         width: calc(100% / 3);
@@ -32,11 +32,11 @@ export const OrderStepsListItemStyled = styled.li`
         @media ${theme.mediaQueries.queryLg} {
             padding: 12px 20px;
         }
-    `}
-`;
+    `,
+);
 
-export const OrderStepsListItemLinkStyled = styled.span<OrderStepsListItemLinkStyledProps>`
-    ${({ theme, isActive, cursor }) => css`
+export const OrderStepsListItemLinkStyled = styled.span<OrderStepsListItemLinkStyledProps>(
+    ({ theme, isActive, cursor }) => css`
         display: block;
 
         line-height: 14px;
@@ -71,5 +71,5 @@ export const OrderStepsListItemLinkStyled = styled.span<OrderStepsListItemLinkSt
                 background-color: ${theme.color.primary};
             }
         `}
-    `}
-`;
+    `,
+);

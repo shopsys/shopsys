@@ -10,46 +10,46 @@ type OrderStepsProps = {
     domainUrl: string;
 };
 
-export const OrderSteps: FC<OrderStepsProps> = (props) => {
-    const testIdentifier = 'blocks-ordersteps-';
+const TEST_IDENTIFIER = 'blocks-ordersteps-';
 
+export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     const t = useTypedTranslationFunction();
     const [cartUrl, transportAndPaymentUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment'],
-        props.domainUrl,
+        domainUrl,
     );
 
     return (
         <Webline>
             <OrderStepsListStyled>
-                <OrderStepsListItemStyled data-testid={testIdentifier + '1'}>
-                    {props.activeStep > 1 ? (
+                <OrderStepsListItemStyled data-testid={TEST_IDENTIFIER + '1'}>
+                    {activeStep > 1 ? (
                         <NextLink href={cartUrl} passHref prefetch>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'1. ' + t('Cart')}
                             </OrderStepsListItemLinkStyled>
                         </NextLink>
                     ) : (
-                        <OrderStepsListItemLinkStyled isActive={props.activeStep === 1}>
+                        <OrderStepsListItemLinkStyled isActive={activeStep === 1}>
                             {'1. ' + t('Cart')}
                         </OrderStepsListItemLinkStyled>
                     )}
                 </OrderStepsListItemStyled>
-                <OrderStepsListItemStyled data-testid={testIdentifier + '2'}>
-                    {props.activeStep > 2 ? (
+                <OrderStepsListItemStyled data-testid={TEST_IDENTIFIER + '2'}>
+                    {activeStep > 2 ? (
                         <NextLink href={transportAndPaymentUrl} passHref prefetch>
                             <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'2. ' + t('Transport and payment')}
                             </OrderStepsListItemLinkStyled>
                         </NextLink>
                     ) : (
-                        <OrderStepsListItemLinkStyled isActive={props.activeStep === 2}>
+                        <OrderStepsListItemLinkStyled isActive={activeStep === 2}>
                             {'2. ' + t('Transport and payment')}
                         </OrderStepsListItemLinkStyled>
                     )}
                 </OrderStepsListItemStyled>
-                <OrderStepsListItemStyled data-testid={testIdentifier + '3'}>
-                    <OrderStepsListItemLinkStyled isActive={props.activeStep === 3}>
+                <OrderStepsListItemStyled data-testid={TEST_IDENTIFIER + '3'}>
+                    <OrderStepsListItemLinkStyled isActive={activeStep === 3}>
                         {'3. ' + t('Contact information')}
                     </OrderStepsListItemLinkStyled>
                 </OrderStepsListItemStyled>

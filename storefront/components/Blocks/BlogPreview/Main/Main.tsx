@@ -20,9 +20,9 @@ type MainProps = {
     blogMainItems: ListedBlogArticleType[];
 };
 
-export const Main: FC<MainProps> = (props) => {
-    const testIdentifier = 'blocks-blogpreview-main-';
+const TEST_IDENTIFIER = 'blocks-blogpreview-main-';
 
+export const Main: FC<MainProps> = ({ blogMainItems }) => {
     const { width } = useGetWindowSize();
     const [isOneMainArticle, setOnlyOneMainArticle] = useState(false);
     const visibleArticles = isOneMainArticle ? 1 : 2;
@@ -37,10 +37,10 @@ export const Main: FC<MainProps> = (props) => {
 
     return (
         <>
-            {props.blogMainItems.map(
+            {blogMainItems.map(
                 (blogMainItem, index) =>
                     index < visibleArticles && (
-                        <MainItemStyled key={index} data-testid={testIdentifier + index}>
+                        <MainItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
                             <MainImageStyled>
                                 <NextLink href={blogMainItem.link} passHref>
                                     <MainImageLinkStyled>

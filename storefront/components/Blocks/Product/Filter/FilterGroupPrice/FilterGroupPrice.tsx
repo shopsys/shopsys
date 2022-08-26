@@ -53,7 +53,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, min
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
             <FilterGroupTitleStyled onClick={handleGroupClick}>
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 <RangeSlider

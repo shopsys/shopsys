@@ -7,18 +7,21 @@ type ProductExposedStoresCountProps = {
     exposedStoresCount: number;
 };
 
-export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = (props) => {
-    const testIdentifier = 'blocks-product-exposed';
+const TEST_IDENTIFIER = 'blocks-product-exposed';
 
+export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = ({
+    exposedStoresCount,
+    isMainVariant,
+}) => {
     const t = useTypedTranslationFunction();
 
-    if (props.isMainVariant || props.exposedStoresCount === 0) {
+    if (isMainVariant || exposedStoresCount === 0) {
         return null;
     }
 
     return (
-        <ProductExposedStoreCountStyled data-testid={testIdentifier}>
-            {t('You can check this item in {{ count }} stores', { count: props.exposedStoresCount })}
+        <ProductExposedStoreCountStyled data-testid={TEST_IDENTIFIER}>
+            {t('You can check this item in {{ count }} stores', { count: exposedStoresCount })}
         </ProductExposedStoreCountStyled>
     );
 };

@@ -89,14 +89,14 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = (props) => {
                     </MapStyled>
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
-                            <ButtonBottomIconStyled iconType="icon" icon="Chat" />
+                            <ButtonBottomIconStyled alt="" iconType="icon" icon="Chat" />
                             <NextLink href={contactUrl} passHref>
                                 <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
                             </NextLink>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
-                            <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
+                            <ButtonBottomIconStyled alt="" iconType="icon" icon="Arrow" type="right" />
                         </ButtonBottomItemStyled>
                     </ButtonBottomStyled>
                 </StoreDetailContentStyled>

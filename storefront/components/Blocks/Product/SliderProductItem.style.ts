@@ -10,8 +10,8 @@ const localVariables = {
     listSliderProductsItemTitleLineHeight: '20px',
 };
 
-export const SliderProductItemStyled = styled.div`
-    ${({ theme }) => css`
+export const SliderProductItemStyled = styled.div(
+    ({ theme }) => css`
         width: 250px;
         min-width: 250px;
         padding: 10px;
@@ -21,11 +21,11 @@ export const SliderProductItemStyled = styled.div`
         &:hover {
             color: ${theme.color.primary};
         }
-    `}
-`;
+    `,
+);
 
-export const SliderProductItemInStyled = styled.div`
-    ${({ theme }) => css`
+export const SliderProductItemInStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -41,8 +41,8 @@ export const SliderProductItemInStyled = styled.div`
                 mix-blend-mode: multiply;
             }
         }
-    `}
-`;
+    `,
+);
 
 export const SliderProductItemLinkStyled = styled.a`
     position: relative;
@@ -94,8 +94,8 @@ export const SliderProductItemInfoStyled = styled.div`
     text-decoration: none;
 `;
 
-export const SliderProductItemTitleStyled = styled.h3`
-    ${({ theme }) => css`
+export const SliderProductItemTitleStyled = styled.h3(
+    ({ theme }) => css`
         display: block;
         height: ${`calc(${localVariables.listSliderProductsItemTitleRows} *
             ${localVariables.listSliderProductsItemTitleLineHeight})`};
@@ -107,5 +107,5 @@ export const SliderProductItemTitleStyled = styled.h3`
         font-size: ${theme.fontSize.bigger};
         font-weight: 700;
         word-wrap: break-word;
-    `}
-`;
+    `,
+);

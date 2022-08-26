@@ -75,12 +75,12 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                         <NextLink key={store.slug} href={store.slug} passHref>
                             <ButtonBottomStyled>
                                 <ButtonBottomItemStyled>
-                                    <ButtonBottomIconStyled iconType="icon" icon="Marker" />
+                                    <ButtonBottomIconStyled alt="" iconType="icon" icon="Marker" />
                                     <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
                                 </ButtonBottomItemStyled>
                                 <ButtonBottomItemStyled>
                                     <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
-                                    <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
+                                    <ButtonBottomIconStyled alt="" iconType="icon" icon="Arrow" type="right" />
                                 </ButtonBottomItemStyled>
                             </ButtonBottomStyled>
                         </NextLink>

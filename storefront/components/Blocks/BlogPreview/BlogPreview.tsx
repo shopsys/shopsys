@@ -21,9 +21,9 @@ import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, useState } from 'react';
 
-export const BlogPreview: FC = () => {
-    const testIdentifier = 'blocks-blogpreview';
+const TEST_IDENTIFIER = 'blocks-blogpreview';
 
+export const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
     const blogPreviewItems = useBlogPreviewArticles();
     const blogUrl = useBlogUrl();
@@ -44,14 +44,14 @@ export const BlogPreview: FC = () => {
     );
 
     return (
-        <BlogPreviewStyled data-testid={testIdentifier}>
+        <BlogPreviewStyled data-testid={TEST_IDENTIFIER}>
             <BlogPreviewHeadingStyled>
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
                 {blogUrl !== undefined && (
                     <NextLink href={blogUrl} passHref>
                         <BlogPreviewHeadingLinkStyled>
                             <span>{t('View all')}</span>
-                            <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
+                            <BlogPreviewHeadingLinkIconStyled alt="" iconType="icon" icon="ArrowRight" />
                         </BlogPreviewHeadingLinkStyled>
                     </NextLink>
                 )}

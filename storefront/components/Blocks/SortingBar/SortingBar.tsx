@@ -140,7 +140,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
                                     onClick={onSelectSortMenu(selectedSort, value.stateValue)}
                                     data-testid={TEST_IDENTIFIER + '-selected'}
                                 >
-                                    <SortingBarSortIconStyled iconType="icon" icon="Sort" />
+                                    <SortingBarSortIconStyled alt="" iconType="icon" icon="Sort" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
                                         <SortingBarSelectedValue data-testid={TEST_IDENTIFIER + '-selected-value'}>

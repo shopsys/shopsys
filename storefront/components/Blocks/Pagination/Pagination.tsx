@@ -16,10 +16,6 @@ type PaginationProps = {
     containerWrapRef: RefObject<HTMLDivElement> | null;
 };
 
-const isDotKey = (prevPage: number | null, currentPage: number): boolean => {
-    return prevPage !== null && prevPage !== currentPage - 1;
-};
-
 const TEST_IDENTIFIER = 'blocks-pagination';
 
 export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
@@ -110,4 +106,8 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
             ))}
         </PaginationWrapperStyled>
     );
+};
+
+const isDotKey = (prevPage: number | null, currentPage: number): boolean => {
+    return prevPage !== null && prevPage !== currentPage - 1;
 };

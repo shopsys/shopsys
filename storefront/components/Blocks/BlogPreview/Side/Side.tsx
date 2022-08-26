@@ -9,13 +9,13 @@ type SideProps = {
     blogSideItems: ListedBlogArticleType[];
 };
 
-export const Side: FC<SideProps> = (props) => {
-    const testIdentifier = 'blocks-blogpreview-side-';
+const TEST_IDENTIFIER = 'blocks-blogpreview-side-';
 
+export const Side: FC<SideProps> = ({ blogSideItems }) => {
     return (
         <>
-            {props.blogSideItems.map((blogSideItem, index) => (
-                <SideItemStyled key={index} data-testid={testIdentifier + index}>
+            {blogSideItems.map((blogSideItem, index) => (
+                <SideItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
                     <SideImageStyled>
                         <NextLink href={blogSideItem.link} passHref>
                             <SideImageLinkStyled>

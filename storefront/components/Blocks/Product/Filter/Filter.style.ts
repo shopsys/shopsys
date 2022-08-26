@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const FilterStyled = styled.div`
-    ${({ theme }) => css`
+export const FilterStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         overflow: hidden;
         padding: 0 14px;
@@ -14,5 +14,5 @@ export const FilterStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             z-index: ${theme.zIndex.above};
         }
-    `}
-`;
+    `,
+);

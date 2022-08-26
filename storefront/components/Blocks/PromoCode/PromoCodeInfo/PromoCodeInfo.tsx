@@ -12,25 +12,25 @@ type PromoCodeInfoProps = {
     onRemovePromoCodeCallback: (promoCode: string) => void;
 };
 
-export const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
-    const testIdentifier = 'blocks-promocode-promocodeinfo';
+const TEST_IDENTIFIER = 'blocks-promocode-promocodeinfo';
 
+export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallback, promoCode }) => {
     const t = useTypedTranslationFunction();
 
     const onRemovePromoCodeHandler = () => {
-        props.onRemovePromoCodeCallback(props.promoCode);
+        onRemovePromoCodeCallback(promoCode);
     };
 
     return (
-        <PromoCodeInfoStyled data-testid={testIdentifier}>
-            <PromoCodeInfoTitleStyled data-testid={testIdentifier + '-title'}>
+        <PromoCodeInfoStyled data-testid={TEST_IDENTIFIER}>
+            <PromoCodeInfoTitleStyled data-testid={TEST_IDENTIFIER + '-title'}>
                 {t('Your discount with the code has been applied.')}
             </PromoCodeInfoTitleStyled>
-            <PromoCodeInfoCouponStyled data-testid={testIdentifier + '-code'}>
-                {props.promoCode}
-                <PromoCodeInfoCouponIconStyled iconType="icon" icon="Cross" onClick={onRemovePromoCodeHandler} />
+            <PromoCodeInfoCouponStyled data-testid={TEST_IDENTIFIER + '-code'}>
+                {promoCode}
+                <PromoCodeInfoCouponIconStyled alt="" iconType="icon" icon="Cross" onClick={onRemovePromoCodeHandler} />
             </PromoCodeInfoCouponStyled>
-            <p data-testid={testIdentifier + '-description'}>
+            <p data-testid={TEST_IDENTIFIER + '-description'}>
                 {t(
                     'The discount was applied to all non-discounted items to which the promotion applies according to the rules.',
                 )}

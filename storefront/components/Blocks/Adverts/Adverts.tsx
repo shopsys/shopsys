@@ -7,27 +7,32 @@ import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import NextLink from 'next/link';
-import { FC, Fragment, HTMLAttributes, useState } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { FC, Fragment, useState } from 'react';
 import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
+type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
 
 type AdvertsProps = {
-    positionName: 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
+    positionName: PositionNameType;
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
     currentCategory?: CategoryDetailType;
 };
 
-export const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
+export const Adverts: FC<AdvertsProps> = ({
+    positionName,
+    withGapBottom,
+    withGapTop,
+    withWebline,
+    currentCategory,
+}) => {
     const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
-    const WrapperComponent = props.withWebline ? Webline : Fragment;
-    const isPositionNameSet = adverts?.some((item) => item.positionName === props.positionName);
+    const WrapperComponent = withWebline ? Webline : Fragment;
+    const isPositionNameSet = adverts?.some((item) => item.positionName === positionName);
 
     useResizeWidthEffect(
         width,
@@ -43,14 +48,10 @@ export const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
 
     return (
         <WrapperComponent>
-            <AdvertsStyled
-                className={props.className}
-                withGapTop={props.withGapTop}
-                withGapBottom={props.withGapBottom}
-            >
+            <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
                 {adverts?.map(
                     (item, index) =>
-                        shouldBeShown(item, props) &&
+                        shouldBeShown(item, positionName, currentCategory) &&
                         (item.__typename === 'AdvertImage' ? (
                             <Fragment key={index}>
                                 {item.link !== undefined ? (
@@ -86,20 +87,21 @@ export const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
     );
 };
 
-const shouldBeShown = (advert: AdvertType, advertsProps: AdvertsProps): boolean => {
-    if (advert.positionName !== advertsProps.positionName) {
+const shouldBeShown = (
+    advert: AdvertType,
+    positionName: PositionNameType,
+    currentCategory?: CategoryDetailType,
+): boolean => {
+    if (advert.positionName !== positionName) {
         return false;
     }
     if (advert.positionName === 'productListMiddle' && advert.categories.length === 0) {
         return false;
     }
     for (const category of advert.categories) {
-        if (
-            category.slug === advertsProps.currentCategory?.slug ||
-            category.slug === advertsProps.currentCategory?.originalCategorySlug
-        ) {
+        if (category.slug === currentCategory?.slug || category.slug === currentCategory?.originalCategorySlug) {
             return true;
         }
     }
-    return advertsProps.positionName !== 'productListMiddle' && advert.positionName === advertsProps.positionName;
+    return positionName !== 'productListMiddle' && advert.positionName === positionName;
 };

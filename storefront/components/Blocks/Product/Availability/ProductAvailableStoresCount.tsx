@@ -7,18 +7,21 @@ type ProductAvailableStoresCountProps = {
     availableStoresCount: number;
 };
 
-export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props) => {
-    const testIdentifier = 'blocks-product-availability';
+const TEST_IDENTIFIER = 'blocks-product-availability';
 
+export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = ({
+    availableStoresCount,
+    isMainVariant,
+}) => {
     const t = useTypedTranslationFunction();
 
-    if (props.isMainVariant || props.availableStoresCount === 0) {
+    if (isMainVariant || availableStoresCount === 0) {
         return null;
     }
 
     return (
-        <ProductAvailableStoreCountStyled data-testid={testIdentifier}>
-            {t('This item is available immediately in {{ count }} stores', { count: props.availableStoresCount })}
+        <ProductAvailableStoreCountStyled data-testid={TEST_IDENTIFIER}>
+            {t('This item is available immediately in {{ count }} stores', { count: availableStoresCount })}
         </ProductAvailableStoreCountStyled>
     );
 };

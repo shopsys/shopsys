@@ -10,18 +10,19 @@ type ProductsListProps = {
     gtmListName: GtmListNameType;
 };
 
-export const ProductsList: FC<ProductsListProps> = (props) => {
-    const testIdentifier = 'blocks-product-list';
+const TEST_IDENTIFIER = 'blocks-product-list';
+
+export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products }) => {
     const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
 
     return (
-        <ProductsListStyled data-testid={testIdentifier}>
-            {props.products.map((listedProductItem, index) => (
+        <ProductsListStyled data-testid={TEST_IDENTIFIER}>
+            {products.map((listedProductItem, index) => (
                 <ProductItem
                     key={listedProductItem.uuid}
                     product={listedProductItem}
                     listIndex={(currentPage - 1) * pageSize + index}
-                    gtmListName={props.gtmListName}
+                    gtmListName={gtmListName}
                 />
             ))}
         </ProductsListStyled>

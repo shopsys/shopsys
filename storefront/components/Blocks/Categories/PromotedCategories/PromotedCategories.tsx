@@ -5,9 +5,9 @@ import { FC } from 'react';
 export const PromotedCategories: FC = () => {
     const promotedCategories = usePromotedCategories();
 
-    if (promotedCategories !== undefined) {
-        return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;
+    if (promotedCategories === undefined) {
+        return null;
     }
 
-    return null;
+    return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;
 };

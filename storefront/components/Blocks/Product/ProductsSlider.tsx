@@ -12,32 +12,32 @@ type ProductsSliderProps = {
     gtmListName: GtmListNameType;
 };
 
-export const ProductsSlider: FC<ProductsSliderProps> = (props) => {
+export const ProductsSlider: FC<ProductsSliderProps> = ({ products, gtmListName }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [areControlsVisible, setAreControlsVisible] = useState<boolean | undefined>(false);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
-        loop: props.products.length > 4,
+        loop: products.length > 4,
         autoAdjustSlidesPerView: false,
         slidesPerView: 4,
-        controls: props.products.length > 4,
+        controls: products.length > 4,
         breakpoints: {
             [theme.mediaQueries.queryNotLargeDesktop]: {
-                loop: props.products.length > 3,
+                loop: products.length > 3,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 3,
-                controls: props.products.length > 3,
+                controls: products.length > 3,
             },
             [theme.mediaQueries.queryTablet]: {
-                loop: props.products.length > 2,
+                loop: products.length > 2,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 2,
-                controls: props.products.length > 2,
+                controls: products.length > 2,
             },
             [theme.mediaQueries.queryMobile]: {
-                loop: props.products.length > 1,
+                loop: products.length > 1,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 1,
-                controls: props.products.length > 1,
+                controls: products.length > 1,
             },
         },
         slideChanged(slider) {
@@ -47,7 +47,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = (props) => {
             setAreControlsVisible(slider.options().controls);
         },
     });
-    useGtmSliderProductListView(props.products, props.gtmListName);
+    useGtmSliderProductListView(products, gtmListName);
 
     const onMoveToNextSlideHandler = () => {
         slider.moveToSlide(currentSlide + 1);
@@ -60,11 +60,11 @@ export const ProductsSlider: FC<ProductsSliderProps> = (props) => {
     return (
         <ProductSliderWrapperStyled>
             <ProductSliderStyled ref={sliderRef} className="keen-slider">
-                {props.products.map((productItemData, index) => (
+                {products.map((productItemData, index) => (
                     <SliderProductItem
                         key={productItemData.uuid}
                         product={productItemData}
-                        gtmListName={props.gtmListName}
+                        gtmListName={gtmListName}
                         listIndex={index}
                     />
                 ))}

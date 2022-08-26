@@ -14,7 +14,7 @@ import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts'
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { DeliveryAddressType } from 'types/customer';
 
 type AddressListProps = {
@@ -28,12 +28,6 @@ export const AddressList: FC<AddressListProps> = (props) => {
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
     const t = useTypedTranslationFunction();
-
-    const setItemToBeDeletedHandler =
-        (deliveryAddressUuid: string) => (e: SyntheticEvent<HTMLDivElement, MouseEvent>) => {
-            e.stopPropagation();
-            setAddressToBeDeleted(deliveryAddressUuid);
-        };
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {
         if (deliveryAddressUuid === undefined) {
@@ -93,7 +87,7 @@ export const AddressList: FC<AddressListProps> = (props) => {
                         <ListItemDeleteStyled
                             icon="Remove"
                             iconType="icon"
-                            onClick={setItemToBeDeletedHandler(address.uuid)}
+                            onClick={() => setAddressToBeDeleted(address.uuid)}
                         />
                     </ListItemStyled>
                 ))}

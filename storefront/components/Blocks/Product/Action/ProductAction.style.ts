@@ -9,8 +9,8 @@ export const ProductActionWrapperStyled = styled.div`
     padding: 0 9px 10px;
 `;
 
-export const ProductActionStyled = styled.div<ProductActionStyledProps>`
-    ${({ theme, isButtonFullWidth }) => css`
+export const ProductActionStyled = styled.div<ProductActionStyledProps>(
+    ({ theme, isButtonFullWidth }) => css`
         padding: 8px;
         display: flex;
         flex-direction: row;
@@ -26,8 +26,8 @@ export const ProductActionStyled = styled.div<ProductActionStyledProps>`
                 width: 100%;
             }
         `}
-    `}
-`;
+    `,
+);
 
 export const AddToCartUnavailableTextStyled = styled.p`
     padding: 5px;

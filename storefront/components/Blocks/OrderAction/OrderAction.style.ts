@@ -11,8 +11,8 @@ type OrderActionStyledProps = {
     withGapTop?: boolean;
 };
 
-export const OrderActionStyled = styled.div<OrderActionStyledProps>`
-    ${({ theme, withGapBottom, withGapTop }) => css`
+export const OrderActionStyled = styled.div<OrderActionStyledProps>(
+    ({ theme, withGapBottom, withGapTop }) => css`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -35,21 +35,21 @@ export const OrderActionStyled = styled.div<OrderActionStyledProps>`
                 margin-bottom: 90px;
             `};
         }
-    `}
-`;
+    `,
+);
 
-export const OrderActionLeftStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderActionLeftStyled = styled.div(
+    ({ theme }) => css`
         order: 2;
 
         @media ${theme.mediaQueries.queryLg} {
             order: 1;
         }
-    `}
-`;
+    `,
+);
 
-export const OrderActionRightStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderActionRightStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 30px;
         order: 1;
         width: auto;
@@ -58,17 +58,17 @@ export const OrderActionRightStyled = styled.div`
             order: 2;
             margin-bottom: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const OrderActionLinkBackStyled = styled.a`
-    ${({ theme }) => css`
+export const OrderActionLinkBackStyled = styled.a(
+    ({ theme }) => css`
         text-transform: uppercase;
         font-weight: 700;
         color: ${theme.color.base};
         text-decoration: none;
-    `}
-`;
+    `,
+);
 
 export const OrderActionButtonBackIconStyled = styled(Icon)`
     position: relative;
@@ -79,13 +79,13 @@ export const OrderActionButtonBackIconStyled = styled(Icon)`
     color: ${localVariables.orderActionButtonBackIconColor};
 `;
 
-export const OrderActionButtonNextIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const OrderActionButtonNextIconStyled = styled(Icon)(
+    ({ theme }) => css`
         position: relative;
         top: 1px;
         transform: rotate(-90deg);
         margin-left: 5px;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);

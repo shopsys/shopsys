@@ -23,6 +23,7 @@ export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLeve
                             data-testid={TEST_IDENTIFIER + index}
                         >
                             <BlogSignpostItemIconStyled
+                                alt=""
                                 iconType="icon"
                                 icon="Arrow"
                                 isActive={activeItem === blogCategoryChild.uuid}

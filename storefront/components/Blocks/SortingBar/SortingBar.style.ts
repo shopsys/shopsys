@@ -11,8 +11,8 @@ type SortingBarItemLinkStyledProps = {
     isActive: boolean;
 };
 
-export const SortingBarStyled = styled.div`
-    ${({ theme }) => css`
+export const SortingBarStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         width: 100%;
         height: 48px;
@@ -26,11 +26,11 @@ export const SortingBarStyled = styled.div`
             width: 100%;
             height: 34px;
         }
-    `}
-`;
+    `,
+);
 
-export const SortingBarOptionsWrapStyled = styled.div`
-    ${({ theme }) => css`
+export const SortingBarOptionsWrapStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         position: absolute;
@@ -52,8 +52,8 @@ export const SortingBarOptionsWrapStyled = styled.div`
             background-color: transparent;
             border-radius: 0;
         }
-    `}
-`;
+    `,
+);
 
 export const SortingBarOptionsStyled = styled.div`
     display: flex;
@@ -65,24 +65,24 @@ export const SortingBarOptionsStyled = styled.div`
     border: 0;
 `;
 
-export const SortingBarItemStyled = styled.div`
-    ${({ theme }) => css`
+export const SortingBarItemStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
 
         @media ${theme.mediaQueries.queryVl} {
             margin-left: ${localVariables.SortOrderOptionsLeftMargin};
         }
-    `}
-`;
+    `,
+);
 
-export const SortingBarItemLinkWrapStyled = styled.span`
-    ${({ theme }) => css`
+export const SortingBarItemLinkWrapStyled = styled.span(
+    ({ theme }) => css`
         line-height: ${theme.lineHeight.default};
-    `}
-`;
+    `,
+);
 
-export const SortingBarItemLinkStyled = styled.a<SortingBarItemLinkStyledProps>`
-    ${({ theme, isActive }) => css`
+export const SortingBarItemLinkStyled = styled.a<SortingBarItemLinkStyledProps>(
+    ({ theme, isActive }) => css`
         display: block;
         padding: 16px 9px 17px;
         text-align: center;
@@ -123,8 +123,8 @@ export const SortingBarItemLinkStyled = styled.a<SortingBarItemLinkStyledProps>`
                 }
             `};
         }
-    `}
-`;
+    `,
+);
 
 export const SortingBarSelectedSortStyled = styled.div`
     display: flex;
@@ -133,34 +133,34 @@ export const SortingBarSelectedSortStyled = styled.div`
     align-items: center;
 `;
 
-export const SortingBarSeletedSortWrapStyled = styled.div`
-    ${({ theme }) => css`
+export const SortingBarSeletedSortWrapStyled = styled.div(
+    ({ theme }) => css`
         padding-left: 8px;
         text-align: justify;
 
         color: ${theme.color.base};
         font-weight: 700;
-    `}
-`;
+    `,
+);
 
-export const SortingBarTitleStyled = styled.div`
-    ${({ theme }) => css`
+export const SortingBarTitleStyled = styled.div(
+    ({ theme }) => css`
         line-height: ${theme.lineHeight.default};
 
         font-size: ${theme.fontSize.default};
         text-transform: uppercase;
-    `}
-`;
+    `,
+);
 
-export const SortingBarSelectedValue = styled.div`
-    ${({ theme }) => css`
+export const SortingBarSelectedValue = styled.div(
+    ({ theme }) => css`
         line-height: ${theme.lineHeight.default};
 
         color: ${theme.color.primary};
         text-transform: none;
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
 export const SortingBarSortIconStyled = styled(Icon)`
     vertical-align: middle;

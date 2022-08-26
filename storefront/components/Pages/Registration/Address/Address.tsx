@@ -4,11 +4,12 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { RegistrationFormType } from 'types/form';
 
 export const Address: FC = () => {
     const t = useTypedTranslationFunction();

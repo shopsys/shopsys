@@ -2,8 +2,8 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ButtonsStyled = styled.div`
-    ${({ theme }) => css`
+export const ButtonsStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -19,11 +19,11 @@ export const ButtonsStyled = styled.div`
 
             border: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ButtonWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const ButtonWrapperStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         display: flex;
         justify-content: flex-end;
@@ -35,11 +35,11 @@ export const ButtonWrapperStyled = styled.div`
                 padding: 0 10px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const LoginStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -71,11 +71,11 @@ export const LoginStyled = styled.div`
                 background-color: ${theme.color.primary};
             }
         }
-    `}
-`;
+    `,
+);
 
-export const LoginColumnStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginColumnStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -87,11 +87,11 @@ export const LoginColumnStyled = styled.div`
                 padding-left: 20px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const LoginProfileStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         padding: 16px;
         margin: 24px -15px 24px 0;
@@ -100,15 +100,11 @@ export const LoginProfileStyled = styled.div`
         background-color: ${theme.color.blueLight};
         border-top-left-radius: ${theme.radius.big};
         border-bottom-left-radius: ${theme.radius.big};
+    `,
+);
 
-        @media ${theme.mediaQueries.queryLg} {
-            margin: 0 -@window-popup-inner-padding 0 0;
-        }
-    `}
-`;
-
-export const LoginProfileTextStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileTextStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         max-width: 170px;
 
@@ -122,11 +118,11 @@ export const LoginProfileTextStyled = styled.div`
 
             font-size: 20px;
         }
-    `}
-`;
+    `,
+);
 
-export const LoginProfileIconStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileIconStyled = styled.div(
+    ({ theme }) => css`
         position: absolute;
         right: 0;
         top: -20px;
@@ -145,11 +141,11 @@ export const LoginProfileIconStyled = styled.div`
         img {
             max-width: none;
         }
-    `}
-`;
+    `,
+);
 
-export const LoginMessageStyled = styled.p`
-    ${({ theme }) => css`
+export const LoginMessageStyled = styled.p(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -159,11 +155,11 @@ export const LoginMessageStyled = styled.p`
 
             font-size: ${theme.fontSize.default};
         }
-    `}
-`;
+    `,
+);
 
-export const LoginLostPassStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginLostPassStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         padding: 6px 8px;
@@ -179,11 +175,11 @@ export const LoginLostPassStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             padding: 8px 12px;
         }
-    `}
-`;
+    `,
+);
 
-export const LoginLostPassIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const LoginLostPassIconStyled = styled(Icon)(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.querySm} {
@@ -194,11 +190,11 @@ export const LoginLostPassIconStyled = styled(Icon)`
 
             color: ${theme.color.red};
         }
-    `}
-`;
+    `,
+);
 
-export const LoginLostPassTextStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginLostPassTextStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -207,11 +203,11 @@ export const LoginLostPassTextStyled = styled.div`
 
             font-size: 15px;
         }
-    `}
-`;
+    `,
+);
 
-export const LoginLostPassLinkStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginLostPassLinkStyled = styled.div(
+    ({ theme }) => css`
         display: none;
         text-decoration: underline;
         cursor: pointer;
@@ -225,11 +221,11 @@ export const LoginLostPassLinkStyled = styled.div`
 
             color: ${theme.color.primary};
         }
-    `}
-`;
+    `,
+);
 
-export const LoginLostPassLinkMobileStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginLostPassLinkMobileStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         text-decoration: underline;
 
@@ -243,5 +239,5 @@ export const LoginLostPassLinkMobileStyled = styled.div`
             display: none;
             color: ${theme.color.primary};
         }
-    `}
-`;
+    `,
+);

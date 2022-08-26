@@ -16,47 +16,55 @@ type OrderActionProps = {
     buttonNext: string;
     buttonBackLink: string;
     buttonNextLink?: string;
-    activeStep: number;
     hasDisabledLook: boolean;
     withGapBottom?: boolean;
     withGapTop?: boolean;
     nextStepClickHandler?: () => void;
 };
 
-export const OrderAction: FC<OrderActionProps> = (props) => {
-    const testIdentifier = 'blocks-orderaction-';
+const TEST_IDENTIFIER = 'blocks-orderaction-';
 
+export const OrderAction: FC<OrderActionProps> = ({
+    buttonBack,
+    buttonNext,
+    buttonBackLink,
+    buttonNextLink,
+    hasDisabledLook,
+    nextStepClickHandler,
+    withGapBottom,
+    withGapTop,
+}) => {
     const router = useRouter();
 
     const onNextStepHandler = () => {
-        if (props.buttonNextLink !== undefined) {
-            router.push(props.buttonNextLink, undefined, { shallow: true });
+        if (buttonNextLink !== undefined) {
+            router.push(buttonNextLink, undefined, { shallow: true });
         }
-        if (props.nextStepClickHandler !== undefined) {
-            props.nextStepClickHandler();
+        if (nextStepClickHandler !== undefined) {
+            nextStepClickHandler();
         }
     };
 
     return (
-        <OrderActionStyled withGapBottom={props.withGapBottom} withGapTop={props.withGapTop}>
-            <OrderActionLeftStyled data-testid={testIdentifier + 'back'}>
-                <NextLink href={props.buttonBackLink} passHref shallow prefetch>
+        <OrderActionStyled withGapBottom={withGapBottom} withGapTop={withGapTop}>
+            <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
+                <NextLink href={buttonBackLink} passHref shallow prefetch>
                     <OrderActionLinkBackStyled>
-                        <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
-                        {props.buttonBack}
+                        <OrderActionButtonBackIconStyled alt="" iconType="icon" icon="Arrow" />
+                        {buttonBack}
                     </OrderActionLinkBackStyled>
                 </NextLink>
             </OrderActionLeftStyled>
-            <OrderActionRightStyled data-testid={testIdentifier + 'next'}>
+            <OrderActionRightStyled data-testid={TEST_IDENTIFIER + 'next'}>
                 <Button
                     type="submit"
                     borderRadius="big"
                     variant="primary"
-                    hasDisabledLook={props.hasDisabledLook}
+                    hasDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
-                    {props.buttonNext}
-                    <OrderActionButtonNextIconStyled iconType="icon" icon="Arrow" />
+                    {buttonNext}
+                    <OrderActionButtonNextIconStyled alt="" iconType="icon" icon="Arrow" />
                 </Button>
             </OrderActionRightStyled>
         </OrderActionStyled>

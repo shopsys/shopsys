@@ -7,9 +7,9 @@ const GTM_LIST_NAME = 'homepage promo products' as const;
 export const PromotedProducts: FC = () => {
     const promotedProducts = usePromotedProducts();
 
-    if (promotedProducts !== undefined) {
-        return <ProductsSlider products={promotedProducts} gtmListName={GTM_LIST_NAME} />;
+    if (promotedProducts === undefined) {
+        return null;
     }
 
-    return null;
+    return <ProductsSlider products={promotedProducts} gtmListName={GTM_LIST_NAME} />;
 };

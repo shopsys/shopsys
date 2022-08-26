@@ -27,8 +27,9 @@ type ProductItemProps = {
     gtmListName: GtmListNameType;
 };
 
-export const ProductItem: FC<ProductItemProps> = (props) => {
-    const testIdentifier = 'blocks-product-list-listeditem-' + props.product.catalogNumber;
+const TEST_IDENTIFIER = 'blocks-product-list-listeditem';
+
+export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListName }) => {
     const { url } = useShopsysSelector((state) => state.domain);
 
     const onProductDetailRedirectHandler = useCallback(
@@ -39,38 +40,36 @@ export const ProductItem: FC<ProductItemProps> = (props) => {
     );
 
     return (
-        <ProductItemStyled data-testid={testIdentifier}>
+        <ProductItemStyled data-testid={TEST_IDENTIFIER + product.catalogNumber}>
             <ProductItemInStyled>
-                <NextLink href={props.product.slug} passHref>
+                <NextLink href={product.slug} passHref>
                     <ProductItemLinkStyled
-                        onClick={() =>
-                            onProductDetailRedirectHandler(props.product, props.gtmListName, props.listIndex)
-                        }
+                        onClick={() => onProductDetailRedirectHandler(product, gtmListName, listIndex)}
                     >
                         <ProductItemImageStyled>
-                            <Image image={props.product.image} type="list" alt={props.product.fullName} />
+                            <Image image={product.image} type="list" alt={product.fullName} />
                             <ProductItemFlagsStyled>
-                                <ProductFlags flags={props.product.flags} />
+                                <ProductFlags flags={product.flags} />
                             </ProductItemFlagsStyled>
                         </ProductItemImageStyled>
                         <ProductItemInfoStyled>
-                            <ProductItemTitleStyled>{props.product.fullName}</ProductItemTitleStyled>
-                            <ProductPrice {...props.product.price} />
+                            <ProductItemTitleStyled>{product.fullName}</ProductItemTitleStyled>
+                            <ProductPrice productPrice={product.price} />
                             <ProductAvailabilityStyled>
-                                {props.product.availability.name}
+                                {product.availability.name}
                                 <ProductAvailableStoresCount
-                                    isMainVariant={props.product.isMainVariant}
-                                    availableStoresCount={props.product.availableStoresCount}
+                                    isMainVariant={product.isMainVariant}
+                                    availableStoresCount={product.availableStoresCount}
                                 />
                                 <ProductExposedStoresCount
-                                    isMainVariant={props.product.isMainVariant}
-                                    exposedStoresCount={props.product.exposedStoresCount}
+                                    isMainVariant={product.isMainVariant}
+                                    exposedStoresCount={product.exposedStoresCount}
                                 />
                             </ProductAvailabilityStyled>
                         </ProductItemInfoStyled>
                     </ProductItemLinkStyled>
                 </NextLink>
-                <ProductAction product={props.product} gtmListName={props.gtmListName} listIndex={props.listIndex} />
+                <ProductAction product={product} gtmListName={gtmListName} listIndex={listIndex} />
             </ProductItemInStyled>
         </ProductItemStyled>
     );

@@ -32,6 +32,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                                 data-testid={TEST_IDENTIFIER + index}
                             >
                                 <BlogSignpostItemIconStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="Arrow"
                                     isActive={activeItem === blogCategory.uuid}

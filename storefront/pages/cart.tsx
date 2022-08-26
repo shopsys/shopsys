@@ -31,7 +31,6 @@ const CartPage: FC<ServerSidePropsType> = () => {
                 <CartContent />
                 <Webline>
                     <OrderAction
-                        activeStep={1}
                         buttonBack={t('Back')}
                         buttonNext={t('Transport and payment')}
                         hasDisabledLook={false}

@@ -2,17 +2,17 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const PromoCodeInfoStyled = styled.div`
-    ${({ theme }) => css`
+export const PromoCodeInfoStyled = styled.div(
+    ({ theme }) => css`
         font-size: ${theme.fontSize.default};
-    `}
-`;
+    `,
+);
 
-export const PromoCodeInfoTitleStyled = styled.div`
-    ${({ theme }) => css`
+export const PromoCodeInfoTitleStyled = styled.div(
+    ({ theme }) => css`
         color: ${theme.color.primary};
-    `}
-`;
+    `,
+);
 
 export const PromoCodeInfoCouponStyled = styled.div`
     display: flex;
@@ -21,8 +21,8 @@ export const PromoCodeInfoCouponStyled = styled.div`
     font-weight: 700;
 `;
 
-export const PromoCodeInfoCouponIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const PromoCodeInfoCouponIconStyled = styled(Icon)(
+    ({ theme }) => css`
         width: 16px;
         height: 16px;
         margin-left: 5px;
@@ -33,5 +33,5 @@ export const PromoCodeInfoCouponIconStyled = styled(Icon)`
         &:hover {
             color: ${theme.color.primary};
         }
-    `}
-`;
+    `,
+);

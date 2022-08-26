@@ -68,7 +68,6 @@ export const Variant: FC<VariantProps> = (props) => {
                         <VariantActionStyled>
                             <AddToCart
                                 productUuid={props.variant.uuid}
-                                productName={props.variant.fullName}
                                 minQuantity={1}
                                 maxQuantity={props.variant.stockQuantity}
                                 gtmListName={props.gtmListName}

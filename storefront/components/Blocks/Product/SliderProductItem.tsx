@@ -27,48 +27,44 @@ type SliderProductItemProps = {
     listIndex: number;
 };
 
-export const SliderProductItem: FC<SliderProductItemProps> = (props) => {
-    const testIdentifier = 'blocks-product-sliderproductitem-';
+const TEST_IDENTIFIER = 'blocks-product-sliderproductitem-';
+
+export const SliderProductItem: FC<SliderProductItemProps> = ({ product, gtmListName, listIndex }) => {
     const { url } = useShopsysSelector((state) => state.domain);
 
     return (
-        <SliderProductItemStyled
-            className="keen-slider__slide"
-            data-testid={testIdentifier + props.product.catalogNumber}
-        >
+        <SliderProductItemStyled className="keen-slider__slide" data-testid={TEST_IDENTIFIER + product.catalogNumber}>
             <SliderProductItemInStyled>
-                <NextLink href={props.product.slug} passHref>
+                <NextLink href={product.slug} passHref>
                     <SliderProductItemLinkStyled
-                        onClick={() =>
-                            onClickProductDetailGtmEventHandler(props.product, props.gtmListName, props.listIndex, url)
-                        }
+                        onClick={() => onClickProductDetailGtmEventHandler(product, gtmListName, listIndex, url)}
                     >
-                        <SliderProductItemImageStyled data-testid={testIdentifier + 'image'}>
-                            <Image image={props.product.image} type="list" alt={props.product.fullName} />
+                        <SliderProductItemImageStyled data-testid={TEST_IDENTIFIER + 'image'}>
+                            <Image image={product.image} type="list" alt={product.fullName} />
                             <SliderProductItemFlagsStyled>
-                                <ProductFlags flags={props.product.flags} />
+                                <ProductFlags flags={product.flags} />
                             </SliderProductItemFlagsStyled>
                         </SliderProductItemImageStyled>
                         <SliderProductItemInfoStyled>
-                            <SliderProductItemTitleStyled data-testid={testIdentifier + 'name'}>
-                                {props.product.fullName}
+                            <SliderProductItemTitleStyled data-testid={TEST_IDENTIFIER + 'name'}>
+                                {product.fullName}
                             </SliderProductItemTitleStyled>
-                            <ProductPrice {...props.product.price} />
+                            <ProductPrice productPrice={product.price} />
                             <ProductAvailabilityStyled>
-                                {props.product.availability.name}
+                                {product.availability.name}
                                 <ProductAvailableStoresCount
-                                    isMainVariant={props.product.isMainVariant}
-                                    availableStoresCount={props.product.availableStoresCount}
+                                    isMainVariant={product.isMainVariant}
+                                    availableStoresCount={product.availableStoresCount}
                                 />
                                 <ProductExposedStoresCount
-                                    isMainVariant={props.product.isMainVariant}
-                                    exposedStoresCount={props.product.exposedStoresCount}
+                                    isMainVariant={product.isMainVariant}
+                                    exposedStoresCount={product.exposedStoresCount}
                                 />
                             </ProductAvailabilityStyled>
                         </SliderProductItemInfoStyled>
                     </SliderProductItemLinkStyled>
                 </NextLink>
-                <ProductAction product={props.product} gtmListName={props.gtmListName} listIndex={props.listIndex} />
+                <ProductAction product={product} gtmListName={gtmListName} listIndex={listIndex} />
             </SliderProductItemInStyled>
         </SliderProductItemStyled>
     );

@@ -5,9 +5,9 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
 
-export const FreeTransport: FC = () => {
-    const testIdentifier = 'blocks-freetransport';
+const TEST_IDENTIFIER = 'blocks-freetransport';
 
+export const FreeTransport: FC = () => {
     const { cart, isCartEmpty } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -21,7 +21,7 @@ export const FreeTransport: FC = () => {
 
     if (amount > 0) {
         return (
-            <FreeTransportStyled data-testid={testIdentifier}>
+            <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
                     components={{
@@ -34,7 +34,7 @@ export const FreeTransport: FC = () => {
     }
 
     return (
-        <FreeTransportStyled data-testid={testIdentifier}>
+        <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
         </FreeTransportStyled>
     );
