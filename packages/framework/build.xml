@@ -66,6 +66,7 @@
                     <arg value="${path.bin-console}"/>
                     <arg value="shopsys:extended-classes:annotations"/>
                     <arg value="--dry-run"/>
+                    <arg value="--verbose"/>
                 </exec>
             </then>
             <else>
@@ -84,6 +85,7 @@
                 <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
                     <arg value="${path.bin-console}"/>
                     <arg value="shopsys:extended-classes:annotations"/>
+                    <arg value="--verbose"/>
                 </exec>
             </then>
             <else>
@@ -105,12 +107,14 @@
             <arg value="${path.bin-console}"/>
             <arg value="assets:install"/>
             <arg value="${path.root}/web/"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="elfinder:install"/>
             <arg value="--docroot"/>
             <arg value="web"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -179,6 +183,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true" output="${dev.null}">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:redis:clean-cache-old"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -220,6 +225,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:cron"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -228,6 +234,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:cron"/>
             <arg value="--list"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -235,6 +242,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:check-mapping"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -242,6 +250,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:check-schema"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -249,6 +258,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:database:create"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -260,10 +270,12 @@
             <arg value="doctrine:fixtures:load"/>
             <arg value="--append"/>
             <arg value="--no-interaction"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:recalculations"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -271,6 +283,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:import-default"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -286,6 +299,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:count"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -293,6 +307,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:generate"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -302,10 +317,12 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:drop"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:schema:create"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -442,6 +459,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -449,6 +467,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-db-functions:create"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -457,6 +476,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains:info"/>
             <arg value="--oneline"/>
+            <arg value="--verbose"/>
         </exec>
 
         <exec executable="${path.php.executable}" outputProperty="domains-info.locales" error="${dev.null}">
@@ -465,6 +485,7 @@
             <arg value="locale"/>
             <arg value="--deduplicate"/>
             <arg value="--oneline"/>
+            <arg value="--verbose"/>
         </exec>
 
         <if>
@@ -482,6 +503,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-urls:replace"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -539,6 +561,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:data-export"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -548,6 +571,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:changed-data-export"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -558,6 +582,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-create"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -567,6 +592,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-delete"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -576,6 +602,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:elasticsearch:indexes-migrate"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -588,6 +615,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:environment:change"/>
             <arg value="${change.environment}"/>
+            <arg value="--verbose"/>
         </exec>
         <if>
             <equals arg1="${change.environment}" arg2="prod"/>
@@ -626,6 +654,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:error-page:generate-all"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -693,6 +722,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:generate:friendly-url"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -817,6 +847,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:plugin-data-fixtures:load"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -825,6 +856,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="cache:warmup"/>
             <arg value="--env=prod"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -852,6 +884,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:redis:check-availability"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -920,6 +953,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:redis:clean-cache"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -928,6 +962,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:database:create"/>
             <arg value="--env=test"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -940,6 +975,7 @@
             <arg value="shopsys:database:dump"/>
             <arg value="--pgdump-bin=${path.pg_dump.executable}"/>
             <arg value="${path.test.database.dump}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -950,11 +986,13 @@
             <arg value="doctrine:fixtures:load"/>
             <arg value="--append"/>
             <arg value="--no-interaction"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:recalculations"/>
             <arg value="--env=test"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -963,11 +1001,13 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:performance-data"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:recalculations"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -976,6 +1016,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:schema:import-default"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -984,6 +1025,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:migrations:migrate"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -994,11 +1036,13 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:schema:drop"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:schema:create"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1007,6 +1051,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:create-directories"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1015,6 +1060,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-data:create"/>
             <arg value="--env=test"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1023,6 +1069,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-db-functions:create"/>
             <arg value="--env=test"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1031,6 +1078,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:domains-urls:replace"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1041,6 +1089,7 @@
             <arg value="--env=test"/>
             <arg value="shopsys:elasticsearch:data-export"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1052,6 +1101,7 @@
             <arg value="--env=test"/>
             <arg value="shopsys:elasticsearch:indexes-create"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1062,6 +1112,7 @@
             <arg value="--env=test"/>
             <arg value="shopsys:elasticsearch:indexes-delete"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1072,6 +1123,7 @@
             <arg value="--env=test"/>
             <arg value="shopsys:elasticsearch:indexes-migrate"/>
             <arg value="${elasticsearch.index}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1082,6 +1134,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:generate:friendly-url"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1090,6 +1143,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="--env=test"/>
             <arg value="shopsys:plugin-data-fixtures:load"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1314,6 +1368,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:check-timezones"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1332,6 +1387,7 @@
             <arg value="--output-dir=${path.root}/translations"/>
             <arg line="${translations.dump.flags}"/>
             <arg line="${domains-info.locales}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1340,6 +1396,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="lint:twig"/>
             <arg value="${path.templates}"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1353,6 +1410,7 @@
                     <arg value="${path.bin-console}"/>
                     <arg value="lint:twig"/>
                     <arg line="${diff.files.twig.spaces}"/>
+                    <arg value="--verbose"/>
                 </exec>
             </then>
         </if>
@@ -1362,6 +1420,7 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="cache:warmup"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
@@ -1403,12 +1462,14 @@
             <arg value="lint:yaml"/>
             <arg value="${path.src}"/>
             <arg value="--parse-tags"/>
+            <arg value="--verbose"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="lint:yaml"/>
             <arg value="${path.config}"/>
             <arg value="--parse-tags"/>
+            <arg value="--verbose"/>
         </exec>
     </target>
 
