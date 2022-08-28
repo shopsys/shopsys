@@ -6,16 +6,16 @@ type PageGuardProps = {
     errorRedirectUrl: string;
 };
 
-export const PageGuard: FC<PageGuardProps> = (props) => {
+export const PageGuard: FC<PageGuardProps> = ({ accessCondition, errorRedirectUrl, children }) => {
     const router = useRouter();
 
-    if (props.accessCondition) {
-        return <>{props.children}</>;
+    if (!accessCondition) {
+        if (typeof window !== 'undefined') {
+            router.replace(errorRedirectUrl);
+        }
+
+        return null;
     }
 
-    if (typeof window !== 'undefined') {
-        router.replace(props.errorRedirectUrl);
-    }
-
-    return null;
+    return <>{children}</>;
 };

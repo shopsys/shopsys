@@ -65,7 +65,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         {formatDate(blogArticle.publishDate, 'l')}
                     </BlogArticleDate>
                     {textWithProductNames !== null && (
-                        <UserText htmlContent={textWithProductNames} data-testid={TEST_IDENTIFIER + 'content'} />
+                        <UserText htmlContent={textWithProductNames} testIdentifier={TEST_IDENTIFIER + 'content'} />
                     )}
                 </BlogArticleTextContent>
 

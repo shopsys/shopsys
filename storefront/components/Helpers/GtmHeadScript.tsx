@@ -7,7 +7,7 @@ export const GtmHeadScript: FC = () => {
     }
 
     const GTM_ID = getDomainConfig(window.location.host).gtmId;
-    if (GTM_ID.length === 0) {
+    if (GTM_ID === undefined || GTM_ID.length === 0) {
         return null;
     }
 

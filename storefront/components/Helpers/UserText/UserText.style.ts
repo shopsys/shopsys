@@ -11,8 +11,8 @@ const localVariables = {
     userTextLineHeight: '1.6',
 } as const;
 
-export const UserTextStyled = styled.section`
-    ${({ theme }) => css`
+export const UserTextStyled = styled.section(
+    ({ theme }) => css`
         font-size: ${localVariables.userTextFontSize};
         line-height: ${localVariables.userTextLineHeight};
         -webkit-font-smoothing: antialiased;
@@ -96,5 +96,5 @@ export const UserTextStyled = styled.section`
 
             border-radius: ${theme.radius.big};
         }
-    `}
-`;
+    `,
+);

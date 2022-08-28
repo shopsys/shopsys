@@ -5,10 +5,10 @@ const localVariables = {
     infoToastBackground: '#f2f2ff',
     successToastBackground: '#ddf9f5',
     errorToastBackground: '#ffc4c4',
-};
+} as const;
 
-export const ToastsStyle = createGlobalStyle`
-    ${({ theme }: { theme: Theme }) => css`
+export const ToastsStyle = createGlobalStyle<{ theme: Theme }>(
+    ({ theme }) => css`
         .Toastify__toast {
             border-radius: 11px;
         }
@@ -68,5 +68,5 @@ export const ToastsStyle = createGlobalStyle`
             --toastify-font-family: sans-serif;
             --toastify-z-index: ${theme.zIndex.maximum};
         }
-    `}
-`;
+    `,
+);

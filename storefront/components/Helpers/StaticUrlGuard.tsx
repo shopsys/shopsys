@@ -7,13 +7,13 @@ type StaticUrlGuardProps = {
     domainUrl: string;
 };
 
-export const StaticUrlGuard: FC<StaticUrlGuardProps> = (props) => {
+export const StaticUrlGuard: FC<StaticUrlGuardProps> = ({ domainUrl, children }) => {
     const router = useRouter();
-    const isStaticUrlAllowed = useStaticUrlGuard(router.asPath.split('?')[0], props.domainUrl);
+    const isStaticUrlAllowed = useStaticUrlGuard(router.asPath.split('?')[0], domainUrl);
 
     if (!isStaticUrlAllowed) {
         return <Error404Content />;
     }
 
-    return <>{props.children}</>;
+    return <>{children}</>;
 };
