@@ -18,8 +18,9 @@ type NavigationItemProps = {
     navigationItem: NavigationItemType;
 };
 
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
+
 export const NavigationItem: FC<NavigationItemProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationitem';
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
     const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
     const isHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);
@@ -44,9 +45,8 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <NavigationItemStyled
                     onMouseEnter={openSubmenu}
                     onMouseLeave={hideSubmenu}
-                    isOpen={isHovered}
                     onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
-                    data-testid={testIdentifier}
+                    data-testid={TEST_IDENTIFIER}
                 >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>
@@ -68,8 +68,7 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <NavigationItemStyled
                     onMouseEnter={openSubmenu}
                     onMouseLeave={hideSubmenu}
-                    isOpen={isHovered}
-                    data-testid={testIdentifier}
+                    data-testid={TEST_IDENTIFIER}
                 >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>

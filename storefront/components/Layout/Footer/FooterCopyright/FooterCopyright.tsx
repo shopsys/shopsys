@@ -3,13 +3,13 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Image from 'next/image';
 import { FC } from 'react';
 
-export const FooterCopyright: FC = () => {
-    const testIdentifier = 'layout-footer-footercopyright';
+const TEST_IDENTIFIER = 'layout-footer-footercopyright';
 
+export const FooterCopyright: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
-        <FooterCopyrightStyled data-testid={testIdentifier}>
+        <FooterCopyrightStyled data-testid={TEST_IDENTIFIER}>
             <FooterCopyrightTextStyled>
                 {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
             </FooterCopyrightTextStyled>

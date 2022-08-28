@@ -18,12 +18,12 @@ type PopupProps = {
     hideCloseButton?: boolean;
 };
 
-export const Popup: FC<PopupProps> = (props) => {
-    const testIdentifier = 'layout-popup';
+const TEST_IDENTIFIER = 'layout-popup';
 
+export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hideCloseButton, wrapperComponent }) => {
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
-            props.onCloseCallback();
+            onCloseCallback();
         }
     }).current;
 
@@ -32,38 +32,38 @@ export const Popup: FC<PopupProps> = (props) => {
             return undefined;
         }
 
-        if (props.isVisible) {
+        if (isVisible) {
             document.addEventListener('keydown', onEscapeButtonPressHandler);
         } else {
             document.removeEventListener('keydown', onEscapeButtonPressHandler);
         }
 
         return () => document.removeEventListener('keydown', onEscapeButtonPressHandler);
-    }, [onEscapeButtonPressHandler, props.isVisible]);
+    }, [onEscapeButtonPressHandler, isVisible]);
 
     const onClickCloseActionHandler: MouseEventHandler<HTMLElement> = () => {
-        props.onCloseCallback();
+        onCloseCallback();
     };
 
-    const PopupWrapper = props.wrapperComponent !== undefined ? props.wrapperComponent : PopupStyled;
+    const PopupWrapper = wrapperComponent !== undefined ? wrapperComponent : PopupStyled;
 
-    if (props.isVisible) {
-        return (
-            <Portal>
-                <Overlay onClick={onClickCloseActionHandler}></Overlay>
-                <PopupWrapper role="dialog" aria-modal={true} data-testid={testIdentifier}>
-                    {props.hideCloseButton !== true && (
-                        <PopupHeaderStyled>
-                            <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
-                                <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
-                            </PopupButtonCloseStyled>
-                        </PopupHeaderStyled>
-                    )}
-                    <PopupContentStyled>{props.children}</PopupContentStyled>
-                </PopupWrapper>
-            </Portal>
-        );
+    if (!isVisible) {
+        return null;
     }
 
-    return null;
+    return (
+        <Portal>
+            <Overlay onClick={onClickCloseActionHandler}></Overlay>
+            <PopupWrapper role="dialog" aria-modal={true} data-testid={TEST_IDENTIFIER}>
+                {hideCloseButton !== true && (
+                    <PopupHeaderStyled>
+                        <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
+                            <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
+                        </PopupButtonCloseStyled>
+                    </PopupHeaderStyled>
+                )}
+                <PopupContentStyled>{children}</PopupContentStyled>
+            </PopupWrapper>
+        </Portal>
+    );
 };

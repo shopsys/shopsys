@@ -11,18 +11,18 @@ type HasSubmenuProps = {
     hasSubmenu?: boolean;
 };
 
-export const MenuIconicListStyled = styled.ul`
-    ${({ theme }) => css`
+export const MenuIconicListStyled = styled.ul(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
             display: flex;
         }
-    `}
-`;
+    `,
+);
 
-export const MenuIconicItemStyled = styled.li`
-    ${({ theme }) => css`
+export const MenuIconicItemStyled = styled.li(
+    ({ theme }) => css`
         display: flex;
         position: relative;
         margin-right: 20px;
@@ -34,11 +34,11 @@ export const MenuIconicItemStyled = styled.li`
         &:last-child {
             margin-right: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const MenuIconicItemLinkStyled = styled.a<HasSubmenuProps>`
-    ${({ theme, hasSubmenu }) => css`
+export const MenuIconicItemLinkStyled = styled.a<HasSubmenuProps>(
+    ({ theme, hasSubmenu }) => css`
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -80,21 +80,21 @@ export const MenuIconicItemLinkStyled = styled.a<HasSubmenuProps>`
                 }
             }
         `}
-    `}
-`;
+    `,
+);
 
-export const MenuIconicItemIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const MenuIconicItemIconStyled = styled(Icon)(
+    ({ theme }) => css`
         width: 18px;
         height: 18px;
         margin-right: 10px;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);
 
-export const MenuIconicSubStyled = styled.ul`
-    ${({ theme }) => css`
+export const MenuIconicSubStyled = styled.ul(
+    ({ theme }) => css`
         display: block;
         position: absolute;
         top: 100%;
@@ -111,11 +111,11 @@ export const MenuIconicSubStyled = styled.ul`
         transform: scaleY(0.5) scaleX(0.7);
         will-change: transform;
         pointer-events: none;
-    `}
-`;
+    `,
+);
 
-export const MenuIconicSubItemStyled = styled.li`
-    ${({ theme }) => css`
+export const MenuIconicSubItemStyled = styled.li(
+    ({ theme }) => css`
         display: block;
 
         border-top: 1px solid ${theme.color.border};
@@ -123,22 +123,22 @@ export const MenuIconicSubItemStyled = styled.li`
         &:first-child {
             border-top: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const MenuIconicSubItemLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const MenuIconicSubItemLinkStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         padding: 12px 20px;
 
         color: ${theme.color.base};
         text-decoration: none;
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const MenuIconicButtonMobileStyled = styled.div`
-    ${({ theme }) => css`
+export const MenuIconicButtonMobileStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -154,11 +154,11 @@ export const MenuIconicButtonMobileStyled = styled.div`
             cursor: pointer;
             font-size: 18px;
         }
-    `}
-`;
+    `,
+);
 
-export const MenuIconicButtonMobileLinkStyled = styled.div`
-    ${({ theme }) => css`
+export const MenuIconicButtonMobileLinkStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;
@@ -174,5 +174,5 @@ export const MenuIconicButtonMobileLinkStyled = styled.div`
             text-decoration: none;
             color: ${theme.color.white};
         }
-    `}
-`;
+    `,
+);

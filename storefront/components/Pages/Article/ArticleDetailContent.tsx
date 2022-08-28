@@ -13,7 +13,7 @@ const TEST_IDENTIFIER = 'pages-article-';
 
 export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => {
     return (
-        <Webline data-testid={TEST_IDENTIFIER}>
+        <Webline testIdentifier={TEST_IDENTIFIER}>
             <ArticleTitle data-testid={TEST_IDENTIFIER + 'title'}>{article.articleName}</ArticleTitle>
             <ArticleDate>{formatDate(article.createdAt, 'l')}</ArticleDate>
             <ArticleWrapper data-testid={TEST_IDENTIFIER + 'content'}>

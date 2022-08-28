@@ -6,18 +6,18 @@ type AutocompleteSearchFormStyledProps = {
     isActive: boolean;
 };
 
-export const AutocompleteSearchStyled = styled.div`
-    ${({ theme }) => css`
+export const AutocompleteSearchStyled = styled.div(
+    ({ theme }) => css`
         height: 48px;
 
         @media ${theme.mediaQueries.queryLg} {
             position: relative;
         }
-    `}
-`;
+    `,
+);
 
-export const AutocompleteSearchInStyled = styled.div`
-    ${({ theme }) => css`
+export const AutocompleteSearchInStyled = styled.div(
+    ({ theme }) => css`
         transition: all 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
 
         @media ${theme.mediaQueries.queryLg} {
@@ -27,11 +27,11 @@ export const AutocompleteSearchInStyled = styled.div`
             top: 0;
             z-index: ${theme.zIndex.aboveMenu};
         }
-    `}
-`;
+    `,
+);
 
-export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormStyledProps>`
-    ${({ theme, isActive }) => css`
+export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormStyledProps>(
+    ({ theme, isActive }) => css`
         position: relative;
         display: flex;
         transition: all ${theme.transition};
@@ -67,8 +67,8 @@ export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormSt
                 `}
             }
         }
-    `}
-`;
+    `,
+);
 
 export const AutocompleteSearchTextInputStyled = styled(TextInput)`
     width: 100%;
@@ -82,8 +82,8 @@ export const AutocompleteSearchTextInputStyled = styled(TextInput)`
     }
 `;
 
-export const AutocompleteSearchRemoveButtonStyled = styled.div`
-    ${({ theme }) => css`
+export const AutocompleteSearchRemoveButtonStyled = styled.div(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         height: 20px;
@@ -109,8 +109,8 @@ export const AutocompleteSearchRemoveButtonStyled = styled.div`
             background-color: ${theme.color.orangeLight};
             border-radius: ${theme.radius.big};
         }
-    `}
-`;
+    `,
+);
 
 export const AutocompleteSearchRemoveButtonTextStyled = styled.span`
     width: 29px;

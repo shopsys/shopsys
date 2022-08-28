@@ -10,8 +10,8 @@ export const NavigationColumnCategoryStyled = styled.li`
     }
 `;
 
-export const NavigationColumnCategoryImageStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationColumnCategoryImageStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         height: 64px;
@@ -25,11 +25,11 @@ export const NavigationColumnCategoryImageStyled = styled.a`
         img {
             mix-blend-mode: multiply;
         }
-    `}
-`;
+    `,
+);
 
-export const NavigationColumnCategoryLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationColumnCategoryLinkStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         margin-bottom: 4px;
 
@@ -37,5 +37,5 @@ export const NavigationColumnCategoryLinkStyled = styled.a`
         font-weight: 700;
         font-size: ${theme.fontSize.default};
         color: ${theme.color.base};
-    `}
-`;
+    `,
+);

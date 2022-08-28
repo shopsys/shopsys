@@ -9,12 +9,10 @@ type OverlayProps = {
 
 const TEST_IDENTIFIER = 'layout-overlay';
 
-export const Overlay: FC<OverlayProps> = ({ isActive, onCloseHandler }) => {
-    return (
-        <OverlayWrapperStyled data-testid={TEST_IDENTIFIER}>
-            <CSSTransition in={isActive} timeout={500} classNames="overlay" unmountOnExit>
-                <OverlayStyled onClick={onCloseHandler} />
-            </CSSTransition>
-        </OverlayWrapperStyled>
-    );
-};
+export const Overlay: FC<OverlayProps> = ({ isActive, onCloseHandler }) => (
+    <OverlayWrapperStyled data-testid={TEST_IDENTIFIER}>
+        <CSSTransition in={isActive} timeout={500} classNames="overlay" unmountOnExit>
+            <OverlayStyled onClick={onCloseHandler} />
+        </CSSTransition>
+    </OverlayWrapperStyled>
+);

@@ -15,39 +15,33 @@ import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
-type FooterBoxInfoProps = {
-    orderStep?: boolean;
-};
-
 // TODO PRG
 const dummyData = {
     phone: '+420 111 222 333',
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-export const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
-    const testIdentifier = 'layout-footer-footerboxinfo';
+const TEST_IDENTIFIER = 'layout-footer-footerboxinfo';
 
+export const FooterBoxInfo: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <FooterBoxInfoStyled orderStep={props.orderStep} data-testid={testIdentifier}>
+        <FooterBoxInfoStyled data-testid={TEST_IDENTIFIER}>
             <picture>
                 <source srcSet="/images/need_advice2x.png 2x, /images/need_advice2x.png 1x" />
                 <FooterBoxInfoImageStyled src="/images/need_advice.png" alt={t('Need advice?')} />
             </picture>
-            <FooterBoxInfoContentStyled orderStep={props.orderStep}>
+            <FooterBoxInfoContentStyled>
                 <FooterBoxInfoTitleStyled>{t('Need advice?')}</FooterBoxInfoTitleStyled>
-                <FooterBoxInfoContactStyled orderStep={props.orderStep}>
+                <FooterBoxInfoContactStyled>
                     <FooterBoxInfoContactIconStyled iconType="icon" icon="Phone" />
-                    <FooterBoxInfoContactPhoneStyled orderStep={props.orderStep} href={'tel:' + dummyData.phone}>
+                    <FooterBoxInfoContactPhoneStyled href={'tel:' + dummyData.phone}>
                         {dummyData.phone}
                     </FooterBoxInfoContactPhoneStyled>
-                    <FooterBoxInfoContactHoursStyled orderStep={props.orderStep}>
-                        {dummyData.opening}
-                    </FooterBoxInfoContactHoursStyled>
+                    <FooterBoxInfoContactHoursStyled>{dummyData.opening}</FooterBoxInfoContactHoursStyled>
                 </FooterBoxInfoContactStyled>
                 <NextLink href={contactUrl} passHref>
                     <FooterBoxInfoButtonStyled variant="secondary">{t('Write to us')}</FooterBoxInfoButtonStyled>

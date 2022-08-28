@@ -27,9 +27,9 @@ import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchFormType } from 'types/form';
 import { AutocompleteSearchType } from 'types/search';
 
-export const AutocompleteSearch: FC = () => {
-    const testIdentifier = 'layout-header-search-autocomplete-input';
+const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
+export const AutocompleteSearch: FC = () => {
     const router = useRouter();
     const [formProviderMethods] = useAutocompleteSearchForm();
     const formMeta = useAutocompleteSearchFormMeta(formProviderMethods);
@@ -117,7 +117,7 @@ export const AutocompleteSearch: FC = () => {
                                         variant="searchInHeader"
                                         label={formMeta.fields.autocompleteSearchQuery.label}
                                         fieldRef={field}
-                                        data-testid={testIdentifier}
+                                        data-testid={TEST_IDENTIFIER}
                                     />
                                 )}
                             />

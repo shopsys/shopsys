@@ -5,7 +5,7 @@ import { css } from 'styled-components';
 const localVariables = {
     footerMenuitemBorderColor: '#606476',
     footerMenuItemGap: '20px',
-};
+} as const;
 
 export const FooterMenuItemStyled = styled.div(
     ({ theme }) => css`

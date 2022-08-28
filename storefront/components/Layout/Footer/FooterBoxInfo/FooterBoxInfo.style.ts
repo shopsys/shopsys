@@ -6,14 +6,10 @@ import { css } from 'styled-components';
 const localVariables = {
     footerBoxInfoImageSize: '61px',
     footerBoxInfoImageSizeSmall: '47px',
-};
+} as const;
 
-type FooterBoxInfoStyledProps = {
-    orderStep?: boolean;
-};
-
-export const FooterBoxInfoStyled = styled.div<FooterBoxInfoStyledProps>`
-    ${({ theme, orderStep }) => css`
+export const FooterBoxInfoStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         align-items: center;
@@ -22,16 +18,11 @@ export const FooterBoxInfoStyled = styled.div<FooterBoxInfoStyledProps>`
         @media ${theme.mediaQueries.queryLg} {
             margin-bottom: 90px;
         }
+    `,
+);
 
-        ${orderStep &&
-        css`
-            margin: 0;
-        `};
-    `}
-`;
-
-export const FooterBoxInfoImageStyled = styled.img`
-    ${({ theme }) => css`
+export const FooterBoxInfoImageStyled = styled.img(
+    ({ theme }) => css`
         position: absolute;
         left: 0;
         bottom: 0;
@@ -46,11 +37,11 @@ export const FooterBoxInfoImageStyled = styled.img`
             width: ${localVariables.footerBoxInfoImageSize};
             height: ${localVariables.footerBoxInfoImageSize};
         }
-    `}
-`;
+    `,
+);
 
-export const FooterBoxInfoContentStyled = styled.div<FooterBoxInfoStyledProps>`
-    ${({ theme, orderStep }) => css`
+export const FooterBoxInfoContentStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         align-items: flex-start;
@@ -70,12 +61,6 @@ export const FooterBoxInfoContentStyled = styled.div<FooterBoxInfoStyledProps>`
             padding: 21px 21px 21px 30px;
         }
 
-        ${orderStep &&
-        css`
-            padding: 0;
-            margin: 0;
-        `};
-
         &::before {
             content: '';
             position: absolute;
@@ -87,17 +72,12 @@ export const FooterBoxInfoContentStyled = styled.div<FooterBoxInfoStyledProps>`
 
             border-bottom-left-radius: 30%;
             background-color: ${theme.color.primary};
-
-            ${orderStep &&
-            css`
-                display: none;
-            `};
         }
-    `}
-`;
+    `,
+);
 
-export const FooterBoxInfoTitleStyled = styled.div`
-    ${({ theme }) => css`
+export const FooterBoxInfoTitleStyled = styled.div(
+    ({ theme }) => css`
         margin: 0 0 12px;
 
         font-size: ${theme.fontSize.bigger};
@@ -114,11 +94,11 @@ export const FooterBoxInfoTitleStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             flex: none;
         }
-    `}
-`;
+    `,
+);
 
-export const FooterBoxInfoContactStyled = styled.div<FooterBoxInfoStyledProps>`
-    ${({ theme, orderStep }) => css`
+export const FooterBoxInfoContactStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -132,26 +112,21 @@ export const FooterBoxInfoContactStyled = styled.div<FooterBoxInfoStyledProps>`
         @media ${theme.mediaQueries.queryVl} {
             justify-content: center;
         }
+    `,
+);
 
-        ${orderStep &&
-        css`
-            margin: 0;
-        `};
-    `}
-`;
-
-export const FooterBoxInfoContactIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const FooterBoxInfoContactIconStyled = styled(Icon)(
+    ({ theme }) => css`
         margin-right: 12px;
         width: 20px;
         height: 20px;
 
         color: ${theme.color.orange};
-    `}
-`;
+    `,
+);
 
-export const FooterBoxInfoContactPhoneStyled = styled.a<FooterBoxInfoStyledProps>`
-    ${({ theme, orderStep }) => css`
+export const FooterBoxInfoContactPhoneStyled = styled.a(
+    ({ theme }) => css`
         margin-right: 16px;
 
         font-size: ${theme.fontSize.default};
@@ -166,38 +141,20 @@ export const FooterBoxInfoContactPhoneStyled = styled.a<FooterBoxInfoStyledProps
         &:hover {
             color: ${theme.color.white};
         }
+    `,
+);
 
-        ${orderStep &&
-        css`
-            margin-right: 0;
-
-            @media ${theme.mediaQueries.queryLg} {
-                margin-right: 16px;
-            }
-        `};
-    `}
-`;
-
-export const FooterBoxInfoContactHoursStyled = styled.p<FooterBoxInfoStyledProps>`
-    ${({ theme, orderStep }) => css`
+export const FooterBoxInfoContactHoursStyled = styled.p(
+    ({ theme }) => css`
         margin: 0;
 
         font-size: ${theme.fontSize.small};
         color: ${theme.color.white};
+    `,
+);
 
-        ${orderStep &&
-        css`
-            display: none;
-
-            @media ${theme.mediaQueries.queryLg} {
-                display: block;
-            }
-        `};
-    `}
-`;
-
-export const FooterBoxInfoButtonStyled = styled(ButtonStyled)`
-    ${({ theme }) => css`
+export const FooterBoxInfoButtonStyled = styled(ButtonStyled)(
+    ({ theme }) => css`
         z-index: ${theme.zIndex.above};
-    `}
-`;
+    `,
+);

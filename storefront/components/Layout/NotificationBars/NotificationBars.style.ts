@@ -6,16 +6,16 @@ type NotificationBarsStyledProps = {
     backgroundColor: string;
 };
 
-export const NotificationBarsStyled = styled.div<NotificationBarsStyledProps>`
-    ${({ backgroundColor }) => css`
+export const NotificationBarsStyled = styled.div<NotificationBarsStyledProps>(
+    ({ backgroundColor }) => css`
         padding: 6px 0;
 
         background-color: ${backgroundColor};
-    `}
-`;
+    `,
+);
 
-export const NotificationBarsBlockStyled = styled.div<NotificationBarsStyledProps>`
-    ${({ theme, backgroundColor }) => css`
+export const NotificationBarsBlockStyled = styled.div<NotificationBarsStyledProps>(
+    ({ theme, backgroundColor }) => css`
         display: flex;
         justify-content: center;
         align-items: center;
@@ -29,8 +29,8 @@ export const NotificationBarsBlockStyled = styled.div<NotificationBarsStyledProp
         img {
             margin-right: 10px;
         }
-    `}
-`;
+    `,
+);
 
 export const NotificationBarsImageStyled = styled.div`
     display: flex;

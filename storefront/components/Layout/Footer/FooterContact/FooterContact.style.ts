@@ -9,10 +9,10 @@ const localVariables = {
     footerConstactLangsLinkGap: '60px',
     footerConstactLangsLinkGapBottom: '10px',
     footerConstactWidth: '27%',
-};
+} as const;
 
-export const FooterContactStyled = styled.div`
-    ${({ theme }) => css`
+export const FooterContactStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -26,11 +26,11 @@ export const FooterContactStyled = styled.div`
             padding-left: ${localVariables.footerConstactStyledMenuItemgap};
             align-items: flex-start;
         }
-    `}
-`;
+    `,
+);
 
-export const FooterContactHeadingStyled = styled(Heading)`
-    ${({ theme }) => css`
+export const FooterContactHeadingStyled = styled(Heading)(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -41,11 +41,11 @@ export const FooterContactHeadingStyled = styled(Heading)`
         cursor: pointer;
         color: ${theme.color.white};
         text-transform: uppercase;
-    `}
-`;
+    `,
+);
 
-export const FooterContactSocialsStyled = styled.div`
-    ${({ theme }) => css`
+export const FooterContactSocialsStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         overflow: hidden;
         height: 92px;
@@ -55,17 +55,17 @@ export const FooterContactSocialsStyled = styled.div`
 
         border: 2px solid ${localVariables.footerConstactStyledBorderColor};
         border-radius: ${theme.radius.big};
-    `}
-`;
+    `,
+);
 
-export const FooterContactInstagramIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const FooterContactInstagramIconStyled = styled(Icon)(
+    ({ theme }) => css`
         width: 32px;
         height: 32px;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);
 
 export const FooterContactYoutubeIconStyled = styled(Icon)`
     width: 45px;
@@ -88,8 +88,8 @@ export const FooterContactSocialsItemStyled = styled.a`
     }
 `;
 
-export const FooterContactLangsStyled = styled.div`
-    ${({ theme }) => css`
+export const FooterContactLangsStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -99,11 +99,11 @@ export const FooterContactLangsStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             margin-left: -${localVariables.footerConstactLangsLinkGap};
         }
-    `}
-`;
+    `,
+);
 
-export const FooterContactLangsItemStyled = styled.a`
-    ${({ theme }) => css`
+export const FooterContactLangsItemStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         padding-left: calc(${localVariables.footerConstactLangsLinkGap} - 20px);
@@ -117,14 +117,14 @@ export const FooterContactLangsItemStyled = styled.a`
             color: ${theme.color.greyLight};
             text-decoration: underline;
         }
-    `}
-`;
+    `,
+);
 
-export const FooterContactLangsItemTextStyled = styled.span`
-    ${({ theme }) => css`
+export const FooterContactLangsItemTextStyled = styled.span(
+    ({ theme }) => css`
         margin-left: 10px;
 
         color: ${theme.color.greyLight};
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);

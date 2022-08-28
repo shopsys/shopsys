@@ -6,15 +6,6 @@ import { FC, useMemo } from 'react';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
-const filterArticlesByPlacement = (
-    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
-    placement: ArticlePlacementTypeEnumApi,
-): SimpleArticleFragmentApi[] =>
-    array?.reduce(
-        (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
-        [] as SimpleArticleFragmentApi[],
-    ) ?? [];
-
 export const FooterMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const [{ data }] = useArticlesQueryApi({
@@ -63,3 +54,12 @@ export const FooterMenu: FC = () => {
         </FooterMenuStyled>
     );
 };
+
+const filterArticlesByPlacement = (
+    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
+    placement: ArticlePlacementTypeEnumApi,
+): SimpleArticleFragmentApi[] =>
+    array?.reduce(
+        (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
+        [] as SimpleArticleFragmentApi[],
+    ) ?? [];

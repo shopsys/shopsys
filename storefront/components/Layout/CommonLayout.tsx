@@ -13,24 +13,22 @@ type CommonLayoutProps = {
     description?: string | null;
 };
 
-export const CommonLayout: FC<CommonLayoutProps> = (props) => {
-    return (
-        <>
-            <SeoMeta title={props.title} description={props.description} />
-            <NotificationBars />
-            <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
-                <Header />
-                <Navigation />
-            </Webline>
-            <Adverts positionName="header" withGapBottom withWebline />
-            {props.children}
-            <Adverts positionName="footer" withGapBottom withGapTop withWebline />
-            <Webline type="light">
-                <NewsletterForm />
-            </Webline>
-            <Webline type="dark">
-                <Footer />
-            </Webline>
-        </>
-    );
-};
+export const CommonLayout: FC<CommonLayoutProps> = ({ children, description, title }) => (
+    <>
+        <SeoMeta title={title} description={description} />
+        <NotificationBars />
+        <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
+            <Header />
+            <Navigation />
+        </Webline>
+        <Adverts positionName="header" withGapBottom withWebline />
+        {children}
+        <Adverts positionName="footer" withGapBottom withGapTop withWebline />
+        <Webline type="light">
+            <NewsletterForm />
+        </Webline>
+        <Webline type="dark">
+            <Footer />
+        </Webline>
+    </>
+);

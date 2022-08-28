@@ -14,19 +14,20 @@ type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategory[];
 };
 
-export const NavigationSubList: FC<NavigationSubListProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationsublist';
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationsublist';
 
+export const NavigationSubList: FC<NavigationSubListProps> = ({ columnCategoryChildren }) => {
     const dispatch = useShopsysDispatch();
     const router = useRouter();
+
     return (
-        <NavigationSubListStyled data-testid={testIdentifier}>
-            {props.columnCategoryChildren.map((columnCategoryChild, subListIndex) =>
+        <NavigationSubListStyled data-testid={TEST_IDENTIFIER}>
+            {columnCategoryChildren.map((columnCategoryChild, subListIndex) =>
                 columnCategoryChild.slug === router.asPath ? (
                     <NavigationSubListItemStyled
                         key={subListIndex}
                         onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
-                        data-testid={testIdentifier + '-' + subListIndex}
+                        data-testid={TEST_IDENTIFIER + '-' + subListIndex}
                     >
                         <NextLink href={columnCategoryChild.slug} passHref>
                             <NavigationSubListItemLinkStyled>
@@ -35,7 +36,7 @@ export const NavigationSubList: FC<NavigationSubListProps> = (props) => {
                         </NextLink>
                     </NavigationSubListItemStyled>
                 ) : (
-                    <NavigationSubListItemStyled key={subListIndex} data-testid={testIdentifier + '-' + subListIndex}>
+                    <NavigationSubListItemStyled key={subListIndex} data-testid={TEST_IDENTIFIER + '-' + subListIndex}>
                         <NextLink href={columnCategoryChild.slug} passHref>
                             <NavigationSubListItemLinkStyled>
                                 {columnCategoryChild.name}

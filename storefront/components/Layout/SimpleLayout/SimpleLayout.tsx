@@ -11,23 +11,21 @@ type SimpleLayoutProps = {
     standardWidth?: true;
 };
 
-export const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
-    return (
-        <>
-            <Webline>
-                <HeadingWrapperStyled>
-                    <Heading type="h1">{props.heading}</Heading>
-                </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={props.breadcrumb} />
-            </Webline>
-            <Webline>
-                {props.standardWidth !== true && (
-                    <SimpleLayoutStyled>
-                        <SimpleLayoutContentStyled>{props.children}</SimpleLayoutContentStyled>
-                    </SimpleLayoutStyled>
-                )}
-                {props.standardWidth === true && <>{props.children}</>}
-            </Webline>
-        </>
-    );
-};
+export const SimpleLayout: FC<SimpleLayoutProps> = ({ breadcrumb, heading, children, standardWidth }) => (
+    <>
+        <Webline>
+            <HeadingWrapperStyled>
+                <Heading type="h1">{heading}</Heading>
+            </HeadingWrapperStyled>
+            <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumb} />
+        </Webline>
+        <Webline>
+            {standardWidth !== true && (
+                <SimpleLayoutStyled>
+                    <SimpleLayoutContentStyled>{children}</SimpleLayoutContentStyled>
+                </SimpleLayoutStyled>
+            )}
+            {standardWidth === true && <>{children}</>}
+        </Webline>
+    </>
+);

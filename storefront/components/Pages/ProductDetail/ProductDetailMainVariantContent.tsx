@@ -57,13 +57,13 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
             </Webline>
-            <Webline data-testid={TEST_IDENTIFIER + 'variants'}>
+            <Webline testIdentifier={TEST_IDENTIFIER + 'variants'}>
                 <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />
             </Webline>
-            <Webline data-testid={TEST_IDENTIFIER + 'description'}>
+            <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline data-testid={TEST_IDENTIFIER + 'accessories'}>
+            <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>

@@ -6,12 +6,10 @@ type PrimaryListProps = {
     navigationItems: NavigationItemType[];
 };
 
-export const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
-    return (
-        <>
-            {navigationItems.map((navigationItem, index) => (
-                <DropdownItem key={index} navigationItem={navigationItem} index={index} goToMenu="secondary" />
-            ))}
-        </>
-    );
-};
+export const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => (
+    <>
+        {navigationItems.map((navigationItem, index) => (
+            <DropdownItem key={index} navigationItem={navigationItem} index={index} goToMenu="secondary" />
+        ))}
+    </>
+);

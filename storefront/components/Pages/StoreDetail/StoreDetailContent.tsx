@@ -36,7 +36,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = (props) => {
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <Webline data-testid={testIdentifier}>
+        <Webline testIdentifier={testIdentifier}>
             <StoreDetailStyled>
                 <StoreDetailContentStyled>
                     <Heading type={'h1'}>{props.store.storeName}</Heading>

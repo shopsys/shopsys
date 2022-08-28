@@ -40,7 +40,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
+            <OrderLayout activeStep={2}>
                 {currentCart.isInitiallyLoaded && (
                     <TransportAndPaymentContent transports={transports} lastOrder={data?.lastOrder ?? null} />
                 )}

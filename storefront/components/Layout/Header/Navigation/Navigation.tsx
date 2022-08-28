@@ -3,9 +3,9 @@ import { NavigationItem } from './NavigationItem/NavigationItem';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
 import { FC } from 'react';
 
-export const Navigation: FC = () => {
-    const testIdentifier = 'layout-header-navigation';
+const TEST_IDENTIFIER = 'layout-header-navigation';
 
+export const Navigation: FC = () => {
     const navigationItems = useNavigationItems();
 
     if (navigationItems.length === 0) {
@@ -13,7 +13,7 @@ export const Navigation: FC = () => {
     }
 
     return (
-        <NavigationStyled data-testid={testIdentifier}>
+        <NavigationStyled data-testid={TEST_IDENTIFIER}>
             {navigationItems.map((navigationItem, index) => (
                 <NavigationItem navigationItem={navigationItem} key={index} />
             ))}

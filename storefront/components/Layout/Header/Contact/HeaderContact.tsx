@@ -18,9 +18,9 @@ const dummyData = {
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-export const HeaderContact: FC = () => {
-    const testIdentifier = 'layout-header-contact';
+const TEST_IDENTIFIER = 'layout-header-contact';
 
+export const HeaderContact: FC = () => {
     const { width } = useGetWindowSize();
     const [areContactHoursVisible, setAreContactHoursVisible] = useState(true);
     useResizeWidthEffect(
@@ -32,7 +32,7 @@ export const HeaderContact: FC = () => {
     );
 
     return (
-        <HeaderContactStyled data-testid={testIdentifier}>
+        <HeaderContactStyled data-testid={TEST_IDENTIFIER}>
             <ContactWrapperStyled>
                 <ContactContentStyled>
                     <HeaderContactIconStyled iconType="icon" icon="Phone" />

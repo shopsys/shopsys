@@ -7,18 +7,16 @@ type NavigationLeafProps = {
     columnCategories: NavigationCategoriesColumn[];
 };
 
-export const NavigationLeaf: FC<NavigationLeafProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationleaf-';
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationleaf-';
 
-    return (
-        <>
-            {props.columnCategories.map((columnCategories, columnIndex) => (
-                <NavigationLeafColumnStyled key={columnIndex} data-testid={testIdentifier + columnIndex}>
-                    {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
-                        <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
-                    ))}
-                </NavigationLeafColumnStyled>
-            ))}
-        </>
-    );
-};
+export const NavigationLeaf: FC<NavigationLeafProps> = ({ columnCategories }) => (
+    <>
+        {columnCategories.map((columnCategories, columnIndex) => (
+            <NavigationLeafColumnStyled key={columnIndex} data-testid={TEST_IDENTIFIER + columnIndex}>
+                {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
+                    <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
+                ))}
+            </NavigationLeafColumnStyled>
+        ))}
+    </>
+);

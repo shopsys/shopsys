@@ -12,10 +12,9 @@ import { useShopsysSelector } from 'redux/main';
 
 type OrderLayoutProps = {
     activeStep: number;
-    buttonNextText: string;
 };
 
-export const OrderLayout: FC<OrderLayoutProps> = (props) => {
+export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, children }) => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
 
@@ -28,11 +27,11 @@ export const OrderLayout: FC<OrderLayoutProps> = (props) => {
             </Webline>
             <Adverts positionName="header" withGapBottom withWebline />
             <Webline>
-                <OrderSteps activeStep={props.activeStep} domainUrl={url} />
+                <OrderSteps activeStep={activeStep} domainUrl={url} />
             </Webline>
             <Webline>
                 <OrderLayoutStyled>
-                    <OrderLayoutContentStyled>{props.children}</OrderLayoutContentStyled>
+                    <OrderLayoutContentStyled>{children}</OrderLayoutContentStyled>
                     <OrderLayoutSummaryStyled>
                         <OrderSummary />
                     </OrderLayoutSummaryStyled>

@@ -24,9 +24,9 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
-export const NewsletterForm: FC = () => {
-    const testIdentifier = 'layout-footer-newsletterform';
+const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
+export const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
@@ -48,11 +48,11 @@ export const NewsletterForm: FC = () => {
 
     return (
         <>
-            <NewsletterFormWrapperStyled data-testid={testIdentifier}>
+            <NewsletterFormWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
                 <NewsletterFormColumnStyled>
                     <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} >
+                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
                             <NewsletterFormInputWrapperStyled>
                                 <FormLine>
                                     <Controller

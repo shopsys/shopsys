@@ -27,9 +27,9 @@ import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
-export const Cart: FC = () => {
-    const testIdentifier = 'layout-header-cart-';
+const TEST_IDENTIFIER = 'layout-header-cart-';
 
+export const Cart: FC = () => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -46,14 +46,14 @@ export const Cart: FC = () => {
             onMouseLeave={() => setOnMouseLeaveTrigger(!onMouseLeaveTrigger)}
         >
             <NextLink href={cartUrl} passHref>
-                <CartBlockStyled isHovered={isCartHovered} data-testid={testIdentifier + 'block'}>
+                <CartBlockStyled isHovered={isCartHovered} data-testid={TEST_IDENTIFIER + 'block'}>
                     <CartPiecesStyled>
                         <CartIconStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled data-testid={testIdentifier + 'itemcount'}>
+                        <CartCountStyled data-testid={TEST_IDENTIFIER + 'itemcount'}>
                             {cart?.items.length ?? 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
-                    <CartValueStyled data-testid={testIdentifier + 'totalprice'}>
+                    <CartValueStyled data-testid={TEST_IDENTIFIER + 'totalprice'}>
                         {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                             explicitZero: true,
                         })}
@@ -63,7 +63,7 @@ export const Cart: FC = () => {
             <CartDetailStyled
                 containsProducts={!isCartEmpty}
                 isHovered={isCartHovered}
-                data-testid={testIdentifier + 'detail'}
+                data-testid={TEST_IDENTIFIER + 'detail'}
             >
                 {!isCartEmpty ? (
                     <>
@@ -77,7 +77,7 @@ export const Cart: FC = () => {
                                 type="button"
                                 size="small"
                                 onClick={() => router.push(cartUrl)}
-                                data-testid={testIdentifier + 'button'}
+                                data-testid={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>

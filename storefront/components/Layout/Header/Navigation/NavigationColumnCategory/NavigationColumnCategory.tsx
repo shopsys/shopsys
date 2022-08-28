@@ -13,22 +13,18 @@ type NavigationColumnCategoryProps = {
     columnCategory: NavigationCategory;
 };
 
-export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationcolumncategory';
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationcolumncategory';
 
-    return (
-        <NavigationColumnCategoryStyled data-testid={testIdentifier}>
-            <NextLink href={props.columnCategory.slug} passHref>
-                <NavigationColumnCategoryImageStyled>
-                    <Image image={props.columnCategory.image} type="default" alt={props.columnCategory.name} />
-                </NavigationColumnCategoryImageStyled>
-            </NextLink>
-            <NextLink href={props.columnCategory.slug} passHref>
-                <NavigationColumnCategoryLinkStyled>{props.columnCategory.name}</NavigationColumnCategoryLinkStyled>
-            </NextLink>
-            {props.columnCategory.children.length > 0 && (
-                <NavigationSubList columnCategoryChildren={props.columnCategory.children} />
-            )}
-        </NavigationColumnCategoryStyled>
-    );
-};
+export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ columnCategory }) => (
+    <NavigationColumnCategoryStyled data-testid={TEST_IDENTIFIER}>
+        <NextLink href={columnCategory.slug} passHref>
+            <NavigationColumnCategoryImageStyled>
+                <Image image={columnCategory.image} type="default" alt={columnCategory.name} />
+            </NavigationColumnCategoryImageStyled>
+        </NextLink>
+        <NextLink href={columnCategory.slug} passHref>
+            <NavigationColumnCategoryLinkStyled>{columnCategory.name}</NavigationColumnCategoryLinkStyled>
+        </NextLink>
+        {columnCategory.children.length > 0 && <NavigationSubList columnCategoryChildren={columnCategory.children} />}
+    </NavigationColumnCategoryStyled>
+);

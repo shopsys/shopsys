@@ -6,8 +6,8 @@ type HamburgerIconProps = {
     isMenuOpened: boolean;
 };
 
-export const HamburgerIcon: FC<HamburgerIconProps> = (props) => {
-    if (props.isMenuOpened) {
+export const HamburgerIcon: FC<HamburgerIconProps> = ({ isMenuOpened }) => {
+    if (isMenuOpened) {
         return <Icon iconType="icon" icon="Close" />;
     }
 

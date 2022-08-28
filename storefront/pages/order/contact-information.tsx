@@ -144,7 +144,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                    <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
+                    <OrderLayout activeStep={3}>
                         <ContactInformationContent />
                         <OrderAction
                             buttonBack={t('Back')}
