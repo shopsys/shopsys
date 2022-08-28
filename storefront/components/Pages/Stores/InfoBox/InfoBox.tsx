@@ -32,7 +32,7 @@ export const InfoBox: FC<InfoBoxProps> = (props) => {
                 </>
             )}
             <br />
-            <LinkStyled href={props.slug} isButton={true}>
+            <LinkStyled href={props.slug} isButton>
                 {t('Store detail')}
             </LinkStyled>
         </InfoBoxStyled>

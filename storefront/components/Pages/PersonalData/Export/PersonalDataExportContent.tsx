@@ -75,7 +75,7 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                             id={formMeta.formName + '-' + formMeta.fields.email.name}
                                             name={formMeta.fields.email.name}
                                             label={formMeta.fields.email.label}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}

@@ -63,7 +63,7 @@ export const NewsletterForm: FC = () => {
                                                     id={formMeta.formName + '-' + formMeta.fields.email.name}
                                                     name={formMeta.fields.email.name}
                                                     label={formMeta.fields.email.label}
-                                                    required={true}
+                                                    required
                                                     type="text"
                                                     inputSize="small"
                                                     isTouched={isTouched}
@@ -101,7 +101,7 @@ export const NewsletterForm: FC = () => {
                                                 id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
                                                 name={formMeta.fields.privacyPolicy.name}
                                                 label={formMeta.fields.privacyPolicy.label}
-                                                required={true}
+                                                required
                                                 fieldRef={field}
                                             />
                                             <FormLineError

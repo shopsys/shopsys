@@ -27,7 +27,7 @@ export const ContactInformationCompany: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -36,7 +36,7 @@ export const ContactInformationCompany: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyName.name}
                                 name={formMeta.fields.companyName.name}
                                 label={formMeta.fields.companyName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -55,7 +55,7 @@ export const ContactInformationCompany: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -64,7 +64,7 @@ export const ContactInformationCompany: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
                                 name={formMeta.fields.companyNumber.name}
                                 label={formMeta.fields.companyNumber.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -83,7 +83,7 @@ export const ContactInformationCompany: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyTaxNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (

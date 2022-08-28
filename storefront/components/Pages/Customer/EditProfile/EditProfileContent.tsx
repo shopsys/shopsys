@@ -155,7 +155,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}>
                     <Heading type="h2">{t('Personal data')}</Heading>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <Controller
                             name={formMeta.fields.email.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -165,7 +165,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         name={formMeta.fields.email.name}
                                         label={formMeta.fields.email.label}
                                         required={false}
-                                        disabled={true}
+                                        disabled
                                         type="text"
                                         isTouched={isTouched}
                                         hasError={invalid}
@@ -177,7 +177,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                             )}
                         />
                     </FormLine>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <EditProfileTextStyled>
                             {t(
                                 'To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.',
@@ -185,7 +185,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                         </EditProfileTextStyled>
                     </FormLine>
                     <FormColumn>
-                        <FormLine bottomGap={true} width="100%" lg="50%">
+                        <FormLine bottomGap width="100%" lg="50%">
                             <Controller
                                 name={formMeta.fields.firstName.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -194,7 +194,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.firstName.name}
                                             name={formMeta.fields.firstName.name}
                                             label={formMeta.fields.firstName.label}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -206,7 +206,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                 )}
                             />
                         </FormLine>
-                        <FormLine bottomGap={true} width="100%" lg="50%">
+                        <FormLine bottomGap width="100%" lg="50%">
                             <Controller
                                 name={formMeta.fields.lastName.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -215,7 +215,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.lastName.name}
                                             name={formMeta.fields.lastName.name}
                                             label={formMeta.fields.lastName.label}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -228,7 +228,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                             />
                         </FormLine>
                     </FormColumn>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <Controller
                             name={formMeta.fields.telephone.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -237,7 +237,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         id={formMeta.formName + '-' + formMeta.fields.telephone.name}
                                         name={formMeta.fields.telephone.name}
                                         label={formMeta.fields.telephone.label}
-                                        required={true}
+                                        required
                                         type="text"
                                         isTouched={isTouched}
                                         hasError={invalid}
@@ -249,7 +249,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                             )}
                         />
                     </FormLine>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <ChoiceFormLine>
                             <Controller
                                 name={formMeta.fields.newsletterSubscription.name}
@@ -267,7 +267,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                     </FormLine>
                     <Heading type="h2">{t('Change password')}</Heading>
                     <FormColumn>
-                        <FormLine bottomGap={true} width="100%" lg="50%">
+                        <FormLine bottomGap width="100%" lg="50%">
                             <Controller
                                 name={formMeta.fields.passwordOld.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -276,7 +276,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.passwordOld.name}
                                             name={formMeta.fields.passwordOld.name}
                                             label={formMeta.fields.passwordOld.label}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -290,7 +290,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                         </FormLine>
                     </FormColumn>
                     <FormColumn>
-                        <FormLine bottomGap={true} width="100%" lg="50%">
+                        <FormLine bottomGap width="100%" lg="50%">
                             <Controller
                                 name={formMeta.fields.passwordFirst.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -299,7 +299,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.passwordFirst.name}
                                             name={formMeta.fields.passwordFirst.name}
                                             label={formMeta.fields.passwordFirst.label}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -311,7 +311,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                 )}
                             />
                         </FormLine>
-                        <FormLine bottomGap={true} width="100%" lg="50%">
+                        <FormLine bottomGap width="100%" lg="50%">
                             <Controller
                                 name={formMeta.fields.passwordSecond.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -320,7 +320,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.passwordSecond.name}
                                             name={formMeta.fields.passwordSecond.name}
                                             label={formMeta.fields.passwordSecond.label}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -336,7 +336,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                     {props.currentCustomerUser.companyCustomer && (
                         <>
                             <Heading type="h2">{t('Company information')}</Heading>
-                            <FormLine bottomGap={true}>
+                            <FormLine bottomGap>
                                 <Controller
                                     name={formMeta.fields.companyName.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -357,7 +357,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                     )}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true}>
+                            <FormLine bottomGap>
                                 <Controller
                                     name={formMeta.fields.companyNumber.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -378,7 +378,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                     )}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true}>
+                            <FormLine bottomGap>
                                 <Controller
                                     name={formMeta.fields.companyTaxNumber.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -404,7 +404,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                         </>
                     )}
                     <Heading type="h2">{t('Billing address')}</Heading>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <Controller
                             name={formMeta.fields.street.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -413,7 +413,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         id={formMeta.formName + '-' + formMeta.fields.street.name}
                                         name={formMeta.fields.street.name}
                                         label={formMeta.fields.street.label}
-                                        required={true}
+                                        required
                                         type="text"
                                         isTouched={isTouched}
                                         hasError={invalid}
@@ -426,7 +426,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                         />
                     </FormLine>
                     <FormColumn>
-                        <FormLine bottomGap={true}>
+                        <FormLine bottomGap>
                             <Controller
                                 name={formMeta.fields.city.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -435,7 +435,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.city.name}
                                             name={formMeta.fields.city.name}
                                             label={formMeta.fields.city.label}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -447,7 +447,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                 )}
                             />
                         </FormLine>
-                        <FormLine bottomGap={true} width="100%" lg="142px">
+                        <FormLine bottomGap width="100%" lg="142px">
                             <Controller
                                 name={formMeta.fields.postcode.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -456,7 +456,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.postcode.name}
                                             name={formMeta.fields.postcode.name}
                                             label={formMeta.fields.postcode.label}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -469,7 +469,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                             />
                         </FormLine>
                     </FormColumn>
-                    <FormLine bottomGap={true}>
+                    <FormLine bottomGap>
                         <Controller
                             name={formMeta.fields.country.name}
                             render={({ fieldState: { invalid, error }, field }) => (
@@ -491,7 +491,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                     {props.currentCustomerUser.deliveryAddresses.length > 0 && (
                         <>
                             <Heading type="h2">{t('Delivery addresses')}</Heading>
-                            <FormLine bottomGap={true}>
+                            <FormLine bottomGap>
                                 <AddressList
                                     deliveryAddresses={props.currentCustomerUser.deliveryAddresses}
                                     defaultDeliveryAddress={props.currentCustomerUser.defaultDeliveryAddress}

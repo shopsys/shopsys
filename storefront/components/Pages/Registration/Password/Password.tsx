@@ -18,7 +18,7 @@ export const Password: FC = () => {
         <>
             <Heading type="h3">{t('Create a password')}</Heading>
             <FormColumn>
-                <FormLine bottomGap={true} width="100%" lg="50%">
+                <FormLine bottomGap width="100%" lg="50%">
                     <Controller
                         name={formMeta.fields.passwordFirst.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -27,7 +27,7 @@ export const Password: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.passwordFirst.name}
                                     name={formMeta.fields.passwordFirst.name}
                                     label={formMeta.fields.passwordFirst.label}
-                                    required={true}
+                                    required
                                     type="password"
                                     isTouched={isTouched}
                                     hasError={invalid}
@@ -44,7 +44,7 @@ export const Password: FC = () => {
                         )}
                     />
                 </FormLine>
-                <FormLine bottomGap={true} width="100%" lg="50%">
+                <FormLine bottomGap width="100%" lg="50%">
                     <Controller
                         name={formMeta.fields.passwordSecond.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -53,7 +53,7 @@ export const Password: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.passwordSecond.name}
                                     name={formMeta.fields.passwordSecond.name}
                                     label={formMeta.fields.passwordSecond.label}
-                                    required={true}
+                                    required
                                     type="password"
                                     isTouched={isTouched}
                                     hasError={invalid}

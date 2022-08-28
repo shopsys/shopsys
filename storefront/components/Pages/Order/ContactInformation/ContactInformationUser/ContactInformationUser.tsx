@@ -24,7 +24,7 @@ export const ContactInformationUser: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Customer information')}</Heading>
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.telephone.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -33,7 +33,7 @@ export const ContactInformationUser: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.telephone.name}
                                 name={formMeta.fields.telephone.name}
                                 label={formMeta.fields.telephone.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -51,7 +51,7 @@ export const ContactInformationUser: FC = () => {
             </FormLine>
 
             <FormColumn lg="65%">
-                <FormLine bottomGap={true} width="100%" lg="50%">
+                <FormLine bottomGap width="100%" lg="50%">
                     <Controller
                         name={formMeta.fields.firstName.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -60,7 +60,7 @@ export const ContactInformationUser: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.firstName.name}
                                     name={formMeta.fields.firstName.name}
                                     label={formMeta.fields.firstName.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}
@@ -78,7 +78,7 @@ export const ContactInformationUser: FC = () => {
                         )}
                     />
                 </FormLine>
-                <FormLine bottomGap={true} width="100%" lg="50%">
+                <FormLine bottomGap width="100%" lg="50%">
                     <Controller
                         name={formMeta.fields.lastName.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -87,7 +87,7 @@ export const ContactInformationUser: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.lastName.name}
                                     name={formMeta.fields.lastName.name}
                                     label={formMeta.fields.lastName.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}

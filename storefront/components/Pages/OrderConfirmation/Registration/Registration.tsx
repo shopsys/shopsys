@@ -115,7 +115,7 @@ export const Registration: FC = () => {
                                                         label={formMeta.fields.password.label}
                                                         type="password"
                                                         fieldRef={field}
-                                                        required={true}
+                                                        required
                                                         isTouched={isTouched}
                                                         hasError={invalid}
                                                     />
@@ -142,7 +142,7 @@ export const Registration: FC = () => {
                                                         name={formMeta.fields.privacyPolicy.name}
                                                         label={formMeta.fields.privacyPolicy.label}
                                                         fieldRef={field}
-                                                        required={true}
+                                                        required
                                                     />
                                                     <FormLineError
                                                         inputType="checkbox"

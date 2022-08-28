@@ -12,7 +12,8 @@ export const SimpleLayoutStyled = styled.div`
     margin-bottom: 100px;
 `;
 
-export const SimpleLayoutContentStyled = styled.div(({ theme }) => css`
+export const SimpleLayoutContentStyled = styled.div(
+    ({ theme }) => css`
         margin-top: 0;
         margin-bottom: 0;
         width: 100%;
@@ -26,4 +27,5 @@ export const SimpleLayoutContentStyled = styled.div(({ theme }) => css`
             padding: 40px 60px 30px;
             margin-top: 28px;
         }
-    `)
+    `,
+);

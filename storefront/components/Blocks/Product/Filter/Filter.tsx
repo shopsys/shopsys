@@ -201,13 +201,13 @@ export const Filter: FC<FilterProps> = ({
                         title={t('Price')}
                         minimalPrice={deepComparedProductFilterOptions.minimalPrice}
                         maximalPrice={deepComparedProductFilterOptions.maximalPrice}
-                        isOpen={true}
+                        isOpen
                     />
 
                     <FilterGroupInStock
                         title={t('Availability')}
                         inStockCount={deepComparedProductFilterOptions.inStock}
-                        isOpen={true}
+                        isOpen
                     />
 
                     {deepComparedProductFilterOptions.flags.length > 0 && (
@@ -215,7 +215,7 @@ export const Filter: FC<FilterProps> = ({
                             title={t('Flags')}
                             filterField="flags"
                             data={deepComparedProductFilterOptions.flags}
-                            isOpen={true}
+                            isOpen
                         />
                     )}
 
@@ -224,7 +224,7 @@ export const Filter: FC<FilterProps> = ({
                             title={t('Brands')}
                             filterField="brands"
                             data={deepComparedProductFilterOptions.brands}
-                            isOpen={true}
+                            isOpen
                         />
                     )}
 

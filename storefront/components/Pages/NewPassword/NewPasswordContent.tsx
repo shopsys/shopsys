@@ -113,12 +113,12 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
                         <Controller
                             name={formMeta.fields.newPassword.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <FormLine bottomGap={true}>
+                                <FormLine bottomGap>
                                     <TextInput
                                         id={formMeta.formName + '-' + formMeta.fields.newPassword.name}
                                         name={formMeta.fields.newPassword.name}
                                         label={formMeta.fields.newPassword.label}
-                                        required={true}
+                                        required
                                         type="password"
                                         isTouched={isTouched}
                                         hasError={invalid}
@@ -144,7 +144,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
                                             id={formMeta.formName + '-' + formMeta.fields.newPasswordAgain.name}
                                             name={formMeta.fields.newPasswordAgain.name}
                                             label={formMeta.fields.newPasswordAgain.label}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}

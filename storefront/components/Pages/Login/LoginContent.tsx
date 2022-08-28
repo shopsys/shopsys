@@ -65,12 +65,12 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                         name="email"
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                             <>
-                                <FormLine bottomGap={true}>
+                                <FormLine bottomGap>
                                     <TextInput
                                         id="login_form-email"
                                         name="email"
                                         label={t('Your email')}
-                                        required={true}
+                                        required
                                         type="text"
                                         isTouched={isTouched}
                                         hasError={invalid}
@@ -95,7 +95,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                                         id="login_form-password"
                                         name="password"
                                         label={t('Password')}
-                                        required={true}
+                                        required
                                         type="password"
                                         isTouched={isTouched}
                                         hasError={invalid}

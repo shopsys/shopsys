@@ -66,12 +66,12 @@ export const Login: FC = () => {
                             name="email"
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                 <>
-                                    <FormLine bottomGap={true}>
+                                    <FormLine bottomGap>
                                         <TextInput
                                             id="login_form-email"
                                             name="email"
                                             label={t('Your email')}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -96,7 +96,7 @@ export const Login: FC = () => {
                                             id="login_form-password"
                                             name="password"
                                             label={t('Password')}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -149,7 +149,7 @@ export const Login: FC = () => {
                 <LoginMessageStyled>
                     {t('Your addresses prefilled and you can check your order history.')}
                 </LoginMessageStyled>
-                <Link isButton={true} href={registrationUrl}>
+                <Link isButton href={registrationUrl}>
                     {t('Register')}
                 </Link>
             </LoginColumnStyled>

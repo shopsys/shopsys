@@ -22,7 +22,7 @@ export const ContactInformationCustomer: FC = () => {
                 render={({ field }) => (
                     <>
                         <FormColumn lg="65%">
-                            <FormLine bottomGap={true} width="100%" lg="50%">
+                            <FormLine bottomGap width="100%" lg="50%">
                                 <Radiobutton
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CommonCustomer}
@@ -31,7 +31,7 @@ export const ContactInformationCustomer: FC = () => {
                                     fieldRef={field}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true} width="100%" lg="50%">
+                            <FormLine bottomGap width="100%" lg="50%">
                                 <Radiobutton
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CompanyCustomer}

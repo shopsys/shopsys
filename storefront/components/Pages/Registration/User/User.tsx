@@ -17,7 +17,7 @@ export const User: FC = () => {
 
     return (
         <>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.email.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -26,7 +26,7 @@ export const User: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.email.name}
                                 name={formMeta.fields.email.name}
                                 label={formMeta.fields.email.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -42,7 +42,7 @@ export const User: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.firstName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -51,7 +51,7 @@ export const User: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.firstName.name}
                                 name={formMeta.fields.firstName.name}
                                 label={formMeta.fields.firstName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -66,7 +66,7 @@ export const User: FC = () => {
                     )}
                 />
             </FormLine>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.lastName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -75,7 +75,7 @@ export const User: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.lastName.name}
                                 name={formMeta.fields.lastName.name}
                                 label={formMeta.fields.lastName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -90,7 +90,7 @@ export const User: FC = () => {
                     )}
                 />
             </FormLine>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.telephone.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -99,7 +99,7 @@ export const User: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.telephone.name}
                                 name={formMeta.fields.telephone.name}
                                 label={formMeta.fields.telephone.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -120,7 +120,7 @@ export const User: FC = () => {
                 render={({ field }) => (
                     <>
                         <FormColumn lg="65%">
-                            <FormLine bottomGap={true} width="100%" lg="50%">
+                            <FormLine bottomGap width="100%" lg="50%">
                                 <Radiobutton
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CommonCustomer}
@@ -129,7 +129,7 @@ export const User: FC = () => {
                                     fieldRef={field}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true} width="100%" lg="50%">
+                            <FormLine bottomGap width="100%" lg="50%">
                                 <Radiobutton
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CompanyCustomer}

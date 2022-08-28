@@ -41,7 +41,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
             isVisible={isVisible}
             onCloseCallback={onCloseCallback}
             wrapperComponent={AddToCartPopupWrapperStyled}
-            hideCloseButton={true}
+            hideCloseButton
         >
             <HeadingStyled type="h2">
                 <Checkmark alt="" iconType="icon" icon="Checkmark" />
@@ -71,7 +71,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
                 <ButtonStyled onClick={onCloseCallback} type="button" data-testid={TEST_IDENTIFIER + '-button-back'}>
                     {t('Back to shop')}
                 </ButtonStyled>
-                <LinkStyled href={cartUrl} isButton={true}>
+                <LinkStyled href={cartUrl} isButton>
                     {t('To cart')}
                 </LinkStyled>
             </ButtonsStyled>

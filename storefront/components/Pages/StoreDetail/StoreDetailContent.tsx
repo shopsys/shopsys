@@ -84,7 +84,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = (props) => {
                             lng={props.store.locationLongitude}
                             zoom={15}
                             markers={storeCoordinates}
-                            isDetail={true}
+                            isDetail
                         />
                     </MapStyled>
                     <ButtonBottomStyled>

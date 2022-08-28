@@ -151,7 +151,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                             buttonNext={t('Submit order')}
                             hasDisabledLook={!formProviderMethods.formState.isValid}
                             withGapTop={false}
-                            withGapBottom={true}
+                            withGapBottom
                             buttonBackLink={transportAndPaymentUrl}
                         />
                     </OrderLayout>

@@ -75,7 +75,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             defaultOrderingMode={category.productConnection.defaultOrderingMode}
                         />
                     )}
-                    <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
+                    <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
                     <CategoryDetailAdvertsStyled positionName="productList" />

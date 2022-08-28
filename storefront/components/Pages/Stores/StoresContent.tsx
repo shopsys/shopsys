@@ -45,7 +45,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
     };
 
     return (
-        <SimpleLayout standardWidth={true} heading={t('Stores')} breadcrumb={breadcrumbs}>
+        <SimpleLayout standardWidth heading={t('Stores')} breadcrumb={breadcrumbs}>
             <StoresStyled>
                 <MapStyled>
                     <GoogleMap markers={stores} activeMarkerHandler={activeMarkerHandler} closeMarkers={closeInfoBox} />

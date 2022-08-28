@@ -35,7 +35,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
                         buttonNext={t('Transport and payment')}
                         hasDisabledLook={false}
                         withGapTop={false}
-                        withGapBottom={true}
+                        withGapBottom
                         buttonBackLink="/"
                         buttonNextLink={transportAndPaymentUrl}
                     />

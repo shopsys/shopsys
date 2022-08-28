@@ -70,7 +70,7 @@ export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProp
                         <ContactInformationDeliveryAddress />
 
                         <Heading type="h3">{t('Note')}</Heading>
-                        <FormLine bottomGap={true} lg="65%">
+                        <FormLine bottomGap lg="65%">
                             <Controller
                                 name={formMeta.fields.note.name}
                                 render={({ field, fieldState: { isTouched, invalid } }) => (

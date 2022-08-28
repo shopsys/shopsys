@@ -119,7 +119,7 @@ export const ContactContent: FC = () => {
                                 </FormLine>
                             </FormColumn>
                             <FormColumn lg="65%">
-                                <FormLine bottomGap={true} width="100%">
+                                <FormLine bottomGap width="100%">
                                     <Controller
                                         name={formMeta.fields.message.name}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (

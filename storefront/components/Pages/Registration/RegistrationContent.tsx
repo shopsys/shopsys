@@ -133,7 +133,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                                         name={formMeta.fields.gdprAgreement.name}
                                         label={formMeta.fields.gdprAgreement.label}
                                         fieldRef={field}
-                                        required={true}
+                                        required
                                     />
                                     <FormLineError
                                         error={error}

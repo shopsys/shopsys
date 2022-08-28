@@ -16,7 +16,7 @@ export const Company: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.companyName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -25,7 +25,7 @@ export const Company: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyName.name}
                                 name={formMeta.fields.companyName.name}
                                 label={formMeta.fields.companyName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -41,7 +41,7 @@ export const Company: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.companyNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -50,7 +50,7 @@ export const Company: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
                                 name={formMeta.fields.companyNumber.name}
                                 label={formMeta.fields.companyNumber.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}

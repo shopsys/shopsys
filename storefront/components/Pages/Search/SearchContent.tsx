@@ -204,7 +204,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                                     originalSlug={null}
                                     orderingMode={searchResults.productsSearch.orderingMode}
                                 />
-                                <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
+                                <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>
                         )}
                     <SearchResultsContentStyled

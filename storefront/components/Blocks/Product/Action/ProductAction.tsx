@@ -21,7 +21,7 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmListName, li
 
     if (product.isMainVariant) {
         return (
-            <ProductActionStyled isButtonFullWidth={true}>
+            <ProductActionStyled isButtonFullWidth>
                 <Button
                     type="button"
                     onClick={() => router.push(product.slug)}

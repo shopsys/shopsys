@@ -54,7 +54,7 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
                 {t('Add to cart')}
             </Button>
             {popupData !== null && (
-                <AddToCartPopup isVisible={true} onCloseCallback={() => setPopupData(null)} product={popupData} />
+                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />
             )}
         </>
     );

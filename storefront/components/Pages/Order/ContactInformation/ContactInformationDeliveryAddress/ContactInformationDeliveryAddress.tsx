@@ -168,7 +168,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     <div ref={cssTransitionRef}>
                         <div ref={contentElement}>
                             {showAddressSelection && (
-                                <FormLine bottomGap={true} lg="65%">
+                                <FormLine bottomGap lg="65%">
                                     <ListStyled>
                                         {user?.deliveryAddresses.map((address) => (
                                             <Controller
@@ -232,7 +232,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                             {(!showAddressSelection || isCustomAddressSelected) && (
                                 <>
                                     <FormColumn lg="65%">
-                                        <FormLine bottomGap={true} width="100%" lg="50%">
+                                        <FormLine bottomGap width="100%" lg="50%">
                                             <Controller
                                                 name={formMeta.fields.deliveryFirstName.name}
                                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -245,7 +245,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryFirstName.name}
                                                             label={formMeta.fields.deliveryFirstName.label}
-                                                            required={true}
+                                                            required
                                                             type="text"
                                                             isTouched={isTouched}
                                                             hasError={invalid}
@@ -272,7 +272,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 )}
                                             />
                                         </FormLine>
-                                        <FormLine bottomGap={true} width="100%" lg="50%">
+                                        <FormLine bottomGap width="100%" lg="50%">
                                             <Controller
                                                 name={formMeta.fields.deliveryLastName.name}
                                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -285,7 +285,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryLastName.name}
                                                             label={formMeta.fields.deliveryLastName.label}
-                                                            required={true}
+                                                            required
                                                             type="text"
                                                             isTouched={isTouched}
                                                             hasError={invalid}
@@ -313,7 +313,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             />
                                         </FormLine>
                                     </FormColumn>
-                                    <FormLine bottomGap={true} lg="65%">
+                                    <FormLine bottomGap lg="65%">
                                         <Controller
                                             name={formMeta.fields.deliveryCompanyName.name}
                                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -352,7 +352,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             )}
                                         />
                                     </FormLine>
-                                    <FormLine bottomGap={true} lg="65%">
+                                    <FormLine bottomGap lg="65%">
                                         <Controller
                                             name={formMeta.fields.deliveryTelephone.name}
                                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -393,7 +393,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                     </FormLine>
                                     {!pickupPlace && (
                                         <>
-                                            <FormLine bottomGap={true} lg="65%">
+                                            <FormLine bottomGap lg="65%">
                                                 <Controller
                                                     name={formMeta.fields.deliveryStreet.name}
                                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -407,7 +407,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                 name={formMeta.fields.deliveryStreet.name}
                                                                 label={formMeta.fields.deliveryStreet.label}
                                                                 type="text"
-                                                                required={true}
+                                                                required
                                                                 isTouched={isTouched}
                                                                 hasError={invalid}
                                                                 fieldRef={field}
@@ -434,7 +434,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 />
                                             </FormLine>
                                             <FormColumn lg="65%">
-                                                <FormLine bottomGap={true}>
+                                                <FormLine bottomGap>
                                                     <Controller
                                                         name={formMeta.fields.deliveryCity.name}
                                                         render={({
@@ -450,7 +450,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                     }
                                                                     name={formMeta.fields.deliveryCity.name}
                                                                     label={formMeta.fields.deliveryCity.label}
-                                                                    required={true}
+                                                                    required
                                                                     type="text"
                                                                     isTouched={isTouched}
                                                                     hasError={invalid}
@@ -477,7 +477,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         )}
                                                     />
                                                 </FormLine>
-                                                <FormLine bottomGap={true} width="100%" lg="142px">
+                                                <FormLine bottomGap width="100%" lg="142px">
                                                     <Controller
                                                         name={formMeta.fields.deliveryPostcode.name}
                                                         render={({
@@ -493,7 +493,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                     }
                                                                     name={formMeta.fields.deliveryPostcode.name}
                                                                     label={formMeta.fields.deliveryPostcode.label}
-                                                                    required={true}
+                                                                    required
                                                                     type="text"
                                                                     isTouched={isTouched}
                                                                     hasError={invalid}

@@ -81,7 +81,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) =
                 )}
             </AddToCartWrapperStyled>
             {popupData !== null && (
-                <AddToCartPopup isVisible={true} onCloseCallback={() => setPopupData(null)} product={popupData} />
+                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />
             )}
         </>
     );

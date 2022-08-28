@@ -43,7 +43,7 @@ export const ContactInformationContent: FC = () => {
 
     return (
         <>
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.email.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (

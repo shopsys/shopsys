@@ -43,7 +43,7 @@ export const ContactInformationAddress: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Billing address')}</Heading>
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.street.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -52,7 +52,7 @@ export const ContactInformationAddress: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.street.name}
                                 name={formMeta.fields.street.name}
                                 label={formMeta.fields.street.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -70,7 +70,7 @@ export const ContactInformationAddress: FC = () => {
             </FormLine>
 
             <FormColumn lg="65%">
-                <FormLine bottomGap={true}>
+                <FormLine bottomGap>
                     <Controller
                         name={formMeta.fields.city.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -79,7 +79,7 @@ export const ContactInformationAddress: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.city.name}
                                     name={formMeta.fields.city.name}
                                     label={formMeta.fields.city.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}
@@ -95,7 +95,7 @@ export const ContactInformationAddress: FC = () => {
                         )}
                     />
                 </FormLine>
-                <FormLine bottomGap={true} width="100%" lg="142px">
+                <FormLine bottomGap width="100%" lg="142px">
                     <Controller
                         name={formMeta.fields.postcode.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -104,7 +104,7 @@ export const ContactInformationAddress: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.postcode.name}
                                     name={formMeta.fields.postcode.name}
                                     label={formMeta.fields.postcode.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}
