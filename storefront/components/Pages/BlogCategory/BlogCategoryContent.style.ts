@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const BlogCategoryStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogCategoryStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         margin-bottom: 70px;
@@ -10,11 +10,11 @@ export const BlogCategoryStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
-export const BlogCategoryListStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogCategoryListStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -25,11 +25,11 @@ export const BlogCategoryListStyled = styled.div`
             flex: 1;
             order: 1;
         }
-    `}
-`;
+    `,
+);
 
-export const BlogCategoryPanelStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogCategoryPanelStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -41,5 +41,5 @@ export const BlogCategoryPanelStyled = styled.div`
             width: 435px;
             padding-left: 50px;
         }
-    `}
-`;
+    `,
+);

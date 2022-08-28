@@ -6,8 +6,8 @@ const localVariables = {
     productDetailGalleryThumbnailItemHoverBg: '#e8e8ea',
 } as const;
 
-export const ProductDetailGalleryThumbnailsStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailGalleryThumbnailsStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -19,11 +19,11 @@ export const ProductDetailGalleryThumbnailsStyled = styled.div`
             padding-right: 24px;
             margin-bottom: 20px;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailGalleryThumbnailsItemStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailGalleryThumbnailsItemStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         width: 76px;
         position: relative;
@@ -67,11 +67,11 @@ export const ProductDetailGalleryThumbnailsItemStyled = styled.div`
                 mix-blend-mode: multiply;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailGalleryMainImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailGalleryMainImageStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -83,8 +83,8 @@ export const ProductDetailGalleryMainImageStyled = styled.div`
             border-radius: ${theme.radius.big};
             overflow: hidden;
         }
-    `}
-`;
+    `,
+);
 
 export const ProductDetailGalleryFlagsStyled = styled.div`
     position: absolute;

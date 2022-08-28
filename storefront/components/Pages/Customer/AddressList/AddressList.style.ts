@@ -6,7 +6,7 @@ import { css } from 'styled-components';
 const localVariables = {
     addressListPadding: '20px',
     addressListDeleteIconSize: '12px',
-};
+} as const;
 
 type ListItemStyledProps = {
     isActive: boolean;
@@ -18,8 +18,8 @@ export const ListStyled = styled.div`
     width: 100%;
 `;
 
-export const ListItemStyled = styled.div<ListItemStyledProps>`
-    ${({ theme, isActive }) => css`
+export const ListItemStyled = styled.div<ListItemStyledProps>(
+    ({ theme, isActive }) => css`
         position: relative;
         display: flex;
         flex-direction: row;
@@ -43,8 +43,8 @@ export const ListItemStyled = styled.div<ListItemStyledProps>`
             : css`
                   cursor: pointer;
               `}
-    `}
-`;
+    `,
+);
 
 export const ListItemIconStyled = styled(Icon)`
     position: relative;
@@ -52,8 +52,8 @@ export const ListItemIconStyled = styled(Icon)`
     margin: 0 5px 0 0;
 `;
 
-export const ListItemDeleteStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const ListItemDeleteStyled = styled(Icon)(
+    ({ theme }) => css`
         position: absolute;
         right: ${localVariables.addressListPadding};
         top: ${localVariables.addressListPadding};
@@ -66,11 +66,11 @@ export const ListItemDeleteStyled = styled(Icon)`
         &:hover {
             color: ${theme.color.red};
         }
-    `}
-`;
+    `,
+);
 
-export const ListPopupStyled = styled(PopupStyled)`
-    ${({ theme }) => css`
+export const ListPopupStyled = styled(PopupStyled)(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             width: 80%;
         }
@@ -78,8 +78,8 @@ export const ListPopupStyled = styled(PopupStyled)`
         @media ${theme.mediaQueries.queryTablet} {
             width: 96%;
         }
-    `}
-`;
+    `,
+);
 
 export const ListPopupInStyled = styled.div`
     display: flex;
@@ -94,19 +94,19 @@ export const ButtonWrapperStyled = styled.div`
     margin-top: 15px;
 `;
 
-export const ButtonBackIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const ButtonBackIconStyled = styled(Icon)(
+    ({ theme }) => css`
         position: relative;
         top: 1px;
         transform: rotate(90deg);
         margin-right: 15px;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);
 
-export const ButtonNextIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const ButtonNextIconStyled = styled(Icon)(
+    ({ theme }) => css`
         position: relative;
         top: 1px;
         transform: rotate(-90deg);
@@ -114,5 +114,5 @@ export const ButtonNextIconStyled = styled(Icon)`
         margin-right: 0;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);

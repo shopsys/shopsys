@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ListStyled = styled.ul`
-    ${({ theme }) => css`
+export const ListStyled = styled.ul(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -11,11 +11,11 @@ export const ListStyled = styled.ul`
         @media ${theme.mediaQueries.queryMd} {
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const ListItemStyled = styled.li(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -25,11 +25,11 @@ export const ListItemStyled = styled.li`
         @media ${theme.mediaQueries.queryMd} {
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ListItemImageStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         text-align: center;
         margin-bottom: 10px;
@@ -38,11 +38,11 @@ export const ListItemImageStyled = styled.div`
             width: 200px;
             margin-bottom: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemContentStyled = styled.div`
-    ${({ theme }) => css`
+export const ListItemContentStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -50,11 +50,11 @@ export const ListItemContentStyled = styled.div`
         @media ${theme.mediaQueries.queryMd} {
             padding-left: 40px;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemTitleStyled = styled.a`
-    ${({ theme }) => css`
+export const ListItemTitleStyled = styled.a(
+    ({ theme }) => css`
         &:hover {
             text-decoration: none;
 
@@ -62,21 +62,21 @@ export const ListItemTitleStyled = styled.a`
                 color: ${theme.color.primary};
             }
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemContentTextStyled = styled.p`
-    ${({ theme }) => css`
+export const ListItemContentTextStyled = styled.p(
+    ({ theme }) => css`
         line-height: 30px;
         margin-bottom: 10px;
 
         font-size: ${theme.fontSize.default};
-    `}
-`;
+    `,
+);
 
-export const ListItemContentDateStyled = styled.p`
-    ${({ theme }) => css`
+export const ListItemContentDateStyled = styled.p(
+    ({ theme }) => css`
         font-weight: 700;
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);

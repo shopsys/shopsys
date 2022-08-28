@@ -1,8 +1,8 @@
 import { PacketeryContainerStyled } from './PacketeryContainer.style';
 import { FC } from 'react';
 
-export const PacketeryContainer: FC = () => {
-    const testIdentifier = 'pages-order-transportandpayment-packeterycontainer';
+const TEST_IDENTIFIER = 'pages-order-transportandpayment-packeterycontainer';
 
-    return <PacketeryContainerStyled id="packetery-container" data-testid={testIdentifier}></PacketeryContainerStyled>;
-};
+export const PacketeryContainer: FC = () => (
+    <PacketeryContainerStyled id="packetery-container" data-testid={TEST_IDENTIFIER}></PacketeryContainerStyled>
+);

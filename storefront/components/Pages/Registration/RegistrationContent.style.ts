@@ -12,8 +12,8 @@ export const ContentSectionStyled = styled.div`
     margin-bottom: 40px;
 `;
 
-export const LoginProfileStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         padding: 16px;
         margin: 24px -15px 24px 0;
@@ -25,11 +25,11 @@ export const LoginProfileStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             margin: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const LoginProfileTextStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileTextStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         line-height: 1.4;
 
@@ -44,8 +44,8 @@ export const LoginProfileTextStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             font-size: 20px;
         }
-    `}
-`;
+    `,
+);
 
 export const LoginProfileTextStrongStyled = styled.div`
     display: block;
@@ -54,8 +54,8 @@ export const LoginProfileTextStrongStyled = styled.div`
     font-weight: 600;
 `;
 
-export const LoginProfileIconStyled = styled.div`
-    ${({ theme }) => css`
+export const LoginProfileIconStyled = styled.div(
+    ({ theme }) => css`
         display: none;
         position: absolute;
         right: 20px;
@@ -71,5 +71,5 @@ export const LoginProfileIconStyled = styled.div`
         img {
             max-width: none;
         }
-    `}
-`;
+    `,
+);

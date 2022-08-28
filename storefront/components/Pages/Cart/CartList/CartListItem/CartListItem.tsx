@@ -26,9 +26,10 @@ type CartListItemProps = {
     listIndex: number;
 };
 
-export const CartListItem: FC<CartListItemProps> = (props) => {
-    const testIdentifier = 'pages-cart-list-item-';
-    const itemCatnum = props.item.product.catalogNumber;
+const TEST_IDENTIFIER = 'pages-cart-list-item-';
+
+export const CartListItem: FC<CartListItemProps> = ({ item, listIndex }) => {
+    const itemCatnum = item.product.catalogNumber;
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
@@ -47,54 +48,42 @@ export const CartListItem: FC<CartListItemProps> = (props) => {
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            changeCartItemQuantity(
-                props.item.product.uuid,
-                props.listIndex,
-                spinboxRef.current!.valueAsNumber,
-                'cart',
-                true,
-            );
+            changeCartItemQuantity(item.product.uuid, listIndex, spinboxRef.current!.valueAsNumber, 'cart', true);
         }, 500);
     };
 
     return (
-        <ItemStyled data-testid={testIdentifier + itemCatnum}>
-            <ImageCellStyled data-testid={testIdentifier + 'image'}>
-                <NextLink href={props.item.product.slug} passHref>
+        <ItemStyled data-testid={TEST_IDENTIFIER + itemCatnum}>
+            <ImageCellStyled data-testid={TEST_IDENTIFIER + 'image'}>
+                <NextLink href={item.product.slug} passHref>
                     <ImageWrapperStyled>
-                        <Image
-                            image={props.item.product.image}
-                            type="thumbnailExtraSmall"
-                            alt={props.item.product.fullName}
-                        />
+                        <Image image={item.product.image} type="thumbnailExtraSmall" alt={item.product.fullName} />
                     </ImageWrapperStyled>
                 </NextLink>
             </ImageCellStyled>
             <InfoCellStyled>
-                <CartListItemInfo item={props.item} />
+                <CartListItemInfo item={item} />
             </InfoCellStyled>
-            <SpinboxCellStyled data-testid={testIdentifier + 'spinbox'}>
+            <SpinboxCellStyled data-testid={TEST_IDENTIFIER + 'spinbox'}>
                 <Spinbox
                     min={1}
-                    max={props.item.product.stockQuantity}
+                    max={item.product.stockQuantity}
                     step={1}
-                    defaultValue={props.item.quantity}
+                    defaultValue={item.quantity}
                     ref={spinboxRef}
                     onChangeValueCallback={onChangeValueHandler}
                 />
             </SpinboxCellStyled>
-            <ItemPriceCellStyled data-testid={testIdentifier + 'itemprice'}>
+            <ItemPriceCellStyled data-testid={TEST_IDENTIFIER + 'itemprice'}>
                 <ItemPriceStyled>
-                    {formatPrice(props.item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
+                    {formatPrice(item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
                 </ItemPriceStyled>
             </ItemPriceCellStyled>
-            <TotalPriceCellStyled data-testid={testIdentifier + 'totalprice'}>
-                <TotalPriceStyled>
-                    {formatPrice(props.item.product.price.priceWithVat * props.item.quantity)}
-                </TotalPriceStyled>
+            <TotalPriceCellStyled data-testid={TEST_IDENTIFIER + 'totalprice'}>
+                <TotalPriceStyled>{formatPrice(item.product.price.priceWithVat * item.quantity)}</TotalPriceStyled>
             </TotalPriceCellStyled>
             <RemoveButtonCellStyled>
-                <RemoveCartItemButton cartItem={props.item} listIndex={props.listIndex} />
+                <RemoveCartItemButton cartItem={item} listIndex={listIndex} />
             </RemoveButtonCellStyled>
         </ItemStyled>
     );

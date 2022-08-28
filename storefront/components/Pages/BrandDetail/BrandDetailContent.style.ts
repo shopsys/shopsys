@@ -3,10 +3,10 @@ import { css } from 'styled-components';
 
 const localVariables = {
     brandDetailImageWidth: '220px',
-};
+} as const;
 
-export const BrandDetailStyled = styled.div`
-    ${({ theme }) => css`
+export const BrandDetailStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -16,8 +16,8 @@ export const BrandDetailStyled = styled.div`
         @media ${theme.mediaQueries.queryMd} {
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
 export const BrandDetailImageStyled = styled.div`
     align-self: center;
@@ -25,8 +25,8 @@ export const BrandDetailImageStyled = styled.div`
     margin-right: 20px;
 `;
 
-export const BrandDetailTextStyled = styled.div`
-    ${({ theme }) => css`
+export const BrandDetailTextStyled = styled.div(
+    ({ theme }) => css`
         align-self: flex-start;
 
         @media ${theme.mediaQueries.queryMd} {
@@ -38,5 +38,5 @@ export const BrandDetailTextStyled = styled.div`
             color: ${theme.color.base};
             font-size: ${theme.fontSize.default};
         }
-    `}
-`;
+    `,
+);

@@ -7,8 +7,8 @@ export const CustomerListStyled = styled.ul`
     flex-wrap: wrap;
 `;
 
-export const CustomerListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const CustomerListItemStyled = styled.li(
+    ({ theme }) => css`
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -43,5 +43,5 @@ export const CustomerListItemStyled = styled.li`
             width: calc(100% / 3 - 10px);
             margin: 0 10px 10px 0;
         }
-    `};
-`;
+    `,
+);

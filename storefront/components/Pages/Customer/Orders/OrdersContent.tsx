@@ -21,16 +21,14 @@ type OrdersContentProps = {
     breadcrumbs: BreadcrumbItemType[];
 };
 
-export const OrdersContent: FC<OrdersContentProps> = (props) => {
-    const testIdentifier = 'pages-customer-orders-';
+const TEST_IDENTIFIER = 'pages-customer-orders-';
 
+export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, totalCount }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const { url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
-
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
-    const orders = props.orders;
 
     return (
         <>
@@ -38,7 +36,7 @@ export const OrdersContent: FC<OrdersContentProps> = (props) => {
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('My orders')}</Heading>
                 </HeadingWrapperStyled>
-                <Breadcrumbs key="breadcrumb" breadcrumb={props.breadcrumbs} />
+                <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <div ref={containerWrapRef}>
                 <Webline>
@@ -58,8 +56,8 @@ export const OrdersContent: FC<OrdersContentProps> = (props) => {
                         {orders !== undefined &&
                             orders.length !== 0 &&
                             orders.map((order, index) => (
-                                <tr key={index} data-testid={testIdentifier + index}>
-                                    <td data-testid={testIdentifier + 'number'}>
+                                <tr key={index} data-testid={TEST_IDENTIFIER + index}>
+                                    <td data-testid={TEST_IDENTIFIER + 'number'}>
                                         <NextLink
                                             href={{
                                                 pathname: customerOrderDetailUrl,
@@ -69,13 +67,13 @@ export const OrdersContent: FC<OrdersContentProps> = (props) => {
                                             {order.number}
                                         </NextLink>
                                     </td>
-                                    <td className="text-right" data-testid={testIdentifier + 'creation-date'}>
+                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'creation-date'}>
                                         {order.creationDate}
                                     </td>
-                                    <td className="text-right" data-testid={testIdentifier + 'quantity'}>
+                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'quantity'}>
                                         {order.items.quantity}
                                     </td>
-                                    <td data-testid={testIdentifier + 'transport'}>
+                                    <td data-testid={TEST_IDENTIFIER + 'transport'}>
                                         <TransportImageWrapperStyled>
                                             <Image
                                                 image={order.transport.image}
@@ -85,11 +83,11 @@ export const OrdersContent: FC<OrdersContentProps> = (props) => {
                                         </TransportImageWrapperStyled>
                                         {order.transport.name}
                                     </td>
-                                    <td data-testid={testIdentifier + 'payment'}>{order.payment}</td>
-                                    <td className="text-right" data-testid={testIdentifier + 'total-price'}>
+                                    <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment}</td>
+                                    <td className="text-right" data-testid={TEST_IDENTIFIER + 'total-price'}>
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </td>
-                                    <td data-testid={testIdentifier + 'detail-link'}>
+                                    <td data-testid={TEST_IDENTIFIER + 'detail-link'}>
                                         <NextLink
                                             href={{
                                                 pathname: customerOrderDetailUrl,
@@ -111,7 +109,7 @@ export const OrdersContent: FC<OrdersContentProps> = (props) => {
                 </Webline>
                 <Webline>
                     <Pagination
-                        totalCount={props.totalCount !== undefined ? props.totalCount : 0}
+                        totalCount={totalCount !== undefined ? totalCount : 0}
                         containerWrapRef={containerWrapRef}
                     />
                 </Webline>

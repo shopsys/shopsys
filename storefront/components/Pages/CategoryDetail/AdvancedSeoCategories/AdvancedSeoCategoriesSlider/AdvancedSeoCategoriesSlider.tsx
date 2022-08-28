@@ -10,7 +10,7 @@ type AdvancedSeoCategoriesSliderProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
 };
 
-export const AdvancedSeoCategoriesSlider: FC<AdvancedSeoCategoriesSliderProps> = (props) => {
+export const AdvancedSeoCategoriesSlider: FC<AdvancedSeoCategoriesSliderProps> = ({ readyCategorySeoMixLinks }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryTablet]: {
@@ -26,7 +26,7 @@ export const AdvancedSeoCategoriesSlider: FC<AdvancedSeoCategoriesSliderProps> =
 
     return (
         <div ref={sliderRef} className="keen-slider">
-            {props.readyCategorySeoMixLinks.map((seoMixLink, index) => (
+            {readyCategorySeoMixLinks.map((seoMixLink, index) => (
                 <NextLink key={index} href={seoMixLink.slug} passHref>
                     <CategoryDetailAdvancedSeoCategoriesItemStyled className="keen-slider__slide">
                         {seoMixLink.name}

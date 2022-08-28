@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ResultProductsStyled = styled.div`
-    ${({ theme }) => css`
+export const ResultProductsStyled = styled.div(
+    ({ theme }) => css`
         padding: 50px;
         text-align: center;
 
@@ -11,5 +11,5 @@ export const ResultProductsStyled = styled.div`
         div:first-of-type {
             margin-bottom: 20px;
         }
-    `}
-`;
+    `,
+);

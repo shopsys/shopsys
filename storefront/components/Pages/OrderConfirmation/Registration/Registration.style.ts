@@ -2,8 +2,8 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const RegistrationStyled = styled.div`
-    ${({ theme }) => css`
+export const RegistrationStyled = styled.div(
+    ({ theme }) => css`
         flex-direction: row;
         display: flex;
         margin-bottom: 84px;
@@ -32,11 +32,11 @@ export const RegistrationStyled = styled.div`
                 display: none;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const RegistrationMessageColumnStyled = styled.div`
-    ${({ theme }) => css`
+export const RegistrationMessageColumnStyled = styled.div(
+    ({ theme }) => css`
         padding: 30px 40px;
         width: 50%;
 
@@ -44,11 +44,11 @@ export const RegistrationMessageColumnStyled = styled.div`
             padding: 20px;
             width: 100%;
         }
-    `}
-`;
+    `,
+);
 
-export const RegistrationFormColumnStyled = styled.div`
-    ${({ theme }) => css`
+export const RegistrationFormColumnStyled = styled.div(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -60,25 +60,25 @@ export const RegistrationFormColumnStyled = styled.div`
             padding: 20px;
             width: 100%;
         }
-    `}
-`;
+    `,
+);
 
-export const RegistrationFormStyled = styled.div`
-    ${({ theme }) => css`
+export const RegistrationFormStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryLg} {
             max-width: 370px;
         }
-    `}
-`;
+    `,
+);
 
 export const RegistrationFormItemStyled = styled.div`
     margin-bottom: 30px;
 `;
 
-export const RegistrationHeadingStyled = styled(Heading)`
-    ${({ theme }) => css`
+export const RegistrationHeadingStyled = styled(Heading)(
+    ({ theme }) => css`
         line-height: 43px;
         margin-bottom: 21px;
 
@@ -87,8 +87,8 @@ export const RegistrationHeadingStyled = styled(Heading)`
         strong {
             color: ${theme.color.primary};
         }
-    `}
-`;
+    `,
+);
 
 export const RegistrationBenefitsListItem = styled.li`
     line-height: 21px;

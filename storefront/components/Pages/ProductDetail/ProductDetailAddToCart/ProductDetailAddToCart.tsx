@@ -22,9 +22,9 @@ type ProductDetailAddToCartProps = {
     product: ProductDetailType;
 };
 
-export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-addtocart';
+const TEST_IDENTIFIER = 'pages-productdetail-addtocart';
 
+export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -38,7 +38,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) =
         }
 
         const addToCartResult = await changeCartItemQuantity(
-            props.product.uuid,
+            product.uuid,
             1,
             spinboxRef.current.valueAsNumber,
             'detail',
@@ -49,29 +49,23 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) =
 
     return (
         <>
-            <AddToCartWrapperStyled data-testid={testIdentifier}>
-                <AddToCartPriceStyled data-testid={testIdentifier + '-price'}>
-                    {formatPrice(props.product.price.priceWithVat)}
+            <AddToCartWrapperStyled data-testid={TEST_IDENTIFIER}>
+                <AddToCartPriceStyled data-testid={TEST_IDENTIFIER + '-price'}>
+                    {formatPrice(product.price.priceWithVat)}
                 </AddToCartPriceStyled>
-                {props.product.isSellingDenied ? (
+                {product.isSellingDenied ? (
                     <AddToCartUnavailableTextStyled>
                         {t('This item can no longer be purchased')}
                     </AddToCartUnavailableTextStyled>
                 ) : (
                     <AddToCartFormStyled>
                         <AddToCartButtonsWrapperStyled>
-                            <Spinbox
-                                min={1}
-                                step={1}
-                                defaultValue={1}
-                                max={props.product.stockQuantity}
-                                ref={spinboxRef}
-                            />
+                            <Spinbox min={1} step={1} defaultValue={1} max={product.stockQuantity} ref={spinboxRef} />
                             <AddToCartButtonWrapperStyled>
                                 <AddToCartButtonStyled
                                     onClick={onAddToCartHandler}
                                     variant="primary"
-                                    data-testid={testIdentifier + '-button'}
+                                    data-testid={TEST_IDENTIFIER + '-button'}
                                 >
                                     {t('Add to cart')}
                                 </AddToCartButtonStyled>

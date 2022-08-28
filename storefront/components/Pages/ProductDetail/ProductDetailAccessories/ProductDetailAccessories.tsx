@@ -8,17 +8,17 @@ type ProductDetailAccessoriesProps = {
     accessories: SliderProductItemType[];
 };
 
-export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = (props) => {
+export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {
     const t = useTypedTranslationFunction();
 
-    if (props.accessories.length === 0) {
+    if (accessories.length === 0) {
         return null;
     }
 
     return (
         <>
             <Heading type="h2">{t('You can also buy')}</Heading>
-            <ProductsSlider products={props.accessories} gtmListName="accessory" />
+            <ProductsSlider products={accessories} gtmListName="accessory" />
         </>
     );
 };

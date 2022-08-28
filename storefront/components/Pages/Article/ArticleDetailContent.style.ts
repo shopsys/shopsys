@@ -2,10 +2,10 @@ import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 const localVariables = {
-    TitleFontSize: '44px',
-    TitleLineheight: '42px',
-    Radius: '8px',
-};
+    titleFontSize: '44px',
+    titleLineheight: '42px',
+    radius: '8px',
+} as const;
 
 export const ArticleWrapper = styled.div(
     ({ theme }) => css`
@@ -20,13 +20,13 @@ export const ArticleWrapper = styled.div(
 export const ArticleTitle = styled.h1(
     ({ theme }) => css`
         display: block;
-        line-height: ${localVariables.TitleLineheight};
+        line-height: ${localVariables.titleLineheight};
         padding: 0 20px;
         margin-bottom: 24px;
 
         color: ${theme.color.primary};
         font-weight: 700;
-        font-size: ${localVariables.TitleFontSize};
+        font-size: ${localVariables.titleFontSize};
     `,
 );
 

@@ -10,20 +10,18 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { CartPreview } from 'components/Pages/Cart/CartPreview/CartPreview';
 import { FC } from 'react';
 
-export const CartSummary: FC = () => {
-    return (
-        <Webline>
-            <CartSummaryStyled>
-                <CartSummaryLeftStyled>
-                    <PromoCode />
-                </CartSummaryLeftStyled>
-                <CartSummaryMiddleStyled>
-                    <FreeTransport />
-                </CartSummaryMiddleStyled>
-                <CartSummaryRightStyled>
-                    <CartPreview />
-                </CartSummaryRightStyled>
-            </CartSummaryStyled>
-        </Webline>
-    );
-};
+export const CartSummary: FC = () => (
+    <Webline>
+        <CartSummaryStyled>
+            <CartSummaryLeftStyled>
+                <PromoCode />
+            </CartSummaryLeftStyled>
+            <CartSummaryMiddleStyled>
+                <FreeTransport />
+            </CartSummaryMiddleStyled>
+            <CartSummaryRightStyled>
+                <CartPreview />
+            </CartSummaryRightStyled>
+        </CartSummaryStyled>
+    </Webline>
+);

@@ -11,27 +11,27 @@ type BlogCategoryContentProps = {
     blogCategory: BlogCategoryDetailType;
 };
 
-export const BlogCategoryContent: FC<BlogCategoryContentProps> = (props) => {
+export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
 
     return (
         <Webline>
             <div ref={containerWrapRef}>
-                <Heading type="h1">{props.blogCategory.name}</Heading>
+                <Heading type="h1">{blogCategory.name}</Heading>
                 <BlogCategoryStyled>
-                    {props.blogCategory.blogArticles !== null && (
+                    {blogCategory.blogArticles !== null && (
                         <BlogCategoryListStyled>
-                            <BlogArticlesList blogArticles={props.blogCategory.blogArticles} />
+                            <BlogArticlesList blogArticles={blogCategory.blogArticles} />
                             <Pagination
-                                totalCount={props.blogCategory.blogArticles.totalCount}
+                                totalCount={blogCategory.blogArticles.totalCount}
                                 containerWrapRef={containerWrapRef}
                             />
                         </BlogCategoryListStyled>
                     )}
                     <BlogCategoryPanelStyled>
                         <BlogSignpost
-                            blogCategoryItems={props.blogCategory.blogCategoriesTree}
-                            activeItem={props.blogCategory.uuid}
+                            blogCategoryItems={blogCategory.blogCategoriesTree}
+                            activeItem={blogCategory.uuid}
                         />
                     </BlogCategoryPanelStyled>
                 </BlogCategoryStyled>

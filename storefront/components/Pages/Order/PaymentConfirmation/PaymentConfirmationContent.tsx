@@ -7,6 +7,5 @@ type PaymentConfirmationContentProps = {
     orderUuid: string;
 };
 
-export const PaymentConfirmationContent: FC<PaymentConfirmationContentProps> = ({ isSuccess, orderUuid }) => {
-    return isSuccess ? <PaymentSuccess orderUuid={orderUuid} /> : <PaymentFail />;
-};
+export const PaymentConfirmationContent: FC<PaymentConfirmationContentProps> = ({ isSuccess, orderUuid }) =>
+    isSuccess ? <PaymentSuccess orderUuid={orderUuid} /> : <PaymentFail />;

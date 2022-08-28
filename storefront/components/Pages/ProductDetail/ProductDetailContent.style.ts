@@ -6,8 +6,8 @@ const localVariables = {
     detailInfoWidth: '512px',
 } as const;
 
-export const ProductDetailStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -16,11 +16,11 @@ export const ProductDetailStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailImageStyled = styled.div(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryLg} {
             width: calc(100% - ${localVariables.detailInfoWidthSmall});
             margin-bottom: 0;
@@ -47,11 +47,11 @@ export const ProductDetailImageStyled = styled.div`
                 border-radius: ${theme.radius.big};
             }
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailInfoStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailInfoStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         margin-bottom: 16px;
 
@@ -64,37 +64,37 @@ export const ProductDetailInfoStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             width: ${localVariables.detailInfoWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailPrefixStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailPrefixStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 4px;
 
         color: ${theme.color.greyLight};
         font-size: ${theme.fontSize.default};
         font-weight: 400;
-    `}
-`;
+    `,
+);
 
-export const ProductDetailHeadingStyled = styled.h1`
-    ${({ theme }) => css`
+export const ProductDetailHeadingStyled = styled.h1(
+    ({ theme }) => css`
         margin-bottom: 8px;
 
         color: ${theme.color.black};
         font-size: 24px;
         font-weight: 700;
-    `}
-`;
+    `,
+);
 
-export const ProductDetailCodeStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailCodeStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 20px;
 
         color: ${theme.color.greyLight};
         font-size: 13px;
-    `}
-`;
+    `,
+);
 
 export const ProductDetailShortDescriptionStyled = styled.div`
     margin-bottom: 20px;

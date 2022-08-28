@@ -1,10 +1,10 @@
 import { PickupPlacePopup } from './PickupPlacePopup/PickupPlacePopup';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './TransportAndPaymentSelect.style';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Radiobutton from 'components/Forms/Radiobutton';
-import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';

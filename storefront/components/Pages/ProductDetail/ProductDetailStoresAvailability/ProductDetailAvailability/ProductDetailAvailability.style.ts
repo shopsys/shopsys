@@ -1,19 +1,21 @@
 import styled, { css } from 'styled-components';
-import { AvailabilityType } from 'types/availability';
+import { AvailabilityStatusType } from 'types/availability';
 
-type ProductDetailAvailabilityLinkStyledProps = Pick<AvailabilityType, 'status'>;
+type ProductDetailAvailabilityLinkStyledProps = {
+    availabilityStatus: AvailabilityStatusType;
+};
 
-export const ProductDetailAvailabilityStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailAvailabilityStyled = styled.div(
+    ({ theme }) => css`
         padding: 14px 10px;
 
         background-color: ${theme.color.blueLight};
         border-radius: 6px;
-    `}
-`;
+    `,
+);
 
-export const ProductDetailAvailabilityLinkStyled = styled.a<ProductDetailAvailabilityLinkStyledProps>`
-    ${({ theme, status }) => css`
+export const ProductDetailAvailabilityLinkStyled = styled.a<ProductDetailAvailabilityLinkStyledProps>(
+    ({ theme, availabilityStatus }) => css`
         align-items: center;
         display: flex;
         margin-bottom: 1.8px;
@@ -22,7 +24,7 @@ export const ProductDetailAvailabilityLinkStyled = styled.a<ProductDetailAvailab
         font-size: ${theme.fontSize.default};
         text-decoration: none;
 
-        ${status === 'in-stock' &&
+        ${availabilityStatus === 'in-stock' &&
         css`
             color: ${theme.color.inStock};
 
@@ -31,7 +33,7 @@ export const ProductDetailAvailabilityLinkStyled = styled.a<ProductDetailAvailab
             }
         `}
 
-        ${status === 'out-of-stock' &&
+        ${availabilityStatus === 'out-of-stock' &&
         css`
             color: ${theme.color.red};
 
@@ -47,13 +49,13 @@ export const ProductDetailAvailabilityLinkStyled = styled.a<ProductDetailAvailab
         img {
             margin-left: 8px;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailAvailabilityInfoStyled = styled.span`
-    ${({ theme }) => css`
+export const ProductDetailAvailabilityInfoStyled = styled.span(
+    ({ theme }) => css`
         margin-right: 3px;
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);

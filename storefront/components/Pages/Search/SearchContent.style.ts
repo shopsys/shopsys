@@ -4,11 +4,7 @@ import { css } from 'styled-components';
 
 const localVariables = {
     searchResultsPanelWidth: '304px',
-};
-
-type SearchResultsPanelStyledProps = {
-    isOpen?: boolean;
-};
+} as const;
 
 type SearchResultsBlockStyledProps = {
     areAllResultsVisible: boolean;
@@ -18,8 +14,8 @@ type SearchResultsContentStyledProps = {
     isPanelActive: boolean;
 };
 
-export const SearchResultsStyled = styled.div`
-    ${({ theme }) =>
+export const SearchResultsStyled = styled.div(
+    ({ theme }) =>
         css`
             position: relative;
             display: flex;
@@ -31,31 +27,25 @@ export const SearchResultsStyled = styled.div`
                 flex-wrap: wrap;
                 margin-bottom: 40px;
             }
-        `}
-`;
+        `,
+);
 
-export const SearchResultsPanelStyled = styled.div<SearchResultsPanelStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const SearchResultsPanelStyled = styled.div(
+    ({ theme }) => css`
         display: none;
         position: absolute;
         width: 100%;
-
-        ${isOpen &&
-        css`
-            display: block;
-            z-index: ${theme.zIndex.menu};
-        `};
 
         @media ${theme.mediaQueries.queryVl} {
             position: static;
             display: block;
             width: ${localVariables.searchResultsPanelWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const SearchResultsContentStyled = styled.div<SearchResultsContentStyledProps>`
-    ${({ theme, isPanelActive }) => css`
+export const SearchResultsContentStyled = styled.div<SearchResultsContentStyledProps>(
+    ({ theme, isPanelActive }) => css`
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -66,24 +56,24 @@ export const SearchResultsContentStyled = styled.div<SearchResultsContentStyledP
                 padding-left: 50px;
             }
         `}
-    `}
-`;
+    `,
+);
 
-export const SearchResultsBlockStyled = styled.div<SearchResultsBlockStyledProps>`
-    ${({ theme, areAllResultsVisible }) => css`
+export const SearchResultsBlockStyled = styled.div<SearchResultsBlockStyledProps>(
+    ({ theme, areAllResultsVisible }) => css`
         @media ${theme.mediaQueries.queryLg} {
             max-height: ${areAllResultsVisible ? 'none' : '150px'};
             overflow: hidden;
         }
-    `}
-`;
+    `,
+);
 
 export const SearchResultsWeblineStyled = styled(Webline)`
     margin-top: 24px;
 `;
 
-export const ShowResultsButtonWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const ShowResultsButtonWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         margin: 20px 0;
@@ -91,5 +81,5 @@ export const ShowResultsButtonWrapperStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             display: none;
         }
-    `}
-`;
+    `,
+);

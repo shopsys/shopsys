@@ -31,7 +31,7 @@ type NewPasswordContentProps = {
     breadcrumbs: BreadcrumbItemType[];
 };
 
-export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
+export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, email, hash }) => {
     const t = useTypedTranslationFunction();
     const [newPasswordResult, newPassword] = useRecoverPasswordMutationApi();
     const { url } = useShopsysSelector((state) => state.domain);
@@ -61,7 +61,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
             showSuccessMessage(formMeta.messages.success);
             if (newPasswordResult.data?.RecoverPassword.tokens.accessToken !== undefined) {
                 login({
-                    email: props.email,
+                    email: email,
                     password: formProviderMethods.getValues('newPassword'),
                     previousCartUuid: cartUuid,
                 });
@@ -74,22 +74,22 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = (props) => {
     const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (data, event) => {
         event?.preventDefault();
         const formData = {
-            hash: props.hash,
-            email: props.email,
+            hash: hash,
+            email: email,
             newPassword: data.newPassword,
         };
         await newPassword(formData);
     };
 
     useEffectOnce(() => {
-        if (props.hash === '' || props.email === '') {
+        if (hash === '' || email === '') {
             showErrorMessage(t('Error occured while loading form data'));
         }
     });
 
-    if (props.hash === '' || props.email === '') {
+    if (hash === '' || email === '') {
         return (
-            <SimpleLayout heading={t('Set new password')} breadcrumb={props.breadcrumbs}>
+            <SimpleLayout heading={t('Set new password')} breadcrumb={breadcrumbs}>
                 <Trans
                     i18nKey="ResendRecoveryLink"
                     defaultTrans="Error occured while loading form data. <0/> Please try to resend new password recovery link <lnk1>on this page</lnk1>."

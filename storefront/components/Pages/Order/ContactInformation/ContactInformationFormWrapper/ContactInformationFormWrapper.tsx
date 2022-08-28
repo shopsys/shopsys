@@ -21,7 +21,7 @@ type ContactInformationFormWrapperProps = {
     isEmailEntered: boolean;
 };
 
-export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProps> = (props) => {
+export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProps> = ({ isEmailEntered }) => {
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProp
     return (
         <ContactInformationFormWrapperStyled contentElementHeight={contentElementHeight}>
             <CSSTransition
-                in={props.isEmailEntered}
+                in={isEmailEntered}
                 timeout={500}
                 classNames="contactInformationFormWrapper"
                 onEnter={calcHeight}

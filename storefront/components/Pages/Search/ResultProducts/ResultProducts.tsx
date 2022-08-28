@@ -11,13 +11,13 @@ type ResultProductsProps = {
     noProductsFound: boolean;
 };
 
-export const ResultProducts: FC<ResultProductsProps> = (props) => {
+export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noProductsFound, products }) => {
     const t = useTypedTranslationFunction();
 
     return (
         <>
-            {props.areProductsShowed && <ProductsList products={props.products} gtmListName="search result" />}
-            {props.areProductsShowed === false && props.noProductsFound === false && (
+            {areProductsShowed && <ProductsList products={products} gtmListName="search result" />}
+            {areProductsShowed === false && noProductsFound === false && (
                 <ResultProductsStyled>
                     <div>
                         <strong>{t('No results match the filter')}</strong>
@@ -28,7 +28,7 @@ export const ResultProducts: FC<ResultProductsProps> = (props) => {
                 </ResultProductsStyled>
             )}
 
-            {props.noProductsFound && (
+            {noProductsFound && (
                 <ResultProductsStyled>
                     <div>
                         <strong>{t('No products matched your search')}</strong>

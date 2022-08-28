@@ -10,9 +10,9 @@ type ProductDetailTabsProps = {
     parameters: ProductParameterType[];
 };
 
-export const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-';
+const TEST_IDENTIFIER = 'pages-productdetail-';
 
+export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters }) => {
     const t = useTypedTranslationFunction();
 
     const formatParameterValue = (valueText: string, index: number) => {
@@ -22,19 +22,22 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem testIdentifier={testIdentifier + 'overview-link'}>{t('Overview')}</TabsListItem>
-                {props.parameters.length > 0 && (
-                    <TabsListItem testIdentifier={testIdentifier + 'parameters-link'}>{t('Parameters')}</TabsListItem>
+                <TabsListItem testIdentifier={TEST_IDENTIFIER + 'overview-link'}>{t('Overview')}</TabsListItem>
+                {parameters.length > 0 && (
+                    <TabsListItem testIdentifier={TEST_IDENTIFIER + 'parameters-link'}>{t('Parameters')}</TabsListItem>
                 )}
             </TabsList>
-            <TabsContent headingTextMobile={t('Overview')} testIdentifier={testIdentifier + 'overview-content'}>
-                <UserText htmlContent={props.description} />
+            <TabsContent headingTextMobile={t('Overview')} testIdentifier={TEST_IDENTIFIER + 'overview-content'}>
+                <UserText htmlContent={description} />
             </TabsContent>
-            {props.parameters.length > 0 && (
-                <TabsContent headingTextMobile={t('Parameters')} testIdentifier={testIdentifier + 'parameters-content'}>
+            {parameters.length > 0 && (
+                <TabsContent
+                    headingTextMobile={t('Parameters')}
+                    testIdentifier={TEST_IDENTIFIER + 'parameters-content'}
+                >
                     <Table>
                         <tbody>
-                            {props.parameters.map((parameter) => (
+                            {parameters.map((parameter) => (
                                 <tr key={parameter.uuid}>
                                     <th>{parameter.name}</th>
                                     <td>

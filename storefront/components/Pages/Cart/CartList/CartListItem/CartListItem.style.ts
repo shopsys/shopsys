@@ -5,8 +5,8 @@ const localVariables = {
     imageCellWidth: '93px',
 } as const;
 
-export const ItemStyled = styled.div`
-    ${({ theme }) => css`
+export const ItemStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -18,11 +18,11 @@ export const ItemStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             padding: 11px;
         }
-    `}
-`;
+    `,
+);
 
-export const ImageCellStyled = styled.div`
-    ${({ theme }) => css`
+export const ImageCellStyled = styled.div(
+    ({ theme }) => css`
         width: ${localVariables.imageCellWidth};
         align-items: center;
         display: flex;
@@ -31,11 +31,11 @@ export const ImageCellStyled = styled.div`
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             margin-bottom: 26px;
         }
-    `}
-`;
+    `,
+);
 
-export const InfoCellStyled = styled.div`
-    ${({ theme }) => css`
+export const InfoCellStyled = styled.div(
+    ({ theme }) => css`
         text-align: center;
         width: calc(100% - ${localVariables.imageCellWidth});
         align-items: center;
@@ -55,11 +55,11 @@ export const InfoCellStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             flex: 1;
         }
-    `}
-`;
+    `,
+);
 
-export const SpinboxCellStyled = styled.div`
-    ${({ theme }) => css`
+export const SpinboxCellStyled = styled.div(
+    ({ theme }) => css`
         padding-right: 15px;
         width: 150px;
         align-items: center;
@@ -69,11 +69,11 @@ export const SpinboxCellStyled = styled.div`
             padding-right: 0;
             width: 120px;
         }
-    `}
-`;
+    `,
+);
 
-export const ItemPriceCellStyled = styled.div`
-    ${({ theme }) => css`
+export const ItemPriceCellStyled = styled.div(
+    ({ theme }) => css`
         margin-left: 0;
         padding-right: 15px;
         align-items: center;
@@ -87,17 +87,17 @@ export const ItemPriceCellStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             width: 136px;
         }
-    `}
-`;
+    `,
+);
 
-export const ItemPriceStyled = styled.span`
-    ${({ theme }) => css`
+export const ItemPriceStyled = styled.span(
+    ({ theme }) => css`
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const TotalPriceCellStyled = styled.div`
-    ${({ theme }) => css`
+export const TotalPriceCellStyled = styled.div(
+    ({ theme }) => css`
         margin-left: 0;
         padding-right: 15px;
         justify-content: flex-end;
@@ -110,17 +110,17 @@ export const TotalPriceCellStyled = styled.div`
             margin-left: auto;
             padding-right: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const TotalPriceStyled = styled.span`
-    ${({ theme }) => css`
+export const TotalPriceStyled = styled.span(
+    ({ theme }) => css`
         color: ${theme.color.primary};
-    `}
-`;
+    `,
+);
 
-export const RemoveButtonCellStyled = styled.div`
-    ${({ theme }) => css`
+export const RemoveButtonCellStyled = styled.div(
+    ({ theme }) => css`
         position: static;
         align-items: center;
         display: flex;
@@ -136,8 +136,8 @@ export const RemoveButtonCellStyled = styled.div`
             right: 11px;
             top: 11px;
         }
-    `}
-`;
+    `,
+);
 
 export const ImageWrapperStyled = styled.a`
     position: relative;

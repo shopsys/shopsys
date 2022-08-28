@@ -31,16 +31,17 @@ type EditProfileContentProps = {
     currentCustomerUser: CurrentCustomerType;
 };
 
-export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
-    const testIdentifier = 'form-edit-profile';
+const TEST_IDENTIFIER = 'form-edit-profile';
+
+export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustomerUser }) => {
     const t = useTypedTranslationFunction();
     const [, customerEditProfile] = useChangePersonalDataMutationApi();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
-        ...props.currentCustomerUser,
+        ...currentCustomerUser,
         country: {
-            label: props.currentCustomerUser.country.name,
-            value: props.currentCustomerUser.country.code,
+            label: currentCustomerUser.country.name,
+            value: currentCustomerUser.country.code,
         },
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
@@ -170,7 +171,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={testIdentifier + '-' + formMeta.fields.email.name}
+                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.email.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -199,7 +200,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.firstName.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -220,7 +221,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.lastName.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -242,7 +243,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={testIdentifier + '-' + formMeta.fields.telephone.name}
+                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -259,7 +260,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         name={formMeta.fields.newsletterSubscription.name}
                                         label={formMeta.fields.newsletterSubscription.label}
                                         fieldRef={field}
-                                        data-testid={testIdentifier + '-' + formMeta.fields.newsletterSubscription.name}
+                                        data-testid={
+                                            TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name
+                                        }
                                     />
                                 )}
                             />
@@ -281,7 +284,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.passwordOld.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -304,7 +307,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.passwordFirst.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -325,7 +328,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.passwordSecond.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -333,7 +336,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                             />
                         </FormLine>
                     </FormColumn>
-                    {props.currentCustomerUser.companyCustomer && (
+                    {currentCustomerUser.companyCustomer && (
                         <>
                             <Heading type="h2">{t('Company information')}</Heading>
                             <FormLine bottomGap>
@@ -350,7 +353,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                data-testid={testIdentifier + '-' + formMeta.fields.companyName.name}
+                                                data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name}
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -371,7 +374,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                data-testid={testIdentifier + '-' + formMeta.fields.companyNumber.name}
+                                                data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name}
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -393,7 +396,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                                 hasError={invalid}
                                                 fieldRef={field}
                                                 data-testid={
-                                                    testIdentifier + '-' + formMeta.fields.companyTaxNumber.name
+                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name
                                                 }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
@@ -418,7 +421,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={testIdentifier + '-' + formMeta.fields.street.name}
+                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.street.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -440,7 +443,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.city.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.city.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -461,7 +464,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={testIdentifier + '-' + formMeta.fields.postcode.name}
+                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -481,20 +484,20 @@ export const EditProfileContent: FC<EditProfileContentProps> = (props) => {
                                         hasError={invalid}
                                         fieldRef={field}
                                         label={formMeta.fields.country.label}
-                                        data-testid={testIdentifier + '-' + formMeta.fields.country.name}
+                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
                                     />
                                     <FormLineError error={error} inputType="select" />
                                 </>
                             )}
                         />
                     </FormLine>
-                    {props.currentCustomerUser.deliveryAddresses.length > 0 && (
+                    {currentCustomerUser.deliveryAddresses.length > 0 && (
                         <>
                             <Heading type="h2">{t('Delivery addresses')}</Heading>
                             <FormLine bottomGap>
                                 <AddressList
-                                    deliveryAddresses={props.currentCustomerUser.deliveryAddresses}
-                                    defaultDeliveryAddress={props.currentCustomerUser.defaultDeliveryAddress}
+                                    deliveryAddresses={currentCustomerUser.deliveryAddresses}
+                                    defaultDeliveryAddress={currentCustomerUser.defaultDeliveryAddress}
                                 />
                             </FormLine>
                         </>

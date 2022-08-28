@@ -5,20 +5,19 @@ type ContactInformationTextWrapperStyledProps = {
     isEmailEntered: boolean;
 };
 
-export const ContactInformationTextWrapperStyled = styled.div<ContactInformationTextWrapperStyledProps>`
-    ${({ isEmailEntered }) => css`
-        ${!isEmailEntered &&
+export const ContactInformationTextWrapperStyled = styled.div<ContactInformationTextWrapperStyledProps>(
+    ({ isEmailEntered }) =>
+        !isEmailEntered &&
         css`
             opacity: 0.5;
             pointer-events: none;
-        `}
-    `}
-`;
+        `,
+);
 
-export const ContactInformationTextStyled = styled.p`
-    ${({ theme }) => css`
+export const ContactInformationTextStyled = styled.p(
+    ({ theme }) => css`
         margin-bottom: 16px;
 
         font-size: ${theme.fontSize.default};
-    `}
-`;
+    `,
+);

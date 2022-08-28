@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const RemoveCartItemButtonStyled = styled.button`
-    ${({ theme }) => css`
+export const RemoveCartItemButtonStyled = styled.button(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         height: 20px;
@@ -25,5 +25,5 @@ export const RemoveCartItemButtonStyled = styled.button`
         &:hover {
             background-color: #e3e3ff;
         }
-    `}
-`;
+    `,
+);

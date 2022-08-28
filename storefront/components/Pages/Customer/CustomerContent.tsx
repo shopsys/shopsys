@@ -24,10 +24,6 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
         url,
     );
 
-    const logoutHandler = () => {
-        logout();
-    };
-
     return (
         <>
             <Webline>
@@ -45,7 +41,7 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
                         <NextLink href={customerEditProfileUrl}>{t('Edit profile')}</NextLink>
                     </CustomerListItemStyled>
                     <CustomerListItemStyled>
-                        <a onClick={logoutHandler}>{t('Logout')}</a>
+                        <a onClick={logout}>{t('Logout')}</a>
                     </CustomerListItemStyled>
                 </CustomerListStyled>
             </Webline>

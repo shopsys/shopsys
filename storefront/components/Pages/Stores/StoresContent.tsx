@@ -66,7 +66,9 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                         </picture>
                     </ImageStyled>
                     <InfoTitleStyled type={'h3'}>{t('Stores')}</InfoTitleStyled>
-                    {activeInfoBox !== -1 && <InfoBox isClosed={closeInfoBoxHandler} {...stores[activeInfoBox]} />}
+                    {activeInfoBox !== -1 && (
+                        <InfoBox closeInfoBoxCallback={closeInfoBoxHandler} store={stores[activeInfoBox]} />
+                    )}
                 </InfoStyled>
             </StoresStyled>
             <StoresList>

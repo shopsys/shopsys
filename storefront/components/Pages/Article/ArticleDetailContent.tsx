@@ -11,18 +11,16 @@ type ArticleDetailContentProps = {
 
 const TEST_IDENTIFIER = 'pages-article-';
 
-export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => {
-    return (
-        <Webline testIdentifier={TEST_IDENTIFIER}>
-            <ArticleTitle data-testid={TEST_IDENTIFIER + 'title'}>{article.articleName}</ArticleTitle>
-            <ArticleDate>{formatDate(article.createdAt, 'l')}</ArticleDate>
-            <ArticleWrapper data-testid={TEST_IDENTIFIER + 'content'}>
-                {article.text !== null && (
-                    <ArticleTextContent>
-                        <UserText htmlContent={article.text} />
-                    </ArticleTextContent>
-                )}
-            </ArticleWrapper>
-        </Webline>
-    );
-};
+export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article }) => (
+    <Webline testIdentifier={TEST_IDENTIFIER}>
+        <ArticleTitle data-testid={TEST_IDENTIFIER + 'title'}>{article.articleName}</ArticleTitle>
+        <ArticleDate>{formatDate(article.createdAt, 'l')}</ArticleDate>
+        <ArticleWrapper data-testid={TEST_IDENTIFIER + 'content'}>
+            {article.text !== null && (
+                <ArticleTextContent>
+                    <UserText htmlContent={article.text} />
+                </ArticleTextContent>
+            )}
+        </ArticleWrapper>
+    </Webline>
+);

@@ -9,17 +9,17 @@ type RemoveCartItemButtonProps = {
     listIndex: number;
 };
 
-export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
-    const testIdentifier = 'pages-cart-removecartitembutton';
+const TEST_IDENTIFIER = 'pages-cart-removecartitembutton';
 
+export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ cartItem, listIndex }) => {
     const removeItemFromCart = useRemoveFromCart();
 
     const onRemoveItemFromCartHandler = () => {
-        removeItemFromCart(props.cartItem, props.listIndex, 'cart');
+        removeItemFromCart(cartItem, listIndex, 'cart');
     };
 
     return (
-        <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler} data-testid={testIdentifier}>
+        <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler} data-testid={TEST_IDENTIFIER}>
             <Icon iconType="icon" icon="RemoveBold" />
         </RemoveCartItemButtonStyled>
     );

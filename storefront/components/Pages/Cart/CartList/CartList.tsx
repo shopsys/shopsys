@@ -8,15 +8,15 @@ type CartListProps = {
     items?: CartItemType[];
 };
 
-export const CartList: FC<CartListProps> = (props) => {
-    if (props.items === undefined) {
+export const CartList: FC<CartListProps> = ({ items }) => {
+    if (items === undefined) {
         return null;
     }
 
     return (
         <Webline>
             <ListStyled>
-                {props.items.map((item, index) => (
+                {items.map((item, index) => (
                     <CartListItem key={item.uuid} item={item} listIndex={index} />
                 ))}
             </ListStyled>

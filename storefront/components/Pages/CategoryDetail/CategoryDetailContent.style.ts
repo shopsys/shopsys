@@ -12,8 +12,8 @@ type PanelStyledProps = {
     isOpen?: boolean;
 };
 
-export const CategoryDetailStyled = styled.div`
-    ${({ theme }) => css`
+export const CategoryDetailStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -24,15 +24,15 @@ export const CategoryDetailStyled = styled.div`
             flex-wrap: wrap;
             margin-bottom: 40px;
         }
-    `}
-`;
+    `,
+);
 
 export const CategoryDetailAdvertsStyled = styled(Adverts)`
     margin-bottom: 15px;
 `;
 
-export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>(
+    ({ theme, isOpen }) => css`
         display: none;
         position: absolute;
         width: 100%;
@@ -48,11 +48,11 @@ export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>`
             display: block;
             width: ${localVariables.categoryDetailPanelWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const CategoryDetailContentStyled = styled.div`
-    ${({ theme }) => css`
+export const CategoryDetailContentStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -60,16 +60,16 @@ export const CategoryDetailContentStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             padding-left: 50px;
         }
-    `}
-`;
+    `,
+);
 
 export const CategoryDetailDescriptionStyled = styled.div`
     font-size: 16px;
     margin-bottom: 16px;
 `;
 
-export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>(
+    ({ theme, isOpen }) => css`
         position: relative;
         display: flex;
         flex-direction: row;
@@ -100,26 +100,26 @@ export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>`
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const CategoryDetailPanelIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const CategoryDetailPanelIconStyled = styled(Icon)(
+    ({ theme }) => css`
         height: 24px;
         width: 24px;
         margin: 2px 10px 0 0;
 
         color: ${theme.color.white};
         font-weight: 700;
-    `}
-`;
+    `,
+);
 
 export const SubcategoriesSimpleNavigationStyled = styled(SimpleNavigation)`
     margin-bottom: 24px;
 `;
 
-export const CategoryDetailContentMessageStyled = styled.div`
-    ${({ theme }) => css`
+export const CategoryDetailContentMessageStyled = styled.div(
+    ({ theme }) => css`
         padding: 50px;
         text-align: center;
 
@@ -128,5 +128,5 @@ export const CategoryDetailContentMessageStyled = styled.div`
         div:first-of-type {
             margin-bottom: 20px;
         }
-    `}
-`;
+    `,
+);

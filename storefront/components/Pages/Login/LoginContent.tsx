@@ -19,18 +19,11 @@ import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import * as Yup from 'yup';
 
-const getLoginFormResolver = (t: Translate) => {
-    return yupResolver(
-        Yup.object().shape({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            password: Yup.string().required(t('This field is required')),
-        }),
-    );
-};
-
 type LoginContentProps = {
     breadcrumbs: BreadcrumbItemType[];
 };
+
+const TEST_IDENTIFIER = 'pages-login-submit';
 
 export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
@@ -54,8 +47,6 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
 
         await login({ email: data.email, password: data.password, previousCartUuid: cartUuid }, redirectUrl);
     };
-
-    const testIdentifier = 'pages-login-submit';
 
     return (
         <SimpleLayout heading={t('Login')} breadcrumb={breadcrumbs}>
@@ -113,12 +104,21 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                     />
 
                     <ButtonWrapperStyled>
-                        <Button type="submit" data-testid={testIdentifier}>
+                        <Button type="submit" data-testid={TEST_IDENTIFIER}>
                             {t('Log in')}
                         </Button>
                     </ButtonWrapperStyled>
                 </Form>
             </FormProvider>
         </SimpleLayout>
+    );
+};
+
+const getLoginFormResolver = (t: Translate) => {
+    return yupResolver(
+        Yup.object().shape({
+            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
+            password: Yup.string().required(t('This field is required')),
+        }),
     );
 };

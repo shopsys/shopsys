@@ -25,63 +25,61 @@ type StoreDetailContentProps = {
     store: StoreDetailType;
 };
 
-export const StoreDetailContent: FC<StoreDetailContentProps> = (props) => {
-    const testIdentifier = 'pages-storedetail';
+const TEST_IDENTIFIER = 'pages-storedetail';
 
+export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const t = useTypedTranslationFunction();
-    const storeCoordinates = [
-        { locationLatitude: props.store.locationLatitude, locationLongitude: props.store.locationLongitude },
-    ];
+    const storeCoordinates = [{ locationLatitude: store.locationLatitude, locationLongitude: store.locationLongitude }];
     const { url } = useShopsysSelector((state) => state.domain);
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <Webline testIdentifier={testIdentifier}>
+        <Webline testIdentifier={TEST_IDENTIFIER}>
             <StoreDetailStyled>
                 <StoreDetailContentStyled>
-                    <Heading type={'h1'}>{props.store.storeName}</Heading>
+                    <Heading type={'h1'}>{store.storeName}</Heading>
                     <InfoStyled>
-                        {props.store.description !== null && (
+                        {store.description !== null && (
                             <InfoItemStyled>
                                 <InfoItemSubtitleStyled type="h3">{t('Store description')}</InfoItemSubtitleStyled>
-                                {props.store.description}
+                                {store.description}
                             </InfoItemStyled>
                         )}
                         <InfoItemStyled>
                             <InfoItemSubtitleStyled type="h3">{t('Store address')}</InfoItemSubtitleStyled>
-                            {props.store.city}
+                            {store.city}
                             <br />
-                            {props.store.street}
+                            {store.street}
                             <br />
-                            {props.store.postcode}
+                            {store.postcode}
                             <br />
-                            {props.store.country.name}
+                            {store.country.name}
                         </InfoItemStyled>
-                        {props.store.openingHours !== null && (
+                        {store.openingHours !== null && (
                             <InfoItemStyled>
                                 <InfoItemSubtitleStyled type="h3">{t('Opening hours')}</InfoItemSubtitleStyled>
-                                <InfoItemOpeningHoursStyled>{props.store.openingHours}</InfoItemOpeningHoursStyled>
+                                <InfoItemOpeningHoursStyled>{store.openingHours}</InfoItemOpeningHoursStyled>
                             </InfoItemStyled>
                         )}
-                        {props.store.contactInfo !== null && (
+                        {store.contactInfo !== null && (
                             <InfoItemStyled>
                                 <InfoItemSubtitleStyled type="h3">
                                     {t('Contact to the department store')}
                                 </InfoItemSubtitleStyled>
-                                {props.store.contactInfo}
+                                {store.contactInfo}
                             </InfoItemStyled>
                         )}
-                        {props.store.specialMessage !== null && (
+                        {store.specialMessage !== null && (
                             <InfoItemStyled>
                                 <InfoItemSubtitleStyled type="h3">{t('Special announcement')}</InfoItemSubtitleStyled>
-                                {props.store.specialMessage}
+                                {store.specialMessage}
                             </InfoItemStyled>
                         )}
                     </InfoStyled>
                     <MapStyled>
                         <GoogleMap
-                            lat={props.store.locationLatitude}
-                            lng={props.store.locationLongitude}
+                            lat={store.locationLatitude}
+                            lng={store.locationLongitude}
                             zoom={15}
                             markers={storeCoordinates}
                             isDetail

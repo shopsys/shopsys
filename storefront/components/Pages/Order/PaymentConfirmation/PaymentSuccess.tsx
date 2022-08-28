@@ -11,7 +11,9 @@ import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { FC } from 'react';
 
-type PaymentSuccessProps = { orderUuid: string };
+type PaymentSuccessProps = {
+    orderUuid: string;
+};
 
 export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
     const t = useTypedTranslationFunction();

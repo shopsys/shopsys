@@ -5,8 +5,8 @@ type ContactInformationFormWrapperStyledProps = {
     contentElementHeight: number;
 };
 
-export const ContactInformationFormWrapperStyled = styled.div<ContactInformationFormWrapperStyledProps>`
-    ${({ contentElementHeight }) => css`
+export const ContactInformationFormWrapperStyled = styled.div<ContactInformationFormWrapperStyledProps>(
+    ({ contentElementHeight }) => css`
         .contactInformationFormWrapper-enter {
             height: 0;
             overflow: hidden;
@@ -28,8 +28,8 @@ export const ContactInformationFormWrapperStyled = styled.div<ContactInformation
             transition: 0.5s all ease;
             overflow: hidden;
         }
-    `}
-`;
+    `,
+);
 
 export const ContactInformationFormWrapperSectionStyled = styled.div`
     margin-bottom: 40px;

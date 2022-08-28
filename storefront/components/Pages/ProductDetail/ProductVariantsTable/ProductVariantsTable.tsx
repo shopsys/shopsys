@@ -18,7 +18,7 @@ type ProductVariantsTableProps = {
     isSellingDenied: boolean;
 };
 
-export const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingDenied, variants }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -34,11 +34,11 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
                     </VariantsTableRowStyled>
                 </VariantsTableHeaderStyled>
                 <VariantsTableBodyStyled>
-                    {props.variants.map((variant, index) => (
+                    {variants.map((variant, index) => (
                         <Variant
                             key={variant.uuid}
                             variant={variant}
-                            isSellingDenied={props.isSellingDenied}
+                            isSellingDenied={isSellingDenied}
                             gtmListName="variants"
                             listIndex={index}
                         />

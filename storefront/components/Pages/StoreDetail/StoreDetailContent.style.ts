@@ -3,26 +3,22 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type ButtonBottomNameStyledProps = {
-    type?: 'right';
-};
-
-type ButtonBottomIconStyledProps = {
-    type?: 'right';
-};
-
 export const StoreDetailMapSize = {
     small: '350px',
     bigger: '500px',
     big: '650px',
+} as const;
+
+type ButtonBottomIconStyledProps = {
+    type?: 'right';
 };
 
 export const StoreDetailStyled = styled.div`
     margin-bottom: 40px;
 `;
 
-export const StoreDetailContentStyled = styled.div`
-    ${({ theme }) => css`
+export const StoreDetailContentStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -39,11 +35,11 @@ export const StoreDetailContentStyled = styled.div`
             min-height: ${StoreDetailMapSize.big};
             padding-left: calc(${StoreDetailMapSize.big} + 70px);
         }
-    `}
-`;
+    `,
+);
 
-export const MapStyled = styled.div`
-    ${({ theme }) => css`
+export const MapStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         height: 245px;
         margin-bottom: 16px;
@@ -66,20 +62,20 @@ export const MapStyled = styled.div`
             width: ${StoreDetailMapSize.big};
             height: ${StoreDetailMapSize.big};
         }
-    `}
-`;
+    `,
+);
 
-export const InfoStyled = styled.div`
-    ${({ theme }) => css`
+export const InfoStyled = styled.div(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryMd} {
             display: flex;
             flex-wrap: wrap;
         }
-    `}
-`;
+    `,
+);
 
-export const InfoItemStyled = styled.div`
-    ${({ theme }) => css`
+export const InfoItemStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 16px;
 
         @media ${theme.mediaQueries.queryMd} {
@@ -94,25 +90,25 @@ export const InfoItemStyled = styled.div`
                 padding-left: 10px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const InfoItemSubtitleStyled = styled(Heading)`
-    ${({ theme }) => css`
+export const InfoItemSubtitleStyled = styled(Heading)(
+    ({ theme }) => css`
         display: block;
         margin-bottom: 4px;
 
         color: ${theme.color.primary};
         font-weight: 400;
-    `}
-`;
+    `,
+);
 
 export const InfoItemOpeningHoursStyled = styled.div`
     max-width: 160px;
 `;
 
-export const ButtonBottomStyled = styled.a`
-    ${({ theme }) => css`
+export const ButtonBottomStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -130,22 +126,22 @@ export const ButtonBottomStyled = styled.a`
                 box-shadow: 0 10px 20px 5px ${theme.color.greyLighter};
             }
         }
-    `}
-`;
+    `,
+);
 
-export const ButtonBottomItemStyled = styled.div`
-    ${({ theme }) => css`
+export const ButtonBottomItemStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: row;
         align-items: center;
 
         color: ${theme.color.primary};
         font-size: ${theme.fontSize.bigger};
-    `}
-`;
+    `,
+);
 
-export const ButtonBottomNameStyled = styled.a<ButtonBottomNameStyledProps>`
-    ${({ theme, type }) => css`
+export const ButtonBottomNameStyled = styled.a(
+    ({ theme }) => css`
         position: relative;
         flex-grow: 1;
 
@@ -156,21 +152,11 @@ export const ButtonBottomNameStyled = styled.a<ButtonBottomNameStyledProps>`
         @media ${theme.mediaQueries.queryMd} {
             font-size: ${theme.fontSize.bigger};
         }
+    `,
+);
 
-        ${type === 'right' &&
-        css`
-            display: none;
-
-            @media ${theme.mediaQueries.queryVl} {
-                display: block;
-                margin-left: 20px;
-            }
-        `}
-    `}
-`;
-
-export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>`
-    ${({ theme, type }) => css`
+export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>(
+    ({ theme, type }) => css`
         width: 24px;
         height: 24px;
         ${type === 'right' ? 'margin-left' : 'margin-right'}: 12px;
@@ -181,5 +167,5 @@ export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>`
         @media ${theme.mediaQueries.queryXl} {
             ${type === 'right' ? 'margin-left' : 'margin-right'}: 20px;
         }
-    `}
-`;
+    `,
+);

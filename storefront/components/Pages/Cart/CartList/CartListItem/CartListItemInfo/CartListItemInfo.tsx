@@ -15,29 +15,29 @@ type CartListItemInfoProps = {
     item: CartItemType;
 };
 
-export const CartListItemInfo: FC<CartListItemInfoProps> = (props) => {
-    const testIdentifier = 'pages-cart-list-item-iteminfo-';
+const TEST_IDENTIFIER = 'pages-cart-list-item-iteminfo-';
 
+export const CartListItemInfo: FC<CartListItemInfoProps> = ({ item }) => {
     const t = useTypedTranslationFunction();
 
     return (
         <>
-            <NameStyled data-testid={testIdentifier + 'name'}>
-                <NextLink href={props.item.product.slug} passHref>
+            <NameStyled data-testid={TEST_IDENTIFIER + 'name'}>
+                <NextLink href={item.product.slug} passHref>
                     <NameTitleStyled>
-                        <NameTitleTextStyled>{props.item.product.fullName}</NameTitleTextStyled>
+                        <NameTitleTextStyled>{item.product.fullName}</NameTitleTextStyled>
                     </NameTitleStyled>
                 </NextLink>
                 <CodeStyled>
-                    {t('Code')}: {props.item.product.catalogNumber}
+                    {t('Code')}: {item.product.catalogNumber}
                 </CodeStyled>
             </NameStyled>
-            <AvailabilityStyled data-testid={testIdentifier + 'availability'}>
-                {props.item.product.availability.name}
-                {props.item.product.availableStoresCount > 0 && (
+            <AvailabilityStyled data-testid={TEST_IDENTIFIER + 'availability'}>
+                {item.product.availability.name}
+                {item.product.availableStoresCount > 0 && (
                     <AvailabilityMessageStyled>
                         {t('or immediately in {{ count }} stores', {
-                            count: props.item.product.availableStoresCount,
+                            count: item.product.availableStoresCount,
                         })}
                     </AvailabilityMessageStyled>
                 )}

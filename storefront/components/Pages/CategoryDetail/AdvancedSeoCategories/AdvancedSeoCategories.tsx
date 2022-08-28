@@ -18,7 +18,7 @@ type AdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
 };
 
-export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = (props) => {
+export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {
     const t = useTypedTranslationFunction();
     const { width } = useGetWindowSize();
     const [isAdvancedSeoCategoriesSliderVisible, setAdvancedSeoCategoriesSliderVisibility] = useState(true);
@@ -30,7 +30,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = (props) => 
         () => setAdvancedSeoCategoriesSliderVisibility(isElementVisible([{ min: 0, max: 768 }], width)),
     );
 
-    if (props.readyCategorySeoMixLinks.length === 0) {
+    if (readyCategorySeoMixLinks.length === 0) {
         return null;
     }
 
@@ -38,10 +38,10 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = (props) => 
         <>
             <Heading type="h3">{t('Favorite categories')}</Heading>
             {isAdvancedSeoCategoriesSliderVisible ? (
-                <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={props.readyCategorySeoMixLinks} />
+                <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={readyCategorySeoMixLinks} />
             ) : (
                 <AdvancedSeoCategoriesWrapperStyled>
-                    {props.readyCategorySeoMixLinks.map((seoMixLink, index) => (
+                    {readyCategorySeoMixLinks.map((seoMixLink, index) => (
                         <NextLink key={index} href={seoMixLink.slug} passHref>
                             <AdvancedSeoCategoriesItemStyled>{seoMixLink.name}</AdvancedSeoCategoriesItemStyled>
                         </NextLink>

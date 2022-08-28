@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ListStyled = styled.ul`
-    ${({ theme }) => css`
+export const ListStyled = styled.ul(
+    ({ theme }) => css`
         margin-bottom: 24px;
 
         border: 1px solid ${theme.color.greyLighter};
@@ -13,5 +13,5 @@ export const ListStyled = styled.ul`
 
             border: 0;
         }
-    `}
-`;
+    `,
+);

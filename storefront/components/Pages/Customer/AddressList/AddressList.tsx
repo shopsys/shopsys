@@ -22,8 +22,9 @@ type AddressListProps = {
     deliveryAddresses: DeliveryAddressType[];
 };
 
-export const AddressList: FC<AddressListProps> = (props) => {
-    const testIdentifier = 'list-addresses';
+const TEST_IDENTIFIER = 'list-addresses';
+
+export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deliveryAddresses }) => {
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
@@ -59,11 +60,11 @@ export const AddressList: FC<AddressListProps> = (props) => {
     return (
         <>
             <ListStyled>
-                {props.deliveryAddresses.map((address, index) => (
+                {deliveryAddresses.map((address, index) => (
                     <ListItemStyled
                         key={address.uuid}
-                        isActive={props.defaultDeliveryAddress?.uuid === address.uuid}
-                        data-testid={testIdentifier + '-item-' + index}
+                        isActive={defaultDeliveryAddress?.uuid === address.uuid}
+                        data-testid={TEST_IDENTIFIER + '-item-' + index}
                         onClick={() => setDefaultItemHandler(address.uuid)}
                     >
                         <div>

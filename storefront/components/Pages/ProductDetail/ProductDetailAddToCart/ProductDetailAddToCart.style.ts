@@ -4,10 +4,10 @@ import { css } from 'styled-components';
 
 const localVariables = {
     wrapBorderRadius: '6px',
-};
+} as const;
 
-export const AddToCartWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const AddToCartWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         margin-bottom: 16px;
         padding: 10px;
@@ -18,21 +18,21 @@ export const AddToCartWrapperStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             margin-bottom: 12px;
         }
-    `}
-`;
+    `,
+);
 
-export const AddToCartPriceStyled = styled.div`
-    ${({ theme }) => css`
+export const AddToCartPriceStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 15px;
 
         color: ${theme.color.primary};
         font-size: 24px;
         font-weight: 700;
-    `}
-`;
+    `,
+);
 
-export const AddToCartFormStyled = styled.div`
-    ${({ theme }) => css`
+export const AddToCartFormStyled = styled.div(
+    ({ theme }) => css`
         line-height: ${theme.lineHeight.default};
 
         font-size: ${theme.fontSize.small};
@@ -40,8 +40,8 @@ export const AddToCartFormStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             font-size: ${theme.fontSize.default};
         }
-    `}
-`;
+    `,
+);
 
 export const AddToCartButtonsWrapperStyled = styled.div`
     display: flex;
@@ -54,13 +54,13 @@ export const AddToCartButtonWrapperStyled = styled.div`
     margin-left: 10px;
 `;
 
-export const AddToCartButtonStyled = styled(ButtonStyled)`
-    ${({ theme }) => css`
+export const AddToCartButtonStyled = styled(ButtonStyled)(
+    ({ theme }) => css`
         width: 100%;
 
         border-radius: ${theme.radius.big};
-    `}
-`;
+    `,
+);
 
 export const AddToCartUnavailableTextStyled = styled.p`
     font-size: 16px;

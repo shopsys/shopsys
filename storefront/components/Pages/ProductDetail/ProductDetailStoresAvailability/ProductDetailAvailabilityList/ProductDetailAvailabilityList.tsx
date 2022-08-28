@@ -16,29 +16,29 @@ type ProductDetailAvailabilityListProps = {
     storeAvailabilities: StoreAvailabilityType[];
 };
 
-export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>(
-    (props, ref) => {
-        const testIdentifier = 'pages-productdetail-availabilitylist-';
+const TEST_IDENTIFIER = 'pages-productdetail-availabilitylist-';
 
+export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>(
+    ({ storeAvailabilities }, ref) => {
         const t = useTypedTranslationFunction();
 
         return (
             <AvailabilityListWrapperStyled>
                 <Heading type="h3">{t('Availability in stores')}</Heading>
                 <ul ref={ref}>
-                    {props.storeAvailabilities.map((storeAvailability, index) => (
-                        <AvailabilityListItemStyled key={index} data-testid={testIdentifier + index}>
-                            <AvailabilityListItemStoreNameStyled data-testid={testIdentifier + index + '-store'}>
+                    {storeAvailabilities.map((storeAvailability, index) => (
+                        <AvailabilityListItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
+                            <AvailabilityListItemStoreNameStyled data-testid={TEST_IDENTIFIER + index + '-store'}>
                                 {storeAvailability.store.storeName}
                             </AvailabilityListItemStoreNameStyled>
                             <AvailabilityListItemStatusStyled
                                 availabilityStatus={storeAvailability.availabilityStatus}
-                                data-testid={testIdentifier + index + '-availability'}
+                                data-testid={TEST_IDENTIFIER + index + '-availability'}
                             >
                                 {storeAvailability.availabilityInformation}
                             </AvailabilityListItemStatusStyled>
                             <NextLink href={storeAvailability.store.slug} passHref>
-                                <AvailabilityListItemStoreLinkStyled data-testid={testIdentifier + index + '-detail'}>
+                                <AvailabilityListItemStoreLinkStyled data-testid={TEST_IDENTIFIER + index + '-detail'}>
                                     {t('Store detail')}
                                     <Icon iconType="icon" icon="ArrowRight" />
                                 </AvailabilityListItemStoreLinkStyled>
