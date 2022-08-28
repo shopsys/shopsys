@@ -2,8 +2,8 @@ import { Theme } from './main';
 import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
-export const GlobalStyle = createGlobalStyle`
-    ${({ theme }: { theme: Theme }) => css`
+export const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
+    ${({ theme }) => css`
         ${reset};
 
         *,
