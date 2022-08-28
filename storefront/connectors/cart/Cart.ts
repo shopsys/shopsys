@@ -26,7 +26,7 @@ import { Translate } from 'next-translate';
 import { useEffect, useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
-import { CombinedError } from 'urql';
+import { CombinedError, OperationContext } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const [isInitiallyLoaded, setInitialLoadedState] = useState(false);
@@ -35,7 +35,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
 
-    const [result] = useCartQueryApi({
+    const [result, refetchCart] = useCartQueryApi({
         variables: { cartUuid },
         pause: cartUuid === null && !isUserLoggedIn,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
@@ -55,7 +55,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     return useMemo(() => {
         if (result.data === undefined) {
-            return getEmptyCart(isInitiallyLoaded, false);
+            return getEmptyCart(isInitiallyLoaded, refetchCart, false);
         }
 
         if (isInitiallyLoaded !== true) {
@@ -63,19 +63,19 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         }
 
         if (cartUuid === null && !isUserLoggedIn) {
-            return getEmptyCart(isInitiallyLoaded, true);
+            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
         }
 
         if (result.error !== undefined) {
             // EXTEND CART ERRORS HERE
             handleCartError(result.error, t);
 
-            return getEmptyCart(isInitiallyLoaded, true);
+            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
         }
 
         if (result.data.cart === null) {
             // EXTEND EMPTY CART HERE
-            return getEmptyCart(isInitiallyLoaded, true);
+            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
         }
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart, currencyCode);
@@ -93,11 +93,16 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             isLoaded: true,
             isInitiallyLoaded: isInitiallyLoaded,
             modifications: result.data.cart.modifications,
+            refetchCart,
         };
-    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded]);
+    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded, refetchCart]);
 };
 
-const getEmptyCart = (isInitiallyLoaded: boolean, isLoaded = true): CurrentCartType => ({
+const getEmptyCart = (
+    isInitiallyLoaded: boolean,
+    refetchCart: (opts?: Partial<OperationContext> | undefined) => void,
+    isLoaded = true,
+): CurrentCartType => ({
     cart: null,
     isCartEmpty: true,
     transport: null,
@@ -108,6 +113,7 @@ const getEmptyCart = (isInitiallyLoaded: boolean, isLoaded = true): CurrentCartT
     isLoaded,
     isInitiallyLoaded,
     modifications: null,
+    refetchCart,
 });
 
 const handleCartError = (error: CombinedError, t: Translate) => {
