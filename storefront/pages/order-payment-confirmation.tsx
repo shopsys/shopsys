@@ -11,19 +11,6 @@ import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
-const getOrderUuid = (orderIdentifier: string[] | string | undefined) => {
-    let orderUuidParam = '';
-    if (orderIdentifier !== undefined) {
-        if (Array.isArray(orderIdentifier)) {
-            orderUuidParam = orderIdentifier[0];
-        } else if (orderIdentifier.trim() !== '') {
-            orderUuidParam = orderIdentifier.trim();
-        }
-    }
-
-    return orderUuidParam;
-};
-
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -53,6 +40,19 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
             </CommonLayout>
         </StaticUrlGuard>
     );
+};
+
+const getOrderUuid = (orderIdentifier: string[] | string | undefined) => {
+    let orderUuidParam = '';
+    if (orderIdentifier !== undefined) {
+        if (Array.isArray(orderIdentifier)) {
+            orderUuidParam = orderIdentifier[0];
+        } else if (orderIdentifier.trim() !== '') {
+            orderUuidParam = orderIdentifier.trim();
+        }
+    }
+
+    return orderUuidParam;
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {

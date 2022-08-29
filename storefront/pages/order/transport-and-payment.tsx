@@ -14,14 +14,12 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import React, { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { ssrExchange } from 'urql';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
-    const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { isUserLoggedIn } = useCurrentUserData();
     const transports = useTransports(cartUuid);

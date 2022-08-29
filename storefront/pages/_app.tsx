@@ -33,7 +33,9 @@ import { fetcher } from 'urql/fetcher';
 
 extend(LocalizedFormat);
 
-type ErrorProps = { err?: any };
+type ErrorProps = {
+    err?: any;
+};
 
 type AppProps = {
     pageProps: ServerSidePropsType;
