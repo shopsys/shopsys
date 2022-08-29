@@ -2,10 +2,6 @@ import { CustomerTypeEnum } from './customer';
 import { GtmConsentInfoType } from './gtm';
 import { SelectOptionType } from './selectOptions';
 
-export type PromoCodeFormType = {
-    promoCode: string;
-};
-
 export type NewsletterFormType = {
     email: string;
     privacyPolicy: boolean;

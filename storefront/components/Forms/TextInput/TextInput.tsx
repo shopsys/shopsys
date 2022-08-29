@@ -9,7 +9,16 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     never,
-    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress' | 'className'
+    | 'name'
+    | 'id'
+    | 'disabled'
+    | 'style'
+    | 'required'
+    | 'onBlurCapture'
+    | 'onChange'
+    | 'onKeyPress'
+    | 'className'
+    | 'value'
 >;
 
 type TextInputProps = NativeProps & {

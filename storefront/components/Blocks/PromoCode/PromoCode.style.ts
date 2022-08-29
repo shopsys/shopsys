@@ -89,6 +89,9 @@ export const PromoCodeContentButtonStyled = styled(Button)(
 );
 
 export const PromoCodeContentInputStyled = styled(TextInput)`
+    width: 100%;
+    margin-bottom: 0;
+
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: 0;
