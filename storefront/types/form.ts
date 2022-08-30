@@ -7,10 +7,6 @@ export type NewsletterFormType = {
     privacyPolicy: boolean;
 };
 
-export type AutocompleteSearchFormType = {
-    autocompleteSearchQuery: string;
-};
-
 // EXTEND CUSTOMER CONTACT INFORMATION FORM HERE
 export type ContactInformationFormType = {
     email: string;

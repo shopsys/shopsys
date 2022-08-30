@@ -1,6 +1,6 @@
 import { Autocomplete } from './Autocomplete/Autocomplete';
 import {
-    AutocompleteSearchFormStyled,
+    AutocompleteSearchInnerStyled,
     AutocompleteSearchInStyled,
     AutocompleteSearchRemoveButtonImageStyled,
     AutocompleteSearchRemoveButtonStyled,
@@ -8,12 +8,10 @@ import {
     AutocompleteSearchStyled,
     AutocompleteSearchTextInputStyled,
 } from './AutocompleteSearch.style';
-import { useAutocompleteSearchForm, useAutocompleteSearchFormMeta } from './formMeta';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { canUseDom } from 'helpers/misc/canUseDom';
 import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -21,28 +19,17 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useRef, useState } from 'react';
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { ChangeEventHandler, FC, useCallback, useMemo, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { AutocompleteSearchFormType } from 'types/form';
-import { AutocompleteSearchType } from 'types/search';
 
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const AutocompleteSearch: FC = () => {
     const router = useRouter();
-    const [formProviderMethods] = useAutocompleteSearchForm();
-    const formMeta = useAutocompleteSearchFormMeta(formProviderMethods);
-    const autocompleteSearchQueryValue = useWatch({
-        name: formMeta.fields.autocompleteSearchQuery.name,
-        control: formProviderMethods.control,
-    });
+    const [autocompleteSearchQueryValue, setAutocompleteSearchQueryValue] = useState('');
     const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
     const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
     const autocompleteSearchApiResults = useAutocompleteSearch(debouncedAutocompleteSearchQuery);
-    const [autocompleteSearchResults, setAutocompleteSearchResults] = useState<AutocompleteSearchType | undefined>(
-        undefined,
-    );
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
@@ -50,34 +37,17 @@ export const AutocompleteSearch: FC = () => {
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();
 
-    useEffectOnce(() => {
-        const handler = () => {
-            setAutocompleteSearchFocus(false);
-            formProviderMethods.reset();
-        };
-
-        router.events.on('routeChangeComplete', handler);
-
-        return () => {
-            router.events.off('routeChangeComplete', handler);
-        };
-    });
-
-    useEffect(() => {
-        if (formProviderMethods.formState.isValid) {
-            setAutocompleteSearchResults(autocompleteSearchApiResults);
-        } else {
-            setAutocompleteSearchResults(undefined);
+    const autocompleteSearchResults = useMemo(() => {
+        if (autocompleteSearchQueryValue.length < MINIMAL_SEARCH_QUERY_LENGTH) {
+            return undefined;
         }
-    }, [autocompleteSearchApiResults, autocompleteSearchQueryValue, formProviderMethods.formState.isValid]);
+
+        return autocompleteSearchApiResults;
+    }, [autocompleteSearchApiResults, autocompleteSearchQueryValue]);
 
     useGtmSearchResultView(autocompleteSearchApiResults, autocompleteSearchQueryValue);
 
     useEffectOnce(() => {
-        if (!canUseDom()) {
-            return undefined;
-        }
-
         const onDocumentClickHandler: EventListener = (event) => {
             if (autocompleteSearchInRef.current === null || !(event.target instanceof HTMLElement)) {
                 setAutocompleteSearchFocus(false);
@@ -103,59 +73,47 @@ export const AutocompleteSearch: FC = () => {
         () => setIsDesktop(false),
     );
 
-    const onAutocompleteSearchSubmitHandler: SubmitHandler<AutocompleteSearchFormType> = (_data, event) => {
-        event?.preventDefault();
+    const onAutocompleteSearchHandler = useCallback(() => {
         router.push({ pathname: searchUrl, query: { q: autocompleteSearchQueryValue } });
-    };
+    }, [router, autocompleteSearchQueryValue, searchUrl]);
+
+    const onChangeAutocompleteSearchQueryValueHandler: ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+        setAutocompleteSearchQueryValue(event.currentTarget.value);
+    }, []);
 
     return (
         <>
             <AutocompleteSearchStyled>
                 <AutocompleteSearchInStyled ref={autocompleteSearchInRef}>
-                    <AutocompleteSearchFormStyled
-                        isActive={hasAutocompleteSearchFocus}
-                        onSubmit={formProviderMethods.handleSubmit(onAutocompleteSearchSubmitHandler)}
-                    >
-                        <FormProvider {...formProviderMethods}>
-                            <Controller
-                                control={formProviderMethods.control}
-                                name={formMeta.fields.autocompleteSearchQuery.name}
-                                render={({ field }) => (
-                                    <AutocompleteSearchTextInputStyled
-                                        id={formMeta.formName + '-' + formMeta.fields.autocompleteSearchQuery.name}
-                                        name={formMeta.fields.autocompleteSearchQuery.name}
-                                        type="search"
-                                        placeholderType="static"
-                                        inputSize="small"
-                                        variant="searchInHeader"
-                                        label={formMeta.fields.autocompleteSearchQuery.label}
-                                        fieldRef={field}
-                                        testIdentifier={TEST_IDENTIFIER}
-                                    />
+                    <AutocompleteSearchInnerStyled isActive={hasAutocompleteSearchFocus}>
+                        <AutocompleteSearchTextInputStyled
+                            type="search"
+                            placeholderType="static"
+                            inputSize="small"
+                            variant="searchInHeader"
+                            label={t("Type what you're looking for")}
+                            testIdentifier={TEST_IDENTIFIER}
+                            onEnterPressCallback={onAutocompleteSearchHandler}
+                            value={autocompleteSearchQueryValue}
+                            onChange={onChangeAutocompleteSearchQueryValueHandler}
+                        />
+                        {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
+                            <AutocompleteSearchRemoveButtonStyled onClick={() => setAutocompleteSearchQueryValue('')}>
+                                {isDesktop ? (
+                                    <Icon iconType="icon" icon="Close" />
+                                ) : (
+                                    <>
+                                        <AutocompleteSearchRemoveButtonImageStyled>
+                                            <Icon iconType="icon" icon="Close" />
+                                        </AutocompleteSearchRemoveButtonImageStyled>
+                                        <AutocompleteSearchRemoveButtonTextStyled>
+                                            {t('Close')}
+                                        </AutocompleteSearchRemoveButtonTextStyled>
+                                    </>
                                 )}
-                            />
-                            {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
-                                <AutocompleteSearchRemoveButtonStyled
-                                    onClick={() =>
-                                        formProviderMethods.setValue(formMeta.fields.autocompleteSearchQuery.name, '')
-                                    }
-                                >
-                                    {isDesktop ? (
-                                        <Icon iconType="icon" icon="Close" />
-                                    ) : (
-                                        <>
-                                            <AutocompleteSearchRemoveButtonImageStyled>
-                                                <Icon iconType="icon" icon="Close" />
-                                            </AutocompleteSearchRemoveButtonImageStyled>
-                                            <AutocompleteSearchRemoveButtonTextStyled>
-                                                {t('Close')}
-                                            </AutocompleteSearchRemoveButtonTextStyled>
-                                        </>
-                                    )}
-                                </AutocompleteSearchRemoveButtonStyled>
-                            )}
-                        </FormProvider>
-                    </AutocompleteSearchFormStyled>
+                            </AutocompleteSearchRemoveButtonStyled>
+                        )}
+                    </AutocompleteSearchInnerStyled>
                     <Autocomplete
                         autocompleteSearchResults={autocompleteSearchResults}
                         isAutocompleteActive={

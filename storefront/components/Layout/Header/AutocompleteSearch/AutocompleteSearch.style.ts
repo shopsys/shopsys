@@ -2,7 +2,7 @@ import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type AutocompleteSearchFormStyledProps = {
+type AutocompleteSearchInnerStyledProps = {
     isActive: boolean;
 };
 
@@ -30,7 +30,7 @@ export const AutocompleteSearchInStyled = styled.div(
     `,
 );
 
-export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormStyledProps>(
+export const AutocompleteSearchInnerStyled = styled.div<AutocompleteSearchInnerStyledProps>(
     ({ theme, isActive }) => css`
         position: relative;
         display: flex;

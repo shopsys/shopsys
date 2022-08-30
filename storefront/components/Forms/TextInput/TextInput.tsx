@@ -2,7 +2,7 @@ import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } f
 import { Icon } from 'components/Basic/Icon/Icon';
 import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
+import { FC, InputHTMLAttributes, KeyboardEventHandler, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -34,6 +34,7 @@ type TextInputProps = NativeProps & {
     isSearchButtonDisabled?: boolean;
     value?: number | string;
     testIdentifier?: string;
+    onEnterPressCallback?: () => void;
 };
 
 export const TextInput: FC<TextInputProps> = ({
@@ -58,6 +59,7 @@ export const TextInput: FC<TextInputProps> = ({
     variant,
     className,
     testIdentifier,
+    onEnterPressCallback,
 }) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
@@ -72,6 +74,12 @@ export const TextInput: FC<TextInputProps> = ({
             }
             return currentInputType;
         });
+    };
+
+    const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
+        if (event.key === 'Enter' && onEnterPressCallback !== undefined) {
+            onEnterPressCallback();
+        }
     };
 
     useEffect(() => {
@@ -103,6 +111,7 @@ export const TextInput: FC<TextInputProps> = ({
                 inputState={inputState}
                 type={inputType}
                 placeholder={typeof label === 'string' ? label : ' '}
+                onKeyUp={enterKeyPressHandler}
                 {...fieldRef}
                 data-testid={testIdentifier}
             />
