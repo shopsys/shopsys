@@ -6,7 +6,7 @@ import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
 import { Header } from 'components/Layout/Header/Header';
 import { NotificationBars } from 'components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 

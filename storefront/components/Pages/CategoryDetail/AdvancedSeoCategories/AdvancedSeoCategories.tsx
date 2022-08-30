@@ -6,9 +6,9 @@ import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider/Advan
 import { Heading } from 'components/Basic/Heading/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import 'keen-slider/keen-slider.min.css';
 import NextLink from 'next/link';
 import { FC, useState } from 'react';

@@ -5,13 +5,13 @@ import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartContent } from 'components/Pages/Cart/CartContent';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmCartView } from 'hooks/gtm/useGtmCartView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 

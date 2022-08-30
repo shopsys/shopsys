@@ -1,7 +1,7 @@
 import { Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Helpers/UserText/UserText';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ProductParameterType } from 'types/parameter';
 

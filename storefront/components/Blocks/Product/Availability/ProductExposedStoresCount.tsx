@@ -1,5 +1,5 @@
 import { ProductExposedStoreCountStyled } from './ProductExposedStoresCount.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
 type ProductExposedStoresCountProps = {

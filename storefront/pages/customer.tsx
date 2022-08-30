@@ -2,12 +2,12 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { AutocompleteSearchFormType } from 'types/form';

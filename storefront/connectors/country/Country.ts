@@ -1,5 +1,5 @@
 import { useCountriesQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useMemo } from 'react';
 import { CountryType } from 'types/country';
 import { SelectOptionType } from 'types/selectOptions';

@@ -10,7 +10,7 @@ import {
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';

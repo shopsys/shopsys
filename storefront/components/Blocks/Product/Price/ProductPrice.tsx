@@ -1,6 +1,6 @@
 import { ProductPriceMainStyled, ProductPriceStyled } from './ProductPrice.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ProductPriceType } from 'types/price';
 

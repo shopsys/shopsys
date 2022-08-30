@@ -4,7 +4,7 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError'
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';

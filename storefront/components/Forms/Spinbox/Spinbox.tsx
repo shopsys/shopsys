@@ -1,5 +1,5 @@
 import { SpinboxButtonStyled, SpinboxInputStyled, SpinboxSmallStyled, SpinboxStyled } from './Spinbox.style';
-import { useForwardedRef } from 'hooks/typescript/UseForwardedRef';
+import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 type SpinboxProps = {

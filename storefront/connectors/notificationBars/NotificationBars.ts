@@ -1,6 +1,6 @@
 import { getFirstImage } from 'connectors/image/Image';
 import { NotificationBarsFragmentApi, useNotificationBarsApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { NotificationBarsType } from 'types/notificationBars';
 
 export const useNotificationBars = (): NotificationBarsType[] => {

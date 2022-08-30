@@ -21,7 +21,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { getCategoryOrSeoCategoryGtmListName } from 'helpers/gtm/gtm';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useRef, useState } from 'react';

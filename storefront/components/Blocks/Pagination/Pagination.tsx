@@ -2,9 +2,9 @@ import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.st
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { usePagination } from 'hooks/ui/usePagination';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, Fragment, RefObject, useCallback, useEffect, useState } from 'react';

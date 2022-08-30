@@ -15,9 +15,9 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, useState } from 'react';
 

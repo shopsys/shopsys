@@ -1,5 +1,5 @@
 import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
-import { useStaticUrlGuard } from 'hooks/staticUrls/UseStaticUrlGuard';
+import { useStaticUrlGuard } from 'hooks/staticUrls/useStaticUrlGuard';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 

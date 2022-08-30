@@ -8,7 +8,7 @@ import {
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import {
     ChangeEvent,
     ChangeEventHandler,

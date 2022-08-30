@@ -6,7 +6,7 @@ import {
     NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import {
     NavigationCategoriesColumn,
     NavigationCategory,

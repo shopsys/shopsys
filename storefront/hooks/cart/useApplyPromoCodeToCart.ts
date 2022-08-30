@@ -1,7 +1,7 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useApplyPromoCodeToCartMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useShopsysSelector } from 'redux/main';
 
 export const useApplyPromoCodeToCart = (): typeof applyPromoCodeHandler => {

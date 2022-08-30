@@ -10,7 +10,7 @@ import {
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import {
     BlogArticleConnectionType,
     BlogArticleDetailType,

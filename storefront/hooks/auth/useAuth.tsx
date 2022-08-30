@@ -9,7 +9,7 @@ import {
 } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/misc/canUseDom';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';

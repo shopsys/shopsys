@@ -1,7 +1,7 @@
-import { useChangePaymentInCart } from './UseChangePaymentInCart';
+import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';

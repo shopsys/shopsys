@@ -3,7 +3,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';

@@ -1,6 +1,6 @@
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useRemoveFromCart } from 'hooks/cart/UseRemoveFromCart';
+import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';
 

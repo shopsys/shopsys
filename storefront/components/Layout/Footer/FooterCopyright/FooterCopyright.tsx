@@ -1,5 +1,5 @@
 import { FooterCopyrightLogoStyled, FooterCopyrightStyled, FooterCopyrightTextStyled } from './FooterCopyright.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import { FC } from 'react';
 

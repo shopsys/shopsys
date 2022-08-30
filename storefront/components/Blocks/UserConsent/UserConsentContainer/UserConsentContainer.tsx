@@ -1,5 +1,5 @@
+import { UserConsentForm } from '../UserConsentForm';
 import { UserConsentContainerStyled, UserConsentStyled } from './UserConsentContainer.style';
-import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { FC, useState } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-userconsent';

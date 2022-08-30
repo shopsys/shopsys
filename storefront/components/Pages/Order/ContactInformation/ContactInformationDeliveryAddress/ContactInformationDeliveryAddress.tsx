@@ -16,7 +16,7 @@ import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';

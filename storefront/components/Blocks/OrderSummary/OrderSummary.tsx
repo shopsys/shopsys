@@ -10,7 +10,7 @@ import { TotalPrice } from './TotalPrice';
 import { TransportAndPayment } from './TransportAndPayment';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-ordersummary';

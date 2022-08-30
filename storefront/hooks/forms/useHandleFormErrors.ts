@@ -1,7 +1,7 @@
 import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect } from 'react';
 import { Path, UseFormReturn } from 'react-hook-form';
 import { GtmMessageOriginType } from 'types/gtm';

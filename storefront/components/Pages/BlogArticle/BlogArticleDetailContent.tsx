@@ -12,7 +12,7 @@ import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleDetailContent.style';
 import { formatDate } from 'helpers/formaters/formatDate';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { BlogArticleDetailType } from 'types/blogArticle';
 

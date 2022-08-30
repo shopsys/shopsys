@@ -5,7 +5,7 @@ import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { isServer } from 'helpers/misc/isServer';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { initialState, PaginationType } from 'redux/slices/user';

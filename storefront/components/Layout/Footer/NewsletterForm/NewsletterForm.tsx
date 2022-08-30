@@ -16,10 +16,10 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError'
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';

@@ -11,7 +11,7 @@ import {
     BrandDetailTextStyled,
 } from 'components/Pages/BrandDetail/BrandDetailContent.style';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
+import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
 import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
 import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';

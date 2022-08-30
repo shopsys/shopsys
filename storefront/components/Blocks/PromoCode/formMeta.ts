@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PromoCodeFormType } from 'types/form';

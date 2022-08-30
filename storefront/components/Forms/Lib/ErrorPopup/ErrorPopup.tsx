@@ -3,7 +3,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, ReactElement, useEffect, useMemo } from 'react';
 import { GtmMessageOriginType } from 'types/gtm';
 

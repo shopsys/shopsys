@@ -7,7 +7,7 @@ import {
 } from './CartPreview.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'pages-cart-cartpreview';

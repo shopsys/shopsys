@@ -6,7 +6,7 @@ import {
     ErrorPageTextMainStyled,
     ErrorPageTextStyled,
 } from 'components/Pages/ErrorPage/ErrorPage.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import React, { FC } from 'react';
 
 export const Error503Content: FC = () => {

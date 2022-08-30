@@ -6,7 +6,7 @@ import {
     SelectedParametersListStyled,
     SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, Fragment } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';

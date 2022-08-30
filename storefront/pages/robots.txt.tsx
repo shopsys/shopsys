@@ -1,5 +1,5 @@
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getDomainConfig } from 'helpers/domain/domain';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext } from 'next';
 import { FC } from 'react';
 

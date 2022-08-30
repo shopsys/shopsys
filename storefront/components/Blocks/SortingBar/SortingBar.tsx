@@ -20,9 +20,9 @@ import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceI
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useShopsysDispatch } from 'redux/main';

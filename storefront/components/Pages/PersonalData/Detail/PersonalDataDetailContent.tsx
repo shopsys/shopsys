@@ -7,7 +7,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQueryApi } from 'graphql/generated';
 import { formatDate } from 'helpers/formaters/formatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
 type PersonalDataDetailContentProps = {

@@ -11,7 +11,7 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';

@@ -15,11 +15,11 @@ import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/s
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
-import { useDebounce } from 'hooks/helpers/UseDebounce';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useDebounce } from 'hooks/helpers/useDebounce';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';

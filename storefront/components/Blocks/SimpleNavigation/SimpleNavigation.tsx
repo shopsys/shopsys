@@ -3,8 +3,8 @@ import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style
 import { Slider } from './Slider/Slider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { FC, HTMLAttributes, useState } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { ListedItemPropType } from 'types/simpleNavigation';

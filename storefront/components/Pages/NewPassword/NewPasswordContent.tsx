@@ -11,11 +11,11 @@ import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts'
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRecoverPasswordMutationApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useAuth } from 'hooks/auth/useAuth';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';

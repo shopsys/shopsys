@@ -14,7 +14,7 @@ import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMe
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { MainVariantDetailType } from 'types/product';

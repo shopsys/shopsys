@@ -1,5 +1,5 @@
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';

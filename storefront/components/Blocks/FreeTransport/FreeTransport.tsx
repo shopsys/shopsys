@@ -1,7 +1,7 @@
 import { FreeTransportStyled } from './FreeTransport.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
 

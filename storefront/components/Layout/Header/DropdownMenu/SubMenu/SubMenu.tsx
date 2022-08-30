@@ -1,7 +1,7 @@
 import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useAuth } from 'hooks/auth/useAuth';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
 import { FC } from 'react';

@@ -1,6 +1,6 @@
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 

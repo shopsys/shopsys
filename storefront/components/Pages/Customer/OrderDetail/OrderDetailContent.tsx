@@ -6,7 +6,7 @@ import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';

@@ -8,7 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
 type PaymentSuccessProps = {

@@ -1,7 +1,7 @@
 import { FooterMenuStyled } from './FooterMenu.style';
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';

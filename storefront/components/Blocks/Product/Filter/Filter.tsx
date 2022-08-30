@@ -18,7 +18,7 @@ import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOp
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';

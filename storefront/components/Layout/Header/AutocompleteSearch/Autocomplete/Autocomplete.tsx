@@ -17,10 +17,10 @@ import {
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useCallback } from 'react';

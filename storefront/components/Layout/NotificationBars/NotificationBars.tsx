@@ -8,7 +8,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Theme } from 'components/Theme/main';
 import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
-import { useAuth } from 'hooks/auth/UseAuth';
+import { useAuth } from 'hooks/auth/useAuth';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';

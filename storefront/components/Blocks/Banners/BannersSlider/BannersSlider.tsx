@@ -8,7 +8,7 @@ import {
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { FC, useEffect, useRef, useState } from 'react';

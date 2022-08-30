@@ -14,7 +14,7 @@ import {
 } from './StoresContent.style';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { FC, useCallback, useState } from 'react';

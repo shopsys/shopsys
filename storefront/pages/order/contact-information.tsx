@@ -21,12 +21,12 @@ import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect'
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { createClient } from 'helpers/urql/createClient';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';

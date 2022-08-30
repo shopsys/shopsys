@@ -6,7 +6,7 @@ import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleI
 import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchType } from 'types/search';

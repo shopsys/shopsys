@@ -16,7 +16,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';

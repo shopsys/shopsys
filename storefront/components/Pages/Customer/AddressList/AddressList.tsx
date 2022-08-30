@@ -13,7 +13,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { DeliveryAddressType } from 'types/customer';
 

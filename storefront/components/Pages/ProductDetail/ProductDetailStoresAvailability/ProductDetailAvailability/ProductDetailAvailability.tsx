@@ -4,7 +4,7 @@ import {
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, RefObject, useEffect } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { ProductDetailType } from 'types/product';

@@ -8,7 +8,7 @@ import {
     ErrorPageTextMainStyled,
     ErrorPageTextStyled,
 } from 'components/Pages/ErrorPage/ErrorPage.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import React, { FC } from 'react';
 

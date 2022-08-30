@@ -1,7 +1,7 @@
 import { AddToCartUnavailableTextStyled, ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
 import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/dist/client/router';
 import { FC } from 'react';
 import { GtmListNameType } from 'types/gtm';

@@ -13,7 +13,7 @@ import {
 } from './SelectedParameters.style';
 import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {

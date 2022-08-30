@@ -1,6 +1,6 @@
 import { mapListedCategoryApiData } from './Categories';
 import { PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { ListedCategoryType } from 'types/category';
 
 export function usePromotedCategories(): ListedCategoryType[] | undefined {

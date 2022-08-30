@@ -3,7 +3,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';

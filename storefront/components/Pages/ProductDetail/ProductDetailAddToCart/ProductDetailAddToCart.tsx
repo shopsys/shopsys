@@ -10,9 +10,9 @@ import {
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
-import { useAddToCart } from 'hooks/cart/UseAddToCart';
+import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';

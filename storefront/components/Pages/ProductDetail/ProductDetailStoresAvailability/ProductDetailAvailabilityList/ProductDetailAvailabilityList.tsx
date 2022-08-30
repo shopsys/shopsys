@@ -7,7 +7,7 @@ import {
 } from './ProductDetailAvailabilityList.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { forwardRef } from 'react';
 import { StoreAvailabilityType } from 'types/availability';

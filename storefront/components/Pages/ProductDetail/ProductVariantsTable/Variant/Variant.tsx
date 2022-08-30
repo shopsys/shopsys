@@ -16,7 +16,7 @@ import { Popup } from 'components/Layout/Popup/Popup';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { ListedVariantType } from 'types/product';

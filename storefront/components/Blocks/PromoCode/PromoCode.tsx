@@ -11,9 +11,9 @@ import {
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
 import { Form } from 'components/Forms/Form/Form';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
-import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
+import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';

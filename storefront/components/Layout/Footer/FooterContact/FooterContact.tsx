@@ -11,9 +11,9 @@ import {
 } from './FooterContact.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { FC, useState } from 'react';
 
 const TEST_IDENTIFIER = 'layout-footer-footercontact';

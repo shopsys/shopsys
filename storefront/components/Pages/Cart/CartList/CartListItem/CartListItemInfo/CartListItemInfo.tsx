@@ -6,7 +6,7 @@ import {
     NameTitleStyled,
     NameTitleTextStyled,
 } from './CartListItem.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { CartItemType } from 'types/cart';

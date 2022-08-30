@@ -11,7 +11,7 @@ import {
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
 import { mapProductFilterOptions } from 'helpers/filterOptions/mapProductFilterOptions';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useShopsysSelector } from 'redux/main';
 import {
     ListedProductConnectionType,

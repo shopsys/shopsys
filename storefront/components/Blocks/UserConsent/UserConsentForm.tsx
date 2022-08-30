@@ -8,7 +8,7 @@ import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
 import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC, useCallback } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';

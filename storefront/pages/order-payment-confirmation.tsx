@@ -5,7 +5,7 @@ import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfir
 import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { FC } from 'react';

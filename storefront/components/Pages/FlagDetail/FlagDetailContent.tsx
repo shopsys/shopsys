@@ -4,7 +4,7 @@ import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsLis
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/UseRemoveSortFromUrlIfDefault';
+import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
 import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';

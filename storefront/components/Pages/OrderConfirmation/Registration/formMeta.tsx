@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';

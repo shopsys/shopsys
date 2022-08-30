@@ -20,7 +20,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';

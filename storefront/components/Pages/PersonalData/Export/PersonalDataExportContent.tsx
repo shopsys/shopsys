@@ -14,10 +14,10 @@ import {
     usePersonalDataPageTextQueryApi,
     usePersonalDataRequestMutationApi,
 } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';

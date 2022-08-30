@@ -1,7 +1,7 @@
 import { mapSimpleCategories } from 'connectors/categories/Categories';
 import { getFirstImage } from 'connectors/image/Image';
 import { AdvertsFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { AdvertType } from 'types/advert';
 
 export const useAdverts = (): AdvertType[] | undefined => {

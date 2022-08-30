@@ -6,7 +6,7 @@ import {
 } from './Breadcrumbs.style';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';

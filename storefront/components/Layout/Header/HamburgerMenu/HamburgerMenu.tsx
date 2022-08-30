@@ -1,6 +1,6 @@
 import { HamburgerIcon } from './HamburgerIcon/HamburgerIcon';
 import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, MouseEventHandler } from 'react';
 
 type HamburgerMenuProps = {

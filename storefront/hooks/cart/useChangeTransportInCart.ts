@@ -3,7 +3,7 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { onTransportChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';

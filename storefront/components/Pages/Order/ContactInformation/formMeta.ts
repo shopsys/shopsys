@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';

@@ -6,7 +6,7 @@ import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
