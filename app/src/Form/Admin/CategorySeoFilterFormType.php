@@ -49,7 +49,7 @@ class CategorySeoFilterFormType extends AbstractType
             ])
             ->add('parameters', ChoiceType::class, [
                 'label' => t('Parametry produktů vybrané kategorie'),
-                'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategory($category, $domainId),
+                'choices' => $this->categorySeoFacade->getParametersUsedByProductsInCategoryWithoutSlider($category, $domainId),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'multiple' => true,

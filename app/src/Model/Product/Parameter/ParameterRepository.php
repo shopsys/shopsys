@@ -56,6 +56,24 @@ class ParameterRepository extends BaseParameterRepository
 
     /**
      * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
+    {
+        $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
+            ->select('p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
+            ->where('p.parameterType != :parameterType')
+            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER);
+
+        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param int $domainId
      * @param string $locale
