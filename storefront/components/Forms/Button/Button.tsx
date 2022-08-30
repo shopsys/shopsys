@@ -7,7 +7,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     ButtonHTMLAttributes<HTMLButtonElement>,
     'type',
-    'onClick' | 'style' | 'name'
+    'onClick' | 'style' | 'name' | 'className'
 >;
 
 type ButtonProps = NativeProps &
@@ -29,6 +29,7 @@ export const Button: FC<ButtonProps> = ({
     variant,
     borderRadius,
     children,
+    className,
 }) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
@@ -40,6 +41,7 @@ export const Button: FC<ButtonProps> = ({
     return (
         <>
             <Component
+                className={className}
                 type={type}
                 onClick={onClick}
                 style={style}

@@ -7,13 +7,16 @@ import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import NextLink from 'next/link';
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, HTMLAttributes, useState } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'className'>;
+
 type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
 
-type AdvertsProps = {
+type AdvertsProps = NativeProps & {
     positionName: PositionNameType;
     withGapBottom?: boolean;
     withGapTop?: boolean;
@@ -27,6 +30,7 @@ export const Adverts: FC<AdvertsProps> = ({
     withGapTop,
     withWebline,
     currentCategory,
+    className,
 }) => {
     const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
@@ -47,7 +51,7 @@ export const Adverts: FC<AdvertsProps> = ({
     }
 
     return (
-        <WrapperComponent>
+        <WrapperComponent className={className}>
             <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
                 {adverts?.map(
                     (item, index) =>

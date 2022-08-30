@@ -9,7 +9,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     never,
-    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress'
+    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress' | 'className'
 >;
 
 type TextInputProps = NativeProps & {
@@ -46,6 +46,7 @@ export const TextInput: FC<TextInputProps> = ({
     style,
     value,
     variant,
+    className,
 }) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
@@ -68,6 +69,7 @@ export const TextInput: FC<TextInputProps> = ({
 
     return (
         <LabelWrapper
+            className={className}
             label={label}
             placeholderType={placeholderType}
             required={required}

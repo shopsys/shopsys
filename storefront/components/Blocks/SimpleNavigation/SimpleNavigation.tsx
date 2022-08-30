@@ -5,17 +5,20 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
-import { FC, useState } from 'react';
+import { FC, HTMLAttributes, useState } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
-type SimpleNavigationProps = {
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'className'>;
+
+type SimpleNavigationProps = NativeProps & {
     listedItems: ListedItemPropType[];
     imageType?: string;
 };
 
 const TEST_IDENTIFIER = 'blocks-simplenavigation';
 
-export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType }) => {
+export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, imageType, className }) => {
     const { width } = useGetWindowSize();
     const [isSliderVisible, setSliderVisible] = useState(true);
     useResizeWidthEffect(
@@ -27,7 +30,7 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, image
     );
 
     return (
-        <ul>
+        <ul className={className}>
             {isSliderVisible ? (
                 <Slider listedItems={listedItems} />
             ) : (

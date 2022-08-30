@@ -2,7 +2,7 @@ import { LabelWrapperStyled, RequiredSymbolStyled } from './LabelWrapper.style';
 import { FC, LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
+type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor' | 'className'>;
 
 type LabelWrapperProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
@@ -24,9 +24,14 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     selectBoxLabelIsFloated,
     htmlFor,
     children,
+    className,
 }) => {
     return (
-        <LabelWrapperStyled inputType={inputType} selectBoxLabelIsFloated={selectBoxLabelIsFloated}>
+        <LabelWrapperStyled
+            className={className}
+            inputType={inputType}
+            selectBoxLabelIsFloated={selectBoxLabelIsFloated}
+        >
             {children}
             {placeholderType !== 'static' && (
                 <label htmlFor={htmlFor}>
