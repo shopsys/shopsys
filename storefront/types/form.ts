@@ -35,10 +35,6 @@ export type ContactInformationFormType = {
     note: string;
 };
 
-export type PickupPlaceFormType = {
-    pickupPlace: string;
-};
-
 export type RegistrationAfterOrderFormType = {
     password: string;
     privacyPolicy: boolean;
