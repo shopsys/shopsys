@@ -10,7 +10,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLi
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
@@ -170,63 +170,35 @@ export const ContactInformationDeliveryAddress: FC = () => {
                             {showAddressSelection && (
                                 <FormLine bottomGap lg="65%">
                                     <ListStyled>
-                                        {user?.deliveryAddresses.map((address) => (
-                                            <Controller
-                                                key={address.uuid}
-                                                name={formMeta.fields.deliveryAddressUuid.name}
-                                                render={({ field }) => (
-                                                    <ListItemStyled>
-                                                        <Radiobutton
-                                                            id={
-                                                                formMeta.formName +
-                                                                '-' +
-                                                                formMeta.fields.deliveryAddressUuid.name +
-                                                                '-' +
-                                                                address.uuid
-                                                            }
-                                                            label={
-                                                                <p>
-                                                                    <strong>
-                                                                        {address.firstName} {address.lastName}
-                                                                    </strong>
-                                                                    {address.companyName}
-                                                                    <br />
-                                                                    {address.street}, {address.city}, {address.postcode}
-                                                                    , {address.country}
-                                                                </p>
-                                                            }
-                                                            name={formMeta.fields.deliveryAddressUuid.name}
-                                                            fieldRef={field}
-                                                            checked={field.value === address.uuid}
-                                                            value={address.uuid}
-                                                        />
-                                                    </ListItemStyled>
-                                                )}
-                                            />
-                                        ))}
-                                        <Controller
+                                        <RadiobuttonGroup
                                             name={formMeta.fields.deliveryAddressUuid.name}
-                                            render={({ field }) => (
-                                                <ListItemStyled>
-                                                    <Radiobutton
-                                                        id={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.deliveryAddressUuid.name +
-                                                            '-different'
-                                                        }
-                                                        label={
-                                                            <p>
-                                                                <strong>{t('Different delivery address')}</strong>
-                                                            </p>
-                                                        }
-                                                        name={formMeta.fields.deliveryAddressUuid.name}
-                                                        fieldRef={field}
-                                                        checked={field.value === ''}
-                                                        value={''}
-                                                    />
-                                                </ListItemStyled>
-                                            )}
+                                            control={formProviderMethods.control}
+                                            formName={formMeta.formName}
+                                            radiobuttons={[
+                                                ...(user?.deliveryAddresses.map((deliveryAddress) => ({
+                                                    label: (
+                                                        <p>
+                                                            <strong>
+                                                                {deliveryAddress.firstName} {deliveryAddress.lastName}
+                                                            </strong>
+                                                            {deliveryAddress.companyName}
+                                                            <br />
+                                                            {deliveryAddress.street}, {deliveryAddress.city},{' '}
+                                                            {deliveryAddress.postcode}, {deliveryAddress.country}
+                                                        </p>
+                                                    ),
+                                                    value: deliveryAddress.uuid,
+                                                })) ?? []),
+                                                {
+                                                    label: (
+                                                        <p>
+                                                            <strong>{t('Different delivery address')}</strong>
+                                                        </p>
+                                                    ),
+                                                    value: '',
+                                                },
+                                            ]}
+                                            render={(radiobutton) => <ListItemStyled>{radiobutton}</ListItemStyled>}
                                         />
                                     </ListStyled>
                                 </FormLine>

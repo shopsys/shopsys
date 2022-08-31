@@ -1,95 +1,77 @@
 import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
 import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
 import { Image } from 'components/Basic/Image/Image';
-import { FC, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { ImageType } from 'types/image';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'value',
-    'disabled' | 'id'
+    'id',
+    'disabled' | 'name' | 'onBlur' | 'checked' | 'onChange'
 >;
 
-type RadiobuttonProps = NativeProps & {
-    label: string | ReactNode | ReactNode[];
+export type RadiobuttonProps = NativeProps & {
+    value: any;
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
-    image?: ImageType | null;
     testIdentifier?: string;
-} & (
-        | {
-              onChangeCallback: (newValue: string | null) => void;
-              fieldRef?: never;
-          }
-        | {
-              onChangeCallback?: never;
-              fieldRef: ControllerRenderProps<any, any>;
-          }
-    );
+    label: ReactNode;
+    image?: ImageType | null;
+    onChangeCallback?: (newValue: string | null) => void;
+};
 
-export const Radiobutton: FC<RadiobuttonProps> = ({
-    label,
-    image,
-    onChangeCallback,
-    id,
-    name,
-    checked,
-    fieldRef,
-    value,
-    disabled,
-    testIdentifier,
-}) => {
-    const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
-        if (onChangeCallback === undefined) {
-            return;
-        }
+export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
+    (
+        { label, image, onChangeCallback, onChange, id, name, checked, value, disabled, testIdentifier, onBlur },
+        radiobuttonForwardedRef,
+    ) => {
+        const onClickHandler: MouseEventHandler<HTMLInputElement> = useCallback(
+            (event) => {
+                if (onChangeCallback === undefined) {
+                    return;
+                }
 
-        if (checked) {
-            onChangeCallback(null);
-        } else {
-            onChangeCallback(event.currentTarget.value);
-        }
-    };
+                if (checked) {
+                    onChangeCallback(null);
+                } else {
+                    onChangeCallback(event.currentTarget.value);
+                }
+            },
+            [checked, onChangeCallback],
+        );
 
-    return (
-        <LabelWrapper
-            htmlFor={id === undefined ? name + 'radiobutton-id' : id}
-            label={
-                <div>
-                    {image !== undefined && (
-                        <LabelImageWrapper>
-                            <Image alt="" type="default" image={image} />
-                        </LabelImageWrapper>
-                    )}
-                    {label}
-                </div>
-            }
-            inputType="radio"
-        >
-            {fieldRef ? (
-                <RadiobuttonStyled
-                    {...fieldRef}
-                    value={value}
-                    checked={checked}
-                    disabled={disabled}
-                    id={id === undefined ? name + 'radiobutton-id' : id}
-                    type="radio"
-                    data-testid={testIdentifier}
-                />
-            ) : (
+        return (
+            <LabelWrapper
+                htmlFor={id}
+                label={
+                    <div>
+                        {image !== undefined && (
+                            <LabelImageWrapper>
+                                <Image alt="" type="default" image={image} />
+                            </LabelImageWrapper>
+                        )}
+                        {label}
+                    </div>
+                }
+                inputType="radio"
+            >
                 <RadiobuttonStyled
                     value={value}
                     name={name}
                     disabled={disabled}
                     checked={checked}
-                    id={id === undefined ? name + 'radiobutton-id' : id}
+                    id={id}
                     type="radio"
                     onClick={onClickHandler}
-                    readOnly={onChangeCallback !== undefined}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    ref={radiobuttonForwardedRef}
+                    readOnly={onChange === undefined}
                     data-testid={testIdentifier}
                 />
-            )}
-        </LabelWrapper>
-    );
-};
+            </LabelWrapper>
+        );
+    },
+);
+
+Radiobutton.displayName = 'Radiobutton';

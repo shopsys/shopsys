@@ -201,9 +201,9 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={transportItem.uuid}
                     value={transportItem.uuid}
                     checked={isActive}
-                    onChangeCallback={handleTransportChange}
                     testIdentifier={TEST_IDENTIFIER + 'transport-item-input'}
                     image={transportItem.image}
+                    onChangeCallback={handleTransportChange}
                     label={
                         <TransportAndPaymentSelectItemLabel
                             name={transportItem.name}
@@ -230,9 +230,9 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={paymentItem.uuid}
                     value={paymentItem.uuid}
                     checked={isActive}
-                    onChangeCallback={handlePaymentChange}
                     testIdentifier={TEST_IDENTIFIER + 'payment-item-input'}
                     image={paymentItem.image}
+                    onChangeCallback={handlePaymentChange}
                     label={
                         <TransportAndPaymentSelectItemLabel
                             name={paymentItem.name}

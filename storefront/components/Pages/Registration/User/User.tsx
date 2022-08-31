@@ -1,7 +1,7 @@
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -114,36 +114,28 @@ export const User: FC = () => {
                     )}
                 />
             </FormLine>
-
-            <Controller
-                name={formMeta.fields.customer.name}
-                render={({ field }) => (
-                    <>
-                        <FormColumn lg="65%">
-                            <FormLine bottomGap width="100%" lg="50%">
-                                <Radiobutton
-                                    name={formMeta.fields.customer.name}
-                                    id={formMeta.formName + '-' + CustomerTypeEnum.CommonCustomer}
-                                    value={CustomerTypeEnum.CommonCustomer}
-                                    checked={field.value === CustomerTypeEnum.CommonCustomer}
-                                    label={t('Private person')}
-                                    fieldRef={field}
-                                />
-                            </FormLine>
-                            <FormLine bottomGap width="100%" lg="50%">
-                                <Radiobutton
-                                    name={formMeta.fields.customer.name}
-                                    id={formMeta.formName + '-' + CustomerTypeEnum.CompanyCustomer}
-                                    value={CustomerTypeEnum.CompanyCustomer}
-                                    checked={field.value === CustomerTypeEnum.CompanyCustomer}
-                                    label={t('Company')}
-                                    fieldRef={field}
-                                />
-                            </FormLine>
-                        </FormColumn>
-                    </>
-                )}
-            />
+            <FormColumn lg="65%">
+                <RadiobuttonGroup
+                    name={formMeta.fields.customer.name}
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    radiobuttons={[
+                        {
+                            label: t('Private person'),
+                            value: CustomerTypeEnum.CommonCustomer,
+                        },
+                        {
+                            label: t('Company'),
+                            value: CustomerTypeEnum.CompanyCustomer,
+                        },
+                    ]}
+                    render={(radiobutton, key) => (
+                        <FormLine key={key} bottomGap width="100%" lg="50%">
+                            {radiobutton}
+                        </FormLine>
+                    )}
+                />
+            </FormColumn>
         </>
     );
 };
