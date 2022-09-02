@@ -13,28 +13,12 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type RadiobuttonProps = NativeProps & {
-    /**
-     * Display Label of the HTML radiobutton element
-     */
     label: string | ReactNode | ReactNode[];
-    /**
-     * A prop which, if present, provides a ImageSizeType object
-     * with render values for a label image/icon
-     */
     image?: ImageType | null;
-    /**
-     * a ref of the controlled field element used for hooking onto the field events/changes
-     */
     fieldRef?: ControllerRenderProps<any, any>;
-    /**
-     * Callback which can be used to uncheck the radiobutton after second click
-     */
     uncheckCallback?: () => void;
 };
 
-/**
- * An HTML Radiobutton element of type radiobutton
- */
 const Radiobutton: FC<RadiobuttonProps> = (props) => {
     const uncheckCallback: MouseEventHandler<HTMLInputElement> = () => {
         if (props.checked && props.uncheckCallback !== undefined) {
@@ -68,5 +52,4 @@ const Radiobutton: FC<RadiobuttonProps> = (props) => {
     );
 };
 
-/* @component */
 export default Radiobutton;

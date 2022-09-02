@@ -17,11 +17,6 @@ type ButtonProps = NativeProps &
         isLink?: boolean;
     };
 
-/**
- * Global component for Buttons.
- * We can combine variants, sizes and border radius.
- * The component is connected to the Link component.
- */
 const Button: FC<ButtonProps> = (props) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
@@ -47,5 +42,4 @@ const Button: FC<ButtonProps> = (props) => {
     );
 };
 
-/* @component */
 export default Button;

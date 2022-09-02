@@ -3,18 +3,18 @@ import { BreadcrumbItemType } from './breadcrumb';
 export type GtmPageType =
     | 'home'
     | 'crossroad'
-    | 'category' // category - friendly URL
-    | 'seo category' // prepared SEO category - friendly URL
-    | 'product' // product - friendly URL
-    | 'cart' // /cart
+    | 'category'
+    | 'seo category'
+    | 'product'
+    | 'cart'
     | 'transport pay' // /transport-and-payment
     | 'shipping data' // /contact-information
     | 'purchase' // /order-confirmation
-    | 'search' // /search
-    | 'blog' // blog - friendly URL
-    | 'article' // blog article - friendly URL
-    | 'stores' // /stores
-    | 'store' // store - friendly URL
+    | 'search'
+    | 'blog'
+    | 'article'
+    | 'stores'
+    | 'store'
     | 'flag'
     | 'brand'
     | 'text'
@@ -22,7 +22,7 @@ export type GtmPageType =
     | 'purchase success'
     | 'about'
     | '404'
-    | 'other' // fallback for new/unknown pages.
+    | 'other'
     | 'cookie consent'
     | 'contact';
 
@@ -41,11 +41,11 @@ export type GtmListNameType =
     | 'suggest';
 
 export type GtmEventType =
-    | 'page_ready' // page view event
+    | 'page_ready'
     | 'consent.update'
-    | 'ec.add_to_cart' // add to cart/increase cart item quantity
-    | 'ec.remove_from_cart' // remove from cart/reduce cart item quantity
-    | 'ec.cart' // cart page view event
+    | 'ec.add_to_cart'
+    | 'ec.remove_from_cart'
+    | 'ec.cart'
     | 'ec.products_list'
     | 'ec.product_click'
     | 'ec.product_view'
@@ -55,7 +55,7 @@ export type GtmEventType =
     | 'ec.shipping_info'
     | 'ec.shipping_data'
     | 'ec.payment_info'
-    | 'ec.purchase' // order confirmation page view event
+    | 'ec.purchase'
     | 'ec.message';
 
 export type GtmMessageOriginType =
@@ -109,14 +109,12 @@ export type GtmSearchEventType = {
     suggestResult?: GtmSuggestResultType;
 };
 
-/** page view event info objects */
-
 export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
     pageId: string; // random string generated for every page load
     breadcrumbs: BreadcrumbItemType[];
-    category?: string[]; // name from root
+    category?: string[];
     categoryId?: number[];
     categoryLevel?: number;
     articleId?: string; // for article page type (UUID used)
@@ -144,8 +142,8 @@ export type GtmUserInfoType = {
     emailHash?: string;
     name?: string;
     surname?: string;
-    phoneNumber?: string; // phone number in intl. format (+420777123456)
-    street?: string; // includes house no.
+    phoneNumber?: string;
+    street?: string;
     city?: string;
     psc?: string;
     country?: string; // country code according to ISO 3166-1 alpha-2.
@@ -156,8 +154,6 @@ export type GtmConsentInfoType = {
     marketing: GtmConsent;
     preferences: GtmConsent;
 };
-
-/** product data types for category list, detail, cart item and order item */
 
 export type GtmProductInterface = {
     id: number;
@@ -184,14 +180,12 @@ export type GtmProductInterface = {
 };
 
 export type GtmListedProductType = GtmProductInterface & {
-    listIndex?: number; // only catalog
+    listIndex?: number;
 };
 
 export type GtmCartItemType = GtmProductInterface & {
-    quantity: number; // only cart attribute
+    quantity: number;
 };
-
-/** ecommerce event data objects */
 
 export type GtmPurchaseType = {
     currency: string;
@@ -206,9 +200,9 @@ export type GtmPurchaseType = {
     paymentPriceWithTax: number;
     shippingPrice: number;
     shippingPriceWithTax: number;
-    shippingType: string; // 'Zasilkovna'
-    shippingDetail: string; // 'Downing street 10',
-    shippingExtra: string[]; // ['night delivery'],
+    shippingType: string;
+    shippingDetail: string;
+    shippingExtra: string[];
     products: GtmCartItemType[];
     reviewConsents: GtmReviewConsentsType;
 };
@@ -230,8 +224,8 @@ export type GtmSuggestResultType = {
 
 export type GtmSuggestClickType = {
     section: GtmSectionType;
-    itemName: string; // which result has been clicked on
-    keyword: string; // searched term
+    itemName: string;
+    keyword: string;
 };
 
 export type GtmChangeCartItemEventType = {
@@ -260,24 +254,24 @@ export type GtmProductDetailEventType = {
 };
 
 export type GtmShippingInfoEventType = {
-    value: number; // value of all products
-    valueWithTax: number; // value of all products with tax
+    value: number;
+    valueWithTax: number;
     currency: string;
     coupons: string[];
     paymentType?: string;
     shippingPrice: number;
     shippingPriceWithTax: number;
-    shippingType: string; // 'Zasilkovna'
-    shippingDetail: string; // 'Downing street 10',
-    shippingExtra: string[]; // ['night delivery'],
+    shippingType: string;
+    shippingDetail: string;
+    shippingExtra: string[];
     products: GtmCartItemType[];
 };
 
 export type GtmPaymentInfoEventType = {
-    value: number; // value of all products
-    valueWithTax: number; // value of all products with tax
-    currency: string;
+    value: number;
+    valueWithTax: number;
     coupons: string[];
+    currency: string;
     paymentType: string;
     paymentPrice: number;
     paymentPriceWithTax: number;

@@ -180,5 +180,4 @@ const Contact: FC = () => {
     );
 };
 
-/* @component */
 export default Contact;

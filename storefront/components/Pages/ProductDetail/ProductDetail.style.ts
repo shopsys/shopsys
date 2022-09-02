@@ -30,7 +30,7 @@ export const ProductDetailImageStyled = styled.div`
             width: calc(100% - ${localVariables.detailInfoWidth});
         }
 
-        /* this styled is used to style the div inserted by the lightbox gallery package */
+        /* these styles are used to style the div inserted by the lightbox gallery package */
         > div {
             position: relative;
             display: flex;

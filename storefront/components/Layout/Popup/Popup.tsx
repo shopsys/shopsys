@@ -18,9 +18,6 @@ type PopupProps = {
     hideCloseButton?: boolean;
 };
 
-/**
- * Popup component used for displaying any type of content above the main page content.
- */
 const Popup: FC<PopupProps> = (props) => {
     const testIdentifier = 'layout-popup';
 
@@ -71,5 +68,4 @@ const Popup: FC<PopupProps> = (props) => {
     return null;
 };
 
-/* @component */
 export default Popup;

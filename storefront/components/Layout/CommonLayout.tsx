@@ -10,9 +10,6 @@ import { FC } from 'react';
 
 type LayoutProps = { title?: string | null; description?: string | null };
 
-/**
- * Basic page layout for common pages
- */
 const CommonLayout: FC<LayoutProps> = (props) => {
     return (
         <>
@@ -35,5 +32,4 @@ const CommonLayout: FC<LayoutProps> = (props) => {
     );
 };
 
-/* @component */
 export default CommonLayout;

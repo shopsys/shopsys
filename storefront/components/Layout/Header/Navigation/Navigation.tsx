@@ -21,5 +21,4 @@ const Navigation = (): ReactElement | null => {
     );
 };
 
-/* @component */
 export default Navigation;

@@ -50,5 +50,5 @@ const ContactInformationCustomer: FC = () => {
         </>
     );
 };
-/* @component */
+
 export default ContactInformationCustomer;

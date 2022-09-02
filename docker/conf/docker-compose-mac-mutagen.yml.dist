@@ -48,19 +48,6 @@ services:
         ports:
             - "3000:3000"
 
-    storefront-styleguide:
-        build:
-            context: ./storefront
-            dockerfile: ./docker/styleguide/Dockerfile
-            target: development
-        container_name: shopsys-framework-storefront-styleguide
-        depends_on:
-            - storefront
-        volumes:
-            - storefront:/app
-        ports:
-            - "6060:6060"
-
     cypress:
         build:
             context: ./storefront

@@ -48,5 +48,4 @@ const NavigationSubList: FC<NavigationSubListProps> = (props) => {
     );
 };
 
-/* @component */
 export default NavigationSubList;

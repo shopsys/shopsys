@@ -578,5 +578,4 @@ const ContactInformationDeliveryAddress: FC = () => {
     );
 };
 
-/* @component */
 export default ContactInformationDeliveryAddress;

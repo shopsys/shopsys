@@ -131,5 +131,4 @@ const MenuIconic: FC = () => {
     );
 };
 
-/* @component */
 export default MenuIconic;

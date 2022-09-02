@@ -113,5 +113,4 @@ const ContactInformationCompany: FC = () => {
     );
 };
 
-/* @component */
 export default ContactInformationCompany;

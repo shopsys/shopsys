@@ -92,5 +92,4 @@ const Company: FC = () => {
     );
 };
 
-/* @component */
 export default Company;

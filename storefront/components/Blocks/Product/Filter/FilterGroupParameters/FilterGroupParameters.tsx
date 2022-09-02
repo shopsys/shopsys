@@ -14,21 +14,9 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
-    /**
-     * Group title with arrow
-     */
     title: string;
-    /**
-     * Sets if group is default open
-     */
     isDefaultCollapsed: boolean;
-    /**
-     * parameterParentIndex of parameters
-     */
     parameterParentIndex: number;
-    /**
-     * Parameters data of product filter
-     */
     data?: ParametersType;
 };
 

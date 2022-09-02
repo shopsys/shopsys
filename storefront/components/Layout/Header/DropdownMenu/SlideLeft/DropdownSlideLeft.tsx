@@ -21,5 +21,4 @@ const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent 
     );
 };
 
-/* @component */
 export default DropdownSlideLeft;

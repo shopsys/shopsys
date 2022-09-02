@@ -12,50 +12,21 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type CheckboxColorProps = NativeProps & {
-    /**
-     * Display Label of the HTML checkbox element
-     */
     label?: string;
-    /**
-     * Background color of color chooser
-     */
     bgColor?: string;
-    /**
-     * a ref of the controlled field element used for hooking onto the field events/changes
-     */
 } & (
         | {
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               value: unknown;
-              /**
-               * a ref of the controlled field element used for hooking onto the field events/changes
-               */
               fieldRef?: never;
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               onChange: (...event: any[]) => void;
           }
         | {
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               value?: never;
-              /**
-               * a ref of the controlled field element used for hooking onto the field events/changes
-               */
               fieldRef: ControllerRenderProps<any, any>;
-              /**
-               * props that are by default included in the fieldRef, but can be used, if a complete fieldRef cannot be provided
-               */
               onChange?: never;
           }
     );
-/**
- * CheckboxColor - circle color with invisible checkbox, selected color will display tick
- */
+
 const CheckboxColor: FC<CheckboxColorProps> = ({
     bgColor = '#d4d4d4',
     label,
@@ -89,5 +60,4 @@ const CheckboxColor: FC<CheckboxColorProps> = ({
     );
 };
 
-/* @component */
 export default CheckboxColor;

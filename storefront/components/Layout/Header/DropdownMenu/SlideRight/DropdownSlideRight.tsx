@@ -15,5 +15,4 @@ const DropdownSlideRight: FC<DropdownItemType> = (props) => {
     );
 };
 
-/* @component */
 export default DropdownSlideRight;

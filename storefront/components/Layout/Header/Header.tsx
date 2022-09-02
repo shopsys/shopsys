@@ -58,5 +58,4 @@ const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     );
 };
 
-/* @component */
 export default Header;

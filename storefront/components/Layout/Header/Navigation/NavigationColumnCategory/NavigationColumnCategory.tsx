@@ -33,5 +33,4 @@ const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
     );
 };
 
-/* @component */
 export default NavigationColumnCategory;

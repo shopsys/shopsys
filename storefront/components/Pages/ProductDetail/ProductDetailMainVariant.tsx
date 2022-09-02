@@ -25,9 +25,7 @@ type ProductDetailMainVariantProps = {
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-';
-/**
- * Main Product Variant Detail page component
- */
+
 const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = ({ product, fetching }) => {
     const router = useRouter();
     useGtmProductDetailView(product, getUrlWithoutGetParameters(router.asPath), fetching);
@@ -72,5 +70,4 @@ const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = ({ product, 
     );
 };
 
-/* @component */
 export default ProductDetailMainVariant;

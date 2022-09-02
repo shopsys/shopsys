@@ -7,9 +7,6 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type FormLineProps = NativeProps & FormLinePropType;
 
-/**
- * A form line element used for wrapping inputs
- */
 const FormLine: FC<FormLineProps> = (props) => {
     return (
         <FormLineStyled style={props.style} {...props}>
@@ -18,5 +15,4 @@ const FormLine: FC<FormLineProps> = (props) => {
     );
 };
 
-/* @component */
 export default FormLine;

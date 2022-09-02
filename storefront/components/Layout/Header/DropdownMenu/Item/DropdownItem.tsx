@@ -68,5 +68,4 @@ const DropdownItem: FC<DropdownItemProps> = ({
     );
 };
 
-/* @component */
 export default DropdownItem;

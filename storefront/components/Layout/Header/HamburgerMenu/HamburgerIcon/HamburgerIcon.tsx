@@ -14,5 +14,4 @@ const HamburgerIcon: FC<HamburgerIconProps> = (props) => {
     return <HamburgerIconOpenStyled iconType="icon" icon="Menu" />;
 };
 
-/* @component */
 export default HamburgerIcon;

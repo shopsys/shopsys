@@ -93,5 +93,4 @@ const ContactInformationContent: FC<ContactInformationContentProps> = (props) =>
     );
 };
 
-/* @component */
 export default ContactInformationContent;

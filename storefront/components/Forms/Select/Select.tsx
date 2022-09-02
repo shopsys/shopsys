@@ -61,5 +61,4 @@ const Select: FC<SelectProps> = (props) => {
     );
 };
 
-/* @component */
 export default Select;

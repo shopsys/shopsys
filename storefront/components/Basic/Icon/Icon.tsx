@@ -3,10 +3,6 @@ import { IconName } from './IconSvg/IconsSvgMap';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-/**
- *  Basic icon component unifies displaying icons
- */
-
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'onClick'>;
 
 type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & (

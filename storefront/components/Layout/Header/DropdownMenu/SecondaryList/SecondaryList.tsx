@@ -34,5 +34,4 @@ const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyOfIndexe
     );
 };
 
-/* @component */
 export default SecondaryList;

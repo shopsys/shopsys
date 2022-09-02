@@ -23,5 +23,4 @@ const NavigationLeaf: FC<NavigationLeafProps> = (props) => {
     );
 };
 
-/* @component */
 export default NavigationLeaf;

@@ -15,9 +15,6 @@ type OrderLayoutProps = {
     buttonNextText: string;
 };
 
-/**
- * Page layout for order pages
- */
 const OrderLayout: FC<OrderLayoutProps> = (props) => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
@@ -46,5 +43,4 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
     );
 };
 
-/* @component */
 export default OrderLayout;

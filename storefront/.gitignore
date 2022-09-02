@@ -5,9 +5,6 @@
 /.pnp
 .pnp.js
 
-# generated docs
-/docs/styleguide/*
-
 # testing
 /coverage
 /cypress/cache

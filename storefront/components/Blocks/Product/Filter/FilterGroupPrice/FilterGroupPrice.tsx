@@ -10,21 +10,9 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { FilterFormType } from 'types/productFilter';
 
 type FilterGroupPriceProps = {
-    /**
-     * Group title with arrow
-     */
     title: string;
-    /**
-     * Sets if group is default open
-     */
     isOpen: boolean;
-    /**
-     * Maximal price of price slider
-     */
     maximalPrice: number;
-    /**
-     * Minimal price of price slider
-     */
     minimalPrice: number;
 };
 

@@ -2,9 +2,6 @@ import BannersSlider from './BannersSlider';
 import { useSliderItems } from 'connectors/sliderItems/SliderItems';
 import { FC } from 'react';
 
-/**
- * A component used for displaying propagation banners on home page
- */
 const Banners: FC = () => {
     const testIdentifier = 'blocks-banners';
 
@@ -17,5 +14,4 @@ const Banners: FC = () => {
     return <BannersSlider sliderItems={sliderItems} data-testid={testIdentifier}></BannersSlider>;
 };
 
-/* @component */
 export default Banners;

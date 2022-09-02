@@ -102,5 +102,4 @@ const Cart: FC = () => {
     );
 };
 
-/* @component */
 export default Cart;

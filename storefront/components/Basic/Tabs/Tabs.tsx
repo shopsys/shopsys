@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-use-before-define
 import {
     TabsContentInStyled,
     TabsContentMobileHeadingStyled,
@@ -11,36 +10,23 @@ import {
 import React, { FC, useState } from 'react';
 
 /**
- * TabsExtended component wrapping tabs and its content
  * In background of styled tab parts we are using - react-tabs components
  * https://github.com/reactjs/react-tabs
  */
 type TabsProps = {
-    /**
-     * Text used as mobile tab variant
-     */
     headingTextMobile: string;
 };
 
 type TabFC<T = unknown> = FC<T> & { tabsRole: string };
 
-/*
- * TabsExtended element is wrap around all tabs and its content
- */
 const TabsExtended: TabFC = (props) => {
     return <TabsStyled {...props}>{props.children}</TabsStyled>;
 };
 
-/*
- * TabsListExtended element is wrap around all tabs
- */
 const TabsListExtended: TabFC = (props) => {
     return <TabsListStyled {...props}>{props.children}</TabsListStyled>;
 };
 
-/*
- * TabsListItemExtended element creates link with tab functionality - shows contant according to ShopsysTabsContent index order
- */
 const TabsListItemExtended: TabFC = (props) => {
     return (
         <TabsListItemStyled selectedClassName="active" {...props}>
@@ -49,11 +35,6 @@ const TabsListItemExtended: TabFC = (props) => {
     );
 };
 
-/*
- * TabsContentExtended element is wrap around tab content
- * On mobile devices there is diplayed only TabsContentMobileHeading (special element with closing arrow icon)
- * and shows content on click event and you have to define headingTextMobile - you can use shorter text
- */
 const TabsContentExtended: TabFC<TabsProps> = (props) => {
     const [isActiveOnMobile, setIsActiveOnMobile] = useState<boolean | undefined>(false);
     const mobileTab = () => {
@@ -79,7 +60,6 @@ TabsListExtended.tabsRole = 'TabList';
 TabsExtended.tabsRole = 'Tabs';
 TabsContentExtended.tabsRole = 'TabPanel';
 
-/* @component */
 export {
     TabsExtended as Tabs,
     TabsListExtended as TabsList,

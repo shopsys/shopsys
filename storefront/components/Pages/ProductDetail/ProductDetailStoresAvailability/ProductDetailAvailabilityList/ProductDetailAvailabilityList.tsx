@@ -49,10 +49,6 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
     );
 });
 
-/**
- * This is required by TS and the forwardRef function.
- * The display name allows correct displaying in dev-tools.
- */
 ProductDetailAvailabilityList.displayName = 'ProductDetailAvailabilityList';
 
 export default ProductDetailAvailabilityList;

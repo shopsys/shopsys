@@ -108,5 +108,4 @@ const ContactInformationUser: FC = () => {
     );
 };
 
-/* @component */
 export default ContactInformationUser;

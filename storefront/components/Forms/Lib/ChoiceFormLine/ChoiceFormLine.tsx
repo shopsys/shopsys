@@ -6,12 +6,8 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type ChoiceFormLineProps = NativeProps;
 
-/**
- * A form line element used for wrapping inputs
- */
 const ChoiceFormLine: FC<ChoiceFormLineProps> = (props) => {
     return <ChoiceFormLineStyled style={props.style}>{props.children}</ChoiceFormLineStyled>;
 };
 
-/* @component */
 export default ChoiceFormLine;

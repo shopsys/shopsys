@@ -16,5 +16,4 @@ const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => {
     );
 };
 
-/* @component */
 export default PrimaryList;

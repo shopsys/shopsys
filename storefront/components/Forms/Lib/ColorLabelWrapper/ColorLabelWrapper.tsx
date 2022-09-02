@@ -6,17 +6,8 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
 type ColorLabelWrapperProps = NativeProps & {
-    /**
-     * Display Label of the given HTML element
-     */
     label?: string;
-    /**
-     * Determine if selected color is light then show dark tick icon
-     */
     isLightColor: boolean;
-    /**
-     * Set background color for checkbox color
-     */
     bgColor: string;
     isDisabled?: boolean;
     isActive: boolean;
@@ -38,5 +29,4 @@ const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
     );
 };
 
-/* @component */
 export default ColorLabelWrapper;

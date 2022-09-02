@@ -11,17 +11,8 @@ import { FC, useState } from 'react';
 import { Controller } from 'react-hook-form';
 
 type FilterGroupInStockProps = {
-    /**
-     * Group title with arrow
-     */
     title: string;
-    /**
-     * Sets if group is default open
-     */
     isOpen: boolean;
-    /**
-     * Count of inStock parameter
-     */
     inStockCount: number;
 };
 

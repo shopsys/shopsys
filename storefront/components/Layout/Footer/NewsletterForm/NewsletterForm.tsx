@@ -24,10 +24,6 @@ import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
-/**
- * Newsletter form block, which is displayed in the Footer section and serves as
- * a signup form for the Newsletter.
- */
 const NewsletterForm: FC = () => {
     const testIdentifier = 'layout-footer-newsletterform';
 
@@ -136,5 +132,4 @@ const NewsletterForm: FC = () => {
     );
 };
 
-/* @component */
 export default NewsletterForm;
