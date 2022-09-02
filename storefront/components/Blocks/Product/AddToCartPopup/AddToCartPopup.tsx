@@ -68,7 +68,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
             </ProductStyled>
 
             <ButtonsStyled>
-                <ButtonStyled onClick={onCloseCallback} type="button" data-testid={TEST_IDENTIFIER + '-button-back'}>
+                <ButtonStyled onClick={onCloseCallback} type="button" testIdentifier={TEST_IDENTIFIER + '-button-back'}>
                     {t('Back to shop')}
                 </ButtonStyled>
                 <LinkStyled href={cartUrl} isButton>

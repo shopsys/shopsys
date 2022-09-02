@@ -77,7 +77,7 @@ export const Cart: FC = () => {
                                 type="button"
                                 size="small"
                                 onClick={() => router.push(cartUrl)}
-                                data-testid={TEST_IDENTIFIER + 'button'}
+                                testIdentifier={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>

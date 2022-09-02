@@ -171,7 +171,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.email.name}
+                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.email.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -200,7 +200,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -221,7 +221,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -243,7 +243,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name}
+                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -260,7 +260,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         name={formMeta.fields.newsletterSubscription.name}
                                         label={formMeta.fields.newsletterSubscription.label}
                                         fieldRef={field}
-                                        data-testid={
+                                        testIdentifier={
                                             TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name
                                         }
                                     />
@@ -284,7 +284,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -307,7 +307,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -328,7 +328,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name}
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -353,7 +353,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name}
+                                                testIdentifier={
+                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name
+                                                }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -374,7 +376,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name}
+                                                testIdentifier={
+                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name
+                                                }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -395,7 +399,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                data-testid={
+                                                testIdentifier={
                                                     TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name
                                                 }
                                             />
@@ -421,7 +425,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         isTouched={isTouched}
                                         hasError={invalid}
                                         fieldRef={field}
-                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.street.name}
+                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.street.name}
                                     />
                                     <FormLineError error={error} inputType="text-input" />
                                 </>
@@ -443,7 +447,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.city.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.city.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>
@@ -464,7 +468,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
-                                            data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name}
+                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name}
                                         />
                                         <FormLineError error={error} inputType="text-input" />
                                     </>

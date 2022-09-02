@@ -27,6 +27,7 @@ export const ContactInformationCustomer: FC = () => {
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CommonCustomer}
                                     value={CustomerTypeEnum.CommonCustomer}
+                                    checked={field.value === CustomerTypeEnum.CommonCustomer}
                                     label={t('Private person')}
                                     fieldRef={field}
                                 />
@@ -36,6 +37,7 @@ export const ContactInformationCustomer: FC = () => {
                                     name={formMeta.fields.customer.name}
                                     id={formMeta.formName + '-' + CustomerTypeEnum.CompanyCustomer}
                                     value={CustomerTypeEnum.CompanyCustomer}
+                                    checked={field.value === CustomerTypeEnum.CompanyCustomer}
                                     label={t('Company')}
                                     fieldRef={field}
                                 />

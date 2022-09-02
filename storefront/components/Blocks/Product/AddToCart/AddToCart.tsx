@@ -49,7 +49,7 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
                 size="small"
                 name="add-to-cart"
                 onClick={onAddToCartHandler}
-                data-testid={TEST_IDENTIFIER}
+                testIdentifier={TEST_IDENTIFIER}
             >
                 {t('Add to cart')}
             </Button>

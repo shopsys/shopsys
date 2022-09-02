@@ -104,7 +104,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                     />
 
                     <ButtonWrapperStyled>
-                        <Button type="submit" data-testid={TEST_IDENTIFIER}>
+                        <Button type="submit" testIdentifier={TEST_IDENTIFIER}>
                             {t('Log in')}
                         </Button>
                     </ButtonWrapperStyled>

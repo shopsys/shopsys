@@ -234,7 +234,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                             query: { q: autocompleteSearchQueryValue },
                                         })
                                     }
-                                    data-testid={TEST_IDENTIFIER + '-all-button'}
+                                    testIdentifier={TEST_IDENTIFIER + '-all-button'}
                                 >
                                     {t('View all results')}
                                 </Button>

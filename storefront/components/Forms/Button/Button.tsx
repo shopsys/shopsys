@@ -15,6 +15,7 @@ type ButtonProps = NativeProps &
         isDisabled?: boolean;
         hasDisabledLook?: boolean;
         isLink?: boolean;
+        testIdentifier?: string;
     };
 
 export const Button: FC<ButtonProps> = ({
@@ -30,6 +31,7 @@ export const Button: FC<ButtonProps> = ({
     borderRadius,
     children,
     className,
+    testIdentifier,
 }) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
@@ -51,6 +53,7 @@ export const Button: FC<ButtonProps> = ({
                 size={size}
                 variant={variant}
                 borderRadius={borderRadius}
+                data-testid={testIdentifier}
                 isDisabled={
                     // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

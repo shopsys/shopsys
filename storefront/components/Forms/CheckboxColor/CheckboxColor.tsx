@@ -14,6 +14,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 type CheckboxColorProps = NativeProps & {
     label?: string;
     bgColor?: string;
+    testIdentifier?: string;
 } & (
         | {
               value: unknown;
@@ -37,6 +38,7 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     required,
     value,
     onChange,
+    testIdentifier,
 }) => {
     return (
         <ColorLabelWrapper
@@ -55,6 +57,7 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
                 checked={fieldRef ? fieldRef.value : value}
                 onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
+                data-testid={testIdentifier}
             />
         </ColorLabelWrapper>
     );

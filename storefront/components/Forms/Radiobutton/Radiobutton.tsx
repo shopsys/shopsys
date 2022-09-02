@@ -14,8 +14,9 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type RadiobuttonProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
+    checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     image?: ImageType | null;
-    checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
+    testIdentifier?: string;
 } & (
         | {
               onChangeCallback: (newValue: string | null) => void;
@@ -37,6 +38,7 @@ export const Radiobutton: FC<RadiobuttonProps> = ({
     fieldRef,
     value,
     disabled,
+    testIdentifier,
 }) => {
     const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
         if (onChangeCallback === undefined) {
@@ -73,6 +75,7 @@ export const Radiobutton: FC<RadiobuttonProps> = ({
                     disabled={disabled}
                     id={id === undefined ? name + 'radiobutton-id' : id}
                     type="radio"
+                    data-testid={testIdentifier}
                 />
             ) : (
                 <RadiobuttonStyled
@@ -84,6 +87,7 @@ export const Radiobutton: FC<RadiobuttonProps> = ({
                     type="radio"
                     onClick={onClickHandler}
                     readOnly={onChangeCallback !== undefined}
+                    data-testid={testIdentifier}
                 />
             )}
         </LabelWrapper>

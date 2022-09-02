@@ -48,14 +48,18 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <PopupButtonWrapperStyled>
-                <Button type="button" onClick={onClosePickupPlacePopupHandler} data-testid={TEST_IDENTIFIER + 'close'}>
+                <Button
+                    type="button"
+                    onClick={onClosePickupPlacePopupHandler}
+                    testIdentifier={TEST_IDENTIFIER + 'close'}
+                >
                     {t('Close')}
                 </Button>
                 <Button
                     type="button"
                     isDisabled={selectedStoreUuid === ''}
                     onClick={onConfirmPickupPlaceHandler}
-                    data-testid={TEST_IDENTIFIER + 'confirm'}
+                    testIdentifier={TEST_IDENTIFIER + 'confirm'}
                 >
                     {t('Confirm')}
                 </Button>

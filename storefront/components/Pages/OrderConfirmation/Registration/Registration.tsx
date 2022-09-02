@@ -159,7 +159,7 @@ export const Registration: FC = () => {
                                         )}
                                     />
                                     <Button
-                                        data-testid={TEST_IDENTIFIER}
+                                        testIdentifier={TEST_IDENTIFIER}
                                         type="submit"
                                         variant="primary"
                                         borderRadius="big"

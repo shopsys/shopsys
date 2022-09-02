@@ -24,6 +24,7 @@ type TextInputProps = NativeProps & {
     fieldRef?: ControllerRenderProps<any, any>;
     isSearchButtonDisabled?: boolean;
     value?: number | string;
+    testIdentifier?: string;
 };
 
 export const TextInput: FC<TextInputProps> = ({
@@ -47,6 +48,7 @@ export const TextInput: FC<TextInputProps> = ({
     value,
     variant,
     className,
+    testIdentifier,
 }) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
@@ -69,7 +71,6 @@ export const TextInput: FC<TextInputProps> = ({
 
     return (
         <LabelWrapper
-            className={className}
             label={label}
             placeholderType={placeholderType}
             required={required}
@@ -77,6 +78,7 @@ export const TextInput: FC<TextInputProps> = ({
             inputType="text-input"
         >
             <TextInputStyled
+                className={className}
                 disabled={disabled}
                 id={id}
                 inputSize={inputSize}
@@ -93,6 +95,7 @@ export const TextInput: FC<TextInputProps> = ({
                 type={inputType}
                 placeholder={typeof label === 'string' ? label : ' '}
                 {...fieldRef}
+                data-testid={testIdentifier}
             />
             {type === 'password' && (
                 <PasswordVisibilityToggleStyled

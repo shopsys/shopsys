@@ -13,6 +13,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 type CheckboxProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
     count?: number;
+    testIdentifier?: string;
 } & (
         | {
               value: unknown;
@@ -36,6 +37,7 @@ export const Checkbox: FC<CheckboxProps> = ({
     fieldRef,
     onChange,
     value,
+    testIdentifier,
 }) => {
     return (
         <LabelWrapper
@@ -54,6 +56,7 @@ export const Checkbox: FC<CheckboxProps> = ({
                 checked={fieldRef ? fieldRef.value : value}
                 onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
+                data-testid={testIdentifier}
             />
         </LabelWrapper>
     );

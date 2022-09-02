@@ -117,7 +117,7 @@ export const AutocompleteSearch: FC = () => {
                                         variant="searchInHeader"
                                         label={formMeta.fields.autocompleteSearchQuery.label}
                                         fieldRef={field}
-                                        data-testid={TEST_IDENTIFIER}
+                                        testIdentifier={TEST_IDENTIFIER}
                                     />
                                 )}
                             />

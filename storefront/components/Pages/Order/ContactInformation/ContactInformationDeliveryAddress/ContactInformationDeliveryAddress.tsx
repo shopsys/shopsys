@@ -197,6 +197,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryAddressUuid.name}
                                                             fieldRef={field}
+                                                            checked={field.value === address.uuid}
                                                             value={address.uuid}
                                                         />
                                                     </ListItemStyled>
@@ -221,6 +222,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         }
                                                         name={formMeta.fields.deliveryAddressUuid.name}
                                                         fieldRef={field}
+                                                        checked={field.value === ''}
                                                         value={''}
                                                     />
                                                 </ListItemStyled>

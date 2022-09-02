@@ -94,7 +94,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             bgColor={dataItem.rgbHex ?? undefined}
                                             onChange={onChangeParameterValueHandler(dataItem, index)}
                                             value={parameterValue[index].checked}
-                                            data-testid={getTestIdentifier(index)}
+                                            testIdentifier={getTestIdentifier(index)}
                                             label={dataItem.text}
                                         />
                                     </>

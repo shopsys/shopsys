@@ -27,7 +27,7 @@ type ProductItemProps = {
     gtmListName: GtmListNameType;
 };
 
-const TEST_IDENTIFIER = 'blocks-product-list-listeditem';
+const getTestIdentifier = (catalogNumber: string) => 'blocks-product-list-listeditem-' + catalogNumber;
 
 export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListName }) => {
     const { url } = useShopsysSelector((state) => state.domain);
@@ -40,7 +40,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListN
     );
 
     return (
-        <ProductItemStyled data-testid={TEST_IDENTIFIER + product.catalogNumber}>
+        <ProductItemStyled data-testid={getTestIdentifier(product.catalogNumber)}>
             <ProductItemInStyled>
                 <NextLink href={product.slug} passHref>
                     <ProductItemLinkStyled
