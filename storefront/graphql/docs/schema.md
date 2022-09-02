@@ -7055,6 +7055,15 @@ Localized transport instruction (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isPersonalPickup</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Pointer telling if the transport is of type personal pickup
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

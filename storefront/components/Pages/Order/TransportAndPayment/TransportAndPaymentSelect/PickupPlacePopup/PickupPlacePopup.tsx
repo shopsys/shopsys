@@ -1,12 +1,10 @@
-import { usePickupPlaceForm, usePickupPlaceFormMeta } from './formMeta';
 import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
-import StoreSelect from './PlaceSelect/StoreSelect';
+import { StoreSelect } from './StoreSelect/StoreSelect';
 import Heading from 'components/Basic/Heading';
 import Button from 'components/Forms/Button';
 import Popup from 'components/Layout/Popup';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC } from 'react';
-import { useWatch } from 'react-hook-form';
+import { FC, useState } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
 
@@ -17,25 +15,24 @@ type PickupPlacePopupProps = {
     onClosePickupPlacePopupCallback: () => void;
 };
 
-const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
-    const testIdentifier = 'pages-order-pickupplace-popup-';
+const TEST_IDENTIFIER = 'pages-order-pickupplace-popup-';
 
+export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const [formProviderMethods] = usePickupPlaceForm();
-    const formMeta = usePickupPlaceFormMeta(formProviderMethods);
-    const pickupPlaceValue = useWatch({ name: formMeta.fields.pickupPlace.name, control: formProviderMethods.control });
+    const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
 
     const onConfirmPickupPlaceHandler = () => {
-        const selectedPickupPlace = props.transport.stores.find((store) => store.identifier === pickupPlaceValue);
+        const selectedPickupPlace = props.transport.stores.find((store) => store.identifier === selectedStoreUuid);
 
         props.onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
-
-        formProviderMethods.setValue(formMeta.fields.pickupPlace.name, '');
     };
 
     const onClosePickupPlacePopupHandler = () => {
         props.onClosePickupPlacePopupCallback();
-        formProviderMethods.setValue(formMeta.fields.pickupPlace.name, '');
+    };
+
+    const onSelectStoreHandler = (newStoreUuid: string | null) => {
+        setSelectedStoreUuid(newStoreUuid ?? '');
     };
 
     return (
@@ -44,21 +41,21 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
             onCloseCallback={onClosePickupPlacePopupHandler}
             wrapperComponent={PickupPlacePopupWrapperStyled}
         >
-            <Heading type="h2">{formMeta.fields.pickupPlace.label}</Heading>
+            <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>
             <StoreSelect
-                control={formProviderMethods.control}
                 transport={props.transport}
-                pickupPlaceValue={pickupPlaceValue}
+                selectedStoreUuid={selectedStoreUuid}
+                onSelectStoreCallback={onSelectStoreHandler}
             />
             <PopupButtonWrapperStyled>
-                <Button type="button" onClick={onClosePickupPlacePopupHandler} data-testid={testIdentifier + 'close'}>
+                <Button type="button" onClick={onClosePickupPlacePopupHandler} data-testid={TEST_IDENTIFIER + 'close'}>
                     {t('Close')}
                 </Button>
                 <Button
                     type="button"
-                    isDisabled={pickupPlaceValue === ''}
+                    isDisabled={selectedStoreUuid === ''}
                     onClick={onConfirmPickupPlaceHandler}
-                    data-testid={testIdentifier + 'confirm'}
+                    data-testid={TEST_IDENTIFIER + 'confirm'}
                 >
                     {t('Confirm')}
                 </Button>
@@ -66,5 +63,3 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
         </Popup>
     );
 };
-
-export default PickupPlacePopup;

@@ -8,46 +8,87 @@ import { ImageType } from 'types/image';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'value' | 'checked',
+    'name' | 'value',
     'disabled' | 'id'
 >;
 
 type RadiobuttonProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
     image?: ImageType | null;
-    fieldRef?: ControllerRenderProps<any, any>;
-    uncheckCallback?: () => void;
-};
+} & (
+        | {
+              onChangeCallback: (newValue: string | null) => void;
+              fieldRef?: never;
+              checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
+          }
+        | {
+              onChangeCallback?: never;
+              fieldRef: ControllerRenderProps<any, any>;
+              checked?: never;
+          }
+    );
 
-const Radiobutton: FC<RadiobuttonProps> = (props) => {
-    const uncheckCallback: MouseEventHandler<HTMLInputElement> = () => {
-        if (props.checked && props.uncheckCallback !== undefined) {
-            props.uncheckCallback();
+/**
+ * An HTML Radiobutton element of type radiobutton
+ */
+const Radiobutton: FC<RadiobuttonProps> = ({
+    label,
+    image,
+    onChangeCallback,
+    id,
+    name,
+    checked,
+    fieldRef,
+    value,
+    disabled,
+}) => {
+    const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
+        if (onChangeCallback === undefined) {
+            return;
+        }
+
+        if (checked) {
+            onChangeCallback(null);
+        } else {
+            onChangeCallback(event.currentTarget.value);
         }
     };
 
     return (
         <LabelWrapper
-            htmlFor={props.id === undefined ? props.name + 'radiobutton-id' : props.id}
+            htmlFor={id === undefined ? name + 'radiobutton-id' : id}
             label={
                 <div>
-                    {props.image !== undefined && (
+                    {image !== undefined && (
                         <LabelImageWrapper>
-                            <Image alt="" type="default" image={props.image} />
+                            <Image alt="" type="default" image={image} />
                         </LabelImageWrapper>
                     )}
-                    {props.label}
+                    {label}
                 </div>
             }
             inputType="radio"
         >
-            <RadiobuttonStyled
-                {...props.fieldRef}
-                {...props}
-                id={props.id === undefined ? props.name + 'radiobutton-id' : props.id}
-                type="radio"
-                onClick={uncheckCallback}
-            />
+            {fieldRef ? (
+                <RadiobuttonStyled
+                    {...fieldRef}
+                    value={value}
+                    disabled={disabled}
+                    id={id === undefined ? name + 'radiobutton-id' : id}
+                    type="radio"
+                />
+            ) : (
+                <RadiobuttonStyled
+                    value={value}
+                    name={name}
+                    disabled={disabled}
+                    checked={checked}
+                    id={id === undefined ? name + 'radiobutton-id' : id}
+                    type="radio"
+                    onClick={onClickHandler}
+                    readOnly={onChangeCallback !== undefined}
+                />
+            )}
         </LabelWrapper>
     );
 };

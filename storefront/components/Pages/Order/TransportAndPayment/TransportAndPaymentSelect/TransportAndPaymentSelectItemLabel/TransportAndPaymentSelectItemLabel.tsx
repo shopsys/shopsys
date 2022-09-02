@@ -5,60 +5,63 @@ import {
     PriceStyled,
     SelectItemLabelStyled,
     TransportDaysUntilDeliveryStyled,
-} from './SelectItemLabel.style';
+} from './TransportAndPaymentSelectItemLabel.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import { FC } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
 
-type SelectItemLabelProps = {
+type TransportAndPaymentSelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
     daysUntilDelivery?: number;
     description?: string;
     pickupPlaceDetail?: PickupPlaceType | null;
-    type?: string;
 };
 
-const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
-    const testIdentifier = 'pages-order-selectitem-label';
+const TEST_IDENTIFIER = 'pages-order-selectitem-label';
 
+export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectItemLabelProps> = ({
+    name,
+    price,
+    daysUntilDelivery,
+    description,
+    pickupPlaceDetail,
+}) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
 
     return (
-        <SelectItemLabelStyled data-testid={testIdentifier}>
+        <SelectItemLabelStyled data-testid={TEST_IDENTIFIER}>
             <NameWrapperStyled>
-                <span data-testid={testIdentifier + '-name'}>{props.name}</span>
-                <DescriptionStyled data-testid={testIdentifier + '-description'}>{props.description}</DescriptionStyled>
-                {props.pickupPlaceDetail !== null && props.pickupPlaceDetail !== undefined && (
+                <span data-testid={TEST_IDENTIFIER + '-name'}>{name}</span>
+                <DescriptionStyled data-testid={TEST_IDENTIFIER + '-description'}>{description}</DescriptionStyled>
+                {pickupPlaceDetail !== null && pickupPlaceDetail !== undefined && (
                     <>
-                        <InfoStyled data-testid={testIdentifier + '-place'}>{props.pickupPlaceDetail.name}</InfoStyled>
-                        <InfoStyled data-testid={testIdentifier + '-address'}>
-                            {props.pickupPlaceDetail.street +
+                        <InfoStyled data-testid={TEST_IDENTIFIER + '-place'}>{pickupPlaceDetail.name}</InfoStyled>
+                        <InfoStyled data-testid={TEST_IDENTIFIER + '-address'}>
+                            {pickupPlaceDetail.street +
                                 ', ' +
-                                props.pickupPlaceDetail.postcode +
+                                pickupPlaceDetail.postcode +
                                 ', ' +
-                                props.pickupPlaceDetail.city}
+                                pickupPlaceDetail.city}
                         </InfoStyled>
                         <InfoStyled>{t('Open') + ': '}</InfoStyled>
                         <InfoStyled
-                            dangerouslySetInnerHTML={{ __html: props.pickupPlaceDetail.openingHoursHtml }}
-                            data-testid={testIdentifier + '-openinghours'}
+                            dangerouslySetInnerHTML={{ __html: pickupPlaceDetail.openingHoursHtml }}
+                            data-testid={TEST_IDENTIFIER + '-openinghours'}
                         />
                     </>
                 )}
             </NameWrapperStyled>
-            {props.daysUntilDelivery !== undefined && (
-                <TransportDaysUntilDeliveryStyled data-testid={testIdentifier + '-delivery'}>
-                    {getDeliveryMessage(props.daysUntilDelivery, props.pickupPlaceDetail !== undefined, t)}
+            {daysUntilDelivery !== undefined && (
+                <TransportDaysUntilDeliveryStyled data-testid={TEST_IDENTIFIER + '-delivery'}>
+                    {getDeliveryMessage(daysUntilDelivery, pickupPlaceDetail !== undefined, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
-            {props.price !== undefined && (
-                <PriceStyled data-testid={testIdentifier + '-price'}>
-                    {formatPrice(props.price.priceWithVat)}
-                </PriceStyled>
+            {price !== undefined && (
+                <PriceStyled data-testid={TEST_IDENTIFIER + '-price'}>{formatPrice(price.priceWithVat)}</PriceStyled>
             )}
         </SelectItemLabelStyled>
     );
@@ -83,5 +86,3 @@ const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean
         count: Math.ceil(daysUntilDelivery / 7),
     });
 };
-
-export default SelectItemLabel;

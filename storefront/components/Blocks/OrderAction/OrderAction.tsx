@@ -20,6 +20,7 @@ type OrderActionProps = {
     hasDisabledLook: boolean;
     withGapBottom?: boolean;
     withGapTop?: boolean;
+    nextStepClickHandler?: () => void;
 };
 
 const OrderAction: FC<OrderActionProps> = (props) => {
@@ -30,6 +31,9 @@ const OrderAction: FC<OrderActionProps> = (props) => {
     const onNextStepHandler = () => {
         if (props.buttonNextLink !== undefined) {
             router.push(props.buttonNextLink, undefined, { shallow: true });
+        }
+        if (props.nextStepClickHandler !== undefined) {
+            props.nextStepClickHandler();
         }
     };
 

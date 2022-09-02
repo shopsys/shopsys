@@ -1948,6 +1948,8 @@ type Transport {
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Localized transport instruction (domain dependent)"""
   instruction: String
+  """Pointer telling if the transport is of type personal pickup"""
+  isPersonalPickup: Boolean!
   """Transport name"""
   name: String!
   """List of assigned payments"""

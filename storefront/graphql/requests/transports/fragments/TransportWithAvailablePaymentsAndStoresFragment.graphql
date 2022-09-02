@@ -21,4 +21,5 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
         __typename
         code
     }
+    isPersonalPickup
 }
