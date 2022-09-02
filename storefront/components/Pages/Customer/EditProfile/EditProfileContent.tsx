@@ -8,7 +8,8 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList/AddressList';
 import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfileContent.style';
@@ -156,28 +157,19 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerChangeProfileFormHandler)}>
                     <Heading type="h2">{t('Personal data')}</Heading>
-                    <FormLine bottomGap>
-                        <Controller
-                            name={formMeta.fields.email.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <TextInput
-                                        id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                        name={formMeta.fields.email.name}
-                                        label={formMeta.fields.email.label}
-                                        required={false}
-                                        disabled
-                                        type="text"
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        fieldRef={field}
-                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.email.name}
-                                    />
-                                    <FormLineError error={error} inputType="text-input" />
-                                </>
-                            )}
-                        />
-                    </FormLine>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        name={formMeta.fields.email.name}
+                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                        formName={formMeta.formName}
+                        textInputProps={{
+                            label: formMeta.fields.email.label,
+                            required: false,
+                            disabled: true,
+                            type: 'text',
+                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
+                        }}
+                    />
                     <FormLine bottomGap>
                         <EditProfileTextStyled>
                             {t(
@@ -186,70 +178,51 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         </EditProfileTextStyled>
                     </FormLine>
                     <FormColumn>
-                        <FormLine bottomGap width="100%" lg="50%">
-                            <Controller
-                                name={formMeta.fields.firstName.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.firstName.name}
-                                            name={formMeta.fields.firstName.name}
-                                            label={formMeta.fields.firstName.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                        <FormLine bottomGap width="100%" lg="50%">
-                            <Controller
-                                name={formMeta.fields.lastName.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.lastName.name}
-                                            name={formMeta.fields.lastName.name}
-                                            label={formMeta.fields.lastName.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                    </FormColumn>
-                    <FormLine bottomGap>
-                        <Controller
-                            name={formMeta.fields.telephone.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <TextInput
-                                        id={formMeta.formName + '-' + formMeta.fields.telephone.name}
-                                        name={formMeta.fields.telephone.name}
-                                        label={formMeta.fields.telephone.label}
-                                        required
-                                        type="text"
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        fieldRef={field}
-                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name}
-                                    />
-                                    <FormLineError error={error} inputType="text-input" />
-                                </>
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.firstName.name}
+                            render={(textInput) => (
+                                <FormLine bottomGap width="100%" lg="50%">
+                                    {textInput}
+                                </FormLine>
                             )}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.firstName.label,
+                                required: true,
+                                type: 'text',
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name,
+                            }}
                         />
-                    </FormLine>
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.lastName.name}
+                            render={(textInput) => (
+                                <FormLine bottomGap width="100%" lg="50%">
+                                    {textInput}
+                                </FormLine>
+                            )}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.lastName.label,
+                                required: true,
+                                type: 'text',
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name,
+                            }}
+                        />
+                    </FormColumn>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        name={formMeta.fields.telephone.name}
+                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                        formName={formMeta.formName}
+                        textInputProps={{
+                            label: formMeta.fields.telephone.label,
+                            required: true,
+                            type: 'tel',
+                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
+                        }}
+                    />
                     <FormLine bottomGap>
                         <ChoiceFormLine>
                             <Controller
@@ -269,212 +242,135 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         </ChoiceFormLine>
                     </FormLine>
                     <Heading type="h2">{t('Change password')}</Heading>
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
+                        name={formMeta.fields.passwordOld.name}
+                        render={(passwordInput) => (
+                            <FormColumn>
+                                <FormLine bottomGap width="100%" lg="50%">
+                                    {passwordInput}
+                                </FormLine>
+                            </FormColumn>
+                        )}
+                        formName={formMeta.formName}
+                        passwordInputProps={{
+                            label: formMeta.fields.passwordOld.label,
+                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
+                        }}
+                    />
                     <FormColumn>
-                        <FormLine bottomGap width="100%" lg="50%">
-                            <Controller
-                                name={formMeta.fields.passwordOld.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.passwordOld.name}
-                                            name={formMeta.fields.passwordOld.name}
-                                            label={formMeta.fields.passwordOld.label}
-                                            required
-                                            type="password"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input-password" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                    </FormColumn>
-                    <FormColumn>
-                        <FormLine bottomGap width="100%" lg="50%">
-                            <Controller
-                                name={formMeta.fields.passwordFirst.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.passwordFirst.name}
-                                            name={formMeta.fields.passwordFirst.name}
-                                            label={formMeta.fields.passwordFirst.label}
-                                            required
-                                            type="password"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input-password" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                        <FormLine bottomGap width="100%" lg="50%">
-                            <Controller
-                                name={formMeta.fields.passwordSecond.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.passwordSecond.name}
-                                            name={formMeta.fields.passwordSecond.name}
-                                            label={formMeta.fields.passwordSecond.label}
-                                            required
-                                            type="password"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input-password" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.passwordFirst.name}
+                            render={(passwordInput) => (
+                                <FormLine bottomGap width="100%" lg="50%">
+                                    {passwordInput}
+                                </FormLine>
+                            )}
+                            formName={formMeta.formName}
+                            passwordInputProps={{
+                                label: formMeta.fields.passwordFirst.label,
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name,
+                            }}
+                        />
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.passwordSecond.name}
+                            render={(passwordInput) => (
+                                <FormLine bottomGap width="100%" lg="50%">
+                                    {passwordInput}
+                                </FormLine>
+                            )}
+                            formName={formMeta.formName}
+                            passwordInputProps={{
+                                label: formMeta.fields.passwordSecond.label,
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name,
+                            }}
+                        />
                     </FormColumn>
                     {currentCustomerUser.companyCustomer && (
                         <>
                             <Heading type="h2">{t('Company information')}</Heading>
-                            <FormLine bottomGap>
-                                <Controller
-                                    name={formMeta.fields.companyName.name}
-                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                        <>
-                                            <TextInput
-                                                id={formMeta.formName + '-' + formMeta.fields.companyName.name}
-                                                name={formMeta.fields.companyName.name}
-                                                label={formMeta.fields.companyName.label}
-                                                required={false}
-                                                type="text"
-                                                isTouched={isTouched}
-                                                hasError={invalid}
-                                                fieldRef={field}
-                                                testIdentifier={
-                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name
-                                                }
-                                            />
-                                            <FormLineError error={error} inputType="text-input" />
-                                        </>
-                                    )}
-                                />
-                            </FormLine>
-                            <FormLine bottomGap>
-                                <Controller
-                                    name={formMeta.fields.companyNumber.name}
-                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                        <>
-                                            <TextInput
-                                                id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
-                                                name={formMeta.fields.companyNumber.name}
-                                                label={formMeta.fields.companyNumber.label}
-                                                required={false}
-                                                type="text"
-                                                isTouched={isTouched}
-                                                hasError={invalid}
-                                                fieldRef={field}
-                                                testIdentifier={
-                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name
-                                                }
-                                            />
-                                            <FormLineError error={error} inputType="text-input" />
-                                        </>
-                                    )}
-                                />
-                            </FormLine>
-                            <FormLine bottomGap>
-                                <Controller
-                                    name={formMeta.fields.companyTaxNumber.name}
-                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                        <>
-                                            <TextInput
-                                                id={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name}
-                                                name={formMeta.fields.companyTaxNumber.name}
-                                                label={formMeta.fields.companyTaxNumber.label}
-                                                required={false}
-                                                type="text"
-                                                isTouched={isTouched}
-                                                hasError={invalid}
-                                                fieldRef={field}
-                                                testIdentifier={
-                                                    TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name
-                                                }
-                                            />
-                                            <FormLineError error={error} inputType="text-input" />
-                                        </>
-                                    )}
-                                />
-                            </FormLine>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.companyName.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.companyName.label,
+                                    required: false,
+                                    type: 'text',
+                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name,
+                                }}
+                            />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.companyNumber.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.companyNumber.label,
+                                    required: false,
+                                    type: 'text',
+                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name,
+                                }}
+                            />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.companyTaxNumber.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.companyTaxNumber.label,
+                                    required: false,
+                                    type: 'text',
+                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name,
+                                }}
+                            />
                         </>
                     )}
                     <Heading type="h2">{t('Billing address')}</Heading>
-                    <FormLine bottomGap>
-                        <Controller
-                            name={formMeta.fields.street.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <TextInput
-                                        id={formMeta.formName + '-' + formMeta.fields.street.name}
-                                        name={formMeta.fields.street.name}
-                                        label={formMeta.fields.street.label}
-                                        required
-                                        type="text"
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        fieldRef={field}
-                                        testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.street.name}
-                                    />
-                                    <FormLineError error={error} inputType="text-input" />
-                                </>
-                            )}
-                        />
-                    </FormLine>
+                    <TextInputControlled
+                        control={formProviderMethods.control}
+                        name={formMeta.fields.street.name}
+                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                        formName={formMeta.formName}
+                        textInputProps={{
+                            label: formMeta.fields.street.label,
+                            required: true,
+                            type: 'text',
+                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.street.name,
+                        }}
+                    />
                     <FormColumn>
-                        <FormLine bottomGap>
-                            <Controller
-                                name={formMeta.fields.city.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.city.name}
-                                            name={formMeta.fields.city.name}
-                                            label={formMeta.fields.city.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.city.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
-                        <FormLine bottomGap width="100%" lg="142px">
-                            <Controller
-                                name={formMeta.fields.postcode.name}
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.postcode.name}
-                                            name={formMeta.fields.postcode.name}
-                                            label={formMeta.fields.postcode.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                            testIdentifier={TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name}
-                                        />
-                                        <FormLineError error={error} inputType="text-input" />
-                                    </>
-                                )}
-                            />
-                        </FormLine>
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.city.name}
+                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.city.label,
+                                required: true,
+                                type: 'text',
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.city.name,
+                            }}
+                        />
+                        <TextInputControlled
+                            control={formProviderMethods.control}
+                            name={formMeta.fields.postcode.name}
+                            render={(textInput) => (
+                                <FormLine bottomGap width="100%" lg="142px">
+                                    {textInput}
+                                </FormLine>
+                            )}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.postcode.label,
+                                required: true,
+                                type: 'text',
+                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name,
+                            }}
+                        />
                     </FormColumn>
                     <FormLine bottomGap>
                         <Controller

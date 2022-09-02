@@ -9,7 +9,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { Textarea } from 'components/Forms/Textarea/Textarea';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -62,62 +62,40 @@ export const ContactContent: FC = () => {
                     )}
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%" lg="50%">
-                                    <Controller
-                                        name={formMeta.fields.name.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.name.name}
-                                                    name={formMeta.fields.name.name}
-                                                    label={formMeta.fields.name.label}
-                                                    required
-                                                    type="text"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.name.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%" lg="50%">
-                                    <Controller
-                                        name={formMeta.fields.email.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                                    name={formMeta.fields.email.name}
-                                                    label={formMeta.fields.email.label}
-                                                    required
-                                                    type="email"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.name.name}
+                                render={(textInput) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%" lg="50%">
+                                            {textInput}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.name.label,
+                                    required: true,
+                                    type: 'text',
+                                }}
+                            />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%" lg="50%">
+                                            {textInput}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                }}
+                            />
                             <FormColumn lg="65%">
                                 <FormLine bottomGap width="100%">
                                     <Controller

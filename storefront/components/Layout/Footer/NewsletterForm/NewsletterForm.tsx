@@ -13,7 +13,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLi
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
@@ -54,34 +54,18 @@ export const NewsletterForm: FC = () => {
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
                             <NewsletterFormInputWrapperStyled>
-                                <FormLine>
-                                    <Controller
-                                        name={formMeta.fields.email.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                                    name={formMeta.fields.email.name}
-                                                    label={formMeta.fields.email.label}
-                                                    required
-                                                    type="text"
-                                                    inputSize="small"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    textInputSize="small"
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    name={formMeta.fields.email.name}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                    formName={formMeta.formName}
+                                    textInputProps={{
+                                        inputSize: 'small',
+                                        label: formMeta.fields.email.label,
+                                        required: true,
+                                        type: 'text',
+                                    }}
+                                />
                                 <NewsletterFormButtonWrapperStyled>
                                     <Button
                                         type="submit"

@@ -1,4 +1,3 @@
-import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -69,18 +68,6 @@ export const AutocompleteSearchInnerStyled = styled.div<AutocompleteSearchInnerS
         }
     `,
 );
-
-export const AutocompleteSearchTextInputStyled = styled(TextInput)`
-    width: 100%;
-    margin-bottom: 0;
-
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-        -webkit-appearance: none;
-    }
-`;
 
 export const AutocompleteSearchRemoveButtonStyled = styled.div(
     ({ theme }) => css`

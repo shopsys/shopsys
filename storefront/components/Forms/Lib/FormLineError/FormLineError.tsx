@@ -4,7 +4,7 @@ import { FieldError } from 'react-hook-form';
 
 type FormLineErrorProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
-    textInputSize?: 'small';
+    textInputSize?: 'small' | 'default';
     error?: FieldError;
     testIdentifier?: string;
 };

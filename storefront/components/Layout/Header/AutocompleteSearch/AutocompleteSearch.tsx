@@ -6,9 +6,9 @@ import {
     AutocompleteSearchRemoveButtonStyled,
     AutocompleteSearchRemoveButtonTextStyled,
     AutocompleteSearchStyled,
-    AutocompleteSearchTextInputStyled,
 } from './AutocompleteSearch.style';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -86,11 +86,7 @@ export const AutocompleteSearch: FC = () => {
             <AutocompleteSearchStyled>
                 <AutocompleteSearchInStyled ref={autocompleteSearchInRef}>
                     <AutocompleteSearchInnerStyled isActive={hasAutocompleteSearchFocus}>
-                        <AutocompleteSearchTextInputStyled
-                            type="search"
-                            placeholderType="static"
-                            inputSize="small"
-                            variant="searchInHeader"
+                        <SearchInput
                             label={t("Type what you're looking for")}
                             testIdentifier={TEST_IDENTIFIER}
                             onEnterPressCallback={onAutocompleteSearchHandler}

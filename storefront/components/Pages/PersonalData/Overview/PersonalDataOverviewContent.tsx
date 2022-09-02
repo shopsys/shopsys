@@ -4,8 +4,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
@@ -19,7 +18,7 @@ import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useEffect } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PersonalDataOverviewFormType } from 'types/form';
 
@@ -66,32 +65,16 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
-                        <Controller
+                        <TextInputControlled
+                            control={formProviderMethods.control}
                             name={formMeta.fields.email.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                            name={formMeta.fields.email.name}
-                                            label={formMeta.fields.email.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input"
-                                            testIdentifier={
-                                                formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                            }
-                                        />
-                                    </FormLine>
-                                </>
-                            )}
+                            render={(textInput) => <FormLine>{textInput}</FormLine>}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.email.label,
+                                required: true,
+                                type: 'text',
+                            }}
                         />
                         <ButtonWrapperStyled>
                             <Button type="submit">{t('Send')}</Button>

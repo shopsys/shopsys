@@ -3,7 +3,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -31,80 +31,44 @@ export const Address: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Billing address')}</Heading>
-            <FormLine bottomGap>
-                <Controller
-                    name={formMeta.fields.street.name}
-                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                        <>
-                            <TextInput
-                                id={formMeta.formName + '-' + formMeta.fields.street.name}
-                                name={formMeta.fields.street.name}
-                                label={formMeta.fields.street.label}
-                                required
-                                type="text"
-                                isTouched={isTouched}
-                                hasError={invalid}
-                                fieldRef={field}
-                            />
-                            <FormLineError
-                                error={error}
-                                inputType="text-input"
-                                testIdentifier={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
-                            />
-                        </>
-                    )}
-                />
-            </FormLine>
-
+            <TextInputControlled
+                control={formProviderMethods.control}
+                name={formMeta.fields.street.name}
+                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                formName={formMeta.formName}
+                textInputProps={{
+                    label: formMeta.fields.street.label,
+                    required: true,
+                    type: 'text',
+                }}
+            />
             <FormColumn>
-                <FormLine bottomGap>
-                    <Controller
-                        name={formMeta.fields.city.name}
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <TextInput
-                                    id={formMeta.formName + '-' + formMeta.fields.city.name}
-                                    name={formMeta.fields.city.name}
-                                    label={formMeta.fields.city.label}
-                                    required
-                                    type="text"
-                                    isTouched={isTouched}
-                                    hasError={invalid}
-                                    fieldRef={field}
-                                />
-                                <FormLineError
-                                    error={error}
-                                    inputType="text-input"
-                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
-                                />
-                            </>
-                        )}
-                    />
-                </FormLine>
-                <FormLine bottomGap width="100%" lg="142px">
-                    <Controller
-                        name={formMeta.fields.postcode.name}
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <TextInput
-                                    id={formMeta.formName + '-' + formMeta.fields.postcode.name}
-                                    name={formMeta.fields.postcode.name}
-                                    label={formMeta.fields.postcode.label}
-                                    required
-                                    type="text"
-                                    isTouched={isTouched}
-                                    hasError={invalid}
-                                    fieldRef={field}
-                                />
-                                <FormLineError
-                                    error={error}
-                                    inputType="text-input"
-                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
-                                />
-                            </>
-                        )}
-                    />
-                </FormLine>
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    name={formMeta.fields.city.name}
+                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                    formName={formMeta.formName}
+                    textInputProps={{
+                        label: formMeta.fields.city.label,
+                        required: true,
+                        type: 'text',
+                    }}
+                />
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    name={formMeta.fields.postcode.name}
+                    render={(textInput) => (
+                        <FormLine bottomGap width="100%" lg="142px">
+                            {textInput}
+                        </FormLine>
+                    )}
+                    formName={formMeta.formName}
+                    textInputProps={{
+                        label: formMeta.fields.postcode.label,
+                        required: true,
+                        type: 'text',
+                    }}
+                />
             </FormColumn>
             <FormLine>
                 <Controller

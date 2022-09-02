@@ -119,9 +119,20 @@ type RegistrationFormMetaType = {
         successAndLogged: string;
     };
     fields: {
-        [key in keyof RegistrationFormType]: {
+        [key in keyof Omit<RegistrationFormType, 'passwordFirst' | 'passwordSecond'>]: {
             name: key;
             label: string | JSX.Element;
+            errorMessage: string | undefined;
+        };
+    } & {
+        passwordFirst: {
+            name: 'passwordFirst';
+            label: string;
+            errorMessage: string | undefined;
+        };
+        passwordSecond: {
+            name: 'passwordSecond';
+            label: string;
             errorMessage: string | undefined;
         };
     };

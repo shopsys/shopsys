@@ -224,23 +224,25 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 <RangeSliderRangeStyled ref={range} />
                 <RangeSliderLeftValueStyled data-testid={TEST_IDENTIFIER + '-left-value'}>
                     <TextInput
+                        id={TEST_IDENTIFIER + '-left-value'}
                         label={t('from')}
                         type="number"
                         inputSize="small"
                         value={minValueInput}
                         onChange={onChangeMinInputHandler}
-                        onBlurCapture={onBlurMinHandler}
+                        onBlur={onBlurMinHandler}
                         onKeyPress={onKeyPressHandler}
                     />
                 </RangeSliderLeftValueStyled>
                 <RangeSliderRightValueStyled data-testid={TEST_IDENTIFIER + '-right-value'}>
                     <TextInput
+                        id={TEST_IDENTIFIER + '-right-value'}
                         label={t('to')}
                         type="number"
                         inputSize="small"
                         value={maxValueInput}
                         onChange={onChangeMaxInputHandler}
-                        onBlurCapture={onBlurMaxHandler}
+                        onBlur={onBlurMaxHandler}
                         onKeyPress={onKeyPressHandler}
                     />
                 </RangeSliderRightValueStyled>

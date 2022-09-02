@@ -3,8 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
@@ -14,7 +14,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { Translate } from 'next-translate';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import * as Yup from 'yup';
@@ -52,57 +52,26 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
         <SimpleLayout heading={t('Login')} breadcrumb={breadcrumbs}>
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
-                    <Controller
+                    <TextInputControlled
+                        control={formProviderMethods.control}
                         name="email"
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <FormLine bottomGap>
-                                    <TextInput
-                                        id="login_form-email"
-                                        name="email"
-                                        label={t('Your email')}
-                                        required
-                                        type="text"
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        fieldRef={field}
-                                    />
-                                    <FormLineError
-                                        textInputSize="small"
-                                        error={error}
-                                        inputType="text-input"
-                                        testIdentifier="login_form-email-error"
-                                    />
-                                </FormLine>
-                            </>
-                        )}
+                        render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                        formName="login-form"
+                        textInputProps={{
+                            label: t('Your email'),
+                            required: true,
+                            type: 'text',
+                        }}
                     />
-                    <Controller
+                    <PasswordInputControlled
+                        control={formProviderMethods.control}
                         name="password"
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <FormLine>
-                                    <TextInput
-                                        id="login_form-password"
-                                        name="password"
-                                        label={t('Password')}
-                                        required
-                                        type="password"
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        fieldRef={field}
-                                    />
-                                    <FormLineError
-                                        textInputSize="small"
-                                        error={error}
-                                        inputType="text-input-password"
-                                        testIdentifier="login_form-password-error"
-                                    />
-                                </FormLine>
-                            </>
-                        )}
+                        render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                        formName="login-form"
+                        passwordInputProps={{
+                            label: t('Password'),
+                        }}
                     />
-
                     <ButtonWrapperStyled>
                         <Button type="submit" testIdentifier={TEST_IDENTIFIER}>
                             {t('Log in')}

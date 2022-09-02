@@ -15,7 +15,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLi
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
@@ -104,34 +104,18 @@ export const Registration: FC = () => {
                         <RegistrationFormStyled>
                             <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
                                 <FormProvider {...formProviderMethods}>
-                                    <Controller
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
                                         name={formMeta.fields.password.name}
-                                        render={({ field, fieldState: { error, invalid, isTouched } }) => (
+                                        render={(passwordInput) => (
                                             <RegistrationFormItemStyled>
-                                                <FormLine>
-                                                    <TextInput
-                                                        id={formMeta.formName + '-' + formMeta.fields.password.name}
-                                                        name={formMeta.fields.password.name}
-                                                        label={formMeta.fields.password.label}
-                                                        type="password"
-                                                        fieldRef={field}
-                                                        required
-                                                        isTouched={isTouched}
-                                                        hasError={invalid}
-                                                    />
-                                                    <FormLineError
-                                                        inputType="text-input-password"
-                                                        error={error}
-                                                        testIdentifier={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.password.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </FormLine>
+                                                <FormLine>{passwordInput}</FormLine>
                                             </RegistrationFormItemStyled>
                                         )}
+                                        formName={formMeta.formName}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.password.label,
+                                        }}
                                     />
                                     <Controller
                                         name={formMeta.fields.privacyPolicy.name}
