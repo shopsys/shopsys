@@ -6,7 +6,7 @@ setlocale(LC_CTYPE, 'en_US.utf8');
 setlocale(LC_NUMERIC, 'en_US.utf8');
 
 // Configure PHP
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 ini_set('display_errors', '0');
 
 // Load cached env vars if the .env.local.php file exists
