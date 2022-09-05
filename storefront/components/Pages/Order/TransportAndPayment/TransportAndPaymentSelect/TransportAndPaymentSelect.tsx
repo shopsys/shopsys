@@ -97,14 +97,14 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 
     const handleTransportChange = useCallback(
-        (newTransportUuid: string | null) => {
+        async (newTransportUuid: string | null) => {
             const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
             if (potentialNewTransport?.uuid === transport?.uuid) {
                 return;
             }
 
             if (potentialNewTransport === undefined) {
-                changeTransportInCart(null, null);
+                await changeTransportInCart(null, null);
 
                 return;
             }
@@ -116,52 +116,53 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     return;
                 }
 
-                changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
+                await changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
                 setPreSelectedPickupPlace(null);
 
                 return;
             }
 
             if (newTransportUuid !== transport?.uuid) {
-                changeTransportInCart(newTransportUuid, null);
+                await changeTransportInCart(newTransportUuid, null);
             }
         },
         [changeTransportInCart, transports, openPersonalPickupPopup, transport?.uuid, preSelectedPickupPlace],
     );
 
     const handlePaymentChange = useCallback(
-        (newPaymentUuid: string | null) => {
-            changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
+        async (newPaymentUuid: string | null) => {
+            await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
         },
         [paymentGoPayBankSwift, changePaymentInCart],
     );
 
     const handleGoPaySwiftChange = useCallback(
-        (newGoPaySwiftValue: string | null) => {
-            changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
+        async (newGoPaySwiftValue: string | null) => {
+            await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
         },
         [changePaymentInCart, payment],
     );
 
-    useEffectOnce(() => {
+    const loadPresetsFromLastOrder = useCallback(async () => {
         if (transport === null) {
-            handleTransportChange(lastOrderTransportUuid);
+            await handleTransportChange(lastOrderTransportUuid);
         }
-    });
+        if (payment === null) {
+            await handlePaymentChange(lastOrderPaymentUuid);
+        }
+    }, [handlePaymentChange, handleTransportChange, lastOrderPaymentUuid, lastOrderTransportUuid, payment, transport]);
 
     useEffectOnce(() => {
-        if (payment === null) {
-            handlePaymentChange(lastOrderPaymentUuid);
-        }
+        loadPresetsFromLastOrder();
     });
 
     const resetPaymentAndGoPayBankSwift = () => {
         changePaymentInCart(null, null);
     };
 
-    const resetAll = () => {
-        handleTransportChange(null);
-        handlePaymentChange(null);
+    const resetAll = async () => {
+        await handleTransportChange(null);
+        await handlePaymentChange(null);
         removePacketeryCookie();
     };
 

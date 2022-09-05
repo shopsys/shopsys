@@ -2,7 +2,7 @@ import TransportAndPaymentSelect from './TransportAndPaymentSelect/TransportAndP
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { LastOrderFragmentApi, useLastOrderQueryApi, useStoreQueryApi } from 'graphql/generated';
+import { LastOrderFragmentApi, useStoreQueryApi } from 'graphql/generated';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getPacketeryCookie } from 'helpers/packetery';
@@ -39,7 +39,6 @@ type TransportAndPaymentErrorsType = {
 export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = ({ transports, lastOrder }) => {
     const router = useRouter();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only' });
     const t = useTypedTranslationFunction();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
@@ -50,8 +49,8 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     );
 
     const [{ data: pickupPlaceData }] = useStoreQueryApi({
-        pause: data?.lastOrder?.pickupPlaceIdentifier === undefined || data.lastOrder.pickupPlaceIdentifier === null,
-        variables: { uuid: data?.lastOrder?.pickupPlaceIdentifier ?? null },
+        pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
+        variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
     });
 
     const transportAndPaymentValidationMessages = useMemo(() => {
@@ -101,22 +100,22 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     };
 
     const lastOrderPickupPlace: PickupPlaceType | null = useMemo(() => {
-        if (data?.lastOrder?.pickupPlaceIdentifier === undefined || data.lastOrder.pickupPlaceIdentifier === null) {
+        if (lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null) {
             return null;
         }
 
         const packeteryCookie = getPacketeryCookie();
 
-        if (packeteryCookie?.identifier === data.lastOrder.pickupPlaceIdentifier) {
+        if (packeteryCookie?.identifier === lastOrder.pickupPlaceIdentifier) {
             return packeteryCookie;
         }
 
         if (pickupPlaceData?.store !== undefined && pickupPlaceData.store !== null) {
-            return getGtmPickupPlaceFromStore(data.lastOrder.pickupPlaceIdentifier, pickupPlaceData.store);
+            return getGtmPickupPlaceFromStore(lastOrder.pickupPlaceIdentifier, pickupPlaceData.store);
         }
 
-        return getGtmPickupPlaceFromLastOrder(data.lastOrder.pickupPlaceIdentifier, data.lastOrder);
-    }, [data?.lastOrder, pickupPlaceData?.store]);
+        return getGtmPickupPlaceFromLastOrder(lastOrder.pickupPlaceIdentifier, lastOrder);
+    }, [lastOrder, pickupPlaceData?.store]);
 
     return (
         <>
