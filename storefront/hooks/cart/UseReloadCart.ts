@@ -26,5 +26,5 @@ export const useReloadCart = (): void => {
         if (modifications !== null) {
             handleCartModifications(modifications, t, changePaymentInCart);
         }
-    }, [modifications, changePaymentInCart, t, slug]);
+    }, [modifications, changePaymentInCart, t]);
 };
