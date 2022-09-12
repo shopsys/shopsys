@@ -22,7 +22,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH = 'payment_cash';
     public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
     public const PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
-    public const PAYMENT_OVER_LIMIT = 'payment_over_limit';
+    public const PAYMENT_LATER = 'payment_later';
 
     /**
      * @var string[]
@@ -145,18 +145,18 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             TransportDataFixture::TRANSPORT_PERSONAL,
             TransportDataFixture::TRANSPORT_CZECH_POST,
             TransportDataFixture::TRANSPORT_PPL,
-            TransportDataFixture::TRANSPORT_OVER_LIMIT,
+            TransportDataFixture::TRANSPORT_DRONE,
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Nadlimitní', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Pay later', [], 'dataFixtures', $locale);
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
-        $this->createPayment(self::PAYMENT_OVER_LIMIT, $paymentData, [TransportDataFixture::TRANSPORT_OVER_LIMIT]);
+        $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
     }
 
     /**

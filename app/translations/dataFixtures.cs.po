@@ -784,6 +784,9 @@ msgstr "Vyřízena"
 msgid "Doprava a platba"
 msgstr ""
 
+msgid "Drone delivery"
+msgstr "Doprava dronem"
+
 msgid "Druhá podsekce %locale%"
 msgstr ""
 
@@ -1135,9 +1138,6 @@ msgstr "NS-9310 Infant náhradní sáčky papírové pro VP-9310"
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
 
-msgid "Nadlimitní"
-msgstr ""
-
 msgid "Nejčastější dotazy FAQ"
 msgstr ""
 
@@ -1281,6 +1281,9 @@ msgstr "Počet stránek"
 
 msgid "Parallel port"
 msgstr "Paralelní port"
+
+msgid "Pay later"
+msgstr "Zaplaťte později"
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
 msgstr "<p>Dokonale čistí, ošetřuje a chrání nerezové plochy v jednom pracovním kroku.</p><ul><li><strong>odstraňuje</strong> bez šmouh prach, špínu, otisky prstů a mastnotu</li><li>dlouhotrvající ochranný film <strong>odpuzující</strong> vodu a zabraňující novému usazování špíny</li><li><strong>působí</strong> antistaticky</li><li><strong>neobsahuje</strong> silikon</li></ul>"
@@ -1765,7 +1768,7 @@ msgstr "VERBATIM 1TB externí disk 2,5\" USB 3.0 GT SuperSpeed červený"
 msgid "VIP"
 msgstr ""
 
-msgid "Vhodné pro nadměrné zboží"
+msgid "Vhodné pro všechny druhy zboží"
 msgstr ""
 
 msgid "Video"

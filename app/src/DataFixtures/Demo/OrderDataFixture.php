@@ -382,7 +382,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED);
         $orderData->firstName = 'Ivan';
@@ -587,7 +587,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
         $orderData->firstName = 'Radim';
@@ -787,8 +787,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_LATER);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
         $orderData->firstName = 'Jindřich';
         $orderData->lastName = 'Němec';

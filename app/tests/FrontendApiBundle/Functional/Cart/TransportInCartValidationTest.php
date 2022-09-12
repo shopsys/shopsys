@@ -108,7 +108,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
         $this->addPaymentToDemoCart($payment->getUuid());
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
         $response = $this->addTransportToDemoCart($transport->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);

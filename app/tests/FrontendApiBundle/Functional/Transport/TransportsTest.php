@@ -33,7 +33,7 @@ class TransportsTest extends GraphQlTestCase
                 "name": "' . t('Personal collection', [], 'dataFixtures', $locale) . '"
               },
               {
-                "name": "' . t('Nadlimitní', [], 'dataFixtures', $locale) . '"
+                "name": "' . t('Drone delivery', [], 'dataFixtures', $locale) . '"
               }
             ]
           }
@@ -190,9 +190,9 @@ class TransportsTest extends GraphQlTestCase
                         ],
                     ],
                     [
-                        'name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Drone delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => t(
-                            'Vhodné pro nadměrné zboží',
+                            'Vhodné pro všechny druhy zboží',
                             [],
                             'dataFixtures',
                             $this->getLocaleForFirstDomain()
@@ -208,7 +208,7 @@ class TransportsTest extends GraphQlTestCase
                         'images' => [],
                         'payments' => [
                             ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Pay later', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],
