@@ -355,5 +355,6 @@
     "Pickup place": "Pickup place",
     "adminLoggedInAsCustomerWarning": "Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>",
     "Your cart has been modified. Please check the changes.": "Your cart has been modified. Please check the changes.",
-    "The page is currently under maintenance.": "The page is currently under maintenance."
+    "The page is currently under maintenance.": "The page is currently under maintenance.",
+    "Your cookie preferences have been set.": "Your cookie preferences have been set."
 }

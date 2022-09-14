@@ -3,7 +3,6 @@ import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
-import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
@@ -15,10 +14,10 @@ import { Controller, FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
 
 type UserConsentFormProps = {
-    onSetUserConsentVisibilityCallback?: (newValue: boolean) => void;
+    onSetCallback?: () => void;
 };
 
-export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisibilityCallback }) => {
+export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
@@ -29,10 +28,10 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
         setUserConsentCookie(formValues);
         onConsentUpdateGtmEventHandler(getGtmConsentInfo());
 
-        if (onSetUserConsentVisibilityCallback !== undefined && getUserConsentCookie() !== null) {
-            onSetUserConsentVisibilityCallback(false);
+        if (onSetCallback) {
+            onSetCallback();
         }
-    }, [formProviderMethods, onSetUserConsentVisibilityCallback]);
+    }, [formProviderMethods, onSetCallback]);
 
     const acceptAllCookieChoices = useCallback(() => {
         for (const key in formMeta.fields) {

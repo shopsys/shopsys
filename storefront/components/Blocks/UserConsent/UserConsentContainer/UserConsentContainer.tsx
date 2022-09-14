@@ -1,11 +1,18 @@
 import { UserConsentForm } from '../UserConsentForm';
 import { UserConsentContainerStyled, UserConsentStyled } from './UserConsentContainer.style';
-import { FC, useState } from 'react';
+import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { FC, useCallback, useState } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-userconsent';
 
 export const UserConsentContainer: FC = () => {
     const [isUserConsentVisible, setUserConsentVisibility] = useState(true);
+
+    const onSetCallback = useCallback(() => {
+        if (getUserConsentCookie() !== null) {
+            setUserConsentVisibility(false);
+        }
+    }, []);
 
     if (!isUserConsentVisible) {
         return null;
@@ -14,7 +21,7 @@ export const UserConsentContainer: FC = () => {
     return (
         <UserConsentContainerStyled>
             <UserConsentStyled data-testid={TEST_IDENTIFIER}>
-                <UserConsentForm onSetUserConsentVisibilityCallback={setUserConsentVisibility} />
+                <UserConsentForm onSetCallback={onSetCallback} />
             </UserConsentStyled>
         </UserConsentContainerStyled>
     );
