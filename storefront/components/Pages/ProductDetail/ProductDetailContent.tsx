@@ -19,7 +19,7 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, useRef } from 'react';
+import { FC, Fragment, useRef } from 'react';
 import { ProductDetailType } from 'types/product';
 
 type ProductDetailContentProps = {
@@ -36,7 +36,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     useGtmProductDetailView(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
-        <>
+        // the key helps to re-mount the component when navigating between different products, which prevents the components from keeping an unwanted state
+        <Fragment key={product.uuid}>
             <ProductMetadata product={product} />
             <Webline>
                 <ProductDetailStyled>
@@ -74,6 +75,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
             <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
-        </>
+        </Fragment>
     );
 };
