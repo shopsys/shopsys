@@ -149,7 +149,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         <OrderAction
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
-                            hasDisabledLook={!formProviderMethods.formState.isValid}
+                            hasDisabledLook={!formProviderMethods.formState.isValid || !!createOrderResult.data}
                             withGapTop={false}
                             withGapBottom
                             buttonBackLink={transportAndPaymentUrl}

@@ -101,7 +101,7 @@ export const cache = cacheExchange({
                 invalidateFields(cache, ['currentCustomerUser']);
             },
             CreateOrder(_result, _args, cache) {
-                invalidateFields(cache, ['currentCustomerUser', 'cart']);
+                invalidateFields(cache, ['currentCustomerUser']);
             },
             AddToCart(result, _args, cache) {
                 const newCart =
