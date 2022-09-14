@@ -90,6 +90,7 @@ exports[`test render list item 1`] = `
   href="/item-slug"
   onClick={[Function]}
   onMouseEnter={[Function]}
+  onTouchStart={[Function]}
 >
   <div
     className="c1"

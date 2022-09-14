@@ -85,6 +85,7 @@ export async function initServerSideProps(
             if (authenticationRequired) {
                 const customerQueryResult = currentClient.readQuery<CurrentCustomerUserQueryApi>(
                     CurrentCustomerUserQueryDocumentApi,
+                    {},
                 );
 
                 const isLogged =

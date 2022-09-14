@@ -52,7 +52,7 @@ export const useAuth = (): [
     };
 
     const logoutHandler = async () => {
-        const logoutResult = await logout();
+        const logoutResult = await logout({});
 
         if (logoutResult.data?.Logout === true) {
             removeTokensFromCookies();

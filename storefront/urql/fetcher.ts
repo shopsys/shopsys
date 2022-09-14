@@ -60,7 +60,7 @@ export const fetcher =
                 const response = new Response(JSON.stringify({ data: JSON.parse(fromCache) }), {
                     statusText: 'OK',
                     status: 200,
-                    headers: { 'Content-Type': 'text/html' },
+                    headers: { 'Content-Type': 'application/json' },
                 });
 
                 return Promise.resolve(response);
@@ -81,7 +81,7 @@ export const fetcher =
                 new Response(JSON.stringify(res), {
                     statusText: 'OK',
                     status: 200,
-                    headers: { 'Content-Type': 'text/html' },
+                    headers: { 'Content-Type': 'application/json' },
                 }),
             );
         } catch (e) {

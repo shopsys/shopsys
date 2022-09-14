@@ -30,7 +30,6 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
             pageSize: pagination.pageSize,
             filter: mapParametersFilter(categoryParametersFilter),
         },
-        requestPolicy: 'network-only',
     });
 
     useQueryError(error);

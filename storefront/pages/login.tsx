@@ -38,7 +38,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 
     const serverSideProps = await initServerSideProps(context, store, false, [], client, exchange);
 
-    const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi);
+    const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(CurrentCustomerUserQueryDocumentApi, {});
     const isLogged =
         customerQueryResult?.data?.currentCustomerUser !== undefined &&
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

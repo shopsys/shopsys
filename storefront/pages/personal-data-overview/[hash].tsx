@@ -5,15 +5,15 @@ import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/
 import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
-type PersonalDataDetailPageProps = {
-    hash: string;
-};
-
-const PersonalDataOverviewByHashPage: NextPage<PersonalDataDetailPageProps> = ({ hash }) => {
+const PersonalDataOverviewByHashPage: NextPage = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const { query } = useRouter();
+    const hash = getStringFromUrlQuery(query.hash);
 
     const [{ data }] = usePersonalDataDetailQueryApi({ variables: { hash } });
 
@@ -35,16 +35,9 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 
     const hash = context.query.hash ?? '';
 
-    const ssrProps = await initServerSideProps(context, store, false, [
+    return initServerSideProps(context, store, false, [
         { query: PersonalDataDetailQueryDocumentApi, variables: { hash } },
     ]);
-
-    return {
-        props: {
-            ...('props' in ssrProps ? ssrProps.props : {}),
-            hash,
-        },
-    };
 });
 
 export default PersonalDataOverviewByHashPage;

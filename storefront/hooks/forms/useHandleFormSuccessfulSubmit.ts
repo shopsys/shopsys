@@ -1,13 +1,13 @@
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useEffect } from 'react';
-import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
+import { DeepPartial, UseFormReturn } from 'react-hook-form';
 import { UseMutationState } from 'urql';
 
 // TODO: předělat z hooku na normální handler
 export const useHandleFormSuccessfulSubmit = <T>(
     result: UseMutationState,
     formProviderMethods: UseFormReturn<T>,
-    defaultValues: UnpackNestedValue<DeepPartial<T>>,
+    defaultValues: DeepPartial<T>,
     onSuccessAction?: (resultData: UseMutationState['data']) => void,
     options?: { blur?: boolean; reset?: boolean },
 ): void => {
