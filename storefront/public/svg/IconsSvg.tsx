@@ -234,6 +234,23 @@ export const Warning = () => (
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
             d="M11.158 3.475c.37-.633 1.305-.633 1.684 0l9.029 15.109c.37.632-.098 1.416-.848 1.416H2.977c-.75 0-1.218-.784-.848-1.416ZM13 15h-2v2h2v-2Zm-1-6c-.55 0-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1Z"
-            fill="currentColor"/>
+            fill="currentColor"
+        />
+    </svg>
+);
+
+export const Spinner = () => (
+    <svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path opacity=".25" d="M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4" />
+        <path d="M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z">
+            <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 16 16"
+                to="360 16 16"
+                dur="0.8s"
+                repeatCount="indefinite"
+            />
+        </path>
     </svg>
 );
