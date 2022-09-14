@@ -128,7 +128,7 @@ export default nextReduxWrapper.withRedux(
         (ssrExchange) => ({
             url: getApiUrl(),
             exchanges: getUrqlExchanges(ssrExchange),
-            fetch: fetcher(null),
+            fetch: fetcher(),
         }),
         { ssr: false },
     )(

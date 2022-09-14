@@ -30,12 +30,13 @@ module.exports = {
     skipInitialProps: true,
     loaderName: 'getServerSideProps',
     loadLocaleFrom: async (locale, namespace) => {
+        let redisClient;
         try {
             if (typeof window === 'undefined') {
                 const redis = await import('redis');
                 const redisKey = `${REDIS_PREFIX}${locale}:${namespace}`;
 
-                const redisClient = redis.createClient({
+                redisClient = redis.createClient({
                     url: REDIS_URL,
                     socket: {
                         connectTimeout: 5000,
@@ -64,7 +65,7 @@ module.exports = {
                             const translatesToCache = JSON.stringify(freshTranslates);
 
                             if (translatesToCache) {
-                                Promise.all([
+                                await Promise.all([
                                     redisClient.set(redisKey, translatesToCache),
                                     redisClient.set(redisKey + '/cached', 'true', {
                                         EX: REDIS_IS_CACHED_TIMEOUT,
@@ -74,17 +75,22 @@ module.exports = {
                         }
                     };
 
-                    cacheToRedis().catch((reject) => {
+                    await cacheToRedis().catch((reject) => {
                         logException(reject);
                     });
                 }
 
+                await redisClient.disconnect();
                 if (cachedTranslates !== null) {
                     return JSON.parse(cachedTranslates);
                 }
             }
         } catch (error) {
             logException(error);
+        } finally {
+            if (redisClient?.isOpen) {
+                await redisClient.disconnect();
+            }
         }
 
         return (await import('./i18n-translator')).getLocalTranslates(locale, namespace);

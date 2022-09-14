@@ -18,9 +18,9 @@ const createInit = (init?: RequestInit | undefined) => ({
 });
 
 export const fetcher =
-    (redisClient: RedisClientType | null) =>
+    () =>
     async (input: RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
-        let client = redisClient;
+        let client: RedisClientType | null = null;
 
         if (!isServer() || !init || publicRuntimeConfig.graphqlRedisCache !== '1') {
             return fetch(input, createInit(init));
@@ -45,16 +45,14 @@ export const fetcher =
 
             const createRedisClient = (await import('redis')).createClient;
 
-            if (client === null) {
-                client = createRedisClient({
-                    url: REDIS_URL,
-                    socket: {
-                        connectTimeout: 5000,
-                    },
-                });
+            client = createRedisClient({
+                url: REDIS_URL,
+                socket: {
+                    connectTimeout: 5000,
+                },
+            });
 
-                await client.connect();
-            }
+            await client.connect();
 
             const fromCache = await client.get(hash);
 
@@ -90,5 +88,9 @@ export const fetcher =
             captureException(e);
 
             return fetch(input, createInit(init));
+        } finally {
+            if (client?.isOpen) {
+                await client.disconnect();
+            }
         }
     };
