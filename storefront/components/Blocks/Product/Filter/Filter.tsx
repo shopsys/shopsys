@@ -16,6 +16,11 @@ import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWitho
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -43,7 +48,7 @@ export const Filter: FC<FilterProps> = ({
 }) => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
-    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
 
     const deepComparedProductFilterOptions = useMemo(
         () => productFilterOptions,
@@ -53,7 +58,9 @@ export const Filter: FC<FilterProps> = ({
 
     const formProviderMethods = useForm<FilterFormType>({
         defaultValues: getDefaultFormValues(
-            mapParametersFilter(getFilterOptions(parseFilterOptionsFromQuery(router.query.filter))),
+            mapParametersFilter(
+                getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
+            ),
             deepComparedProductFilterOptions,
             originalSlug,
         ),
@@ -128,11 +135,11 @@ export const Filter: FC<FilterProps> = ({
         );
 
         if (orderingMode === defaultOrderingMode) {
-            delete routerQueryWithoutAllParameter.sort;
+            delete routerQueryWithoutAllParameter[SORT_QUERY_PARAMETER_NAME];
         }
 
         if (isProductFilterSameAsDefault) {
-            delete routerQueryWithoutAllParameter.filter;
+            delete routerQueryWithoutAllParameter[FILTER_QUERY_PARAMETER_NAME];
 
             shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });
             return;
@@ -150,9 +157,9 @@ export const Filter: FC<FilterProps> = ({
         pathname = originalSlug ?? slug;
 
         if (isProductFilterEmpty) {
-            delete routerQueryWithoutAllParameter.filter;
+            delete routerQueryWithoutAllParameter[FILTER_QUERY_PARAMETER_NAME];
         } else {
-            delete routerQueryWithoutAllParameter.page;
+            delete routerQueryWithoutAllParameter[PAGE_QUERY_PARAMETER_NAME];
             routerQueryWithoutAllParameter.filter = getActualUrlQueryWithoutDefaultPriceFilter(
                 checkedBrands,
                 checkedFlags,
@@ -165,7 +172,7 @@ export const Filter: FC<FilterProps> = ({
         }
 
         if (sortingFromQuery === null && originalSlug !== null && orderingMode !== null) {
-            routerQueryWithoutAllParameter.sort = orderingMode;
+            routerQueryWithoutAllParameter[SORT_QUERY_PARAMETER_NAME] = orderingMode;
         }
 
         shallowReplaceIfDifferent(router, { pathname, query: routerQueryWithoutAllParameter });

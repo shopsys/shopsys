@@ -2,6 +2,7 @@ import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.st
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -42,7 +43,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const queryParamsWithoutPage = { ...router.query };
     delete queryParamsWithoutPage.all;
-    delete queryParamsWithoutPage.page;
+    delete queryParamsWithoutPage[PAGE_QUERY_PARAMETER_NAME];
 
     useEffect(() => {
         dispatch(userActions.setPagination({ ...initialState.pagination }));

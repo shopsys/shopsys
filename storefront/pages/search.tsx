@@ -14,6 +14,11 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useGtmSearchResultsListView } from 'hooks/gtm/useGtmSearchResultsListView';
@@ -27,11 +32,16 @@ import { initialState, userActions } from 'redux/slices/user';
 const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
+    const pageParam = router.query[PAGE_QUERY_PARAMETER_NAME];
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const searchProductsSort = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+    const searchProductsSort = getProductListSort(
+        parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]),
+    );
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
-    const searchParametersFilter = getFilterOptions(parseFilterOptionsFromQuery(router.query.filter));
+    const searchParametersFilter = getFilterOptions(
+        parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
+    );
     const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
     const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, searchParametersFilter);
 
@@ -44,10 +54,10 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     useEffect(() => {
         dispatch(
             userActions.setPagination(
-                getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
+                getNewPagination(parsePageNumberFromQuery(pageParam), initialState.pagination.pageSize),
             ),
         );
-    }, [dispatch, router.query.page]);
+    }, [dispatch, pageParam]);
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
@@ -61,8 +71,8 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
-    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query.filter));
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
+    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
     store.dispatch(
         userActions.setPagination(
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),

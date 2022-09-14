@@ -18,6 +18,7 @@ import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/
 import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
 import { canUseDom } from 'helpers/misc/canUseDom';
+import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -41,7 +42,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
-    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query.sort));
+    const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
     const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(sorting ?? sortingFromQuery);
     const { width } = useGetWindowSize();
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
@@ -78,14 +79,14 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
             const pathname = router.asPath.split('?')[0];
             const queryParams = getQueryWithoutAllParameter(router);
 
-            queryParams.sort = sort;
+            queryParams[SORT_QUERY_PARAMETER_NAME] = sort;
 
             const filterUrlQuery =
                 deepComparedProductFilterOptions !== null
                     ? getFilterUrlQueryForSortingInSeoCategory(deepComparedProductFilterOptions)
                     : null;
             if (filterUrlQuery !== null) {
-                queryParams.filter = filterUrlQuery;
+                queryParams[FILTER_QUERY_PARAMETER_NAME] = filterUrlQuery;
             }
 
             shallowReplaceIfDifferent(router, { pathname, query: queryParams });

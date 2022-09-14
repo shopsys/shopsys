@@ -20,6 +20,7 @@ import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getCategoryOrSeoCategoryGtmListName } from 'helpers/gtm/gtm';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
@@ -80,11 +81,13 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <CategoryDetailContentStyled>
                     <CategoryDetailAdvertsStyled positionName="productList" />
                     <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
-                    {category.description !== null && category.description !== '' && (query.page ?? 1) === 1 && (
-                        <CategoryDetailDescriptionStyled
-                            dangerouslySetInnerHTML={{ __html: category.description }}
-                        ></CategoryDetailDescriptionStyled>
-                    )}
+                    {category.description !== null &&
+                        category.description !== '' &&
+                        (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
+                            <CategoryDetailDescriptionStyled
+                                dangerouslySetInnerHTML={{ __html: category.description }}
+                            ></CategoryDetailDescriptionStyled>
+                        )}
                     <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={category} />
                     <SubcategoriesSimpleNavigationStyled
                         listedItems={[...category.children, ...category.linkedCategories]}

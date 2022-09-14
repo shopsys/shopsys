@@ -24,6 +24,11 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
@@ -40,14 +45,15 @@ import { ssrExchange } from 'urql';
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
+    const pageParam = router.query[PAGE_QUERY_PARAMETER_NAME];
 
     useEffect(() => {
         dispatch(
             userActions.setPagination(
-                getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
+                getNewPagination(parsePageNumberFromQuery(pageParam), initialState.pagination.pageSize),
             ),
         );
-    }, [dispatch, router.query.page]);
+    }, [dispatch, pageParam]);
 
     const slug = getUrlWithoutGetParameters(router.asPath);
     const { data, fetching } = useFriendlyUrlResolvedData(slug);
@@ -96,11 +102,14 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     const { url } = initDomainConfig(context, store);
-    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
-    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query.filter));
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
+    const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
     store.dispatch(
         userActions.setPagination(
-            getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
+            getNewPagination(
+                parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]),
+                initialState.pagination.pageSize,
+            ),
         ),
     );
 

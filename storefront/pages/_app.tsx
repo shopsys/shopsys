@@ -1,3 +1,4 @@
+import { Canonical } from 'components/Basic/Head/Canonical/Canonical';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
@@ -99,6 +100,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
                 <link rel="preload" href="/fonts/dmSans700.woff2" as="font" type="font/woff2" crossOrigin="" />
                 <GtmHeadScript />
             </Head>
+            <Canonical />
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
