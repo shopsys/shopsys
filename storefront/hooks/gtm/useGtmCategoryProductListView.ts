@@ -30,7 +30,7 @@ export const useGtmCategoryProductListView = (
 
             event.ecommerce = getGtmProductsListEvent(
                 data.productConnection.products,
-                getCategoryOrSeoCategoryGtmListName(data, slug),
+                getCategoryOrSeoCategoryGtmListName(data.originalCategorySlug),
                 currentPage,
                 pageSize,
                 url,

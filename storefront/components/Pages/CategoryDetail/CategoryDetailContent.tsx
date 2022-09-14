@@ -58,7 +58,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
         }
     };
 
-    const gtmListName = useMemo(() => getCategoryOrSeoCategoryGtmListName(category, category.slug), [category]);
+    const gtmListName = useMemo(() => getCategoryOrSeoCategoryGtmListName(category.originalCategorySlug), [category]);
 
     return (
         <Webline>

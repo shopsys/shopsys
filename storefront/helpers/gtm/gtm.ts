@@ -102,7 +102,7 @@ export const getGtmPageInfoForFriendlyUrl = (
             defaultPageInfo.type = 'product';
             break;
         case 'Category':
-            defaultPageInfo.type = getCategoryOrSeoCategoryGtmListName(data, slug);
+            defaultPageInfo.type = getCategoryOrSeoCategoryGtmListName(data.originalCategorySlug);
             defaultPageInfo.category = getGtmCategoryInfo(data as CategoryDetailType);
             break;
         case 'Store':
@@ -229,13 +229,5 @@ export const getGtmUserInfo = (currentCustomer: CurrentCustomerType | null | und
     return userInfo;
 };
 
-export const getCategoryOrSeoCategoryGtmListName = (
-    data: CategoryDetailType,
-    slug: string,
-): 'seo category' | 'category' =>
-    data.readyCategorySeoMixLinks.some((seoMixLink) => {
-        const slugWithoutLeadingSlash = slug.charAt(0) === '/' ? slug.slice(1) : slug;
-        return seoMixLink.slug === slugWithoutLeadingSlash;
-    })
-        ? 'seo category'
-        : 'category';
+export const getCategoryOrSeoCategoryGtmListName = (originalCategorySlug: string | null): 'seo category' | 'category' =>
+    originalCategorySlug !== null ? 'seo category' : 'category';
