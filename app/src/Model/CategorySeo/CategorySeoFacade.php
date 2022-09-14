@@ -55,6 +55,16 @@ class CategorySeoFacade
 
     /**
      * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
+    {
+        return $this->parameterRepository->getParametersUsedByProductsInCategoryWithoutSlider($category, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
      * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
      * @param int $domainId
      * @param string $locale
