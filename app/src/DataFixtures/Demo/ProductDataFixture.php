@@ -448,12 +448,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone - Apple A7 with 64-bit architecture, 4" Retina Touch display 1136x640, 32GB internal memory, WiFi 802.11a/b/g/n, Bluetooth 4.0, 8 Mpx camera with LED flash, GPS, Fingerprint sensor, iOS 7', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Weight', [], 'dataFixtures', $locale), t('112 g', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Weight (kg)', [], 'dataFixtures', $locale), '0.12', $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Dimensions', [], 'dataFixtures', $locale), t('123.8x58.6 mm', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Memory card support', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('RAM', [], 'dataFixtures', $locale), t('1024 MB', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of colors', [], 'dataFixtures', $locale), t('16mil.', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Processor frequency', [], 'dataFixtures', $locale), t('1.7GHz', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Processor frequency (GHz)', [], 'dataFixtures', $locale), '1.7', $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of processor cores', [], 'dataFixtures', $locale), t('2', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Bluetooth', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('NFC', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
@@ -1501,12 +1501,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.7" 720x1280, procesor 1,5GHz, internal memory 16GB, camera 8mpx, GPS, WiFi, Bluetooth, 3G, FM, microSD, micro USB, Android 4.0', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Weight', [], 'dataFixtures', $locale), t('112 g', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Weight (kg)', [], 'dataFixtures', $locale), '0.15', $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Dimensions', [], 'dataFixtures', $locale), t('123.8x58.6 mm', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Memory card support', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('RAM', [], 'dataFixtures', $locale), t('1024 MB', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of colors', [], 'dataFixtures', $locale), t('16mil.', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Processor frequency', [], 'dataFixtures', $locale), t('1.7GHz', [], 'dataFixtures', $locale), $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Processor frequency (GHz)', [], 'dataFixtures', $locale), '1.8', $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Number of processor cores', [], 'dataFixtures', $locale), t('2', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('Bluetooth', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('NFC', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
@@ -2262,7 +2262,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('SONY Xperia SP C5303', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Mobile phone 4.6 "1280x720, Qualcomm MSM8960Pro 1.7 GHz, 1GB RAM, 8GB 8MPx camera, GPS, WiFi, Bluetooth, FM, micro USB, Android 4.1', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.6 "1280x720, Qualcomm MSM8960Pro 1.7 GHz', [], 'dataFixtures', $domain->getLocale());
+
+            $i = 0;
+            $this->addParameterTranslations($parameterTranslations, t('Weight (kg)', [], 'dataFixtures', $locale), '0.54', $locale, $i);
+            $this->addParameterTranslations($parameterTranslations, t('Processor frequency (GHz)', [], 'dataFixtures', $locale), '2.4', $locale, $i);
         }
+
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4371.9');

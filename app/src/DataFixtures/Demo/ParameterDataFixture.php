@@ -223,6 +223,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodSk);
 
         $this->createSliderParameterWithValuesAndAssignThemToProducts();
+        $this->makeSomeExistingParametersSlider();
     }
 
     /**
@@ -327,6 +328,23 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             $this->addParameterValueToProduct($product52, $parameter, $this->getParameterValue($locale, '5'));
             $this->addParameterValueToProduct($product9, $parameter, $this->getParameterValue($locale, '4'));
             $this->addParameterValueToProduct($product35, $parameter, $this->getParameterValue($locale, '4'));
+        }
+    }
+
+    public function makeSomeExistingParametersSlider(): void
+    {
+        $parameters = [
+            // Processor frequency (GHz)
+            $this->parameterFacade->getById(15),
+            // Weight (kg)
+            $this->parameterFacade->getById(10),
+        ];
+
+        foreach ($parameters as $parameter) {
+            $parameterData = $this->parameterDataFactory->createFromParameter($parameter);
+            $parameterData->parameterType = Parameter::PARAMETER_TYPE_SLIDER;
+
+            $this->parameterFacade->edit($parameter->getId(), $parameterData);
         }
     }
 
