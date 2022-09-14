@@ -11,7 +11,10 @@ import {
     NotificationBarsDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import {
+    getInternationalizedStaticUrls,
+    getServerSideInternationalizedStaticUrl,
+} from 'helpers/localization/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
@@ -71,7 +74,7 @@ export async function initServerSideProps(
             );
             const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
             const parsedSlug = slugResult?.data.slug.slug;
-            const trimmedUrl = context.resolvedUrl.split('?')[0];
+            const trimmedUrl = getServerSideInternationalizedStaticUrl(context, domainConfig.url);
 
             if (parsedSlug !== undefined && parsedSlug !== trimmedUrl) {
                 return {

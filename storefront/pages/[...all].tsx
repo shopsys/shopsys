@@ -1,3 +1,4 @@
+import { getServerSideInternationalizedStaticUrl } from '../helpers/localization/getInternationalizedStaticUrls';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -94,7 +95,7 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
 );
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
+    const { url } = initDomainConfig(context, store);
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query.sort));
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query.filter));
     store.dispatch(
@@ -107,7 +108,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const client = await createClient(context, store, exchange);
 
     const slugQueryVariables: SlugQueryVariablesApi = {
-        slug: getUrlWithoutGetParameters(context.resolvedUrl),
+        slug: getServerSideInternationalizedStaticUrl(context, url),
         orderingMode,
         endCursorForPagination: store.getState().user.pagination.paginationCursor,
         pageSize: initialState.pagination.pageSize,
