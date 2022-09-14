@@ -1,6 +1,6 @@
+import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
 import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
-import Image from 'components/Basic/Image';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { Image } from 'components/Basic/Image/Image';
 import { FC, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -14,24 +14,21 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type RadiobuttonProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
+    checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     image?: ImageType | null;
+    testIdentifier?: string;
 } & (
         | {
               onChangeCallback: (newValue: string | null) => void;
               fieldRef?: never;
-              checked?: InputHTMLAttributes<HTMLInputElement>['checked'];
           }
         | {
               onChangeCallback?: never;
               fieldRef: ControllerRenderProps<any, any>;
-              checked?: never;
           }
     );
 
-/**
- * An HTML Radiobutton element of type radiobutton
- */
-const Radiobutton: FC<RadiobuttonProps> = ({
+export const Radiobutton: FC<RadiobuttonProps> = ({
     label,
     image,
     onChangeCallback,
@@ -41,6 +38,7 @@ const Radiobutton: FC<RadiobuttonProps> = ({
     fieldRef,
     value,
     disabled,
+    testIdentifier,
 }) => {
     const onClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
         if (onChangeCallback === undefined) {
@@ -73,9 +71,11 @@ const Radiobutton: FC<RadiobuttonProps> = ({
                 <RadiobuttonStyled
                     {...fieldRef}
                     value={value}
+                    checked={checked}
                     disabled={disabled}
                     id={id === undefined ? name + 'radiobutton-id' : id}
                     type="radio"
+                    data-testid={testIdentifier}
                 />
             ) : (
                 <RadiobuttonStyled
@@ -87,10 +87,9 @@ const Radiobutton: FC<RadiobuttonProps> = ({
                     type="radio"
                     onClick={onClickHandler}
                     readOnly={onChangeCallback !== undefined}
+                    data-testid={testIdentifier}
                 />
             )}
         </LabelWrapper>
     );
 };
-
-export default Radiobutton;

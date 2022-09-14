@@ -4,14 +4,14 @@ import {
     MessageWrapperStyled,
     PaymentWrapperStyled,
 } from './PaymentConfirmation.style';
-import Heading from 'components/Basic/Heading';
-import Webline from 'components/Layout/Webline';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const PaymentFail: FC = () => {
+export const PaymentFail: FC = () => {
     const t = useTypedTranslationFunction();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('purchase fail');
     useGtmStaticPageView(gtmStaticPageViewEvent);
@@ -32,5 +32,3 @@ const PaymentFail: FC = () => {
         </Webline>
     );
 };
-
-export default PaymentFail;

@@ -1,7 +1,7 @@
+import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { toast } from 'react-toastify';
 import { GtmMessageOriginType } from 'types/gtm';
-import { getGtmMessageEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
@@ -26,11 +26,13 @@ export const showErrorMessage = (message: string, origin?: GtmMessageOriginType)
     const event = getGtmMessageEvent('error', message, 'flash message', origin);
     gtmSafePushEvent(event);
 };
+
 export const showInfoMessage = (message: string, origin?: GtmMessageOriginType): void => {
     showMessage(message, 'info');
     const event = getGtmMessageEvent('information', message, 'flash message', origin);
     gtmSafePushEvent(event);
 };
+
 export const showSuccessMessage = (message: string): void => {
     showMessage(message, 'success');
 };

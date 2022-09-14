@@ -2,25 +2,31 @@ import { Heading1Styled, Heading2Styled, Heading3Styled, Heading4Styled } from '
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style' | 'onClick'>;
+type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
+
+type NativeProps = ExtractNativePropsFromDefault<
+    HTMLAttributes<HTMLHeadingElement>,
+    never,
+    'style' | 'onClick' | 'className'
+>;
 
 type HeadingProps = NativeProps & {
-    type: 'h1' | 'h2' | 'h3' | 'h4';
-    'data-testid'?: string;
+    type: HeadingType;
 };
 
-const Heading: FC<HeadingProps> = (props) => {
-    const testIdentifier = 'basic-heading-' + props.type;
+const getTestIdentifier = (type: HeadingType) => 'basic-heading-' + type;
 
-    const Component = renderHeading(props.type);
+export const Heading: FC<HeadingProps> = ({ type, children, style, onClick, className }) => {
+    const Component = renderHeading(type);
+
     return (
-        <Component {...props} data-testid={testIdentifier}>
-            {props.children}
+        <Component className={className} style={style} onClick={onClick} data-testid={getTestIdentifier(type)}>
+            {children}
         </Component>
     );
 };
 
-const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
+const renderHeading = (type: HeadingType) => {
     switch (type) {
         case 'h1':
             return Heading1Styled;
@@ -34,5 +40,3 @@ const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
 
     throw new Error('Wrong type provided for Heading.');
 };
-
-export default Heading;

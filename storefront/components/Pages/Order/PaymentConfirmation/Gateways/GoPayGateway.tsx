@@ -1,7 +1,7 @@
-import Link from 'components/Basic/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import Script from 'next/script';
 import { FC, useState } from 'react';

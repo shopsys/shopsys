@@ -4,19 +4,19 @@ import {
     ListItemStyled,
     ListStyled,
 } from './ContactInformationDeliveryAddress.style';
-import Heading from 'components/Basic/Heading';
-import Checkbox from 'components/Forms/Checkbox';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import Radiobutton from 'components/Forms/Radiobutton';
-import Select from 'components/Forms/Select';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { Select } from 'components/Forms/Select/Select';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
@@ -26,7 +26,7 @@ import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 
-const ContactInformationDeliveryAddress: FC = () => {
+export const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
@@ -168,7 +168,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                     <div ref={cssTransitionRef}>
                         <div ref={contentElement}>
                             {showAddressSelection && (
-                                <FormLine bottomGap={true} lg="65%">
+                                <FormLine bottomGap lg="65%">
                                     <ListStyled>
                                         {user?.deliveryAddresses.map((address) => (
                                             <Controller
@@ -197,6 +197,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryAddressUuid.name}
                                                             fieldRef={field}
+                                                            checked={field.value === address.uuid}
                                                             value={address.uuid}
                                                         />
                                                     </ListItemStyled>
@@ -221,6 +222,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         }
                                                         name={formMeta.fields.deliveryAddressUuid.name}
                                                         fieldRef={field}
+                                                        checked={field.value === ''}
                                                         value={''}
                                                     />
                                                 </ListItemStyled>
@@ -232,7 +234,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                             {(!showAddressSelection || isCustomAddressSelected) && (
                                 <>
                                     <FormColumn lg="65%">
-                                        <FormLine bottomGap={true} width="100%" lg="50%">
+                                        <FormLine bottomGap width="100%" lg="50%">
                                             <Controller
                                                 name={formMeta.fields.deliveryFirstName.name}
                                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -245,7 +247,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryFirstName.name}
                                                             label={formMeta.fields.deliveryFirstName.label}
-                                                            required={true}
+                                                            required
                                                             type="text"
                                                             isTouched={isTouched}
                                                             hasError={invalid}
@@ -261,7 +263,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         <FormLineError
                                                             error={error}
                                                             inputType="text-input"
-                                                            data-testid={
+                                                            testIdentifier={
                                                                 formMeta.formName +
                                                                 '-' +
                                                                 formMeta.fields.deliveryFirstName.name +
@@ -272,7 +274,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 )}
                                             />
                                         </FormLine>
-                                        <FormLine bottomGap={true} width="100%" lg="50%">
+                                        <FormLine bottomGap width="100%" lg="50%">
                                             <Controller
                                                 name={formMeta.fields.deliveryLastName.name}
                                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -285,7 +287,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             }
                                                             name={formMeta.fields.deliveryLastName.name}
                                                             label={formMeta.fields.deliveryLastName.label}
-                                                            required={true}
+                                                            required
                                                             type="text"
                                                             isTouched={isTouched}
                                                             hasError={invalid}
@@ -301,7 +303,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         <FormLineError
                                                             error={error}
                                                             inputType="text-input"
-                                                            data-testid={
+                                                            testIdentifier={
                                                                 formMeta.formName +
                                                                 '-' +
                                                                 formMeta.fields.deliveryLastName.name +
@@ -313,7 +315,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                             />
                                         </FormLine>
                                     </FormColumn>
-                                    <FormLine bottomGap={true} lg="65%">
+                                    <FormLine bottomGap lg="65%">
                                         <Controller
                                             name={formMeta.fields.deliveryCompanyName.name}
                                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -341,7 +343,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     <FormLineError
                                                         error={error}
                                                         inputType="text-input"
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.deliveryCompanyName.name +
@@ -352,7 +354,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                             )}
                                         />
                                     </FormLine>
-                                    <FormLine bottomGap={true} lg="65%">
+                                    <FormLine bottomGap lg="65%">
                                         <Controller
                                             name={formMeta.fields.deliveryTelephone.name}
                                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -380,7 +382,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     <FormLineError
                                                         error={error}
                                                         inputType="text-input"
-                                                        data-testid={
+                                                        testIdentifier={
                                                             formMeta.formName +
                                                             '-' +
                                                             formMeta.fields.deliveryTelephone.name +
@@ -393,7 +395,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     </FormLine>
                                     {!pickupPlace && (
                                         <>
-                                            <FormLine bottomGap={true} lg="65%">
+                                            <FormLine bottomGap lg="65%">
                                                 <Controller
                                                     name={formMeta.fields.deliveryStreet.name}
                                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -407,7 +409,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                                 name={formMeta.fields.deliveryStreet.name}
                                                                 label={formMeta.fields.deliveryStreet.label}
                                                                 type="text"
-                                                                required={true}
+                                                                required
                                                                 isTouched={isTouched}
                                                                 hasError={invalid}
                                                                 fieldRef={field}
@@ -422,7 +424,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             <FormLineError
                                                                 error={error}
                                                                 inputType="text-input"
-                                                                data-testid={
+                                                                testIdentifier={
                                                                     formMeta.formName +
                                                                     '-' +
                                                                     formMeta.fields.deliveryStreet.name +
@@ -434,7 +436,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 />
                                             </FormLine>
                                             <FormColumn lg="65%">
-                                                <FormLine bottomGap={true}>
+                                                <FormLine bottomGap>
                                                     <Controller
                                                         name={formMeta.fields.deliveryCity.name}
                                                         render={({
@@ -450,7 +452,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                                     }
                                                                     name={formMeta.fields.deliveryCity.name}
                                                                     label={formMeta.fields.deliveryCity.label}
-                                                                    required={true}
+                                                                    required
                                                                     type="text"
                                                                     isTouched={isTouched}
                                                                     hasError={invalid}
@@ -466,7 +468,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                                 <FormLineError
                                                                     error={error}
                                                                     inputType="text-input"
-                                                                    data-testid={
+                                                                    testIdentifier={
                                                                         formMeta.formName +
                                                                         '-' +
                                                                         formMeta.fields.deliveryCity.name +
@@ -477,7 +479,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                         )}
                                                     />
                                                 </FormLine>
-                                                <FormLine bottomGap={true} width="100%" lg="142px">
+                                                <FormLine bottomGap width="100%" lg="142px">
                                                     <Controller
                                                         name={formMeta.fields.deliveryPostcode.name}
                                                         render={({
@@ -493,7 +495,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                                     }
                                                                     name={formMeta.fields.deliveryPostcode.name}
                                                                     label={formMeta.fields.deliveryPostcode.label}
-                                                                    required={true}
+                                                                    required
                                                                     type="text"
                                                                     isTouched={isTouched}
                                                                     hasError={invalid}
@@ -509,7 +511,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                                 <FormLineError
                                                                     error={error}
                                                                     inputType="text-input"
-                                                                    data-testid={
+                                                                    testIdentifier={
                                                                         formMeta.formName +
                                                                         '-' +
                                                                         formMeta.fields.deliveryPostcode.name +
@@ -547,7 +549,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                             <FormLineError
                                                                 error={error}
                                                                 inputType="select"
-                                                                data-testid={
+                                                                testIdentifier={
                                                                     formMeta.formName +
                                                                     '-' +
                                                                     formMeta.fields.deliveryCountry.name +
@@ -575,5 +577,3 @@ const ContactInformationDeliveryAddress: FC = () => {
         </>
     );
 };
-
-export default ContactInformationDeliveryAddress;

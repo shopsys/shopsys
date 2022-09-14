@@ -9,8 +9,8 @@ const localVariables = {
     ResetButtonHoverBackgroundColor: '#d3d4e1',
 } as const;
 
-export const ListItemStyled = styled.li<ListItemStyledProps>`
-    ${({ theme, isActive }) => css`
+export const ListItemStyled = styled.li<ListItemStyledProps>(
+    ({ theme, isActive }) => css`
         display: flex;
         flex-wrap: wrap;
         min-width: 100%;
@@ -26,15 +26,15 @@ export const ListItemStyled = styled.li<ListItemStyledProps>`
             background-color: ${theme.color.blueLight};
             border-bottom: 0;
         `}
-    `}
-`;
+    `,
+);
 
 export const PaymentListWrapper = styled.div`
     margin-top: 50px;
 `;
 
-export const ResetButtonStyled = styled.button`
-    ${({ theme }) => css`
+export const ResetButtonStyled = styled.button(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         line-height: 17px;
@@ -56,5 +56,5 @@ export const ResetButtonStyled = styled.button`
         i {
             margin-left: 8px;
         }
-    `}
-`;
+    `,
+);

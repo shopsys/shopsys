@@ -10,8 +10,8 @@ import {
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
-import { mapProductFilterOptions } from 'helpers/filterOptions/MapProductFilterOptions';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { mapProductFilterOptions } from 'helpers/filterOptions/mapProductFilterOptions';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useShopsysSelector } from 'redux/main';
 import {
     ListedProductConnectionType,

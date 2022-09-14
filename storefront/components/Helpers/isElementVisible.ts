@@ -4,5 +4,6 @@ export const isElementVisible = (visibleRanges: { min: number; max: number }[], 
             return true;
         }
     }
+
     return false;
 };

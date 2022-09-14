@@ -2,14 +2,14 @@ import { styled } from 'components/Theme/main';
 import { HTMLAttributes } from 'react';
 import { css } from 'styled-components';
 
-type PaginationButtonStyledProps = HTMLAttributes<HTMLAnchorElement> & {
-    active?: boolean;
-    dotButton?: boolean;
-};
-
 const localVariables = {
     paginationWidth: '340px',
     buttonHeightAndWidth: '44px',
+};
+
+type PaginationButtonStyledProps = HTMLAttributes<HTMLAnchorElement> & {
+    active?: boolean;
+    dotButton?: boolean;
 };
 
 export const PaginationWrapperStyled = styled.div(

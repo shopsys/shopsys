@@ -8,8 +8,8 @@ import {
 } from './HeaderContact.style';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { FC, useState } from 'react';
 
 // TODO PRG
@@ -18,9 +18,9 @@ const dummyData = {
     opening: 'Po - Út, 10 - 16 hod',
 };
 
-const HeaderContact: FC = () => {
-    const testIdentifier = 'layout-header-contact';
+const TEST_IDENTIFIER = 'layout-header-contact';
 
+export const HeaderContact: FC = () => {
     const { width } = useGetWindowSize();
     const [areContactHoursVisible, setAreContactHoursVisible] = useState(true);
     useResizeWidthEffect(
@@ -32,7 +32,7 @@ const HeaderContact: FC = () => {
     );
 
     return (
-        <HeaderContactStyled data-testid={testIdentifier}>
+        <HeaderContactStyled data-testid={TEST_IDENTIFIER}>
             <ContactWrapperStyled>
                 <ContactContentStyled>
                     <HeaderContactIconStyled iconType="icon" icon="Phone" />
@@ -43,5 +43,3 @@ const HeaderContact: FC = () => {
         </HeaderContactStyled>
     );
 };
-
-export default HeaderContact;

@@ -1,18 +1,18 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type WithIsActiveStyledProps = {
-    isActive: boolean;
-};
-
 const localVariables = {
     imageMaxWidth: '72px',
     imageMaxWidthMobile: '48px',
     imageMaxHeight: '48px',
+} as const;
+
+type WithIsActiveStyledProps = {
+    isActive: boolean;
 };
 
-export const AutocompleteStyled = styled.div<WithIsActiveStyledProps>`
-    ${({ theme, isActive }) => css`
+export const AutocompleteStyled = styled.div<WithIsActiveStyledProps>(
+    ({ theme, isActive }) => css`
         @media ${theme.mediaQueries.queryLg} {
             width: 100%;
             opacity: 0;
@@ -33,11 +33,11 @@ export const AutocompleteStyled = styled.div<WithIsActiveStyledProps>`
         @media ${theme.mediaQueries.queryVl} {
             width: 576px;
         }
-    `}
-`;
+    `,
+);
 
-export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
-    ${({ theme, isActive }) => css`
+export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>(
+    ({ theme, isActive }) => css`
         width: 100%;
         position: absolute;
         top: 0;
@@ -76,8 +76,8 @@ export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
                 pointer-events: auto;
             `}
         }
-    `}
-`;
+    `,
+);
 
 export const SearchResultGroupStyled = styled.ul`
     list-style: none;
@@ -89,17 +89,17 @@ export const SearchResultGroupStyled = styled.ul`
     }
 `;
 
-export const SearchResultGroupTitleStyled = styled.p`
-    ${({ theme }) => css`
+export const SearchResultGroupTitleStyled = styled.p(
+    ({ theme }) => css`
         margin: 0;
 
         color: ${theme.color.greyLight};
         font-size: 13px;
-    `}
-`;
+    `,
+);
 
-export const SearchResultLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const SearchResultLinkStyled = styled.a(
+    ({ theme }) => css`
         width: 100%;
         display: flex;
         align-items: center;
@@ -109,8 +109,8 @@ export const SearchResultLinkStyled = styled.a`
         font-weight: 700;
         color: ${theme.color.base};
         text-decoration: none;
-    `}
-`;
+    `,
+);
 
 export const ProductsSearchResultStyled = styled.ul`
     display: flex;
@@ -122,8 +122,8 @@ export const ProductsSearchResultStyled = styled.ul`
     list-style: none;
 `;
 
-export const ProductSearchResultItemStyled = styled.li`
-    ${({ theme }) => css`
+export const ProductSearchResultItemStyled = styled.li(
+    ({ theme }) => css`
         margin-bottom: 9px;
         padding-left: 18px;
         width: 100%;
@@ -134,11 +134,11 @@ export const ProductSearchResultItemStyled = styled.li`
             margin-bottom: 18px;
             width: 20%;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductSearchResultLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const ProductSearchResultLinkStyled = styled.a(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         flex-direction: row;
@@ -153,11 +153,11 @@ export const ProductSearchResultLinkStyled = styled.a`
             align-items: flex-start;
             flex-direction: column;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductSearchResultImageWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductSearchResultImageWrapperStyled = styled.div(
+    ({ theme }) => css`
         margin-right: 10px;
         position: relative;
         max-width: ${localVariables.imageMaxWidth};
@@ -170,20 +170,21 @@ export const ProductSearchResultImageWrapperStyled = styled.div`
                 max-width: ${localVariables.imageMaxWidth};
             }
         }
-    `}
-`;
+    `,
+);
 
 export const ProductSearchResultNameStyled = styled.span`
     margin-bottom: 5px;
     margin-right: 0;
     flex: 1;
 `;
-export const ProductSearchResultPriceStyled = styled.span`
-    ${({ theme }) => css`
+
+export const ProductSearchResultPriceStyled = styled.span(
+    ({ theme }) => css`
         color: ${theme.color.primary};
         font-weight: 700;
-    `}
-`;
+    `,
+);
 
 export const NoResultsMessageWrapperStyled = styled.div`
     align-items: center;

@@ -1,5 +1,5 @@
 import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi, useStoresQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { ListedStoreType } from 'types/store';
 
 export function useStores(): ListedStoreType[] {

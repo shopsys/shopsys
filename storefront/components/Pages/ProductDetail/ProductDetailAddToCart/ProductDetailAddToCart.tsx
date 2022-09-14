@@ -7,12 +7,12 @@ import {
     AddToCartUnavailableTextStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
-import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
-import Spinbox from 'components/Forms/Spinbox';
+import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
+import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
-import { useAddToCart } from 'hooks/cart/UseAddToCart';
+import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
@@ -22,9 +22,9 @@ type ProductDetailAddToCartProps = {
     product: ProductDetailType;
 };
 
-const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-addtocart';
+const TEST_IDENTIFIER = 'pages-productdetail-addtocart';
 
+export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -38,7 +38,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
         }
 
         const addToCartResult = await changeCartItemQuantity(
-            props.product.uuid,
+            product.uuid,
             1,
             spinboxRef.current.valueAsNumber,
             'detail',
@@ -49,29 +49,23 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
 
     return (
         <>
-            <AddToCartWrapperStyled data-testid={testIdentifier}>
-                <AddToCartPriceStyled data-testid={testIdentifier + '-price'}>
-                    {formatPrice(props.product.price.priceWithVat)}
+            <AddToCartWrapperStyled data-testid={TEST_IDENTIFIER}>
+                <AddToCartPriceStyled data-testid={TEST_IDENTIFIER + '-price'}>
+                    {formatPrice(product.price.priceWithVat)}
                 </AddToCartPriceStyled>
-                {props.product.isSellingDenied ? (
+                {product.isSellingDenied ? (
                     <AddToCartUnavailableTextStyled>
                         {t('This item can no longer be purchased')}
                     </AddToCartUnavailableTextStyled>
                 ) : (
                     <AddToCartFormStyled>
                         <AddToCartButtonsWrapperStyled>
-                            <Spinbox
-                                min={1}
-                                step={1}
-                                defaultValue={1}
-                                max={props.product.stockQuantity}
-                                ref={spinboxRef}
-                            />
+                            <Spinbox min={1} step={1} defaultValue={1} max={product.stockQuantity} ref={spinboxRef} />
                             <AddToCartButtonWrapperStyled>
                                 <AddToCartButtonStyled
                                     onClick={onAddToCartHandler}
                                     variant="primary"
-                                    data-testid={testIdentifier + '-button'}
+                                    data-testid={TEST_IDENTIFIER + '-button'}
                                 >
                                     {t('Add to cart')}
                                 </AddToCartButtonStyled>
@@ -81,10 +75,8 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
                 )}
             </AddToCartWrapperStyled>
             {popupData !== null && (
-                <AddToCartPopup isVisible={true} onCloseCallback={() => setPopupData(null)} product={popupData} />
+                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />
             )}
         </>
     );
 };
-
-export default ProductDetailAddToCart;

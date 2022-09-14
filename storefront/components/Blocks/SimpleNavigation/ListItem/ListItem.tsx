@@ -5,7 +5,7 @@ import {
     ListItemNameStyled,
     ListItemNameWrapperStyled,
 } from './ListItem.style';
-import Image from 'components/Basic/Image';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -15,30 +15,24 @@ type ListItemProps = {
     imageType?: string;
 };
 
-const ListItem: FC<ListItemProps> = (props) => {
-    const testIdentifier = 'blocks-simplenavigation-listitem';
+const TEST_IDENTIFIER = 'blocks-simplenavigation-listitem';
 
+export const ListItem: FC<ListItemProps> = ({ listedItem, imageType }) => {
     return (
-        <NextLink href={props.listedItem.slug} passHref>
-            <ListItemBlockStyled data-testid={testIdentifier}>
-                {'image' in props.listedItem && (
+        <NextLink href={listedItem.slug} passHref>
+            <ListItemBlockStyled data-testid={TEST_IDENTIFIER}>
+                {'image' in listedItem && (
                     <ListItemImageStyled>
-                        <Image
-                            image={props.listedItem.image}
-                            type={props.imageType ?? 'default'}
-                            alt={props.listedItem.name}
-                        />
+                        <Image image={listedItem.image} type={imageType ?? 'default'} alt={listedItem.name} />
                     </ListItemImageStyled>
                 )}
                 <ListItemNameWrapperStyled>
-                    <ListItemNameStyled>{props.listedItem.name}</ListItemNameStyled>
-                    {'totalCount' in props.listedItem && props.listedItem.totalCount !== undefined && (
-                        <ListItemCountStyled>({props.listedItem.totalCount})</ListItemCountStyled>
+                    <ListItemNameStyled>{listedItem.name}</ListItemNameStyled>
+                    {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
+                        <ListItemCountStyled>({listedItem.totalCount})</ListItemCountStyled>
                     )}
                 </ListItemNameWrapperStyled>
             </ListItemBlockStyled>
         </NextLink>
     );
 };
-
-export default ListItem;

@@ -7,18 +7,18 @@ const localVariables = {
     totalPriceFontSize: '24px',
 } as const;
 
-export const OrderSummaryWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderSummaryWrapperStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryVl} {
             width: ${localVariables.orderSummaryWrapperWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const OrderSummaryTitleStyled = styled.h3`
-    ${({ theme }) => css`
+export const OrderSummaryTitleStyled = styled.h3(
+    ({ theme }) => css`
         margin-bottom: 11px;
 
         font-size: ${theme.fontSize.default};
@@ -27,11 +27,11 @@ export const OrderSummaryTitleStyled = styled.h3`
         @media ${theme.mediaQueries.queryLg} {
             font-size: ${theme.fontSize.bigger};
         }
-    `}
-`;
+    `,
+);
 
-export const OrderSummaryContentWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderSummaryContentWrapperStyled = styled.div(
+    ({ theme }) => css`
         margin: 0 -${localVariables.marginBottom};
         padding: 10px 20px;
 
@@ -42,8 +42,8 @@ export const OrderSummaryContentWrapperStyled = styled.div`
 
             border-radius: ${theme.radius.big};
         }
-    `}
-`;
+    `,
+);
 
 export const OrderSummaryContentStyled = styled.div`
     display: flex;
@@ -61,15 +61,15 @@ export const OrderSummaryListStyled = styled.ul`
     list-style: none;
 `;
 
-export const ListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const ListItemStyled = styled.li(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         padding: 10px 0;
 
         border-bottom: 1px solid ${theme.color.creamWhite};
-    `}
-`;
+    `,
+);
 
 export const ListItemPictureWrapperStyled = styled.div`
     margin-right: 17px;
@@ -83,33 +83,33 @@ export const ListItemInfoWrapperStyled = styled.div`
     align-items: center;
 `;
 
-export const ListItemInfoStyled = styled.span`
-    ${({ theme }) => css`
+export const ListItemInfoStyled = styled.span(
+    ({ theme }) => css`
         padding-right: 10px;
         flex: 1;
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const ListItemPriceStyled = styled.strong`
-    ${({ theme }) => css`
+export const ListItemPriceStyled = styled.strong(
+    ({ theme }) => css`
         margin-left: auto;
         width: 95px;
         text-align: right;
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const OrderSummaryRowWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderSummaryRowWrapperStyled = styled.div(
+    ({ theme }) => css`
         padding-bottom: 10px;
         margin-bottom: ${localVariables.marginBottom};
 
         border-bottom: 1px solid ${theme.color.creamWhite};
-    `}
-`;
+    `,
+);
 
 export const OrderSummaryRowContentStyled = styled.div`
     display: table;
@@ -126,27 +126,27 @@ export const PriceWrapperStyled = styled.div`
     justify-content: flex-end;
 `;
 
-export const OrderSummaryTextAndImageStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderSummaryTextAndImageStyled = styled.div(
+    ({ theme }) => css`
         display: table-row;
         padding: 6px 0;
         vertical-align: baseline;
         line-height: ${theme.lineHeight.default};
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
-export const OrderSummaryPriceStyled = styled.div`
-    ${({ theme }) => css`
+export const OrderSummaryPriceStyled = styled.div(
+    ({ theme }) => css`
         padding: 6px 0;
         vertical-align: baseline;
         line-height: ${theme.lineHeight.default};
         text-align: right;
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
 export const TransportAndPaymentImageWrapperStyled = styled.span`
     display: inline-block;
@@ -169,10 +169,10 @@ export const OrderSummaryTotalPriceTextStyled = styled.span`
     align-items: end;
 `;
 
-export const OrderSummaryTotalPriceAmountStyled = styled.strong`
-    ${({ theme }) => css`
+export const OrderSummaryTotalPriceAmountStyled = styled.strong(
+    ({ theme }) => css`
         color: ${theme.color.primary};
 
         font-size: ${localVariables.totalPriceFontSize};
-    `}
-`;
+    `,
+);

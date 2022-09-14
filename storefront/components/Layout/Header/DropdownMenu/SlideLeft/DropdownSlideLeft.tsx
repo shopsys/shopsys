@@ -1,5 +1,5 @@
 import { DropdownSlideLeftIconStyled, DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { DropdownListLevels } from 'types/dropdown';
 
@@ -10,7 +10,7 @@ type DropdownSlideLeftProps = {
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideleft';
 
-const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent }) => {
+export const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -20,5 +20,3 @@ const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClickEvent 
         </DropdownSlideLeftStyled>
     );
 };
-
-export default DropdownSlideLeft;

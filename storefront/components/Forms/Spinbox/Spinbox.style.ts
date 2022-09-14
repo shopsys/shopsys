@@ -7,10 +7,10 @@ const localVariables = {
     spinboxButtonWidth: '24px',
     spinboxWidth: '120px',
     spinboxWidthSmall: '80px',
-};
+} as const;
 
-export const SpinboxStyled = styled.div`
-    ${({ theme }) => css`
+export const SpinboxStyled = styled.div(
+    ({ theme }) => css`
         display: inline-flex;
         width: ${localVariables.spinboxWidth};
         height: ${localVariables.spinboxHeight};
@@ -19,11 +19,11 @@ export const SpinboxStyled = styled.div`
         border-radius: ${theme.radius.big};
         background-color: ${theme.color.white};
         overflow: hidden;
-    `}
-`;
+    `,
+);
 
-export const SpinboxSmallStyled = styled(SpinboxStyled)`
-    ${({ theme }) => css`
+export const SpinboxSmallStyled = styled(SpinboxStyled)(
+    ({ theme }) => css`
         height: ${localVariables.spinboxHeightSmall};
         width: ${localVariables.spinboxWidthSmall};
 
@@ -34,11 +34,11 @@ export const SpinboxSmallStyled = styled(SpinboxStyled)`
 
             font-size: 12px;
         }
-    `}
-`;
+    `,
+);
 
-export const SpinboxInputStyled = styled.input`
-    ${({ theme }) => css`
+export const SpinboxInputStyled = styled.input(
+    ({ theme }) => css`
         flex: 1;
         text-align: center;
         padding: 0;
@@ -60,11 +60,11 @@ export const SpinboxInputStyled = styled.input`
         &[type='number'] {
             -moz-appearance: textfield;
         }
-    `}
-`;
+    `,
+);
 
-export const SpinboxButtonStyled = styled.button`
-    ${({ theme }) => css`
+export const SpinboxButtonStyled = styled.button(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         align-items: center;
@@ -79,5 +79,5 @@ export const SpinboxButtonStyled = styled.button`
         background: none;
         border: 0;
         outline: 0;
-    `}
-`;
+    `,
+);

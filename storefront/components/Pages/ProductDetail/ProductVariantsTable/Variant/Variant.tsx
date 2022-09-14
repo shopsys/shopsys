@@ -8,15 +8,15 @@ import {
     VariantImageWrapperStyled,
     VariantPriceCellStyled,
 } from './Variant.style';
-import Image from 'components/Basic/Image';
-import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
-import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
-import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
-import Popup from 'components/Layout/Popup';
-import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
+import { Image } from 'components/Basic/Image/Image';
+import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
+import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
+import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
+import { Popup } from 'components/Layout/Popup/Popup';
+import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { ListedVariantType } from 'types/product';
@@ -28,51 +28,47 @@ type VariantProps = {
     listIndex: number;
 };
 
-const Variant: FC<VariantProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-variant-';
+const TEST_IDENTIFIER = 'pages-productdetail-variant-';
 
+export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIndex, variant }) => {
     const formatPrice = useFormatPrice();
     const [isAvailabilityPopupVisible, setAvailabilityPopupVisibility] = useState(false);
     const t = useTypedTranslationFunction();
 
     return (
         <>
-            <VariantsTableRowStyled key={props.variant.uuid} data-testid={testIdentifier + props.variant.catalogNumber}>
+            <VariantsTableRowStyled key={variant.uuid} data-testid={TEST_IDENTIFIER + variant.catalogNumber}>
                 <VariantImageCellStyled>
                     <VariantImageWrapperStyled>
-                        <Image alt={props.variant.fullName} type="default" image={props.variant.image} />
+                        <Image alt={variant.fullName} type="default" image={variant.image} />
                     </VariantImageWrapperStyled>
                 </VariantImageCellStyled>
-                <VariantCellStyled data-testid={testIdentifier + 'name'}>{props.variant.fullName}</VariantCellStyled>
+                <VariantCellStyled data-testid={TEST_IDENTIFIER + 'name'}>{variant.fullName}</VariantCellStyled>
                 <VariantAvailabilityCellStyled
                     onClick={() => setAvailabilityPopupVisibility(true)}
-                    data-testid={testIdentifier + 'availability'}
+                    data-testid={TEST_IDENTIFIER + 'availability'}
                 >
-                    {props.variant.availability.name}
+                    {variant.availability.name}
                     <ProductAvailableStoresCount
                         isMainVariant={false}
-                        availableStoresCount={props.variant.availableStoresCount}
+                        availableStoresCount={variant.availableStoresCount}
                     />
-                    <ProductExposedStoresCount
-                        isMainVariant={false}
-                        exposedStoresCount={props.variant.exposedStoresCount}
-                    />
+                    <ProductExposedStoresCount isMainVariant={false} exposedStoresCount={variant.exposedStoresCount} />
                 </VariantAvailabilityCellStyled>
-                <VariantPriceCellStyled data-testid={testIdentifier + 'price'}>
-                    {formatPrice(props.variant.price.priceWithVat)}
+                <VariantPriceCellStyled data-testid={TEST_IDENTIFIER + 'price'}>
+                    {formatPrice(variant.price.priceWithVat)}
                 </VariantPriceCellStyled>
                 <VariantActionCellStyled>
-                    {props.isSellingDenied ? (
+                    {isSellingDenied ? (
                         <>{t('This item can no longer be purchased')}</>
                     ) : (
                         <VariantActionStyled>
                             <AddToCart
-                                productUuid={props.variant.uuid}
-                                productName={props.variant.fullName}
+                                productUuid={variant.uuid}
                                 minQuantity={1}
-                                maxQuantity={props.variant.stockQuantity}
-                                gtmListName={props.gtmListName}
-                                listIndex={props.listIndex}
+                                maxQuantity={variant.stockQuantity}
+                                gtmListName={gtmListName}
+                                listIndex={listIndex}
                             />
                         </VariantActionStyled>
                     )}
@@ -84,11 +80,9 @@ const Variant: FC<VariantProps> = (props) => {
                     onCloseCallback={() => setAvailabilityPopupVisibility(false)}
                     wrapperComponent={AvailabilityPopupStyled}
                 >
-                    <ProductDetailAvailabilityList storeAvailabilities={props.variant.storeAvailabilities} />
+                    <ProductDetailAvailabilityList storeAvailabilities={variant.storeAvailabilities} />
                 </Popup>
             )}
         </>
     );
 };
-
-export default Variant;

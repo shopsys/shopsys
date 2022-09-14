@@ -10,11 +10,11 @@ import {
     useOrderDetailQueryApi,
     useOrdersQueryApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { DomainConfigType } from 'helpers/domain/domain';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useShopsysSelector } from 'redux/main';
 import { initialState } from 'redux/slices/user';
 import { ListedOrderConnectionType, ListedOrderType, OrderDetailItemType, OrderDetailType } from 'types/orders';
-import { DomainConfigType } from 'utils/Domain/Domain';
 
 export const useOrders = (currentDomainConfig: DomainConfigType): ListedOrderConnectionType | undefined => {
     const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);

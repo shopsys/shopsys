@@ -3,7 +3,7 @@ import {
     DeliveryAddressFragmentApi,
     useCurrentCustomerUserQueryApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 

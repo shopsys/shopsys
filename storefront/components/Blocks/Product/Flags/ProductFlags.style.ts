@@ -9,8 +9,8 @@ type ProductFlagsItemStyledProps = {
     color?: string;
 };
 
-export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
-    ${({ theme, color }) => css`
+export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>(
+    ({ theme, color }) => css`
         display: inline-flex;
         margin-bottom: 2px;
         margin-right: auto;
@@ -29,5 +29,5 @@ export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
             color: ${theme.color.black};
             text-decoration: none;
         }
-    `}
-`;
+    `,
+);

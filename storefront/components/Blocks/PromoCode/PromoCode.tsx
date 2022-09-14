@@ -8,19 +8,20 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
-import PromoCodeInfo from './PromoCodeInfo';
-import Form from 'components/Forms/Form';
+import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
+import { Form } from 'components/Forms/Form/Form';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useApplyPromoCodeToCart } from 'hooks/cart/UseApplyPromoCodeToCart';
-import { useRemovePromoCodeFromCart } from 'hooks/cart/UseRemovePromoCodeFromCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
+import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useEffect, useRef, useState } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { PromoCodeFormType } from 'types/form';
 
-const PromoCode: FC = () => {
-    const testIdentifier = 'blocks-promocode';
+const TEST_IDENTIFIER = 'blocks-promocode';
+
+export const PromoCode: FC = () => {
     const { promoCode } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
@@ -55,16 +56,16 @@ const PromoCode: FC = () => {
     }, [promoCode, setValue]);
 
     return (
-        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={testIdentifier}>
+        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
             {promoCode !== null ? (
                 <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
             ) : (
                 <>
                     <PromoCodeButtonStyled
                         onClick={() => setIsContentVisible(!isContentVisible)}
-                        data-testid={testIdentifier + '-add-button'}
+                        data-testid={TEST_IDENTIFIER + '-add-button'}
                     >
-                        <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
+                        <PromoCodeButtonIconStyled alt="" iconType="icon" icon="Plus" />
                         {t('I have a discount coupon')}
                     </PromoCodeButtonStyled>
                     <CSSTransition
@@ -81,7 +82,6 @@ const PromoCode: FC = () => {
                                 <FormProvider {...formProviderMethods}>
                                     <Form
                                         onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                                        noValidate
                                         style={{ display: 'flex' }}
                                     >
                                         <Controller
@@ -99,7 +99,7 @@ const PromoCode: FC = () => {
                                                     <PromoCodeContentButtonStyled
                                                         type="submit"
                                                         isDisabled={!formProviderMethods.formState.isValid}
-                                                        data-testid={testIdentifier + '-apply-button'}
+                                                        data-testid={TEST_IDENTIFIER + '-apply-button'}
                                                     >
                                                         {t('Apply')}
                                                     </PromoCodeContentButtonStyled>
@@ -116,5 +116,3 @@ const PromoCode: FC = () => {
         </PromoCodeStyled>
     );
 };
-
-export default PromoCode;

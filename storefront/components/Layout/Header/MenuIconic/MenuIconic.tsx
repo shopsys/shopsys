@@ -9,21 +9,21 @@ import {
     MenuIconicSubItemStyled,
     MenuIconicSubStyled,
 } from './MenuIconic.style';
-import Heading from 'components/Basic/Heading';
-import Login from 'components/Blocks/Popup/Login';
-import Popup from 'components/Layout/Popup';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Login } from 'components/Blocks/Popup/Login/Login';
+import { Popup } from 'components/Layout/Popup/Popup';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { useAuth } from 'hooks/auth/useAuth';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
 import nookies from 'nookies';
 import { FC, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const MenuIconic: FC = () => {
-    const testIdentifier = 'layout-header-menuiconic';
+const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
+export const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
     const [, [, logout]] = useAuth();
     const { isUserLoggedIn } = useCurrentUserData();
@@ -55,8 +55,8 @@ const MenuIconic: FC = () => {
 
     return (
         <>
-            <MenuIconicListStyled data-testid={testIdentifier}>
-                <MenuIconicItemStyled data-testid={testIdentifier + '-0'}>
+            <MenuIconicListStyled data-testid={TEST_IDENTIFIER}>
+                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-0'}>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled iconType="icon" icon="Chat" />
@@ -64,7 +64,7 @@ const MenuIconic: FC = () => {
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
-                <MenuIconicItemStyled data-testid={testIdentifier + '-1'}>
+                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-1'}>
                     <NextLink href={storesUrl} passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled iconType="icon" icon="Marker" />
@@ -72,13 +72,13 @@ const MenuIconic: FC = () => {
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
-                <MenuIconicItemStyled data-testid={testIdentifier + '-2'}>
+                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-2'}>
                     {isUserLoggedIn ? (
-                        <MenuIconicItemLinkStyled hasSubmenu={true}>
+                        <MenuIconicItemLinkStyled hasSubmenu>
                             <MenuIconicItemIconStyled iconType="icon" icon="User" />
                             {t('My account')}
                             <MenuIconicSubStyled>
-                                <MenuIconicSubItemStyled data-testid={testIdentifier + '-sub-0'}>
+                                <MenuIconicSubItemStyled data-testid={TEST_IDENTIFIER + '-sub-0'}>
                                     <NextLink href={customerOrdersUrl} passHref>
                                         <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
                                     </NextLink>
@@ -87,7 +87,7 @@ const MenuIconic: FC = () => {
                                     <NextLink
                                         href={customerEditProfileUrl}
                                         passHref
-                                        data-testid={testIdentifier + '-sub-1'}
+                                        data-testid={TEST_IDENTIFIER + '-sub-1'}
                                     >
                                         <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
                                     </NextLink>
@@ -95,7 +95,7 @@ const MenuIconic: FC = () => {
                                 <MenuIconicSubItemStyled>
                                     <MenuIconicSubItemLinkStyled
                                         onClick={logoutHandler}
-                                        data-testid={testIdentifier + '-sub-2'}
+                                        data-testid={TEST_IDENTIFIER + '-sub-2'}
                                     >
                                         {t('Logout')}
                                     </MenuIconicSubItemLinkStyled>
@@ -130,5 +130,3 @@ const MenuIconic: FC = () => {
         </>
     );
 };
-
-export default MenuIconic;

@@ -3,8 +3,8 @@ import {
     ProductDetailAvailabilityLinkStyled as AvailabilityLinkStyled,
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
-import Icon from 'components/Basic/Icon';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, RefObject, useEffect } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { ProductDetailType } from 'types/product';
@@ -14,14 +14,14 @@ type ProductDetailAvailabilityProps = {
     scrollTarget: RefObject<HTMLUListElement>;
 };
 
-const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-productdetailavailability';
+const TEST_IDENTIFIER = 'pages-productdetail-productdetailavailability';
 
+export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ product, scrollTarget }) => {
     const t = useTypedTranslationFunction();
 
     const scrollOnClickHandler = () => {
-        if (props.scrollTarget.current !== null) {
-            props.scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (scrollTarget.current !== null) {
+            scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
 
@@ -30,25 +30,23 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
     }, []);
 
     return (
-        <AvailabilityStyled data-testid={testIdentifier}>
-            <AvailabilityLinkStyled status={props.product.availability.status} onClick={scrollOnClickHandler}>
-                {props.product.availability.name}
+        <AvailabilityStyled data-testid={TEST_IDENTIFIER}>
+            <AvailabilityLinkStyled availabilityStatus={product.availability.status} onClick={scrollOnClickHandler}>
+                {product.availability.name}
                 <Icon iconType="icon" icon="Arrow" />
             </AvailabilityLinkStyled>
-            {props.product.availableStoresCount > 0 && (
-                <AvailabilityInfoStyled data-testid={testIdentifier + '-availability'}>
+            {product.availableStoresCount > 0 && (
+                <AvailabilityInfoStyled data-testid={TEST_IDENTIFIER + '-availability'}>
                     {t('This item is available immediately in {{ count }} stores', {
-                        count: props.product.availableStoresCount,
+                        count: product.availableStoresCount,
                     })}
                 </AvailabilityInfoStyled>
             )}
-            {props.product.exposedStoresCount > 0 && (
-                <AvailabilityInfoStyled data-testid={testIdentifier + '-exposed'}>
-                    {t('You can check this item in {{ count }} stores', { count: props.product.exposedStoresCount })}
+            {product.exposedStoresCount > 0 && (
+                <AvailabilityInfoStyled data-testid={TEST_IDENTIFIER + '-exposed'}>
+                    {t('You can check this item in {{ count }} stores', { count: product.exposedStoresCount })}
                 </AvailabilityInfoStyled>
             )}
         </AvailabilityStyled>
     );
 };
-
-export default ProductDetailAvailability;

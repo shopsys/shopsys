@@ -1,9 +1,9 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const BreadcrumbsStyled = styled.div`
-    ${({ theme }) => css`
+export const BreadcrumbsStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 36px;
         display: flex;
         align-items: center;
@@ -15,11 +15,11 @@ export const BreadcrumbsStyled = styled.div`
             border-bottom: 2px solid ${theme.color.greyLighter};
             font-size: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const BreadcrumbsLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const BreadcrumbsLinkStyled = styled.a(
+    ({ theme }) => css`
         margin-right: 11px;
 
         color: ${theme.color.primary};
@@ -35,11 +35,11 @@ export const BreadcrumbsLinkStyled = styled.a`
                 display: initial;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const BreadcrumbsSpanStyled = styled.span`
-    ${({ theme }) => css`
+export const BreadcrumbsSpanStyled = styled.span(
+    ({ theme }) => css`
         margin-right: 11px;
 
         color: ${theme.color.greyLight};
@@ -48,11 +48,11 @@ export const BreadcrumbsSpanStyled = styled.span`
         @media ${theme.mediaQueries.queryTablet} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const LeftArrowIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const LeftArrowIconStyled = styled(Icon)(
+    ({ theme }) => css`
         height: 12px;
         width: 12px;
         transform: rotate(90deg);
@@ -63,5 +63,5 @@ export const LeftArrowIconStyled = styled(Icon)`
         @media ${theme.mediaQueries.queryLg} {
             display: none;
         }
-    `}
-`;
+    `,
+);

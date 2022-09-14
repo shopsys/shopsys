@@ -5,8 +5,8 @@ import {
     SideSliderItemStyled,
     SideSliderNameStyled,
 } from './SideSlider.style';
-import Flag from 'components/Basic/Flag';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Image } from 'components/Basic/Image/Image';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -18,9 +18,9 @@ type SideSliderProps = {
     blogSideItems: ListedBlogArticleType[];
 };
 
-const SideSlider: FC<SideSliderProps> = (props) => {
-    const testIdentifier = 'blocks-blogpreview-sideslider-';
+const TEST_IDENTIFIER = 'blocks-blogpreview-sideslider-';
 
+export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryNotLargeDesktop]: {
@@ -40,11 +40,11 @@ const SideSlider: FC<SideSliderProps> = (props) => {
     return (
         <>
             <div ref={sliderRef} className="keen-slider">
-                {props.blogSideItems.map((blogSideItem, index) => (
+                {blogSideItems.map((blogSideItem, index) => (
                     <SideSliderItemStyled
                         key={index}
                         className="keen-slider__slide"
-                        data-testid={testIdentifier + index}
+                        data-testid={TEST_IDENTIFIER + index}
                     >
                         <SideSliderImageStyled>
                             <NextLink href={blogSideItem.link} passHref>
@@ -74,5 +74,3 @@ const SideSlider: FC<SideSliderProps> = (props) => {
         </>
     );
 };
-
-export default SideSlider;

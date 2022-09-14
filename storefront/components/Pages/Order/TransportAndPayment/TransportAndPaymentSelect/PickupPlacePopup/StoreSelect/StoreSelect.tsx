@@ -1,4 +1,4 @@
-import Radiobutton from 'components/Forms/Radiobutton';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelect.style';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
 import { FC } from 'react';

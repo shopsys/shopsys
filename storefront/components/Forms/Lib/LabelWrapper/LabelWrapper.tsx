@@ -2,7 +2,7 @@ import { LabelWrapperStyled, RequiredSymbolStyled } from './LabelWrapper.style';
 import { FC, LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
+type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor' | 'className'>;
 
 type LabelWrapperProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
@@ -14,22 +14,32 @@ type LabelWrapperProps = NativeProps & {
     selectBoxLabelIsFloated?: boolean;
 };
 
-const LabelWrapper: FC<LabelWrapperProps> = (props) => {
+export const LabelWrapper: FC<LabelWrapperProps> = ({
+    label,
+    count,
+    inputType,
+    required,
+    placeholderType,
+    checked,
+    selectBoxLabelIsFloated,
+    htmlFor,
+    children,
+    className,
+}) => {
     return (
-        <LabelWrapperStyled inputType={props.inputType} selectBoxLabelIsFloated={props.selectBoxLabelIsFloated}>
-            {props.children}
-            {props.placeholderType !== 'static' && (
-                <label htmlFor={props.htmlFor}>
-                    {props.label}
-                    {props.count !== undefined &&
-                        props.checked === false &&
-                        props.count > 0 &&
-                        `\u00A0(${props.count})`}
-                    {props.required && <RequiredSymbolStyled>*</RequiredSymbolStyled>}
+        <LabelWrapperStyled
+            className={className}
+            inputType={inputType}
+            selectBoxLabelIsFloated={selectBoxLabelIsFloated}
+        >
+            {children}
+            {placeholderType !== 'static' && (
+                <label htmlFor={htmlFor}>
+                    {label}
+                    {count !== undefined && checked === false && count > 0 && `\u00A0(${count})`}
+                    {required && <RequiredSymbolStyled>*</RequiredSymbolStyled>}
                 </label>
             )}
         </LabelWrapperStyled>
     );
 };
-
-export default LabelWrapper;

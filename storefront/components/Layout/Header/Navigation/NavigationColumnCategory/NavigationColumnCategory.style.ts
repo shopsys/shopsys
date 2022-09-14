@@ -1,18 +1,6 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-const localVariables = {
-    navigationHeight: '64px',
-    navigationSubListItemGap: '45px',
-} as const;
-
-export const NavigationItemSubListStyled = styled.ul`
-    display: flex;
-    flex-direction: column;
-    width: calc(100% / 4);
-    padding-left: ${localVariables.navigationSubListItemGap};
-`;
-
 export const NavigationColumnCategoryStyled = styled.li`
     width: 100%;
     margin-bottom: 35px;
@@ -22,8 +10,8 @@ export const NavigationColumnCategoryStyled = styled.li`
     }
 `;
 
-export const NavigationColumnCategoryImageStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationColumnCategoryImageStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         height: 64px;
@@ -37,11 +25,11 @@ export const NavigationColumnCategoryImageStyled = styled.a`
         img {
             mix-blend-mode: multiply;
         }
-    `}
-`;
+    `,
+);
 
-export const NavigationColumnCategoryLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationColumnCategoryLinkStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         margin-bottom: 4px;
 
@@ -49,5 +37,5 @@ export const NavigationColumnCategoryLinkStyled = styled.a`
         font-weight: 700;
         font-size: ${theme.fontSize.default};
         color: ${theme.color.base};
-    `}
-`;
+    `,
+);

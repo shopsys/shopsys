@@ -1,33 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'components/Basic/Link';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { Link } from 'components/Basic/Link/Link';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
-import { SelectOptionType } from 'types/selectOptions';
+import { RegistrationFormType } from 'types/form';
 import * as Yup from 'yup';
-
-export type RegistrationFormType = {
-    email: string;
-    passwordFirst: string;
-    passwordSecond: string;
-    customer: CustomerTypeEnum;
-    telephone: string;
-    firstName: string;
-    lastName: string;
-    street: string;
-    city: string;
-    postcode: string;
-    country: SelectOptionType;
-    companyName: string;
-    companyNumber: string;
-    companyTaxNumber: string;
-    gdprAgreement: boolean;
-    newsletterSubscription: boolean;
-};
 
 export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, RegistrationFormType] => {
     const t = useTypedTranslationFunction();

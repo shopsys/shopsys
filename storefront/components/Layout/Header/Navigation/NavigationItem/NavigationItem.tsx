@@ -5,7 +5,7 @@ import {
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
-import NavigationLeaf from 'components/Layout/Header/Navigation/NavigationLeaf';
+import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf/NavigationLeaf';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -18,8 +18,9 @@ type NavigationItemProps = {
     navigationItem: NavigationItemType;
 };
 
-const NavigationItem: FC<NavigationItemProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationitem';
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';
+
+export const NavigationItem: FC<NavigationItemProps> = (props) => {
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
     const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
     const isHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);
@@ -44,9 +45,8 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <NavigationItemStyled
                     onMouseEnter={openSubmenu}
                     onMouseLeave={hideSubmenu}
-                    isOpen={isHovered}
                     onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
-                    data-testid={testIdentifier}
+                    data-testid={TEST_IDENTIFIER}
                 >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>
@@ -68,8 +68,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <NavigationItemStyled
                     onMouseEnter={openSubmenu}
                     onMouseLeave={hideSubmenu}
-                    isOpen={isHovered}
-                    data-testid={testIdentifier}
+                    data-testid={TEST_IDENTIFIER}
                 >
                     <NextLink href={props.navigationItem.link} passHref>
                         <NavigationItemLinkStyled isOpen={isHovered}>
@@ -91,5 +90,3 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
         </>
     );
 };
-
-export default NavigationItem;

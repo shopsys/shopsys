@@ -1,6 +1,6 @@
-import HamburgerIcon from './HamburgerIcon';
+import { HamburgerIcon } from './HamburgerIcon/HamburgerIcon';
 import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, MouseEventHandler } from 'react';
 
 type HamburgerMenuProps = {
@@ -10,7 +10,7 @@ type HamburgerMenuProps = {
 
 const TEST_IDENTIFIER = 'layout-header-hamburgermenu';
 
-const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
+export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -22,5 +22,3 @@ const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuToggleHandl
         </HamburgerMenuStyled>
     );
 };
-
-export default HamburgerMenu;

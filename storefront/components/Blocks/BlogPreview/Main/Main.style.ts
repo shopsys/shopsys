@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const MainItemStyled = styled.div`
-    ${({ theme }) => css`
+export const MainItemStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -20,8 +20,8 @@ export const MainItemStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             padding-left: 87px;
         }
-    `}
-`;
+    `,
+);
 
 export const MainImageStyled = styled.div`
     display: flex;
@@ -29,8 +29,8 @@ export const MainImageStyled = styled.div`
     width: 100%;
 `;
 
-export const MainImageLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const MainImageLinkStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         position: relative;
         margin-bottom: 10px;
@@ -43,15 +43,15 @@ export const MainImageLinkStyled = styled.a`
 
             border-radius: ${theme.radius.medium};
         }
-    `}
-`;
+    `,
+);
 
 export const MainContentStyled = styled.div`
     flex: 1;
 `;
 
-export const MainNameStyled = styled.a`
-    ${({ theme }) => css`
+export const MainNameStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         line-height: 22px;
         margin-bottom: 6px;
@@ -65,13 +65,13 @@ export const MainNameStyled = styled.a`
             color: ${theme.color.white};
             text-decoration: underline;
         }
-    `}
-`;
+    `,
+);
 
-export const MainDescriptionStyled = styled.div`
-    ${({ theme }) => css`
+export const MainDescriptionStyled = styled.div(
+    ({ theme }) => css`
         line-height: 21px;
 
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);

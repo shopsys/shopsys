@@ -33,7 +33,7 @@ After successful refresh, previously forbidden requests are re-executed with the
 
 For logging the user in/out we can use `useAuth` hook.
 ```plain
-/hooks/auth/UseAuth.tsx
+/hooks/auth/useAuth.tsx
 ```
 
 User login

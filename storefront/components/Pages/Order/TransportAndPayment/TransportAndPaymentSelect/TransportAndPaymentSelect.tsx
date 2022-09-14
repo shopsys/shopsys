@@ -1,18 +1,18 @@
 import { PickupPlacePopup } from './PickupPlacePopup/PickupPlacePopup';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './TransportAndPaymentSelect.style';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Radiobutton from 'components/Forms/Radiobutton';
-import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
+import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
-import { useChangeTransportInCart } from 'hooks/cart/UseChangeTransportInCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
 import { FC, useCallback, useState } from 'react';
@@ -97,14 +97,14 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 
     const handleTransportChange = useCallback(
-        (newTransportUuid: string | null) => {
+        async (newTransportUuid: string | null) => {
             const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
             if (potentialNewTransport?.uuid === transport?.uuid) {
                 return;
             }
 
             if (potentialNewTransport === undefined) {
-                changeTransportInCart(null, null);
+                await changeTransportInCart(null, null);
 
                 return;
             }
@@ -116,52 +116,53 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     return;
                 }
 
-                changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
+                await changeTransportInCart(newTransportUuid, preSelectedPickupPlace);
                 setPreSelectedPickupPlace(null);
 
                 return;
             }
 
             if (newTransportUuid !== transport?.uuid) {
-                changeTransportInCart(newTransportUuid, null);
+                await changeTransportInCart(newTransportUuid, null);
             }
         },
         [changeTransportInCart, transports, openPersonalPickupPopup, transport?.uuid, preSelectedPickupPlace],
     );
 
     const handlePaymentChange = useCallback(
-        (newPaymentUuid: string | null) => {
-            changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
+        async (newPaymentUuid: string | null) => {
+            await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
         },
         [paymentGoPayBankSwift, changePaymentInCart],
     );
 
     const handleGoPaySwiftChange = useCallback(
-        (newGoPaySwiftValue: string | null) => {
-            changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
+        async (newGoPaySwiftValue: string | null) => {
+            await changePaymentInCart(payment?.uuid ?? null, newGoPaySwiftValue);
         },
         [changePaymentInCart, payment],
     );
 
-    useEffectOnce(() => {
+    const loadPresetsFromLastOrder = useCallback(async () => {
         if (transport === null) {
-            handleTransportChange(lastOrderTransportUuid);
+            await handleTransportChange(lastOrderTransportUuid);
         }
-    });
+        if (payment === null) {
+            await handlePaymentChange(lastOrderPaymentUuid);
+        }
+    }, [handlePaymentChange, handleTransportChange, lastOrderPaymentUuid, lastOrderTransportUuid, payment, transport]);
 
     useEffectOnce(() => {
-        if (payment === null) {
-            handlePaymentChange(lastOrderPaymentUuid);
-        }
+        loadPresetsFromLastOrder();
     });
 
     const resetPaymentAndGoPayBankSwift = () => {
         changePaymentInCart(null, null);
     };
 
-    const resetAll = () => {
-        handleTransportChange(null);
-        handlePaymentChange(null);
+    const resetAll = async () => {
+        await handleTransportChange(null);
+        await handlePaymentChange(null);
         removePacketeryCookie();
     };
 
@@ -200,9 +201,9 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={transportItem.uuid}
                     value={transportItem.uuid}
                     checked={isActive}
-                    image={transportItem.image}
                     onChangeCallback={handleTransportChange}
-                    data-testid={TEST_IDENTIFIER + 'transport-item-input'}
+                    testIdentifier={TEST_IDENTIFIER + 'transport-item-input'}
+                    image={transportItem.image}
                     label={
                         <TransportAndPaymentSelectItemLabel
                             name={transportItem.name}
@@ -229,9 +230,9 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={paymentItem.uuid}
                     value={paymentItem.uuid}
                     checked={isActive}
-                    image={paymentItem.image}
                     onChangeCallback={handlePaymentChange}
-                    data-testid={TEST_IDENTIFIER + 'payment-item-input'}
+                    testIdentifier={TEST_IDENTIFIER + 'payment-item-input'}
+                    image={paymentItem.image}
                     label={
                         <TransportAndPaymentSelectItemLabel
                             name={paymentItem.name}

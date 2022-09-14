@@ -1,6 +1,6 @@
 import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
-import Flag from 'components/Basic/Flag';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
@@ -9,13 +9,13 @@ type SideProps = {
     blogSideItems: ListedBlogArticleType[];
 };
 
-const Side: FC<SideProps> = (props) => {
-    const testIdentifier = 'blocks-blogpreview-side-';
+const TEST_IDENTIFIER = 'blocks-blogpreview-side-';
 
+export const Side: FC<SideProps> = ({ blogSideItems }) => {
     return (
         <>
-            {props.blogSideItems.map((blogSideItem, index) => (
-                <SideItemStyled key={index} data-testid={testIdentifier + index}>
+            {blogSideItems.map((blogSideItem, index) => (
+                <SideItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
                     <SideImageStyled>
                         <NextLink href={blogSideItem.link} passHref>
                             <SideImageLinkStyled>
@@ -42,5 +42,3 @@ const Side: FC<SideProps> = (props) => {
         </>
     );
 };
-
-export default Side;

@@ -6,7 +6,7 @@ import {
     OrderSummaryTextAndImageStyled,
     TransportAndPaymentImageWrapperStyled,
 } from './OrderSummary.style';
-import Image from 'components/Basic/Image';
+import { Image } from 'components/Basic/Image/Image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { FC } from 'react';
 import { PaymentType } from 'types/payment';
@@ -17,37 +17,37 @@ type TransportAndPaymentProps = {
     payment: PaymentType | null;
 };
 
-const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
-    const testIdentifier = 'blocks-ordersummary';
+const TEST_IDENTIFIER = 'blocks-ordersummary';
 
+export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, transport }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <OrderSummaryRowWrapperStyled data-testid={testIdentifier}>
+        <OrderSummaryRowWrapperStyled data-testid={TEST_IDENTIFIER}>
             <OrderSummaryRowContentStyled>
-                {props.transport !== null && (
+                {transport !== null && (
                     <OrderSummaryRowStyled>
-                        <OrderSummaryTextAndImageStyled data-testid={testIdentifier + '-transport-name'}>
-                            {props.transport.name}
+                        <OrderSummaryTextAndImageStyled data-testid={TEST_IDENTIFIER + '-transport-name'}>
+                            {transport.name}
                             <TransportAndPaymentImageWrapperStyled>
-                                <Image image={props.transport.image} type="default" alt={props.transport.name} />
+                                <Image image={transport.image} type="default" alt={transport.name} />
                             </TransportAndPaymentImageWrapperStyled>
                         </OrderSummaryTextAndImageStyled>
-                        <OrderSummaryPriceStyled data-testid={testIdentifier + '-transport-price'}>
-                            <strong>{formatPrice(props.transport.price.priceWithVat)}</strong>
+                        <OrderSummaryPriceStyled data-testid={TEST_IDENTIFIER + '-transport-price'}>
+                            <strong>{formatPrice(transport.price.priceWithVat)}</strong>
                         </OrderSummaryPriceStyled>
                     </OrderSummaryRowStyled>
                 )}
-                {props.payment !== null && (
+                {payment !== null && (
                     <OrderSummaryRowStyled>
-                        <OrderSummaryTextAndImageStyled data-testid={testIdentifier + '-payment-name'}>
-                            {props.payment.name}
+                        <OrderSummaryTextAndImageStyled data-testid={TEST_IDENTIFIER + '-payment-name'}>
+                            {payment.name}
                             <TransportAndPaymentImageWrapperStyled>
-                                <Image image={props.payment.image} type="default" alt={props.payment.name} />
+                                <Image image={payment.image} type="default" alt={payment.name} />
                             </TransportAndPaymentImageWrapperStyled>
                         </OrderSummaryTextAndImageStyled>
-                        <OrderSummaryPriceStyled data-testid={testIdentifier + '-payment-price'}>
-                            <strong>{formatPrice(props.payment.price.priceWithVat)}</strong>
+                        <OrderSummaryPriceStyled data-testid={TEST_IDENTIFIER + '-payment-price'}>
+                            <strong>{formatPrice(payment.price.priceWithVat)}</strong>
                         </OrderSummaryPriceStyled>
                     </OrderSummaryRowStyled>
                 )}
@@ -55,5 +55,3 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
         </OrderSummaryRowWrapperStyled>
     );
 };
-
-export default TransportAndPayment;

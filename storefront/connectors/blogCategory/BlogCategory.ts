@@ -1,6 +1,6 @@
 import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { BlogCategoryDetailFragmentApi, useBlogCategoriesApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { BlogCategoryDetailType } from 'types/blogCategory';
 
 export const useBlogUrl = (): string | undefined => {

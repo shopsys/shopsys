@@ -1,16 +1,16 @@
-import Heading from 'components/Basic/Heading';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
 
-const ContactInformationCompany: FC = () => {
+export const ContactInformationCompany: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
@@ -27,7 +27,7 @@ const ContactInformationCompany: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -36,7 +36,7 @@ const ContactInformationCompany: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyName.name}
                                 name={formMeta.fields.companyName.name}
                                 label={formMeta.fields.companyName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -48,14 +48,14 @@ const ContactInformationCompany: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
                             />
                         </>
                     )}
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -64,7 +64,7 @@ const ContactInformationCompany: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
                                 name={formMeta.fields.companyNumber.name}
                                 label={formMeta.fields.companyNumber.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -76,14 +76,14 @@ const ContactInformationCompany: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
                             />
                         </>
                     )}
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} lg="65%">
+            <FormLine bottomGap lg="65%">
                 <Controller
                     name={formMeta.fields.companyTaxNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -103,7 +103,9 @@ const ContactInformationCompany: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'}
+                                testIdentifier={
+                                    formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'
+                                }
                             />
                         </>
                     )}
@@ -112,5 +114,3 @@ const ContactInformationCompany: FC = () => {
         </>
     );
 };
-
-export default ContactInformationCompany;

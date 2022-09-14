@@ -5,8 +5,8 @@ type OverlayStyledProps = {
     isHiddenOnDesktop?: boolean;
 };
 
-export const OverlayStyled = styled.div<OverlayStyledProps>`
-    ${({ theme, isHiddenOnDesktop }) => css`
+export const OverlayStyled = styled.div<OverlayStyledProps>(
+    ({ theme, isHiddenOnDesktop }) => css`
         bottom: 0;
         left: 0;
         position: fixed;
@@ -29,5 +29,5 @@ export const OverlayStyled = styled.div<OverlayStyledProps>`
                 display: none;
             }
         `}
-    `}
-`;
+    `,
+);

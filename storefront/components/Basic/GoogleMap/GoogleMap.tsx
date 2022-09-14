@@ -19,27 +19,35 @@ type GoogleMapProps = {
     closeMarkers?: boolean;
 };
 
-const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
-    const testIdentifier = 'basic-googlemap';
+const TEST_IDENTIFIER = 'basic-googlemap';
 
+export const GoogleMap: FC<GoogleMapProps> = ({
+    lat,
+    lng,
+    zoom,
+    markers,
+    activeMarkerHandler,
+    isDetail,
+    closeMarkers,
+}) => {
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useShopsysSelector((state) => state.domain);
-    const lat = props.lat === null || props.lat === undefined ? mapSetting.latitude : props.lat;
-    const lng = props.lng === null || props.lng === undefined ? mapSetting.longitude : props.lng;
-    const zoom = props.zoom === null || props.zoom === undefined ? mapSetting.zoom : props.zoom;
+    const mapLat = lat === null || lat === undefined ? mapSetting.latitude : lat;
+    const mapLng = lng === null || lng === undefined ? mapSetting.longitude : lng;
+    const mapZoom = zoom === null || zoom === undefined ? mapSetting.zoom : zoom;
     const [activeMarker, setActiveMarker] = useState(-1);
 
     const markerClickHandler = (index: number) => {
-        if (!props.isDetail) {
+        if (!isDetail) {
             setActiveMarker(activeMarker === index ? -1 : index);
         }
     };
 
     useEffect(() => {
-        if (props.closeMarkers) {
+        if (closeMarkers) {
             setActiveMarker(-1);
         }
-    }, [props.closeMarkers]);
+    }, [closeMarkers]);
 
     useEffect(() => {
         if (activeMarkerHandler) {
@@ -48,28 +56,28 @@ const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
     }, [activeMarkerHandler, activeMarker]);
 
     return (
-        <GoogleMapWrapStyled data-testid={testIdentifier}>
+        <GoogleMapWrapStyled data-testid={TEST_IDENTIFIER}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: publicRuntimeConfig.googleMapApiKey }}
-                defaultCenter={{ lat: lat, lng: lng }}
-                defaultZoom={zoom}
+                defaultCenter={{ lat: mapLat, lng: mapLng }}
+                defaultZoom={mapZoom}
                 options={{
                     disableDoubleClickZoom: true,
                     fullscreenControl: false,
                     zoomControlOptions: { position: 1 },
                 }}
             >
-                {props.markers !== undefined &&
-                    Array.isArray(props.markers) &&
-                    props.markers.length !== 0 &&
-                    props.markers.map((marker, index) => (
+                {markers !== undefined &&
+                    Array.isArray(markers) &&
+                    markers.length !== 0 &&
+                    markers.map((marker, index) => (
                         <GoogleMapMarkerStyled
                             iconType="icon"
                             icon="MapMarker"
                             key={index}
                             lat={marker.locationLatitude}
                             lng={marker.locationLongitude}
-                            isDetail={props.isDetail}
+                            isDetail={isDetail}
                             isActive={index === activeMarker}
                             onClick={() => markerClickHandler(index)}
                         ></GoogleMapMarkerStyled>
@@ -78,5 +86,3 @@ const GoogleMap: FC<GoogleMapProps> = ({ activeMarkerHandler, ...props }) => {
         </GoogleMapWrapStyled>
     );
 };
-
-export default GoogleMap;

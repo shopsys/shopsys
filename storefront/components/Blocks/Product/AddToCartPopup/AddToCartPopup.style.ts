@@ -1,7 +1,7 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Link from 'components/Basic/Link';
-import Button from 'components/Forms/Button';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Link } from 'components/Basic/Link/Link';
+import { Button } from 'components/Forms/Button/Button';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css, keyframes } from 'styled-components';
@@ -30,19 +30,19 @@ const fillAnimation = keyframes`
     100% { box-shadow: inset 0 0 0 30px ${localVariables.fillAnimationColor}; }
 `;
 
-export const AddToCartPopupWrapperStyled = styled(PopupStyled)`
-    ${({ theme }) => css`
+export const AddToCartPopupWrapperStyled = styled(PopupStyled)(
+    ({ theme }) => css`
         width: 600px;
         max-width: 96%;
 
         @media ${theme.mediaQueries.queryVl} {
             max-width: 600px;
         }
-    `}
-`;
+    `,
+);
 
-export const HeadingStyled = styled(Heading)`
-    ${({ theme }) => css`
+export const HeadingStyled = styled(Heading)(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         width: 100%;
@@ -55,11 +55,11 @@ export const HeadingStyled = styled(Heading)`
         @media ${theme.mediaQueries.queryMobile} {
             margin-bottom: 16px;
         }
-    `}
-`;
+    `,
+);
 
-export const Checkmark = styled(Icon)`
-    ${({ theme }) => css`
+export const Checkmark = styled(Icon)(
+    ({ theme }) => css`
         display: block;
         width: ${localVariables.checkmarkSize};
         height: ${localVariables.checkmarkSize};
@@ -96,11 +96,11 @@ export const Checkmark = styled(Icon)`
             stroke-dashoffset: 48;
             animation: ${strokeAnimation} 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.9s forwards;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -114,11 +114,11 @@ export const ProductStyled = styled.div`
             padding: 16px;
             flex-direction: row;
         }
-    `}
-`;
+    `,
+);
 
-export const ImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ImageStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         align-items: center;
@@ -130,11 +130,11 @@ export const ImageStyled = styled.div`
         @media ${theme.mediaQueries.queryMobile} {
             margin-bottom: 16px;
         }
-    `}
-`;
+    `,
+);
 
-export const ContentStyled = styled.div`
-    ${({ theme }) => css`
+export const ContentStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryMd} {
@@ -146,11 +146,11 @@ export const ContentStyled = styled.div`
             align-items: center;
             justify-content: space-between;
         }
-    `}
-`;
+    `,
+);
 
-export const NameStyled = styled.div`
-    ${({ theme }) => css`
+export const NameStyled = styled.div(
+    ({ theme }) => css`
         display: block;
 
         font-size: 15px;
@@ -158,11 +158,11 @@ export const NameStyled = styled.div`
         font-weight: 400;
         color: ${theme.color.primary};
         word-break: break-word;
-    `}
-`;
+    `,
+);
 
-export const PriceInfoStyled = styled.div`
-    ${({ theme }) => css`
+export const PriceInfoStyled = styled.div(
+    ({ theme }) => css`
         margin-top: 6px;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -171,19 +171,19 @@ export const PriceInfoStyled = styled.div`
             padding-left: 16px;
             text-align: right;
         }
-    `}
-`;
+    `,
+);
 
-export const PriceStyled = styled.div`
-    ${({ theme }) => css`
+export const PriceStyled = styled.div(
+    ({ theme }) => css`
         display: block;
 
         color: ${theme.color.primary};
-    `}
-`;
+    `,
+);
 
-export const ButtonsStyled = styled.div`
-    ${({ theme }) => css`
+export const ButtonsStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         margin: -${localVariables.buttonGap} 0 0 -${localVariables.buttonGap};
@@ -195,27 +195,27 @@ export const ButtonsStyled = styled.div`
             justify-content: space-between;
             padding: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ButtonStyled = styled(Button)`
-    ${({ theme }) => css`
+export const ButtonStyled = styled(Button)(
+    ({ theme }) => css`
         margin: ${localVariables.buttonGap} 0 0 ${localVariables.buttonGap};
 
         @media ${theme.mediaQueries.queryLg} {
             width: auto;
             justify-content: flex-start;
         }
-    `}
-`;
+    `,
+);
 
-export const LinkStyled = styled(Link)`
-    ${({ theme }) => css`
+export const LinkStyled = styled(Link)(
+    ({ theme }) => css`
         margin: ${localVariables.buttonGap} 0 0 ${localVariables.buttonGap};
 
         @media ${theme.mediaQueries.queryLg} {
             width: auto;
             justify-content: flex-start;
         }
-    `}
-`;
+    `,
+);

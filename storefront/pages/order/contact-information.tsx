@@ -1,29 +1,32 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import OrderAction from 'components/Blocks/OrderAction';
-import Form from 'components/Forms/Form';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import Footer from 'components/Layout/Footer';
-import OrderLayout from 'components/Layout/OrderLayout';
-import Webline from 'components/Layout/Webline';
-import ContactInformationForm from 'components/Pages/Order/ContactInformation';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
+import { Form } from 'components/Forms/Form/Form';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { Footer } from 'components/Layout/Footer/Footer';
+import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     useContactInformationForm,
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { CreateOrderMutationApi, useCreateOrderMutationApi } from 'graphql/generated';
-import { createClient } from 'helpers/createClient';
-import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { onPurchaseOrderGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { createClient } from 'helpers/urql/createClient';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import React, { FC } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -31,11 +34,8 @@ import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { userActions } from 'redux/slices/user';
 import { ssrExchange } from 'urql';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
-import { onPurchaseOrderGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
-const ContactInformation: FC<ServerSidePropsType> = () => {
+const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
@@ -144,15 +144,14 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             <MetaRobots content="noindex" />
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                    <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
-                        <ContactInformationForm />
+                    <OrderLayout activeStep={3}>
+                        <ContactInformationContent />
                         <OrderAction
-                            activeStep={3}
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
                             hasDisabledLook={!formProviderMethods.formState.isValid}
                             withGapTop={false}
-                            withGapBottom={true}
+                            withGapBottom
                             buttonBackLink={transportAndPaymentUrl}
                         />
                     </OrderLayout>
@@ -179,4 +178,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return redirect === false ? initServerSideProps(context, store, false, [], client, ssrCache) : redirect;
 });
 
-export default ContactInformation;
+export default ContactInformationPage;

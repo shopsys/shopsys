@@ -1,7 +1,7 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';

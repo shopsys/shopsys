@@ -1,11 +1,11 @@
-import Heading from 'components/Basic/Heading';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 const localVariables = {
     footerMenuitemBorderColor: '#606476',
     footerMenuItemGap: '20px',
-};
+} as const;
 
 export const FooterMenuItemStyled = styled.div(
     ({ theme }) => css`

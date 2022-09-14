@@ -27,19 +27,19 @@ const getWeblineType = (type: WeblinePropType['type'], theme: Theme) => {
     }
 };
 
-export const WeblineStyled = styled.div<WeblineStyledProps>`
-    ${({ type, theme }) => css`
+export const WeblineStyled = styled.div<WeblineStyledProps>(
+    ({ type, theme }) => css`
         ${getWeblineType(type, theme)};
-    `}
-`;
+    `,
+);
 
-export const ContainerStyled = styled.div`
-    ${({ theme }) => css`
+export const ContainerStyled = styled.div(
+    ({ theme }) => css`
         padding: 0 ${theme.layout.padding};
 
         @media ${theme.mediaQueries.queryXl} {
             width: ${theme.layout.width};
             margin: 0 auto;
         }
-    `}
-`;
+    `,
+);

@@ -4,14 +4,14 @@ import {
     ProductDetailGalleryThumbnailsItemStyled,
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
-import ProductDetailImageSlider from './ProductDetailImageSlider';
+import { ProductDetailImageSlider } from './ProductDetailImageSlider';
 import clsx from 'clsx';
-import Image from 'components/Basic/Image';
-import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import { Image } from 'components/Basic/Image/Image';
+import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import LightGallery from 'lightgallery/react';
 import { FC, useState } from 'react';
@@ -24,7 +24,7 @@ type ProductDetailGalleryProps = {
     flags: SimpleFlagType[];
 };
 
-const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
+export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName }) => {
     const [isSliderVisible, setSliderVisibility] = useState(false);
     const { width } = useGetWindowSize();
     useResizeWidthEffect(
@@ -35,25 +35,25 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
         () => setSliderVisibility(isElementVisible([{ min: 0, max: desktopFirstSizes.tablet }], width)),
     );
 
-    if (props.images.length === 0) {
+    if (images.length === 0) {
         return null;
     }
 
-    const mainImage = props.images[0];
-    const mainImageUrl = props.images[0].sizes?.find((size) => size.size === 'default')?.url;
+    const mainImage = images[0];
+    const mainImageUrl = images[0].sizes?.find((size) => size.size === 'default')?.url;
 
     return isSliderVisible ? (
-        <ProductDetailImageSlider galleryItems={props.images} flags={props.flags} />
+        <ProductDetailImageSlider galleryItems={images} flags={flags} />
     ) : (
         <LightGallery mode="lg-fade" thumbnail plugins={[lgThumbnail]} selector=".lightboxItem">
             <ProductDetailGalleryMainImageStyled data-src={mainImageUrl} className="lightboxItem">
-                <Image image={mainImage} alt={props.productName} type="default" maxHeight="400px" />
+                <Image image={mainImage} alt={productName} type="default" maxHeight="400px" />
                 <ProductDetailGalleryFlagsStyled>
-                    <ProductFlags flags={props.flags} />
+                    <ProductFlags flags={flags} />
                 </ProductDetailGalleryFlagsStyled>
             </ProductDetailGalleryMainImageStyled>
             <ProductDetailGalleryThumbnailsStyled>
-                {props.images.map(
+                {images.map(
                     (image, index) =>
                         index > 0 && (
                             <ProductDetailGalleryThumbnailsItemStyled
@@ -61,7 +61,7 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                                 className={clsx('lightboxItem', index > 6 && 'isHidden')}
                                 data-src={image.sizes?.find((size) => size.size === 'default')?.url}
                             >
-                                <Image image={image} alt={props.productName} type="default" />
+                                <Image image={image} alt={productName} type="default" />
                             </ProductDetailGalleryThumbnailsItemStyled>
                         ),
                 )}
@@ -69,5 +69,3 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
         </LightGallery>
     );
 };
-
-export default ProductDetailGallery;

@@ -7,7 +7,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     'href',
-    'rel' | 'target'
+    'rel' | 'target' | 'className'
 >;
 
 type LinkProps = NativePropsAnchor &
@@ -16,25 +16,45 @@ type LinkProps = NativePropsAnchor &
         isButton?: boolean;
     };
 
-const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, borderRadius, ...restProps }) => {
-    const testIdentifier =
-        'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
+const getTestIdentifier = (linkType?: 'external', isButton?: boolean) =>
+    'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
 
+export const Link: FC<LinkProps> = ({
+    linkType,
+    isButton,
+    children,
+    size,
+    variant,
+    borderRadius,
+    href,
+    rel,
+    target,
+    className,
+}) => {
     if (linkType === 'external') {
         if (isButton === true) {
             <ButtonStyled
-                {...restProps}
+                className={className}
+                href={href}
+                rel={rel}
+                target={target}
                 size={size}
                 variant={variant}
                 borderRadius={borderRadius}
-                data-testid={testIdentifier}
+                data-testid={getTestIdentifier(linkType, isButton)}
             >
                 {children}
             </ButtonStyled>;
         }
 
         return (
-            <LinkStyled {...restProps} data-testid={testIdentifier}>
+            <LinkStyled
+                className={className}
+                href={href}
+                rel={rel}
+                target={target}
+                data-testid={getTestIdentifier(linkType, isButton)}
+            >
                 {children}
             </LinkStyled>
         );
@@ -42,8 +62,16 @@ const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, bord
 
     if (isButton === true) {
         return (
-            <NextLink {...restProps} passHref>
-                <ButtonStyled size={size} variant={variant} borderRadius={borderRadius} data-testid={testIdentifier}>
+            <NextLink href={href} passHref>
+                <ButtonStyled
+                    className={className}
+                    rel={rel}
+                    target={target}
+                    size={size}
+                    variant={variant}
+                    borderRadius={borderRadius}
+                    data-testid={getTestIdentifier(linkType, isButton)}
+                >
                     {children}
                 </ButtonStyled>
             </NextLink>
@@ -51,10 +79,15 @@ const Link: FC<LinkProps> = ({ linkType, isButton, children, size, variant, bord
     }
 
     return (
-        <NextLink {...restProps} passHref>
-            <LinkStyled data-testid={testIdentifier}>{children}</LinkStyled>
+        <NextLink href={href} passHref>
+            <LinkStyled
+                className={className}
+                rel={rel}
+                target={target}
+                data-testid={getTestIdentifier(linkType, isButton)}
+            >
+                {children}
+            </LinkStyled>
         </NextLink>
     );
 };
-
-export default Link;

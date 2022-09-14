@@ -5,8 +5,8 @@ const localVariables = {
     navigationItemLinkHorizontalGap: '10px',
 } as const;
 
-export const NavigationStyled = styled.ul`
-    ${({ theme }) => css`
+export const NavigationStyled = styled.ul(
+    ({ theme }) => css`
         display: none;
         width: 100%;
 
@@ -16,5 +16,5 @@ export const NavigationStyled = styled.ul`
             position: relative;
             margin-left: -${localVariables.navigationItemLinkHorizontalGap};
         }
-    `}
-`;
+    `,
+);

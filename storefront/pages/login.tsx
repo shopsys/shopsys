@@ -1,19 +1,19 @@
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Login from 'components/Pages/Login';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { CurrentCustomerUserQueryApi, CurrentCustomerUserQueryDocumentApi } from 'graphql/generated';
-import { createClient } from 'helpers/createClient';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { createClient } from 'helpers/urql/createClient';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { ssrExchange } from 'urql';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Index: FC<ServerSidePropsType> = () => {
+const LoginPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], domainUrl);
@@ -24,7 +24,7 @@ const Index: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <CommonLayout title={t('Login')}>
-                <Login breadcrumbs={breadcrumbs} />
+                <LoginContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );
@@ -61,4 +61,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return serverSideProps;
 });
 
-export default Index;
+export default LoginPage;

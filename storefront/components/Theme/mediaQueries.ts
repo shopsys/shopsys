@@ -30,9 +30,7 @@ const desktopFirst = {
     queryNotLargeDesktop: `(max-width: ${desktopFirstSizes.notLargeDesktop}px)`,
 } as const;
 
-const mediaQueries = {
+export const mediaQueries = {
     ...mobileFirst,
     ...desktopFirst,
 };
-
-export default mediaQueries;

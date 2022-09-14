@@ -1,15 +1,15 @@
 import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { useAuth } from 'hooks/auth/useAuth';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
 
-const SubMenu: FC = () => {
+export const SubMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const { isUserLoggedIn } = useCurrentUserData();
@@ -35,5 +35,3 @@ const SubMenu: FC = () => {
         </SubMenuStyled>
     );
 };
-
-export default SubMenu;

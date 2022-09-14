@@ -4,8 +4,8 @@ import { css } from 'styled-components';
 
 type FormLineStyledProps = FormLinePropType;
 
-export const FormLineStyled = styled.div<FormLineStyledProps>`
-    ${({ theme, bottomGap, width, xs, sm, md, lg, vl, xl }) => css`
+export const FormLineStyled = styled.div<FormLineStyledProps>(
+    ({ theme, bottomGap, width, xs, sm, md, lg, vl, xl }) => css`
         ${bottomGap &&
         css`
             padding-bottom: 12px;
@@ -63,5 +63,5 @@ export const FormLineStyled = styled.div<FormLineStyledProps>`
                 flex: none;
             }
         `}
-    `};
-`;
+    `,
+);

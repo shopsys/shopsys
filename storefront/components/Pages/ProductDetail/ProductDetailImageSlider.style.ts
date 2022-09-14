@@ -7,8 +7,8 @@ const localVariables = {
     productDetailImagesButtonSize: '32px',
 } as const;
 
-export const ProductDetailImageSliderBoxStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailImageSliderBoxStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -18,11 +18,11 @@ export const ProductDetailImageSliderBoxStyled = styled.div`
             width: 100%;
             padding-bottom: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailImageSliderStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailImageSliderStyled = styled.div(
+    ({ theme }) => css`
         width: calc(100% - ${localVariables.productDetailImageSliderThumbnailControlsWidth});
 
         cursor: pointer;
@@ -30,11 +30,11 @@ export const ProductDetailImageSliderStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             width: 100%;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailImageSliderItemStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailImageSliderItemStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         justify-content: center;
         align-items: center;
@@ -56,15 +56,15 @@ export const ProductDetailImageSliderItemStyled = styled.div`
             height: 100%;
             object-fit: contain;
         }
-    `}
-`;
+    `,
+);
 
 export const SliderItemImageStyled = styled.img`
     width: 100%;
 `;
 
-const ImageSliderControlStyled = styled.button`
-    ${({ theme }) => css`
+const ImageSliderControlStyled = styled.button(
+    ({ theme }) => css`
         width: ${localVariables.productDetailImagesButtonSize};
         height: ${localVariables.productDetailImagesButtonSize};
         position: absolute;
@@ -81,8 +81,8 @@ const ImageSliderControlStyled = styled.button`
         &:hover {
             background-color: ${tinycolor(theme.color.grey).darken(10).toString()};
         }
-    `}
-`;
+    `,
+);
 
 export const ImageSliderControlPreviousStyled = styled(ImageSliderControlStyled)`
     left: 0;

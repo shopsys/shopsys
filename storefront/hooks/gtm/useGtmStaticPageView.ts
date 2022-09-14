@@ -1,6 +1,6 @@
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { GtmPageViewEventType } from 'types/gtm';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmStaticPageView = (event: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);

@@ -2,14 +2,12 @@ import { PromotedCategoriesSimpleNavigationStyled } from './PromotedCategories.s
 import { usePromotedCategories } from 'connectors/categories/PromotedCategories';
 import { FC } from 'react';
 
-const PromotedCategories: FC = () => {
+export const PromotedCategories: FC = () => {
     const promotedCategories = usePromotedCategories();
 
-    if (promotedCategories !== undefined) {
-        return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;
+    if (promotedCategories === undefined) {
+        return null;
     }
 
-    return null;
+    return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;
 };
-
-export default PromotedCategories;

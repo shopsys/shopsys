@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -8,8 +8,8 @@ export const HeaderContactStyled = styled.div`
     order: 2;
 `;
 
-export const ContactWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const ContactWrapperStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -24,11 +24,11 @@ export const ContactWrapperStyled = styled.div`
             flex-direction: row;
             justify-content: space-between;
         }
-    `}
-`;
+    `,
+);
 
-export const ContactContentStyled = styled.div`
-    ${({ theme }) => css`
+export const ContactContentStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -39,11 +39,11 @@ export const ContactContentStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             justify-content: center;
         }
-    `}
-`;
+    `,
+);
 
-export const PhoneNumberStyled = styled.a`
-    ${({ theme }) => css`
+export const PhoneNumberStyled = styled.a(
+    ({ theme }) => css`
         text-decoration: none;
 
         font-weight: 700;
@@ -53,24 +53,24 @@ export const PhoneNumberStyled = styled.a`
         @media ${theme.mediaQueries.queryLg} {
             margin-right: 16px;
         }
-    `}
-`;
+    `,
+);
 
-export const ContactHours = styled.p`
-    ${({ theme }) => css`
+export const ContactHours = styled.p(
+    ({ theme }) => css`
         margin: 0;
 
         font-size: ${theme.fontSize.small};
         color: ${theme.color.creamWhite};
-    `}
-`;
+    `,
+);
 
-export const HeaderContactIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const HeaderContactIconStyled = styled(Icon)(
+    ({ theme }) => css`
         margin-right: 12px;
         width: 20px;
         height: 20px;
 
         color: ${theme.color.orange};
-    `}
-`;
+    `,
+);

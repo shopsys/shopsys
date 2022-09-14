@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const NewsletterFormWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const NewsletterFormWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         padding: 33px 0 26px;
@@ -32,11 +32,11 @@ export const NewsletterFormWrapperStyled = styled.div`
                 padding-right: 20px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const NewsletterFormColumnStyled = styled.div`
-    ${({ theme }) => css`
+export const NewsletterFormColumnStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -52,11 +52,11 @@ export const NewsletterFormColumnStyled = styled.div`
                 margin-top: 15px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const NewsletterFormInputWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const NewsletterFormInputWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         margin-bottom: 12px;
 
@@ -64,11 +64,11 @@ export const NewsletterFormInputWrapperStyled = styled.div`
             flex-direction: column;
             margin-bottom: 6px;
         }
-    `}
-`;
+    `,
+);
 
-export const NewsletterFormButtonWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const NewsletterFormButtonWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
 
@@ -80,5 +80,5 @@ export const NewsletterFormButtonWrapperStyled = styled.div`
                 margin-top: 12px;
             }
         }
-    `}
-`;
+    `,
+);

@@ -1,21 +1,22 @@
-import { WeblinePropType } from './propTypes';
+import { WeblinePropType, WeblineType } from './propTypes';
 import { ContainerStyled, WeblineStyled } from './Webline.style';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, 'children', 'style'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style' | 'className'>;
 
 type WeblineProps = NativeProps & WeblinePropType;
 
-const Webline: FC<WeblineProps> = (props) => {
-    const testIdentifier =
-        props['data-testid'] ?? 'layout-webline' + (props.type !== undefined ? '-' + props.type : '');
+const getTestIdentifier = (testIdentifier?: string, type?: WeblineType) =>
+    testIdentifier ?? 'layout-webline' + (type !== undefined ? '-' + type : '');
 
-    return (
-        <WeblineStyled {...props} data-testid={testIdentifier}>
-            <ContainerStyled>{props.children}</ContainerStyled>
-        </WeblineStyled>
-    );
-};
-
-export default Webline;
+export const Webline: FC<WeblineProps> = ({ children, style, testIdentifier, type, className }) => (
+    <WeblineStyled
+        className={className}
+        style={style}
+        type={type}
+        testIdentifier={getTestIdentifier(testIdentifier, type)}
+    >
+        <ContainerStyled>{children}</ContainerStyled>
+    </WeblineStyled>
+);

@@ -1,4 +1,4 @@
-import RangeSlider from 'components/Basic/RangeSlider';
+import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { FC, useCallback } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FilterFormType } from 'types/productFilter';
@@ -9,7 +9,7 @@ type SliderFilterProps = {
     max: number;
 };
 
-const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex }) => {
+export const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex }) => {
     const minValueName = `parameters.${parameterParentIndex}.minimalValue` as const;
     const maxValueName = `parameters.${parameterParentIndex}.maximalValue` as const;
 
@@ -44,5 +44,3 @@ const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex })
         />
     );
 };
-
-export default SliderFilter;

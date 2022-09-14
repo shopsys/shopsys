@@ -1,13 +1,13 @@
 import { FreeTransportStyled } from './FreeTransport.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
 
-const FreeTransport: FC = () => {
-    const testIdentifier = 'blocks-freetransport';
+const TEST_IDENTIFIER = 'blocks-freetransport';
 
+export const FreeTransport: FC = () => {
     const { cart, isCartEmpty } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -21,7 +21,7 @@ const FreeTransport: FC = () => {
 
     if (amount > 0) {
         return (
-            <FreeTransportStyled data-testid={testIdentifier}>
+            <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
                     components={{
@@ -34,10 +34,8 @@ const FreeTransport: FC = () => {
     }
 
     return (
-        <FreeTransportStyled data-testid={testIdentifier}>
+        <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
         </FreeTransportStyled>
     );
 };
-
-export default FreeTransport;

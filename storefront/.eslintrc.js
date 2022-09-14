@@ -79,7 +79,7 @@ module.exports = {
         'no-restricted-imports': [
             'error',
             {
-                patterns: ['..*'],
+                patterns: ['../.*'],
             },
         ],
         'react-hooks/rules-of-hooks': 'error',

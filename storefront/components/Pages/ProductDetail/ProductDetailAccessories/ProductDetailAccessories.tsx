@@ -1,6 +1,6 @@
-import ShopsysHeading from 'components/Basic/Heading';
-import ProductsSlider from 'components/Blocks/Product/ProductsSlider';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { SliderProductItemType } from 'types/product';
 
@@ -8,19 +8,17 @@ type ProductDetailAccessoriesProps = {
     accessories: SliderProductItemType[];
 };
 
-const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = (props) => {
+export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {
     const t = useTypedTranslationFunction();
 
-    if (props.accessories.length === 0) {
+    if (accessories.length === 0) {
         return null;
     }
 
     return (
         <>
-            <ShopsysHeading type="h2">{t('You can also buy')}</ShopsysHeading>
-            <ProductsSlider products={props.accessories} gtmListName="accessory" />
+            <Heading type="h2">{t('You can also buy')}</Heading>
+            <ProductsSlider products={accessories} gtmListName="accessory" />
         </>
     );
 };
-
-export default ProductDetailAccessories;

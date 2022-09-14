@@ -4,8 +4,8 @@ import {
     BlogSignpostItemStyled,
     BlogSignpostStyled,
 } from './BlogSignpost.style';
-import Children from './Children';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Children } from './Children/Children';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { ListedBlogCategoryType } from 'types/blogCategory';
@@ -17,7 +17,7 @@ type BlogSingpostProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-';
 
-const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
+export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -32,6 +32,7 @@ const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) 
                                 data-testid={TEST_IDENTIFIER + index}
                             >
                                 <BlogSignpostItemIconStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="Arrow"
                                     isActive={activeItem === blogCategory.uuid}
@@ -47,5 +48,3 @@ const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) 
         </BlogSignpostStyled>
     );
 };
-
-export default BlogSignpost;

@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { css } from 'styled-components';
@@ -15,8 +15,8 @@ const localVariables = {
     tabsHeadingPadding: '20px',
 } as const;
 
-export const TabsStyled = styled(Tabs)`
-    ${({ theme }) => css`
+export const TabsStyled = styled(Tabs)(
+    ({ theme }) => css`
         padding: 0;
         margin-bottom: 20px;
 
@@ -28,11 +28,11 @@ export const TabsStyled = styled(Tabs)`
             width: ${theme.layout.width};
             margin: 0 auto 20px auto;
         }
-    `}
-`;
+    `,
+);
 
-export const TabsListStyled = styled(TabList)`
-    ${({ theme }) => css`
+export const TabsListStyled = styled(TabList)(
+    ({ theme }) => css`
         display: none;
         flex-direction: row;
         padding: 0 10px;
@@ -43,11 +43,11 @@ export const TabsListStyled = styled(TabList)`
         @media ${theme.mediaQueries.queryLg} {
             display: flex;
         }
-    `}
-`;
+    `,
+);
 
-export const TabsListItemStyled = styled(Tab)`
-    ${({ theme }) => css`
+export const TabsListItemStyled = styled(Tab)(
+    ({ theme }) => css`
         position: relative;
         margin: 0 16px;
         padding: 3px 8px;
@@ -74,11 +74,11 @@ export const TabsListItemStyled = styled(Tab)`
                 background-color: ${theme.color.primary};
             }
         }
-    `}
-`;
+    `,
+);
 
-export const TabsContentStyled = styled(TabPanel)`
-    ${({ theme }) => css`
+export const TabsContentStyled = styled(TabPanel)(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -95,11 +95,11 @@ export const TabsContentStyled = styled(TabPanel)`
                 padding-top: 48px;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const TabsContentInStyled = styled.div<TabsContentStyledProps>`
-    ${({ theme, isActiveOnMobile }) => css`
+export const TabsContentInStyled = styled.div<TabsContentStyledProps>(
+    ({ theme, isActiveOnMobile }) => css`
         display: block;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -114,11 +114,11 @@ export const TabsContentInStyled = styled.div<TabsContentStyledProps>`
                       display: none !important;
                   `};
         }
-    `}
-`;
+    `,
+);
 
-export const TabsContentMobileHeadingStyled = styled.h3`
-    ${({ theme }) => css`
+export const TabsContentMobileHeadingStyled = styled.h3(
+    ({ theme }) => css`
         width: 100%;
         display: flex;
         justify-content: space-between;
@@ -135,11 +135,11 @@ export const TabsContentMobileHeadingStyled = styled.h3`
         @media ${theme.mediaQueries.queryLg} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const TabsIconStyled = styled(Icon)<TabsIconStyledProps>`
-    ${({ theme, isActive }) => css`
+export const TabsIconStyled = styled(Icon)<TabsIconStyledProps>(
+    ({ theme, isActive }) => css`
         height: 18px;
         width: 18px;
 
@@ -151,5 +151,5 @@ export const TabsIconStyled = styled(Icon)<TabsIconStyledProps>`
             transform: rotate(-180deg);
             transition: ${theme.transition};
         `}
-    `}
-`;
+    `,
+);

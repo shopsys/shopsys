@@ -1,5 +1,5 @@
 import { NavigationLeafColumnStyled } from './NavigationLeaf.style';
-import NavigationColumnCategory from 'components/Layout/Header/Navigation/NavigationColumnCategory';
+import { NavigationColumnCategory } from 'components/Layout/Header/Navigation/NavigationColumnCategory/NavigationColumnCategory';
 import { FC } from 'react';
 import { NavigationCategoriesColumn } from 'types/navigation';
 
@@ -7,20 +7,16 @@ type NavigationLeafProps = {
     columnCategories: NavigationCategoriesColumn[];
 };
 
-const NavigationLeaf: FC<NavigationLeafProps> = (props) => {
-    const testIdentifier = 'layout-header-navigation-navigationleaf-';
+const TEST_IDENTIFIER = 'layout-header-navigation-navigationleaf-';
 
-    return (
-        <>
-            {props.columnCategories.map((columnCategories, columnIndex) => (
-                <NavigationLeafColumnStyled key={columnIndex} data-testid={testIdentifier + columnIndex}>
-                    {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
-                        <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
-                    ))}
-                </NavigationLeafColumnStyled>
-            ))}
-        </>
-    );
-};
-
-export default NavigationLeaf;
+export const NavigationLeaf: FC<NavigationLeafProps> = ({ columnCategories }) => (
+    <>
+        {columnCategories.map((columnCategories, columnIndex) => (
+            <NavigationLeafColumnStyled key={columnIndex} data-testid={TEST_IDENTIFIER + columnIndex}>
+                {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
+                    <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
+                ))}
+            </NavigationLeafColumnStyled>
+        ))}
+    </>
+);

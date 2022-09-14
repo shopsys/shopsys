@@ -14,8 +14,8 @@ export const SideImageStyled = styled.div`
     width: 100%;
 `;
 
-export const SideImageLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const SideImageLinkStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         position: relative;
         width: 100%;
@@ -27,16 +27,16 @@ export const SideImageLinkStyled = styled.a`
 
             border-radius: ${theme.radius.medium};
         }
-    `}
-`;
+    `,
+);
 
 export const SideContentStyled = styled.div`
     flex: 1;
     margin-left: 20px;
 `;
 
-export const SideNameStyled = styled.a`
-    ${({ theme }) => css`
+export const SideNameStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         line-height: 20px;
         margin-bottom: 6px;
@@ -49,5 +49,5 @@ export const SideNameStyled = styled.a`
         &:hover {
             color: ${theme.color.creamWhite};
         }
-    `}
-`;
+    `,
+);

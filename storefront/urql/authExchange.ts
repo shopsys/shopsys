@@ -8,11 +8,11 @@ import {
 } from '@urql/core';
 import { DocumentNode } from 'graphql';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
+import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { GetServerSidePropsContext } from 'next';
 import { TokenType } from 'urql/types';
-import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 
-function isRefreshTokenMutation(operation: Operation) {
+const isRefreshTokenMutation = (operation: Operation) => {
     return (
         operation.kind === 'mutation' &&
         operation.query.definitions.some((def) => {
@@ -22,7 +22,7 @@ function isRefreshTokenMutation(operation: Operation) {
             return false;
         })
     );
-}
+};
 
 /**
  * Add access token to each request if authState is valid
@@ -57,7 +57,7 @@ const didAuthError = (params: { error: CombinedError }): boolean => {
     return params.error.response?.status === 401;
 };
 
-async function doTryRefreshToken(
+const doTryRefreshToken = async (
     refreshToken: string,
     mutate: <Data = any, Variables extends Record<string, unknown> = Record<string, unknown>>(
         query: DocumentNode | TypedDocumentNode<Data, Variables> | string,
@@ -65,7 +65,7 @@ async function doTryRefreshToken(
         context?: Partial<OperationContext>,
     ) => Promise<OperationResult<Data>>,
     context?: GetServerSidePropsContext,
-): Promise<TokenType | null> {
+): Promise<TokenType | null> => {
     try {
         const result = await mutate(RefreshTokensDocumentApi, { refreshToken });
 
@@ -86,7 +86,7 @@ async function doTryRefreshToken(
 
     removeTokensFromCookies(context);
     return null;
-}
+};
 
 /**
  * Factory for getAuth function, so it's possible to pass context
@@ -144,10 +144,8 @@ type GetAuthExchangeOptionsReturnType = {
     }) => Promise<TokenType | null>;
 };
 
-const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExchangeOptionsReturnType => ({
+export const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExchangeOptionsReturnType => ({
     addAuthToOperation,
     didAuthError,
     getAuth: createGetAuth(context),
 });
-
-export default getAuthExchangeOptions;

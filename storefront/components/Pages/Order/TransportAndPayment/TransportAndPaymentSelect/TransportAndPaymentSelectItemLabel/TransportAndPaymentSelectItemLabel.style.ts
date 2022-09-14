@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const SelectItemLabelStyled = styled.div`
-    ${({ theme }) => css`
+export const SelectItemLabelStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         align-items: center;
         display: flex;
@@ -13,11 +13,11 @@ export const SelectItemLabelStyled = styled.div`
             flex: 1;
             width: auto;
         }
-    `}
-`;
+    `,
+);
 
-export const NameWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const NameWrapperStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         margin-right: 15px;
         display: flex;
@@ -29,28 +29,28 @@ export const NameWrapperStyled = styled.div`
             flex: 1;
             width: auto;
         }
-    `}
-`;
+    `,
+);
 
-export const InfoStyled = styled.span`
-    ${({ theme }) => css`
+export const InfoStyled = styled.span(
+    ({ theme }) => css`
         color: ${theme.color.greyLight};
         font-size: 14px;
-    `}
-`;
+    `,
+);
 
-export const DescriptionStyled = styled(InfoStyled)`
-    ${({ theme }) => css`
+export const DescriptionStyled = styled(InfoStyled)(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             display: initial;
         }
-    `}
-`;
+    `,
+);
 
-export const TransportDaysUntilDeliveryStyled = styled.span`
-    ${({ theme }) => css`
+export const TransportDaysUntilDeliveryStyled = styled.span(
+    ({ theme }) => css`
         width: 50%;
 
         color: ${theme.color.inStock};
@@ -61,11 +61,11 @@ export const TransportDaysUntilDeliveryStyled = styled.span`
             align-self: center;
             width: 135px;
         }
-    `}
-`;
+    `,
+);
 
-export const PriceStyled = styled.strong`
-    ${({ theme }) => css`
+export const PriceStyled = styled.strong(
+    ({ theme }) => css`
         width: 50%;
 
         font-size: ${theme.fontSize.small};
@@ -74,5 +74,5 @@ export const PriceStyled = styled.strong`
         @media ${theme.mediaQueries.queryLg} {
             width: 100px;
         }
-    `}
-`;
+    `,
+);

@@ -1,21 +1,12 @@
 import { FooterMenuStyled } from './FooterMenu.style';
-import FooterMenuItem from 'components/Layout/Footer/FooterMenuItem';
+import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 
 const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
-const filterArticlesByPlacement = (
-    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
-    placement: ArticlePlacementTypeEnumApi,
-): SimpleArticleFragmentApi[] =>
-    array?.reduce(
-        (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
-        [] as SimpleArticleFragmentApi[],
-    ) ?? [];
-
-const FooterMenu: FC = () => {
+export const FooterMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const [{ data }] = useArticlesQueryApi({
         variables: {
@@ -64,4 +55,11 @@ const FooterMenu: FC = () => {
     );
 };
 
-export default FooterMenu;
+const filterArticlesByPlacement = (
+    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
+    placement: ArticlePlacementTypeEnumApi,
+): SimpleArticleFragmentApi[] =>
+    array?.reduce(
+        (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
+        [] as SimpleArticleFragmentApi[],
+    ) ?? [];

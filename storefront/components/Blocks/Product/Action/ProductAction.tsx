@@ -1,7 +1,7 @@
 import { AddToCartUnavailableTextStyled, ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
-import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
-import Button from 'components/Forms/Button';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
+import { Button } from 'components/Forms/Button/Button';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/dist/client/router';
 import { FC } from 'react';
 import { GtmListNameType } from 'types/gtm';
@@ -13,20 +13,20 @@ type ProductActionProps = {
     listIndex: number;
 };
 
-const ProductAction: FC<ProductActionProps> = (props) => {
-    const testIdentifier = 'blocks-product-action';
+const TEST_IDENTIFIER = 'blocks-product-action';
 
+export const ProductAction: FC<ProductActionProps> = ({ product, gtmListName, listIndex }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
 
-    if (props.product.isMainVariant) {
+    if (product.isMainVariant) {
         return (
-            <ProductActionStyled isButtonFullWidth={true}>
+            <ProductActionStyled isButtonFullWidth>
                 <Button
                     type="button"
-                    onClick={() => router.push(props.product.slug)}
+                    onClick={() => router.push(product.slug)}
                     name="choose-variant"
-                    data-testid={testIdentifier + '-choose-variant'}
+                    testIdentifier={TEST_IDENTIFIER + '-choose-variant'}
                 >
                     {t('Choose variant')}
                 </Button>
@@ -34,9 +34,9 @@ const ProductAction: FC<ProductActionProps> = (props) => {
         );
     }
 
-    if (props.product.isSellingDenied) {
+    if (product.isSellingDenied) {
         return (
-            <ProductActionWrapperStyled data-testid={testIdentifier}>
+            <ProductActionWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <ProductActionStyled isButtonFullWidth={false}>
                     <AddToCartUnavailableTextStyled>
                         {t('This item can no longer be purchased')}
@@ -47,19 +47,16 @@ const ProductAction: FC<ProductActionProps> = (props) => {
     }
 
     return (
-        <ProductActionWrapperStyled data-testid={testIdentifier}>
+        <ProductActionWrapperStyled data-testid={TEST_IDENTIFIER}>
             <ProductActionStyled isButtonFullWidth={false}>
                 <AddToCart
-                    productUuid={props.product.uuid}
-                    productName={props.product.fullName}
+                    productUuid={product.uuid}
                     minQuantity={1}
-                    maxQuantity={props.product.stockQuantity}
-                    gtmListName={props.gtmListName}
-                    listIndex={props.listIndex}
+                    maxQuantity={product.stockQuantity}
+                    gtmListName={gtmListName}
+                    listIndex={listIndex}
                 />
             </ProductActionStyled>
         </ProductActionWrapperStyled>
     );
 };
-
-export default ProductAction;

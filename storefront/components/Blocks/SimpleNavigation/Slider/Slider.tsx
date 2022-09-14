@@ -1,4 +1,4 @@
-import ListItem from 'components/Blocks/SimpleNavigation/ListItem';
+import { ListItem } from 'components/Blocks/SimpleNavigation/ListItem/ListItem';
 import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
@@ -10,9 +10,9 @@ type SliderProps = {
     listedItems: ListedItemPropType[];
 };
 
-const Slider: FC<SliderProps> = (props) => {
-    const testIdentifier = 'blocks-simplenavigation-slider-';
+const TEST_IDENTIFIER = 'blocks-simplenavigation-slider-';
 
+export const Slider: FC<SliderProps> = ({ listedItems }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryTablet]: {
@@ -32,13 +32,11 @@ const Slider: FC<SliderProps> = (props) => {
 
     return (
         <div ref={sliderRef} className="keen-slider">
-            {props.listedItems.map((listedItem, key) => (
-                <ListItemStyled key={key} className="keen-slider__slide" data-testid={testIdentifier + key}>
+            {listedItems.map((listedItem, key) => (
+                <ListItemStyled key={key} className="keen-slider__slide" data-testid={TEST_IDENTIFIER + key}>
                     <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
                 </ListItemStyled>
             ))}
         </div>
     );
 };
-
-export default Slider;

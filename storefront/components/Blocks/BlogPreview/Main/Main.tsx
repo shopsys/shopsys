@@ -6,12 +6,12 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import Flag from 'components/Basic/Flag';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, Fragment, useState } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
@@ -20,9 +20,9 @@ type MainProps = {
     blogMainItems: ListedBlogArticleType[];
 };
 
-const Main: FC<MainProps> = (props) => {
-    const testIdentifier = 'blocks-blogpreview-main-';
+const TEST_IDENTIFIER = 'blocks-blogpreview-main-';
 
+export const Main: FC<MainProps> = ({ blogMainItems }) => {
     const { width } = useGetWindowSize();
     const [isOneMainArticle, setOnlyOneMainArticle] = useState(false);
     const visibleArticles = isOneMainArticle ? 1 : 2;
@@ -37,10 +37,10 @@ const Main: FC<MainProps> = (props) => {
 
     return (
         <>
-            {props.blogMainItems.map(
+            {blogMainItems.map(
                 (blogMainItem, index) =>
                     index < visibleArticles && (
-                        <MainItemStyled key={index} data-testid={testIdentifier + index}>
+                        <MainItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
                             <MainImageStyled>
                                 <NextLink href={blogMainItem.link} passHref>
                                     <MainImageLinkStyled>
@@ -69,5 +69,3 @@ const Main: FC<MainProps> = (props) => {
         </>
     );
 };
-
-export default Main;

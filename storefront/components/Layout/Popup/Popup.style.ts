@@ -1,9 +1,9 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const PopupStyled = styled.div`
-    ${({ theme }) => css`
+export const PopupStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         max-height: calc(100% - 20px);
@@ -23,8 +23,8 @@ export const PopupStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             max-width: 96%;
         }
-    `}
-`;
+    `,
+);
 
 export const PopupHeaderStyled = styled.div`
     height: 36px;
@@ -33,8 +33,8 @@ export const PopupHeaderStyled = styled.div`
     align-items: center;
 `;
 
-export const PopupButtonCloseStyled = styled.button`
-    ${({ theme }) => css`
+export const PopupButtonCloseStyled = styled.button(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;
@@ -49,16 +49,16 @@ export const PopupButtonCloseStyled = styled.button`
         font-size: 10px;
         outline: 0;
         text-decoration: none;
-    `}
-`;
+    `,
+);
 
-export const PopupButtonCloseIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const PopupButtonCloseIconStyled = styled(Icon)(
+    ({ theme }) => css`
         width: 24px;
         height: 24px;
         color: ${theme.color.primary};
-    `}
-`;
+    `,
+);
 
 export const PopupContentStyled = styled.div`
     padding: 0 15px 15px 15px;

@@ -7,8 +7,8 @@ import {
     RangeSliderThumbStyled,
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
-import TextInput from 'components/Forms/TextInput';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import {
     ChangeEvent,
     ChangeEventHandler,
@@ -37,7 +37,7 @@ type RangeSliderProps = {
 
 const TEST_IDENTIFIER = 'basic-rangeslider';
 
-const RangeSlider: FC<RangeSliderProps> = ({
+export const RangeSlider: FC<RangeSliderProps> = ({
     min,
     max,
     delay = 300,
@@ -235,5 +235,3 @@ const RangeSlider: FC<RangeSliderProps> = ({
         </RangeSliderContainerStyled>
     );
 };
-
-export default RangeSlider;

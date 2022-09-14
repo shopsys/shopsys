@@ -1,6 +1,11 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
+
+const localVariables = {
+    cartItemCountSize: '15px',
+    cartButtonMobileSize: '40px',
+} as const;
 
 type CartDetailStyledProps = {
     containsProducts: boolean;
@@ -11,23 +16,18 @@ type CartBlockStyledProps = {
     isHovered: boolean;
 };
 
-const localVariables = {
-    cartItemCountSize: '15px',
-    cartButtonMobileSize: '40px',
-} as const;
-
-export const CartStyled = styled.div`
-    ${({ theme }) => css`
+export const CartStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
 
         @media ${theme.mediaQueries.queryLg} {
             display: flex;
         }
-    `}
-`;
+    `,
+);
 
-export const CartBlockStyled = styled.a<CartBlockStyledProps>`
-    ${({ theme, isHovered }) => css`
+export const CartBlockStyled = styled.a<CartBlockStyledProps>(
+    ({ theme, isHovered }) => css`
         display: none;
         align-items: center;
         padding: 15px 7px 15px 15px;
@@ -53,20 +53,20 @@ export const CartBlockStyled = styled.a<CartBlockStyledProps>`
             text-decoration: none;
             color: ${theme.color.black};
         }
-    `}
-`;
+    `,
+);
 
-export const CartPiecesStyled = styled.span`
-    ${() => css`
+export const CartPiecesStyled = styled.span(
+    () => css`
         position: relative;
         display: flex;
 
         font-size: 18px;
-    `}
-`;
+    `,
+);
 
-export const CartValueStyled = styled.span`
-    ${({ theme }) => css`
+export const CartValueStyled = styled.span(
+    ({ theme }) => css`
         display: none;
         margin-left: 15px;
         line-height: 18px;
@@ -77,11 +77,11 @@ export const CartValueStyled = styled.span`
         @media ${theme.mediaQueries.queryLg} {
             display: block;
         }
-    `}
-`;
+    `,
+);
 
-export const CartCountStyled = styled.span`
-    ${({ theme }) => css`
+export const CartCountStyled = styled.span(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,11 +101,11 @@ export const CartCountStyled = styled.span`
             top: -7px;
             right: -8px;
         }
-    `}
-`;
+    `,
+);
 
-export const CartDetailStyled = styled.div<CartDetailStyledProps>`
-    ${({ theme, containsProducts, isHovered }) => css`
+export const CartDetailStyled = styled.div<CartDetailStyledProps>(
+    ({ theme, containsProducts, isHovered }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -135,8 +135,9 @@ export const CartDetailStyled = styled.div<CartDetailStyledProps>`
                 pointer-events: auto;
             `}
         }
-    `}
-`;
+    `,
+);
+
 export const CartDetailList = styled.ul`
     display: flex;
     flex-direction: column;
@@ -149,36 +150,36 @@ export const CartDetailList = styled.ul`
     list-style: none;
 `;
 
-export const CartDetailFigureStyled = styled.div`
-    ${() => css`
+export const CartDetailFigureStyled = styled.div(
+    () => css`
         position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 20px;
         height: 80px;
-    `}
-`;
+    `,
+);
 
-export const CartDetailTextStyled = styled.span`
-    ${({ theme }) => css`
+export const CartDetailTextStyled = styled.span(
+    ({ theme }) => css`
         max-width: 150px;
 
         font-size: ${theme.fontSize.default};
         color: ${theme.color.base};
         font-weight: 400;
-    `}
-`;
+    `,
+);
 
-export const CartDetailImageStyled = styled.img`
-    ${() => css`
+export const CartDetailImageStyled = styled.img(
+    () => css`
         height: 85px;
         overflow: hidden;
-    `}
-`;
+    `,
+);
 
-export const CartButtonMobileStyled = styled.div`
-    ${({ theme }) => css`
+export const CartButtonMobileStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -193,11 +194,11 @@ export const CartButtonMobileStyled = styled.div`
             cursor: pointer;
             font-size: 18px;
         }
-    `}
-`;
+    `,
+);
 
-export const CartButtonMobileLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const CartButtonMobileLinkStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;
@@ -213,19 +214,19 @@ export const CartButtonMobileLinkStyled = styled.a`
             text-decoration: none;
             color: ${theme.color.white};
         }
-    `}
-`;
+    `,
+);
 
 export const CartIconStyled = styled(Icon)`
     height: 18px;
     width: 18px;
 `;
 
-export const CartIconMobileStyled = styled(CartIconStyled)`
-    ${({ theme }) => css`
+export const CartIconMobileStyled = styled(CartIconStyled)(
+    ({ theme }) => css`
         color: ${theme.color.white};
-    `}
-`;
+    `,
+);
 
 export const CartDetailButtonWrapperStyled = styled.div`
     width: 100%;

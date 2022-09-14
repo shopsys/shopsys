@@ -1,15 +1,15 @@
 import { FooterCopyrightLogoStyled, FooterCopyrightStyled, FooterCopyrightTextStyled } from './FooterCopyright.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import { FC } from 'react';
 
-const FooterCopyright: FC = () => {
-    const testIdentifier = 'layout-footer-footercopyright';
+const TEST_IDENTIFIER = 'layout-footer-footercopyright';
 
+export const FooterCopyright: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
-        <FooterCopyrightStyled data-testid={testIdentifier}>
+        <FooterCopyrightStyled data-testid={TEST_IDENTIFIER}>
             <FooterCopyrightTextStyled>
                 {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
             </FooterCopyrightTextStyled>
@@ -22,5 +22,3 @@ const FooterCopyright: FC = () => {
         </FooterCopyrightStyled>
     );
 };
-
-export default FooterCopyright;

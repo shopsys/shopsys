@@ -1,33 +1,42 @@
 import { AdvertsStyled } from './Adverts.style';
-import Image from 'components/Basic/Image/Image';
+import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import Webline from 'components/Layout/Webline';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, Fragment, HTMLAttributes, useState } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'className'>;
 
-type AdvertsProps = {
-    positionName: 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
+type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
+
+type AdvertsProps = NativeProps & {
+    positionName: PositionNameType;
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
     currentCategory?: CategoryDetailType;
 };
 
-const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
+export const Adverts: FC<AdvertsProps> = ({
+    positionName,
+    withGapBottom,
+    withGapTop,
+    withWebline,
+    currentCategory,
+    className,
+}) => {
     const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
-    const WrapperComponent = props.withWebline ? Webline : Fragment;
-    const isPositionNameSet = adverts?.some((item) => item.positionName === props.positionName);
+    const WrapperComponent = withWebline ? Webline : Fragment;
+    const isPositionNameSet = adverts?.some((item) => item.positionName === positionName);
 
     useResizeWidthEffect(
         width,
@@ -42,15 +51,11 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
     }
 
     return (
-        <WrapperComponent>
-            <AdvertsStyled
-                className={props.className}
-                withGapTop={props.withGapTop}
-                withGapBottom={props.withGapBottom}
-            >
+        <WrapperComponent className={className}>
+            <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
                 {adverts?.map(
                     (item, index) =>
-                        shouldBeShown(item, props) &&
+                        shouldBeShown(item, positionName, currentCategory) &&
                         (item.__typename === 'AdvertImage' ? (
                             <Fragment key={index}>
                                 {item.link !== undefined ? (
@@ -86,22 +91,21 @@ const Adverts: FC<AdvertsProps & NativeProps> = (props) => {
     );
 };
 
-const shouldBeShown = (advert: AdvertType, advertsProps: AdvertsProps): boolean => {
-    if (advert.positionName !== advertsProps.positionName) {
+const shouldBeShown = (
+    advert: AdvertType,
+    positionName: PositionNameType,
+    currentCategory?: CategoryDetailType,
+): boolean => {
+    if (advert.positionName !== positionName) {
         return false;
     }
     if (advert.positionName === 'productListMiddle' && advert.categories.length === 0) {
         return false;
     }
     for (const category of advert.categories) {
-        if (
-            category.slug === advertsProps.currentCategory?.slug ||
-            category.slug === advertsProps.currentCategory?.originalCategorySlug
-        ) {
+        if (category.slug === currentCategory?.slug || category.slug === currentCategory?.originalCategorySlug) {
             return true;
         }
     }
-    return advertsProps.positionName !== 'productListMiddle' && advert.positionName === advertsProps.positionName;
+    return positionName !== 'productListMiddle' && advert.positionName === positionName;
 };
-
-export default Adverts;

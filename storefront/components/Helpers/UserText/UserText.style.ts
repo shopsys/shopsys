@@ -1,4 +1,5 @@
 import { styled } from 'components/Theme/main';
+import { css } from 'styled-components';
 
 const localVariables = {
     userTextUlPointSize: '5px',
@@ -10,12 +11,12 @@ const localVariables = {
     userTextLineHeight: '1.6',
 } as const;
 
-export const UserTextStyled = styled.section`
-    ${({ theme }) => `
+export const UserTextStyled = styled.section(
+    ({ theme }) => css`
         font-size: ${localVariables.userTextFontSize};
         line-height: ${localVariables.userTextLineHeight};
         -webkit-font-smoothing: antialiased;
-        
+
         color: ${theme.color.greyLight};
 
         p,
@@ -23,7 +24,7 @@ export const UserTextStyled = styled.section`
         ol,
         li {
             line-height: inherit;
-        
+
             font-size: inherit;
             color: inherit;
         }
@@ -34,7 +35,7 @@ export const UserTextStyled = styled.section`
         h5 {
             margin-bottom: ${localVariables.userTextHeadingMarginBottom};
             text-transform: none;
-        
+
             font-size: ${localVariables.userTextHeadingFontSize};
         }
 
@@ -78,7 +79,7 @@ export const UserTextStyled = styled.section`
                     left: 0;
                     width: ${localVariables.userTextUlPointSize};
                     height: ${localVariables.userTextUlPointSize};
-                    
+
                     border-radius: 100%;
                     background-color: ${theme.color.primary};
                 }
@@ -92,8 +93,8 @@ export const UserTextStyled = styled.section`
         img {
             display: block;
             height: auto;
-            
+
             border-radius: ${theme.radius.big};
         }
-    `}
-`;
+    `,
+);

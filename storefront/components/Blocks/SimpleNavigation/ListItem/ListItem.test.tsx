@@ -1,9 +1,9 @@
 /**
  * @jest-environment jsdom
  */
-import ListItem from './ListItem';
+import { ListItem } from './ListItem';
 import { expect, test } from '@jest/globals';
-import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
+import { ShopsysGlobalProvider } from 'context/ShopsysGlobalProvider/ShopsysGlobalProvider';
 import 'jest-styled-components';
 import renderer from 'react-test-renderer';
 

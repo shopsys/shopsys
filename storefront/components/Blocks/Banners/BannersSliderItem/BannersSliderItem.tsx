@@ -8,21 +8,17 @@ type BannersSliderItemProps = {
     image: ImageSizeType | null;
 };
 
-const BannersSliderItem: FC<BannersSliderItemProps> = (props) => {
-    return (
-        <a href={props.link} className="keen-slider__slide">
-            {props.image === null ? (
-                <BannersSliderItemStyled src="images/optimized-noimage.png" />
-            ) : (
-                <picture>
-                    {props.image.additionalSizes.map((size) => (
-                        <source key={size.url} srcSet={size.url} media={size.media} />
-                    ))}
-                    <BannersSliderItemStyled src={props.image.url} />
-                </picture>
-            )}
-        </a>
-    );
-};
-
-export default BannersSliderItem;
+export const BannersSliderItem: FC<BannersSliderItemProps> = ({ image, link }) => (
+    <a href={link} className="keen-slider__slide">
+        {image === null ? (
+            <BannersSliderItemStyled src="images/optimized-noimage.png" />
+        ) : (
+            <picture>
+                {image.additionalSizes.map((size) => (
+                    <source key={size.url} srcSet={size.url} media={size.media} />
+                ))}
+                <BannersSliderItemStyled src={image.url} />
+            </picture>
+        )}
+    </a>
+);

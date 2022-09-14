@@ -1,6 +1,5 @@
-/* eslint-disable no-use-before-define */
 import { SpinboxButtonStyled, SpinboxInputStyled, SpinboxSmallStyled, SpinboxStyled } from './Spinbox.style';
-import { useForwardedRef } from 'hooks/typescript/UseForwardedRef';
+import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 type SpinboxProps = {
@@ -12,10 +11,10 @@ type SpinboxProps = {
     size?: 'default' | 'small';
 };
 
-const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
-    ({ min, max, onChangeValueCallback, step, ...restProps }, spinboxForwardedRef) => {
-        const testIdentifier = 'forms-spinbox-';
+const TEST_IDENTIFIER = 'forms-spinbox-';
 
+export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
+    ({ min, max, onChangeValueCallback, step, defaultValue, size }, spinboxForwardedRef) => {
         const [isHoldingDecrease, setIsHoldingDecrease] = useState(false);
         const [isHoldingIncrease, setIsHoldingIncrease] = useState(false);
         const intervalRef = useRef<NodeJS.Timer | null>(null);
@@ -87,7 +86,7 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         let Component = SpinboxStyled;
 
-        if (restProps.size === 'small') {
+        if (size === 'small') {
             Component = SpinboxSmallStyled;
         }
 
@@ -98,25 +97,25 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseDown={() => setIsHoldingDecrease(true)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
                     onMouseLeave={() => setIsHoldingDecrease(false)}
-                    data-testid={testIdentifier + 'decrease'}
+                    data-testid={TEST_IDENTIFIER + 'decrease'}
                 >
                     -
                 </SpinboxButtonStyled>
                 <SpinboxInputStyled
                     ref={spinboxRef}
-                    defaultValue={restProps.defaultValue}
+                    defaultValue={defaultValue}
                     onInput={onInputHandler}
                     type="number"
                     min={min}
                     max={max}
-                    data-testid={testIdentifier + 'input'}
+                    data-testid={TEST_IDENTIFIER + 'input'}
                 />
                 <SpinboxButtonStyled
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
                     onMouseLeave={() => setIsHoldingIncrease(false)}
-                    data-testid={testIdentifier + 'increase'}
+                    data-testid={TEST_IDENTIFIER + 'increase'}
                 >
                     +
                 </SpinboxButtonStyled>
@@ -126,5 +125,3 @@ const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 );
 
 Spinbox.displayName = 'Spinbox';
-
-export default Spinbox;

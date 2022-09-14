@@ -6,8 +6,8 @@ import {
     ListItemStyled,
     ListItemTitleStyled,
 } from './ListItem.style';
-import Image from 'components/Basic/Image';
-import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
+import { Image } from 'components/Basic/Image/Image';
+import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -18,30 +18,26 @@ type ListItemProps = {
     listIndex: number;
 };
 
-const ListItem: FC<ListItemProps> = (props) => {
-    const testIdentifier = 'layout-header-cart-listitem';
+const TEST_IDENTIFIER = 'layout-header-cart-listitem';
 
+export const ListItem: FC<ListItemProps> = ({ cartItem, listIndex }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <ListItemStyled key={props.cartItem.uuid} data-testid={testIdentifier}>
+        <ListItemStyled key={cartItem.uuid} data-testid={TEST_IDENTIFIER}>
             <ListItemImageWrapperStyled>
-                <Image alt={props.cartItem.product.fullName} type="thumbnail" image={props.cartItem.product.image} />
+                <Image alt={cartItem.product.fullName} type="thumbnail" image={cartItem.product.image} />
             </ListItemImageWrapperStyled>
             <ListItemDetailStyled>
-                <NextLink href={props.cartItem.product.slug} passHref>
-                    <ListItemTitleStyled>{props.cartItem.product.fullName}</ListItemTitleStyled>
+                <NextLink href={cartItem.product.slug} passHref>
+                    <ListItemTitleStyled>{cartItem.product.fullName}</ListItemTitleStyled>
                 </NextLink>
-                <ListItemQuantityStyled>
-                    {props.cartItem.quantity + props.cartItem.product.unit.name}
-                </ListItemQuantityStyled>
+                <ListItemQuantityStyled>{cartItem.quantity + cartItem.product.unit.name}</ListItemQuantityStyled>
                 <ListItemPriceStyled>
-                    {formatPrice(props.cartItem.product.price.priceWithVat * props.cartItem.quantity)}
+                    {formatPrice(cartItem.product.price.priceWithVat * cartItem.quantity)}
                 </ListItemPriceStyled>
             </ListItemDetailStyled>
-            <RemoveCartItemButton cartItem={props.cartItem} listIndex={props.listIndex} />
+            <RemoveCartItemButton cartItem={cartItem} listIndex={listIndex} />
         </ListItemStyled>
     );
 };
-
-export default ListItem;

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-const FontFaceStyle = () => (
+const FontFaceStyleStyle = () => (
     <style jsx global>{`
         @font-face {
             font-family: 'DM Sans';
@@ -52,4 +52,4 @@ const FontFaceStyle = () => (
     `}</style>
 );
 
-export default memo(FontFaceStyle, () => true);
+export const FontFaceStyle = memo(FontFaceStyleStyle, () => true);

@@ -8,22 +8,22 @@ import {
     BlogPreviewHeadingTitleStyled,
     BlogPreviewStyled,
 } from './BlogPreview.style';
-import Main from './Main';
-import Side from './Side';
-import SideSlider from './SideSlider';
+import { Main } from './Main/Main';
+import { Side } from './Side/Side';
+import { SideSlider } from './SideSlider/SideSlider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { FC, useState } from 'react';
 
-const BlogPreview: FC = () => {
-    const testIdentifier = 'blocks-blogpreview';
+const TEST_IDENTIFIER = 'blocks-blogpreview';
 
+export const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
     const blogPreviewItems = useBlogPreviewArticles();
     const blogUrl = useBlogUrl();
@@ -44,14 +44,14 @@ const BlogPreview: FC = () => {
     );
 
     return (
-        <BlogPreviewStyled data-testid={testIdentifier}>
+        <BlogPreviewStyled data-testid={TEST_IDENTIFIER}>
             <BlogPreviewHeadingStyled>
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
                 {blogUrl !== undefined && (
                     <NextLink href={blogUrl} passHref>
                         <BlogPreviewHeadingLinkStyled>
                             <span>{t('View all')}</span>
-                            <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
+                            <BlogPreviewHeadingLinkIconStyled alt="" iconType="icon" icon="ArrowRight" />
                         </BlogPreviewHeadingLinkStyled>
                     </NextLink>
                 )}
@@ -72,5 +72,3 @@ const BlogPreview: FC = () => {
         </BlogPreviewStyled>
     );
 };
-
-export default BlogPreview;

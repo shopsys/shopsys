@@ -1,4 +1,4 @@
-import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { useComponentUpdate } from 'hooks/helpers/useComponentUpdate';
 import { debounce } from 'lodash';
 import { useState } from 'react';
 

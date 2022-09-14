@@ -5,14 +5,12 @@ import { DropdownItemType } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-slideright';
 
-const DropdownSlideRight: FC<DropdownItemType> = (props) => {
+export const DropdownSlideRight: FC<DropdownItemType> = (dropdownItemProps) => {
     const context = useContext(DropdownMenuContext);
 
     return (
-        <DropdownSlideRightStyled onClick={() => context.slideRight(props)} data-testid={TEST_IDENTIFIER}>
+        <DropdownSlideRightStyled onClick={() => context.slideRight(dropdownItemProps)} data-testid={TEST_IDENTIFIER}>
             <DropdownSlideRightIconStyled iconType="icon" icon="Arrow" />
         </DropdownSlideRightStyled>
     );
 };
-
-export default DropdownSlideRight;

@@ -13,20 +13,26 @@ type ColorLabelWrapperProps = NativeProps & {
     isActive: boolean;
 };
 
-const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
+export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
+    label,
+    isLightColor,
+    bgColor,
+    isDisabled,
+    isActive,
+    htmlFor,
+    children,
+}) => {
     return (
         <ColorLabelWrapperStyled
-            isLightColor={props.isLightColor}
-            bgColor={props.bgColor}
-            isDisabled={props.isDisabled}
-            isActive={props.isActive}
+            isLightColor={isLightColor}
+            bgColor={bgColor}
+            isDisabled={isDisabled}
+            isActive={isActive}
         >
-            {props.children}
-            <Tooltip label={props.label}>
-                <label htmlFor={props.htmlFor} />
+            {children}
+            <Tooltip label={label}>
+                <label htmlFor={htmlFor} />
             </Tooltip>
         </ColorLabelWrapperStyled>
     );
 };
-
-export default ColorLabelWrapper;

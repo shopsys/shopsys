@@ -1,11 +1,6 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type LabelWrapperStyledProps = {
-    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio' | 'selectbox';
-    selectBoxLabelIsFloated?: boolean;
-};
-
 const localVariables = {
     labelFontSizeSmall: '11px',
     labelActivePositionTop: '9px',
@@ -15,8 +10,13 @@ const localVariables = {
     choiceIconSize: '18px',
 } as const;
 
-export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
-    ${({ theme, inputType, selectBoxLabelIsFloated }) => css`
+type LabelWrapperStyledProps = {
+    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio' | 'selectbox';
+    selectBoxLabelIsFloated?: boolean;
+};
+
+export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>(
+    ({ theme, inputType, selectBoxLabelIsFloated }) => css`
         position: relative;
         width: 100%;
 
@@ -269,13 +269,13 @@ export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
                 }
             }
         `}
-    `}
-`;
+    `,
+);
 
-export const RequiredSymbolStyled = styled.span`
-    ${({ theme }) => css`
+export const RequiredSymbolStyled = styled.span(
+    ({ theme }) => css`
         margin-left: 5px;
 
         color: ${theme.color.red};
-    `}
-`;
+    `,
+);

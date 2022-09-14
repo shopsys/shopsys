@@ -10,16 +10,16 @@ export const VariantsTableStyled = styled.table`
     width: 100%;
 `;
 
-export const VariantsTableHeaderStyled = styled.thead`
-    ${({ theme }) => css`
+export const VariantsTableHeaderStyled = styled.thead(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryTablet} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
-export const VariantsTableBodyStyled = styled.tbody`
-    ${({ theme }) => css`
+export const VariantsTableBodyStyled = styled.tbody(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryTablet} {
             display: flex;
             flex-wrap: wrap;
@@ -29,11 +29,11 @@ export const VariantsTableBodyStyled = styled.tbody`
         ${theme.mediaQueries.queryMobile} {
             margin-left: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const VariantsTableRowStyled = styled.tr`
-    ${({ theme }) =>
+export const VariantsTableRowStyled = styled.tr(
+    ({ theme }) =>
         css`
             @media ${theme.mediaQueries.queryTablet} {
                 margin-left: ${localVariables.tableGab};
@@ -49,11 +49,11 @@ export const VariantsTableRowStyled = styled.tr`
                 margin-left: 0;
                 width: 100%;
             }
-        `}
-`;
+        `,
+);
 
-export const TableHeaderCellStyled = styled.th`
-    ${({ theme }) =>
+export const TableHeaderCellStyled = styled.th(
+    ({ theme }) =>
         css`
             text-align: center;
             vertical-align: middle;
@@ -71,11 +71,11 @@ export const TableHeaderCellStyled = styled.th`
                 border-bottom: 1px solid ${theme.color.greyLighter};
                 font-size: 12px;
             }
-        `}
-`;
+        `,
+);
 
-export const TableHeaderImageCellStyled = styled(TableHeaderCellStyled)`
-    ${({ theme }) => css`
+export const TableHeaderImageCellStyled = styled(TableHeaderCellStyled)(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryTablet} {
             width: 40px;
         }
@@ -83,21 +83,21 @@ export const TableHeaderImageCellStyled = styled(TableHeaderCellStyled)`
         @media ${theme.mediaQueries.queryLg} {
             width: 100px;
         }
-    `}
-`;
+    `,
+);
 
-export const TableHeaderPriceCellStyled = styled(TableHeaderCellStyled)`
-    ${({ theme }) => css`
+export const TableHeaderPriceCellStyled = styled(TableHeaderCellStyled)(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryLg} {
             text-align: right;
         }
-    `}
-`;
+    `,
+);
 
-export const TableHeaderActionCellStyled = styled(TableHeaderCellStyled)`
-    ${({ theme }) => css`
+export const TableHeaderActionCellStyled = styled(TableHeaderCellStyled)(
+    ({ theme }) => css`
         @media ${theme.mediaQueries.queryLg} {
             width: 240px;
         }
-    `}
-`;
+    `,
+);

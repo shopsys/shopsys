@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const IconSvgStyled = styled.i`
-    ${({ theme }) => css`
+export const IconSvgStyled = styled.i(
+    ({ theme }) => css`
         display: inline-flex;
         line-height: 0;
         width: 14px;
@@ -21,5 +21,5 @@ export const IconSvgStyled = styled.i`
 
             font-size: inherit;
         }
-    `};
-`;
+    `,
+);

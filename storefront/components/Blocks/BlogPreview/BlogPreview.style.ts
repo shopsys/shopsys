@@ -1,16 +1,16 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const BlogPreviewStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogPreviewStyled = styled.div(
+    ({ theme }) => css`
         padding: 50px 0 40px;
 
         @media ${theme.mediaQueries.queryVl} {
             padding: 50px 0 60px;
         }
-    `}
-`;
+    `,
+);
 
 export const BlogPreviewHeadingStyled = styled.div`
     align-items: baseline;
@@ -19,8 +19,8 @@ export const BlogPreviewHeadingStyled = styled.div`
     margin-bottom: 20px;
 `;
 
-export const BlogPreviewHeadingTitleStyled = styled.h2`
-    ${({ theme }) => css`
+export const BlogPreviewHeadingTitleStyled = styled.h2(
+    ({ theme }) => css`
         line-height: 36px;
         margin: 0 32px 7px 0;
 
@@ -28,11 +28,11 @@ export const BlogPreviewHeadingTitleStyled = styled.h2`
         font-size: 32px;
         font-weight: 700;
         text-transform: none;
-    `}
-`;
+    `,
+);
 
-export const BlogPreviewHeadingLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const BlogPreviewHeadingLinkStyled = styled.a(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         margin-bottom: 7px;
@@ -46,19 +46,19 @@ export const BlogPreviewHeadingLinkStyled = styled.a`
             text-decoration: none;
             color: ${theme.color.creamWhite};
         }
-    `}
-`;
+    `,
+);
 
-export const BlogPreviewHeadingLinkIconStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const BlogPreviewHeadingLinkIconStyled = styled(Icon)(
+    ({ theme }) => css`
         margin-left: 6px;
         position: relative;
         top: -1px;
 
         color: ${theme.color.creamWhite};
         font-size: ${theme.fontSize.extraSmall};
-    `}
-`;
+    `,
+);
 
 export const BlogPreviewArticlesStyled = styled.div`
     display: flex;
@@ -66,8 +66,8 @@ export const BlogPreviewArticlesStyled = styled.div`
     flex-wrap: wrap;
 `;
 
-export const BlogPreviewArticlesMainStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogPreviewArticlesMainStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         margin-bottom: 30px;
@@ -86,11 +86,11 @@ export const BlogPreviewArticlesMainStyled = styled.div`
             flex: 1;
             margin-left: -87px;
         }
-    `}
-`;
+    `,
+);
 
-export const BlogPreviewArticlesSideStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogPreviewArticlesSideStyled = styled.div(
+    ({ theme }) => css`
         flex-direction: row;
         overflow: hidden;
 
@@ -104,5 +104,5 @@ export const BlogPreviewArticlesSideStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             margin-left: 103px;
         }
-    `}
-`;
+    `,
+);

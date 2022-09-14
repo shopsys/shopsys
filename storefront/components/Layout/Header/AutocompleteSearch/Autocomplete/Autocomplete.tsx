@@ -14,11 +14,13 @@ import {
     SearchResultLinkStyled,
     ShowAllResultsButtonWrapper,
 } from './Autocomplete.style';
-import Icon from 'components/Basic/Icon';
-import Image from 'components/Basic/Image';
-import Button from 'components/Forms/Button';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Image } from 'components/Basic/Image/Image';
+import { Button } from 'components/Forms/Button/Button';
+import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useCallback } from 'react';
@@ -26,8 +28,6 @@ import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'utils/Gtm/EventHandlers';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -40,9 +40,13 @@ type AutocompleteProps = {
     autocompleteSearchQueryValue: string;
 };
 
-const Autocomplete: FC<AutocompleteProps> = (props) => {
-    const testIdentifier = 'layout-header-search-autocomplete';
+const TEST_IDENTIFIER = 'layout-header-search-autocomplete';
 
+export const Autocomplete: FC<AutocompleteProps> = ({
+    autocompleteSearchQueryValue,
+    autocompleteSearchResults,
+    isAutocompleteActive,
+}) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -52,20 +56,20 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     const onProductDetailRedirectHandler = useCallback(
         (product: SimpleProductType | ListedProductType, listName: GtmListNameType, index: number) => {
             onClickProductDetailGtmEventHandler(product, listName, index, domainConfig.url);
-            onClickSuggestResultGtmEventHandler(props.autocompleteSearchQueryValue, 'product', product.fullName);
+            onClickSuggestResultGtmEventHandler(autocompleteSearchQueryValue, 'product', product.fullName);
         },
-        [props.autocompleteSearchQueryValue, domainConfig.url],
+        [autocompleteSearchQueryValue, domainConfig.url],
     );
 
     return (
-        <AutocompleteStyled isActive={props.isAutocompleteActive} data-testid={testIdentifier}>
-            <AutocompleteBodyStyled isActive={props.isAutocompleteActive}>
+        <AutocompleteStyled isActive={isAutocompleteActive} data-testid={TEST_IDENTIFIER}>
+            <AutocompleteBodyStyled isActive={isAutocompleteActive}>
                 {(() => {
-                    if (props.autocompleteSearchResults === undefined) {
+                    if (autocompleteSearchResults === undefined) {
                         return null;
                     }
 
-                    if (areAllResultsEmpty(props.autocompleteSearchResults)) {
+                    if (areAllResultsEmpty(autocompleteSearchResults)) {
                         return (
                             <NoResultsMessageWrapperStyled>
                                 <Icon iconType="image" icon="warning" alt="warning" />
@@ -78,20 +82,18 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
 
                     return (
                         <>
-                            {props.autocompleteSearchResults.productsSearch.totalCount > 0 && (
+                            {autocompleteSearchResults.productsSearch.totalCount > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Products')} (${
-                                            props.autocompleteSearchResults.productsSearch.totalCount
-                                        })`}
+                                        {`${t('Products')} (${autocompleteSearchResults.productsSearch.totalCount})`}
                                     </SearchResultGroupTitleStyled>
-                                    <ProductsSearchResultStyled data-testid={testIdentifier + '-products'}>
-                                        {props.autocompleteSearchResults.productsSearch.products.map(
+                                    <ProductsSearchResultStyled data-testid={TEST_IDENTIFIER + '-products'}>
+                                        {autocompleteSearchResults.productsSearch.products.map(
                                             (product, index) =>
                                                 index < AUTOCOMPLETE_PRODUCT_LIMIT && (
                                                     <ProductSearchResultItemStyled
                                                         key={product.slug}
-                                                        data-testid={testIdentifier + '-products-' + index}
+                                                        data-testid={TEST_IDENTIFIER + '-products-' + index}
                                                     >
                                                         <NextLink href={product.slug} passHref>
                                                             <ProductSearchResultLinkStyled
@@ -124,24 +126,24 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </ProductsSearchResultStyled>
                                 </>
                             )}
-                            {props.autocompleteSearchResults.brandSearch.length > 0 && (
+                            {autocompleteSearchResults.brandSearch.length > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Brands')} (${props.autocompleteSearchResults.brandSearch.length})`}
+                                        {`${t('Brands')} (${autocompleteSearchResults.brandSearch.length})`}
                                     </SearchResultGroupTitleStyled>
-                                    <SearchResultGroupStyled data-testid={testIdentifier + '-brands'}>
-                                        {props.autocompleteSearchResults.brandSearch.map(
+                                    <SearchResultGroupStyled data-testid={TEST_IDENTIFIER + '-brands'}>
+                                        {autocompleteSearchResults.brandSearch.map(
                                             (brand, index) =>
                                                 index < AUTOCOMPLETE_BRAND_LIMIT && (
                                                     <li
                                                         key={brand.slug}
-                                                        data-testid={testIdentifier + '-brands-' + index}
+                                                        data-testid={TEST_IDENTIFIER + '-brands-' + index}
                                                     >
                                                         <NextLink href={brand.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
-                                                                        props.autocompleteSearchQueryValue,
+                                                                        autocompleteSearchQueryValue,
                                                                         'brand',
                                                                         brand.name,
                                                                     )
@@ -156,26 +158,26 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </SearchResultGroupStyled>
                                 </>
                             )}
-                            {props.autocompleteSearchResults.categoriesSearch.totalCount > 0 && (
+                            {autocompleteSearchResults.categoriesSearch.totalCount > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
                                         {`${t('Categories')} (${
-                                            props.autocompleteSearchResults.categoriesSearch.totalCount
+                                            autocompleteSearchResults.categoriesSearch.totalCount
                                         })`}
                                     </SearchResultGroupTitleStyled>
-                                    <SearchResultGroupStyled data-testid={testIdentifier + '-categories'}>
-                                        {props.autocompleteSearchResults.categoriesSearch.categories.map(
+                                    <SearchResultGroupStyled data-testid={TEST_IDENTIFIER + '-categories'}>
+                                        {autocompleteSearchResults.categoriesSearch.categories.map(
                                             (category, index) =>
                                                 index < AUTOCOMPLETE_CATEGORY_LIMIT && (
                                                     <li
                                                         key={category.slug}
-                                                        data-testid={testIdentifier + '-categories-' + index}
+                                                        data-testid={TEST_IDENTIFIER + '-categories-' + index}
                                                     >
                                                         <NextLink href={category.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
-                                                                        props.autocompleteSearchQueryValue,
+                                                                        autocompleteSearchQueryValue,
                                                                         'category',
                                                                         category.name,
                                                                     )
@@ -190,24 +192,24 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </SearchResultGroupStyled>
                                 </>
                             )}
-                            {props.autocompleteSearchResults.articlesSearch.length > 0 && (
+                            {autocompleteSearchResults.articlesSearch.length > 0 && (
                                 <>
                                     <SearchResultGroupTitleStyled>
-                                        {`${t('Articles')} (${props.autocompleteSearchResults.articlesSearch.length})`}
+                                        {`${t('Articles')} (${autocompleteSearchResults.articlesSearch.length})`}
                                     </SearchResultGroupTitleStyled>
-                                    <SearchResultGroupStyled data-testid={testIdentifier + '-articles'}>
-                                        {props.autocompleteSearchResults.articlesSearch.map(
+                                    <SearchResultGroupStyled data-testid={TEST_IDENTIFIER + '-articles'}>
+                                        {autocompleteSearchResults.articlesSearch.map(
                                             (article, index) =>
                                                 index < AUTOCOMPLETE_ARTICLE_LIMIT && (
                                                     <li
                                                         key={article.slug}
-                                                        data-testid={testIdentifier + '-articles-' + index}
+                                                        data-testid={TEST_IDENTIFIER + '-articles-' + index}
                                                     >
                                                         <NextLink href={article.slug} passHref>
                                                             <SearchResultLinkStyled
                                                                 onClick={() =>
                                                                     onClickSuggestResultGtmEventHandler(
-                                                                        props.autocompleteSearchQueryValue,
+                                                                        autocompleteSearchQueryValue,
                                                                         'article',
                                                                         article.name,
                                                                     )
@@ -229,10 +231,10 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     onClick={() =>
                                         router.push({
                                             pathname: searchUrl,
-                                            query: { q: props.autocompleteSearchQueryValue },
+                                            query: { q: autocompleteSearchQueryValue },
                                         })
                                     }
-                                    data-testid={testIdentifier + '-all-button'}
+                                    testIdentifier={TEST_IDENTIFIER + '-all-button'}
                                 >
                                     {t('View all results')}
                                 </Button>
@@ -257,5 +259,3 @@ const areAllResultsEmpty = (autocompleteSearchResults: AutocompleteSearchType | 
         autocompleteSearchResults.productsSearch.totalCount === 0
     );
 };
-
-export default Autocomplete;

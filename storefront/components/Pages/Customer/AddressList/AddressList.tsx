@@ -9,12 +9,12 @@ import {
     ListPopupStyled,
     ListStyled,
 } from './AddressList.style';
-import Button from 'components/Forms/Button';
+import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import Popup from 'components/Layout/Popup';
+import { Popup } from 'components/Layout/Popup/Popup';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { FC, SyntheticEvent, useState } from 'react';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { FC, useState } from 'react';
 import { DeliveryAddressType } from 'types/customer';
 
 type AddressListProps = {
@@ -22,18 +22,13 @@ type AddressListProps = {
     deliveryAddresses: DeliveryAddressType[];
 };
 
-const AddressList: FC<AddressListProps> = (props) => {
-    const testIdentifier = 'list-addresses';
+const TEST_IDENTIFIER = 'list-addresses';
+
+export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deliveryAddresses }) => {
     const [addressToBeDeleted, setAddressToBeDeleted] = useState<string | undefined>(undefined);
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutationApi();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutationApi();
     const t = useTypedTranslationFunction();
-
-    const setItemToBeDeletedHandler =
-        (deliveryAddressUuid: string) => (e: SyntheticEvent<HTMLDivElement, MouseEvent>) => {
-            e.stopPropagation();
-            setAddressToBeDeleted(deliveryAddressUuid);
-        };
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {
         if (deliveryAddressUuid === undefined) {
@@ -65,11 +60,11 @@ const AddressList: FC<AddressListProps> = (props) => {
     return (
         <>
             <ListStyled>
-                {props.deliveryAddresses.map((address, index) => (
+                {deliveryAddresses.map((address, index) => (
                     <ListItemStyled
                         key={address.uuid}
-                        isActive={props.defaultDeliveryAddress?.uuid === address.uuid}
-                        data-testid={testIdentifier + '-item-' + index}
+                        isActive={defaultDeliveryAddress?.uuid === address.uuid}
+                        data-testid={TEST_IDENTIFIER + '-item-' + index}
                         onClick={() => setDefaultItemHandler(address.uuid)}
                     >
                         <div>
@@ -93,7 +88,7 @@ const AddressList: FC<AddressListProps> = (props) => {
                         <ListItemDeleteStyled
                             icon="Remove"
                             iconType="icon"
-                            onClick={setItemToBeDeletedHandler(address.uuid)}
+                            onClick={() => setAddressToBeDeleted(address.uuid)}
                         />
                     </ListItemStyled>
                 ))}
@@ -120,5 +115,3 @@ const AddressList: FC<AddressListProps> = (props) => {
         </>
     );
 };
-
-export default AddressList;

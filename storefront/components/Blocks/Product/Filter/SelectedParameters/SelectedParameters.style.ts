@@ -1,5 +1,5 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -7,8 +7,8 @@ const localVariables = {
     SelectedParametersListItemGap: '6px',
 } as const;
 
-export const SelectedParametersStyled = styled.div`
-    ${({ theme }) => css`
+export const SelectedParametersStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         margin-bottom: 20px;
         padding: 28px 14px 14px;
@@ -20,8 +20,8 @@ export const SelectedParametersStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             z-index: 0;
         }
-    `}
-`;
+    `,
+);
 
 export const SelectedParametersTitleStyled = styled(Heading)`
     text-transform: uppercase;
@@ -37,8 +37,8 @@ export const SelectedParametersListStyled = styled.ul`
     flex-wrap: wrap;
 `;
 
-export const SelectedParametersListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const SelectedParametersListItemStyled = styled.li(
+    ({ theme }) => css`
         margin-bottom: ${localVariables.SelectedParametersListItemGap};
         margin-left: ${localVariables.SelectedParametersListItemGap};
         padding: 6px 10px;
@@ -47,8 +47,8 @@ export const SelectedParametersListItemStyled = styled.li`
         border-radius: ${theme.radius.small};
         color: ${theme.color.base};
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);
 
 export const SelectedParametersListItemRemoveStyled = styled(Icon)`
     width: 13px;
@@ -59,8 +59,8 @@ export const SelectedParametersListItemRemoveStyled = styled(Icon)`
     cursor: pointer;
 `;
 
-export const SelectedParametersResetStyled = styled.div`
-    ${({ theme }) => css`
+export const SelectedParametersResetStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
 
@@ -68,29 +68,29 @@ export const SelectedParametersResetStyled = styled.div`
         color: ${theme.color.greyLight};
         font-size: ${theme.fontSize.small};
         text-decoration: none;
-    `}
-`;
+    `,
+);
 
 export const SelectedParametersResetTextStyled = styled.div`
     font-weight: 700;
     text-transform: uppercase;
 `;
 
-export const SelectedParametersResetRemoveStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const SelectedParametersResetRemoveStyled = styled(Icon)(
+    ({ theme }) => css`
         margin-left: 8px;
 
         cursor: pointer;
         color: ${theme.color.greyLight};
-    `}
-`;
+    `,
+);
 
-export const SelectedParametersNameStyled = styled.p`
-    ${({ theme }) => css`
+export const SelectedParametersNameStyled = styled.p(
+    ({ theme }) => css`
         margin-bottom: ${localVariables.SelectedParametersListItemGap};
         margin-left: ${localVariables.SelectedParametersListItemGap};
         padding: 6px 0;
 
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);

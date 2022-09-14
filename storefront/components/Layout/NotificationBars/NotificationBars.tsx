@@ -3,12 +3,12 @@ import {
     NotificationBarsImageStyled,
     NotificationBarsStyled,
 } from './NotificationBars.style';
-import Image from 'components/Basic/Image/Image';
-import Button from 'components/Forms/Button';
-import Webline from 'components/Layout/Webline';
+import { Image } from 'components/Basic/Image/Image';
+import { Button } from 'components/Forms/Button/Button';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { Theme } from 'components/Theme/main';
 import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
-import { useAuth } from 'hooks/auth/UseAuth';
+import { useAuth } from 'hooks/auth/useAuth';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
@@ -17,7 +17,7 @@ import { FC, useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { NotificationBarsType } from 'types/notificationBars';
 
-const NotificationBars: FC = () => {
+export const NotificationBars: FC = () => {
     const notificationBarItems = useNotificationBars();
     const { isUserLoggedIn, user } = useCurrentUserData();
     const [isAdminLoggedInAsUser, setIsAdminLoggedAsUser] = useState(false);
@@ -97,5 +97,3 @@ const NotificationBars: FC = () => {
         </>
     );
 };
-
-export default NotificationBars;

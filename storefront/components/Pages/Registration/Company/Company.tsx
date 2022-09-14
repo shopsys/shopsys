@@ -1,13 +1,14 @@
-import Heading from 'components/Basic/Heading';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { RegistrationFormType } from 'types/form';
 
-const Company: FC = () => {
+export const Company: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
@@ -15,7 +16,7 @@ const Company: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.companyName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -24,7 +25,7 @@ const Company: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyName.name}
                                 name={formMeta.fields.companyName.name}
                                 label={formMeta.fields.companyName.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -33,14 +34,14 @@ const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyName.name + '-error'}
                             />
                         </>
                     )}
                 />
             </FormLine>
 
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.companyNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -49,7 +50,7 @@ const Company: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
                                 name={formMeta.fields.companyNumber.name}
                                 label={formMeta.fields.companyNumber.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -58,7 +59,7 @@ const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.companyNumber.name + '-error'}
                             />
                         </>
                     )}
@@ -82,7 +83,9 @@ const Company: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'}
+                                testIdentifier={
+                                    formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name + '-error'
+                                }
                             />
                         </>
                     )}
@@ -91,5 +94,3 @@ const Company: FC = () => {
         </>
     );
 };
-
-export default Company;

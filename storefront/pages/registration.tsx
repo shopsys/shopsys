@@ -1,16 +1,16 @@
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Registration from 'components/Pages/Registration';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { RegistrationContent } from 'components/Pages/Registration/RegistrationContent';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Index: FC<ServerSidePropsType> = () => {
+const RegistrationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], domainUrl);
@@ -21,7 +21,7 @@ const Index: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <CommonLayout title={t('Registration')}>
-                <Registration breadcrumbs={breadcrumbs} />
+                <RegistrationContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </StaticUrlGuard>
     );
@@ -32,4 +32,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store);
 });
 
-export default Index;
+export default RegistrationPage;

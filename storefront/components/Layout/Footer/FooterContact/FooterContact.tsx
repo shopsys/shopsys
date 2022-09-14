@@ -9,16 +9,16 @@ import {
     FooterContactStyled,
     FooterContactYoutubeIconStyled,
 } from './FooterContact.style';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { FC, useState } from 'react';
 
-const FooterContact: FC = () => {
-    const testIdentifier = 'layout-footer-footercontact';
+const TEST_IDENTIFIER = 'layout-footer-footercontact';
 
+export const FooterContact: FC = () => {
     const t = useTypedTranslationFunction();
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();
@@ -31,7 +31,7 @@ const FooterContact: FC = () => {
     );
 
     return (
-        <FooterContactStyled data-testid={testIdentifier}>
+        <FooterContactStyled data-testid={TEST_IDENTIFIER}>
             {isDesktop && (
                 <>
                     <FooterContactHeadingStyled type="h4">{t('Follow Us')}</FooterContactHeadingStyled>
@@ -61,5 +61,3 @@ const FooterContact: FC = () => {
         </FooterContactStyled>
     );
 };
-
-export default FooterContact;

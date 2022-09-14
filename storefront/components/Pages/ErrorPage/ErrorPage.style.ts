@@ -8,8 +8,8 @@ const localVariables = {
     detailInfoWidth: '512px',
 } as const;
 
-export const ErrorPageStyled = styled.div`
-    ${({ theme }) => css`
+export const ErrorPageStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-wrap: wrap;
@@ -31,11 +31,11 @@ export const ErrorPageStyled = styled.div`
 
             background-color: ${theme.color.white};
         }
-    `}
-`;
+    `,
+);
 
-export const ErrorPageTextStyled = styled.div`
-    ${({ theme }) => css`
+export const ErrorPageTextStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         padding: 20px 16px 0 16px;
         z-index: 1;
@@ -45,11 +45,11 @@ export const ErrorPageTextStyled = styled.div`
             padding: 48px 0 0 48px;
             text-align: left;
         }
-    `}
-`;
+    `,
+);
 
-export const ErrorPageTextHeadingStyled = styled.div`
-    ${({ theme }) => css`
+export const ErrorPageTextHeadingStyled = styled.div(
+    ({ theme }) => css`
         line-height: 1.2;
         margin-bottom: 0;
         width: 100%;
@@ -63,11 +63,11 @@ export const ErrorPageTextHeadingStyled = styled.div`
             text-align: left;
             max-width: ${localVariables.pageWidth};
         }
-    `}
-`;
+    `,
+);
 
-export const ErrorPageTextMainStyled = styled.div`
-    ${({ theme }) => css`
+export const ErrorPageTextMainStyled = styled.div(
+    ({ theme }) => css`
         margin: 16px 0 0;
 
         font-size: 15px;
@@ -76,21 +76,21 @@ export const ErrorPageTextMainStyled = styled.div`
         @media ${theme.mediaQueries.queryLg} {
             margin: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const ErrorPageButtonLinkStyled = styled(ButtonStyled)`
-    ${({ theme }) => css`
+export const ErrorPageButtonLinkStyled = styled(ButtonStyled)(
+    ({ theme }) => css`
         margin-top: 8px;
 
         @media ${theme.mediaQueries.queryLg} {
             margin-top: 32px;
         }
-    `}
-`;
+    `,
+);
 
-export const ErrorPageImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ErrorPageImageStyled = styled.div(
+    ({ theme }) => css`
         position: absolute;
         bottom: 20px;
         width: 100%;
@@ -107,5 +107,5 @@ export const ErrorPageImageStyled = styled.div`
             max-height: 100%;
             object-fit: cover;
         }
-    `}
-`;
+    `,
+);

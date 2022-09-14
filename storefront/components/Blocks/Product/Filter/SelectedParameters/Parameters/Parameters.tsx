@@ -6,7 +6,7 @@ import {
     SelectedParametersListStyled,
     SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, Fragment } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
@@ -97,6 +97,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                     </>
                                 )}
                                 <SelectedParametersListItemRemoveStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={onUncheckSliderParameter(filteredParameter.parameterUuid)}
@@ -118,6 +119,7 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                         >
                                             {value.text}
                                             <SelectedParametersListItemRemoveStyled
+                                                alt=""
                                                 iconType="icon"
                                                 icon="RemoveThin"
                                                 onClick={onUncheckParameter(

@@ -1,18 +1,18 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const TableGridStyled = styled.div`
-    ${({ theme }) => css`
+export const TableGridStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: 24px;
         overflow-x: auto;
 
         border-radius: ${theme.radius.biggest};
         border: 2px solid ${theme.color.border};
-    `}
-`;
+    `,
+);
 
-export const TableGridRootStyled = styled.table`
-    ${({ theme }) => css`
+export const TableGridRootStyled = styled.table(
+    ({ theme }) => css`
         width: 100%;
 
         tr {
@@ -59,8 +59,8 @@ export const TableGridRootStyled = styled.table`
                 }
             }
         }
-    `}
-`;
+    `,
+);
 
 export const TableGridColumnsStyled = styled.tbody`
     display: flex;
@@ -70,8 +70,8 @@ export const TableGridColumnsStyled = styled.tbody`
     padding: 25px;
 `;
 
-export const TableGridColumnStyled = styled.table`
-    ${({ theme }) => css`
+export const TableGridColumnStyled = styled.table(
+    ({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryMd} {
@@ -112,5 +112,5 @@ export const TableGridColumnStyled = styled.table`
                 }
             }
         }
-    `}
-`;
+    `,
+);

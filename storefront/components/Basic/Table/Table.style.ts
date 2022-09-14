@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const TableStyled = styled.table`
-    ${({ theme }) => css`
+export const TableStyled = styled.table(
+    ({ theme }) => css`
         width: 100%;
 
         tr {
@@ -31,5 +31,5 @@ export const TableStyled = styled.table`
         td {
             text-align: right;
         }
-    `}
-`;
+    `,
+);

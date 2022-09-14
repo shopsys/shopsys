@@ -1,16 +1,17 @@
-import Heading from 'components/Basic/Heading';
-import FormColumn from 'components/Forms/Lib/FormColumn';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import Select from 'components/Forms/Select';
-import TextInput from 'components/Forms/TextInput';
-import { RegistrationFormType, useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { Select } from 'components/Forms/Select/Select';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { RegistrationFormType } from 'types/form';
 
-const Address: FC = () => {
+export const Address: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<RegistrationFormType>();
     const { setValue } = formProviderMethods;
@@ -30,7 +31,7 @@ const Address: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Billing address')}</Heading>
-            <FormLine bottomGap={true}>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.street.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -39,7 +40,7 @@ const Address: FC = () => {
                                 id={formMeta.formName + '-' + formMeta.fields.street.name}
                                 name={formMeta.fields.street.name}
                                 label={formMeta.fields.street.label}
-                                required={true}
+                                required
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}
@@ -48,7 +49,7 @@ const Address: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="text-input"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.street.name + '-error'}
                             />
                         </>
                     )}
@@ -56,7 +57,7 @@ const Address: FC = () => {
             </FormLine>
 
             <FormColumn>
-                <FormLine bottomGap={true}>
+                <FormLine bottomGap>
                     <Controller
                         name={formMeta.fields.city.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -65,7 +66,7 @@ const Address: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.city.name}
                                     name={formMeta.fields.city.name}
                                     label={formMeta.fields.city.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}
@@ -74,13 +75,13 @@ const Address: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.city.name + '-error'}
                                 />
                             </>
                         )}
                     />
                 </FormLine>
-                <FormLine bottomGap={true} width="100%" lg="142px">
+                <FormLine bottomGap width="100%" lg="142px">
                     <Controller
                         name={formMeta.fields.postcode.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -89,7 +90,7 @@ const Address: FC = () => {
                                     id={formMeta.formName + '-' + formMeta.fields.postcode.name}
                                     name={formMeta.fields.postcode.name}
                                     label={formMeta.fields.postcode.label}
-                                    required={true}
+                                    required
                                     type="text"
                                     isTouched={isTouched}
                                     hasError={invalid}
@@ -98,7 +99,7 @@ const Address: FC = () => {
                                 <FormLineError
                                     error={error}
                                     inputType="text-input"
-                                    data-testid={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
+                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.postcode.name + '-error'}
                                 />
                             </>
                         )}
@@ -121,7 +122,7 @@ const Address: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="select"
-                                data-testid={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
+                                testIdentifier={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                             />
                         </>
                     )}
@@ -130,5 +131,3 @@ const Address: FC = () => {
         </>
     );
 };
-
-export default Address;

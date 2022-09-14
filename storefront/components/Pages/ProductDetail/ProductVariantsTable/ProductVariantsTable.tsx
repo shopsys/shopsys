@@ -8,8 +8,8 @@ import {
     VariantsTableRowStyled,
     VariantsTableStyled,
 } from './ProductVariantsTable.style';
-import Variant from './Variant';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Variant } from './Variant/Variant';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedVariantType } from 'types/product';
 
@@ -18,7 +18,7 @@ type ProductVariantsTableProps = {
     isSellingDenied: boolean;
 };
 
-const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingDenied, variants }) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -34,11 +34,11 @@ const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
                     </VariantsTableRowStyled>
                 </VariantsTableHeaderStyled>
                 <VariantsTableBodyStyled>
-                    {props.variants.map((variant, index) => (
+                    {variants.map((variant, index) => (
                         <Variant
                             key={variant.uuid}
                             variant={variant}
-                            isSellingDenied={props.isSellingDenied}
+                            isSellingDenied={isSellingDenied}
                             gtmListName="variants"
                             listIndex={index}
                         />
@@ -48,5 +48,3 @@ const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
         </>
     );
 };
-
-export default ProductVariantsTable;

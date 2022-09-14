@@ -13,10 +13,8 @@ type MetaRobotsType = {
         | 'noindex, nofollow';
 };
 
-const MetaRobots: FC<MetaRobotsType> = ({ content }) => (
+export const MetaRobots: FC<MetaRobotsType> = ({ content }) => (
     <Head>
         <meta name="robots" content={content} />
     </Head>
 );
-
-export default MetaRobots;

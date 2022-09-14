@@ -23,7 +23,7 @@ const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
 const keyUrl = (data: Data) => data.url as string | null;
 
-const cache = cacheExchange({
+export const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
     keys: {
         AdditionalSize: keyUrl,
@@ -264,5 +264,3 @@ const getPaymentFromTransport = (
 
     return transport.payments.find((payment) => payment.uuid === paymentUuid) ?? null;
 };
-
-export default cache;

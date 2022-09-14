@@ -1,7 +1,7 @@
-import Table from 'components/Basic/Table';
-import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs';
-import UserText from 'components/Helpers/UserText';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Table } from 'components/Basic/Table/Table';
+import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
+import { UserText } from 'components/Helpers/UserText/UserText';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ProductParameterType } from 'types/parameter';
 
@@ -10,9 +10,9 @@ type ProductDetailTabsProps = {
     parameters: ProductParameterType[];
 };
 
-const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
-    const testIdentifier = 'pages-productdetail-';
+const TEST_IDENTIFIER = 'pages-productdetail-';
 
+export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters }) => {
     const t = useTypedTranslationFunction();
 
     const formatParameterValue = (valueText: string, index: number) => {
@@ -22,19 +22,22 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem data-testid={testIdentifier + 'overview-link'}>{t('Overview')}</TabsListItem>
-                {props.parameters.length > 0 && (
-                    <TabsListItem data-testid={testIdentifier + 'parameters-link'}>{t('Parameters')}</TabsListItem>
+                <TabsListItem testIdentifier={TEST_IDENTIFIER + 'overview-link'}>{t('Overview')}</TabsListItem>
+                {parameters.length > 0 && (
+                    <TabsListItem testIdentifier={TEST_IDENTIFIER + 'parameters-link'}>{t('Parameters')}</TabsListItem>
                 )}
             </TabsList>
-            <TabsContent headingTextMobile={t('Overview')} data-testid={testIdentifier + 'overview-content'}>
-                <UserText htmlContent={props.description} />
+            <TabsContent headingTextMobile={t('Overview')} testIdentifier={TEST_IDENTIFIER + 'overview-content'}>
+                <UserText htmlContent={description} />
             </TabsContent>
-            {props.parameters.length > 0 && (
-                <TabsContent headingTextMobile={t('Parameters')} data-testid={testIdentifier + 'parameters-content'}>
+            {parameters.length > 0 && (
+                <TabsContent
+                    headingTextMobile={t('Parameters')}
+                    testIdentifier={TEST_IDENTIFIER + 'parameters-content'}
+                >
                     <Table>
                         <tbody>
-                            {props.parameters.map((parameter) => (
+                            {parameters.map((parameter) => (
                                 <tr key={parameter.uuid}>
                                     <th>{parameter.name}</th>
                                     <td>
@@ -51,5 +54,3 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
         </Tabs>
     );
 };
-
-export default ProductDetailTabs;

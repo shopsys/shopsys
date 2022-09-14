@@ -1,27 +1,32 @@
-import Breadcrumbs from 'components/Layout/Breadcrumbs';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Webline from 'components/Layout/Webline';
-import ArticleDetailPage from 'components/Pages/Article';
-import BlogArticlePage from 'components/Pages/BlogArticle';
-import BlogCategoryPage from 'components/Pages/BlogCategory';
-import BrandDetailPage from 'components/Pages/BrandDetail';
-import CategoryDetailPage from 'components/Pages/CategoryDetail';
-import Error404 from 'components/Pages/ErrorPage/404';
-import FlagDetailPage from 'components/Pages/FlagDetail';
-import ProductDetailPage from 'components/Pages/ProductDetail';
-import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
-import StoreDetailPage from 'components/Pages/StoreDetail';
+import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { ArticleDetailContent } from 'components/Pages/Article/ArticleDetailContent';
+import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArticleDetailContent';
+import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
+import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
+import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
+import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
+import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
+import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
+import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
+import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
-import { createClient } from 'helpers/createClient';
-import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
-import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
+import { useGtmPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getGtmPageInfoForFriendlyUrl } from 'helpers/gtm/gtm';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
-import { getProductListSort } from 'helpers/sorting/GetProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import { getProductListSort } from 'helpers/sorting/getProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { createClient } from 'helpers/urql/createClient';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
@@ -30,11 +35,6 @@ import { initialState, userActions } from 'redux/slices/user';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { ssrExchange } from 'urql';
-import { getUrlWithoutGetParameters } from 'utils/getUrlWithoutGetParameters';
-import { useGtmPageViewEvent } from 'utils/Gtm/EventFactories';
-import { getGtmPageInfoForFriendlyUrl } from 'utils/Gtm/Gtm';
-import { getNewPagination } from 'utils/Pagination/getNewPagination';
-import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -59,28 +59,28 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
     switch (data?.__typename) {
         case 'RegularProduct':
-            return wrapContent(<ProductDetailPage product={data as ProductDetailType} fetching={fetching} />, data);
+            return wrapContent(<ProductDetailContent product={data as ProductDetailType} fetching={fetching} />, data);
         case 'MainVariant':
             return wrapContent(
-                <ProductDetailMainVariantPage product={data as MainVariantDetailType} fetching={fetching} />,
+                <ProductDetailMainVariantContent product={data as MainVariantDetailType} fetching={fetching} />,
                 data,
             );
         case 'Category':
-            return wrapContent(<CategoryDetailPage category={data} fetching={fetching} />, data);
+            return wrapContent(<CategoryDetailContent category={data} fetching={fetching} />, data);
         case 'Store':
-            return wrapContent(<StoreDetailPage store={data} />, data);
+            return wrapContent(<StoreDetailContent store={data} />, data);
         case 'Article':
-            return wrapContent(<ArticleDetailPage article={data} />, data);
+            return wrapContent(<ArticleDetailContent article={data} />, data);
         case 'BlogArticle':
-            return wrapContent(<BlogArticlePage blogArticle={data} />, data);
+            return wrapContent(<BlogArticleDetailContent blogArticle={data} />, data);
         case 'Brand':
-            return wrapContent(<BrandDetailPage brand={data} fetching={fetching} />, data);
+            return wrapContent(<BrandDetailContent brand={data} fetching={fetching} />, data);
         case 'Flag':
-            return wrapContent(<FlagDetailPage flag={data} fetching={fetching} />, data);
+            return wrapContent(<FlagDetailContent flag={data} fetching={fetching} />, data);
         case 'BlogCategory':
-            return wrapContent(<BlogCategoryPage blogCategory={data} />, data);
+            return wrapContent(<BlogCategoryContent blogCategory={data} />, data);
         default:
-            return <Error404 />;
+            return <Error404Content />;
     }
 };
 

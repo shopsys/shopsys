@@ -1,14 +1,18 @@
-import { IconSvg } from './IconSvg';
 import { IconName } from './IconSvg/IconsSvgMap';
+import { IconSvg } from './IconSvg/IconSvg';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'onClick'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'title' | 'onClick' | 'className'>;
 
-type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & (
+type IconProps = NativeProps &
+    (
         | {
               iconType: 'icon';
               icon: IconName;
+              width?: never;
+              height?: never;
+              alt?: never;
           }
         | {
               iconType: 'image';
@@ -19,23 +23,23 @@ type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & 
           }
     );
 
-const Icon: FC<IconProps> = (props) => {
-    if (props.iconType === 'image') {
-        const testIdentifier = 'basic-icon-' + props.icon;
+const getTestIdentifier = (icon: string) => 'basic-icon-' + icon;
 
-        return (
-            <img
-                src={`/icons/${props.icon}.png`}
-                height={props.height !== undefined ? props.height : '24'}
-                width={props.width !== undefined ? props.width : '24'}
-                title={props.title}
-                alt={props.alt}
-                data-testid={testIdentifier}
-            />
-        );
+export const Icon: FC<IconProps> = ({ icon, iconType, title, alt, height, width, onClick, className }) => {
+    if (iconType === 'icon') {
+        return <IconSvg className={className} icon={icon as IconName} onClick={onClick} />;
     }
 
-    return <IconSvg {...props} icon={props.icon} />;
+    return (
+        <img
+            className={className}
+            src={`/icons/${icon}.png`}
+            height={height !== undefined ? height : '24'}
+            width={width !== undefined ? width : '24'}
+            title={title}
+            alt={alt}
+            onClick={onClick}
+            data-testid={getTestIdentifier(icon)}
+        />
+    );
 };
-
-export default Icon;

@@ -5,38 +5,37 @@ import {
     InfoBoxStyled,
     LinkStyled,
 } from './InfoBox.style';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedStoreType } from 'types/store';
 
-type InfoBoxProps = ListedStoreType & {
-    isClosed: () => void;
+type InfoBoxProps = {
+    store: ListedStoreType;
+    closeInfoBoxCallback: () => void;
 };
 
-const InfoBox: FC<InfoBoxProps> = (props) => {
+export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
     const t = useTypedTranslationFunction();
 
     return (
         <InfoBoxStyled>
-            <ButtonCloseStyled onClick={props.isClosed} iconType="icon" icon="Remove" />
-            <HeadingStyled type="h2">{props.name}</HeadingStyled>
+            <ButtonCloseStyled alt="" onClick={closeInfoBoxCallback} iconType="icon" icon="Remove" />
+            <HeadingStyled type="h2">{store.name}</HeadingStyled>
             <div>
-                {props.street}
+                {store.street}
                 <br />
-                {props.postcode} {props.city}
+                {store.postcode} {store.city}
             </div>
-            {props.openingHoursHtml !== null && (
+            {store.openingHoursHtml !== null && (
                 <>
                     <HeadingOpeningHoursStyled type="h3">{t('Opening hours')}</HeadingOpeningHoursStyled>
-                    <div dangerouslySetInnerHTML={{ __html: props.openingHoursHtml }} />
+                    <div dangerouslySetInnerHTML={{ __html: store.openingHoursHtml }} />
                 </>
             )}
             <br />
-            <LinkStyled href={props.slug} isButton={true}>
+            <LinkStyled href={store.slug} isButton>
                 {t('Store detail')}
             </LinkStyled>
         </InfoBoxStyled>
     );
 };
-
-export default InfoBox;

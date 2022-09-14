@@ -11,9 +11,9 @@ import {
     SelectedParametersStyled,
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
-import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
+import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import {
@@ -132,6 +132,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                             <SelectedParametersListItemStyled key={filterFormBrand.uuid}>
                                 {filterFormBrand.name}
                                 <SelectedParametersListItemRemoveStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={onUncheckBrand(filterFormBrand.uuid)}
@@ -148,6 +149,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                             <SelectedParametersListItemStyled key={filterFormFlag.uuid}>
                                 {filterFormFlag.name}
                                 <SelectedParametersListItemRemoveStyled
+                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={onUncheckFlag(filterFormFlag.uuid)}
@@ -165,6 +167,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                         <SelectedParametersListItemStyled>
                             {t('Only goods in stock')}
                             <SelectedParametersListItemRemoveStyled
+                                alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
                                 onClick={() => {
@@ -193,6 +196,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                                 </>
                             )}
                             <SelectedParametersListItemRemoveStyled
+                                alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
                                 onClick={onResetPrices}
@@ -203,7 +207,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
             </SelectedParametersBlockStyled>
             <SelectedParametersResetStyled onClick={onResetAllParameters}>
                 <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
-                <SelectedParametersResetRemoveStyled iconType="icon" icon="Remove" />
+                <SelectedParametersResetRemoveStyled alt="" iconType="icon" icon="Remove" />
             </SelectedParametersResetStyled>
         </SelectedParametersStyled>
     );

@@ -1,12 +1,12 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
-import Link from 'components/Basic/Link';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Link } from 'components/Basic/Link/Link';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
 
-export const InfoBoxStyled = styled.div`
-    ${({ theme }) => css`
+export const InfoBoxStyled = styled.div(
+    ({ theme }) => css`
         position: absolute;
         top: 0;
         left: 0;
@@ -21,8 +21,8 @@ export const InfoBoxStyled = styled.div`
         @media ${theme.mediaQueries.queryMobile} {
             display: none;
         }
-    `}
-`;
+    `,
+);
 
 export const HeadingStyled = styled(Heading)`
     margin: 0 0 10px;
@@ -36,8 +36,8 @@ export const LinkStyled = styled(Link)`
     margin-top: 20px;
 `;
 
-export const ButtonCloseStyled = styled(Icon)`
-    ${({ theme }) => css`
+export const ButtonCloseStyled = styled(Icon)(
+    ({ theme }) => css`
         position: absolute;
         top: 15px;
         right: 15px;
@@ -51,5 +51,5 @@ export const ButtonCloseStyled = styled(Icon)`
         &:hover {
             color: ${tinycolor(theme.color.orange).darken(10).toString()};
         }
-    `}
-`;
+    `,
+);

@@ -1,18 +1,18 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
 import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './UserConsentForm.style';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
+import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { getGtmConsentInfo } from 'helpers/gtm/gtm';
 import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC, useCallback } from 'react';
 import { Controller, FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
-import { onConsentUpdateGtmEventHandler } from 'utils/Gtm/EventHandlers';
-import { getGtmConsentInfo } from 'utils/Gtm/Gtm';
 
 type UserConsentFormProps = {
     onSetUserConsentVisibilityCallback?: (newValue: boolean) => void;
@@ -85,7 +85,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
             </ConsentRowStyled>
             <ConsentButtonsRowStyled>
                 <Button
-                    data-testid="blocks-userconsent-save"
+                    testIdentifier="blocks-userconsent-save"
                     type="button"
                     size="small"
                     variant="primary"
@@ -94,7 +94,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
                     {t('Save choices')}
                 </Button>
                 <Button
-                    data-testid="blocks-userconsent-accept"
+                    testIdentifier="blocks-userconsent-accept"
                     type="button"
                     size="small"
                     onClick={acceptAllCookieChoices}
@@ -102,7 +102,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetUserConsentVisi
                     {t('Accept all')}
                 </Button>
                 <Button
-                    data-testid="blocks-userconsent-reject"
+                    testIdentifier="blocks-userconsent-reject"
                     type="button"
                     size="small"
                     variant="secondary"

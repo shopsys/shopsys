@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const FooterMenuStyled = styled.div`
-    ${({ theme }) => css`
+export const FooterMenuStyled = styled.div(
+    ({ theme }) => css`
         margin: 0 -${theme.layout.padding} 30px;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -15,5 +15,5 @@ export const FooterMenuStyled = styled.div`
             flex: 1;
             margin-bottom: 0;
         }
-    `}
-`;
+    `,
+);

@@ -11,8 +11,8 @@ export const SideSliderImageStyled = styled.div`
     width: 100%;
 `;
 
-export const SideSliderImageLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const SideSliderImageLinkStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         position: relative;
         margin-bottom: 8px;
@@ -25,15 +25,15 @@ export const SideSliderImageLinkStyled = styled.a`
 
             border-radius: ${theme.radius.medium};
         }
-    `}
-`;
+    `,
+);
 
 export const SideSliderContentStyled = styled.div`
     flex: 1;
 `;
 
-export const SideSliderNameStyled = styled.a`
-    ${({ theme }) => css`
+export const SideSliderNameStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         line-height: 22px;
 
@@ -45,5 +45,5 @@ export const SideSliderNameStyled = styled.a`
         &:hover {
             color: ${theme.color.creamWhite};
         }
-    `}
-`;
+    `,
+);

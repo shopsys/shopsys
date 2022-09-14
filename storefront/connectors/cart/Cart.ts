@@ -19,8 +19,8 @@ import {
     useCartQueryApi,
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
-import { useChangePaymentInCart } from 'hooks/cart/UseChangePaymentInCart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
 import { useEffect, useMemo, useState } from 'react';

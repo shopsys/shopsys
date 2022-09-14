@@ -1,8 +1,9 @@
 import { styled } from 'components/Theme/main';
-import Image from 'next/image';
+import NextImage from 'next/image';
+import { css } from 'styled-components';
 
-export const LogoStyled = styled(Image)`
-    ${({ theme }) => `
+export const LogoStyled = styled(NextImage)(
+    ({ theme }) => css`
         display: flex;
         width: 100%;
         max-width: 120px;
@@ -10,5 +11,5 @@ export const LogoStyled = styled(Image)`
         @media ${theme.mediaQueries.queryLg} {
             max-width: 163px;
         }
-    `}
-`;
+    `,
+);

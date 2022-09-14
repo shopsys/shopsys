@@ -7,28 +7,28 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import Flag from 'components/Basic/Flag';
-import Heading from 'components/Basic/Heading';
-import Image from 'components/Basic/Image';
+import { Flag } from 'components/Basic/Flag/Flag';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BlogArticleConnectionType } from 'types/blogArticle';
 
-type ListProps = {
+type BlogArticlesListProps = {
     blogArticles: BlogArticleConnectionType;
 };
 
-const List: FC<ListProps> = (props) => {
-    const testIdentifier = 'pages-blogcategory-blogarticleslist-';
+const TEST_IDENTIFIER = 'pages-blogcategory-blogarticleslist-';
 
+export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) => {
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     return (
         <ListStyled>
-            {props.blogArticles.edges.map((blogArticle, blogArticleIndex) => (
-                <ListItemStyled key={blogArticle.uuid} data-testid={testIdentifier + blogArticleIndex}>
-                    <ListItemImageStyled data-testid={testIdentifier + blogArticleIndex + '-image'}>
+            {blogArticles.edges.map((blogArticle, blogArticleIndex) => (
+                <ListItemStyled key={blogArticle.uuid} data-testid={TEST_IDENTIFIER + blogArticleIndex}>
+                    <ListItemImageStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}>
                         <NextLink href={blogArticle.link} passHref>
                             <a>
                                 <Image image={blogArticle.image} type="list" alt={blogArticle.name} />
@@ -43,8 +43,8 @@ const List: FC<ListProps> = (props) => {
                                         <Flag
                                             href={blogArticleCategory.link}
                                             color="#cdb3ff"
-                                            data-testid={
-                                                testIdentifier +
+                                            testIdentifier={
+                                                TEST_IDENTIFIER +
                                                 blogArticleIndex +
                                                 '-section-' +
                                                 blogArticleCategoryIndex
@@ -57,16 +57,16 @@ const List: FC<ListProps> = (props) => {
                             ))}
                         </div>
                         <NextLink href={blogArticle.link} passHref>
-                            <ListItemTitleStyled data-testid={testIdentifier + blogArticleIndex + '-title'}>
+                            <ListItemTitleStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}>
                                 <Heading type="h2">{blogArticle.name}</Heading>
                             </ListItemTitleStyled>
                         </NextLink>
                         {blogArticle.perex !== null && (
-                            <ListItemContentTextStyled data-testid={testIdentifier + blogArticleIndex + '-perex'}>
+                            <ListItemContentTextStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-perex'}>
                                 {blogArticle.perex}
                             </ListItemContentTextStyled>
                         )}
-                        <ListItemContentDateStyled data-testid={testIdentifier + blogArticleIndex + '-date'}>
+                        <ListItemContentDateStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-date'}>
                             {new Date(blogArticle.publishDate).toLocaleDateString(currentDomainConfig.defaultLocale)}
                         </ListItemContentDateStyled>
                     </ListItemContentStyled>
@@ -75,5 +75,3 @@ const List: FC<ListProps> = (props) => {
         </ListStyled>
     );
 };
-
-export default List;

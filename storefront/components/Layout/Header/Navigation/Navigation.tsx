@@ -1,11 +1,11 @@
 import { NavigationStyled } from './Navigation.style';
-import NavigationItem from './NavigationItem';
+import { NavigationItem } from './NavigationItem/NavigationItem';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
-const Navigation = (): ReactElement | null => {
-    const testIdentifier = 'layout-header-navigation';
+const TEST_IDENTIFIER = 'layout-header-navigation';
 
+export const Navigation: FC = () => {
     const navigationItems = useNavigationItems();
 
     if (navigationItems.length === 0) {
@@ -13,12 +13,10 @@ const Navigation = (): ReactElement | null => {
     }
 
     return (
-        <NavigationStyled data-testid={testIdentifier}>
+        <NavigationStyled data-testid={TEST_IDENTIFIER}>
             {navigationItems.map((navigationItem, index) => (
                 <NavigationItem navigationItem={navigationItem} key={index} />
             ))}
         </NavigationStyled>
     );
 };
-
-export default Navigation;

@@ -6,8 +6,8 @@ type AdvertsStyledProps = {
     withGapTop?: boolean;
 };
 
-export const AdvertsStyled = styled.div<AdvertsStyledProps>`
-    ${({ withGapBottom, withGapTop }) => css`
+export const AdvertsStyled = styled.div<AdvertsStyledProps>(
+    ({ withGapBottom, withGapTop }) => css`
         ${withGapBottom &&
         css`
             margin-bottom: 32px;
@@ -17,5 +17,5 @@ export const AdvertsStyled = styled.div<AdvertsStyledProps>`
         css`
             margin-top: 32px;
         `}
-    `}
-`;
+    `,
+);

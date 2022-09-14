@@ -1,8 +1,8 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const ListItemBlockStyled = styled.a`
-    ${({ theme }) => css`
+export const ListItemBlockStyled = styled.a(
+    ({ theme }) => css`
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -25,11 +25,11 @@ export const ListItemBlockStyled = styled.a`
             background-color: ${theme.color.whitesmoke};
             text-decoration: none;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemImageStyled = styled.div`
-    ${({ theme }) => css`
+export const ListItemImageStyled = styled.div(
+    ({ theme }) => css`
         flex: 0 0 auto;
         height: 48px;
         margin-bottom: 6px;
@@ -44,8 +44,8 @@ export const ListItemImageStyled = styled.div`
             mix-blend-mode: multiply;
             max-height: 100%;
         }
-    `}
-`;
+    `,
+);
 
 export const ListItemNameWrapperStyled = styled.div`
     margin: 0;
@@ -53,8 +53,8 @@ export const ListItemNameWrapperStyled = styled.div`
     max-width: 100%;
 `;
 
-export const ListItemNameStyled = styled.span`
-    ${({ theme }) => css`
+export const ListItemNameStyled = styled.span(
+    ({ theme }) => css`
         display: block;
         max-width: 100%;
 
@@ -64,15 +64,15 @@ export const ListItemNameStyled = styled.span`
         @media ${theme.mediaQueries.queryLg} {
             padding-left: 10px;
         }
-    `}
-`;
+    `,
+);
 
-export const ListItemCountStyled = styled.span`
-    ${({ theme }) => css`
+export const ListItemCountStyled = styled.span(
+    ({ theme }) => css`
         margin-left: 8px;
 
         white-space: nowrap;
         color: ${theme.color.greyLight};
         font-size: 11px;
-    `}
-`;
+    `,
+);

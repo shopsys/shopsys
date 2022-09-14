@@ -3,14 +3,14 @@ import { FormLineStyled } from 'components/Forms/Lib/FormLine/FormLine.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type FormColumnStyledProps = FormColumnPropType;
-
 const localVariables = {
     formColumnGap: '12px',
-};
+} as const;
 
-export const FormColumnStyled = styled.div<FormColumnStyledProps>`
-    ${({ theme, width, xs, sm, md, lg, vl, xl }) => css`
+type FormColumnStyledProps = FormColumnPropType;
+
+export const FormColumnStyled = styled.div<FormColumnStyledProps>(
+    ({ theme, width, xs, sm, md, lg, vl, xl }) => css`
         display: flex;
         flex-wrap: wrap;
         margin-left: -${localVariables.formColumnGap};
@@ -65,5 +65,5 @@ export const FormColumnStyled = styled.div<FormColumnStyledProps>`
         ${FormLineStyled} {
             padding-left: ${localVariables.formColumnGap};
         }
-    `};
-`;
+    `,
+);

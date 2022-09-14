@@ -1,5 +1,5 @@
 import { CheckboxStyled } from './Checkbox.style';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, InputHTMLAttributes, ReactNode } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -13,6 +13,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 type CheckboxProps = NativeProps & {
     label: string | ReactNode | ReactNode[];
     count?: number;
+    testIdentifier?: string;
 } & (
         | {
               value: unknown;
@@ -26,7 +27,18 @@ type CheckboxProps = NativeProps & {
           }
     );
 
-const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disabled, fieldRef, onChange, value }) => {
+export const Checkbox: FC<CheckboxProps> = ({
+    id,
+    name,
+    label,
+    count,
+    required,
+    disabled,
+    fieldRef,
+    onChange,
+    value,
+    testIdentifier,
+}) => {
     return (
         <LabelWrapper
             label={label}
@@ -44,9 +56,8 @@ const Checkbox: FC<CheckboxProps> = ({ id, name, label, count, required, disable
                 checked={fieldRef ? fieldRef.value : value}
                 onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
+                data-testid={testIdentifier}
             />
         </LabelWrapper>
     );
 };
-
-export default Checkbox;

@@ -9,14 +9,14 @@ import {
     SimpleBlogArticleFragmentApi,
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { DomainConfigType } from 'helpers/domain/domain';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import {
     BlogArticleConnectionType,
     BlogArticleDetailType,
     ListedBlogArticleType,
     SimpleBlogArticleType,
 } from 'types/blogArticle';
-import { DomainConfigType } from 'utils/Domain/Domain';
 
 export const blogPreviewVariables = { first: 6, onlyHomepageArticles: true };
 

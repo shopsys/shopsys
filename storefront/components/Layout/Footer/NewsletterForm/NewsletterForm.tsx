@@ -5,28 +5,28 @@ import {
     NewsletterFormInputWrapperStyled,
     NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
-import Checkbox from 'components/Forms/Checkbox';
-import Form from 'components/Forms/Form';
-import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { Form } from 'components/Forms/Form/Form';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
-const NewsletterForm: FC = () => {
-    const testIdentifier = 'layout-footer-newsletterform';
+const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
+export const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
@@ -48,11 +48,11 @@ const NewsletterForm: FC = () => {
 
     return (
         <>
-            <NewsletterFormWrapperStyled data-testid={testIdentifier}>
+            <NewsletterFormWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
                 <NewsletterFormColumnStyled>
                     <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} noValidate>
+                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
                             <NewsletterFormInputWrapperStyled>
                                 <FormLine>
                                     <Controller
@@ -63,7 +63,7 @@ const NewsletterForm: FC = () => {
                                                     id={formMeta.formName + '-' + formMeta.fields.email.name}
                                                     name={formMeta.fields.email.name}
                                                     label={formMeta.fields.email.label}
-                                                    required={true}
+                                                    required
                                                     type="text"
                                                     inputSize="small"
                                                     isTouched={isTouched}
@@ -74,7 +74,7 @@ const NewsletterForm: FC = () => {
                                                     textInputSize="small"
                                                     error={error}
                                                     inputType="text-input"
-                                                    data-testid={
+                                                    testIdentifier={
                                                         formMeta.formName + '-' + formMeta.fields.email.name + '-error'
                                                     }
                                                 />
@@ -101,13 +101,13 @@ const NewsletterForm: FC = () => {
                                                 id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
                                                 name={formMeta.fields.privacyPolicy.name}
                                                 label={formMeta.fields.privacyPolicy.label}
-                                                required={true}
+                                                required
                                                 fieldRef={field}
                                             />
                                             <FormLineError
                                                 error={error}
                                                 inputType="checkbox"
-                                                data-testid={
+                                                testIdentifier={
                                                     formMeta.formName +
                                                     '-' +
                                                     formMeta.fields.privacyPolicy.name +
@@ -131,5 +131,3 @@ const NewsletterForm: FC = () => {
         </>
     );
 };
-
-export default NewsletterForm;

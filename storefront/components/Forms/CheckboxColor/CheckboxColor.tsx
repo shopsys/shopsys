@@ -1,5 +1,5 @@
 import { CheckboxColorStyled } from './CheckboxColor.style';
-import ColorLabelWrapper from 'components/Forms/Lib/ColorLabelWrapper';
+import { ColorLabelWrapper } from 'components/Forms/Lib/ColorLabelWrapper/ColorLabelWrapper';
 import { FC, InputHTMLAttributes } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import tinycolor from 'tinycolor2';
@@ -14,6 +14,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 type CheckboxColorProps = NativeProps & {
     label?: string;
     bgColor?: string;
+    testIdentifier?: string;
 } & (
         | {
               value: unknown;
@@ -27,7 +28,7 @@ type CheckboxColorProps = NativeProps & {
           }
     );
 
-const CheckboxColor: FC<CheckboxColorProps> = ({
+export const CheckboxColor: FC<CheckboxColorProps> = ({
     bgColor = '#d4d4d4',
     label,
     fieldRef,
@@ -37,6 +38,7 @@ const CheckboxColor: FC<CheckboxColorProps> = ({
     required,
     value,
     onChange,
+    testIdentifier,
 }) => {
     return (
         <ColorLabelWrapper
@@ -55,9 +57,8 @@ const CheckboxColor: FC<CheckboxColorProps> = ({
                 checked={fieldRef ? fieldRef.value : value}
                 onChange={fieldRef ? fieldRef.onChange : onChange}
                 type="checkbox"
+                data-testid={testIdentifier}
             />
         </ColorLabelWrapper>
     );
 };
-
-export default CheckboxColor;

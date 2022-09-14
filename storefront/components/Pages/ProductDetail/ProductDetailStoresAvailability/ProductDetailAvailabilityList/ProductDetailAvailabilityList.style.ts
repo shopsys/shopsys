@@ -1,56 +1,59 @@
 import styled, { css } from 'styled-components';
-import { StoreAvailabilityType } from 'types/availability';
+import { AvailabilityStatusType } from 'types/availability';
 
-type ProductDetailAvailabilityListItemStatusStyledProps = Pick<StoreAvailabilityType, 'availabilityStatus'>;
+type ProductDetailAvailabilityListItemStatusStyledProps = {
+    availabilityStatus: AvailabilityStatusType;
+};
 
-export const ProductDetailAvailabilityListWrapperStyled = styled.div`
-    ${({ theme }) => css`
+export const ProductDetailAvailabilityListWrapperStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         width: 588px;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             width: 100%;
         }
-    `}
-`;
+    `,
+);
 
-export const ProductDetailAvailabilityListItemStyled = styled.li`
-    ${({ theme }) => css`
+export const ProductDetailAvailabilityListItemStyled = styled.li(
+    ({ theme }) => css`
         width: 100%;
         display: flex;
         padding: 14px 0;
         align-items: center;
 
         border-bottom: 1px solid ${theme.color.greyLighter};
-    `}
-`;
+    `,
+);
 
 export const ProductDetailAvailabilityListItemStoreNameStyled = styled.strong`
     margin-right: 10px;
     width: 148px;
 `;
 
-export const ProductDetailAvailabilityListItemStatusStyled = styled.span<ProductDetailAvailabilityListItemStatusStyledProps>`
-    ${({ theme, availabilityStatus }) => css`
-        flex: 1;
-        padding-right: 10px;
+export const ProductDetailAvailabilityListItemStatusStyled =
+    styled.span<ProductDetailAvailabilityListItemStatusStyledProps>(
+        ({ theme, availabilityStatus }) => css`
+            flex: 1;
+            padding-right: 10px;
 
-        font-size: ${theme.fontSize.small};
+            font-size: ${theme.fontSize.small};
 
-        ${availabilityStatus === 'in-stock' &&
-        css`
-            color: ${theme.color.inStock};
-        `}
+            ${availabilityStatus === 'in-stock' &&
+            css`
+                color: ${theme.color.inStock};
+            `}
 
-        ${availabilityStatus === 'out-of-stock' &&
-        css`
-            color: ${theme.color.red};
-        `}
-    `}
-`;
+            ${availabilityStatus === 'out-of-stock' &&
+            css`
+                color: ${theme.color.red};
+            `}
+        `,
+    );
 
-export const ProductDetailAvailabilityListItemStoreLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const ProductDetailAvailabilityListItemStoreLinkStyled = styled.a(
+    ({ theme }) => css`
         align-items: center;
         display: flex;
         margin-left: auto;
@@ -66,5 +69,5 @@ export const ProductDetailAvailabilityListItemStoreLinkStyled = styled.a`
         img {
             margin-left: 8px;
         }
-    `}
-`;
+    `,
+);

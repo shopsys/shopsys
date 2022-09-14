@@ -6,19 +6,19 @@ import { FilterGroupPrice } from './FilterGroupPrice/FilterGroupPrice';
 import { getDefaultFormValues } from './formMeta';
 import { getIndexOfParameter } from './helpers/getIndexOfParameter';
 import { SelectedParameters } from './SelectedParameters/SelectedParameters';
-import Form from 'components/Forms/Form';
+import { Form } from 'components/Forms/Form/Form';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/GetActualUrlQueryWithoutDefaultPriceFilter';
-import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
-import { getIsProductFilterEmpty } from 'helpers/filterOptions/GetIsProductFilterEmpty';
-import { getIsProductFilterSameAsDefault } from 'helpers/filterOptions/GetIsProductFilterSameAsDefault';
-import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWithoutAllParameter';
-import { mapParametersFilter } from 'helpers/filterOptions/MapParametersFilter';
-import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
-import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
-import { getProductListSort } from 'helpers/sorting/GetProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/getActualUrlQueryWithoutDefaultPriceFilter';
+import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
+import { getIsProductFilterSameAsDefault } from 'helpers/filterOptions/getIsProductFilterSameAsDefault';
+import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
+import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
+import { getProductListSort } from 'helpers/sorting/getProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -34,7 +34,7 @@ type FilterProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
 
-export const ProductFilter: FC<FilterProps> = ({
+export const Filter: FC<FilterProps> = ({
     productFilterOptions,
     slug,
     originalSlug,
@@ -201,13 +201,13 @@ export const ProductFilter: FC<FilterProps> = ({
                         title={t('Price')}
                         minimalPrice={deepComparedProductFilterOptions.minimalPrice}
                         maximalPrice={deepComparedProductFilterOptions.maximalPrice}
-                        isOpen={true}
+                        isOpen
                     />
 
                     <FilterGroupInStock
                         title={t('Availability')}
                         inStockCount={deepComparedProductFilterOptions.inStock}
-                        isOpen={true}
+                        isOpen
                     />
 
                     {deepComparedProductFilterOptions.flags.length > 0 && (
@@ -215,7 +215,7 @@ export const ProductFilter: FC<FilterProps> = ({
                             title={t('Flags')}
                             filterField="flags"
                             data={deepComparedProductFilterOptions.flags}
-                            isOpen={true}
+                            isOpen
                         />
                     )}
 
@@ -224,7 +224,7 @@ export const ProductFilter: FC<FilterProps> = ({
                             title={t('Brands')}
                             filterField="brands"
                             data={deepComparedProductFilterOptions.brands}
-                            isOpen={true}
+                            isOpen
                         />
                     )}
 

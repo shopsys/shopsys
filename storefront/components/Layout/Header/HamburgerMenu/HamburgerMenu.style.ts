@@ -5,8 +5,8 @@ type HamburgerMenuProps = {
     isOpen: boolean;
 };
 
-export const HamburgerMenuStyled = styled.div<HamburgerMenuProps>`
-    ${({ theme, isOpen }) => css`
+export const HamburgerMenuStyled = styled.div<HamburgerMenuProps>(
+    ({ theme, isOpen }) => css`
         display: flex;
         align-items: center;
         padding: 0 10px;
@@ -21,8 +21,8 @@ export const HamburgerMenuStyled = styled.div<HamburgerMenuProps>`
         css`
             z-index: ${theme.zIndex.aboveMobileMenu};
         `}
-    `}
-`;
+    `,
+);
 
 export const HamburgerMenuTextStyled = styled.span`
     width: 29px;

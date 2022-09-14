@@ -5,10 +5,10 @@ const localVariables = {
     headerItemGapSmall: '20px',
     headerItemGap: '32px',
     headerMobileButtonSize: '40px',
-};
+} as const;
 
-export const HeaderStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-wrap: wrap;
         padding: 8px 0 11px;
@@ -20,11 +20,11 @@ export const HeaderStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             padding: 23px 0 16px;
         }
-    `}
-`;
+    `,
+);
 
-export const HeaderLogoStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderLogoStyled = styled.div(
+    ({ theme }) => css`
         order: 1;
         flex: 1;
         display: flex;
@@ -42,11 +42,11 @@ export const HeaderLogoStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             margin-right: ${localVariables.headerItemGap};
         }
-    `}
-`;
+    `,
+);
 
-export const HeaderMiddleStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderMiddleStyled = styled.div(
+    ({ theme }) => css`
         width: 100%;
         order: 6;
         margin-top: 11px;
@@ -68,11 +68,11 @@ export const HeaderMiddleStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             margin-right: ${localVariables.headerItemGap};
         }
-    `}
-`;
+    `,
+);
 
-export const HeaderLinksStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderLinksStyled = styled.div(
+    ({ theme }) => css`
         order: 2;
         display: flex;
 
@@ -89,11 +89,11 @@ export const HeaderLinksStyled = styled.div`
         @media ${theme.mediaQueries.queryXl} {
             margin-right: ${localVariables.headerItemGap};
         }
-    `}
-`;
+    `,
+);
 
-export const HeaderCartStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderCartStyled = styled.div(
+    ({ theme }) => css`
         order: 3;
         position: relative;
         display: flex;
@@ -101,11 +101,11 @@ export const HeaderCartStyled = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             order: 4;
         }
-    `}
-`;
+    `,
+);
 
-export const HeaderMenuButtonStyled = styled.div`
-    ${({ theme }) => css`
+export const HeaderMenuButtonStyled = styled.div(
+    ({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -121,5 +121,5 @@ export const HeaderMenuButtonStyled = styled.div`
             cursor: pointer;
             font-size: 18px;
         }
-    `}
-`;
+    `,
+);

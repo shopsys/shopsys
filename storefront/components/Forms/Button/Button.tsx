@@ -7,7 +7,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     ButtonHTMLAttributes<HTMLButtonElement>,
     'type',
-    'onClick' | 'style' | 'name'
+    'onClick' | 'style' | 'name' | 'className'
 >;
 
 type ButtonProps = NativeProps &
@@ -15,31 +15,53 @@ type ButtonProps = NativeProps &
         isDisabled?: boolean;
         hasDisabledLook?: boolean;
         isLink?: boolean;
+        testIdentifier?: string;
     };
 
-const Button: FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = ({
+    type,
+    onClick,
+    style,
+    name,
+    isDisabled,
+    hasDisabledLook,
+    isLink,
+    size,
+    variant,
+    borderRadius,
+    children,
+    className,
+    testIdentifier,
+}) => {
     const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
 
-    if (props.isLink === true) {
+    if (isLink === true) {
         Component = ButtonAsLinkStyled;
     }
 
     return (
         <>
             <Component
-                {...props}
-                hasDisabledLook={props.hasDisabledLook}
+                className={className}
+                type={type}
+                onClick={onClick}
+                style={style}
+                name={name}
+                hasDisabledLook={hasDisabledLook}
+                isLink={isLink}
+                size={size}
+                variant={variant}
+                borderRadius={borderRadius}
+                data-testid={testIdentifier}
                 isDisabled={
                     // formProviderMethods may be null probably when it is not used in FormProvider context - see https://github.com/react-hook-form/react-hook-form/discussions/3894
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    props.isDisabled || (props.type === 'submit' && formProviderMethods?.formState.isSubmitting)
+                    isDisabled || (type === 'submit' && formProviderMethods?.formState.isSubmitting)
                 }
             >
-                {props.children}
+                {children}
             </Component>
         </>
     );
 };
-
-export default Button;

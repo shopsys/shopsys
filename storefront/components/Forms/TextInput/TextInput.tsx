@@ -1,7 +1,7 @@
 import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style';
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
-import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -9,7 +9,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     never,
-    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress'
+    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress' | 'className'
 >;
 
 type TextInputProps = NativeProps & {
@@ -24,11 +24,34 @@ type TextInputProps = NativeProps & {
     fieldRef?: ControllerRenderProps<any, any>;
     isSearchButtonDisabled?: boolean;
     value?: number | string;
+    testIdentifier?: string;
 };
 
-const TextInput: FC<TextInputProps> = (props) => {
+export const TextInput: FC<TextInputProps> = ({
+    label,
+    type,
+    disabled,
+    fieldRef,
+    hasError,
+    id,
+    inputSize,
+    isSearchButtonDisabled,
+    isTouched,
+    markSuccessfulWhenValid,
+    name,
+    onBlurCapture,
+    onChange,
+    onKeyPress,
+    placeholderType,
+    required,
+    style,
+    value,
+    variant,
+    className,
+    testIdentifier,
+}) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
-    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(props.type);
+    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
 
     const togglePasswordVisibilityHandler = () => {
         setInputType((currentInputType) => {
@@ -43,32 +66,49 @@ const TextInput: FC<TextInputProps> = (props) => {
     };
 
     useEffect(() => {
-        setInputState(getStateAfterValidation(props.hasError, props.isTouched, props.markSuccessfulWhenValid));
-    }, [props.hasError, props.isTouched, props.markSuccessfulWhenValid]);
+        setInputState(getStateAfterValidation(hasError, isTouched, markSuccessfulWhenValid));
+    }, [hasError, isTouched, markSuccessfulWhenValid]);
 
     return (
-        <LabelWrapper {...props} htmlFor={props.id} inputType="text-input">
+        <LabelWrapper
+            label={label}
+            placeholderType={placeholderType}
+            required={required}
+            htmlFor={id}
+            inputType="text-input"
+        >
             <TextInputStyled
-                {...props.fieldRef}
-                {...props}
+                className={className}
+                disabled={disabled}
+                id={id}
+                inputSize={inputSize}
+                name={name}
+                onBlurCapture={onBlurCapture}
+                onChange={onChange}
+                onKeyPress={onKeyPress}
+                placeholderType={placeholderType}
+                required={required}
+                style={style}
+                value={value}
+                variant={variant}
                 inputState={inputState}
                 type={inputType}
-                placeholder={typeof props.label === 'string' ? props.label : ' '}
+                placeholder={typeof label === 'string' ? label : ' '}
+                {...fieldRef}
+                data-testid={testIdentifier}
             />
-            {props.type === 'password' && (
+            {type === 'password' && (
                 <PasswordVisibilityToggleStyled
                     src="/svg/eye.svg"
                     isVisible={inputType === 'text'}
                     onClick={togglePasswordVisibilityHandler}
                 />
             )}
-            {props.variant === 'searchInHeader' && (
-                <SearchButtonStyled type="submit" disabled={props.isSearchButtonDisabled}>
+            {variant === 'searchInHeader' && (
+                <SearchButtonStyled type="submit" disabled={isSearchButtonDisabled}>
                     <Icon iconType="icon" icon="Search" />
                 </SearchButtonStyled>
             )}
         </LabelWrapper>
     );
 };
-
-export default TextInput;

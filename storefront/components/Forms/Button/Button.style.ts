@@ -40,8 +40,8 @@ export const buttonSettings = (
     `;
 };
 
-export const ButtonStyled = styled.button<ButtonStyledProps>`
-    ${({ theme, size, variant, borderRadius, isDisabled, hasDisabledLook }) => css`
+export const ButtonStyled = styled.button<ButtonStyledProps>(
+    ({ theme, size, variant, borderRadius, isDisabled, hasDisabledLook }) => css`
         ${buttonSettings(theme, size, variant, borderRadius)}
         width: auto;
         vertical-align: middle;
@@ -66,11 +66,11 @@ export const ButtonStyled = styled.button<ButtonStyledProps>`
         css`
             pointer-events: none;
         `}
-    `}
-`;
+    `,
+);
 
-export const ButtonAsLinkStyled = styled.button<ButtonAsLinkStyledProps>`
-    ${({ theme, isDisabled, hasDisabledLook }) => css`
+export const ButtonAsLinkStyled = styled.button<ButtonAsLinkStyledProps>(
+    ({ theme, isDisabled, hasDisabledLook }) => css`
         padding: 0;
         min-height: 0;
 
@@ -92,5 +92,5 @@ export const ButtonAsLinkStyled = styled.button<ButtonAsLinkStyledProps>`
             color: ${theme.color.primary};
             text-decoration: underline;
         }
-    `}
-`;
+    `,
+);

@@ -1,6 +1,6 @@
 import { getFirstImage } from 'connectors/image/Image';
 import { SliderItemFragmentApi, useSliderItemsQueryApi } from 'graphql/generated';
-import { useQueryError } from 'hooks/graphQl/UseQueryError';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { SliderItemType } from 'types/sliderItem';
 
 export const useSliderItems = (): SliderItemType[] | undefined => {

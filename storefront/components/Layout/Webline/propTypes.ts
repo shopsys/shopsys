@@ -1,4 +1,6 @@
+export type WeblineType = 'colored' | 'dark' | 'light' | 'blog';
+
 export type WeblinePropType = {
-    type?: 'colored' | 'dark' | 'light' | 'blog';
-    'data-testid'?: string;
+    type?: WeblineType;
+    testIdentifier?: string;
 };

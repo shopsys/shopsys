@@ -6,14 +6,10 @@ type OverlayProps = {
     isHiddenOnDesktop?: boolean;
 };
 
-const Overlay: FC<OverlayProps> = (props) => {
-    const testIdentifier = 'basic-overlay';
+const TEST_IDENTIFIER = 'basic-overlay';
 
-    return (
-        <OverlayStyled {...props} data-testid={testIdentifier}>
-            {props.children}
-        </OverlayStyled>
-    );
-};
-
-export default Overlay;
+export const Overlay: FC<OverlayProps> = ({ onClick, children, isHiddenOnDesktop }) => (
+    <OverlayStyled onClick={onClick} isHiddenOnDesktop={isHiddenOnDesktop} data-testid={TEST_IDENTIFIER}>
+        {children}
+    </OverlayStyled>
+);

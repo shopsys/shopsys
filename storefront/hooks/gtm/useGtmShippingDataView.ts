@@ -1,9 +1,9 @@
+import { getGtmShippingInfoEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
+import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { GtmPageViewEventType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
-import { getGtmShippingInfoEvent, getNewGtmEcommerceEvent } from 'utils/Gtm/EventFactories';
-import { gtmSafePushEvent } from 'utils/Gtm/Gtm';
 
 export const useGtmShippingDataView = (
     transport: TransportType | null,

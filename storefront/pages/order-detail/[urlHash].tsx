@@ -1,22 +1,22 @@
-import MetaRobots from 'components/Basic/Head/MetaRobots';
-import PageGuard from 'components/Helpers/PageGuard';
-import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import CommonLayout from 'components/Layout/CommonLayout';
-import OrderDetail from 'components/Pages/Customer/OrderDetail';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { PageGuard } from 'components/Helpers/PageGuard';
+import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
-import { getStringFromUrlQuery } from 'utils/getStringFromUrlQuery';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const OrderDetailByHash: FC = () => {
+const OrderDetailByHashPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const router = useRouter();
@@ -31,7 +31,7 @@ const OrderDetailByHash: FC = () => {
             <MetaRobots content="noindex" />
             <PageGuard accessCondition={order !== null} errorRedirectUrl="/">
                 <CommonLayout title={`${t('Order number')} ${order?.number}`}>
-                    <OrderDetail order={order!} breadcrumbs={breadcrumbs} />
+                    <OrderDetailContent order={order!} breadcrumbs={breadcrumbs} />
                 </CommonLayout>
             </PageGuard>
         </StaticUrlGuard>
@@ -54,4 +54,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-export default OrderDetailByHash;
+export default OrderDetailByHashPage;

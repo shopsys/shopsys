@@ -12,15 +12,15 @@ import {
     PriceStyled,
     ProductStyled,
 } from './AddToCartPopup.style';
-import Image from 'components/Basic/Image';
-import Popup from 'components/Layout/Popup';
+import { Image } from 'components/Basic/Image/Image';
+import { Popup } from 'components/Layout/Popup/Popup';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
 type AddToCartPopupProps = {
     isVisible: boolean;
@@ -28,9 +28,9 @@ type AddToCartPopupProps = {
     product: AddToCartPopupDataType;
 };
 
-const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
-    const testIdentifier = 'blocks-product-addtocartpopup-product';
+const TEST_IDENTIFIER = 'blocks-product-addtocartpopup-product';
 
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCallback, product }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
@@ -38,29 +38,29 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
 
     return (
         <Popup
-            isVisible={props.isVisible}
-            onCloseCallback={props.onCloseCallback}
+            isVisible={isVisible}
+            onCloseCallback={onCloseCallback}
             wrapperComponent={AddToCartPopupWrapperStyled}
-            hideCloseButton={true}
+            hideCloseButton
         >
             <HeadingStyled type="h2">
-                <Checkmark iconType="icon" icon="Checkmark" />
+                <Checkmark alt="" iconType="icon" icon="Checkmark" />
                 {t('Great choice! We have added your item to the cart')}
             </HeadingStyled>
-            <ProductStyled data-testid={testIdentifier}>
-                {props.product.image !== null && (
+            <ProductStyled data-testid={TEST_IDENTIFIER}>
+                {product.image !== null && (
                     <ImageStyled>
-                        <Image image={props.product.image} type="thumbnailMedium" alt={props.product.fullName} />
+                        <Image image={product.image} type="thumbnailMedium" alt={product.fullName} />
                     </ImageStyled>
                 )}
                 <ContentStyled>
-                    <NameStyled data-testid={testIdentifier + '-name'}>
-                        <NextLink href={props.product.slug}>{props.product.fullName}</NextLink>
+                    <NameStyled data-testid={TEST_IDENTIFIER + '-name'}>
+                        <NextLink href={product.slug}>{product.fullName}</NextLink>
                     </NameStyled>
                     <PriceInfoStyled>
-                        <PriceStyled data-testid={testIdentifier + '-price'}>
-                            {`${props.product.quantity} ${props.product.unitName}, ${formatPrice(
-                                props.product.quantity * props.product.price.priceWithVat,
+                        <PriceStyled data-testid={TEST_IDENTIFIER + '-price'}>
+                            {`${product.quantity} ${product.unitName}, ${formatPrice(
+                                product.quantity * product.price.priceWithVat,
                             )}`}
                         </PriceStyled>
                     </PriceInfoStyled>
@@ -68,19 +68,13 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
             </ProductStyled>
 
             <ButtonsStyled>
-                <ButtonStyled
-                    onClick={props.onCloseCallback}
-                    type="button"
-                    data-testid={testIdentifier + '-button-back'}
-                >
+                <ButtonStyled onClick={onCloseCallback} type="button" testIdentifier={TEST_IDENTIFIER + '-button-back'}>
                     {t('Back to shop')}
                 </ButtonStyled>
-                <LinkStyled href={cartUrl} isButton={true}>
+                <LinkStyled href={cartUrl} isButton>
                     {t('To cart')}
                 </LinkStyled>
             </ButtonsStyled>
         </Popup>
     );
 };
-
-export default AddToCartPopup;

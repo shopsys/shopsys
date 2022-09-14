@@ -1,5 +1,5 @@
-import Heading from 'components/Basic/Heading';
-import Icon from 'components/Basic/Icon';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -12,25 +12,25 @@ type BlogSignpostItemIconStyledProps = {
     isActive: boolean;
 };
 
-export const BlogSignpostStyled = styled.div`
-    ${({ theme }) => css`
+export const BlogSignpostStyled = styled.div(
+    ({ theme }) => css`
         display: flex;
         flex-direction: column;
         padding: 30px;
 
         background-color: ${theme.color.primary};
         border-radius: ${theme.radius.big};
-    `}
-`;
+    `,
+);
 
-export const BlogSignpostHeadingStyled = styled(Heading)`
-    ${({ theme }) => css`
+export const BlogSignpostHeadingStyled = styled(Heading)(
+    ({ theme }) => css`
         color: ${theme.color.creamWhite};
-    `}
-`;
+    `,
+);
 
-export const BlogSignpostItemStyled = styled.a<BlogSignpostItemStyledProps>`
-    ${({ theme, isActive, itemLevel }) => css`
+export const BlogSignpostItemStyled = styled.a<BlogSignpostItemStyledProps>(
+    ({ theme, isActive, itemLevel }) => css`
         position: relative;
         padding: 12px 35px;
         ${itemLevel !== undefined &&
@@ -64,11 +64,11 @@ export const BlogSignpostItemStyled = styled.a<BlogSignpostItemStyledProps>`
                       ${theme.color.creamWhite}
                   `};
         }
-    `}
-`;
+    `,
+);
 
-export const BlogSignpostItemIconStyled = styled(Icon)<BlogSignpostItemIconStyledProps>`
-    ${({ theme, isActive }) => css`
+export const BlogSignpostItemIconStyled = styled(Icon)<BlogSignpostItemIconStyledProps>(
+    ({ theme, isActive }) => css`
         position: absolute;
         top: 50%;
         left: 10px;
@@ -80,5 +80,5 @@ export const BlogSignpostItemIconStyled = styled(Icon)<BlogSignpostItemIconStyle
         css`
             color: ${theme.color.base};
         `}
-    `}
-`;
+    `,
+);

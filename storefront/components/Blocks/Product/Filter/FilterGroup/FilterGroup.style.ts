@@ -1,4 +1,4 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -15,15 +15,15 @@ type FilterGroupContentItemStyledProps = {
     isActive: boolean;
 };
 
-export const FilterGroupStyled = styled.div`
-    ${({ theme }) => css`
+export const FilterGroupStyled = styled.div(
+    ({ theme }) => css`
         margin-bottom: -${localVariables.filterGroupBorderWidth};
         border-bottom: ${localVariables.filterGroupBorderWidth} solid ${theme.color.border};
-    `}
-`;
+    `,
+);
 
-export const FilterGroupTitleStyled = styled.div`
-    ${({ theme }) => css`
+export const FilterGroupTitleStyled = styled.div(
+    ({ theme }) => css`
         display: block;
         position: relative;
         padding: 25px 20px 25px 0;
@@ -34,11 +34,11 @@ export const FilterGroupTitleStyled = styled.div`
         font-size: ${theme.fontSize.default};
         font-weight: 700;
         cursor: pointer;
-    `}
-`;
+    `,
+);
 
-export const FilterGroupContentStyled = styled.div<FilterGroupStyledProps>`
-    ${({ isOpen }) => css`
+export const FilterGroupContentStyled = styled.div<FilterGroupStyledProps>(
+    ({ isOpen }) => css`
         flex-wrap: wrap;
         flex-direction: column;
         margin-bottom: 24px;
@@ -50,11 +50,11 @@ export const FilterGroupContentStyled = styled.div<FilterGroupStyledProps>`
             : css`
                   display: none;
               `};
-    `}
-`;
+    `,
+);
 
-export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemStyledProps>`
-    ${({ isDisabled, isActive }) => css`
+export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemStyledProps>(
+    ({ isDisabled, isActive }) => css`
         margin-bottom: 10px;
         ${isDisabled &&
         !isActive &&
@@ -62,14 +62,8 @@ export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemSty
             opacity: 0.3;
             pointer-events: none;
         `}
-    `}
-`;
-
-export const FilterItemCheckboxStyled = styled.div`
-    position: relative;
-    display: inline-block;
-    width: 100%;
-`;
+    `,
+);
 
 export const FilterGroupColorStyled = styled.div`
     display: flex;
@@ -77,8 +71,8 @@ export const FilterGroupColorStyled = styled.div`
     flex-wrap: wrap;
 `;
 
-export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>(
+    ({ theme, isOpen }) => css`
         position: absolute;
         right: 0;
         top: 50%;
@@ -97,5 +91,5 @@ export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>`
                   transform: translateY(-50%) rotate(0deg);
                   transition: ${theme.transition};
               `};
-    `}
-`;
+    `,
+);

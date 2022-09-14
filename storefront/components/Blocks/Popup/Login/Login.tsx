@@ -14,38 +14,29 @@ import {
     LoginStyled,
 } from './Login.style';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Link from 'components/Basic/Link';
-import Button from 'components/Forms/Button';
-import Form from 'components/Forms/Form';
-import FormLine from 'components/Forms/Lib/FormLine';
-import FormLineError from 'components/Forms/Lib/FormLineError';
-import TextInput from 'components/Forms/TextInput';
-import { useAuth } from 'hooks/auth/UseAuth';
-import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Link } from 'components/Basic/Link/Link';
+import { Button } from 'components/Forms/Button/Button';
+import { Form } from 'components/Forms/Form/Form';
+import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { useAuth } from 'hooks/auth/useAuth';
+import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { useShopsysForm } from 'hooks/forms/useShopsysForm';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 import * as Yup from 'yup';
 
-const getLoginFormResolver = (t: Translate) => {
-    return yupResolver(
-        Yup.object().shape({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            password: Yup.string().required(t('This field is required')),
-        }),
-    );
-};
+const TEST_IDENTIFIER = 'blocks-popup-login';
 
-const Login: FC = () => {
-    const testIdentifier = 'blocks-popup-login';
-
+export const Login: FC = () => {
     const t = useTypedTranslationFunction();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
     const { url } = useShopsysSelector((state) => state.domain);
@@ -67,7 +58,7 @@ const Login: FC = () => {
     };
 
     return (
-        <LoginStyled data-testid={testIdentifier}>
+        <LoginStyled data-testid={TEST_IDENTIFIER}>
             <LoginColumnStyled>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
@@ -75,12 +66,12 @@ const Login: FC = () => {
                             name="email"
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                 <>
-                                    <FormLine bottomGap={true}>
+                                    <FormLine bottomGap>
                                         <TextInput
                                             id="login_form-email"
                                             name="email"
                                             label={t('Your email')}
-                                            required={true}
+                                            required
                                             type="text"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -90,7 +81,7 @@ const Login: FC = () => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input"
-                                            data-testid="login_form-email-error"
+                                            testIdentifier="login_form-email-error"
                                         />
                                     </FormLine>
                                 </>
@@ -105,7 +96,7 @@ const Login: FC = () => {
                                             id="login_form-password"
                                             name="password"
                                             label={t('Password')}
-                                            required={true}
+                                            required
                                             type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
@@ -115,7 +106,7 @@ const Login: FC = () => {
                                             textInputSize="small"
                                             error={error}
                                             inputType="text-input-password"
-                                            data-testid="login_form-password-error"
+                                            testIdentifier="login_form-password-error"
                                         />
                                     </FormLine>
                                 </>
@@ -128,7 +119,7 @@ const Login: FC = () => {
                                 </Button>
                             </ButtonWrapperStyled>
                             <LoginLostPassStyled>
-                                <LoginLostPassIconStyled iconType="icon" icon="Warning" />
+                                <LoginLostPassIconStyled alt="" iconType="icon" icon="Warning" />
                                 <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
                                 <NextLink href={resetPasswordUrl} passHref>
                                     <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>
@@ -158,7 +149,7 @@ const Login: FC = () => {
                 <LoginMessageStyled>
                     {t('Your addresses prefilled and you can check your order history.')}
                 </LoginMessageStyled>
-                <Link isButton={true} href={registrationUrl}>
+                <Link isButton href={registrationUrl}>
                     {t('Register')}
                 </Link>
             </LoginColumnStyled>
@@ -166,4 +157,11 @@ const Login: FC = () => {
     );
 };
 
-export default Login;
+const getLoginFormResolver = (t: Translate) => {
+    return yupResolver(
+        Yup.object().shape({
+            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
+            password: Yup.string().required(t('This field is required')),
+        }),
+    );
+};

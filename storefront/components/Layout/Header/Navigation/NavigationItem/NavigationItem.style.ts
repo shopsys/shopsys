@@ -1,18 +1,18 @@
-import Icon from 'components/Basic/Icon';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
-
-type NavigationStyledProps = {
-    isOpen?: boolean;
-};
 
 const localVariables = {
     navigationHeight: '64px',
     navigationSubListItemGap: '45px',
 } as const;
 
-export const NavigationItemStyled = styled.li<NavigationStyledProps>`
-    ${({ theme }) => css`
+type NavigationStyledProps = {
+    isOpen?: boolean;
+};
+
+export const NavigationItemStyled = styled.li(
+    ({ theme }) => css`
         padding: 0;
         display: inline-block;
         vertical-align: middle;
@@ -29,11 +29,11 @@ export const NavigationItemStyled = styled.li<NavigationStyledProps>`
         &:last-child {
             margin-right: 0;
         }
-    `}
-`;
+    `,
+);
 
-export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>(
+    ({ theme, isOpen }) => css`
         position: relative;
         display: block;
         padding: 0 10px;
@@ -80,11 +80,11 @@ export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>`
 
             background-color: ${theme.color.orange};
         }
-    `}
-`;
+    `,
+);
 
-export const NavigationItemLinkIconStyled = styled(Icon)<NavigationStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const NavigationItemLinkIconStyled = styled(Icon)<NavigationStyledProps>(
+    ({ theme, isOpen }) => css`
         margin-left: 8px;
 
         color: ${theme.color.white};
@@ -94,11 +94,11 @@ export const NavigationItemLinkIconStyled = styled(Icon)<NavigationStyledProps>`
             transform: rotate(180deg);
             color: ${theme.color.orangeLight};
         `};
-    `};
-`;
+    `,
+);
 
-export const NavigationItemSubStyled = styled.div<NavigationStyledProps>`
-    ${({ theme, isOpen }) => css`
+export const NavigationItemSubStyled = styled.div<NavigationStyledProps>(
+    ({ theme, isOpen }) => css`
         display: block;
         position: absolute;
         left: 0;
@@ -117,8 +117,8 @@ export const NavigationItemSubStyled = styled.div<NavigationStyledProps>`
             opacity: 1;
             pointer-events: auto;
         `};
-    `}
-`;
+    `,
+);
 
 export const NavigationItemSubWrapStyled = styled.div`
     display: flex;

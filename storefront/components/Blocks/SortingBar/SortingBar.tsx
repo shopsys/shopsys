@@ -14,15 +14,15 @@ import {
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { canUseDom } from 'helpers/canUseDom';
-import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/GetFilterUrlQueryForSortingInSeoCategory';
-import { getQueryWithoutAllParameter } from 'helpers/filterOptions/GetQueryWithoutAllParameter';
-import { shallowReplaceIfDifferent } from 'helpers/filterOptions/ShallowReplaceIfDifferent';
-import { getProductListSort } from 'helpers/sorting/GetProductListSort';
-import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/getFilterUrlQueryForSortingInSeoCategory';
+import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
+import { canUseDom } from 'helpers/misc/canUseDom';
+import { getProductListSort } from 'helpers/sorting/getProductListSort';
+import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useShopsysDispatch } from 'redux/main';
@@ -37,7 +37,7 @@ type SortingBarProps = {
 
 const TEST_IDENTIFIER = 'blocks-sortingbar';
 
-const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
+export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -140,7 +140,7 @@ const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOpt
                                     onClick={onSelectSortMenu(selectedSort, value.stateValue)}
                                     data-testid={TEST_IDENTIFIER + '-selected'}
                                 >
-                                    <SortingBarSortIconStyled iconType="icon" icon="Sort" />
+                                    <SortingBarSortIconStyled alt="" iconType="icon" icon="Sort" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
                                         <SortingBarSelectedValue data-testid={TEST_IDENTIFIER + '-selected-value'}>
@@ -200,5 +200,3 @@ const isNewSortDifferentThanCurrent = (
     currentSort: ProductOrderingModeEnumApi | null,
     newSort: ProductOrderingModeEnumApi,
 ) => currentSort !== newSort;
-
-export default SortingBar;

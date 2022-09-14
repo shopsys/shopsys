@@ -1,10 +1,10 @@
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const OrderDetailByHash: FC = () => {
+const AbandonedCartPage: FC = () => {
     const router = useRouter();
     useEffect(() => {
         router.replace('/');
@@ -26,4 +26,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     };
 });
 
-export default OrderDetailByHash;
+export default AbandonedCartPage;

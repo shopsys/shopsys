@@ -6,27 +6,20 @@ type FormLineErrorProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
     textInputSize?: 'small';
     error?: FieldError;
-    'data-testid'?: string;
+    testIdentifier?: string;
 };
 
-const FormLineError: FC<FormLineErrorProps> = (props) => {
-    const testIdentifier = props['data-testid'] ?? 'forms-error';
+const getTestIdentifier = (testIdentifier?: string) => testIdentifier ?? 'forms-error';
 
-    if (props.error) {
-        return (
-            <FormFieldErrorStyled data-testid={testIdentifier}>
-                <ErrorIconStyled
-                    inputType={props.inputType}
-                    textInputSize={props.textInputSize}
-                    iconType="icon"
-                    icon="Cross"
-                />
-                {props.error.message !== undefined && <ErrorMessageStyled>{props.error.message}</ErrorMessageStyled>}
-            </FormFieldErrorStyled>
-        );
+export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, testIdentifier, textInputSize }) => {
+    if (error === undefined) {
+        return null;
     }
 
-    return null;
+    return (
+        <FormFieldErrorStyled data-testid={getTestIdentifier(testIdentifier)}>
+            <ErrorIconStyled inputType={inputType} textInputSize={textInputSize} iconType="icon" icon="Cross" />
+            {error.message !== undefined && <ErrorMessageStyled>{error.message}</ErrorMessageStyled>}
+        </FormFieldErrorStyled>
+    );
 };
-
-export default FormLineError;

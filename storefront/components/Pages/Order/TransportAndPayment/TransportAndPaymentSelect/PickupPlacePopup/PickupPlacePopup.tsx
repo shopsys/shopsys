@@ -1,9 +1,9 @@
 import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
 import { StoreSelect } from './StoreSelect/StoreSelect';
-import Heading from 'components/Basic/Heading';
-import Button from 'components/Forms/Button';
-import Popup from 'components/Layout/Popup';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Button } from 'components/Forms/Button/Button';
+import { Popup } from 'components/Layout/Popup/Popup';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
@@ -48,14 +48,18 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <PopupButtonWrapperStyled>
-                <Button type="button" onClick={onClosePickupPlacePopupHandler} data-testid={TEST_IDENTIFIER + 'close'}>
+                <Button
+                    type="button"
+                    onClick={onClosePickupPlacePopupHandler}
+                    testIdentifier={TEST_IDENTIFIER + 'close'}
+                >
                     {t('Close')}
                 </Button>
                 <Button
                     type="button"
                     isDisabled={selectedStoreUuid === ''}
                     onClick={onConfirmPickupPlaceHandler}
-                    data-testid={TEST_IDENTIFIER + 'confirm'}
+                    testIdentifier={TEST_IDENTIFIER + 'confirm'}
                 >
                     {t('Confirm')}
                 </Button>

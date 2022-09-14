@@ -7,12 +7,12 @@ import {
 } from './CartPreview.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
-const CartPreview: FC = () => {
-    const testIdentifier = 'pages-cart-cartpreview';
+const TEST_IDENTIFIER = 'pages-cart-cartpreview';
 
+export const CartPreview: FC = () => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const { cart, isCartEmpty } = useCurrentCart();
@@ -22,10 +22,10 @@ const CartPreview: FC = () => {
     }
 
     return (
-        <CartPreviewStyled data-testid={testIdentifier}>
+        <CartPreviewStyled data-testid={TEST_IDENTIFIER}>
             <tbody>
                 {cart.totalDiscountPrice.priceWithVat > 0 && (
-                    <CartPreviewRowStyled data-testid={testIdentifier + '-discount'}>
+                    <CartPreviewRowStyled data-testid={TEST_IDENTIFIER + '-discount'}>
                         <CartPreviewCellStyled>{t('The amount of discounts')}</CartPreviewCellStyled>
                         <CartPreviewCellStyled textAlign="right">
                             <CartPreviewCellBasicPrice>
@@ -34,7 +34,7 @@ const CartPreview: FC = () => {
                         </CartPreviewCellStyled>
                     </CartPreviewRowStyled>
                 )}
-                <CartPreviewRowStyled data-testid={testIdentifier + '-total'}>
+                <CartPreviewRowStyled data-testid={TEST_IDENTIFIER + '-total'}>
                     <CartPreviewCellStyled>{t('You pay')}</CartPreviewCellStyled>
                     <CartPreviewCellStyled textAlign="right">
                         <CartPreviewCellTotalPrice>
@@ -46,5 +46,3 @@ const CartPreview: FC = () => {
         </CartPreviewStyled>
     );
 };
-
-export default CartPreview;

@@ -4,18 +4,18 @@ import {
     OrderSummaryTitleStyled,
     OrderSummaryWrapperStyled,
 } from './OrderSummary.style';
-import ProductsPreview from './ProductsPreview';
-import PromoCode from './PromoCode';
-import TotalPrice from './TotalPrice';
-import TransportAndPayment from './TransportAndPayment';
-import Adverts from 'components/Blocks/Adverts';
+import { ProductsPreview } from './ProductsPreview';
+import { PromoCode } from './PromoCode';
+import { TotalPrice } from './TotalPrice';
+import { TransportAndPayment } from './TransportAndPayment';
+import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
-const OrderSummary: FC = () => {
-    const testIdentifier = 'blocks-ordersummary';
+const TEST_IDENTIFIER = 'blocks-ordersummary';
 
+export const OrderSummary: FC = () => {
     const t = useTypedTranslationFunction();
     const { cart, transport, payment, promoCode } = useCurrentCart();
 
@@ -26,7 +26,7 @@ const OrderSummary: FC = () => {
     return (
         <>
             <Adverts positionName="cartPreview" withGapBottom />
-            <OrderSummaryWrapperStyled data-testid={testIdentifier}>
+            <OrderSummaryWrapperStyled data-testid={TEST_IDENTIFIER}>
                 <OrderSummaryTitleStyled>{t('Your order')}</OrderSummaryTitleStyled>
                 <OrderSummaryContentWrapperStyled>
                     <OrderSummaryContentStyled>
@@ -42,5 +42,3 @@ const OrderSummary: FC = () => {
         </>
     );
 };
-
-export default OrderSummary;

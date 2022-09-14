@@ -1,6 +1,15 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
+const localVariables = {
+    inputHeightDefault: '54px',
+    inputHeightSmall: '48px',
+    inputPaddingVertical: '20px',
+    inputPaddingHorizontal: '10px',
+    inputBorderWidth: '2px',
+    inputSearchIconSize: '20px',
+} as const;
+
 type TextInputStyledProps = {
     placeholderType?: 'static';
     inputState?: 'success' | 'error';
@@ -12,17 +21,8 @@ type PasswordVisibilityToggleStyledProps = {
     isVisible: boolean;
 };
 
-const localVariables = {
-    inputHeightDefault: '54px',
-    inputHeightSmall: '48px',
-    inputPaddingVertical: '20px',
-    inputPaddingHorizontal: '10px',
-    inputBorderWidth: '2px',
-    inputSearchIconSize: '20px',
-} as const;
-
-export const TextInputStyled = styled.input<TextInputStyledProps>`
-    ${({ theme, inputState, placeholderType, inputSize, variant }) => css`
+export const TextInputStyled = styled.input<TextInputStyledProps>(
+    ({ theme, inputState, placeholderType, inputSize, variant }) => css`
         box-sizing: border-box;
         height: ${inputSize === 'small' ? localVariables.inputHeightSmall : localVariables.inputHeightDefault};
         width: 100%;
@@ -108,11 +108,11 @@ export const TextInputStyled = styled.input<TextInputStyledProps>`
                 margin: 0;
             }
         }
-    `}
-`;
+    `,
+);
 
-export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggleStyledProps>`
-    ${({ isVisible }) => css`
+export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggleStyledProps>(
+    ({ isVisible }) => css`
         width: 25px;
         position: absolute;
         top: 50%;
@@ -125,8 +125,8 @@ export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggl
         css`
             opacity: 50%;
         `}
-    `}
-`;
+    `,
+);
 
 export const SearchButtonStyled = styled.button`
     position: absolute;

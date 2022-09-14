@@ -1,11 +1,11 @@
 import { SearchMetadata } from 'components/Basic/Head/SearchMetadata/SearchMetadata';
-import Heading from 'components/Basic/Heading';
-import Banners from 'components/Blocks/Banners';
-import BlogPreview from 'components/Blocks/BlogPreview';
-import PromotedCategories from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
-import PromotedProducts from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
-import CommonLayout from 'components/Layout/CommonLayout';
-import Webline from 'components/Layout/Webline';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Banners } from 'components/Blocks/Banners/Banners';
+import { BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
+import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
+import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { blogPreviewVariables } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import {
     BlogArticlesQueryDocumentApi,
@@ -13,15 +13,15 @@ import {
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
-const Index: FC<ServerSidePropsType> = () => {
+const HomePage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('home');
@@ -42,7 +42,6 @@ const Index: FC<ServerSidePropsType> = () => {
                     <Heading type="h2">{t('Promoted products')}</Heading>
                     <PromotedProducts />
                 </Webline>
-
                 <Webline type="blog">
                     <BlogPreview />
                 </Webline>
@@ -61,4 +60,4 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     ]);
 });
 
-export default Index;
+export default HomePage;

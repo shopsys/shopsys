@@ -1,11 +1,11 @@
-import CommonLayout from 'components/Layout/CommonLayout';
-import Contact from 'components/Pages/Contact';
-import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { CommonLayout } from 'components/Layout/CommonLayout';
+import { ContactContent } from 'components/Pages/Contact/ContactContent';
+import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import React, { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
-import { useGtmStaticPageViewEvent } from 'utils/Gtm/EventFactories';
 
 const ContactPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('contact');
@@ -13,7 +13,7 @@ const ContactPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout>
-            <Contact />
+            <ContactContent />
         </CommonLayout>
     );
 };

@@ -1,10 +1,6 @@
 import { TableStyled } from './Table.style';
 import { FC } from 'react';
 
-const Table: FC = (props) => {
-    const testIdentifier = 'basic-table';
+const TEST_IDENTIFIER = 'basic-table';
 
-    return <TableStyled data-testid={testIdentifier}>{props.children}</TableStyled>;
-};
-
-export default Table;
+export const Table: FC = ({ children }) => <TableStyled data-testid={TEST_IDENTIFIER}>{children}</TableStyled>;

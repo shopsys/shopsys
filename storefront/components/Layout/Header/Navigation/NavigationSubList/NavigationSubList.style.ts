@@ -17,8 +17,8 @@ export const NavigationSubListItemStyled = styled.li`
     }
 `;
 
-export const NavigationSubListItemLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationSubListItemLinkStyled = styled.a(
+    ({ theme }) => css`
         display: block;
         margin-bottom: 5px;
 
@@ -26,5 +26,5 @@ export const NavigationSubListItemLinkStyled = styled.a`
         color: ${theme.color.base};
         font-weight: 400;
         font-size: ${theme.fontSize.small};
-    `}
-`;
+    `,
+);

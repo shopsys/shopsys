@@ -15,21 +15,21 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
-import ListItem from './ListItem';
-import Button from 'components/Forms/Button';
+import { ListItem } from './ListItem/ListItem';
+import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { getInternationalizedStaticUrls } from 'utils/getInternationalizedStaticUrls';
 
-const Cart: FC = () => {
-    const testIdentifier = 'layout-header-cart-';
+const TEST_IDENTIFIER = 'layout-header-cart-';
 
+export const Cart: FC = () => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
@@ -46,14 +46,14 @@ const Cart: FC = () => {
             onMouseLeave={() => setOnMouseLeaveTrigger(!onMouseLeaveTrigger)}
         >
             <NextLink href={cartUrl} passHref>
-                <CartBlockStyled isHovered={isCartHovered} data-testid={testIdentifier + 'block'}>
+                <CartBlockStyled isHovered={isCartHovered} data-testid={TEST_IDENTIFIER + 'block'}>
                     <CartPiecesStyled>
                         <CartIconStyled iconType="icon" icon="Cart" />
-                        <CartCountStyled data-testid={testIdentifier + 'itemcount'}>
+                        <CartCountStyled data-testid={TEST_IDENTIFIER + 'itemcount'}>
                             {cart?.items.length ?? 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
-                    <CartValueStyled data-testid={testIdentifier + 'totalprice'}>
+                    <CartValueStyled data-testid={TEST_IDENTIFIER + 'totalprice'}>
                         {formatPrice(cart?.totalItemsPrice.priceWithVat ?? 0, {
                             explicitZero: true,
                         })}
@@ -63,7 +63,7 @@ const Cart: FC = () => {
             <CartDetailStyled
                 containsProducts={!isCartEmpty}
                 isHovered={isCartHovered}
-                data-testid={testIdentifier + 'detail'}
+                data-testid={TEST_IDENTIFIER + 'detail'}
             >
                 {!isCartEmpty ? (
                     <>
@@ -77,7 +77,7 @@ const Cart: FC = () => {
                                 type="button"
                                 size="small"
                                 onClick={() => router.push(cartUrl)}
-                                data-testid={testIdentifier + 'button'}
+                                testIdentifier={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>
@@ -101,5 +101,3 @@ const Cart: FC = () => {
         </CartStyled>
     );
 };
-
-export default Cart;
