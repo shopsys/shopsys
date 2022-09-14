@@ -50,6 +50,19 @@ export const AutocompleteSearch: FC = () => {
     const [isDesktop, setIsDesktop] = useState(false);
     const { width } = useGetWindowSize();
 
+    useEffectOnce(() => {
+        const handler = () => {
+            setAutocompleteSearchFocus(false);
+            formProviderMethods.reset();
+        };
+
+        router.events.on('routeChangeComplete', handler);
+
+        return () => {
+            router.events.off('routeChangeComplete', handler);
+        };
+    });
+
     useEffect(() => {
         if (formProviderMethods.formState.isValid) {
             setAutocompleteSearchResults(autocompleteSearchApiResults);
