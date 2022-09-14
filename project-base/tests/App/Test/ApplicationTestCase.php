@@ -6,11 +6,18 @@ namespace Tests\App\Test;
 
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use const PHP_URL_SCHEME;
 
 abstract class ApplicationTestCase extends WebTestCase
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     * @inject
+     */
+    protected EntityManagerDecorator $em;
+
     /**
      * @var \Tests\App\Test\Client|null
      */
@@ -21,6 +28,8 @@ abstract class ApplicationTestCase extends WebTestCase
         parent::setUp();
 
         self::$client = self::getCurrentClient();
+        $this->em->beginTransaction();
+        $this->em->getConnection()->setAutoCommit(false);
     }
 
     /**
@@ -135,7 +144,7 @@ abstract class ApplicationTestCase extends WebTestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
+        $this->em->rollback();
 
         if (static::$client === null) {
             return;
@@ -144,5 +153,7 @@ abstract class ApplicationTestCase extends WebTestCase
         static::$client->enableReboot();
         static::$client->getKernel()->shutdown();
         static::$client = null;
+
+        parent::tearDown();
     }
 }

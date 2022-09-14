@@ -7,7 +7,6 @@ namespace Tests\App\Functional\Controller;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Faker\Provider\Text;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -34,12 +33,6 @@ class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     * @inject
-     */
-    protected EntityManagerDecorator $em;
 
     public function testPreviousUrlRedirect(): void
     {
