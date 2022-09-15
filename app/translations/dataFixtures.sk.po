@@ -22,16 +22,10 @@ msgstr ""
 msgid "1 kg"
 msgstr ""
 
-msgid "1.7GHz"
-msgstr ""
-
 msgid "100 Czech crowns ticket"
 msgstr ""
 
 msgid "1024 MB"
-msgstr ""
-
-msgid "112 g"
 msgstr ""
 
 msgid "12 Mpix"
@@ -1360,7 +1354,7 @@ msgstr ""
 msgid "Pro média"
 msgstr ""
 
-msgid "Processor frequency"
+msgid "Processor frequency (GHz)"
 msgstr ""
 
 msgid "První podsekce %locale%"
@@ -1793,6 +1787,9 @@ msgid "We are looking forward to your visit."
 msgstr ""
 
 msgid "Weight"
+msgstr ""
+
+msgid "Weight (kg)"
 msgstr ""
 
 msgid "Well known USB cable with A and micro B connectors."
