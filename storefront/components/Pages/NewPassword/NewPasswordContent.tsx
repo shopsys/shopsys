@@ -14,11 +14,9 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useAuth } from 'hooks/auth/useAuth';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import Trans from 'next-translate/Trans';
-import { useRouter } from 'next/router';
 import { FC } from 'react';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
@@ -39,11 +37,10 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
         ['/new-password', '/reset-password'],
         url,
     );
-    const [formProviderMethods, defaultValues] = useRecoveryPasswordForm();
+    const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     const [[, login]] = useAuth();
-    const router = useRouter();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
 
     useHandleFormErrors(
@@ -53,23 +50,6 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
         formMeta.messages.error,
         formMeta.fields,
     );
-    useHandleFormSuccessfulSubmit(
-        newPasswordResult,
-        formProviderMethods,
-        defaultValues,
-        () => {
-            showSuccessMessage(formMeta.messages.success);
-            if (newPasswordResult.data?.RecoverPassword.tokens.accessToken !== undefined) {
-                login({
-                    email: email,
-                    password: formProviderMethods.getValues('newPassword'),
-                    previousCartUuid: cartUuid,
-                });
-                router.push('/');
-            }
-        },
-        { blur: true, reset: true },
-    );
 
     const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (data, event) => {
         event?.preventDefault();
@@ -78,7 +58,19 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
             email: email,
             newPassword: data.newPassword,
         };
-        await newPassword(formData);
+        const resultData = await newPassword(formData);
+
+        if (resultData.data?.RecoverPassword.tokens.accessToken !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
+            login(
+                {
+                    email: email,
+                    password: formProviderMethods.getValues('newPassword'),
+                    previousCartUuid: cartUuid,
+                },
+                '/',
+            );
+        }
     };
 
     useEffectOnce(() => {
@@ -138,38 +130,33 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
                         <Controller
                             name={formMeta.fields.newPasswordAgain.name}
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.newPasswordAgain.name}
-                                            name={formMeta.fields.newPasswordAgain.name}
-                                            label={formMeta.fields.newPasswordAgain.label}
-                                            required
-                                            type="password"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input-password"
-                                            testIdentifier={
-                                                formMeta.formName +
-                                                '-' +
-                                                formMeta.fields.newPasswordAgain.name +
-                                                '-error'
-                                            }
-                                        />
-                                    </FormLine>
-                                    <ButtonWrapperStyled>
-                                        <Button type="submit" hasDisabledLook={invalid || field.value.length === 0}>
-                                            {t('Set new password')}
-                                        </Button>
-                                    </ButtonWrapperStyled>
-                                </>
+                                <FormLine>
+                                    <TextInput
+                                        id={formMeta.formName + '-' + formMeta.fields.newPasswordAgain.name}
+                                        name={formMeta.fields.newPasswordAgain.name}
+                                        label={formMeta.fields.newPasswordAgain.label}
+                                        required
+                                        type="password"
+                                        isTouched={isTouched}
+                                        hasError={invalid}
+                                        fieldRef={field}
+                                    />
+                                    <FormLineError
+                                        textInputSize="small"
+                                        error={error}
+                                        inputType="text-input-password"
+                                        testIdentifier={
+                                            formMeta.formName + '-' + formMeta.fields.newPasswordAgain.name + '-error'
+                                        }
+                                    />
+                                </FormLine>
                             )}
                         />
+                        <ButtonWrapperStyled>
+                            <Button type="submit" hasDisabledLook={!formProviderMethods.formState.isValid}>
+                                {t('Set new password')}
+                            </Button>
+                        </ButtonWrapperStyled>
                     </Form>
                 </FormProvider>
             </SimpleLayout>
