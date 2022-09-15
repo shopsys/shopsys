@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PAYMENT_CARD_METHOD = 'gopay_payment_card_method';
+    public const BANK_ACCOUNT_METHOD = 'gopay_bank_account_method';
 
     private const SWIFT_DEMO_DATA = [
         [
@@ -46,10 +47,10 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'payment_group' => 'card-payment',
         ],
         [
-            'reference_name' => null,
+            'reference_name' => self::BANK_ACCOUNT_METHOD,
             'currency' => CurrencyDataFixture::CURRENCY_CZK,
-            'identifier' => 'BANK_ACCOUNT',
-            'name' => '[CS] Rychlý bankovní převod	',
+            'identifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
+            'name' => '[CS] Rychlý bankovní převod',
             'image_normal_url' => 'bank_account',
             'image_large_url' => 'bank_account@2x',
             'payment_group' => 'bank-transfer',

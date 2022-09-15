@@ -15,6 +15,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
 {
     public const CURRENCY_CZK = 'currency_czk';
     public const CURRENCY_EUR = 'currency_eur';
+    private const CZK_DEFAULT_MIN_FRACTION_DIGITS = 0;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
@@ -58,7 +59,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
          */
         $currencyCzk = $this->currencyFacade->getById(1);
         $currencyData = $this->currencyDataFactory->createFromCurrency($currencyCzk);
-        $currencyData->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
+        $currencyData->minFractionDigits = self::CZK_DEFAULT_MIN_FRACTION_DIGITS;
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
         $currencyCzk = $this->currencyFacade->edit($currencyCzk->getId(), $currencyData);
         $this->addReference(self::CURRENCY_CZK, $currencyCzk);
