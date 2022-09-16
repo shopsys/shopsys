@@ -1363,6 +1363,9 @@ msgstr ""
 msgid "Processor frequency"
 msgstr "Frekvence procesoru"
 
+msgid "Processor frequency (GHz)"
+msgstr "Frekvence procesoru (GHz)"
+
 msgid "První podsekce %locale%"
 msgstr ""
 
@@ -1795,6 +1798,9 @@ msgstr "Těšíme se na Vaši návštěvu."
 msgid "Weight"
 msgstr "Hmotnost"
 
+msgid "Weight (kg)"
+msgstr "Hmotnost (kg)"
+
 msgid "Well known USB cable with A and micro B connectors."
 msgstr "Značkový USB kabel s koncovkami A a micro B, délka kabelu 1 metr, vhodné k vybraným mobilním zařízením a fotoaparátům."
 
@@ -1941,4 +1947,3 @@ msgstr "bílá"
 
 msgid "| Commerce Cloud"
 msgstr ""
-

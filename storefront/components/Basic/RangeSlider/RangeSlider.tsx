@@ -35,6 +35,16 @@ type RangeSliderProps = {
     setMaxValueCallback: (value: number) => void;
 };
 
+const DELIMITER_REGEXP = /[,.]/;
+
+const getDecimalsLength = (value: number) => (value.toString().split(DELIMITER_REGEXP)[1] ?? '').length;
+
+const getStep = (min: number, max: number): number => {
+    const decimals = Math.max(getDecimalsLength(min), getDecimalsLength(max));
+
+    return decimals === 0 ? 1 : Math.pow(10, -decimals);
+};
+
 const TEST_IDENTIFIER = 'basic-rangeslider';
 
 export const RangeSlider: FC<RangeSliderProps> = ({
@@ -47,6 +57,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     setMaxValueCallback,
 }) => {
     const t = useTypedTranslationFunction();
+    const step = getStep(min, max);
 
     const [minValueInput, setMinValueInput] = useState(min);
     const [minValueThumb, setMinValueThumb] = useState(min);
@@ -193,6 +204,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 type="range"
                 min={min}
                 max={max}
+                step={step}
                 value={minValueThumb}
                 onChange={onChangeMinHandler}
                 data-testid={TEST_IDENTIFIER + '-left-thumb'}
@@ -202,6 +214,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 type="range"
                 min={min}
                 max={max}
+                step={step}
                 value={maxValueThumb}
                 onChange={onChangeMaxHandler}
                 data-testid={TEST_IDENTIFIER + '-right-thumb'}
