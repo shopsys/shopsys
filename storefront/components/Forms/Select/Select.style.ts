@@ -1,4 +1,5 @@
 import { styled } from 'components/Theme/main';
+import { ReactNode } from 'react';
 import SelectReact from 'react-select';
 import { css } from 'styled-components';
 import tinycolor from 'tinycolor2';
@@ -11,6 +12,7 @@ const localVariables = {
 
 type SelectStyledProps = {
     inputStateError: boolean;
+    label: ReactNode;
 };
 
 export const SelectStyled = styled(SelectReact)<SelectStyledProps>(

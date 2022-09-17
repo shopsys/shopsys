@@ -376,9 +376,10 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     <Select
                                         options={countrySelectOptions}
                                         onChange={field.onChange}
-                                        value={countrySelectOptions.find((option) => option.value === field.value)}
+                                        value={countrySelectOptions.find(
+                                            (option) => option.value === field.value.value,
+                                        )}
                                         hasError={invalid}
-                                        fieldRef={field}
                                         label={formMeta.fields.country.label}
                                         data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
                                     />

@@ -81,7 +81,6 @@ export const Address: FC = () => {
                                 onChange={field.onChange}
                                 value={countrySelectOptions.find((option) => option.value === field.value.value)}
                                 hasError={invalid}
-                                fieldRef={field}
                             />
                             <FormLineError
                                 error={error}

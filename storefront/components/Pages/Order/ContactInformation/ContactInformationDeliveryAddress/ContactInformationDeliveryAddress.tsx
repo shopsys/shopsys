@@ -374,7 +374,6 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                 value={countrySelectOptions.find(
                                                                     (option) => option.value === field.value.value,
                                                                 )}
-                                                                fieldRef={field}
                                                             />
 
                                                             <FormLineError
