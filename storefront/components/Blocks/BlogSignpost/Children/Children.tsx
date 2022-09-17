@@ -14,7 +14,7 @@ const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
 export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => {
     return (
         <>
-            {blogCategory.children.map((blogCategoryChild, index) => (
+            {blogCategory.children?.map((blogCategoryChild, index) => (
                 <Fragment key={blogCategoryChild.uuid}>
                     <NextLink href={blogCategoryChild.link} passHref>
                         <BlogSignpostItemStyled
@@ -31,7 +31,7 @@ export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLeve
                             {blogCategoryChild.name}
                         </BlogSignpostItemStyled>
                     </NextLink>
-                    {blogCategoryChild.children.length > 0 && (
+                    {blogCategoryChild.children !== undefined && blogCategoryChild.children.length > 0 && (
                         <Children blogCategory={blogCategoryChild} activeItem={activeItem} itemLevel={itemLevel + 1} />
                     )}
                 </Fragment>
