@@ -20,7 +20,7 @@ import {
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -46,7 +46,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         },
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const countrySelectOptions = useCountriesAsSelectOptions();
     const [, changePassword] = useChangePasswordMutationApi();
 

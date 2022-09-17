@@ -25,7 +25,7 @@ const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
 export const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
-    const [, [, logout]] = useAuth();
+    const { logout } = useAuth();
     const { isUserLoggedIn } = useCurrentUserData();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [storesUrl, customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(

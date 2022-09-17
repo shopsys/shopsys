@@ -1,8 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-// TODO: předělat z hooku na normální handler
-export const useHandleErrorPopupVisibility = <T>(
+export const useErrorPopupVisibility = <T extends FieldValues>(
     formProviderMethods: UseFormReturn<T>,
     overrideVisibility?: boolean,
 ): [boolean, Dispatch<SetStateAction<boolean>>] => {
@@ -15,8 +14,7 @@ export const useHandleErrorPopupVisibility = <T>(
         ) {
             setErrorPopupVisibility(true);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formProviderMethods.formState.isSubmitting]);
+    }, [formProviderMethods.formState.isSubmitting, formProviderMethods.formState.errors, overrideVisibility]);
 
     return [isErrorPopupVisible, setErrorPopupVisibility];
 };

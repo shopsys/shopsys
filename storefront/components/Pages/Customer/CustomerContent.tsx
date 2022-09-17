@@ -17,7 +17,7 @@ type CustomerContentProps = {
 
 export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
-    const [, [, logout]] = useAuth();
+    const { logout } = useAuth();
     const { url } = useShopsysSelector((state) => state.domain);
     const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
         ['/customer/orders', '/customer/edit-profile'],

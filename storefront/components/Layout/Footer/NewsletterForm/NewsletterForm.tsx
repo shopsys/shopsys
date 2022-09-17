@@ -15,11 +15,12 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
@@ -27,23 +28,32 @@ const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
 export const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
-    const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
+    const [, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, 'footer', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        subscribeToNewsletterResult,
-        formProviderMethods,
-        defaultValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { blur: true, reset: true },
-    );
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
-    const onSubscribeToNewsletterHandler: SubmitHandler<NewsletterFormType> = async (data, event) => {
-        event?.preventDefault();
-        await subscribeToNewsletter(data);
-    };
+    const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
+        async (data) => {
+            blurInput();
+            const subscribeToNewsletterResult = await subscribeToNewsletter(data);
+
+            if (subscribeToNewsletterResult.data?.NewsletterSubscribe !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
+
+            handleFormErrors(
+                subscribeToNewsletterResult.error,
+                formProviderMethods,
+                'footer',
+                t,
+                formMeta.messages.error,
+            );
+
+            clearForm(subscribeToNewsletterResult.error, formProviderMethods, defaultValues);
+        },
+        [formMeta.messages, formProviderMethods, subscribeToNewsletter, t, defaultValues],
+    );
 
     return (
         <>

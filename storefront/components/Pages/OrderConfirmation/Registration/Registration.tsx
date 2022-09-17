@@ -20,7 +20,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
@@ -40,7 +40,7 @@ export const Registration: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
     useEffectOnce(() => {
         return () => {

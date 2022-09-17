@@ -9,11 +9,12 @@ import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers//localization/getInternationalizedStaticUrls';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PasswordResetFormType } from 'types/form';
@@ -24,28 +25,30 @@ type ResetPasswordContentProps = {
 
 export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
-    const [resetPasswordResult, resetPassword] = usePasswordRecoveryMutationApi();
+    const [, resetPassword] = usePasswordRecoveryMutationApi();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(resetPasswordResult.error, formProviderMethods, 'other', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        resetPasswordResult,
-        formProviderMethods,
-        defaultValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { blur: true, reset: true },
-    );
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
     const {
         fieldState: { invalid },
         field: { value },
     } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
 
-    const onResetPasswordHandler: SubmitHandler<PasswordResetFormType> = async (data, event) => {
-        event?.preventDefault();
-        await resetPassword(data);
-    };
+    const onResetPasswordHandler = useCallback<SubmitHandler<PasswordResetFormType>>(
+        async (data) => {
+            blurInput();
+            const resetPasswordResult = await resetPassword(data);
+
+            if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
+
+            handleFormErrors(resetPasswordResult.error, formProviderMethods, 'other', t, formMeta.messages.error);
+            clearForm(resetPasswordResult.error, formProviderMethods, defaultValues);
+        },
+        [formMeta.messages, formProviderMethods, resetPassword, t, defaultValues],
+    );
 
     return (
         <>

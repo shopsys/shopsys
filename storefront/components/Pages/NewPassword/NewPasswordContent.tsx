@@ -9,14 +9,14 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import Trans from 'next-translate/Trans';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
@@ -30,7 +30,7 @@ type NewPasswordContentProps = {
 
 export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, email, hash }) => {
     const t = useTypedTranslationFunction();
-    const [newPasswordResult, newPassword] = useRecoverPasswordMutationApi();
+    const [, newPassword] = useRecoverPasswordMutationApi();
     const { url } = useShopsysSelector((state) => state.domain);
     const [newPasswordUrl, resetPasswordUrl] = getInternationalizedStaticUrls(
         ['/new-password', '/reset-password'],
@@ -38,42 +38,57 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
     );
     const [formProviderMethods] = useRecoveryPasswordForm();
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    const [[, login]] = useAuth();
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const { login } = useAuth();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },
         field: { value: newPasswordValue },
     } = useController({ name: formMeta.fields.newPasswordAgain.name, control: formProviderMethods.control });
-    useHandleFormErrors(
-        newPasswordResult.error,
-        formProviderMethods,
-        'other',
-        formMeta.messages.error,
-        formMeta.fields,
-    );
 
-    const onNewPasswordHandler: SubmitHandler<NewPasswordFormType> = async (data, event) => {
-        event?.preventDefault();
-        const formData = {
-            hash: hash,
-            email: email,
-            newPassword: data.newPassword,
-        };
-        const resultData = await newPassword(formData);
+    const onNewPasswordHandler = useCallback<SubmitHandler<NewPasswordFormType>>(
+        async (data) => {
+            const formData = {
+                hash: hash,
+                email: email,
+                newPassword: data.newPassword,
+            };
+            const newPasswordResult = await newPassword(formData);
 
-        if (resultData.data?.RecoverPassword.tokens.accessToken !== undefined) {
-            showSuccessMessage(formMeta.messages.success);
-            login(
-                {
-                    email: email,
-                    password: formProviderMethods.getValues('newPassword'),
-                    previousCartUuid: cartUuid,
-                },
-                '/',
+            if (newPasswordResult.data?.RecoverPassword.tokens.accessToken !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+                login(
+                    {
+                        email: email,
+                        password: formProviderMethods.getValues('newPassword'),
+                        previousCartUuid: cartUuid,
+                    },
+                    '/',
+                );
+            }
+
+            handleFormErrors(
+                newPasswordResult.error,
+                formProviderMethods,
+                'other',
+                t,
+                formMeta.messages.error,
+                formMeta.fields,
             );
-        }
-    };
+        },
+        [
+            cartUuid,
+            email,
+            formMeta.fields,
+            formMeta.messages.error,
+            formMeta.messages.success,
+            formProviderMethods,
+            hash,
+            login,
+            newPassword,
+            t,
+        ],
+    );
 
     useEffectOnce(() => {
         if (hash === '' || email === '') {

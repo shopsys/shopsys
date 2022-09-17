@@ -6,14 +6,13 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
@@ -31,22 +30,25 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
     const { url } = useShopsysSelector((state) => state.domain);
     const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
-    const [[loginResult, login]] = useAuth();
+    const { login } = useAuth();
 
-    useHandleFormErrors(loginResult.error, formProviderMethods, 'other');
-    useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' });
+    const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(
+        async (data) => {
+            let redirectUrl = url;
 
-    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = async (data, event) => {
-        event?.preventDefault();
+            if (typeof router.query.r === 'string') {
+                redirectUrl = router.query.r;
+            }
 
-        let redirectUrl = url;
+            const loginResult = await login(
+                { email: data.email, password: data.password, previousCartUuid: cartUuid },
+                redirectUrl,
+            );
 
-        if (typeof router.query.r === 'string') {
-            redirectUrl = router.query.r;
-        }
-
-        await login({ email: data.email, password: data.password, previousCartUuid: cartUuid }, redirectUrl);
-    };
+            handleFormErrors(loginResult.error, formProviderMethods, 'other', t);
+        },
+        [cartUuid, formProviderMethods, login, router.query.r, t, url],
+    );
 
     return (
         <SimpleLayout heading={t('Login')} breadcrumb={breadcrumbs}>

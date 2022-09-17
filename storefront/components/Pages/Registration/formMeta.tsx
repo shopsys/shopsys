@@ -115,7 +115,6 @@ type RegistrationFormMetaType = {
     formName: string;
     messages: {
         error: string;
-        success: string;
         successAndLogged: string;
     };
     fields: {
@@ -159,7 +158,6 @@ export const useRegistrationFormMeta = (
             formName: 'registration-form',
             messages: {
                 error: t('Could not create account'),
-                success: t('Your account has been created'),
                 successAndLogged: t('Your account has been created and you are logged in now'),
             },
             fields: {

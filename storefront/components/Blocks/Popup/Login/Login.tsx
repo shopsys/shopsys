@@ -20,16 +20,16 @@ import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { blurInput } from 'helpers/forms/blurInput';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import * as Yup from 'yup';
@@ -45,17 +45,21 @@ export const Login: FC = () => {
         url,
     );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
-    const [[loginResult, login]] = useAuth();
+    const { login } = useAuth();
 
-    useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' }, undefined, {
-        blur: true,
-    });
-    useHandleFormErrors(loginResult.error, formProviderMethods, 'login popup');
+    const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(
+        async (data) => {
+            blurInput();
+            const loginResponse = await login({
+                email: data.email,
+                password: data.password,
+                previousCartUuid: cartUuid,
+            });
 
-    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = (data, event) => {
-        event?.preventDefault();
-        login({ email: data.email, password: data.password, previousCartUuid: cartUuid });
-    };
+            handleFormErrors(loginResponse.error, formProviderMethods, 'login popup', t);
+        },
+        [login, cartUuid, formProviderMethods, t],
+    );
 
     return (
         <LoginStyled data-testid={TEST_IDENTIFIER}>
