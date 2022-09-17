@@ -6,9 +6,9 @@ import {
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
-import { FC, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { BrandsType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
+import { FC, useCallback, useState } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
+import { BrandsType, FilterFormFlagType, FilterFormType, FilterOptionFlagsType } from 'types/productFilter';
 
 type FilterFieldType = 'flags' | 'brands';
 
@@ -25,10 +25,19 @@ export const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, 
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
     const formProviderMethods = useFormContext<FilterFormType>();
 
-    const filterGroupValue = useWatch({
-        name: filterField,
-        control: formProviderMethods.control,
-    });
+    const {
+        field: { value: filterGroupValue },
+    } = useController({ name: filterField, control: formProviderMethods.control });
+
+    const onChangeCheckboxValueHandler = useCallback(
+        (dataItem: FilterFormFlagType, index: number) => () => {
+            formProviderMethods.setValue(`${filterField}.${index}`, {
+                ...dataItem,
+                checked: !filterGroupValue[index].checked,
+            });
+        },
+        [formProviderMethods, filterGroupValue, filterField],
+    );
 
     const handleGroupClick = () => {
         setIsGroupOpen(!isGroupOpen);
@@ -42,24 +51,21 @@ export const FilterGroup: FC<FilterGroupProps> = ({ title, isOpen, filterField, 
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 {filterGroupValue.map((dataItem, index) => (
-                    <Controller
-                        name={`${filterField}.${index}.checked`}
+                    <FilterGroupContentItemStyled
                         key={dataItem.uuid}
-                        render={({ field }) => (
-                            <FilterGroupContentItemStyled
-                                isDisabled={data?.[index]?.count === 0}
-                                isActive={field.value}
-                                data-testid={getTestIdentifier(filterField) + '-' + index}
-                            >
-                                <Checkbox
-                                    name={field.name}
-                                    label={dataItem.name}
-                                    fieldRef={field}
-                                    count={data?.[index]?.count}
-                                />
-                            </FilterGroupContentItemStyled>
-                        )}
-                    />
+                        isDisabled={data?.[index]?.count === 0}
+                        isActive={filterGroupValue[index].checked}
+                        data-testid={getTestIdentifier(filterField) + '-' + index}
+                    >
+                        <Checkbox
+                            id={`${filterField}.${index}.checked`}
+                            name={`${filterField}.${index}.checked`}
+                            label={dataItem.name}
+                            onChange={onChangeCheckboxValueHandler(dataItem, index)}
+                            value={filterGroupValue[index].checked}
+                            count={data?.[index]?.count}
+                        />
+                    </FilterGroupContentItemStyled>
                 ))}
             </FilterGroupContentStyled>
         </FilterGroupStyled>

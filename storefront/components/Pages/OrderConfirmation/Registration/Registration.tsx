@@ -9,12 +9,11 @@ import {
     RegistrationStyled,
 } from './Registration.style';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -27,7 +26,7 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
@@ -117,30 +116,18 @@ export const Registration: FC = () => {
                                             label: formMeta.fields.password.label,
                                         }}
                                     />
-                                    <Controller
+                                    <CheckboxControlled
                                         name={formMeta.fields.privacyPolicy.name}
-                                        render={({ field, fieldState: { error } }) => (
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        render={(checkbox) => (
                                             <RegistrationFormItemStyled>
-                                                <ChoiceFormLine>
-                                                    <Checkbox
-                                                        name={formMeta.fields.privacyPolicy.name}
-                                                        label={formMeta.fields.privacyPolicy.label}
-                                                        fieldRef={field}
-                                                        required
-                                                    />
-                                                    <FormLineError
-                                                        inputType="checkbox"
-                                                        error={error}
-                                                        testIdentifier={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.privacyPolicy.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </ChoiceFormLine>
+                                                <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                                             </RegistrationFormItemStyled>
                                         )}
+                                        checkboxProps={{
+                                            label: formMeta.fields.privacyPolicy.label,
+                                        }}
                                     />
                                     <Button
                                         testIdentifier={TEST_IDENTIFIER}

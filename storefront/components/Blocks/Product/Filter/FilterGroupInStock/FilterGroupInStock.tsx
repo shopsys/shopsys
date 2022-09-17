@@ -5,10 +5,11 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import { FilterFormType } from 'types/productFilter';
 
 type FilterGroupInStockProps = {
     title: string;
@@ -20,6 +21,7 @@ const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
 
 export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStockCount }) => {
     const t = useTypedTranslationFunction();
+    const { control } = useFormContext<FilterFormType>();
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
 
     const handleGroupClick = () => {
@@ -33,19 +35,19 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen,
                 <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                <Controller
+                <CheckboxControlled
                     name="onlyInStock"
-                    render={({ field }) => (
-                        <FilterGroupContentItemStyled isDisabled={inStockCount === 0} isActive={field.value}>
-                            <Checkbox
-                                name={field.name}
-                                id={field.name}
-                                label={t('In stock')}
-                                fieldRef={field}
-                                count={inStockCount}
-                            />
+                    control={control}
+                    formName="filter-form"
+                    render={(checkbox, currentValue) => (
+                        <FilterGroupContentItemStyled isDisabled={inStockCount === 0} isActive={currentValue}>
+                            {checkbox}
                         </FilterGroupContentItemStyled>
                     )}
+                    checkboxProps={{
+                        label: t('In stock'),
+                        count: inStockCount,
+                    }}
                 />
             </FilterGroupContentStyled>
         </FilterGroupStyled>

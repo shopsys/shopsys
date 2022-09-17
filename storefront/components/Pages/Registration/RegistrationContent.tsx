@@ -12,11 +12,10 @@ import {
 } from './RegistrationContent.style';
 import { User } from './User/User';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRegistrationMutationApi } from 'graphql/generated';
@@ -27,7 +26,7 @@ import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessf
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { RegistrationFormType } from 'types/form';
@@ -124,42 +123,24 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                             <Address />
                         </ContentSectionStyled>
 
-                        <Controller
+                        <CheckboxControlled
                             name={formMeta.fields.gdprAgreement.name}
-                            render={({ field, fieldState: { error } }) => (
-                                <ChoiceFormLine>
-                                    <Checkbox
-                                        id={formMeta.formName + '-' + formMeta.fields.gdprAgreement.name}
-                                        name={formMeta.fields.gdprAgreement.name}
-                                        label={formMeta.fields.gdprAgreement.label}
-                                        fieldRef={field}
-                                        required
-                                    />
-                                    <FormLineError
-                                        error={error}
-                                        inputType="checkbox"
-                                        testIdentifier={
-                                            formMeta.formName + '-' + formMeta.fields.gdprAgreement.name + '-error'
-                                        }
-                                    />
-                                </ChoiceFormLine>
-                            )}
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.gdprAgreement.label,
+                            }}
                         />
-
-                        <ChoiceFormLine>
-                            <Controller
-                                name={formMeta.fields.newsletterSubscription.name}
-                                render={({ field }) => (
-                                    <Checkbox
-                                        id={formMeta.formName + '-' + formMeta.fields.newsletterSubscription.name}
-                                        name={formMeta.fields.newsletterSubscription.name}
-                                        label={formMeta.fields.newsletterSubscription.label}
-                                        fieldRef={field}
-                                    />
-                                )}
-                            />
-                        </ChoiceFormLine>
-
+                        <CheckboxControlled
+                            name={formMeta.fields.newsletterSubscription.name}
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.newsletterSubscription.label,
+                            }}
+                        />
                         <ButtonWrapperStyled>
                             <Button type="submit">{t('Sign up')}</Button>
                         </ButtonWrapperStyled>

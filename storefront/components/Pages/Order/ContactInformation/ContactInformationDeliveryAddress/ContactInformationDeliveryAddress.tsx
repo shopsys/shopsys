@@ -5,7 +5,7 @@ import {
     ListStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
@@ -139,22 +139,19 @@ export const ContactInformationDeliveryAddress: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Delivery address')}</Heading>
-            <FormLine lg="65%">
-                <ChoiceFormLine>
-                    <Controller
-                        name={formMeta.fields.differentDeliveryAddress.name}
-                        render={({ field }) => (
-                            <Checkbox
-                                name={formMeta.fields.differentDeliveryAddress.name}
-                                fieldRef={field}
-                                id={formMeta.formName + '-' + formMeta.fields.differentDeliveryAddress.name}
-                                label={formMeta.fields.differentDeliveryAddress.label}
-                            />
-                        )}
-                    />
-                </ChoiceFormLine>
-            </FormLine>
-
+            <CheckboxControlled
+                name={formMeta.fields.differentDeliveryAddress.name}
+                control={formProviderMethods.control}
+                formName={formMeta.formName}
+                render={(checkbox) => (
+                    <FormLine lg="65%">
+                        <ChoiceFormLine>{checkbox}</ChoiceFormLine>
+                    </FormLine>
+                )}
+                checkboxProps={{
+                    label: formMeta.fields.differentDeliveryAddress.label,
+                }}
+            />
             <ContactInformationDeliveryAddressStyled contentElementHeight={contentElementHeight}>
                 <CSSTransition
                     in={differentDeliveryAddressValue}
@@ -198,7 +195,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     value: '',
                                                 },
                                             ]}
-                                            render={(radiobutton) => <ListItemStyled>{radiobutton}</ListItemStyled>}
+                                            render={(radiobutton, key) => (
+                                                <ListItemStyled key={key}>{radiobutton}</ListItemStyled>
+                                            )}
                                         />
                                     </ListStyled>
                                 </FormLine>

@@ -10,7 +10,7 @@ import {
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { FC, useCallback, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
@@ -59,46 +59,34 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {data?.__typename === 'ParameterCheckboxFilterOption' &&
                     data.values.map((dataItem, index) => (
-                        <Controller
+                        <FilterGroupContentItemStyled
                             key={dataItem.uuid}
-                            name={`parameters.${parameterParentIndex}.values.${index}.checked`}
-                            render={({ field }) => (
-                                <FilterGroupContentItemStyled
-                                    key={dataItem.uuid}
-                                    isDisabled={data.values[index]?.count === 0}
-                                    isActive={field.value}
-                                    data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
-                                >
-                                    <Checkbox
-                                        name={field.name}
-                                        label={dataItem.text}
-                                        onChange={onChangeParameterValueHandler(dataItem, index)}
-                                        value={parameterValue[index].checked}
-                                        count={(data as ParametersCheckboxType).values[index]?.count}
-                                    />
-                                </FilterGroupContentItemStyled>
-                            )}
-                        />
+                            isDisabled={data.values[index]?.count === 0}
+                            isActive={parameterValue[index].checked}
+                            data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
+                        >
+                            <Checkbox
+                                id={`parameters.${parameterParentIndex}.values.${index}.checked`}
+                                name={`parameters.${parameterParentIndex}.values.${index}.checked`}
+                                label={dataItem.text}
+                                onChange={onChangeParameterValueHandler(dataItem, index)}
+                                value={parameterValue[index].checked}
+                                count={(data as ParametersCheckboxType).values[index]?.count}
+                            />
+                        </FilterGroupContentItemStyled>
                     ))}
                 {data?.__typename === 'ParameterColorFilterOption' && (
                     <FilterGroupColorStyled>
                         {data.values.map((dataItem, index) => (
-                            <Controller
+                            <CheckboxColor
                                 key={dataItem.uuid}
                                 name={`parameters.${parameterParentIndex}.values.${index}.checked`}
-                                render={({ field }) => (
-                                    <>
-                                        <CheckboxColor
-                                            name={field.name}
-                                            id={field.name}
-                                            bgColor={dataItem.rgbHex ?? undefined}
-                                            onChange={onChangeParameterValueHandler(dataItem, index)}
-                                            value={parameterValue[index].checked}
-                                            testIdentifier={getTestIdentifier(index)}
-                                            label={dataItem.text}
-                                        />
-                                    </>
-                                )}
+                                id={`parameters.${parameterParentIndex}.values.${index}.checked`}
+                                bgColor={dataItem.rgbHex ?? undefined}
+                                onChange={onChangeParameterValueHandler(dataItem, index)}
+                                value={parameterValue[index].checked}
+                                testIdentifier={getTestIdentifier(index)}
+                                label={dataItem.text}
                             />
                         ))}
                     </FilterGroupColorStyled>

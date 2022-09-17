@@ -1,6 +1,6 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
@@ -223,24 +223,20 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
                         }}
                     />
-                    <FormLine bottomGap>
-                        <ChoiceFormLine>
-                            <Controller
-                                name={formMeta.fields.newsletterSubscription.name}
-                                render={({ field }) => (
-                                    <Checkbox
-                                        id={formMeta.formName + '-' + formMeta.fields.newsletterSubscription.name}
-                                        name={formMeta.fields.newsletterSubscription.name}
-                                        label={formMeta.fields.newsletterSubscription.label}
-                                        fieldRef={field}
-                                        testIdentifier={
-                                            TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name
-                                        }
-                                    />
-                                )}
-                            />
-                        </ChoiceFormLine>
-                    </FormLine>
+                    <CheckboxControlled
+                        name={formMeta.fields.newsletterSubscription.name}
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        render={(checkbox) => (
+                            <FormLine bottomGap>
+                                <ChoiceFormLine>{checkbox}</ChoiceFormLine>
+                            </FormLine>
+                        )}
+                        checkboxProps={{
+                            label: formMeta.fields.newsletterSubscription.label,
+                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
+                        }}
+                    />
                     <Heading type="h2">{t('Change password')}</Heading>
                     <PasswordInputControlled
                         control={formProviderMethods.control}

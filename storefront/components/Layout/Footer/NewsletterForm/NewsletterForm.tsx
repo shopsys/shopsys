@@ -7,12 +7,11 @@ import {
 } from './NewsletterForm.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
@@ -21,7 +20,7 @@ import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
 const TEST_IDENTIFIER = 'layout-footer-newsletterform';
@@ -76,32 +75,16 @@ export const NewsletterForm: FC = () => {
                                     </Button>
                                 </NewsletterFormButtonWrapperStyled>
                             </NewsletterFormInputWrapperStyled>
-                            <ChoiceFormLine>
-                                <Controller
-                                    name={formMeta.fields.privacyPolicy.name}
-                                    render={({ fieldState: { error }, field }) => (
-                                        <>
-                                            <Checkbox
-                                                id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
-                                                name={formMeta.fields.privacyPolicy.name}
-                                                label={formMeta.fields.privacyPolicy.label}
-                                                required
-                                                fieldRef={field}
-                                            />
-                                            <FormLineError
-                                                error={error}
-                                                inputType="checkbox"
-                                                testIdentifier={
-                                                    formMeta.formName +
-                                                    '-' +
-                                                    formMeta.fields.privacyPolicy.name +
-                                                    '-error'
-                                                }
-                                            />
-                                        </>
-                                    )}
-                                />
-                            </ChoiceFormLine>
+                            <CheckboxControlled
+                                name={formMeta.fields.privacyPolicy.name}
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                checkboxProps={{
+                                    label: formMeta.fields.privacyPolicy.label,
+                                    required: true,
+                                }}
+                            />
                         </Form>
                     </FormProvider>
                 </NewsletterFormColumnStyled>

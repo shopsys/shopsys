@@ -2,7 +2,7 @@ import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } fro
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper/ContactInformationFormWrapper';
 import { useContactInformationFormMeta } from './formMeta';
 import { Link } from 'components/Basic/Link/Link';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
@@ -10,7 +10,7 @@ import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
 import Trans from 'next-translate/Trans';
 import { FC, useEffect, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
@@ -68,19 +68,15 @@ export const ContactInformationContent: FC = () => {
                         }}
                     />
                 </ContactInformationTextStyled>
-                <ChoiceFormLine>
-                    <Controller
-                        name={formMeta.fields.newsletterSubscription.name}
-                        render={({ field }) => (
-                            <Checkbox
-                                id={formMeta.formName + '-' + formMeta.fields.newsletterSubscription.name}
-                                name={formMeta.fields.newsletterSubscription.name}
-                                label={formMeta.fields.newsletterSubscription.label}
-                                fieldRef={field}
-                            />
-                        )}
-                    />
-                </ChoiceFormLine>
+                <CheckboxControlled
+                    name={formMeta.fields.newsletterSubscription.name}
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                    checkboxProps={{
+                        label: formMeta.fields.newsletterSubscription.label,
+                    }}
+                />
             </ContactInformationTextWrapperStyled>
         </>
     );
