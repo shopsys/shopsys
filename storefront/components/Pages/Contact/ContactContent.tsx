@@ -7,8 +7,7 @@ import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { Textarea } from 'components/Forms/Textarea/Textarea';
+import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
@@ -21,7 +20,7 @@ import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import React, { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { ContactFormType } from 'types/form';
 
@@ -96,37 +95,23 @@ export const ContactContent: FC = () => {
                                     type: 'email',
                                 }}
                             />
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%">
-                                    <Controller
-                                        name={formMeta.fields.message.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <Textarea
-                                                    id={formMeta.formName + '-' + formMeta.fields.message.name}
-                                                    name={formMeta.fields.message.name}
-                                                    label={formMeta.fields.message.label}
-                                                    required
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                    rows={4}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="textarea"
-                                                    testIdentifier={
-                                                        formMeta.formName +
-                                                        '-' +
-                                                        formMeta.fields.message.name +
-                                                        '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
+                            <TextareaControlled
+                                name={formMeta.fields.message.name}
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                render={(textarea) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%">
+                                            {textarea}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                textareaProps={{
+                                    label: formMeta.fields.message.label,
+                                    required: true,
+                                    rows: 4,
+                                }}
+                            />
                             <ContactTextStyled>
                                 <Trans
                                     i18nKey="ContactFormInfo"
