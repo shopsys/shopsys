@@ -1,15 +1,13 @@
+import { useFilterState } from '../FilterContext/useFilterState';
 import {
     FilterGroupArrowStyled,
-    FilterGroupContentItemStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { FilterFormType } from 'types/productFilter';
+import { FC, useMemo, useState } from 'react';
 
 type FilterGroupInStockProps = {
     title: string;
@@ -19,35 +17,27 @@ type FilterGroupInStockProps = {
 
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-instock';
 
-export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen, inStockCount }) => {
+export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen }) => {
     const t = useTypedTranslationFunction();
-    const { control } = useFormContext<FilterFormType>();
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
-
-    const handleGroupClick = () => {
-        setIsGroupOpen(!isGroupOpen);
-    };
+    const [state, dispatch] = useFilterState();
+    const isOnlyInStock = useMemo(() => state.selected.onlyInStock, [state.selected.onlyInStock]);
+    const inStockCount = useMemo(() => state.options.inStock, [state.options.inStock]);
 
     return (
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
-            <FilterGroupTitleStyled onClick={handleGroupClick}>
+            <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                <CheckboxControlled
+                <Checkbox
                     name="onlyInStock"
-                    control={control}
-                    formName="filter-form"
-                    render={(checkbox, currentValue) => (
-                        <FilterGroupContentItemStyled isDisabled={inStockCount === 0} isActive={currentValue}>
-                            {checkbox}
-                        </FilterGroupContentItemStyled>
-                    )}
-                    checkboxProps={{
-                        label: t('In stock'),
-                        count: inStockCount,
-                    }}
+                    id="onlyInStock"
+                    onChange={() => dispatch({ type: 'setOnlyInStock', payload: !isOnlyInStock })}
+                    label={t('In stock')}
+                    count={inStockCount}
+                    value={isOnlyInStock}
                 />
             </FilterGroupContentStyled>
         </FilterGroupStyled>

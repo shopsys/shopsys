@@ -10,7 +10,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 export type CheckboxProps = NativeProps & {
-    value: any;
+    value: boolean;
     label: ReactNode;
     count?: number;
     testIdentifier?: string;
@@ -24,8 +24,8 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
                 count={count}
                 required={required}
                 htmlFor={id}
+                checked={value}
                 inputType="checkbox"
-                checked={value as any}
             >
                 <CheckboxStyled
                     id={id}
@@ -34,7 +34,8 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
                     name={name}
                     onChange={onChange}
                     type="checkbox"
-                    value={value}
+                    checked={value}
+                    value={value as any}
                     ref={checkboxForwardedRef}
                     data-testid={testIdentifier}
                 />

@@ -1,3 +1,9 @@
+import {
+    useCheckedBrands,
+    useCheckedFlags,
+    useFilterState,
+    useIsProductFilterEmpty,
+} from '../FilterContext/useFilterState';
 import { Parameters } from './Parameters/Parameters';
 import {
     SelectedParametersBlockStyled,
@@ -11,113 +17,32 @@ import {
     SelectedParametersStyled,
     SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
-import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
-import { useFormContext } from 'react-hook-form';
-import {
-    FilterFormBrandType,
-    FilterFormFlagType,
-    FilterFormParameterType,
-    FilterFormType,
-    FilterOptionsType,
-} from 'types/productFilter';
-
-type SelectedParametersProps = {
-    productFilterOptions: FilterOptionsType;
-    checkedBrands: FilterFormBrandType[];
-    checkedFlags: FilterFormFlagType[];
-    checkedParameters: FilterFormParameterType[];
-    isOnlyInStock: boolean;
-    minimalPrice: number;
-    maximalPrice: number;
-};
+import { FC, useMemo } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
-export const SelectedParameters: FC<SelectedParametersProps> = ({
-    productFilterOptions,
-    checkedBrands,
-    checkedFlags,
-    checkedParameters,
-    isOnlyInStock,
-    minimalPrice,
-    maximalPrice,
-}) => {
+export const SelectedParameters: FC = () => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const formProviderMethods = useFormContext<FilterFormType>();
+    const [state, dispatch] = useFilterState();
+    const checkedBrands = useCheckedBrands();
+    const checkedFlags = useCheckedFlags();
+    const isOnlyInStock = useMemo(() => state.selected.onlyInStock, [state.selected.onlyInStock]);
+    const isProductFilterEmpty = useIsProductFilterEmpty();
+    const minimalPrice = useMemo(() => state.selected.minimalPrice, [state.selected.minimalPrice]);
+    const maximalPrice = useMemo(() => state.selected.maximalPrice, [state.selected.maximalPrice]);
+    const isMinimalPriceVisible = useMemo(
+        () => state.selected.minimalPrice !== state.options.minimalPrice,
+        [state.options.minimalPrice, state.selected.minimalPrice],
+    );
+    const isMaximalPriceVisible = useMemo(
+        () => state.selected.maximalPrice !== state.options.maximalPrice,
+        [state.options.maximalPrice, state.selected.maximalPrice],
+    );
 
-    const isMinimalPriceVisible = minimalPrice !== productFilterOptions.minimalPrice;
-    const isMaximalPriceVisible = maximalPrice !== productFilterOptions.maximalPrice;
-
-    const onUncheckFlag = (uuid: string) => () => {
-        const indexOfValue = productFilterOptions.flags.findIndex((item) => item.flag.uuid === uuid);
-        const indexOfValueInChecked = checkedFlags.findIndex((item) => item.uuid === uuid);
-
-        formProviderMethods.setValue(`flags.${indexOfValue}`, {
-            ...checkedFlags[indexOfValueInChecked],
-            checked: false,
-        });
-    };
-
-    const onUncheckBrand = (uuid: string) => () => {
-        const indexOfValue = productFilterOptions.brands.findIndex((item) => item.brand.uuid === uuid);
-        const indexOfValueInChecked = checkedBrands.findIndex((item) => item.uuid === uuid);
-
-        formProviderMethods.setValue(`brands.${indexOfValue}`, {
-            ...checkedBrands[indexOfValueInChecked],
-            checked: false,
-        });
-    };
-
-    const onResetPrices = () => {
-        formProviderMethods.setValue('minimalPrice', productFilterOptions.minimalPrice);
-        formProviderMethods.setValue('maximalPrice', productFilterOptions.maximalPrice);
-    };
-
-    const onResetAllParameters = () => {
-        productFilterOptions.flags.forEach((flag, index) =>
-            formProviderMethods.setValue(`flags.${index}`, { ...flag.flag, checked: false }),
-        );
-        productFilterOptions.brands.forEach((brand, index) =>
-            formProviderMethods.setValue(`brands.${index}`, { ...brand.brand, checked: false }),
-        );
-        productFilterOptions.parameters?.forEach((parameterItem, parameterIndex) => {
-            formProviderMethods.setValue(`parameters.${parameterIndex}`, {
-                parameterName: parameterItem.name,
-                selectedValue: 'selectedValue' in parameterItem ? parameterItem.selectedValue : null,
-                parameterUuid: parameterItem.uuid,
-                unit: 'unit' in parameterItem ? parameterItem.unit : null,
-                isCollapsed: parameterItem.isCollapsed,
-                minimalValue: null,
-                maximalValue: null,
-                values:
-                    'values' in parameterItem
-                        ? parameterItem.values.map((value) => ({
-                              ...value,
-                              rgbHex: 'rgbHex' in value ? value.rgbHex : null,
-                              checked: false,
-                          }))
-                        : [],
-            });
-        });
-        formProviderMethods.setValue(`onlyInStock`, false);
-        onResetPrices();
-    };
-
-    if (
-        getIsProductFilterEmpty(
-            checkedBrands,
-            checkedFlags,
-            minimalPrice,
-            maximalPrice,
-            isOnlyInStock,
-            checkedParameters,
-            productFilterOptions,
-        )
-    ) {
+    if (isProductFilterEmpty) {
         return null;
     }
 
@@ -135,7 +60,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                                     alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={onUncheckBrand(filterFormBrand.uuid)}
+                                    onClick={() => dispatch({ type: 'uncheckBrand', payload: filterFormBrand.uuid })}
                                 />
                             </SelectedParametersListItemStyled>
                         ))}
@@ -152,15 +77,13 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                                     alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={onUncheckFlag(filterFormFlag.uuid)}
+                                    onClick={() => dispatch({ type: 'uncheckFlag', payload: filterFormFlag.uuid })}
                                 />
                             </SelectedParametersListItemStyled>
                         ))}
                     </SelectedParametersListStyled>
                 )}
-
-                <Parameters checkedParameters={checkedParameters} filterOptions={productFilterOptions} />
-
+                <Parameters />
                 {isOnlyInStock && (
                     <SelectedParametersListStyled>
                         <SelectedParametersNameStyled>{t('Availability')}:</SelectedParametersNameStyled>
@@ -170,9 +93,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                                 alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
-                                onClick={() => {
-                                    formProviderMethods.setValue('onlyInStock', false);
-                                }}
+                                onClick={() => dispatch({ type: 'setOnlyInStock', payload: false })}
                             />
                         </SelectedParametersListItemStyled>
                     </SelectedParametersListStyled>
@@ -199,13 +120,13 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({
                                 alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
-                                onClick={onResetPrices}
+                                onClick={() => dispatch({ type: 'resetPrices' })}
                             />
                         </SelectedParametersListItemStyled>
                     </SelectedParametersListStyled>
                 )}
             </SelectedParametersBlockStyled>
-            <SelectedParametersResetStyled onClick={onResetAllParameters}>
+            <SelectedParametersResetStyled onClick={() => dispatch({ type: 'resetAllParameters' })}>
                 <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
                 <SelectedParametersResetRemoveStyled alt="" iconType="icon" icon="Remove" />
             </SelectedParametersResetStyled>
