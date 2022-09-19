@@ -78,6 +78,7 @@ abstract class ApplicationTestCase extends WebTestCase
         array $kernelOptions = [],
         array $clientOptions = []
     ): Client {
+        self::ensureKernelShutdown();
         $client = self::createClient($kernelOptions);
 
         /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
