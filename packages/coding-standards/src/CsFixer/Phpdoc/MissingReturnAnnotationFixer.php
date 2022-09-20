@@ -62,7 +62,7 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
      */
     private function shouldSkip(string $type, ?Token $docToken): bool
     {
-        if (in_array($type, ['', 'void', 'mixed'], true)) {
+        if (in_array($type, ['', 'void', 'mixed', 'never'], true)) {
             return true;
         }
 
