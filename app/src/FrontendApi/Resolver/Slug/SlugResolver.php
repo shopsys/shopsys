@@ -27,6 +27,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver;
@@ -152,46 +153,49 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         $routeNameToEntityMap = $this->friendlyUrlRepository->getRouteNameToEntityMap();
         $entity = $routeNameToEntityMap[$friendlyUrl->getRouteName()];
 
-        switch ($entity) {
-            case Article::class:
-                $article = $this->articleResolver->resolver(null, $slugWithoutSlash);
-                $article[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_ARTICLE;
+        try {
+            switch ($entity) {
+                case Article::class:
+                    $article = $this->articleResolver->resolver(null, $slugWithoutSlash);
+                    $article[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_ARTICLE;
 
-                return $article;
-            case Brand::class:
-                /** @var \App\Model\Product\Brand\Brand $brand */
-                $brand = $this->brandResolver->resolver(null, $slugWithoutSlash);
+                    return $article;
+                case Brand::class:
+                    /** @var \App\Model\Product\Brand\Brand $brand */
+                    $brand = $this->brandResolver->resolver(null, $slugWithoutSlash);
 
-                return $brand;
-            case BlogArticle::class:
-                $blogArticle = $this->blogArticleResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
-                $blogArticle[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_BLOG_ARTICLE;
+                    return $brand;
+                case BlogArticle::class:
+                    $blogArticle = $this->blogArticleResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                    $blogArticle[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_BLOG_ARTICLE;
 
-                return $blogArticle;
-            case BlogCategory::class:
-                return $this->blogCategoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
-            case Category::class:
-                /** @var \App\Model\Category\Category $category */
-                $category = $this->categoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
-                $matchingReadyCategorySeoMix = $this->findMatchingReadyCategorySeoMix($info, $category);
+                    return $blogArticle;
+                case BlogCategory::class:
+                    return $this->blogCategoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                case Category::class:
+                    /** @var \App\Model\Category\Category $category */
+                    $category = $this->categoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                    $matchingReadyCategorySeoMix = $this->findMatchingReadyCategorySeoMix($info, $category);
 
-                return $matchingReadyCategorySeoMix ?? $category;
-            case Flag::class:
-                return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
-            case Product::class:
-                $product = $this->productDetailResolver->resolver(null, $slugWithoutSlash);
-                $product[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_PRODUCT;
+                    return $matchingReadyCategorySeoMix ?? $category;
+                case Flag::class:
+                    return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                case Product::class:
+                    $product = $this->productDetailResolver->resolver(null, $slugWithoutSlash);
+                    $product[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_PRODUCT;
 
-                return $product;
-            case Store::class:
-                return $this->storeResolver->resolver(null, $slugWithoutSlash);
-            case ReadyCategorySeoMix::class:
-                $readyCategorySeoMix = $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
-                if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
-                    return $readyCategorySeoMix->getCategory();
-                }
+                    return $product;
+                case Store::class:
+                    return $this->storeResolver->resolver(null, $slugWithoutSlash);
+                case ReadyCategorySeoMix::class:
+                    $readyCategorySeoMix = $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
+                    if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
+                        return $readyCategorySeoMix->getCategory();
+                    }
 
-                return $readyCategorySeoMix;
+                    return $readyCategorySeoMix;
+            }
+        } catch (UserEntityNotFoundError $error) {
         }
 
         throw new NoResultFoundForSlugUserError('No result found for request.');

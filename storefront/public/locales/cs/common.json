@@ -376,5 +376,6 @@
     "Your cart has been modified. Please check the changes.": "Váš košík byl upraven. Prosím, zkontrolujte si změny.",
     "The page is currently under maintenance.": "Stránka je aktuálně v režimu údržby.",
     "Your cookie preferences have been set.": "Vaše nastavení souhlasů se soubory cookies bylo uloženo.",
-    "Invalid token.": "Token není validní"
+    "Invalid token.": "Token není validní",
+    "Product not found.": "Produkt nebyl nalezen."
 }

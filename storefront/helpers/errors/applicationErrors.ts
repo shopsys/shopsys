@@ -17,6 +17,7 @@ export const ApplicationErrors = {
     'no-result-found-for-slug': 'no-result-found-for-slug',
     'store-not-found': 'store-not-found',
     'invalid-token': 'invalid-token',
+    'product-not-found': 'product-not-found',
 } as const;
 
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;
