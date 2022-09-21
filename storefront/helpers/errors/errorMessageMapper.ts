@@ -19,6 +19,7 @@ const ERROR_MESSAGES: Record<ApplicationErrorsType, string | undefined> = {
     [ApplicationErrors['product-price-missing']]: 'Product price is missing.',
     [ApplicationErrors['no-result-found-for-slug']]: 'No result found for slug.',
     [ApplicationErrors['store-not-found']]: 'Store not found.',
+    [ApplicationErrors['invalid-token']]: 'Invalid token.',
 };
 
 export const hasErrorMessage = (errorCode: string): boolean => {
