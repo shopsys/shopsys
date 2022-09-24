@@ -1,4 +1,4 @@
-import TransportAndPaymentSelect from './TransportAndPaymentSelect/TransportAndPaymentSelect';
+import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
@@ -7,6 +7,8 @@ import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getPacketeryCookie } from 'helpers/packetery';
+import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
+import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useMemo, useState } from 'react';
@@ -17,6 +19,10 @@ import { TransportType } from 'types/transport';
 type TransportAndPaymentContentProps = {
     transports: TransportType[];
     lastOrder: LastOrderFragmentApi | null;
+    changeTransportInCart: ChangeTransportHandler;
+    changePaymentInCart: ChangePaymentHandler;
+    isTransportSelectionLoading: boolean;
+    isPaymentSelectionLoading: boolean;
 };
 
 type TransportAndPaymentErrorsType = {
@@ -37,7 +43,14 @@ type TransportAndPaymentErrorsType = {
     };
 };
 
-export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = ({ transports, lastOrder }) => {
+export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = ({
+    transports,
+    lastOrder,
+    changePaymentInCart,
+    changeTransportInCart,
+    isPaymentSelectionLoading,
+    isTransportSelectionLoading,
+}) => {
     const router = useRouter();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const t = useTypedTranslationFunction();
@@ -126,12 +139,22 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                     lastOrderPickupPlace={lastOrderPickupPlace}
                     lastOrderTransportUuid={lastOrder?.transport.uuid ?? null}
                     lastOrderPaymentUuid={lastOrder?.payment.uuid ?? null}
+                    changeTransportInCart={changeTransportInCart}
+                    changePaymentInCart={changePaymentInCart}
+                    isTransportSelectionLoading={isTransportSelectionLoading}
                 />
             )}
             <OrderAction
                 buttonBack={t('Back')}
                 buttonNext={t('Contact information')}
-                hasDisabledLook={hasValidationErrors(transportAndPaymentValidationMessages)}
+                hasDisabledLook={
+                    hasValidationErrors(transportAndPaymentValidationMessages) ||
+                    isTransportSelectionLoading ||
+                    isPaymentSelectionLoading
+                }
+                isLoading={
+                    (isTransportSelectionLoading || isPaymentSelectionLoading) && transport !== null && payment !== null
+                }
                 withGapTop={true}
                 withGapBottom={true}
                 buttonBackLink={cartUrl}

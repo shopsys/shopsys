@@ -50,7 +50,11 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand, fetchin
                         totalCount={brand.productConnection.totalCount}
                     />
                     {brand.productConnection.products.length !== 0 && (
-                        <ProductsList products={brand.productConnection.products} gtmListName="brand" />
+                        <ProductsList
+                            products={brand.productConnection.products}
+                            gtmListName="brand"
+                            fetching={fetching}
+                        />
                     )}
                     <Pagination totalCount={brand.productConnection.totalCount} containerWrapRef={containerWrapRef} />
                 </div>

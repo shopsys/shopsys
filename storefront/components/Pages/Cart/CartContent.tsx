@@ -15,11 +15,12 @@ export const CartContent: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
     const t = useTypedTranslationFunction();
+    const { loginLoading } = useShopsysSelector((state) => state.user);
     const { cart, isCartEmpty, isInitiallyLoaded } = useCurrentCart();
 
     return (
         <>
-            {isInitiallyLoaded ? (
+            {isInitiallyLoaded && loginLoading === 'not-loading' ? (
                 <>
                     {isCartEmpty ? (
                         <EmptyCart />

@@ -7,6 +7,7 @@ import {
     AddToCartUnavailableTextStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
@@ -28,7 +29,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const changeCartItemQuantity = useAddToCart('product');
+    const [changeCartItemQuantity, fetching] = useAddToCart('product');
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
@@ -67,6 +68,12 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     variant="primary"
                                     data-testid={TEST_IDENTIFIER + '-button'}
                                 >
+                                    {fetching ? (
+                                        <Icon icon="Spinner" iconType="icon" width={26} height={26} />
+                                    ) : (
+                                        <Icon iconType="icon" icon="Cart" />
+                                    )}
+
                                     {t('Add to cart')}
                                 </AddToCartButtonStyled>
                             </AddToCartButtonWrapperStyled>

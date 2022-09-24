@@ -45,7 +45,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     );
     const { pickupPlace, transport, payment, promoCode, cart } = useCurrentCart();
     const t = useTypedTranslationFunction();
-    const [, createOrder] = useCreateOrderMutationApi();
+    const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
@@ -162,6 +162,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                             withGapTop={false}
                             withGapBottom
                             buttonBackLink={transportAndPaymentUrl}
+                            isLoading={fetching}
                         />
                     </OrderLayout>
                 </Form>

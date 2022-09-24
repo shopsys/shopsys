@@ -33,7 +33,11 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag, fetching }
                         totalCount={flag.productConnection.totalCount}
                     />
                     {flag.productConnection.products.length !== 0 && (
-                        <ProductsList products={flag.productConnection.products} gtmListName="flag" />
+                        <ProductsList
+                            products={flag.productConnection.products}
+                            gtmListName="flag"
+                            fetching={fetching}
+                        />
                     )}
                     <Pagination totalCount={flag.productConnection.totalCount} containerWrapRef={containerWrapRef} />
                 </div>

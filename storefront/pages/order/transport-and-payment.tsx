@@ -12,6 +12,8 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { createClient } from 'helpers/urql/createClient';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -26,6 +28,8 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
     const currentCart = useCurrentCart();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
+    const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('transport pay');
     useGtmStaticPageView(gtmStaticPageViewEvent);
@@ -38,9 +42,19 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <OrderLayout activeStep={2}>
+            <OrderLayout
+                activeStep={2}
+                isTransportOrPaymentLoading={isTransportSelectionLoading || isPaymentSelectionLoading}
+            >
                 {currentCart.isInitiallyLoaded && (
-                    <TransportAndPaymentContent transports={transports} lastOrder={data?.lastOrder ?? null} />
+                    <TransportAndPaymentContent
+                        transports={transports}
+                        lastOrder={data?.lastOrder ?? null}
+                        changeTransportInCart={changeTransportInCart}
+                        isTransportSelectionLoading={isTransportSelectionLoading}
+                        changePaymentInCart={changePaymentInCart}
+                        isPaymentSelectionLoading={isPaymentSelectionLoading}
+                    />
                 )}
             </OrderLayout>
             <Webline type="dark">

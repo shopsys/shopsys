@@ -1,33 +1,39 @@
 import { IconName } from './IconSvg/IconsSvgMap';
 import { IconSvg } from './IconSvg/IconSvg';
-import { FC, HTMLAttributes } from 'react';
+import { CSSProperties, FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'title' | 'onClick' | 'className'>;
 
-type IconProps = NativeProps &
-    (
+type IconProps = NativeProps & { width?: number; height?: number } & (
         | {
               iconType: 'icon';
               icon: IconName;
-              width?: never;
-              height?: never;
               alt?: never;
+              color?: CSSProperties['color'];
           }
         | {
               iconType: 'image';
               icon: string;
-              width?: number;
-              height?: number;
               alt: string;
+              color?: never;
           }
     );
 
 const getTestIdentifier = (icon: string) => 'basic-icon-' + icon;
 
-export const Icon: FC<IconProps> = ({ icon, iconType, title, alt, height, width, onClick, className }) => {
+export const Icon: FC<IconProps> = ({ icon, iconType, title, alt, height, width, onClick, className, color }) => {
     if (iconType === 'icon') {
-        return <IconSvg className={className} icon={icon as IconName} onClick={onClick} />;
+        return (
+            <IconSvg
+                className={className}
+                icon={icon as IconName}
+                onClick={onClick}
+                color={color}
+                height={height}
+                width={width}
+            />
+        );
     }
 
     return (

@@ -12,9 +12,10 @@ import { useShopsysSelector } from 'redux/main';
 
 type OrderLayoutProps = {
     activeStep: number;
+    isTransportOrPaymentLoading?: boolean;
 };
 
-export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, children }) => {
+export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, isTransportOrPaymentLoading, children }) => {
     const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
 
@@ -33,7 +34,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ activeStep, children }) => {
                 <OrderLayoutStyled>
                     <OrderLayoutContentStyled>{children}</OrderLayoutContentStyled>
                     <OrderLayoutSummaryStyled>
-                        <OrderSummary />
+                        <OrderSummary isTransportOrPaymentLoading={isTransportOrPaymentLoading} />
                     </OrderLayoutSummaryStyled>
                 </OrderLayoutStyled>
             </Webline>

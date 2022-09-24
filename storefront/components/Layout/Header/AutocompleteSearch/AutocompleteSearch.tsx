@@ -29,7 +29,9 @@ export const AutocompleteSearch: FC = () => {
     const [autocompleteSearchQueryValue, setAutocompleteSearchQueryValue] = useState('');
     const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
     const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
-    const autocompleteSearchApiResults = useAutocompleteSearch(debouncedAutocompleteSearchQuery);
+    const [autocompleteSearchApiResults, areSearchResultsLoading] = useAutocompleteSearch(
+        debouncedAutocompleteSearchQuery,
+    );
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
@@ -92,6 +94,7 @@ export const AutocompleteSearch: FC = () => {
                             onEnterPressCallback={onAutocompleteSearchHandler}
                             value={autocompleteSearchQueryValue}
                             onChange={onChangeAutocompleteSearchQueryValueHandler}
+                            isLoading={areSearchResultsLoading}
                         />
                         {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
                             <AutocompleteSearchRemoveButtonStyled onClick={() => setAutocompleteSearchQueryValue('')}>

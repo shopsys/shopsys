@@ -1,26 +1,15 @@
 import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
-import { FC } from 'react';
-import { CartItemType } from 'types/cart';
+import { FC, MouseEventHandler } from 'react';
 
 type RemoveCartItemButtonProps = {
-    cartItem: CartItemType;
-    listIndex: number;
+    onItemRemove: MouseEventHandler<HTMLButtonElement>;
 };
 
 const TEST_IDENTIFIER = 'pages-cart-removecartitembutton';
 
-export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ cartItem, listIndex }) => {
-    const removeItemFromCart = useRemoveFromCart();
-
-    const onRemoveItemFromCartHandler = () => {
-        removeItemFromCart(cartItem, listIndex, 'cart');
-    };
-
-    return (
-        <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHandler} data-testid={TEST_IDENTIFIER}>
-            <Icon iconType="icon" icon="RemoveBold" />
-        </RemoveCartItemButtonStyled>
-    );
-};
+export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemove }) => (
+    <RemoveCartItemButtonStyled onClick={onItemRemove} data-testid={TEST_IDENTIFIER}>
+        <Icon iconType="icon" icon="RemoveBold" />
+    </RemoveCartItemButtonStyled>
+);

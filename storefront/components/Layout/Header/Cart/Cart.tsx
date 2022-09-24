@@ -16,15 +16,17 @@ import {
     CartValueStyled,
 } from './Cart.style';
 import { ListItem } from './ListItem/ListItem';
+import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { RemoveFromCartHandler, useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 const TEST_IDENTIFIER = 'layout-header-cart-';
@@ -33,18 +35,26 @@ export const Cart: FC = () => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const { cart, isCartEmpty } = useCurrentCart();
+    const { cart, isCartEmpty, isInitiallyLoaded } = useCurrentCart();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainConfig.url);
     const [onMouseEnterTrigger, setOnMouseEnterTrigger] = useState(false);
     const [onMouseLeaveTrigger, setOnMouseLeaveTrigger] = useState(false);
     const isCartHovered = useMouseHoverDebounce(onMouseEnterTrigger, onMouseLeaveTrigger);
+    const { loginLoading } = useShopsysSelector((state) => state.user);
+    const [removeItemFromCart, isRemovingItem] = useRemoveFromCart();
+
+    const removeItemHandler = useCallback<RemoveFromCartHandler>(
+        (cartItem, listIndex, gtmListName) => removeItemFromCart(cartItem, listIndex, gtmListName),
+        [removeItemFromCart],
+    );
 
     return (
         <CartStyled
             onMouseEnter={() => setOnMouseEnterTrigger(!onMouseEnterTrigger)}
             onMouseLeave={() => setOnMouseLeaveTrigger(!onMouseLeaveTrigger)}
         >
+            {(!isInitiallyLoaded || loginLoading !== 'not-loading') && <LoadingOverlay iconSize={32} />}
             <NextLink href={cartUrl} passHref>
                 <CartBlockStyled isHovered={isCartHovered} data-testid={TEST_IDENTIFIER + 'block'}>
                     <CartPiecesStyled>
@@ -68,8 +78,13 @@ export const Cart: FC = () => {
                 {!isCartEmpty ? (
                     <>
                         <CartDetailList>
+                            {isRemovingItem && <LoadingOverlay iconSize={64} />}
                             {cart?.items.map((cartItem, index) => (
-                                <ListItem key={cartItem.uuid} cartItem={cartItem} listIndex={index} />
+                                <ListItem
+                                    key={cartItem.uuid}
+                                    cartItem={cartItem}
+                                    onItemRemove={() => removeItemHandler(cartItem, index, 'cart')}
+                                />
                             ))}
                         </CartDetailList>
                         <CartDetailButtonWrapperStyled>

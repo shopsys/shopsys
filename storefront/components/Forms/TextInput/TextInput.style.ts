@@ -113,6 +113,18 @@ export const SearchTextInputStyled = styled.input(
     `,
 );
 
+export const TextInputLoadingWrapper = styled.div`
+    position: absolute;
+    top: calc(50% - 16px);
+    right: 15px;
+
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 export const PasswordTextInputStyled = styled(TextInputStyled)<TextInputStyledProps>(
     ({ theme }) => css`
         &[type='password'] {

@@ -37,6 +37,10 @@ export const buttonSettings = (
             color: ${theme.button.variant[buttonVariant].colorHover};
             background-color: ${theme.button.variant[buttonVariant].backgroundHover};
         }
+
+        i:first-child {
+            margin-right: 12px;
+        }
     `;
 };
 
@@ -44,8 +48,9 @@ export const ButtonStyled = styled.button<ButtonStyledProps>(
     ({ theme, size, variant, borderRadius, isDisabled, hasDisabledLook }) => css`
         ${buttonSettings(theme, size, variant, borderRadius)}
         width: auto;
-        vertical-align: middle;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         transition: ${theme.transition} background-color, ${theme.transition} color;
         text-align: center;
 

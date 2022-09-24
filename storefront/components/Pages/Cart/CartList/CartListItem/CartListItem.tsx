@@ -14,28 +14,29 @@ import { CartListItemInfo } from './CartListItemInfo/CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
-import { useAddToCart } from 'hooks/cart/useAddToCart';
+import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC, useRef } from 'react';
+import { FC, MouseEventHandler, useRef } from 'react';
 import { CartItemType } from 'types/cart';
 
 type CartListItemProps = {
     item: CartItemType;
     listIndex: number;
+    onItemRemove: MouseEventHandler<HTMLButtonElement>;
+    onItemQuantityChange: AddToCartAction;
 };
 
 const TEST_IDENTIFIER = 'pages-cart-list-item-';
 
-export const CartListItem: FC<CartListItemProps> = ({ item, listIndex }) => {
+export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRemove, onItemQuantityChange }) => {
     const itemCatnum = item.product.catalogNumber;
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement>(null);
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
-    const changeCartItemQuantity = useAddToCart('cart');
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {
@@ -48,7 +49,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex }) => {
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            changeCartItemQuantity(item.product.uuid, listIndex, spinboxRef.current!.valueAsNumber, 'cart', true);
+            onItemQuantityChange(item.product.uuid, listIndex, spinboxRef.current!.valueAsNumber, 'cart', true);
         }, 500);
     };
 
@@ -83,7 +84,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex }) => {
                 <TotalPriceStyled>{formatPrice(item.product.price.priceWithVat * item.quantity)}</TotalPriceStyled>
             </TotalPriceCellStyled>
             <RemoveButtonCellStyled>
-                <RemoveCartItemButton cartItem={item} listIndex={listIndex} />
+                <RemoveCartItemButton onItemRemove={onItemRemove} />
             </RemoveButtonCellStyled>
         </ItemStyled>
     );

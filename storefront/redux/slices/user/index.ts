@@ -7,6 +7,8 @@ export type PaginationType = {
     pageSize: number;
 };
 
+type LoginLoadingStatus = 'not-loading' | 'loading' | 'loading-with-cart-modifications';
+
 type InitialState = {
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
@@ -14,6 +16,7 @@ type InitialState = {
     lastOrderPaymentType: string;
     urlHash: string | undefined;
     cartUuid: string | null;
+    loginLoading: LoginLoadingStatus;
 };
 
 export const initialState = {
@@ -25,6 +28,7 @@ export const initialState = {
     canAccessOrderConfirmation: false,
     urlHash: undefined,
     cartUuid: null,
+    loginLoading: 'not-loading',
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -48,6 +52,9 @@ export const userSlice = createSlice({
         },
         setCartUuid(state, action: PayloadAction<string | null>) {
             state.cartUuid = action.payload;
+        },
+        setLoginLoading(state, action: PayloadAction<LoginLoadingStatus>) {
+            state.loginLoading = action.payload;
         },
     },
     extraReducers: {

@@ -3,6 +3,7 @@ import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Transpo
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
@@ -10,8 +11,8 @@ import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
-import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
+import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
+import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
@@ -28,24 +29,27 @@ type TransportAndPaymentSelectProps = {
     lastOrderPickupPlace: PickupPlaceType | null;
     lastOrderTransportUuid: string | null;
     lastOrderPaymentUuid: string | null;
+    changeTransportInCart: ChangeTransportHandler;
+    changePaymentInCart: ChangePaymentHandler;
+    isTransportSelectionLoading: boolean;
 };
 
 const TEST_IDENTIFIER = 'pages-order-';
 
-const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
+export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     transports,
     lastOrderPickupPlace,
     lastOrderTransportUuid,
     lastOrderPaymentUuid,
+    changeTransportInCart,
+    changePaymentInCart,
+    isTransportSelectionLoading,
 }) => {
     const t = useTypedTranslationFunction();
     const { defaultLocale, currencyCode } = useShopsysSelector((state) => state.domain);
     const [preSelectedTransport, setPreselectedTransport] = useState<TransportType | null>(null);
     const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<PickupPlaceType | null>(lastOrderPickupPlace);
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-
-    const changeTransportInCart = useChangeTransportInCart();
-    const changePaymentInCart = useChangePaymentInCart();
     const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
 
     const isPickupPlaceSelected = pickupPlace !== null;
@@ -277,6 +281,7 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 </div>
                 {transport !== null && preSelectedTransport === null && (
                     <PaymentListWrapper data-testid={TEST_IDENTIFIER + 'payment'}>
+                        {isTransportSelectionLoading && <LoadingOverlay iconSize={30} />}
                         <Heading type="h3">{t('Choose payment')}</Heading>
                         <ul>
                             {payment !== null
@@ -315,5 +320,3 @@ const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         </>
     );
 };
-
-export default TransportAndPaymentSelect;

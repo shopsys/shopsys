@@ -139,6 +139,7 @@ export const CartDetailStyled = styled.div<CartDetailStyledProps>(
 );
 
 export const CartDetailList = styled.ul`
+    position: relative;
     display: flex;
     flex-direction: column;
     margin: 0;

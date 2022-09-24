@@ -14,6 +14,8 @@ type PromoCodeStyledProps = {
 
 export const PromoCodeStyled = styled.div<PromoCodeStyledProps>(
     ({ theme, contentElementHeight }) => css`
+        position: relative;
+
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;
         }

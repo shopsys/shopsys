@@ -30,6 +30,7 @@ export const ListItemStyled = styled.li<ListItemStyledProps>(
 );
 
 export const PaymentListWrapper = styled.div`
+    position: relative;
     margin-top: 50px;
 `;
 

@@ -1,6 +1,6 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { useChangeTransportInCartMutationApi } from 'graphql/generated';
+import { CartFragmentApi, useChangeTransportInCartMutationApi } from 'graphql/generated';
 import { onTransportChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -9,8 +9,13 @@ import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { PickupPlaceType } from 'types/pickupPlace';
 
-export const useChangeTransportInCart = (): typeof changeTransportHandler => {
-    const [, changeTransportInCart] = useChangeTransportInCartMutationApi();
+export type ChangeTransportHandler = (
+    newTransportUuid: string | null,
+    newPickupPlace: PickupPlaceType | null,
+) => Promise<CartFragmentApi | undefined | null>;
+
+export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
+    const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
@@ -18,8 +23,8 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
 
     const gtmCart = useLatest(gtmCartEventInfo.cart);
 
-    const changeTransportHandler = useCallback(
-        async (newTransportUuid: string | null, newPickupPlace: PickupPlaceType | null) => {
+    const changeTransportHandler = useCallback<ChangeTransportHandler>(
+        async (newTransportUuid, newPickupPlace) => {
             const changeTransportResult = await changeTransportInCart(
                 {
                     input: {
@@ -58,5 +63,5 @@ export const useChangeTransportInCart = (): typeof changeTransportHandler => {
         [cartUuid, changeTransportInCart, currencyCode, gtmCart, t],
     );
 
-    return changeTransportHandler;
+    return [changeTransportHandler, fetching];
 };
