@@ -9,7 +9,25 @@ import {
 } from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import React, { FC } from 'react';
+import { useRouter } from 'next/router';
+import React, { FC, useEffect } from 'react';
+import { FallbackProps } from 'react-error-boundary';
+
+export const Error500ContentWithBoundary: FC<FallbackProps> = ({ resetErrorBoundary }) => {
+    const router = useRouter();
+
+    useEffect(() => {
+        const handleResetFromErrorState = () => resetErrorBoundary();
+
+        router.events.on('routeChangeComplete', handleResetFromErrorState);
+
+        return () => {
+            router.events.off('routeChangeComplete', handleResetFromErrorState);
+        };
+    }, [resetErrorBoundary, router.events]);
+
+    return <Error500Content />;
+};
 
 export const Error500Content: FC = () => {
     const t = useTypedTranslationFunction();
