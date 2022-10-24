@@ -384,7 +384,7 @@ class ProductController extends AdminBaseController
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<array<string, mixed>>
      */
     protected function getGrid(QueryBuilder $queryBuilder)
     {
@@ -438,7 +438,7 @@ class ProductController extends AdminBaseController
     /**
      * @return bool
      */
-    protected function productCanBeCreated()
+    protected function productCanBeCreated(): bool
     {
         return count($this->unitFacade->getAll()) !== 0
             && $this->setting->get(Setting::DEFAULT_UNIT) !== 0

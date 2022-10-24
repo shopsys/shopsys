@@ -251,7 +251,7 @@ class DefaultController extends AdminBaseController
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView[]|null
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<array<string, mixed>>[]|null
      */
     protected function getCronGridViews(): ?array
     {
@@ -273,7 +273,7 @@ class DefaultController extends AdminBaseController
 
     /**
      * @param string $instanceName
-     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridView<array<string, mixed>>
      */
     protected function createCronGridViewForInstance(string $instanceName): GridView
     {

@@ -161,7 +161,10 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    protected function loadData()
+    /**
+     * @return array<int, array<string, int|string|null>>
+     */
+    protected function loadData(): array
     {
         $data = [];
         foreach ($this->domain->getAll() as $domainConfig) {

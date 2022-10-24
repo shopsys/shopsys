@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GridController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade
+     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade<array<string, mixed>>
      */
     protected $inlineEditFacade;
 
@@ -23,7 +23,7 @@ class GridController extends AdminBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade $gridOrderingFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade $inlineEditFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade<array<string, mixed>> $inlineEditFacade
      */
     public function __construct(
         GridOrderingFacade $gridOrderingFacade,
@@ -36,8 +36,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/get-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function getFormAction(Request $request)
+    public function getFormAction(Request $request): JsonResponse
     {
         $renderedFormRow = $this->inlineEditFacade->getRenderedFormRow(
             $request->get('serviceName'),
@@ -50,8 +51,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/save-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveFormAction(Request $request)
+    public function saveFormAction(Request $request): JsonResponse
     {
         $responseData = [];
         $rowId = json_decode($request->get('rowId'));
@@ -76,8 +78,9 @@ class GridController extends AdminBaseController
     /**
      * @Route("/_grid/save-ordering/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->gridOrderingFacade->saveOrdering(
             $request->get('entityClass'),

@@ -244,7 +244,7 @@ class ArticleController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function saveOrderingAction(Request $request)
+    public function saveOrderingAction(Request $request): JsonResponse
     {
         $this->articleFacade->saveOrdering($request->get('rowIdsByGridId'));
 
@@ -255,7 +255,7 @@ class ArticleController extends AdminBaseController
 
     /**
      * @param string $articlePlacement
-     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<array<string, mixed>>
      */
     protected function getGrid($articlePlacement)
     {

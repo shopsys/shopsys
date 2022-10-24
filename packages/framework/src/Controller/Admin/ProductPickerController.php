@@ -112,8 +112,8 @@ class ProductPickerController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $viewParameters
-     * @param array $gridViewParameters
+     * @param array<string, mixed> $viewParameters
+     * @param array<string, mixed> $gridViewParameters
      */
     protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
     {

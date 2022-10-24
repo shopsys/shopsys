@@ -245,8 +245,8 @@ class OrderController extends AdminBaseController
     }
 
     /**
-     * @param array $row
-     * @return array
+     * @param array<string, mixed> $row
+     * @return array<string, mixed>
      */
     protected function addOrderEntityToDataSource(array $row)
     {

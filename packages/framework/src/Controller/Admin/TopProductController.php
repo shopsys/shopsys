@@ -63,7 +63,7 @@ class TopProductController extends AdminBaseController
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getProductsForDomain($domainId)
+    protected function getProductsForDomain($domainId): array
     {
         $topProducts = $this->topProductFacade->getAll($domainId);
         $products = [];
