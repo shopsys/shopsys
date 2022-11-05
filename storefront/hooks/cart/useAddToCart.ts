@@ -27,7 +27,9 @@ export const useAddToCart = (origin: GtmMessageOriginType): typeof addToCartActi
         const addToCartActionResult = await addToCart({
             input: { cartUuid, productUuid, quantity, isAbsoluteQuantity },
         });
-        dispatch(userActions.setCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null));
+        if (cartUuid === null) {
+            dispatch(userActions.setCartUuid(addToCartActionResult.data?.AddToCart.cart.uuid ?? null));
+        }
 
         // EXTEND ADDING TO CART HERE
 
