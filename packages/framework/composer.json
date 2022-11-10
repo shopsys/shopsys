@@ -58,7 +58,7 @@
         "fp/jsformvalidator-bundle": "^1.6.1",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.5",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^6.3 || ^7.5",
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
         "heureka/overeno-zakazniky": "^2.0.6",
         "intervention/image": "^2.3.14",
