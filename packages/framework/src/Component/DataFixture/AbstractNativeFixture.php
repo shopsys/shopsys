@@ -36,6 +36,8 @@ abstract class AbstractNativeFixture extends AbstractFixture
         DeprecationHelper::triggerClass(self::class);
 
         $nativeQuery = $this->entityManager->createNativeQuery($sql, new ResultSetMapping());
+
+        /** @phpstan-ignore-next-line */
         return $nativeQuery->execute($parameters);
     }
 }
