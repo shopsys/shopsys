@@ -29,6 +29,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [v10.0.4](https://github.com/shopsys/shopsys/compare/v10.0.3...v10.0.4) (2022-11-14)
+
+:top: Upgrading
+
+- allow ^7.5 version of guzzlehttp/guzzle library [\#2510](https://github.com/shopsys/shopsys/pull/2510)
+
 ## [v10.0.3](https://github.com/shopsys/shopsys/compare/v10.0.2...v10.0.3) (2022-08-11)
 
 :sparkles: Enhancements and features
