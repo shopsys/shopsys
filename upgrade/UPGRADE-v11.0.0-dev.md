@@ -947,3 +947,5 @@ There you can find links to upgrade notes for other versions too.
     - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
 - use logger methods as they're specified in PSR-3 ([#2483](https://github.com/shopsys/shopsys/pull/2483))
     - replace any usages of `Logger::add<Emergency|Alert|Critical|Notice|Debug|Error|Warning|Info>` with corresponding call of `emergency|alert|critical|notice|debug|error|warning|info` method
+- `guzzlehttp/guzzle` has been upgraded to `^7.5` version [#2514](https://github.com/shopsys/shopsys/pull/2514)
+    - support for the older versions has been dropped as they do not support PHP 8.1
