@@ -138,3 +138,12 @@ services:
     Psr\Http\Message\ServerRequestInterface:
         factory: ['@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory', 'createRequest']
         arguments: ['@=service("request_stack").getMasterRequest()']
+
+    Shopsys\FrontendApiBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+            - { name: kernel.event_listener, event: graphql.post_executor, method: afterGraphQlExecution }
+    Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
+        alias: Shopsys\FrontendApiBundle\Component\HttpFoundation\TransactionalMasterRequestListener

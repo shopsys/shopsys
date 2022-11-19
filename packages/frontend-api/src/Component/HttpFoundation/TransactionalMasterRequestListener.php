@@ -3,12 +3,16 @@
 namespace Shopsys\FrontendApiBundle\Component\HttpFoundation;
 
 use Doctrine\ORM\EntityManagerInterface;
+use GraphQL\Error\Error;
 use Overblog\GraphQLBundle\Event\ExecutorResultEvent;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener as BaseTransactionalMasterRequestListener;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestListener
 {
+    protected const GRAPHQL_ENDPOINT_ROUTE = 'overblog_graphql_endpoint';
+    protected const QUERY_TYPE = 'query';
+
     /**
      * @var bool
      */
@@ -20,6 +24,7 @@ class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestL
     public function __construct(EntityManagerInterface $em)
     {
         parent::__construct($em);
+
         $this->hasGraphqlResponseErrors = false;
     }
 
@@ -28,24 +33,24 @@ class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestL
      */
     public function afterGraphQlExecution(ExecutorResultEvent $event): void
     {
-        if (count($event->getResult()->errors) > 0) {
-            $this->hasGraphqlResponseErrors = true;
+        foreach ($event->getResult()->errors as $error) {
+            if ($error->getCategory() === Error::CATEGORY_INTERNAL) {
+                $this->hasGraphqlResponseErrors = true;
+                break;
+            }
         }
     }
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
-     * @return void
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($event->isMasterRequest() && $this->hasGraphqlResponseErrors === true && $this->inTransaction === true){
+        if ($event->isMasterRequest() && $this->hasGraphqlResponseErrors === true && $this->inTransaction === true) {
             $this->em->rollback();
             $this->inTransaction = false;
         }
 
         parent::onKernelResponse($event);
     }
-
-
 }
