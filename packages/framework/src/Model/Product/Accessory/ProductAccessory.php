@@ -48,7 +48,7 @@ class ProductAccessory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
@@ -56,7 +56,7 @@ class ProductAccessory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getAccessory()
+    public function getAccessory(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->accessory;
     }
@@ -64,7 +64,7 @@ class ProductAccessory
     /**
      * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }

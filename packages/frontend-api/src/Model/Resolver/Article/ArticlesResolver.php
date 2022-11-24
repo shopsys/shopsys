@@ -47,7 +47,7 @@ class ArticlesResolver implements QueryInterface, AliasedInterface
      * @param string|null $placement
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument, ?string $placement)
+    public function resolve(Argument $argument, ?string $placement): \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
         $domainId = $this->domain->getId();

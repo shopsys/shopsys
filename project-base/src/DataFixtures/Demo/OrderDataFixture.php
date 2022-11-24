@@ -79,7 +79,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -601,7 +601,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param int $domainId
      */
-    private function loadDistinct(int $domainId)
+    private function loadDistinct(int $domainId): void
     {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
@@ -733,7 +733,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         OrderData $orderData,
         array $products,
         ?CustomerUser $customerUser = null
-    ) {
+    ): void {
         $quantifiedProducts = [];
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName);
@@ -758,7 +758,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

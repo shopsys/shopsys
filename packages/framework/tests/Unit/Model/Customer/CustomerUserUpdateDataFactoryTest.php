@@ -35,7 +35,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
 {
     private const DOMAIN_ID = 1;
 
-    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges()
+    public function testGetAmendedCustomerUserUpdateDataByOrderWithoutChanges(): void
     {
         $customerUserUpdateUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
@@ -142,7 +142,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertEquals($deliveryAddressData, $customerUserUpdateData->deliveryAddressData);
     }
 
-    public function testGetAmendedCustomerUserUpdateDataByOrder()
+    public function testGetAmendedCustomerUserUpdateDataByOrder(): void
     {
         $customerUserUpdateDataFactory = $this->getCustomerUserUpdateDataFactory();
 
@@ -263,7 +263,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData|null $billingAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(?BillingAddressData $billingAddressData = null)
+    private function createBillingAddress(?BillingAddressData $billingAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         if ($billingAddressData === null) {
             $billingAddressData = new BillingAddressData();
@@ -276,7 +276,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
-    private function createDeliveryAddress(?DeliveryAddressData $deliveryAddressData = null)
+    private function createDeliveryAddress(?DeliveryAddressData $deliveryAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         if ($deliveryAddressData === null) {
             $deliveryAddressData = new DeliveryAddressData();

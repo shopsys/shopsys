@@ -41,7 +41,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      */
     private Environment $twigEnvironment;
 
-    public function testExportXml()
+    public function testExportXml(): void
     {
         $country = $this->createCountry();
 
@@ -87,7 +87,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    private function createCountry()
+    private function createCountry(): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         $countryData = new CountryData();
         $countryData->names = ['cz' => 'Czech Republic'];
@@ -100,7 +100,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(Country $country, Customer $customer)
+    private function createBillingAddress(Country $country, Customer $customer): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         $billingAddressData = new BillingAddressData();
         $billingAddressData->country = $country;
@@ -120,7 +120,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
-    private function createDeliveryAddress(Country $country)
+    private function createDeliveryAddress(Country $country): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
     {
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->country = $country;
@@ -138,7 +138,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerUser(Customer $customer)
+    private function createCustomerUser(Customer $customer): \App\Model\Customer\User\CustomerUser
     {
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'Jaromír';
@@ -158,7 +158,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \App\Model\Order\Order
      */
-    private function createOrder(Currency $currency, OrderStatus $status, Country $country)
+    private function createOrder(Currency $currency, OrderStatus $status, Country $country): \App\Model\Order\Order
     {
         $orderData = new OrderData();
         $orderData->currency = $currency;

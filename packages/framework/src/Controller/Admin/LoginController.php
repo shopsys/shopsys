@@ -65,7 +65,7 @@ class LoginController extends AdminBaseController
      * @Route("/logout/", name="admin_logout")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $currentDomainId = $this->domain->getId();
         if ($currentDomainId !== Domain::MAIN_ADMIN_DOMAIN_ID && !$this->isGranted(Roles::ROLE_ADMIN)) {
@@ -116,7 +116,7 @@ class LoginController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
      */
-    public function ssoAction(Request $request, $originalDomainId)
+    public function ssoAction(Request $request, $originalDomainId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -140,7 +140,7 @@ class LoginController extends AdminBaseController
      * @Route("/authorization/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function authorizationAction(Request $request)
+    public function authorizationAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);
         $originalReferer = $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME);

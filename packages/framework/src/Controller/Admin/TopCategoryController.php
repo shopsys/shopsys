@@ -36,7 +36,7 @@ class TopCategoryController extends AdminBaseController
      * @Route("/category/top-category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = [

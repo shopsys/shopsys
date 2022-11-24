@@ -35,12 +35,12 @@ class AutomaticBestsellingProductRepository
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getOfferedProductsByCategory(
-        $domainId,
+        int $domainId,
         Category $category,
         PricingGroup $pricingGroup,
         DateTime $ordersCreatedAtLimit,
-        $maxResults
-    ) {
+        int $maxResults
+    ): array {
         $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,

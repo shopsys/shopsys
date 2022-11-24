@@ -37,7 +37,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $email
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername($email): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             mb_strtolower($email),
@@ -59,7 +59,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function refreshUser(UserInterface $userInterface)
+    public function refreshUser(UserInterface $userInterface): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $class = get_class($userInterface);
         if (!$this->supportsClass($class)) {
@@ -97,7 +97,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $class
      * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class === CustomerUser::class || is_subclass_of($class, CustomerUser::class);
     }

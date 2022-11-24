@@ -58,7 +58,7 @@ class ScriptController extends AdminBaseController
      * @Route("/script/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $scriptData = $this->scriptDataFactory->create();
         $form = $this->createForm(ScriptFormType::class, $scriptData);
@@ -90,7 +90,7 @@ class ScriptController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $scriptId
      */
-    public function editAction(Request $request, $scriptId)
+    public function editAction(Request $request, $scriptId): \Symfony\Component\HttpFoundation\Response
     {
         $script = $this->scriptFacade->getById($scriptId);
         $scriptData = $this->scriptDataFactory->createFromScript($script);
@@ -122,7 +122,7 @@ class ScriptController extends AdminBaseController
     /**
      * @Route("/script/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $dataSource = new QueryBuilderDataSource($this->scriptFacade->getAllQueryBuilder(), 's.id');
 
@@ -149,7 +149,7 @@ class ScriptController extends AdminBaseController
      * @Route("/script/delete/{scriptId}")
      * @param int $scriptId
      */
-    public function deleteAction($scriptId)
+    public function deleteAction($scriptId): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $script = $this->scriptFacade->getById($scriptId);
@@ -173,7 +173,7 @@ class ScriptController extends AdminBaseController
      * @Route("/script/google-analytics/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function googleAnalyticsAction(Request $request)
+    public function googleAnalyticsAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = ['trackingId' => $this->scriptFacade->getGoogleAnalyticsTrackingId($domainId)];
@@ -194,7 +194,7 @@ class ScriptController extends AdminBaseController
     /**
      * @return string[]
      */
-    protected function getOrderSentPageScriptVariableLabelsIndexedByVariables()
+    protected function getOrderSentPageScriptVariableLabelsIndexedByVariables(): array
     {
         return [
             ScriptFacade::VARIABLE_NUMBER => t('Order number'),

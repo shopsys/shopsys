@@ -24,7 +24,7 @@ class CookiesExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isCookiesConsentGiven', [$this, 'isCookiesConsentGiven']),
@@ -35,7 +35,7 @@ class CookiesExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'cookies';
     }
@@ -43,7 +43,7 @@ class CookiesExtension extends AbstractExtension
     /**
      * @return bool
      */
-    public function isCookiesConsentGiven()
+    public function isCookiesConsentGiven(): bool
     {
         return $this->cookiesFacade->isCookiesConsentGiven();
     }
@@ -52,7 +52,7 @@ class CookiesExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findCookiesArticleByDomainId($domainId)
+    public function findCookiesArticleByDomainId(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
     {
         return $this->cookiesFacade->findCookiesArticleByDomainId($domainId);
     }

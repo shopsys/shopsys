@@ -45,7 +45,7 @@ class ProductFilterConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
-    public function getParameterChoices()
+    public function getParameterChoices(): array
     {
         return $this->parameterChoices;
     }
@@ -53,7 +53,7 @@ class ProductFilterConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagChoices()
+    public function getFlagChoices(): array
     {
         return $this->flagChoices;
     }
@@ -61,7 +61,7 @@ class ProductFilterConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getBrandChoices()
+    public function getBrandChoices(): array
     {
         return $this->brandChoices;
     }
@@ -69,7 +69,7 @@ class ProductFilterConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRange()
+    public function getPriceRange(): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
     {
         return $this->priceRange;
     }

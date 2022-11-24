@@ -98,7 +98,7 @@ class InlineEditFacade
      *     form: \Symfony\Component\Form\FormView
      * }
      */
-    protected function getFormRowTemplateParameters(Grid $grid, Form $form)
+    protected function getFormRowTemplateParameters(Grid $grid, Form $form): array
     {
         $formView = $form->createView();
         $rows = $grid->getRows();

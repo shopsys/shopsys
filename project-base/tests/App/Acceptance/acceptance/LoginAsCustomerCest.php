@@ -15,7 +15,7 @@ class LoginAsCustomerCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $frontendLoginPage
      */
-    public function testLoginAsCustomer(AcceptanceTester $me, LoginPage $loginPage, FrontendLoginPage $frontendLoginPage)
+    public function testLoginAsCustomer(AcceptanceTester $me, LoginPage $loginPage, FrontendLoginPage $frontendLoginPage): void
     {
         $me->wantTo('login as a customer from admin');
         $loginPage->loginAsAdmin();

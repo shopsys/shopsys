@@ -12,7 +12,7 @@ class SomeClass
     /**
      * @return bool
      */
-    protected function method()
+    protected function method(): bool
     {
         return true;
     }

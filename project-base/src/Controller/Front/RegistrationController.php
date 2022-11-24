@@ -65,7 +65,7 @@ class RegistrationController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function existsEmailAction(Request $request)
+    public function existsEmailAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $email = $request->get('email');
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
@@ -76,7 +76,7 @@ class RegistrationController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');

@@ -35,7 +35,7 @@ class MigrationsLock
     }
 
     /**
-     * @return string[]
+     * @return int[]|string[]
      */
     public function getOrderedInstalledMigrationClasses(): array
     {
@@ -61,7 +61,7 @@ class MigrationsLock
     }
 
     /**
-     * @return string[]
+     * @return int[]|string[]
      */
     public function getSkippedMigrationClasses(): array
     {

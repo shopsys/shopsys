@@ -37,7 +37,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -61,7 +61,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     /**
      * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

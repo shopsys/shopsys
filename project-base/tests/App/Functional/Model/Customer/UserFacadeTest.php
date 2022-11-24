@@ -31,7 +31,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
      */
     protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
+    public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException(): void
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,
@@ -45,7 +45,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function testCreateNotDuplicateEmail()
+    public function testCreateNotDuplicateEmail(): void
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserUpdateData->customerUserData->pricingGroup = $this->getReferenceForDomain(
@@ -63,7 +63,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->expectNotToPerformAssertions();
     }
 
-    public function testCreateDuplicateEmail()
+    public function testCreateDuplicateEmail(): void
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,
@@ -76,7 +76,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $this->customerUserFacade->create($customerUserUpdateData);
     }
 
-    public function testCreateDuplicateEmailCaseInsentitive()
+    public function testCreateDuplicateEmailCaseInsentitive(): void
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,

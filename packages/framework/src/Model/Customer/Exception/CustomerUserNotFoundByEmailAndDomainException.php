@@ -32,7 +32,7 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -40,7 +40,7 @@ class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFound
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

@@ -58,7 +58,7 @@ class ProductElasticsearchRepository
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
-    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
@@ -73,7 +73,7 @@ class ProductElasticsearchRepository
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
-    public function addRelevance(QueryBuilder $productQueryBuilder, $searchText)
+    public function addRelevance(QueryBuilder $productQueryBuilder, ?string $searchText): void
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
 
@@ -89,7 +89,7 @@ class ProductElasticsearchRepository
      * @param string|null $searchText
      * @return int[]
      */
-    protected function getFoundProductIds(QueryBuilder $productQueryBuilder, $searchText)
+    protected function getFoundProductIds(QueryBuilder $productQueryBuilder, ?string $searchText): array
     {
         $domainId = $productQueryBuilder->getParameter('domainId')->getValue();
 

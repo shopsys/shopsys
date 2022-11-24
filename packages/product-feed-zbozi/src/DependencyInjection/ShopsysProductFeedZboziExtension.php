@@ -12,6 +12,7 @@ class ShopsysProductFeedZboziExtension extends Extension implements PrependExten
 {
     /**
      * {@inheritDoc}
+     * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

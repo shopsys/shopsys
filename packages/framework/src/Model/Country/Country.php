@@ -86,7 +86,7 @@ class Country extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getName($locale = null): string
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }

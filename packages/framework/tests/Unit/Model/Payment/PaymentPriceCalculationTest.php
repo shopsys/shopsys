@@ -23,7 +23,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PaymentPriceCalculationTest extends TestCase
 {
-    public function calculateIndependentPriceProvider()
+    /**
+     * @return array<int, array{inputPriceType: int, inputPrice: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string, priceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, priceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function calculateIndependentPriceProvider(): array
     {
         return [
             [
@@ -43,7 +46,10 @@ class PaymentPriceCalculationTest extends TestCase
         ];
     }
 
-    public function calculatePriceProvider()
+    /**
+     * @return array<int, array{inputPriceType: int, inputPrice: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string, priceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, priceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money, productsPrice: \Shopsys\FrameworkBundle\Model\Pricing\Price}>
+     */
+    public function calculatePriceProvider(): array
     {
         return [
             [
@@ -79,7 +85,7 @@ class PaymentPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType'])
             ->disableOriginalConstructor()
@@ -147,7 +153,7 @@ class PaymentPriceCalculationTest extends TestCase
         Money $priceWithoutVat,
         Money $priceWithVat,
         Price $productsPrice
-    ) {
+    ): void {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getFreeTransportAndPaymentPriceLimit'])

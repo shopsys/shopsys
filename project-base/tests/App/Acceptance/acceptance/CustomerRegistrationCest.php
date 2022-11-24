@@ -24,7 +24,7 @@ class CustomerRegistrationCest
         RegistrationPage $registrationPage,
         AcceptanceTester $me,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('successfully register new customer');
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
@@ -48,7 +48,7 @@ class CustomerRegistrationCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testAlreadyUsedEmail(RegistrationPage $registrationPage, AcceptanceTester $me)
+    public function testAlreadyUsedEmail(RegistrationPage $registrationPage, AcceptanceTester $me): void
     {
         $me->wantTo('use already used email while registration');
         $me->amOnLocalizedRoute('front_registration_register');
@@ -66,7 +66,7 @@ class CustomerRegistrationCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testPasswordMismatch(RegistrationPage $registrationPage, AcceptanceTester $me)
+    public function testPasswordMismatch(RegistrationPage $registrationPage, AcceptanceTester $me): void
     {
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnLocalizedRoute('front_registration_register');

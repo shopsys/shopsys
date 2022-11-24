@@ -69,7 +69,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
-    protected function fillNew(TransportData $transportData)
+    protected function fillNew(TransportData $transportData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
@@ -100,7 +100,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
-    protected function fillFromTransport(TransportData $transportData, Transport $transport)
+    protected function fillFromTransport(TransportData $transportData, Transport $transport): void
     {
         $names = [];
         $descriptions = [];

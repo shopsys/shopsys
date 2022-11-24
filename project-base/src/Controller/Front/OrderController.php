@@ -167,7 +167,7 @@ class OrderController extends FrontBaseController
         $this->newsletterFacade = $newsletterFacade;
     }
 
-    public function indexAction()
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
@@ -290,7 +290,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function previewAction(Request $request)
+    public function previewAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $transportId = $request->get('transportId');
         $paymentId = $request->get('paymentId');
@@ -325,7 +325,7 @@ class OrderController extends FrontBaseController
         OrderPreview $orderPreview,
         array $transports,
         array $payments
-    ) {
+    ): void {
         $transportAndPaymentCheckResult = $this->transportAndPaymentWatcher->checkTransportAndPayment(
             $orderData,
             $orderPreview,
@@ -352,7 +352,7 @@ class OrderController extends FrontBaseController
         }
     }
 
-    public function saveOrderFormAction()
+    public function saveOrderFormAction(): \Symfony\Component\HttpFoundation\Response
     {
         $flow = $this->domainAwareOrderFlowFactory->create();
         $flow->bind(new FrontOrderData());
@@ -362,7 +362,7 @@ class OrderController extends FrontBaseController
         return new Response();
     }
 
-    public function sentAction()
+    public function sentAction(): \Symfony\Component\HttpFoundation\Response
     {
         $orderId = $this->session->get(self::SESSION_CREATED_ORDER, null);
         $this->session->remove(self::SESSION_CREATED_ORDER);
@@ -377,12 +377,12 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    public function termsAndConditionsAction()
+    public function termsAndConditionsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->getTermsAndConditionsResponse();
     }
 
-    public function termsAndConditionsDownloadAction()
+    public function termsAndConditionsDownloadAction(): \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
     {
         $response = $this->getTermsAndConditionsResponse();
 
@@ -396,7 +396,7 @@ class OrderController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getTermsAndConditionsResponse()
+    private function getTermsAndConditionsResponse(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
@@ -408,7 +408,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\Order $order
      */
-    private function sendMail($order)
+    private function sendMail(\App\Model\Order\Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
             $order->getStatus(),

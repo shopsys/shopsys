@@ -7,15 +7,15 @@ use Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer\Source\Nam
 
 final class SomeClass
 {
-    public function function1(?stdClass $value)
+    public function function1(?stdClass $value): void
     {
     }
 
-    public function function2(?NamespacedType $value)
+    public function function2(?NamespacedType $value): void
     {
     }
 
-    public function function3(int $value = null)
+    public function function3(int $value = null): void
     {
     }
 }

@@ -63,7 +63,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param int $domainId
      */
-    protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId)
+    protected function fillForDomainId(CustomerUserData $customerUserData, int $domainId): void
     {
         $customerUserData->pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
             $domainId
@@ -87,7 +87,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser)
+    protected function fillFromUser(CustomerUserData $customerUserData, CustomerUser $customerUser): void
     {
         $customerUserData->domainId = $customerUser->getDomainId();
         $customerUserData->firstName = $customerUser->getFirstName();

@@ -16,7 +16,7 @@ class ProductAdvancedSearchPage extends AbstractPage
      * @param string $searchSubject
      * @param string $value
      */
-    public function search($searchSubject, $value)
+    public function search(string $searchSubject, string $value): void
     {
         $this->tester->amOnPage('/admin/product/list/');
 
@@ -36,7 +36,7 @@ class ProductAdvancedSearchPage extends AbstractPage
     /**
      * @param string $productName
      */
-    public function assertFoundProductByName($productName)
+    public function assertFoundProductByName(string $productName): void
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getAdminLocale());
         $this->tester->seeTranslationAdminInCss($translatedProductName, '.test-grid-column-name');
@@ -45,7 +45,7 @@ class ProductAdvancedSearchPage extends AbstractPage
     /**
      * @param int $expectedCount
      */
-    public function assertFoundProductCount($expectedCount)
+    public function assertFoundProductCount(int $expectedCount): void
     {
         $foundProductCount = $this->tester->countVisibleByCss('tbody .table-grid__row');
 

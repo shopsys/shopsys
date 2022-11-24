@@ -56,6 +56,7 @@ class RoutingExtension implements ExtensionInterface
 
     /**
      * {@inheritdoc}
+     * @param \Knp\Menu\ItemInterface $item
      */
     public function buildItem(ItemInterface $item, array $options): void
     {

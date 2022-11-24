@@ -41,7 +41,7 @@ class CurrentCustomerUser
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $customerUser = $this->findCurrentCustomerUser();
         if ($customerUser === null) {
@@ -53,7 +53,7 @@ class CurrentCustomerUser
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findCurrentCustomerUser()
+    public function findCurrentCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         $token = $this->tokenStorage->getToken();
 

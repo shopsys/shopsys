@@ -9,7 +9,7 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PriceTest extends TestCase
 {
-    public function testAdd()
+    public function testAdd(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $priceToAdd = new Price(Money::create(10), Money::create(15));
@@ -20,7 +20,7 @@ class PriceTest extends TestCase
         $this->assertThat($actualAddingResult->getVatAmount(), new IsMoneyEqual(Money::create(6)));
     }
 
-    public function testAddIsImmutable()
+    public function testAddIsImmutable(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $priceToAdd = new Price(Money::create(10), Money::create(15));
@@ -31,7 +31,7 @@ class PriceTest extends TestCase
         $this->assertThat($price->getVatAmount(), new IsMoneyEqual(Money::create(1)));
     }
 
-    public function testSubtract()
+    public function testSubtract(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $priceToSubtract = new Price(Money::create(10), Money::create(15));
@@ -42,7 +42,7 @@ class PriceTest extends TestCase
         $this->assertThat($actualAddingResult->getVatAmount(), new IsMoneyEqual(Money::create(-4)));
     }
 
-    public function testSubtractIsImmutable()
+    public function testSubtractIsImmutable(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $priceToSubtract = new Price(Money::create(10), Money::create(15));
@@ -53,7 +53,7 @@ class PriceTest extends TestCase
         $this->assertThat($price->getVatAmount(), new IsMoneyEqual(Money::create(1)));
     }
 
-    public function testInverse()
+    public function testInverse(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $actualInverseResult = $price->inverse();
@@ -63,7 +63,7 @@ class PriceTest extends TestCase
         $this->assertThat($actualInverseResult->getVatAmount(), new IsMoneyEqual(Money::create(-1)));
     }
 
-    public function testInverseIsImmutable()
+    public function testInverseIsImmutable(): void
     {
         $price = new Price(Money::create(2), Money::create(3));
         $price->inverse();

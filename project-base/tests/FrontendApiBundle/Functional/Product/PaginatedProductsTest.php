@@ -32,7 +32,10 @@ class PaginatedProductsTest extends GraphQlTestCase
         }
     }
 
-    private function getPaginatedProductsDataProvider()
+    /**
+     * @return array<int, array{orderingMode: string, expectedOrderedProducts: array<int, array{name: string}>}>
+     */
+    private function getPaginatedProductsDataProvider(): array
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
         return [

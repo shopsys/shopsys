@@ -19,7 +19,7 @@ class SingleValue
     const F = 'value';
     const G = 'value';
 
-    public function method()
+    public function method(): void
     {
         echo self::A;
         echo self::B;

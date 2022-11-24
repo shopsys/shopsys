@@ -81,7 +81,7 @@ class AdministratorController extends AdminBaseController
     /**
      * @Route("/administrator/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
@@ -109,7 +109,7 @@ class AdministratorController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -183,7 +183,7 @@ class AdministratorController extends AdminBaseController
     /**
      * @Route("/administrator/my-account/")
      */
-    public function myAccountAction()
+    public function myAccountAction(): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
@@ -197,7 +197,7 @@ class AdministratorController extends AdminBaseController
      * @Route("/administrator/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
@@ -243,7 +243,7 @@ class AdministratorController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();

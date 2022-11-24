@@ -45,7 +45,7 @@ class AdministratorGridLimit
     /**
      * @return string
      */
-    public function getGridId()
+    public function getGridId(): string
     {
         return $this->gridId;
     }
@@ -53,7 +53,7 @@ class AdministratorGridLimit
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
@@ -61,7 +61,7 @@ class AdministratorGridLimit
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
+    public function setLimit(int $limit): void
     {
         $this->limit = $limit;
     }

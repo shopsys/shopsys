@@ -86,7 +86,7 @@ class BrandController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $brand = $this->brandFacade->getById($id);
         $brandData = $this->brandDataFactory->createFromBrand($brand);
@@ -124,7 +124,7 @@ class BrandController extends AdminBaseController
     /**
      * @Route("/brand/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -159,7 +159,7 @@ class BrandController extends AdminBaseController
      * @Route("/brand/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -195,7 +195,7 @@ class BrandController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->brandFacade->getById($id)->getName();

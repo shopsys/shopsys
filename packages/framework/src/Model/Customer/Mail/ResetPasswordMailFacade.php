@@ -51,7 +51,7 @@ class ResetPasswordMailFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function sendMail(CustomerUser $customerUser)
+    public function sendMail(CustomerUser $customerUser): void
     {
         $mailTemplate = $this->mailTemplateFacade->get(
             MailTemplate::RESET_PASSWORD_NAME,

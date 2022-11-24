@@ -24,7 +24,7 @@ class AdvertController extends FrontBaseController
     /**
      * @param string $positionName
      */
-    public function boxAction($positionName)
+    public function boxAction(string $positionName): \Symfony\Component\HttpFoundation\Response
     {
         $advert = $this->advertFacade->findRandomAdvertByPositionOnCurrentDomain($positionName);
 

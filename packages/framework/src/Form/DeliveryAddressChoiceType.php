@@ -28,7 +28,7 @@ class DeliveryAddressChoiceType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -50,7 +50,7 @@ class DeliveryAddressChoiceType extends AbstractType
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
@@ -65,7 +65,7 @@ class DeliveryAddressChoiceType extends AbstractType
     /**
      * @return string|null
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

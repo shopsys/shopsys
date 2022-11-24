@@ -101,7 +101,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
@@ -133,7 +133,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function exportAction(Request $request)
+    public function exportAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
@@ -165,7 +165,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param string $hash
      */
-    public function accessDisplayAction($hash)
+    public function accessDisplayAction(string $hash): \Symfony\Component\HttpFoundation\Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
@@ -203,7 +203,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param string $hash
      */
-    public function accessExportAction($hash)
+    public function accessExportAction(string $hash): \Symfony\Component\HttpFoundation\Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
@@ -245,7 +245,7 @@ class PersonalDataController extends FrontBaseController
     /**
      * @param string $hash
      */
-    public function exportXmlAction($hash)
+    public function exportXmlAction(string $hash): \Symfony\Component\HttpFoundation\Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,

@@ -246,7 +246,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
      */
-    private function getOrderItemByName(BaseOrder $order, string $name): OrderItem
+    private function getOrderItemByName(\App\Model\Order\Order $order, string $name): \App\Model\Order\Item\OrderItem
     {
         foreach ($order->getItems() as $orderItem) {
             if ($orderItem->getName() === $name) {

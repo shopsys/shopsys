@@ -37,7 +37,7 @@ class ProductCalculatedPricesType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('product')
@@ -46,8 +46,10 @@ class ProductCalculatedPricesType extends AbstractType
 
     /**
      * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $product = $options['product'];
 

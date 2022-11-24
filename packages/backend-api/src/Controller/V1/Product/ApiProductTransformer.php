@@ -53,7 +53,7 @@ class ApiProductTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string[]
+     * @return string[]|null[]
      */
     protected function transformNames(Product $product): array
     {
@@ -66,7 +66,7 @@ class ApiProductTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string[]
+     * @return string[]|null[]
      */
     protected function transformShortDescriptions(Product $product): array
     {
@@ -79,7 +79,7 @@ class ApiProductTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return string[]
+     * @return string[]|null[]
      */
     protected function transformLongDescriptions(Product $product): array
     {

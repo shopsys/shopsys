@@ -65,7 +65,7 @@ class PaymentController extends AdminBaseController
      * @Route("/payment/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -102,7 +102,7 @@ class PaymentController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $payment = $this->paymentFacade->getById($id);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -143,7 +143,7 @@ class PaymentController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $paymentName = $this->paymentFacade->getById($id)->getName();
@@ -163,7 +163,7 @@ class PaymentController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->paymentGridFactory->create();
 

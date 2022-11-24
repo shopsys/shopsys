@@ -64,7 +64,7 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @return array<string|\phpDocumentor\Reflection\Type[]>[]
+     * @return array<int, mixed[]>
      */
     public function methodPhpDocReturnTypeDataProvider(): array
     {
@@ -132,7 +132,7 @@ class DocBlockParserTest extends TestCase
     }
 
     /**
-     * @return array<\Roave\BetterReflection\Reflection\ReflectionProperty|string>[]
+     * @return array<int, array<\Roave\BetterReflection\Reflection\ReflectionProperty|null|string>>
      */
     public function methodPhpDocPropertyTypeDataProvider(): array
     {

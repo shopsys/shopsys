@@ -51,7 +51,7 @@ class DomainExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getDomain', [$this, 'getDomain']),
@@ -64,7 +64,7 @@ class DomainExtension extends AbstractExtension
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function getDomain()
+    public function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         return $this->domain;
     }
@@ -72,7 +72,7 @@ class DomainExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'domain';
     }
@@ -81,7 +81,7 @@ class DomainExtension extends AbstractExtension
      * @param int $domainId
      * @return string
      */
-    public function getDomainNameById($domainId)
+    public function getDomainNameById(int $domainId): string
     {
         return $this->getDomain()->getDomainConfigById($domainId)->getName();
     }
@@ -91,7 +91,7 @@ class DomainExtension extends AbstractExtension
      * @param string $size
      * @return string
      */
-    public function getDomainIconHtml($domainId, $size = 'normal')
+    public function getDomainIconHtml(int $domainId, string $size = 'normal'): string
     {
         $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();
         if ($this->domainFacade->existsDomainIcon($domainId)) {
@@ -121,7 +121,7 @@ class DomainExtension extends AbstractExtension
     /**
      * @return bool
      */
-    public function isMultidomain()
+    public function isMultidomain(): bool
     {
         return $this->getDomain()->isMultidomain();
     }

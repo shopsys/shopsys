@@ -87,7 +87,7 @@ class PriceResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array{prices: array<string, mixed>} $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function resolveByProduct($data): ProductPrice
+    public function resolveByProduct(\Shopsys\FrameworkBundle\Model\Product\Product|array $data): ProductPrice
     {
         if ($data instanceof Product) {
             return $this->productCachedAttributesFacade->getProductSellingPrice($data);

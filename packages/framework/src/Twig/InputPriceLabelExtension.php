@@ -26,7 +26,7 @@ class InputPriceLabelExtension extends AbstractExtension
     /**
      * @return array
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('inputPriceLabel', [$this, 'getInputPriceLabel']),
@@ -36,7 +36,7 @@ class InputPriceLabelExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getInputPriceLabel()
+    public function getInputPriceLabel(): string
     {
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
@@ -57,7 +57,7 @@ class InputPriceLabelExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'input_price_label_extension';
     }

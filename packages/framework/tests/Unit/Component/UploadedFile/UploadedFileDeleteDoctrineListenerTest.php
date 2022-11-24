@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class UploadedFileDeleteDoctrineListenerTest extends TestCase
 {
-    public function testPreRemoveDeleteFile()
+    public function testPreRemoveDeleteFile(): void
     {
         $uploadedFile = new UploadedFile('entityName', 1, 'default', 'dummy.txt', 'dummy.txt', 0);
 
@@ -38,7 +38,7 @@ class UploadedFileDeleteDoctrineListenerTest extends TestCase
         $doctrineListener->preRemove($args);
     }
 
-    public function testPreRemoveDeleteUploadedFile()
+    public function testPreRemoveDeleteUploadedFile(): void
     {
         $entity = new Dummy();
 

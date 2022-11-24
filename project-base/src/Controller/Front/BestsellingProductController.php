@@ -45,7 +45,7 @@ class BestsellingProductController extends FrontBaseController
     /**
      * @param \App\Model\Category\Category $category
      */
-    public function listAction(Category $category)
+    public function listAction(Category $category): \Symfony\Component\HttpFoundation\Response
     {
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),

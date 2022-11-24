@@ -110,7 +110,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
         string $propertyName,
-        $propertyValue
+        bool|\Shopsys\FrameworkBundle\Component\Money\Money|null $propertyValue
     ): void {
         switch ($propertyName) {
             case 'show':

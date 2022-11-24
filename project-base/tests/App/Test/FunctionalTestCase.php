@@ -57,12 +57,12 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
     protected function findClient(
-        $createNew = false,
-        $username = null,
-        $password = null,
-        $kernelOptions = [],
-        $clientOptions = []
-    ) {
+        bool $createNew = false,
+        string $username = null,
+        string $password = null,
+        array $kernelOptions = [],
+        array $clientOptions = []
+    ): \Symfony\Bundle\FrameworkBundle\Client {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
@@ -99,7 +99,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param string $referenceName
      * @return object
      */
-    protected function getReference($referenceName)
+    protected function getReference(string $referenceName)
     {
         return $this->persistentReferenceFacade->getReference($referenceName);
     }

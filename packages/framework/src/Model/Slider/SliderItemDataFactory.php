@@ -51,7 +51,7 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
      */
-    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem)
+    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem): void
     {
         $sliderItemData->name = $sliderItem->getName();
         $sliderItemData->link = $sliderItem->getLink();

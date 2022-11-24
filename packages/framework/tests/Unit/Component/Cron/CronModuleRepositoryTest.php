@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class CronModuleRepositoryTest extends TestCase
 {
-    public function testGetCronModuleReturnsCorrectInstance()
+    public function testGetCronModuleReturnsCorrectInstance(): void
     {
         $doctrineRepositoryMock = $this->createNullDoctrineRepositoryMock();
         $em = $this->createEntityManagerMockWithRepository($doctrineRepositoryMock);
@@ -26,7 +26,7 @@ class CronModuleRepositoryTest extends TestCase
      * @param \Doctrine\ORM\EntityRepository $entityRepository
      * @return \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityManagerInterface
      */
-    private function createEntityManagerMockWithRepository(EntityRepository $entityRepository)
+    private function createEntityManagerMockWithRepository(EntityRepository $entityRepository): \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityManagerInterface
     {
         $em = $this->createMock(EntityManagerInterface::class);
         $em->method('getRepository')->willReturn($entityRepository);
@@ -36,7 +36,7 @@ class CronModuleRepositoryTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityRepository
      */
-    private function createNullDoctrineRepositoryMock()
+    private function createNullDoctrineRepositoryMock(): \PHPUnit\Framework\MockObject\MockObject|\Doctrine\ORM\EntityRepository
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);

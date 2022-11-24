@@ -12,7 +12,7 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 
 class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 {
-    public function testCopyAllMultidomainDataForNewDomainCopiesTestRow()
+    public function testCopyAllMultidomainDataForNewDomainCopiesTestRow(): void
     {
         $this->em->getConnection()->executeQuery('
             CREATE TABLE _test_table (
@@ -70,7 +70,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedResults, $results);
     }
 
-    public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException()
+    public function testCopyAllMultidomainDataForNewDomainWithDomainIdDoesNotThrowDriverException(): void
     {
         $this->em->getConnection()->executeQuery('
             CREATE TABLE _test_table (

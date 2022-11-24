@@ -66,7 +66,7 @@ class PaymentDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -74,7 +74,7 @@ class PaymentDomain
     /**
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -82,7 +82,7 @@ class PaymentDomain
     /**
      * @param bool $enabled
      */
-    public function setEnabled(bool $enabled)
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }

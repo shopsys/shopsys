@@ -23,12 +23,12 @@ class ProductHiddenRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    public function calculateHiddenForProduct(Product $product)
+    public function calculateHiddenForProduct(Product $product): void
     {
         $this->executeQuery($product);
     }
 
-    public function calculateHiddenForAll()
+    public function calculateHiddenForAll(): void
     {
         $this->executeQuery();
     }
@@ -36,7 +36,7 @@ class ProductHiddenRecalculator
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      */
-    protected function executeQuery(?Product $product = null)
+    protected function executeQuery(?Product $product = null): void
     {
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')

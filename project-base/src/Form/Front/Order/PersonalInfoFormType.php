@@ -72,7 +72,7 @@ class PersonalInfoFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
@@ -321,7 +321,7 @@ class PersonalInfoFormType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'order_personal_info_form';
     }
@@ -329,7 +329,7 @@ class PersonalInfoFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')
@@ -337,7 +337,7 @@ class PersonalInfoFormType extends AbstractType
             ->setDefaults([
                 'data_class' => FrontOrderData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \App\Model\Order\FrontOrderData $orderData */

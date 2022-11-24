@@ -37,7 +37,7 @@ class ProductListAdminRepository
      * @param int $pricingGroupId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductListQueryBuilder($pricingGroupId)
+    public function getProductListQueryBuilder(int $pricingGroupId): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -65,7 +65,7 @@ class ProductListAdminRepository
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
         QuickSearchFormData $quickSearchData
-    ) {
+    ): void {
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder->andWhere('
                 (

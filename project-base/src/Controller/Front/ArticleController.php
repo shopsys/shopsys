@@ -25,7 +25,7 @@ class ArticleController extends FrontBaseController
     /**
      * @param int $id
      */
-    public function detailAction($id)
+    public function detailAction(int $id): \Symfony\Component\HttpFoundation\Response
     {
         $article = $this->articleFacade->getVisibleById($id);
 
@@ -34,7 +34,7 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
-    public function menuAction()
+    public function menuAction(): \Symfony\Component\HttpFoundation\Response
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_TOP_MENU);
 
@@ -43,7 +43,7 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
-    public function footerAction()
+    public function footerAction(): \Symfony\Component\HttpFoundation\Response
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_FOOTER);
 

@@ -33,7 +33,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
      */
     private ProductDataFactoryInterface $productDataFactory;
 
-    public function testCalculateSellingDeniedForProductSellableVariant()
+    public function testCalculateSellingDeniedForProductSellableVariant(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -61,7 +61,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertFalse($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableVariants()
+    public function testCalculateSellingDeniedForProductNotSellableVariants(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');
@@ -95,7 +95,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
         $this->assertTrue($mainVariant->getCalculatedSellingDenied());
     }
 
-    public function testCalculateSellingDeniedForProductNotSellableMainVariant()
+    public function testCalculateSellingDeniedForProductNotSellableMainVariant(): void
     {
         /** @var \App\Model\Product\Product $variant1 */
         $variant1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '53');

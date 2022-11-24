@@ -13,7 +13,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $pluginDataFixtureRegistryDefinition = $container->findDefinition(
             PluginDataFixtureRegistry::class
@@ -28,7 +28,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
      * @param \Symfony\Component\DependencyInjection\Definition $pluginDataFixtureRegistryDefinition
      * @param string $serviceId
      */
-    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, $serviceId)
+    private function registerDataFixture(Definition $pluginDataFixtureRegistryDefinition, int|string $serviceId): void
     {
         $pluginDataFixtureRegistryDefinition->addMethodCall('registerDataFixture', [new Reference($serviceId)]);
     }

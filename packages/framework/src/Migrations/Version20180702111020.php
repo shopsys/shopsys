@@ -34,7 +34,7 @@ class Version20180702111020 extends AbstractMigration
     {
     }
 
-    private function setInputPriceType()
+    private function setInputPriceType(): void
     {
         $inputPriceTypeSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;'
@@ -51,7 +51,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setRoundingType()
+    private function setRoundingType(): void
     {
         $roundingTypeSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;'
@@ -68,7 +68,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setOrderSubmittedText()
+    private function setOrderSubmittedText(): void
     {
         $orderSubmittedTextSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;'
@@ -94,7 +94,7 @@ class Version20180702111020 extends AbstractMigration
         );
     }
 
-    private function setMainAdminMail()
+    private function setMainAdminMail(): void
     {
         $mailAdminMailSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;'
@@ -106,7 +106,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setMainAdminMailName()
+    private function setMainAdminMailName(): void
     {
         $mainAdminMailNameSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;'
@@ -130,7 +130,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoMetaDescriptionMainPage()
+    private function setSeoMetaDescriptionMainPage(): void
     {
         $seoMetaDescriptionMainPageSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;'
@@ -145,7 +145,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleMainPage()
+    private function setSeoTitleMainPage(): void
     {
         $seoTitleMainPageSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;'
@@ -160,7 +160,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setSeoTitleAddOn()
+    private function setSeoTitleAddOn(): void
     {
         $seoTitleAddOnSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;'
@@ -175,7 +175,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setTermsAndConditionsArticleId()
+    private function setTermsAndConditionsArticleId(): void
     {
         $termsAndConditionsArticleIdSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;'
@@ -187,7 +187,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setCookiesArticleId()
+    private function setCookiesArticleId(): void
     {
         $cookiesArticleIdSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;'
@@ -199,7 +199,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setDomainDataCreated()
+    private function setDomainDataCreated(): void
     {
         $domainDataCreatedSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;'
@@ -211,7 +211,7 @@ class Version20180702111020 extends AbstractMigration
         }
     }
 
-    private function setFeedHash()
+    private function setFeedHash(): void
     {
         $feedHashSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;'
@@ -231,7 +231,7 @@ class Version20180702111020 extends AbstractMigration
      *
      * @return string
      */
-    private function generateTenCharactersHash()
+    private function generateTenCharactersHash(): string
     {
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
         $numberOfChars = strlen($characters);

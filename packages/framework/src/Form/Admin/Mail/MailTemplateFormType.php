@@ -28,7 +28,7 @@ class MailTemplateFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('subject', TextType::class, [
@@ -83,9 +83,9 @@ class MailTemplateFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return \Symfony\Component\Validator\Constraints\NotBlank[]|\Symfony\Component\Validator\Constraints\Length[]|\Shopsys\FrameworkBundle\Form\Constraints\Contains[]
      */
-    private function getSubjectConstraints(array $options)
+    private function getSubjectConstraints(array $options): array
     {
         $subjectConstraints = [];
 
@@ -111,9 +111,9 @@ class MailTemplateFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return \Symfony\Component\Validator\Constraints\NotBlank[]|\Shopsys\FrameworkBundle\Form\Constraints\Contains[]
      */
-    private function getBodyConstraints(array $options)
+    private function getBodyConstraints(array $options): array
     {
         $bodyConstraints = [];
 
@@ -136,7 +136,7 @@ class MailTemplateFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['required_subject_variables', 'required_body_variables', 'entity', 'allow_disable_sending'])
@@ -150,7 +150,7 @@ class MailTemplateFormType extends AbstractType
                 'allow_disable_sending' => false,
                 'data_class' => MailTemplateData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData */

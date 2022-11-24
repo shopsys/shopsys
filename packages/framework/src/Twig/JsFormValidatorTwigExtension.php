@@ -11,7 +11,7 @@ class JsFormValidatorTwigExtension extends BaseJsFormValidatorTwigExtension
     /**
      * @inheritDoc
      */
-    public function getJsValidator($form = null, $onLoad = true, $wrapped = true)
+    public function getJsValidator($form = null, $onLoad = true, $wrapped = true): string
     {
         // onLoad can not be registered in the jsModel, because following listener below is called after onLoad event
         $jsModels = parent::getJsValidator($form, false, false);

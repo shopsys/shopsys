@@ -31,7 +31,7 @@ class HeaderLinks
      */
     public function format(): string
     {
-        $links = array_map(static function (array $link) {
+        $links = array_map(static function (array $link): string {
             return sprintf('<%s>; rel="%s"', $link['link'], $link['rel']);
         }, $this->links);
         return implode(', ', $links);

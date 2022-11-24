@@ -49,7 +49,7 @@ class HomepageController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
-    public function indexAction()
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
         $topProducts = $this->listedProductViewFacade->getAllTop();

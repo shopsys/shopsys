@@ -21,7 +21,7 @@ class SymfonyHelper extends Module
     /**
      * {@inheritDoc}
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         require_once Configuration::projectDir() . '/../app/autoload.php';
 
@@ -32,7 +32,7 @@ class SymfonyHelper extends Module
     /**
      * {@inheritDoc}
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->kernel->boot();
     }
@@ -41,7 +41,7 @@ class SymfonyHelper extends Module
      * @param string $serviceId
      * @return object
      */
-    public function grabServiceFromContainer($serviceId)
+    public function grabServiceFromContainer(string $serviceId): object
     {
         return $this->kernel->getContainer()->get('test.service_container')->get($serviceId);
     }

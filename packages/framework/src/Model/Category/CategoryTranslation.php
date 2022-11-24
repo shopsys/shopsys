@@ -27,7 +27,7 @@ class CategoryTranslation extends AbstractTranslation
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -35,7 +35,7 @@ class CategoryTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }

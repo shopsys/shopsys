@@ -11,6 +11,7 @@ class ShopsysFormTypesExtension extends Extension
 {
     /**
      * {@inheritDoc}
+     * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

@@ -61,7 +61,7 @@ abstract class CartWatcherFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      */
-    public function checkCartModifications(Cart $cart)
+    public function checkCartModifications(Cart $cart): void
     {
         $this->checkNotListableItems($cart);
         $this->checkModifiedPrices($cart);

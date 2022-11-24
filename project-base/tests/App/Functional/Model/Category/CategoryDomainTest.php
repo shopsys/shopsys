@@ -32,7 +32,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
      */
     private CategoryFactoryInterface $categoryFactory;
 
-    public function testCreateCategoryEnabledOnDomain()
+    public function testCreateCategoryEnabledOnDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -46,7 +46,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertTrue($refreshedCategory->isEnabled(self::FIRST_DOMAIN_ID));
     }
 
-    public function testCreateCategoryDisabledOnDomain()
+    public function testCreateCategoryDisabledOnDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -63,7 +63,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     /**
      * @group multidomain
      */
-    public function testCreateCategoryWithDifferentVisibilityOnDomains()
+    public function testCreateCategoryWithDifferentVisibilityOnDomains(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -82,7 +82,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     /**
      * @group multidomain
      */
-    public function testCreateCategoryDomainWithData()
+    public function testCreateCategoryDomainWithData(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -109,7 +109,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     /**
      * @group singledomain
      */
-    public function testCreateCategoryDomainWithDataForSingleDomain()
+    public function testCreateCategoryDomainWithDataForSingleDomain(): void
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -134,7 +134,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\Category
      */
-    private function getRefreshedCategoryFromDatabase(Category $category)
+    private function getRefreshedCategoryFromDatabase(Category $category): \App\Model\Category\Category
     {
         $this->em->persist($category);
         $this->em->flush();

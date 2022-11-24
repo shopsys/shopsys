@@ -34,7 +34,7 @@ class PaymentTest extends TransactionFunctionalTestCase
      */
     private TransportFacade $transportFacade;
 
-    public function testRemoveTransportFromPaymentAfterDelete()
+    public function testRemoveTransportFromPaymentAfterDelete(): void
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';

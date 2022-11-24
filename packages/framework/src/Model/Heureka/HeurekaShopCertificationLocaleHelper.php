@@ -11,7 +11,7 @@ class HeurekaShopCertificationLocaleHelper
      * @param string $locale
      * @return bool
      */
-    public function isDomainLocaleSupported($locale)
+    public function isDomainLocaleSupported(string $locale): bool
     {
         try {
             $this->getLanguageIdByLocale($locale);
@@ -25,7 +25,7 @@ class HeurekaShopCertificationLocaleHelper
      * @param string $locale
      * @return int
      */
-    public function getLanguageIdByLocale($locale)
+    public function getLanguageIdByLocale(string $locale): int
     {
         $supportedLanguagesByLocale = [
             'cs' => ShopCertification::HEUREKA_CZ,
@@ -44,7 +44,7 @@ class HeurekaShopCertificationLocaleHelper
      * @param string $locale
      * @return string|null
      */
-    public function getServerNameByLocale($locale)
+    public function getServerNameByLocale(string $locale): ?string
     {
         if ($locale === 'cs') {
             return 'Heureka.cz';

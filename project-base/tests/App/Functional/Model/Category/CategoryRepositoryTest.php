@@ -49,7 +49,7 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
      */
     private Localization $localization;
 
-    public function testDoNotGetCategoriesWithoutVisibleChildren()
+    public function testDoNotGetCategoriesWithoutVisibleChildren(): void
     {
         $categoryData = $this->categoryDataFactory->create();
         $names = [];
@@ -79,7 +79,7 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
         $this->assertCount(0, $categoriesWithVisibleChildren);
     }
 
-    public function testGetCategoriesWithAtLeastOneVisibleChild()
+    public function testGetCategoriesWithAtLeastOneVisibleChild(): void
     {
         $categoryData = $this->categoryDataFactory->create();
         $names = [];

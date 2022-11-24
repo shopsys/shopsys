@@ -36,7 +36,7 @@ class ScriptDataFactory implements ScriptDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @param \Shopsys\FrameworkBundle\Model\Script\Script $script
      */
-    protected function fillFromScript(ScriptData $scriptData, Script $script)
+    protected function fillFromScript(ScriptData $scriptData, Script $script): void
     {
         $scriptData->name = $script->getName();
         $scriptData->code = $script->getCode();

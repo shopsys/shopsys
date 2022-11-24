@@ -39,7 +39,7 @@ class SearchController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function autocompleteAction(Request $request)
+    public function autocompleteAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl(
@@ -63,7 +63,7 @@ class SearchController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function boxAction(Request $request)
+    public function boxAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
             trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER))

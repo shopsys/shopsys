@@ -55,7 +55,7 @@ class AdvertFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $imageConstraints = [
             new Constraints\NotBlank([
@@ -187,7 +187,7 @@ class AdvertFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['scenario', 'advert', 'image_exists'])
@@ -198,7 +198,7 @@ class AdvertFormType extends AbstractType
                 'image_exists' => false,
                 'data_class' => AdvertData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData */

@@ -7,7 +7,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 
 class RuleFormViewDataFactoryTest extends TestCase
 {
-    public function testCreateDefault()
+    public function testCreateDefault(): void
     {
         $filterName = 'filterName';
 
@@ -20,7 +20,7 @@ class RuleFormViewDataFactoryTest extends TestCase
         $this->assertSame($filterName, $defaultRuleFormData['subject']);
     }
 
-    public function testCreateFromRequestDataDefault()
+    public function testCreateFromRequestDataDefault(): void
     {
         $ruleFormViewDataFactory = new RuleFormViewDataFactory();
         $rulesFormViewData = $ruleFormViewDataFactory->createFromRequestData('productName');
@@ -34,7 +34,7 @@ class RuleFormViewDataFactoryTest extends TestCase
         }
     }
 
-    public function testCreateFromRequestData()
+    public function testCreateFromRequestData(): void
     {
         $requestData = [
             [

@@ -13,7 +13,7 @@ class TwigEnvironmentTest extends FunctionalTestCase
      * but we are using it in App/Twig/TranslationExtension anyway
      * so we need to know that the method is callable
      */
-    public function testGetFilterMethodIsCallableOnTwigEnvironment()
+    public function testGetFilterMethodIsCallableOnTwigEnvironment(): void
     {
         $twigEnvironment = $this->getContainer()->get('twig');
         if (!is_callable([$twigEnvironment, 'getFilter'])) {

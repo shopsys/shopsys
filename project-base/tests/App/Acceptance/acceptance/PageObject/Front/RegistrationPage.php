@@ -38,7 +38,7 @@ class RegistrationPage extends AbstractPage
      * @param string $firstPassword
      * @param string $secondPassword
      */
-    public function register($firstName, $lastName, $email, $firstPassword, $secondPassword)
+    public function register(string $firstName, string $lastName, string $email, string $firstPassword, string $secondPassword): void
     {
         $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
         $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
@@ -59,7 +59,7 @@ class RegistrationPage extends AbstractPage
     /**
      * @param string $text
      */
-    public function seeEmailError($text)
+    public function seeEmailError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_email', $text);
     }
@@ -67,7 +67,7 @@ class RegistrationPage extends AbstractPage
     /**
      * @param string $text
      */
-    public function seePasswordError($text)
+    public function seePasswordError(string $text): void
     {
         $this->seeErrorForField('.js-validation-error-list-registration_form_password_first', $text);
     }
@@ -76,7 +76,7 @@ class RegistrationPage extends AbstractPage
      * @param string $fieldClass
      * @param string $text
      */
-    private function seeErrorForField($fieldClass, $text)
+    private function seeErrorForField(string $fieldClass, \string $text): void
     {
         // Error message might be in popup - wait for animation
         $this->tester->wait(1);

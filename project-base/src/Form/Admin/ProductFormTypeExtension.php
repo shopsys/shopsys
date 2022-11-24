@@ -12,8 +12,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 {
     /**
      * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
     }
 

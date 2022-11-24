@@ -32,7 +32,7 @@ class EnabledModuleRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getEnabledModuleRepository()
+    protected function getEnabledModuleRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(EnabledModule::class);
     }
@@ -41,7 +41,7 @@ class EnabledModuleRepository
      * @param string $moduleName
      * @return \Shopsys\FrameworkBundle\Model\Module\EnabledModule|null
      */
-    public function findByName($moduleName)
+    public function findByName(string $moduleName): ?\Shopsys\FrameworkBundle\Model\Module\EnabledModule
     {
         if (!in_array($moduleName, $this->moduleList->getNames(), true)) {
             throw new UnsupportedModuleException($moduleName);

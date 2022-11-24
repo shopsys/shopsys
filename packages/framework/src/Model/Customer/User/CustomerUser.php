@@ -148,7 +148,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
-    public function edit(CustomerUserData $customerUserData)
+    public function edit(CustomerUserData $customerUserData): void
     {
         $this->setData($customerUserData);
     }
@@ -186,7 +186,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -194,7 +194,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -202,7 +202,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime
      */
-    public function getLastActivity()
+    public function getLastActivity(): \DateTime
     {
         return $this->lastActivity;
     }
@@ -210,12 +210,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @param \DateTime $lastActivity
      */
-    public function setLastActivity($lastActivity)
+    public function setLastActivity($lastActivity): void
     {
         $this->lastActivity = $lastActivity;
     }
 
-    public function onLogin()
+    public function onLogin(): void
     {
         $this->lastLogin = new DateTime();
     }
@@ -231,7 +231,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -239,7 +239,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @param int $domainId
      */
-    public function setDomainId($domainId)
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }
@@ -247,7 +247,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -255,7 +255,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -263,7 +263,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->email;
     }
@@ -271,7 +271,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -279,7 +279,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getFullName()
+    public function getFullName(): string
     {
         if ($this->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
             return (string)$this->getCustomer()->getBillingAddress()->getCompanyName();
@@ -291,7 +291,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -299,7 +299,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime|null
      */
-    public function getLastLogin()
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
@@ -307,7 +307,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup()
+    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroup;
     }
@@ -315,7 +315,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string|null
      */
-    public function getResetPasswordHash()
+    public function getResetPasswordHash(): ?string
     {
         return $this->resetPasswordHash;
     }
@@ -350,14 +350,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @inheritDoc
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return [Roles::ROLE_LOGGED_CUSTOMER];
     }
@@ -373,7 +373,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string|null
      */
-    public function getTelephone()
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }

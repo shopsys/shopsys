@@ -44,7 +44,7 @@ class ProductVisibilityExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isVisibleForDefaultPricingGroup', [$this, 'isVisibleForDefaultPricingGroupOnDomain']),
@@ -58,7 +58,7 @@ class ProductVisibilityExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'product_visibility';
     }
@@ -68,7 +68,7 @@ class ProductVisibilityExtension extends AbstractExtension
      * @param int $domainId
      * @return bool
      */
-    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
+    public function isVisibleForDefaultPricingGroupOnDomain(Product $product, int $domainId): bool
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
         $productVisibility = $this->productVisibilityRepository->getProductVisibility(
@@ -84,7 +84,7 @@ class ProductVisibilityExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return bool
      */
-    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product)
+    public function isVisibleForDefaultPricingGroupOnEachDomain(Product $product): bool
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if (!$this->isVisibleForDefaultPricingGroupOnDomain($product, $domainConfig->getId())) {

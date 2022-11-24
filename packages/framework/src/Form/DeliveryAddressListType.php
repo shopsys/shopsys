@@ -14,7 +14,7 @@ class DeliveryAddressListType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('customerUser')
             ->setAllowedTypes('customerUser', CustomerUser::class)
@@ -28,7 +28,7 @@ class DeliveryAddressListType extends AbstractType
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
@@ -38,7 +38,7 @@ class DeliveryAddressListType extends AbstractType
     /**
      * @return string|null
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

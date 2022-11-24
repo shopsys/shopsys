@@ -37,7 +37,7 @@ class CustomerCommunicationController extends AdminBaseController
      * @Route("/customer-communication/order-submitted/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function orderSubmittedAction(Request $request)
+    public function orderSubmittedAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $domainId);

@@ -36,7 +36,7 @@ class AddProductResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getCartItem()
+    public function getCartItem(): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         return $this->cartItem;
     }
@@ -44,7 +44,7 @@ class AddProductResult
     /**
      * @return bool
      */
-    public function getIsNew()
+    public function getIsNew(): bool
     {
         return $this->isNew;
     }
@@ -52,7 +52,7 @@ class AddProductResult
     /**
      * @return int
      */
-    public function getAddedQuantity()
+    public function getAddedQuantity(): int
     {
         return $this->addedQuantity;
     }

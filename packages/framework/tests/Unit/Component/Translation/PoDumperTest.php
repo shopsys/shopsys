@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Translation\PoDumper;
 
 class PoDumperTest extends TestCase
 {
-    public function testDump()
+    public function testDump(): void
     {
         $source = new FileSource('filepath', 10, 20);
 

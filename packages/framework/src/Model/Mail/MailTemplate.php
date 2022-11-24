@@ -78,7 +78,7 @@ class MailTemplate
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      */
-    public function edit(MailTemplateData $mailTemplateData)
+    public function edit(MailTemplateData $mailTemplateData): void
     {
         $this->bccEmail = $mailTemplateData->bccEmail;
         $this->subject = $mailTemplateData->subject;
@@ -89,7 +89,7 @@ class MailTemplate
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -97,7 +97,7 @@ class MailTemplate
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -105,7 +105,7 @@ class MailTemplate
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -113,7 +113,7 @@ class MailTemplate
     /**
      * @return string|null
      */
-    public function getBccEmail()
+    public function getBccEmail(): ?string
     {
         return $this->bccEmail;
     }
@@ -121,7 +121,7 @@ class MailTemplate
     /**
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -129,7 +129,7 @@ class MailTemplate
     /**
      * @return string
      */
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }
@@ -137,7 +137,7 @@ class MailTemplate
     /**
      * @return bool
      */
-    public function isSendMail()
+    public function isSendMail(): bool
     {
         return $this->sendMail;
     }

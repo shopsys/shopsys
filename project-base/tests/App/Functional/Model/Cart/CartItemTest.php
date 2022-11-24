@@ -33,7 +33,7 @@ class CartItemTest extends TransactionFunctionalTestCase
      */
     private VatFacade $vatFacade;
 
-    public function testIsSimilarItemAs()
+    public function testIsSimilarItemAs(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 

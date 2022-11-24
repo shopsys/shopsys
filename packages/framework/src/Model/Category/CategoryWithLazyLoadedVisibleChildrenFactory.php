@@ -24,7 +24,7 @@ class CategoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]
      */
-    public function createCategoriesWithLazyLoadedVisibleChildren($categories, DomainConfig $domainConfig)
+    public function createCategoriesWithLazyLoadedVisibleChildren(array $categories, DomainConfig $domainConfig): array
     {
         $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
             $categories,

@@ -26,7 +26,7 @@ class OrderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    public function getOrderDetailUrl(Order $order)
+    public function getOrderDetailUrl(Order $order): string
     {
         return $this->domainRouterFactory->getRouter($order->getDomainId())->generate(
             'front_customer_order_detail_unregistered',

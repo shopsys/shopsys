@@ -40,7 +40,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @group warmup
      */
-    public function testAdminPagesWarmup()
+    public function testAdminPagesWarmup(): void
     {
         $this->doWarmupPagesWithProgress(
             $this->getRequestDataSets('~^admin_~')
@@ -50,14 +50,14 @@ class AllPagesTest extends KernelTestCase
     /**
      * @group warmup
      */
-    public function testFrontPagesWarmup()
+    public function testFrontPagesWarmup(): void
     {
         $this->doWarmupPagesWithProgress(
             $this->getRequestDataSets('~^front~')
         );
     }
 
-    public function testAdminPages()
+    public function testAdminPages(): void
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
@@ -65,7 +65,7 @@ class AllPagesTest extends KernelTestCase
         );
     }
 
-    public function testFrontPages()
+    public function testFrontPages(): void
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
@@ -77,7 +77,7 @@ class AllPagesTest extends KernelTestCase
      * @param string $routeNamePattern
      * @return \Shopsys\HttpSmokeTesting\RequestDataSet[]
      */
-    private function getRequestDataSets($routeNamePattern)
+    private function getRequestDataSets(string $routeNamePattern): array
     {
         $requestDataSetGenerators = [];
         $allRouteInfo = $this->getRouterAdapter()->getAllRouteInfo();
@@ -90,7 +90,7 @@ class AllPagesTest extends KernelTestCase
         $routeConfigCustomization = new RouteConfigCustomization(static::$container);
         $routeConfigCustomization->customizeRouteConfigs($routeConfigCustomizer);
 
-        $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) use ($routeNamePattern) {
+        $routeConfigCustomizer->customize(function (RouteConfig $config, RouteInfo $info) use ($routeNamePattern): void {
             if (!preg_match($routeNamePattern, $info->getRouteName())) {
                 $config->skipRoute('Route name does not match pattern "' . $routeNamePattern . '".');
             }
@@ -113,7 +113,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet[] $requestDataSets
      */
-    private function doWarmupPagesWithProgress(array $requestDataSets)
+    private function doWarmupPagesWithProgress(array $requestDataSets): void
     {
         $consoleOutput = new ConsoleOutput();
         $consoleOutput->writeln('');
@@ -138,7 +138,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet[] $requestDataSets
      * @param string $jmeterOutputFilename
      */
-    private function doTestPagesWithProgress(array $requestDataSets, $jmeterOutputFilename)
+    private function doTestPagesWithProgress(array $requestDataSets, string $jmeterOutputFilename): void
     {
         $consoleOutput = new ConsoleOutput();
         $consoleOutput->writeln('');
@@ -174,7 +174,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Tests\App\Performance\Page\PerformanceTestSample
      */
-    private function doTestRequestDataSet(RequestDataSet $requestDataSet)
+    private function doTestRequestDataSet(RequestDataSet $requestDataSet): \Tests\App\Performance\Page\PerformanceTestSample
     {
         $this->setUp();
 
@@ -213,7 +213,7 @@ class AllPagesTest extends KernelTestCase
      */
     private function doAssert(
         array $performanceTestSamples
-    ) {
+    ): void {
         $performanceTestSampleQualifier = $this->createPerformanceTestSampleQualifier();
 
         $overallStatus = $performanceTestSampleQualifier->getOverallStatus($performanceTestSamples);
@@ -233,7 +233,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @param string $jmeterOutputFilename
      */
-    private function exportJmeterCsvReport(array $performanceTestSamples, $jmeterOutputFilename)
+    private function exportJmeterCsvReport(array $performanceTestSamples, \string $jmeterOutputFilename): void
     {
         $jmeterCsvReporter = new JmeterCsvReporter();
         $performanceResultsCsvExporter = new PerformanceResultsCsvExporter($jmeterCsvReporter);
@@ -245,7 +245,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @return \Tests\App\Performance\Page\PerformanceTestSample[]
      */
-    private function aggregatePerformanceTestSamplesByUrl(array $performanceTestSamples)
+    private function aggregatePerformanceTestSamplesByUrl(array $performanceTestSamples): array
     {
         $performanceTestSamplesAggregator = new PerformanceTestSamplesAggregator();
 
@@ -256,7 +256,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @param \Symfony\Component\Console\Output\ConsoleOutput $consoleOutput
      */
-    private function printPerformanceTestsSummary(array $performanceTestSamples, ConsoleOutput $consoleOutput)
+    private function printPerformanceTestsSummary(array $performanceTestSamples, ConsoleOutput $consoleOutput): void
     {
         $performanceTestSampleQualifier = $this->createPerformanceTestSampleQualifier();
         $performanceTestSummaryPrinter = new PerformanceTestSummaryPrinter($performanceTestSampleQualifier);
@@ -267,7 +267,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @return \Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter
      */
-    private function getRouterAdapter()
+    private function getRouterAdapter(): \Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter
     {
         $router = static::$container->get('router');
         return new SymfonyRouterAdapter($router);
@@ -277,7 +277,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @return \Tests\App\Performance\Page\PerformanceTestSampleQueryCounter
      */
-    private function injectQueryCounter(EntityManagerInterface $entityManager)
+    private function injectQueryCounter(EntityManagerInterface $entityManager): \Tests\App\Performance\Page\PerformanceTestSampleQueryCounter
     {
         $connectionConfiguration = $entityManager->getConnection()->getConfiguration();
 
@@ -299,7 +299,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @return \Tests\App\Performance\Page\PerformanceTestSampleQualifier
      */
-    private function createPerformanceTestSampleQualifier()
+    private function createPerformanceTestSampleQualifier(): \Tests\App\Performance\Page\PerformanceTestSampleQualifier
     {
         $container = static::$container;
 

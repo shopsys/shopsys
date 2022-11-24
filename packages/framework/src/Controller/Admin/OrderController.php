@@ -107,7 +107,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $order = $this->orderFacade->getById($id);
 
@@ -154,7 +154,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
      */
-    public function addProductAction(Request $request, $orderId)
+    public function addProductAction(Request $request, $orderId): \Symfony\Component\HttpFoundation\Response
     {
         $productId = $request->get('productId');
         $orderItem = $this->orderItemFacade->addProductToOrder($orderId, $productId);
@@ -181,7 +181,7 @@ class OrderController extends AdminBaseController
      * @Route("/order/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -248,7 +248,7 @@ class OrderController extends AdminBaseController
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
-    protected function addOrderEntityToDataSource(array $row)
+    protected function addOrderEntityToDataSource(array $row): array
     {
         $row['order'] = $this->orderFacade->getById($row['id']);
 
@@ -260,7 +260,7 @@ class OrderController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -285,7 +285,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
             $request->get('filterName'),
@@ -301,7 +301,7 @@ class OrderController extends AdminBaseController
      * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
-    public function previewAction($id)
+    public function previewAction($id): \Symfony\Component\HttpFoundation\Response
     {
         $order = $this->orderFacade->getById($id);
 

@@ -52,7 +52,7 @@ class ProductPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePriceForCurrentUser(Product $product)
+    public function calculatePriceForCurrentUser(Product $product): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         return $this->productPriceCalculation->calculatePrice(
             $product,
@@ -67,7 +67,7 @@ class ProductPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePriceForCustomerUserAndDomainId(Product $product, $domainId, ?CustomerUser $customerUser = null)
+    public function calculatePriceForCustomerUserAndDomainId(Product $product, int $domainId, ?CustomerUser $customerUser = null): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if ($customerUser === null) {
             $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);

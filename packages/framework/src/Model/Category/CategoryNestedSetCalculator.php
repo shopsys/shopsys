@@ -66,7 +66,7 @@ class CategoryNestedSetCalculator
      */
     protected static function getChildren(array $parentIdByCategoryId, ?int $parentId): array
     {
-        return array_filter($parentIdByCategoryId, static function ($value) use ($parentId) {
+        return array_filter($parentIdByCategoryId, static function ($value) use ($parentId): bool {
             return $value === $parentId;
         });
     }

@@ -52,7 +52,7 @@ class ProductCategoryDomain
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getCategory()
+    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->category;
     }
@@ -60,7 +60,7 @@ class ProductCategoryDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

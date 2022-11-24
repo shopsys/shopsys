@@ -46,7 +46,7 @@ class ImageAbstractFilesystemValidator extends ImageValidator
     /**
      * @inheritDoc
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         $abstractPath = $this->fileUpload->getTemporaryFilepath($value->getFilename());
         $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());

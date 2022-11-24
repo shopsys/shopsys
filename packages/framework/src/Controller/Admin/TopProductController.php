@@ -36,7 +36,7 @@ class TopProductController extends AdminBaseController
      * @Route("/product/top-product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = [
@@ -63,7 +63,7 @@ class TopProductController extends AdminBaseController
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getProductsForDomain($domainId): array
+    protected function getProductsForDomain(int $domainId): array
     {
         $topProducts = $this->topProductFacade->getAll($domainId);
         $products = [];

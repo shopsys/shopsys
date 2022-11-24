@@ -61,12 +61,12 @@ class InputPriceRecalculator
         $this->currencyFacade = $currencyFacade;
     }
 
-    public function recalculateToInputPricesWithoutVat()
+    public function recalculateToInputPricesWithoutVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
     }
 
-    public function recalculateToInputPricesWithVat()
+    public function recalculateToInputPricesWithVat(): void
     {
         $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
     }
@@ -74,7 +74,7 @@ class InputPriceRecalculator
     /**
      * @param int $newInputPriceType
      */
-    protected function recalculateInputPriceForNewType($newInputPriceType)
+    protected function recalculateInputPriceForNewType(int $newInputPriceType): void
     {
         $this->recalculateTransportsInputPriceForNewType($newInputPriceType);
         $this->recalculatePaymentsInputPriceForNewType($newInputPriceType);
@@ -83,14 +83,14 @@ class InputPriceRecalculator
     /**
      * @param int $toInputPriceType
      */
-    protected function recalculatePaymentsInputPriceForNewType($toInputPriceType)
+    protected function recalculatePaymentsInputPriceForNewType(int $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Payment::class, 'p')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Payment $payment) use ($toInputPriceType): void {
             foreach ($payment->getPrices() as $paymentInputPrice) {
                 $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
                     $payment,
@@ -112,14 +112,14 @@ class InputPriceRecalculator
     /**
      * @param int $toInputPriceType
      */
-    protected function recalculateTransportsInputPriceForNewType($toInputPriceType)
+    protected function recalculateTransportsInputPriceForNewType(int $toInputPriceType): void
     {
         $query = $this->em->createQueryBuilder()
             ->select('t')
             ->from(Transport::class, 't')
             ->getQuery();
 
-        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType) {
+        $this->batchProcessQuery($query, function (Transport $transport) use ($toInputPriceType): void {
             foreach ($transport->getPrices() as $transportInputPrice) {
                 $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
                     $transportInputPrice->getDomainId()
@@ -145,7 +145,7 @@ class InputPriceRecalculator
      * @param \Doctrine\ORM\Query $query
      * @param \Closure $callback
      */
-    protected function batchProcessQuery(Query $query, Closure $callback)
+    protected function batchProcessQuery(Query $query, Closure $callback): void
     {
         $iteration = 0;
 

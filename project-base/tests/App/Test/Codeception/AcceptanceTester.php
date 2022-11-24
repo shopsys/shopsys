@@ -32,12 +32,12 @@ class AcceptanceTester extends Actor implements ActorInterface
 
     use AcceptanceTesterActions;
 
-    public function switchToLastOpenedWindow()
+    public function switchToLastOpenedWindow(): void
     {
         // workaround for a race condition when windows get enumerated before the new window is opened
         $this->wait(1);
 
-        $closure = Closure::fromCallable(function (RemoteWebDriver $webdriver) {
+        $closure = Closure::fromCallable(function (RemoteWebDriver $webdriver): void {
             $handles = $webdriver->getWindowHandles();
             $lastWindow = end($handles);
             $this->switchToWindow($lastWindow);
@@ -50,12 +50,12 @@ class AcceptanceTester extends Actor implements ActorInterface
     /**
      * @param int $timeout
      */
-    public function waitForAjax($timeout = self::DEFAULT_AJAX_TIMEOUT_SEC)
+    public function waitForAjax($timeout = self::DEFAULT_AJAX_TIMEOUT_SEC): void
     {
         $this->waitForJS('return $.active == 0;', $timeout);
     }
 
-    public function pauseExecution()
+    public function pauseExecution(): void
     {
     }
 }

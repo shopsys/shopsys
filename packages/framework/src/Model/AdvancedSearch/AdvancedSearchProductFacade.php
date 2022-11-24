@@ -52,7 +52,7 @@ class AdvancedSearchProductFacade
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAdvancedSearchForm(Request $request)
+    public function createAdvancedSearchForm(Request $request): \Symfony\Component\Form\FormInterface
     {
         $rawRulesData = $request->get(static::RULES_FORM_NAME);
         $rulesData = is_array($rawRulesData) ? $rawRulesData : [];
@@ -66,7 +66,7 @@ class AdvancedSearchProductFacade
      * @param string|int $index
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRuleForm($filterName, $index)
+    public function createRuleForm(string $filterName, string|int $index): \Symfony\Component\Form\FormInterface
     {
         $rulesData = [
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),
@@ -79,7 +79,7 @@ class AdvancedSearchProductFacade
      * @param array $advancedSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderByAdvancedSearchData($advancedSearchData)
+    public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): \Doctrine\ORM\QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);
@@ -91,7 +91,7 @@ class AdvancedSearchProductFacade
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function isAdvancedSearchFormSubmitted(Request $request)
+    public function isAdvancedSearchFormSubmitted(Request $request): bool
     {
         $rulesData = $request->get(static::RULES_FORM_NAME);
 

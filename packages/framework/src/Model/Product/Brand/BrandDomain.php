@@ -67,7 +67,7 @@ class BrandDomain
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -75,7 +75,7 @@ class BrandDomain
     /**
      * @return string|null
      */
-    public function getSeoTitle()
+    public function getSeoTitle(): ?string
     {
         return $this->seoTitle;
     }
@@ -83,7 +83,7 @@ class BrandDomain
     /**
      * @param string|null $seoTitle
      */
-    public function setSeoTitle($seoTitle)
+    public function setSeoTitle(?string $seoTitle): void
     {
         $this->seoTitle = $seoTitle;
     }
@@ -91,7 +91,7 @@ class BrandDomain
     /**
      * @return string|null
      */
-    public function getSeoMetaDescription()
+    public function getSeoMetaDescription(): ?string
     {
         return $this->seoMetaDescription;
     }
@@ -99,7 +99,7 @@ class BrandDomain
     /**
      * @param string|null $seoMetaDescription
      */
-    public function setSeoMetaDescription($seoMetaDescription)
+    public function setSeoMetaDescription(?string $seoMetaDescription): void
     {
         $this->seoMetaDescription = $seoMetaDescription;
     }
@@ -107,7 +107,7 @@ class BrandDomain
     /**
      * @return string|null
      */
-    public function getSeoH1()
+    public function getSeoH1(): ?string
     {
         return $this->seoH1;
     }
@@ -115,7 +115,7 @@ class BrandDomain
     /**
      * @param string|null $seoH1
      */
-    public function setSeoH1($seoH1)
+    public function setSeoH1(?string $seoH1): void
     {
         $this->seoH1 = $seoH1;
     }

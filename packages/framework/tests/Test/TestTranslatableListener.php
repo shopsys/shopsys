@@ -44,7 +44,7 @@ class TestTranslatableListener extends TranslatableListener
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         if ($this->administrationFacade->isInAdmin()) {
             return $this->adminLocale;

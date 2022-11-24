@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
 
 class AdvancedSearchQueryBuilderExtenderTest extends TestCase
 {
-    public function testExtendByAdvancedSearchData()
+    public function testExtendByAdvancedSearchData(): void
     {
         $ruleData = new AdvancedSearchRuleData();
         $ruleData->subject = 'testSubject';

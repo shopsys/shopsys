@@ -7,7 +7,10 @@ use Shopsys\FrameworkBundle\Form\Transformers\IndexedBooleansToArrayOfIndexesTra
 
 class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 {
-    public function transformValuesProvider()
+    /**
+     * @return array<int, array{value: class-string<\foo>|array<class-string<\foo>>|int[]|null, expected: array<int|string, bool>|null}>
+     */
+    public function transformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -20,16 +23,19 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider transformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param mixed[]|int[]|array<class-string<\foo>>|class-string<\foo>|null $value
+     * @param array<int|string, true>|null $expected
      */
-    public function testTransform($value, $expected)
+    public function testTransform(array|string|null $value, ?array $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->transform($value));
     }
 
-    public function reverseTransformValuesProvider()
+    /**
+     * @return array<int, array{value: class-string<\foo>|array<int|string, bool>|null, expected: array<class-string<\foo>>|int[]|null}>
+     */
+    public function reverseTransformValuesProvider(): array
     {
         return [
             ['value' => [], 'expected' => []],
@@ -44,10 +50,10 @@ class IndexedBooleansToArrayOfIndexesTransformerTest extends TestCase
 
     /**
      * @dataProvider reverseTransformValuesProvider
-     * @param mixed $value
-     * @param mixed $expected
+     * @param class-string<\foo>|array<int|string, bool>|null $value
+     * @param mixed[]|int[]|array<class-string<\foo>>|null $expected
      */
-    public function testReverseTransform($value, $expected)
+    public function testReverseTransform(string|array|null $value, ?array $expected): void
     {
         $transformer = new IndexedBooleansToArrayOfIndexesTransformer();
         $this->assertSame($expected, $transformer->reverseTransform($value));

@@ -36,7 +36,7 @@ class PricingGroupDataFactory implements PricingGroupDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      */
-    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup)
+    protected function fillFromPricingGroup(PricingGroupData $pricingGroupData, PricingGroup $pricingGroup): void
     {
         $pricingGroupData->name = $pricingGroup->getName();
     }

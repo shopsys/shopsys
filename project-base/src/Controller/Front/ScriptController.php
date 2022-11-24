@@ -33,7 +33,7 @@ class ScriptController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    public function embedAllPagesGoogleAnalyticsScriptAction()
+    public function embedAllPagesGoogleAnalyticsScriptAction(): \Symfony\Component\HttpFoundation\Response
     {
         if (!$this->scriptFacade->isGoogleAnalyticsActivated($this->domain->getId())) {
             return new Response('');
@@ -47,7 +47,7 @@ class ScriptController extends FrontBaseController
     /**
      * @param \App\Model\Order\Order $order
      */
-    public function embedOrderSentPageGoogleAnalyticsScriptAction(Order $order)
+    public function embedOrderSentPageGoogleAnalyticsScriptAction(Order $order): \Symfony\Component\HttpFoundation\Response
     {
         if (!$this->scriptFacade->isGoogleAnalyticsActivated($this->domain->getId())) {
             return new Response('');

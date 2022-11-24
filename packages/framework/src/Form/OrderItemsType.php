@@ -42,8 +42,9 @@ class OrderItemsType extends AbstractType
 
     /**
      * @inheritdoc
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
         $order = $options['order'];
@@ -75,8 +76,10 @@ class OrderItemsType extends AbstractType
 
     /**
      * @inheritdoc
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
 
@@ -103,7 +106,7 @@ class OrderItemsType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['order'])
@@ -117,7 +120,7 @@ class OrderItemsType extends AbstractType
     /**
      * @return string|null
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return FormType::class;
     }

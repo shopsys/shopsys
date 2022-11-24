@@ -36,7 +36,7 @@ class ProductExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('productDisplayName', [$this, 'getProductDisplayName']),
@@ -47,7 +47,7 @@ class ProductExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -72,7 +72,7 @@ class ProductExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'product';
     }
@@ -81,7 +81,7 @@ class ProductExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
-    public function getProductDisplayName(Product $product)
+    public function getProductDisplayName(Product $product): string
     {
         if ($product->getName() === null) {
             return t('ID %productId%', [
@@ -96,7 +96,7 @@ class ProductExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
-    public function getProductListDisplayName(Product $product)
+    public function getProductListDisplayName(Product $product): string
     {
         if ($product->getName() === null) {
             return t('Product name in default language is not entered');
@@ -110,7 +110,7 @@ class ProductExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getProductMainCategory(Product $product, $domainId)
+    public function getProductMainCategory(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
@@ -120,7 +120,7 @@ class ProductExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
-    public function findProductMainCategory(Product $product, $domainId)
+    public function findProductMainCategory(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
     }
@@ -129,7 +129,7 @@ class ProductExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
-    public function getProductSellingPrice(Product $product)
+    public function getProductSellingPrice(Product $product): ?\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }
@@ -138,7 +138,7 @@ class ProductExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product)
+    public function getProductParameterValues(Product $product): array
     {
         return $this->productCachedAttributesFacade->getProductParameterValues($product);
     }

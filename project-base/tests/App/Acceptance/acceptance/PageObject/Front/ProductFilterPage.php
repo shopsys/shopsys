@@ -29,7 +29,7 @@ class ProductFilterPage extends AbstractPage
     /**
      * @param string $price
      */
-    public function setMinimalPrice($price)
+    public function setMinimalPrice(string $price): void
     {
         $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
         $this->tester->fillFieldByCss('#product_filter_form_minimalPrice', $convertedPrice . WebDriverKeys::ENTER);
@@ -39,7 +39,7 @@ class ProductFilterPage extends AbstractPage
     /**
      * @param string $price
      */
-    public function setMaximalPrice($price)
+    public function setMaximalPrice(string $price): void
     {
         $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
         $this->tester->fillFieldByCss('#product_filter_form_maximalPrice', $convertedPrice . WebDriverKeys::ENTER);
@@ -49,7 +49,7 @@ class ProductFilterPage extends AbstractPage
     /**
      * @param int $brandPosition
      */
-    public function filterByBrand($brandPosition)
+    public function filterByBrand(int $brandPosition): void
     {
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
@@ -63,7 +63,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterLabel
      * @param string $valueLabel
      */
-    public function filterByParameter($parameterLabel, $valueLabel)
+    public function filterByParameter(string $parameterLabel, string $valueLabel): void
     {
         $parameterElement = $this->findParameterElementByLabel($parameterLabel);
         $labelElement = $this->getLabelElementByParameterValueText($parameterElement, $valueLabel);
@@ -71,7 +71,7 @@ class ProductFilterPage extends AbstractPage
         $this->waitForFilter();
     }
 
-    private function waitForFilter()
+    private function waitForFilter(): void
     {
         $this->tester->wait(self::PRE_EVALUATION_WAIT);
         $this->tester->waitForAjax();
@@ -81,7 +81,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterLabel
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findParameterElementByLabel($parameterLabel)
+    private function findParameterElementByLabel(\string $parameterLabel): \Facebook\WebDriver\WebDriverElement
     {
         $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
@@ -113,7 +113,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterValueText
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
+    private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, \string $parameterValueText): \Facebook\WebDriver\WebDriverElement
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterValueDivs = $parameterElement->findElements(

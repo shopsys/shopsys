@@ -41,7 +41,7 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
      */
     private AvailabilityFacade $availabilityFacade;
 
-    public function testRecalculateOnProductEditNotUsingStock()
+    public function testRecalculateOnProductEditNotUsingStock(): void
     {
         $productId = 1;
 
@@ -64,7 +64,7 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
         );
     }
 
-    public function testRecalculateOnProductEditUsingStockInStock()
+    public function testRecalculateOnProductEditUsingStockInStock(): void
     {
         $productId = 1;
 
@@ -89,7 +89,7 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
         );
     }
 
-    public function testRecalculateOnProductEditUsingStockOutOfStock()
+    public function testRecalculateOnProductEditUsingStockOutOfStock(): void
     {
         $productId = 1;
 

@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class DomainDataCreatorTest extends TestCase
 {
-    public function testCreateNewDomainsDataNoNewDomain()
+    public function testCreateNewDomainsDataNoNewDomain(): void
     {
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
@@ -59,7 +59,7 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(0, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataOneNewDomain()
+    public function testCreateNewDomainsDataOneNewDomain(): void
     {
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs'),
@@ -127,7 +127,7 @@ class DomainDataCreatorTest extends TestCase
         $this->assertEquals(1, $newDomainsDataCreated);
     }
 
-    public function testCreateNewDomainsDataNewLocale()
+    public function testCreateNewDomainsDataNewLocale(): void
     {
         $domainConfigWithDataCreated = new DomainConfig(
             Domain::FIRST_DOMAIN_ID,

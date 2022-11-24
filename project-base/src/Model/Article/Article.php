@@ -32,7 +32,7 @@ class Article extends BaseArticle
     /**
      * @param \App\Model\Article\ArticleData $articleData
      */
-    public function edit(BaseArticleData $articleData)
+    public function edit(BaseArticleData $articleData): void
     {
         parent::edit($articleData);
     }

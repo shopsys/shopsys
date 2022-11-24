@@ -13,7 +13,10 @@ use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleData;
 
 class AdministratorTest extends TestCase
 {
-    public function administratorRolesDataProvider()
+    /**
+     * @return array<int, array{roles: string[], expectedRole: string}>
+     */
+    public function administratorRolesDataProvider(): array
     {
         return [
             [
@@ -32,7 +35,7 @@ class AdministratorTest extends TestCase
      * @param array $roles
      * @param string $expectedRole
      */
-    public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole)
+    public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole): void
     {
         $administratorData = new AdministratorData();
         $administratorData->realName = 'Administrator';
@@ -54,7 +57,7 @@ class AdministratorTest extends TestCase
         $this->assertContains($expectedRole, $administrator->getRoles());
     }
 
-    public function testSetAdministratorRolesWithoutMandatoryRole()
+    public function testSetAdministratorRolesWithoutMandatoryRole(): void
     {
         $administratorData = new AdministratorData();
         $administratorData->realName = 'Administrator';

@@ -14,7 +14,7 @@ class RegisterMultiDesignFilesystemLoaderCompilerPass implements CompilerPassInt
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $twigFilesystemLoaderDefinition = $container->getDefinition('twig.loader.native_filesystem');
         $twigFilesystemLoaderDefinition->setClass(FilesystemLoader::class);

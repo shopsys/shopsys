@@ -55,7 +55,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     /**
      * @return array<string, string>
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SUBMIT => 'preSubmit',

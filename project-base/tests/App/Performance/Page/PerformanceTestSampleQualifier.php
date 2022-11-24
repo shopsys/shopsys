@@ -48,7 +48,7 @@ class PerformanceTestSampleQualifier
      * @param float $duration
      * @return int
      */
-    public function getStatusForDuration($duration)
+    public function getStatusForDuration(float $duration): int
     {
         if ($duration >= $this->durationCritical) {
             return self::STATUS_CRITICAL;
@@ -65,7 +65,7 @@ class PerformanceTestSampleQualifier
      * @param int $queryCount
      * @return int
      */
-    public function getStatusForQueryCount($queryCount)
+    public function getStatusForQueryCount(int $queryCount): int
     {
         if ($queryCount >= $this->queryCountCritical) {
             return self::STATUS_CRITICAL;
@@ -82,7 +82,7 @@ class PerformanceTestSampleQualifier
      * @param \Tests\App\Performance\Page\PerformanceTestSample $performanceTestSample
      * @return int
      */
-    public function getSampleStatus(PerformanceTestSample $performanceTestSample)
+    public function getSampleStatus(PerformanceTestSample $performanceTestSample): int
     {
         $overallStatus = self::STATUS_OK;
 
@@ -105,7 +105,7 @@ class PerformanceTestSampleQualifier
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @return int
      */
-    public function getOverallStatus(array $performanceTestSamples)
+    public function getOverallStatus(array $performanceTestSamples): int
     {
         $allStatuses = [self::STATUS_OK];
 

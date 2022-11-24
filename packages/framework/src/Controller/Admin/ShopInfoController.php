@@ -36,7 +36,7 @@ class ShopInfoController extends AdminBaseController
      * @Route("/shop-info/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 

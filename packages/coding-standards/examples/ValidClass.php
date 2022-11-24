@@ -17,7 +17,7 @@ final class ValidClass
     /**
      * @param \ShopsysNamespace\Type $parameterCamelCase
      */
-    public function method(Type $parameterCamelCase)
+    public function method(Type $parameterCamelCase): \ShopsysNamespace\Type
     {
         $this->parameterCamelCase = $parameterCamelCase;
 

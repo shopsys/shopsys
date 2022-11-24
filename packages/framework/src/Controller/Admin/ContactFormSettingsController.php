@@ -47,7 +47,7 @@ class ContactFormSettingsController extends AdminBaseController
      * @Route("/contact-form/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $contactFormSettingsData = $this->contactFormSettingsDataFactory->createFromSettingsByDomainId($domainId);

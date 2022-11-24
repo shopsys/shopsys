@@ -147,7 +147,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     /**
      * @param \Symfony\Component\Form\FormEvent $event
      */
-    public function onPreSubmit(FormEvent $event)
+    public function onPreSubmit(FormEvent $event): void
     {
         $data = $event->getData();
         if (!is_array($data) || !array_key_exists('file', $data) || !is_array($data['file'])) {

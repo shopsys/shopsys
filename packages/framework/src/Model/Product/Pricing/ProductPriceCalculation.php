@@ -66,7 +66,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -81,7 +81,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
+    protected function calculateMainVariantPrice(Product $mainVariant, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
@@ -109,7 +109,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup)
+    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
@@ -138,7 +138,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getMinimumPriceByPriceWithoutVat(array $prices)
+    public function getMinimumPriceByPriceWithoutVat(array $prices): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         if (count($prices) === 0) {
             throw new InvalidArgumentException('Array can not be empty.');
@@ -162,7 +162,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
      * @return bool
      */
-    public function arePricesDifferent(array $prices)
+    public function arePricesDifferent(array $prices): bool
     {
         if (count($prices) === 0) {
             throw new InvalidArgumentException('Array can not be empty.');

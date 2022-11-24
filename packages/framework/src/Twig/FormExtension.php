@@ -11,7 +11,7 @@ class FormExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getFormErrorSourceId', [$this, 'getFormErrorSourceId']),
@@ -24,7 +24,7 @@ class FormExtension extends AbstractExtension
      * @param \Symfony\Component\Form\FormError $formError
      * @return string
      */
-    public function getFormErrorSourceId(FormError $formError)
+    public function getFormErrorSourceId(FormError $formError): string
     {
         $form = $formError->getOrigin();
         $sourceIdParts = [];

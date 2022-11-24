@@ -110,7 +110,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $mailTemplate, $order)
+    public function createMessage(MailTemplate $mailTemplate, $order): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $order->getEmail(),
@@ -128,7 +128,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return string
      */
-    public static function getMailTemplateNameByStatus(OrderStatus $orderStatus)
+    public static function getMailTemplateNameByStatus(OrderStatus $orderStatus): string
     {
         return static::MAIL_TEMPLATE_NAME_PREFIX . $orderStatus->getId();
     }
@@ -138,7 +138,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    public static function findMailTemplateForOrderStatus(array $mailTemplates, OrderStatus $orderStatus)
+    public static function findMailTemplateForOrderStatus(array $mailTemplates, OrderStatus $orderStatus): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         foreach ($mailTemplates as $mailTemplate) {
             if ($mailTemplate->getName() === self::getMailTemplateNameByStatus($orderStatus)) {
@@ -153,7 +153,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return array
      */
-    protected function getVariablesReplacementsForBody(Order $order)
+    protected function getVariablesReplacementsForBody(Order $order): array
     {
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
         $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
@@ -185,7 +185,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return array
      */
-    protected function getVariablesReplacementsForSubject(Order $order)
+    protected function getVariablesReplacementsForSubject(Order $order): array
     {
         return [
             self::VARIABLE_NUMBER => $order->getNumber(),
@@ -197,7 +197,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getFormattedPrice(Order $order)
+    protected function getFormattedPrice(Order $order): string
     {
         return $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
             $order->getTotalPriceWithVat(),
@@ -210,7 +210,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getFormattedDateTime(Order $order)
+    protected function getFormattedDateTime(Order $order): string
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
             $order->getCreatedAt(),
@@ -222,7 +222,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getBillingAddressHtmlTable(Order $order)
+    protected function getBillingAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
@@ -234,7 +234,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getDeliveryAddressHtmlTable(Order $order)
+    protected function getDeliveryAddressHtmlTable(Order $order): string
     {
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
@@ -246,7 +246,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getProductsHtmlTable(Order $order)
+    protected function getProductsHtmlTable(Order $order): string
     {
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
             $order->getItems()
@@ -263,7 +263,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getDomainLocaleByOrder(Order $order)
+    protected function getDomainLocaleByOrder(Order $order): string
     {
         return $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
     }

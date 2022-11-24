@@ -61,7 +61,7 @@ class AdministratorFrontSecurityFacade
     /**
      * @return bool
      */
-    public function isAdministratorLogged()
+    public function isAdministratorLogged(): bool
     {
         try {
             $token = $this->getAdministratorToken();
@@ -82,7 +82,7 @@ class AdministratorFrontSecurityFacade
     /**
      * @return bool
      */
-    public function isAdministratorLoggedAsCustomer()
+    public function isAdministratorLoggedAsCustomer(): bool
     {
         return $this->session->has(LoginAsUserFacade::SESSION_LOGIN_AS);
     }
@@ -90,7 +90,7 @@ class AdministratorFrontSecurityFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getCurrentAdministrator()
+    public function getCurrentAdministrator(): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         if ($this->isAdministratorLogged()) {
             /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user */
@@ -106,7 +106,7 @@ class AdministratorFrontSecurityFacade
      * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      */
-    protected function getAdministratorToken()
+    protected function getAdministratorToken(): \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
     {
         $serializedToken = $this->session->get('_security_' . static::ADMINISTRATION_CONTEXT);
         if ($serializedToken === null) {
@@ -129,7 +129,7 @@ class AdministratorFrontSecurityFacade
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */
-    protected function refreshUserInToken(TokenInterface $token)
+    protected function refreshUserInToken(TokenInterface $token): void
     {
         $user = $token->getUser();
         if (!$user instanceof UserInterface) {

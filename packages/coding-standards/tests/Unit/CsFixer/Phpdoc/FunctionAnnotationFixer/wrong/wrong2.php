@@ -6,6 +6,9 @@ namespace Shopsys\CodingStandards\CsFixer\Phpdoc;
 
 final class FunctionAnnotationFixerTestClass2
 {
+    /**
+     * @param Shopsys\CodingStandards\CsFixer\Phpdoc\Token|null $docToken
+     */
     private function shouldSkip(string $type, ?Token $docToken): bool
     {
         if (!$type || $type === 'void') {

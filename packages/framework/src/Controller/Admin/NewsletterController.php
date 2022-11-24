@@ -51,7 +51,7 @@ class NewsletterController extends AdminBaseController
      * @Route("/newsletter/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
@@ -87,7 +87,7 @@ class NewsletterController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $email = $this->newsletterFacade->getNewsletterSubscriberById($id)->getEmail();
@@ -126,7 +126,7 @@ class NewsletterController extends AdminBaseController
     /**
      * @param int $domainId
      */
-    protected function streamCsvExport($domainId)
+    protected function streamCsvExport(int $domainId): void
     {
         $output = new SplFileObject('php://output', 'w+');
 

@@ -44,7 +44,7 @@ class ProductManualInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $inputPrice
      */
-    public function refresh(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice)
+    public function refresh(Product $product, PricingGroup $pricingGroup, ?Money $inputPrice): void
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,

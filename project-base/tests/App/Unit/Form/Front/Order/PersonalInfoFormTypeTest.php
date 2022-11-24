@@ -41,7 +41,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     /**
      * @return array
      */
-    public function getTermsAndConditionsAgreementIsMandatoryData()
+    public function getTermsAndConditionsAgreementIsMandatoryData(): array
     {
         return [
             [$this->getPersonalInfoFormData(true), true],
@@ -54,7 +54,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @param bool $isExpectedValid
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
-    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, $isExpectedValid)
+    public function testTermsAndConditionsAgreementIsMandatory(array $personalInfoFormData, bool $isExpectedValid): void
     {
         $this->disableHeurekaShopCertification();
 
@@ -69,7 +69,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @param bool $legalConditionsAgreement
      * @return array
      */
-    private function getPersonalInfoFormData($legalConditionsAgreement)
+    private function getPersonalInfoFormData(bool $legalConditionsAgreement): array
     {
         $personalInfoFormData = [];
         $personalInfoFormData['firstName'] = 'test';
@@ -86,7 +86,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         return $personalInfoFormData;
     }
 
-    public function testHeurekaShopCertificationActivatedAndDisallowedByUser()
+    public function testHeurekaShopCertificationActivatedAndDisallowedByUser(): void
     {
         $this->enableHeurekaShopCertification();
         $personalInfoFormData = $this->getPersonalInfoFormData(true);

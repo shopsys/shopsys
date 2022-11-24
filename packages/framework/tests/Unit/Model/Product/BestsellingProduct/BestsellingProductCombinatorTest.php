@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 class BestsellingProductCombinatorTest extends TestCase
 {
-    public function testCombineManualAndAutomaticBestsellingProducts()
+    public function testCombineManualAndAutomaticBestsellingProducts(): void
     {
         $bestsellingProductCombinator = new BestsellingProductCombinator();
 

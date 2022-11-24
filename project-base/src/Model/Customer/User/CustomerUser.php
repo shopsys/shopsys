@@ -34,7 +34,7 @@ class CustomerUser extends BaseUser
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
-    public function edit(BaseUserData $customerUserData)
+    public function edit(BaseUserData $customerUserData): void
     {
         parent::edit($customerUserData);
     }

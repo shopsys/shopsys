@@ -25,7 +25,7 @@ class OrderDataMapper extends BaseOrderDataMapper
      * @param \App\Model\Order\FrontOrderData $frontOrderData
      * @return \App\Model\Order\OrderData
      */
-    public function getOrderDataFromFrontOrderData(BaseFrontOrderData $frontOrderData)
+    public function getOrderDataFromFrontOrderData(BaseFrontOrderData $frontOrderData): \Shopsys\FrameworkBundle\Model\Order\OrderData
     {
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::getOrderDataFromFrontOrderData($frontOrderData);

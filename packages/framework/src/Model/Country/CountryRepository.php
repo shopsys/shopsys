@@ -27,7 +27,7 @@ class CountryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCountryRepository()
+    protected function getCountryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Country::class);
     }
@@ -52,7 +52,7 @@ class CountryRepository
      * @param int $countryId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function findById($countryId): ?Country
+    public function findById(int $countryId): ?Country
     {
         return $this->getCountryRepository()->find($countryId);
     }
@@ -61,7 +61,7 @@ class CountryRepository
      * @param int $countryId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getById($countryId): Country
+    public function getById(int $countryId): Country
     {
         $country = $this->findById($countryId);
 
@@ -73,7 +73,7 @@ class CountryRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
+     * @return object[]
      */
     public function getAll(): array
     {

@@ -47,7 +47,7 @@ class UnitController extends AdminBaseController
     /**
      * @Route("/product/unit/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $unitInlineEdit = $this->unitInlineEdit;
 
@@ -62,7 +62,7 @@ class UnitController extends AdminBaseController
      * @Route("/unit/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $unit = $this->unitFacade->getById($id);
@@ -107,7 +107,7 @@ class UnitController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -144,7 +144,7 @@ class UnitController extends AdminBaseController
      * @Route("/product/unit/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         try {
             $defaultUnit = $this->unitFacade->getDefaultUnit();

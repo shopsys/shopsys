@@ -9,7 +9,7 @@ class SomeClass
      * @param string $condition
      * @return \Doctrine\ORM\QueryBuilder $queryBuilder
      */
-    public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition)
+    public function addOrExtendJoin(QueryBuilder $queryBuilder, string $class, string $alias, string $condition): \Doctrine\ORM\QueryBuilder
     {
     }
 }

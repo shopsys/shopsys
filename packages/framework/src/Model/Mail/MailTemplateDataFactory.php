@@ -56,7 +56,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate
      */
-    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate)
+    protected function fillFromMailTemplate(MailTemplateData $mailTemplateData, MailTemplate $mailTemplate): void
     {
         $mailTemplateData->name = $mailTemplate->getName();
         $mailTemplateData->bccEmail = $mailTemplate->getBccEmail();

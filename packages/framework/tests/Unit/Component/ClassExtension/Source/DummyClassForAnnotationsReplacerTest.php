@@ -24,42 +24,42 @@ class DummyClassForAnnotationsReplacerTest
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function returnsFrameworkCategoryFacade()
+    public function returnsFrameworkCategoryFacade(): \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
     {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null
      */
-    public function returnsFrameworkCategoryFacadeOrNull()
+    public function returnsFrameworkCategoryFacadeOrNull(): ?\Shopsys\FrameworkBundle\Model\Category\CategoryFacade
     {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData[]
      */
-    public function returnsFrameworkArticleDataArray()
+    public function returnsFrameworkArticleDataArray(): array
     {
     }
 
     /**
      * @return int
      */
-    public function returnsInt()
+    public function returnsInt(): int
     {
     }
 
     /**
      * @return array<string, int>
      */
-    public function returnsAssocArray()
+    public function returnsAssocArray(): array
     {
     }
 
     /**
      * @return array
      */
-    public function returnsNotTypedArray()
+    public function returnsNotTypedArray(): array
     {
     }
 
@@ -69,7 +69,7 @@ class DummyClassForAnnotationsReplacerTest
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
      * @param int $integer
      */
-    public function acceptsVariousParameters($categoryFacade, $categoryFacadeOrNull, $array, $integer)
+    public function acceptsVariousParameters(\Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade, ?\Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacadeOrNull, array $array, int $integer): void
     {
     }
 }

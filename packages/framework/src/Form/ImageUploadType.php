@@ -54,7 +54,7 @@ class ImageUploadType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ImageUploadData::class,
@@ -87,7 +87,7 @@ class ImageUploadType extends AbstractType
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['entity'] = $options['entity'];
         $view->vars['images_by_id'] = $this->getImagesIndexedById($options);
@@ -99,7 +99,7 @@ class ImageUploadType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->resetModelTransformers();
 
@@ -130,7 +130,7 @@ class ImageUploadType extends AbstractType
      * @param array $options
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    private function getImagesIndexedById(array $options)
+    private function getImagesIndexedById(array $options): array
     {
         if ($options['entity'] === null) {
             return [];
@@ -143,7 +143,7 @@ class ImageUploadType extends AbstractType
      * @param array $options
      * @return bool
      */
-    private function isMultiple(array $options)
+    private function isMultiple(array $options): bool
     {
         if ($options['multiple'] !== null) {
             return $options['multiple'];
@@ -161,7 +161,7 @@ class ImageUploadType extends AbstractType
     /**
      * @return string
      */
-    public function getParent()
+    public function getParent(): string
     {
         return AbstractFileUploadType::class;
     }

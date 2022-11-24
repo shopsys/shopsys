@@ -31,7 +31,7 @@ class OrderListAdminFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilder()
+    public function getOrderListQueryBuilder(): \Doctrine\ORM\QueryBuilder
     {
         return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getAdminLocale());
     }

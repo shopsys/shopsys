@@ -315,7 +315,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editData(OrderData $orderData)
+    protected function editData(OrderData $orderData): void
     {
         $this->fillCommonFields($orderData);
 
@@ -352,7 +352,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editOrderTransport(OrderData $orderData)
+    protected function editOrderTransport(OrderData $orderData): void
     {
         $orderTransportData = $orderData->orderTransport;
         $this->transport = $orderTransportData->transport;
@@ -362,7 +362,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function editOrderPayment(OrderData $orderData)
+    protected function editOrderPayment(OrderData $orderData): void
     {
         $orderPaymentData = $orderData->orderPayment;
         $this->payment = $orderPaymentData->payment;
@@ -372,7 +372,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
-    protected function setDeliveryAddress(OrderData $orderData)
+    protected function setDeliveryAddress(OrderData $orderData): void
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
         if ($orderData->deliveryAddressSameAsBillingAddress) {
@@ -399,7 +399,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
      */
-    public function addItem(OrderItem $item)
+    public function addItem(OrderItem $item): void
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
@@ -409,7 +409,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $item
      */
-    public function removeItem(OrderItem $item)
+    public function removeItem(OrderItem $item): void
     {
         if ($item->isTypeTransport()) {
             $this->transport = null;
@@ -423,7 +423,7 @@ class Order
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
      */
-    public function setStatus(OrderStatus $status)
+    public function setStatus(OrderStatus $status): void
     {
         $this->status = $status;
     }
@@ -433,7 +433,7 @@ class Order
      * @param string|null $companyNumber
      * @param string|null $companyTaxNumber
      */
-    public function setCompanyInfo($companyName = null, $companyNumber = null, $companyTaxNumber = null)
+    public function setCompanyInfo(?string $companyName = null, ?string $companyNumber = null, ?string $companyTaxNumber = null): void
     {
         $this->companyName = $companyName;
         $this->companyNumber = $companyNumber;
@@ -443,7 +443,7 @@ class Order
     /**
      * @param int $domainId
      */
-    public function setDomainId($domainId)
+    public function setDomainId(int $domainId): void
     {
         $this->domainId = $domainId;
     }
@@ -451,7 +451,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getPayment()
+    public function getPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->payment;
     }
@@ -459,7 +459,7 @@ class Order
     /**
      * @return string
      */
-    public function getPaymentName()
+    public function getPaymentName(): string
     {
         return $this->getOrderPayment()->getName();
     }
@@ -467,7 +467,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getOrderPayment()
+    public function getOrderPayment(): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
     {
         foreach ($this->items as $item) {
             if ($item->isTypePayment()) {
@@ -481,7 +481,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getTransport()
+    public function getTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->transport;
     }
@@ -489,7 +489,7 @@ class Order
     /**
      * @return string
      */
-    public function getTransportName()
+    public function getTransportName(): string
     {
         return $this->getOrderTransport()->getName();
     }
@@ -497,7 +497,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getOrderTransport()
+    public function getOrderTransport(): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
     {
         foreach ($this->items as $item) {
             if ($item->isTypeTransport()) {
@@ -511,7 +511,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getStatus()
+    public function getStatus(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
     {
         return $this->status;
     }
@@ -551,7 +551,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getCurrency()
+    public function getCurrency(): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
     {
         return $this->currency;
     }
@@ -569,12 +569,12 @@ class Order
     /**
      * @return bool
      */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
 
-    public function markAsDeleted()
+    public function markAsDeleted(): void
     {
         $this->deleted = true;
     }
@@ -582,7 +582,7 @@ class Order
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -598,7 +598,7 @@ class Order
     /**
      * @return string
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -606,7 +606,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUser()
+    public function getCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         return $this->customerUser;
     }
@@ -614,7 +614,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -622,7 +622,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items->getValues();
     }
@@ -630,7 +630,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getItemsWithoutTransportAndPayment()
+    public function getItemsWithoutTransportAndPayment(): array
     {
         $itemsWithoutTransportAndPayment = [];
         foreach ($this->getItems() as $orderItem) {
@@ -645,7 +645,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    protected function getTransportAndPaymentItems()
+    protected function getTransportAndPaymentItems(): array
     {
         $transportAndPaymentItems = [];
         foreach ($this->getItems() as $orderItem) {
@@ -660,7 +660,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTransportAndPaymentPrice()
+    public function getTransportAndPaymentPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
     {
         $transportAndPaymentItems = $this->getTransportAndPaymentItems();
         $totalPrice = Price::zero();
@@ -677,7 +677,7 @@ class Order
      * @param int $orderItemId
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getItemById($orderItemId)
+    public function getItemById(int $orderItemId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
     {
         foreach ($this->getItems() as $orderItem) {
             if ($orderItem->getId() === $orderItemId) {
@@ -693,7 +693,7 @@ class Order
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -701,7 +701,7 @@ class Order
     /**
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -709,7 +709,7 @@ class Order
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -717,7 +717,7 @@ class Order
     /**
      * @return string
      */
-    public function getTelephone()
+    public function getTelephone(): string
     {
         return $this->telephone;
     }
@@ -725,7 +725,7 @@ class Order
     /**
      * @return string
      */
-    public function getCompanyName()
+    public function getCompanyName(): string
     {
         return $this->companyName;
     }
@@ -733,7 +733,7 @@ class Order
     /**
      * @return string
      */
-    public function getCompanyNumber()
+    public function getCompanyNumber(): string
     {
         return $this->companyNumber;
     }
@@ -741,7 +741,7 @@ class Order
     /**
      * @return string
      */
-    public function getCompanyTaxNumber()
+    public function getCompanyTaxNumber(): string
     {
         return $this->companyTaxNumber;
     }
@@ -749,7 +749,7 @@ class Order
     /**
      * @return string
      */
-    public function getStreet()
+    public function getStreet(): string
     {
         return $this->street;
     }
@@ -757,7 +757,7 @@ class Order
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -765,7 +765,7 @@ class Order
     /**
      * @return string
      */
-    public function getPostcode()
+    public function getPostcode(): string
     {
         return $this->postcode;
     }
@@ -773,7 +773,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getCountry()
+    public function getCountry(): \Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->country;
     }
@@ -781,7 +781,7 @@ class Order
     /**
      * @return bool
      */
-    public function isDeliveryAddressSameAsBillingAddress()
+    public function isDeliveryAddressSameAsBillingAddress(): bool
     {
         return $this->deliveryAddressSameAsBillingAddress;
     }
@@ -789,7 +789,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryFirstName()
+    public function getDeliveryFirstName(): string
     {
         return $this->deliveryFirstName;
     }
@@ -797,7 +797,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryLastName()
+    public function getDeliveryLastName(): string
     {
         return $this->deliveryLastName;
     }
@@ -805,7 +805,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryCompanyName()
+    public function getDeliveryCompanyName(): string
     {
         return $this->deliveryCompanyName;
     }
@@ -813,7 +813,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryTelephone()
+    public function getDeliveryTelephone(): string
     {
         return $this->deliveryTelephone;
     }
@@ -821,7 +821,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryStreet()
+    public function getDeliveryStreet(): string
     {
         return $this->deliveryStreet;
     }
@@ -829,7 +829,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryCity()
+    public function getDeliveryCity(): string
     {
         return $this->deliveryCity;
     }
@@ -837,7 +837,7 @@ class Order
     /**
      * @return string
      */
-    public function getDeliveryPostcode()
+    public function getDeliveryPostcode(): string
     {
         return $this->deliveryPostcode;
     }
@@ -845,7 +845,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getDeliveryCountry()
+    public function getDeliveryCountry(): ?\Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->deliveryCountry;
     }
@@ -853,7 +853,7 @@ class Order
     /**
      * @return string|null
      */
-    public function getNote()
+    public function getNote(): ?string
     {
         return $this->note;
     }
@@ -861,7 +861,7 @@ class Order
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }
@@ -869,7 +869,7 @@ class Order
     /**
      * @return string
      */
-    public function getUrlHash()
+    public function getUrlHash(): string
     {
         return $this->urlHash;
     }
@@ -877,7 +877,7 @@ class Order
     /**
      * @return int
      */
-    public function getProductItemsCount()
+    public function getProductItemsCount(): int
     {
         return count($this->getProductItems());
     }
@@ -885,7 +885,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
      */
-    public function getProductItems()
+    public function getProductItems(): array
     {
         $productItems = [];
         foreach ($this->items as $item) {
@@ -900,7 +900,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
-    public function getCreatedAsAdministrator()
+    public function getCreatedAsAdministrator(): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
     {
         return $this->createdAsAdministrator;
     }
@@ -908,7 +908,7 @@ class Order
     /**
      * @return string|null
      */
-    public function getCreatedAsAdministratorName()
+    public function getCreatedAsAdministratorName(): ?string
     {
         return $this->createdAsAdministratorName;
     }
@@ -924,7 +924,7 @@ class Order
     /**
      * @return bool
      */
-    public function isCancelled()
+    public function isCancelled(): bool
     {
         return $this->status->getType() === OrderStatus::TYPE_CANCELED;
     }

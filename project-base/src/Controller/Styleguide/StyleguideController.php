@@ -8,7 +8,7 @@ use App\Controller\Front\FrontBaseController;
 
 class StyleguideController extends FrontBaseController
 {
-    public function styleguideAction()
+    public function styleguideAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Styleguide/styleguide.html.twig');
     }

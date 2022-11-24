@@ -83,9 +83,9 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array{id: int} $data
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
-    public function resolveByProduct($data, ?string $type, ?string $size): array
+    public function resolveByProduct(\Shopsys\FrameworkBundle\Model\Product\Product|array $data, ?string $type, ?string $size): array
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
         return $this->resolveByEntityId($productId, static::IMAGE_ENTITY_PRODUCT, $type, $size);
@@ -95,7 +95,7 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     public function resolveByCategory(Category $category, ?string $type, ?string $size): array
     {
@@ -106,7 +106,7 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     public function resolveByPayment(Payment $payment, ?string $type, ?string $size): array
     {
@@ -117,7 +117,7 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     public function resolveByTransport(Transport $transport, ?string $type, ?string $size): array
     {
@@ -128,7 +128,7 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     public function resolveByBrand(Brand $brand, ?string $type, ?string $size): array
     {
@@ -139,7 +139,7 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     public function resolveByAdvert(Advert $advert, ?string $type, ?string $size): array
     {
@@ -158,7 +158,7 @@ class ImagesResolver implements QueryInterface
      * @param string $entityName
      * @param string|null $type
      * @param string|null $size
-     * @return ImageInfo[]
+     * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     protected function resolveByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): array
     {
@@ -208,7 +208,7 @@ class ImagesResolver implements QueryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $images
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
-     * @return ImageInfo[]
+     * @return array<int, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
     protected function getResolvedImages(array $images, array $sizeConfigs): array
     {

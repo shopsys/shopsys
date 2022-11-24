@@ -29,7 +29,7 @@ class FormThemeExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getDefaultFormTheme', [$this, 'getDefaultFormTheme']),
@@ -39,7 +39,7 @@ class FormThemeExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getDefaultFormTheme()
+    public function getDefaultFormTheme(): string
     {
         $masterRequest = $this->requestStack->getMasterRequest();
         if ($this->isAdmin($masterRequest->get('_controller'))) {
@@ -61,7 +61,7 @@ class FormThemeExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'form_theme';
     }

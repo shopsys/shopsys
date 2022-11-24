@@ -12,7 +12,7 @@ use Tests\App\Test\FunctionalTestCase;
 
 class FilesystemLoaderTest extends FunctionalTestCase
 {
-    public function testLoadingMultiDesignTemplate()
+    public function testLoadingMultiDesignTemplate(): void
     {
         $twigFilesystemLoader = $this->getContainer()->get('twig.loader.native_filesystem');
         $setting = $this->createMock(Setting::class);

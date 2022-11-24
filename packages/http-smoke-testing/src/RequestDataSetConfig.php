@@ -31,7 +31,7 @@ interface RequestDataSetConfig
      * @param mixed $value
      * @return $this
      */
-    public function setParameter(string $name, $value): self;
+    public function setParameter(string $name, mixed $value): self;
 
     /**
      * Adds a custom debug note for this request data set. Debug notes are shown on test failure for this data set.

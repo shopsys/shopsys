@@ -23,8 +23,9 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
 
     /**
      * {@inheritdoc}
+     * @param \Twig\Node\Node $node
      */
-    protected function doEnterNode(Node $node, Environment $env)
+    protected function doEnterNode(Node $node, Environment $env): \Twig\Node\Node
     {
         if ($node instanceof FilterExpression) {
             $filterNameConstantNode = $node->getNode('filter');
@@ -55,8 +56,9 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
 
     /**
      * {@inheritdoc}
+     * @param \Twig\Node\Node $node
      */
-    protected function doLeaveNode(Node $node, Environment $env): ?Node
+    protected function doLeaveNode(Node $node, Environment $env): \Twig\Node\Node
     {
         return $node;
     }

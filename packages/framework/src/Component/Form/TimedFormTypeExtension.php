@@ -30,6 +30,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

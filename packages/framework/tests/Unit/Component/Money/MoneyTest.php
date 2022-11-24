@@ -18,7 +18,7 @@ final class MoneyTest extends TestCase
      * @param int|string $value
      * @param string $expectedAmount
      */
-    public function testCreate($value, string $expectedAmount): void
+    public function testCreate(int|string $value, string $expectedAmount): void
     {
         $money = Money::create($value);
 
@@ -55,7 +55,7 @@ final class MoneyTest extends TestCase
      * @dataProvider invalidValuesCreateProvider
      * @param int|string $value
      */
-    public function testInvalidValuesInCreate($value): void
+    public function testInvalidValuesInCreate(int|string $value): void
     {
         $this->expectException(MoneyException::class);
 
@@ -254,7 +254,7 @@ final class MoneyTest extends TestCase
      * @param int|string $b
      * @param string $expectedAmount
      */
-    public function testMultiply(string $a, $b, string $expectedAmount): void
+    public function testMultiply(string $a, int|string $b, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -289,7 +289,7 @@ final class MoneyTest extends TestCase
      * @dataProvider invalidMultipliersProvider
      * @param int|string $multiplier
      */
-    public function testInvalidMultipliers($multiplier): void
+    public function testInvalidMultipliers(int|string $multiplier): void
     {
         $money = Money::create(1);
 
@@ -323,7 +323,7 @@ final class MoneyTest extends TestCase
      * @param int $scale
      * @param string $expectedAmount
      */
-    public function testDivide(string $a, $b, int $scale, string $expectedAmount): void
+    public function testDivide(string $a, int|string $b, int $scale, string $expectedAmount): void
     {
         $moneyA = Money::create($a);
 
@@ -360,7 +360,7 @@ final class MoneyTest extends TestCase
      * @dataProvider invalidDivisorProvider
      * @param int|string $divisor
      */
-    public function testInvalidDivisors($divisor): void
+    public function testInvalidDivisors(int|string $divisor): void
     {
         $money = Money::create(1);
 
@@ -381,7 +381,7 @@ final class MoneyTest extends TestCase
      * @dataProvider cannotDivideByZeroProvider
      * @param int|string $divisor
      */
-    public function testCannotDivideByZero($divisor): void
+    public function testCannotDivideByZero(int|string $divisor): void
     {
         $money = Money::create(1);
 

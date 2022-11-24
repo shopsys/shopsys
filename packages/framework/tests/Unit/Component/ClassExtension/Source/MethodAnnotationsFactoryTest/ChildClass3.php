@@ -9,7 +9,7 @@ class ChildClass3 extends BaseClass3
     /**
      * @return \App\Model\Category\CategoryFacade
      */
-    public function getCategoryFacade()
+    public function getCategoryFacade(): \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
     {
     }
 }

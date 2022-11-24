@@ -46,7 +46,7 @@ class FeedPathProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedUrl(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $domainConfig->getUrl() . $this->feedUrlPrefix . $this->getFeedFilename($feedInfo, $domainConfig);
     }
@@ -56,7 +56,7 @@ class FeedPathProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
@@ -66,7 +66,7 @@ class FeedPathProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    public function getFeedLocalFilepath(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         return $this->projectDir . $this->feedDir . $this->getFeedFilename($feedInfo, $domainConfig);
     }
@@ -76,7 +76,7 @@ class FeedPathProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string
      */
-    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig)
+    protected function getFeedFilename(FeedInfoInterface $feedInfo, DomainConfig $domainConfig): string
     {
         $feedHash = $this->setting->get(Setting::FEED_HASH);
 

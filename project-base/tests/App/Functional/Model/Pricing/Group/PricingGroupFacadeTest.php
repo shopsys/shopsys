@@ -51,7 +51,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
      */
     private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    public function testCreate()
+    public function testCreate(): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -69,7 +69,7 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
         $this->assertNotNull($productCalculatedPrice);
     }
 
-    public function testDeleteAndReplace()
+    public function testDeleteAndReplace(): void
     {
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';

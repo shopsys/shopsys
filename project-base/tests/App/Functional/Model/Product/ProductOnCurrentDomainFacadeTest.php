@@ -39,7 +39,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      */
     protected PriceConverter $priceConverter;
 
-    public function testFilterByMinimalPrice()
+    public function testFilterByMinimalPrice(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
@@ -56,7 +56,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(22, $paginationResult->getResults());
     }
 
-    public function testFilterByMaximalPrice()
+    public function testFilterByMaximalPrice(): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
@@ -73,7 +73,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(22, $paginationResult->getResults());
     }
 
-    public function testFilterByStockAvailability()
+    public function testFilterByStockAvailability(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PHONES);
 
@@ -84,7 +84,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(2, $paginationResult->getResults());
     }
 
-    public function testFilterByFlag()
+    public function testFilterByFlag(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -97,7 +97,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(2, $paginationResult->getResults());
     }
 
-    public function testFilterByFlagsReturnsProductsWithAnyOfUsedFlags()
+    public function testFilterByFlagsReturnsProductsWithAnyOfUsedFlags(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
@@ -112,7 +112,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(5, $paginationResult->getResults());
     }
 
-    public function testFilterByBrand()
+    public function testFilterByBrand(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -125,7 +125,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(6, $paginationResult->getResults());
     }
 
-    public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands()
+    public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -140,7 +140,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(8, $paginationResult->getResults());
     }
 
-    public function testFilterByParameter()
+    public function testFilterByParameter(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -158,7 +158,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(3, $paginationResult->getResults());
     }
 
-    public function testFilterByParametersUsesOrWithinTheSameParameter()
+    public function testFilterByParametersUsesOrWithinTheSameParameter(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -201,7 +201,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $this->assertCount(10, $paginationResult->getResults());
     }
 
-    public function testFilterByParametersUsesAndWithinDistinctParameters()
+    public function testFilterByParametersUsesAndWithinDistinctParameters(): void
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
@@ -226,7 +226,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      * @param array $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales)
+    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
     {
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);
@@ -242,7 +242,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      * @param array[] $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales)
+    private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
     {
         $parameterValues = [];
 

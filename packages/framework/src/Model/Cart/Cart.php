@@ -68,7 +68,7 @@ class Cart
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $item
      */
-    public function addItem(CartItem $item)
+    public function addItem(CartItem $item): void
     {
         if (!$this->items->contains($item)) {
             $this->items->add($item);
@@ -79,7 +79,7 @@ class Cart
     /**
      * @param int $itemId
      */
-    public function removeItemById($itemId)
+    public function removeItemById(int $itemId): void
     {
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
@@ -92,7 +92,7 @@ class Cart
         throw new InvalidCartItemException($message);
     }
 
-    public function clean()
+    public function clean(): void
     {
         $this->items->clear();
     }
@@ -100,7 +100,7 @@ class Cart
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem[]
      */
-    public function getItems()
+    public function getItems(): array
     {
         return $this->items->getValues();
     }
@@ -108,7 +108,7 @@ class Cart
     /**
      * @return int
      */
-    public function getItemsCount()
+    public function getItemsCount(): int
     {
         return $this->items->count();
     }
@@ -116,7 +116,7 @@ class Cart
     /**
      * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->getItemsCount() === 0;
     }
@@ -124,7 +124,7 @@ class Cart
     /**
      * @param array $quantitiesByItemId
      */
-    public function changeQuantities(array $quantitiesByItemId)
+    public function changeQuantities(array $quantitiesByItemId): void
     {
         foreach ($this->items as $item) {
             if (array_key_exists($item->getId(), $quantitiesByItemId)) {
@@ -139,7 +139,7 @@ class Cart
      * @param int $itemId
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getItemById($itemId)
+    public function getItemById(int $itemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
     {
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {
@@ -153,7 +153,7 @@ class Cart
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    public function getQuantifiedProducts()
+    public function getQuantifiedProducts(): array
     {
         $quantifiedProducts = [];
         foreach ($this->items as $item) {
@@ -181,7 +181,7 @@ class Cart
     /**
      * @return string
      */
-    public function getCartIdentifier()
+    public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
     }
@@ -194,7 +194,7 @@ class Cart
     /**
      * @param \DateTime $modifiedAt
      */
-    public function setModifiedAt(DateTime $modifiedAt)
+    public function setModifiedAt(DateTime $modifiedAt): void
     {
         $this->modifiedAt = $modifiedAt;
     }

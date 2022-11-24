@@ -12,7 +12,7 @@ interface UniqueLoginInterface
     /**
      * @param string $loginToken
      */
-    public function setLoginToken($loginToken);
+    public function setLoginToken(string $loginToken);
 
     /**
      * @return bool
@@ -22,5 +22,5 @@ interface UniqueLoginInterface
     /**
      * @param bool $multidomainLogin
      */
-    public function setMultidomainLogin($multidomainLogin);
+    public function setMultidomainLogin(bool $multidomainLogin);
 }

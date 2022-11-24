@@ -37,7 +37,7 @@ class ScriptDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $scriptData = $this->scriptDataFactory->create();
         $scriptData->name = 'Demo skript 1';

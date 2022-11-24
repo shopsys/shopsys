@@ -38,7 +38,7 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $personalDataAccessRequestData = $this->personalDataFactory->createForDisplay();
         $personalDataAccessRequestData->domainId = Domain::FIRST_DOMAIN_ID;

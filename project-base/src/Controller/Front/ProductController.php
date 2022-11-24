@@ -144,7 +144,7 @@ class ProductController extends FrontBaseController
     /**
      * @param int $id
      */
-    public function detailAction($id)
+    public function detailAction(int $id): \Symfony\Component\HttpFoundation\Response
     {
         $productDetailView = $this->productDetailViewFacade->getVisibleProductDetail($id);
 
@@ -161,7 +161,7 @@ class ProductController extends FrontBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function listByCategoryAction(Request $request, $id)
+    public function listByCategoryAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $id);
@@ -224,7 +224,7 @@ class ProductController extends FrontBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function listByBrandAction(Request $request, $id)
+    public function listByBrandAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
     {
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
@@ -259,7 +259,7 @@ class ProductController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
             trim((string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE))
@@ -321,7 +321,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    private function createProductFilterConfigForCategory(Category $category)
+    private function createProductFilterConfigForCategory(Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForCategory(
             $this->domain->getId(),
@@ -334,7 +334,7 @@ class ProductController extends FrontBaseController
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    private function createProductFilterConfigForSearch($searchText)
+    private function createProductFilterConfigForSearch(string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
     {
         return $this->productFilterConfigFactory->createForSearch(
             $this->domain->getId(),
@@ -347,7 +347,7 @@ class ProductController extends FrontBaseController
      * @param string|null $searchText
      * @return \App\Model\Category\Category[]
      */
-    private function searchCategories($searchText)
+    private function searchCategories(string $searchText): array
     {
         /** @var \App\Model\Category\Category[] $categories */
         $categories = $this->categoryFacade->getVisibleByDomainAndSearchText(
@@ -362,7 +362,7 @@ class ProductController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function selectOrderingModeForListAction(Request $request)
+    public function selectOrderingModeForListAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
 
@@ -380,7 +380,7 @@ class ProductController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function selectOrderingModeForListByBrandAction(Request $request)
+    public function selectOrderingModeForListByBrandAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $productListOrderingConfig = $this->productListOrderingModeForBrandFacade->getProductListOrderingConfig();
 
@@ -398,7 +398,7 @@ class ProductController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function selectOrderingModeForSearchAction(Request $request)
+    public function selectOrderingModeForSearchAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $productListOrderingConfig = $this->productListOrderingModeForSearchFacade->getProductListOrderingConfig();
 
@@ -417,7 +417,7 @@ class ProductController extends FrontBaseController
      * @param string|null $page
      * @return bool
      */
-    private function isRequestPageValid($page)
+    private function isRequestPageValid(?string $page): bool
     {
         return $page === null || (preg_match('@^([2-9]|[1-9][0-9]+)$@', $page));
     }
@@ -425,7 +425,7 @@ class ProductController extends FrontBaseController
     /**
      * @return array
      */
-    private function getRequestParametersWithoutPage()
+    private function getRequestParametersWithoutPage(): array
     {
         $parameters = $this->requestExtension->getAllRequestParams();
         unset($parameters[self::PAGE_QUERY_PARAMETER]);

@@ -2,7 +2,7 @@
 
 class SingleValueAfterMethodWithoutNamespace
 {
-    public function method()
+    public function method(): void
     {
 
     }

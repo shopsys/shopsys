@@ -3,20 +3,20 @@
 /**
  * @param int $value
  */
-function function1(int $value)
+function function1(int $value): void
 {
 }
 
 /**
  * @param mixed $value
  */
-function function2($value)
+function function2(mixed $value): void
 {
 }
 
 /**
  * @param mixed|null $value
  */
-function function3($value = null)
+function function3(?mixed $value = null): void
 {
 }

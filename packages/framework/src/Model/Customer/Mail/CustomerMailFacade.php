@@ -51,7 +51,7 @@ class CustomerMailFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function sendRegistrationMail(CustomerUser $customerUser)
+    public function sendRegistrationMail(CustomerUser $customerUser): void
     {
         $mailTemplate = $this->mailTemplateFacade->get(
             MailTemplate::REGISTRATION_CONFIRM_NAME,

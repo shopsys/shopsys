@@ -87,6 +87,7 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
 
     /**
      * @inheritdoc
+     * @param \Twig\Node\Node $ast
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, Node $ast): void
     {

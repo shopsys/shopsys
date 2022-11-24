@@ -36,7 +36,7 @@ class SeoController extends AdminBaseController
      * @Route("/seo/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $seoSettingData = [

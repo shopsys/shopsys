@@ -26,7 +26,7 @@ class BreadcrumbController extends FrontBaseController
      * @param string $routeName
      * @param array $routeParameters
      */
-    public function indexAction($routeName, array $routeParameters = [])
+    public function indexAction(string $routeName, array $routeParameters = []): \Symfony\Component\HttpFoundation\Response
     {
         $breadcrumbItems = $this->breadcrumbResolver->resolveBreadcrumbItems($routeName, $routeParameters);
 

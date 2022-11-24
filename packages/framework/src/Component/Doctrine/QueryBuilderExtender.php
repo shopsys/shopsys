@@ -68,7 +68,7 @@ class QueryBuilderExtender
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return string
      */
-    protected function getRootAlias(QueryBuilder $queryBuilder): string|bool
+    protected function getRootAlias(QueryBuilder $queryBuilder): string
     {
         $rootAliases = $queryBuilder->getRootAliases();
         if (count($rootAliases) !== static::REQUIRED_ALIASES_COUNT) {

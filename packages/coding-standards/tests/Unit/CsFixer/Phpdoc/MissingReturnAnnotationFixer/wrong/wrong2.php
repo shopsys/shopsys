@@ -2,7 +2,7 @@
 
 class SomeClass
 {
-    function function1(int $value): int
+    function function1(int $value): void
     {
     }
 }

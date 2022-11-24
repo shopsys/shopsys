@@ -12,7 +12,7 @@ class LoginPage extends AbstractPage
     private const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
     private const DEFAULT_USER_PASSWORD = 'user123';
 
-    public function login()
+    public function login(): void
     {
         $this->tester->fillFieldByName('front_login_form[email]', self::DEFAULT_USER_EMAIL);
         $this->tester->fillFieldByName('front_login_form[password]', self::DEFAULT_USER_PASSWORD);

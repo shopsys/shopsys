@@ -29,7 +29,7 @@ class LoginController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
@@ -48,7 +48,7 @@ class LoginController extends FrontBaseController
         ]);
     }
 
-    public function windowFormAction()
+    public function windowFormAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Content/Login/windowForm.html.twig', [
             'form' => $this->getLoginForm()->createView(),
@@ -58,7 +58,7 @@ class LoginController extends FrontBaseController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function getLoginForm()
+    private function getLoginForm(): \Symfony\Component\Form\FormInterface
     {
         return $this->createForm(LoginFormType::class, null, [
             'action' => $this->generateUrl('front_login_check'),

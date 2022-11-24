@@ -36,7 +36,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('have my payment and transport remembered by order');
 
         // tv-audio
@@ -69,7 +69,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('have my payment and transport remembered by order');
 
         // tv-audio
@@ -94,7 +94,7 @@ class OrderCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\OrderPage $orderPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testFormRemembersFirstName(ProductListPage $productListPage, OrderPage $orderPage, AcceptanceTester $me)
+    public function testFormRemembersFirstName(ProductListPage $productListPage, OrderPage $orderPage, AcceptanceTester $me): void
     {
         $me->wantTo('have my first name remembered by order');
 
@@ -128,7 +128,7 @@ class OrderCest
         OrderPage $orderPage,
         AcceptanceTester $me,
         SymfonyHelper $symfonyHelper
-    ) {
+    ): void {
         $scriptFacade = $symfonyHelper->grabServiceFromContainer(ScriptFacade::class);
         $this->setGoogleAnalyticsTrackingId('GA-test', $scriptFacade);
 
@@ -141,7 +141,7 @@ class OrderCest
      * @param string $trackingId
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      */
-    private function setGoogleAnalyticsTrackingId($trackingId, ScriptFacade $scriptFacade)
+    private function setGoogleAnalyticsTrackingId(string $trackingId, ScriptFacade $scriptFacade): void
     {
         $scriptFacade->setGoogleAnalyticsTrackingId($trackingId, Domain::FIRST_DOMAIN_ID);
     }
@@ -155,7 +155,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
         $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
@@ -192,7 +192,7 @@ class OrderCest
         AcceptanceTester $me,
         RegistrationPage $registrationPage,
         LayoutPage $layoutPage
-    ) {
+    ): void {
         $me->wantTo('Send order as logged customer');
 
         $me->amOnPage('/');

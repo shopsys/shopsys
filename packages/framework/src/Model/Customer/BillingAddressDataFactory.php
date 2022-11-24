@@ -36,7 +36,7 @@ class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddress $billingAddress
      */
-    protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress)
+    protected function fillFromBillingAddress(BillingAddressData $billingAddressData, BillingAddress $billingAddress): void
     {
         $billingAddressData->companyCustomer = $billingAddress->isCompanyCustomer();
         $billingAddressData->companyName = $billingAddress->getCompanyName();

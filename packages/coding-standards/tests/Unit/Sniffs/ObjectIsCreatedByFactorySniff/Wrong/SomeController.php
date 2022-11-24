@@ -6,7 +6,7 @@ namespace Tests\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff\Wrong;
 
 final class SomeController
 {
-    public function action()
+    public function action(): void
     {
         $post = new Post();
     }

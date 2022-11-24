@@ -25,7 +25,7 @@ class CartRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCartRepository()
+    protected function getCartRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Cart::class);
     }
@@ -34,7 +34,7 @@ class CartRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?\Shopsys\FrameworkBundle\Model\Cart\Cart
     {
         $criteria = [];
         if ($customerUserIdentifier->getCustomerUser() !== null) {
@@ -49,7 +49,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (
@@ -78,7 +78,7 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForRegisteredCustomerUsers($daysLimit)
+    public function deleteOldCartsForRegisteredCustomerUsers(int $daysLimit): void
     {
         $this->em->getConnection()->executeStatement(
             'DELETE FROM cart_items WHERE cart_id IN (

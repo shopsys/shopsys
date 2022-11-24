@@ -21,7 +21,7 @@ class OrderDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderData $frontOrderData
      * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
      */
-    public function getOrderDataFromFrontOrderData(FrontOrderData $frontOrderData)
+    public function getOrderDataFromFrontOrderData(FrontOrderData $frontOrderData): \Shopsys\FrameworkBundle\Model\Order\OrderData
     {
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $frontOrderData->transport;

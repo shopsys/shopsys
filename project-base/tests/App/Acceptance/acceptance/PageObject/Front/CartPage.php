@@ -16,7 +16,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @param int $quantity
      */
-    public function assertProductQuantity($productName, $quantity)
+    public function assertProductQuantity(string $productName, int $quantity): void
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
         $this->tester->seeInFieldByElement((string)$quantity, $quantityField);
@@ -26,7 +26,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @param string $price
      */
-    public function assertProductPriceRoundedByCurrency($productName, $price)
+    public function assertProductPriceRoundedByCurrency(string $productName, string $price): void
     {
         $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
         $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
@@ -39,7 +39,7 @@ class CartPage extends AbstractPage
     /**
      * @param string $price
      */
-    public function assertTotalPriceWithVatRoundedByCurrency($price)
+    public function assertTotalPriceWithVatRoundedByCurrency(string $price): void
     {
         $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
             Money::create($price)
@@ -53,7 +53,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @param int $quantity
      */
-    public function changeProductQuantity($productName, $quantity)
+    public function changeProductQuantity(string $productName, int $quantity): void
     {
         $quantityField = $this->getQuantityFieldByProductName($productName);
         $this->tester->fillFieldByElement($quantityField, (string)$quantity);
@@ -64,7 +64,7 @@ class CartPage extends AbstractPage
     /**
      * @param string $productName
      */
-    public function removeProductFromCart($productName)
+    public function removeProductFromCart(string $productName): void
     {
         $row = $this->findProductRowInCartByName($productName);
         $removingButton = $row->findElement(WebDriverBy::cssSelector('.test-cart-item-remove-button'));
@@ -74,7 +74,7 @@ class CartPage extends AbstractPage
     /**
      * @param string $productName
      */
-    public function assertProductIsInCartByName($productName)
+    public function assertProductIsInCartByName(string $productName): void
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
@@ -83,7 +83,7 @@ class CartPage extends AbstractPage
     /**
      * @param string $productName
      */
-    public function assertProductIsNotInCartByName($productName)
+    public function assertProductIsNotInCartByName(string $productName): void
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
@@ -93,7 +93,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getQuantityFieldByProductName($productName)
+    private function getQuantityFieldByProductName(\string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -104,7 +104,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductRowInCartByName($productName)
+    private function findProductRowInCartByName(\string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
@@ -133,7 +133,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductTotalPriceCellByName($productName)
+    private function getProductTotalPriceCellByName(\string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -144,7 +144,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductPriceCellByName($productName)
+    private function getProductPriceCellByName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -154,7 +154,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getTotalProductsPriceCell()
+    private function getTotalProductsPriceCell(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('.test-cart-total-price'));
     }
@@ -162,7 +162,7 @@ class CartPage extends AbstractPage
     /**
      * @param string $promoCodeName
      */
-    public function applyPromoCode($promoCodeName)
+    public function applyPromoCode(string $promoCodeName): void
     {
         $promoCodeField = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-input'));
         $this->tester->fillFieldByElement($promoCodeField, $promoCodeName);
@@ -170,7 +170,7 @@ class CartPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    public function removePromoCode()
+    public function removePromoCode(): void
     {
         $removePromoCodeButton = $this->webDriver->findElement(
             WebDriverBy::cssSelector('#js-promo-code-remove-button')
@@ -182,7 +182,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function canSeePromoCodeSubmitButtonElement()
+    public function canSeePromoCodeSubmitButtonElement(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
     }
@@ -190,7 +190,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function canSeePromoCodeRemoveButtonElement()
+    public function canSeePromoCodeRemoveButtonElement(): \Facebook\WebDriver\WebDriverElement
     {
         return $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
     }
@@ -199,7 +199,7 @@ class CartPage extends AbstractPage
      * @param array $products
      * @param int $discount
      */
-    public function assertTotalPriceWithVatByProducts(array $products, int $discount = 0)
+    public function assertTotalPriceWithVatByProducts(array $products, int $discount = 0): void
     {
         $totalPrice = Money::zero();
 

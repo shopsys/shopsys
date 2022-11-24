@@ -10,7 +10,7 @@ class JoinNoneEmptyExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('joinNoneEmpty', [$this, 'getArray']),
@@ -22,7 +22,7 @@ class JoinNoneEmptyExtension extends AbstractExtension
      * @param mixed $glue
      * @return string
      */
-    public function getArray(array $array, $glue = ', ')
+    public function getArray(array $array, mixed $glue = ', '): string
     {
         return implode($glue, array_filter($array));
     }
@@ -30,7 +30,7 @@ class JoinNoneEmptyExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'join_none_empty';
     }

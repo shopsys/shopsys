@@ -61,7 +61,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -114,10 +114,10 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param array $transportsReferenceNames
      */
     private function createPayment(
-        $referenceName,
+        string $referenceName,
         PaymentData $paymentData,
         array $transportsReferenceNames
-    ) {
+    ): void {
         $paymentData->transports = [];
         foreach ($transportsReferenceNames as $transportReferenceName) {
             /** @var \App\Model\Transport\Transport $transport */
@@ -132,7 +132,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             TransportDataFixture::class,

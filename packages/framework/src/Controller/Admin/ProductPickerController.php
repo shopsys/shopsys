@@ -74,7 +74,7 @@ class ProductPickerController extends AdminBaseController
         $jsInstanceId,
         bool $allowMainVariants = true,
         bool $allowVariants = true
-    ) {
+    ): \Symfony\Component\HttpFoundation\Response {
         return $this->getPickerResponse(
             $request,
             [
@@ -94,7 +94,7 @@ class ProductPickerController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parentInstanceId
      */
-    public function pickSingleAction(Request $request, $parentInstanceId)
+    public function pickSingleAction(Request $request, $parentInstanceId): \Symfony\Component\HttpFoundation\Response
     {
         return $this->getPickerResponse(
             $request,
@@ -115,7 +115,7 @@ class ProductPickerController extends AdminBaseController
      * @param array<string, mixed> $viewParameters
      * @param array<string, mixed> $gridViewParameters
      */
-    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
+    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();

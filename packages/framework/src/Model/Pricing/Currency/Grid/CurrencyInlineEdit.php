@@ -87,7 +87,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param int|null $currencyId
      * @return bool
      */
-    protected function isDefaultCurrencyId($currencyId): bool
+    protected function isDefaultCurrencyId(?int $currencyId): bool
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById($currencyId);

@@ -51,7 +51,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->createOrderStatusReference(1, self::ORDER_STATUS_NEW);
         $this->createOrderStatusReference(2, self::ORDER_STATUS_IN_PROGRESS);
@@ -67,9 +67,9 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135341
      */
     private function createOrderStatusReference(
-        $orderStatusId,
-        $referenceName
-    ) {
+        int $orderStatusId,
+        string $referenceName
+    ): void {
         $orderStatus = $this->orderStatusFacade->getById($orderStatusId);
         $orderStatusData = $this->orderStatusDataFactory->createFromOrderStatus($orderStatus);
         foreach ($this->domain->getAllLocales() as $locale) {

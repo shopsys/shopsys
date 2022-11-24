@@ -11,7 +11,7 @@ class TranslationExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('transHtml', [$this, 'transHtml'], [
@@ -24,7 +24,7 @@ class TranslationExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'translation';
     }
@@ -42,7 +42,7 @@ class TranslationExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+    public function transHtml(Environment $twig, string $message, array $arguments = [], ?string $domain = null, ?string $locale = null): string
     {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
@@ -57,7 +57,7 @@ class TranslationExtension extends AbstractExtension
      * @param array $elements
      * @return array
      */
-    protected function getEscapedElements(Environment $twig, array $elements)
+    protected function getEscapedElements(Environment $twig, array $elements): array
     {
         $defaultEscapeFilterCallable = $twig->getFilter('escape')->getCallable();
         $escapedElements = [];

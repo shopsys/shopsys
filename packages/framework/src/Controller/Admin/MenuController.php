@@ -19,7 +19,7 @@ class MenuController extends AdminBaseController
         $this->domainFacade = $domainFacade;
     }
 
-    public function menuAction()
+    public function menuAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Menu/menu.html.twig', [
             'domainConfigs' => $this->domainFacade->getAllDomainConfigs(),

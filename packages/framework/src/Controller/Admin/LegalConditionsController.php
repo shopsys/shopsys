@@ -37,7 +37,7 @@ class LegalConditionsController extends AdminBaseController
      * @Route("/legal-conditions/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $settingData = [

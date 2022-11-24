@@ -105,7 +105,7 @@ class CountryDataModifierVersion20190121094400
      * @param string $countryCode
      * @return bool
      */
-    private function codeExistsForDomain($domainId, $countryCode): bool
+    private function codeExistsForDomain(int $domainId, string $countryCode): bool
     {
         foreach ($this->data as $row) {
             if ($row['code'] === $countryCode && $row['domain_id'] === $domainId) {

@@ -49,7 +49,7 @@ class CountryFacade
      * @param int $countryId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getById($countryId): Country
+    public function getById(int $countryId): Country
     {
         return $this->countryRepository->getById($countryId);
     }
@@ -72,7 +72,7 @@ class CountryFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function edit($countryId, CountryData $countryData): Country
+    public function edit(int $countryId, CountryData $countryData): Country
     {
         $country = $this->countryRepository->getById($countryId);
         $country->edit($countryData);

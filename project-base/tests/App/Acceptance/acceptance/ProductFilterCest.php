@@ -22,7 +22,7 @@ class ProductFilterCest
         AcceptanceTester $me,
         ProductFilterPage $productFilterPage,
         ProductListPage $productListPage
-    ) {
+    ): void {
         $me->wantTo('test all product filters');
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);

@@ -25,7 +25,7 @@ class ProductPrice extends Price
     /**
      * @return bool
      */
-    public function isPriceFrom()
+    public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }

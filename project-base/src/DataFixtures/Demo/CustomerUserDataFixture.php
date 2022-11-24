@@ -109,7 +109,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
@@ -441,7 +441,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             CountryDataFixture::class,
@@ -451,7 +451,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \App\Model\Customer\User\CustomerUser $customer
      */
-    private function resetPassword(CustomerUser $customer)
+    private function resetPassword(CustomerUser $customer): void
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(
             CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH

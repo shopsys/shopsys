@@ -26,7 +26,7 @@ interface PluginCrudExtensionInterface
      * @param int $id
      * @return mixed
      */
-    public function getData($id);
+    public function getData(int $id);
 
     /**
      * Saves the data of an entity with provided id after submitting of the sub-form
@@ -34,12 +34,12 @@ interface PluginCrudExtensionInterface
      * @param int $id
      * @param mixed $data
      */
-    public function saveData($id, $data);
+    public function saveData(int $id, mixed $data);
 
     /**
      * Removes all saved data of an entity with provided id after deleting the entity
      *
      * @param int $id
      */
-    public function removeData($id);
+    public function removeData(int $id);
 }

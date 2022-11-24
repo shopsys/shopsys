@@ -107,7 +107,7 @@ class OrderItemTest extends TestCase
         $orderItem->hasProduct();
     }
 
-    public function testEditProductTypeWithProduct()
+    public function testEditProductTypeWithProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -126,7 +126,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10', $orderItem->getvatPercent());
     }
 
-    public function testEditProductTypeWithoutProduct()
+    public function testEditProductTypeWithoutProduct(): void
     {
         $orderItemData = new OrderItemData();
         $orderItemData->name = 'newName';
@@ -145,7 +145,7 @@ class OrderItemTest extends TestCase
         $this->assertSame('10', $orderItem->getvatPercent());
     }
 
-    public function testConstructWithMainVariantThrowsException()
+    public function testConstructWithMainVariantThrowsException(): void
     {
         $variant = Product::create(new ProductData());
         $mainVariant = Product::createMainVariant(new ProductData(), [$variant]);
@@ -218,7 +218,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function createOrderMock(): MockObject
+    private function createOrderMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->createMock(Order::class);
     }
@@ -226,7 +226,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    private function createTransportMock(): MockObject
+    private function createTransportMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         return $this->createMock(Transport::class);
     }
@@ -234,7 +234,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    private function createPaymentMock(): MockObject
+    private function createPaymentMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         return $this->createMock(Payment::class);
     }
@@ -242,7 +242,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function createProductMock(): MockObject
+    private function createProductMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->createMock(Product::class);
     }

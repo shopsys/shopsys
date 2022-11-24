@@ -36,7 +36,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = Domain::FIRST_DOMAIN_ID;

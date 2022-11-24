@@ -61,7 +61,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
-    public function edit(FlagData $flagData)
+    public function edit(FlagData $flagData): void
     {
         $this->setData($flagData);
     }
@@ -79,7 +79,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -96,7 +96,7 @@ class Flag extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): string
     {
         return $this->translation($locale)->getName();
     }
@@ -104,7 +104,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getRgbColor()
+    public function getRgbColor(): string
     {
         return $this->rgbColor;
     }
@@ -112,7 +112,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -120,7 +120,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
-    protected function setTranslations(FlagData $flagData)
+    protected function setTranslations(FlagData $flagData): void
     {
         foreach ($flagData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -130,7 +130,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
     {
         return new FlagTranslation();
     }

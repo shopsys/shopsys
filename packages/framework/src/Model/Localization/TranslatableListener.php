@@ -22,7 +22,10 @@ class TranslatableListener extends PrezentTranslatableListener
         $this->setCurrentLocale(null);
     }
 
-    public function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
     {
         return [
             Events::loadClassMetadata,
@@ -34,7 +37,7 @@ class TranslatableListener extends PrezentTranslatableListener
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $this->postLoad($args);
     }

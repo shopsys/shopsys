@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 
 class VatFacadeTest extends TestCase
 {
-    public function testGetDefaultVat()
+    public function testGetDefaultVat(): void
     {
         $expected = new Vat(new VatData(), Domain::FIRST_DOMAIN_ID);
         $emMock = $this->createMock(EntityManager::class);
@@ -64,7 +64,7 @@ class VatFacadeTest extends TestCase
         $this->assertSame($expected, $defaultVat);
     }
 
-    public function testSetDefaultVatForFirstDomain()
+    public function testSetDefaultVatForFirstDomain(): void
     {
         $emMock = $this->createMock(EntityManager::class);
         $vatRepositoryMock = $this->createMock(VatRepository::class);

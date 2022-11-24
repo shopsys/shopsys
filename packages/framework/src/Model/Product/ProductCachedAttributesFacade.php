@@ -53,7 +53,7 @@ class ProductCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
-    public function getProductSellingPrice(Product $product)
+    public function getProductSellingPrice(Product $product): ?\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
     {
         if (isset($this->sellingPricesByProductId[$product->getId()])) {
             return $this->sellingPricesByProductId[$product->getId()];
@@ -72,7 +72,7 @@ class ProductCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValues(Product $product)
+    public function getProductParameterValues(Product $product): array
     {
         if (isset($this->parameterValuesByProductId[$product->getId()])) {
             return $this->parameterValuesByProductId[$product->getId()];

@@ -23,8 +23,9 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritDoc}
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
@@ -42,7 +43,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritDoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

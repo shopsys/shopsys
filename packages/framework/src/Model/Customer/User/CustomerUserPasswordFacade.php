@@ -73,7 +73,7 @@ class CustomerUserPasswordFacade
      * @param string $email
      * @param int $domainId
      */
-    public function resetPassword($email, $domainId)
+    public function resetPassword(string $email, int $domainId): void
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
@@ -90,7 +90,7 @@ class CustomerUserPasswordFacade
      * @param string|null $hash
      * @return bool
      */
-    public function isResetPasswordHashValid($email, $domainId, $hash)
+    public function isResetPasswordHashValid(string $email, int $domainId, ?string $hash): bool
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 

@@ -43,7 +43,7 @@ class PricingGroup
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      */
-    public function edit(PricingGroupData $pricingGroupData)
+    public function edit(PricingGroupData $pricingGroupData): void
     {
         $this->setData($pricingGroupData);
     }
@@ -59,7 +59,7 @@ class PricingGroup
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -67,7 +67,7 @@ class PricingGroup
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -75,7 +75,7 @@ class PricingGroup
     /**
      * @return int
      */
-    public function getDomainId()
+    public function getDomainId(): int
     {
         return $this->domainId;
     }

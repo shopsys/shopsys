@@ -43,7 +43,7 @@ class Kernel extends BaseKernel
         return dirname(__DIR__);
     }
 
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 

@@ -27,7 +27,7 @@ class PromoCodeController extends FrontBaseController
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
-    public function indexAction()
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Content/Order/PromoCode/index.html.twig', [
             'validEnteredPromoCode' => $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull(),
@@ -37,7 +37,7 @@ class PromoCodeController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function applyAction(Request $request)
+    public function applyAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $promoCode = $request->get(self::PROMO_CODE_PARAMETER);
         try {
@@ -53,7 +53,7 @@ class PromoCodeController extends FrontBaseController
         return new JsonResponse(['result' => true]);
     }
 
-    public function removeAction()
+    public function removeAction(): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
         $this->addSuccessFlash(t('Promo code removed from order'));

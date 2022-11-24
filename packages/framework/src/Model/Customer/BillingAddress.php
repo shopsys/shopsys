@@ -86,7 +86,7 @@ class BillingAddress
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      */
-    public function edit(BillingAddressData $billingAddressData)
+    public function edit(BillingAddressData $billingAddressData): void
     {
         $this->setData($billingAddressData);
     }
@@ -123,7 +123,7 @@ class BillingAddress
     /**
      * @return bool
      */
-    public function isCompanyCustomer()
+    public function isCompanyCustomer(): bool
     {
         return $this->companyCustomer;
     }
@@ -131,7 +131,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getCompanyName()
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
@@ -139,7 +139,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getCompanyNumber()
+    public function getCompanyNumber(): ?string
     {
         return $this->companyNumber;
     }
@@ -147,7 +147,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getCompanyTaxNumber()
+    public function getCompanyTaxNumber(): ?string
     {
         return $this->companyTaxNumber;
     }
@@ -155,7 +155,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
@@ -163,7 +163,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -171,7 +171,7 @@ class BillingAddress
     /**
      * @return string|null
      */
-    public function getPostcode()
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
@@ -179,7 +179,7 @@ class BillingAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getCountry()
+    public function getCountry(): ?\Shopsys\FrameworkBundle\Model\Country\Country
     {
         return $this->country;
     }

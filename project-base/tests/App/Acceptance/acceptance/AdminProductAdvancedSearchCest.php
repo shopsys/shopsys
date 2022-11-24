@@ -19,7 +19,7 @@ class AdminProductAdvancedSearchCest
         AcceptanceTester $me,
         LoginPage $loginPage,
         ProductAdvancedSearchPage $productAdvancedSearchPage
-    ) {
+    ): void {
         $me->wantTo('search for product by catnum');
         $loginPage->loginAsAdmin();
 

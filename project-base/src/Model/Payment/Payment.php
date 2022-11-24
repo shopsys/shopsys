@@ -33,7 +33,7 @@ class Payment extends BasePayment
     /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
-    public function edit(BasePaymentData $paymentData)
+    public function edit(BasePaymentData $paymentData): void
     {
         parent::edit($paymentData);
     }

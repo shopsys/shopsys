@@ -39,7 +39,7 @@ class ImageController extends FrontBaseController
      * @param mixed $sizeName
      * @param mixed $imageId
      */
-    public function getImageAction($entityName, $type, $sizeName, $imageId)
+    public function getImageAction(mixed $entityName, mixed $type, mixed $sizeName, mixed $imageId): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;
@@ -73,7 +73,7 @@ class ImageController extends FrontBaseController
      * @param int $imageId
      * @param int $additionalIndex
      */
-    public function getAdditionalImageAction($entityName, $type, $sizeName, int $imageId, int $additionalIndex)
+    public function getAdditionalImageAction(mixed $entityName, mixed $type, mixed $sizeName, int $imageId, int $additionalIndex): \Symfony\Component\HttpFoundation\StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;
@@ -115,7 +115,7 @@ class ImageController extends FrontBaseController
                 'content-size' => $this->filesystem->getSize($imageFilepath),
             ];
 
-            $callback = function () use ($fileStream) {
+            $callback = function () use ($fileStream): void {
                 $out = fopen('php://output', 'wb');
                 stream_copy_to_stream($fileStream, $out);
             };

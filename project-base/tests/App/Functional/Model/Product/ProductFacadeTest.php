@@ -55,13 +55,13 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
      * @param mixed $calculatedSellingDenied
      */
     public function testHandleOutOfStockState(
-        $hidden,
-        $sellingDenied,
-        $stockQuantity,
-        $outOfStockAction,
-        $calculatedHidden,
-        $calculatedSellingDenied
-    ) {
+        bool $hidden,
+        bool $sellingDenied,
+        int $stockQuantity,
+        string $outOfStockAction,
+        bool $calculatedHidden,
+        bool $calculatedSellingDenied
+    ): void {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
@@ -83,7 +83,10 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
     }
 
-    public function getTestHandleOutOfStockStateDataProvider()
+    /**
+     * @return array<int, array{hidden: bool, sellingDenied: bool, stockQuantity: int, outOfStockAction: string, calculatedHidden: bool, calculatedSellingDenied: bool}>
+     */
+    public function getTestHandleOutOfStockStateDataProvider(): array
     {
         return [
             [
@@ -137,7 +140,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         ];
     }
 
-    public function testEditMarkProductForVisibilityRecalculation()
+    public function testEditMarkProductForVisibilityRecalculation(): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -152,7 +155,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame(true, $reflectionPropertyRecalculateVisibility->getValue($product));
     }
 
-    public function testEditSchedulesPriceRecalculation()
+    public function testEditSchedulesPriceRecalculation(): void
     {
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);

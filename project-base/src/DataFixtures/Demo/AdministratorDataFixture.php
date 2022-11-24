@@ -29,7 +29,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $this->createAdministratorReference(1, self::SUPERADMINISTRATOR);
         $this->createAdministratorReference(2, self::ADMINISTRATOR);
@@ -42,7 +42,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
      * @param string $referenceName
      * @see \Shopsys\FrameworkBundle\Migrations\Version20180702111015
      */
-    private function createAdministratorReference(int $administratorId, string $referenceName)
+    private function createAdministratorReference(int $administratorId, string $referenceName): void
     {
         $administrator = $this->administratorFacade->getById($administratorId);
         $this->addReference($referenceName, $administrator);

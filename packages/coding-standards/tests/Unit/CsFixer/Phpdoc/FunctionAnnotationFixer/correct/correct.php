@@ -17,7 +17,7 @@ final class FunctionAnnotationFixerTestCorrectClass extends Naming
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string|string[] $keys
      */
-    public function pressKeysByElement(WebDriverElement $element, $keys)
+    public function pressKeysByElement(WebDriverElement $element, string|array $keys): void
     {
     }
 }

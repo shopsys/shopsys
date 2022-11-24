@@ -36,7 +36,7 @@ class DeliveryAddressFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
 
@@ -167,7 +167,7 @@ class DeliveryAddressFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('domain_id')
@@ -175,7 +175,7 @@ class DeliveryAddressFormType extends AbstractType
             ->setDefaults([
                 'data_class' => DeliveryAddressData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'validation_groups' => function (FormInterface $form) {
+                'validation_groups' => function (FormInterface $form): array {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
                     /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData */

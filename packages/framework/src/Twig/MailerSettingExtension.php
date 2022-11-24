@@ -36,7 +36,7 @@ class MailerSettingExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('isMailerSettingUnusual', [$this, 'isMailerSettingUnusual']),
@@ -47,7 +47,7 @@ class MailerSettingExtension extends AbstractExtension
     /**
      * @return bool
      */
-    public function isMailerSettingUnusual()
+    public function isMailerSettingUnusual(): bool
     {
         return $this->mailerSettingProvider->isDeliveryDisabled() || $this->mailerSettingProvider->isMailerMasterEmailSet();
     }
@@ -55,7 +55,7 @@ class MailerSettingExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getMailerSettingInfo()
+    public function getMailerSettingInfo(): string
     {
         return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
             'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
@@ -67,7 +67,7 @@ class MailerSettingExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'shopsys.twig.mailer_setting_extension';
     }

@@ -61,7 +61,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     /**
      * @return float
      */
-    protected function getRequestTime()
+    protected function getRequestTime(): float
     {
         return microtime(true) - $this->startTime;
     }
@@ -69,7 +69,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     /**
      * @return array<string, mixed>
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::REQUEST => ['initStartTime', 512],

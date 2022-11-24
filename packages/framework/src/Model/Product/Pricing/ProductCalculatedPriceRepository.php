@@ -33,7 +33,7 @@ class ProductCalculatedPriceRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductCalculatedPriceRepository()
+    protected function getProductCalculatedPriceRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(ProductCalculatedPrice::class);
     }
@@ -43,7 +43,7 @@ class ProductCalculatedPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $priceWithVat
      */
-    public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, ?Money $priceWithVat)
+    public function saveCalculatedPrice(Product $product, PricingGroup $pricingGroup, ?Money $priceWithVat): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice|null $productCalculatedPrice */
         $productCalculatedPrice = $this->getProductCalculatedPriceRepository()->find([
@@ -68,7 +68,7 @@ class ProductCalculatedPriceRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      */
-    public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup)
+    public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup): void
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO product_calculated_prices (product_id, pricing_group_id, price_with_vat)

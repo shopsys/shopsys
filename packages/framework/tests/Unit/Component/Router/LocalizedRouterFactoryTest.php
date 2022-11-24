@@ -13,7 +13,7 @@ class LocalizedRouterFactoryTest extends TestCase
 {
     protected const LOCALE_ROUTERS_CONFIGURATION_MASK = __DIR__ . '/Resources/routing_front_*.yaml';
 
-    public function testGetRouterRouterNotResolvedException()
+    public function testGetRouterRouterNotResolvedException(): void
     {
         $containerMock = $this->createMock(ContainerInterface::class);
         $context = new RequestContext();
@@ -27,7 +27,7 @@ class LocalizedRouterFactoryTest extends TestCase
         $localizedRouterFactory->getRouter('ru', $context);
     }
 
-    public function testGetRouter()
+    public function testGetRouter(): void
     {
         $containerMock = $this->createMock(ContainerInterface::class);
         $context1 = new RequestContext();

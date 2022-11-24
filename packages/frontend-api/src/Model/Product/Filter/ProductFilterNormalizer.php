@@ -101,7 +101,7 @@ class ProductFilterNormalizer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parametersFilterData
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]|null[]
      */
     protected function getAllParametersFromParameterFilterData(array $parametersFilterData): array
     {

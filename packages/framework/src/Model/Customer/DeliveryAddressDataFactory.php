@@ -36,7 +36,7 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $deliveryAddress
      */
-    protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress)
+    protected function fillFromDeliveryAddress(DeliveryAddressData $deliveryAddressData, DeliveryAddress $deliveryAddress): void
     {
         $deliveryAddressData->companyName = $deliveryAddress->getCompanyName();
         $deliveryAddressData->firstName = $deliveryAddress->getFirstName();

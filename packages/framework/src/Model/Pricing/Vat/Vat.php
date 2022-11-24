@@ -59,7 +59,7 @@ class Vat
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      */
-    public function edit(VatData $vatData)
+    public function edit(VatData $vatData): void
     {
         $this->setData($vatData);
     }
@@ -75,7 +75,7 @@ class Vat
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -83,7 +83,7 @@ class Vat
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -99,7 +99,7 @@ class Vat
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
      */
-    public function getReplaceWith()
+    public function getReplaceWith(): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
     {
         return $this->replaceWith;
     }
@@ -107,12 +107,12 @@ class Vat
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $newVat
      */
-    public function markForDeletion(self $newVat)
+    public function markForDeletion(self $newVat): void
     {
         $this->replaceWith = $newVat;
     }
 
-    public function isMarkedAsDeleted()
+    public function isMarkedAsDeleted(): bool
     {
         return $this->replaceWith !== null;
     }

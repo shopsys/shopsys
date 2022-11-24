@@ -95,7 +95,7 @@ class QueryBuilderExtenderTest extends TestCase
         ];
     }
 
-    public function testDifferentAlias()
+    public function testDifferentAlias(): void
     {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)

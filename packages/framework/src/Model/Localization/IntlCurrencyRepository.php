@@ -202,7 +202,7 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
      *
      * @return \CommerceGuys\Intl\Currency\Currency[]
      */
-    public function getAll($locale = null)
+    public function getAll($locale = null): array
     {
         /** @var \CommerceGuys\Intl\Currency\Currency[] $intlCurrencies */
         $intlCurrencies = parent::getAll($locale);

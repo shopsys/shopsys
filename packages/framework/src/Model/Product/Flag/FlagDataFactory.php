@@ -63,7 +63,7 @@ class FlagDataFactory implements FlagDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
      */
-    protected function fillFromFlag(FlagData $flagData, Flag $flag)
+    protected function fillFromFlag(FlagData $flagData, Flag $flag): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation[] $translations */
         $translations = $flag->getTranslations();

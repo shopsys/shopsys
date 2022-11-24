@@ -10,7 +10,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTimeProviderTest extends TestCase
 {
-    public function isFormTimeValidProvider()
+    /**
+     * @return array<int, array<bool|int|string>>
+     */
+    public function isFormTimeValidProvider(): array
     {
         return [
             [9, '-10 second', true],
@@ -24,7 +27,7 @@ class FormTimeProviderTest extends TestCase
      * @param string $formCreatedAt
      * @param bool $isValid
      */
-    public function testIsFormTimeValid($minimumSeconds, $formCreatedAt, $isValid)
+    public function testIsFormTimeValid(int $minimumSeconds, string $formCreatedAt, bool $isValid): void
     {
         $sessionMock = $this->getMockBuilder(Session::class)
             ->disableOriginalConstructor()

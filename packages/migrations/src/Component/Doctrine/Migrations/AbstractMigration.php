@@ -31,7 +31,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      * @param \Doctrine\DBAL\Cache\QueryCacheProfile|null $qcp
      * @return \Doctrine\DBAL\Result
      */
-    public function sql(string $query, array $params = [], $types = [], ?QueryCacheProfile $qcp = null): Result
+    public function sql(string $query, array $params = [], array $types = [], ?QueryCacheProfile $qcp = null): Result
     {
         $this->sqlQueries[] = new Query($query, $params, $types);
 

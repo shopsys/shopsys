@@ -19,14 +19,17 @@ class FileAllowedExtension extends Constraint
      */
     public $extensions;
 
-    public function getRequiredOptions()
+    /**
+     * @return string[]
+     */
+    public function getRequiredOptions(): array
     {
         return [
             'extensions',
         ];
     }
 
-    public function getDefaultOption()
+    public function getDefaultOption(): string
     {
         return 'extensions';
     }

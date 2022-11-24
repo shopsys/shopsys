@@ -17,7 +17,7 @@ class InputPriceCalculationTest extends TestCase
      * @param string $vatPercent
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedResult
      */
-    public function testGetInputPrice(int $inputPriceType, Money $priceWithVat, string $vatPercent, Money $expectedResult)
+    public function testGetInputPrice(int $inputPriceType, Money $priceWithVat, string $vatPercent, Money $expectedResult): void
     {
         $inputPriceCalculation = new InputPriceCalculation();
         $actualInputPrice = $inputPriceCalculation->getInputPrice($inputPriceType, $priceWithVat, $vatPercent);
@@ -25,7 +25,10 @@ class InputPriceCalculationTest extends TestCase
         $this->assertThat($actualInputPrice, new IsMoneyEqual($expectedResult));
     }
 
-    public function getInputPriceDataProvider()
+    /**
+     * @return array<int, array{inputPriceType: int, priceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string, expectedResult: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function getInputPriceDataProvider(): array
     {
         return [
             [

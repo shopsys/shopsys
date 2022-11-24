@@ -12,7 +12,7 @@ final class FunctionAnnotationFixerTestClass3
      * use SomeNamespace\AnotherClass;
      * use SomeNamespace\SomeClass;
      */
-    private function matchUseImports(Tokens $tokens, string $className): ?string
+    private function matchUseImports(Tokens $tokens, string $className): void
     {
     }
 }

@@ -31,7 +31,7 @@ class DelayedPricingSetting
     /**
      * @param int $inputPriceType
      */
-    public function scheduleSetInputPriceType($inputPriceType)
+    public function scheduleSetInputPriceType(int $inputPriceType): void
     {
         if (!in_array($inputPriceType, PricingSetting::getInputPriceTypes(), true)) {
             throw new InvalidInputPriceTypeException('Unknown input price type');

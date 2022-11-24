@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPriceCalculationForCustomerUserTest extends TestCase
 {
-    public function testCalculatePriceByUserAndDomainIdWithUser()
+    public function testCalculatePriceByUserAndDomainIdWithUser(): void
     {
         $product = $this->createMock(Product::class);
         $pricingGroupData = new PricingGroupData();
@@ -60,7 +60,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $this->assertSame($expectedProductPrice, $productPrice);
     }
 
-    public function testCalculatePriceByUserAndDomainIdWithoutUser()
+    public function testCalculatePriceByUserAndDomainIdWithoutUser(): void
     {
         $domainId = Domain::FIRST_DOMAIN_ID;
         $product = $this->createMock(Product::class);

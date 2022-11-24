@@ -554,7 +554,7 @@ class ProductDetailViewFactoryTest extends TestCase
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacade
      */
-    private function createListedProductVariantsViewFacadeMock(array $variants)
+    private function createListedProductVariantsViewFacadeMock(array $variants): \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacade
     {
         $listedProductVariantsViewFacadeMock = $this->createMock(ListedProductVariantsViewFacade::class);
         $listedProductVariantsViewFacadeMock

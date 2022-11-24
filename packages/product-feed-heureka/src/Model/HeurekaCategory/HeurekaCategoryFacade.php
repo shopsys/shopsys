@@ -86,7 +86,7 @@ class HeurekaCategoryFacade
      * @param int $categoryId
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategory $heurekaCategory
      */
-    public function changeHeurekaCategoryForCategoryId($categoryId, HeurekaCategory $heurekaCategory): void
+    public function changeHeurekaCategoryForCategoryId(int $categoryId, HeurekaCategory $heurekaCategory): void
     {
         $oldHeurekaCategoryByCategoryId = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
 

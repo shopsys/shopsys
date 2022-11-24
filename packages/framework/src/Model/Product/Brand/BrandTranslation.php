@@ -27,7 +27,7 @@ class BrandTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -35,7 +35,7 @@ class BrandTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): void
     {
         $this->description = TransformString::getTrimmedStringOrNullOnEmpty($description);
     }

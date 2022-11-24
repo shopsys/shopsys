@@ -11,7 +11,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class DomainRouterTest extends TestCase
 {
-    public function testGetRouter()
+    public function testGetRouter(): void
     {
         $context = new RequestContext();
         $basicRouterMock = $this->getMockBuilder(RouterInterface::class)->getMockForAbstractClass();

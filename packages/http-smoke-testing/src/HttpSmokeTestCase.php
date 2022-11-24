@@ -157,7 +157,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * @param string $message
      * @return string
      */
-    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, $message): string
+    protected function getMessageWithDebugNotes(RequestDataSet $requestDataSet, string $message): string
     {
         if (count($requestDataSet->getDebugNotes()) > 0) {
             $indentedDebugNotes = array_map(function ($debugNote) {

@@ -57,7 +57,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function getReference($entityName, $id)
+    public function getReference($entityName, $id): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -67,7 +67,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function getPartialReference($entityName, $identifier)
+    public function getPartialReference($entityName, $identifier): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -77,7 +77,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function find($entityName, $id, $lockMode = null, $lockVersion = null)
+    public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 

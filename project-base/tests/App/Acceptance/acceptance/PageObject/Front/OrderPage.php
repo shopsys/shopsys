@@ -15,7 +15,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $transportTitle
      */
-    public function assertTransportIsNotSelected($transportTitle)
+    public function assertTransportIsNotSelected(string $transportTitle): void
     {
         $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedTransportTitle);
@@ -24,7 +24,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $transportTitle
      */
-    public function assertTransportIsSelected($transportTitle)
+    public function assertTransportIsSelected(string $transportTitle): void
     {
         $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedTransportTitle);
@@ -33,7 +33,7 @@ class OrderPage extends AbstractPage
     /**
      * @param int $transportPosition
      */
-    public function selectTransport($transportPosition)
+    public function selectTransport(int $transportPosition): void
     {
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
@@ -46,7 +46,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $paymentTitle
      */
-    public function assertPaymentIsNotSelected($paymentTitle)
+    public function assertPaymentIsNotSelected(string $paymentTitle): void
     {
         $this->scrollToPaymentForm();
         $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
@@ -56,7 +56,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $paymentTitle
      */
-    public function assertPaymentIsSelected($paymentTitle)
+    public function assertPaymentIsSelected(string $paymentTitle): void
     {
         $this->scrollToPaymentForm();
         $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
@@ -66,7 +66,7 @@ class OrderPage extends AbstractPage
     /**
      * @param int $paymentPosition
      */
-    public function selectPayment($paymentPosition)
+    public function selectPayment(int $paymentPosition): void
     {
         $this->scrollToPaymentForm();
         $frontCheckboxClicker = FrontCheckbox::createByCss(
@@ -80,7 +80,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $firstName
      */
-    public function fillFirstName($firstName)
+    public function fillFirstName(string $firstName): void
     {
         $this->tester->fillFieldByName(self::FIRST_NAME_FIELD_NAME, $firstName);
     }
@@ -88,7 +88,7 @@ class OrderPage extends AbstractPage
     /**
      * @param string $firstName
      */
-    public function assertFirstNameIsFilled($firstName)
+    public function assertFirstNameIsFilled(string $firstName): void
     {
         $this->tester->seeInFieldByName($firstName, self::FIRST_NAME_FIELD_NAME);
     }
@@ -99,7 +99,7 @@ class OrderPage extends AbstractPage
      * @param string $email
      * @param string $telephone
      */
-    public function fillPersonalInfo($firstName, $lastName, $email, $telephone)
+    public function fillPersonalInfo(string $firstName, string $lastName, string $email, string $telephone): void
     {
         $this->fillFirstName($firstName);
         $this->tester->fillFieldByName('order_personal_info_form[lastName]', $lastName);
@@ -112,7 +112,7 @@ class OrderPage extends AbstractPage
      * @param string $city
      * @param string $postcode
      */
-    public function fillBillingAddress($street, $city, $postcode)
+    public function fillBillingAddress(string $street, string $city, string $postcode): void
     {
         $this->tester->fillFieldByName('order_personal_info_form[street]', $street);
         $this->tester->fillFieldByName('order_personal_info_form[city]', $city);
@@ -124,12 +124,12 @@ class OrderPage extends AbstractPage
     /**
      * @param string $note
      */
-    public function fillNote($note)
+    public function fillNote(string $note): void
     {
         $this->tester->fillFieldByName('order_personal_info_form[note]', $note);
     }
 
-    public function acceptLegalConditions()
+    public function acceptLegalConditions(): void
     {
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
@@ -140,7 +140,7 @@ class OrderPage extends AbstractPage
         $this->tester->wait(1);
     }
 
-    private function scrollToPaymentForm()
+    private function scrollToPaymentForm(): void
     {
         $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
     }

@@ -67,7 +67,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -112,7 +112,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     /**
      * @return string[]
      */
-    private function getBrandNamesIndexedByBrandConstants()
+    private function getBrandNamesIndexedByBrandConstants(): array
     {
         return [
             self::BRAND_APPLE => 'Apple',

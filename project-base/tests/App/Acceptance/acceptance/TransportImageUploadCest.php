@@ -20,7 +20,7 @@ class TransportImageUploadCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage $entityEditPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      */
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
+    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage): void
     {
         $me->wantTo('Upload an image in admin transport edit page');
         $loginPage->loginAsAdmin();

@@ -41,7 +41,7 @@ class Authenticator
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function checkLoginProcess(Request $request)
+    public function checkLoginProcess(Request $request): bool
     {
         $error = null;
 
@@ -67,7 +67,7 @@ class Authenticator
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function loginUser(CustomerUser $customerUser, Request $request)
+    public function loginUser(CustomerUser $customerUser, Request $request): void
     {
         $token = new UsernamePasswordToken(
             $customerUser,

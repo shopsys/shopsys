@@ -35,7 +35,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
-    protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator)
+    protected function fillFromAdministrator(AdministratorData $administratorData, Administrator $administrator): void
     {
         $administratorData->email = $administrator->getEmail();
         $administratorData->realName = $administrator->getRealName();

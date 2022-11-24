@@ -50,7 +50,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
      */
-    protected function fillFromAdvert(AdvertData $advertData, Advert $advert)
+    protected function fillFromAdvert(AdvertData $advertData, Advert $advert): void
     {
         $advertData->name = $advert->getName();
         $advertData->type = $advert->getType();

@@ -29,7 +29,7 @@ final class PhpToDocTypeTransformer
      * @param mixed $default
      * @return string
      */
-    public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, $default = null): string
+    public function transform(Tokens $tokens, ?TypeAnalysis $typeAnalysis, mixed $default = null): string
     {
         if ($typeAnalysis === null) {
             $type = 'mixed';

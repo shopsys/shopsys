@@ -59,7 +59,7 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument)
+    public function resolve(Argument $argument): \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
     {
         $search = $argument['search'] ?? '';
 
@@ -90,7 +90,7 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolveByCategory(Argument $argument, Category $category)
+    public function resolveByCategory(Argument $argument, Category $category): \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
     {
         $search = $argument['search'] ?? '';
 
@@ -124,7 +124,7 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolveByBrand(Argument $argument, Brand $brand)
+    public function resolveByBrand(Argument $argument, Brand $brand): \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
     {
         $search = $argument['search'] ?? '';
 

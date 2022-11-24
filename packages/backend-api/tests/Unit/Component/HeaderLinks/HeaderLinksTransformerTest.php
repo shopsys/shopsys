@@ -19,14 +19,17 @@ class HeaderLinksTransformerTest extends TestCase
      * @param \Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks $expectedHeaderLinks
      * @dataProvider getFromPaginationResultTestCases
      */
-    public function testFromPaginationResult(PaginationResult $paginationResult, HeaderLinks $expectedHeaderLinks)
+    public function testFromPaginationResult(PaginationResult $paginationResult, HeaderLinks $expectedHeaderLinks): void
     {
         $transformer = new HeaderLinksTransformer();
         $headerLinks = $transformer->fromPaginationResult($paginationResult, 'http://example.com/x');
         $this->assertEquals($expectedHeaderLinks, $headerLinks);
     }
 
-    public function getFromPaginationResultTestCases()
+    /**
+     * @return Generator<\Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks[]|\Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<mixed>[]>
+     */
+    public function getFromPaginationResultTestCases(): \Tests\BackendApiBundle\Unit\Component\HeaderLinks\Generator
     {
         yield [
             new PaginationResult(1, 20, 10, []),

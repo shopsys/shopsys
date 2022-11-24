@@ -58,7 +58,7 @@ class ArticleFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
 
@@ -166,7 +166,7 @@ class ArticleFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['article', 'domain_id'])
@@ -180,9 +180,9 @@ class ArticleFormType extends AbstractType
 
     /**
      * @param array $options
-     * @return string[]
+     * @return array<string, string>
      */
-    private function getSeoMetaDescriptionAttributes(array $options)
+    private function getSeoMetaDescriptionAttributes(array $options): array
     {
         $seoMetaDescriptionAttributes = [];
 

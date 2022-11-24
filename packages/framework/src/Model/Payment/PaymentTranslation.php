@@ -39,7 +39,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -47,7 +47,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -55,7 +55,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @return string|null
      */
-    public function getInstructions()
+    public function getInstructions(): ?string
     {
         return $this->instructions;
     }
@@ -63,7 +63,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $name
      */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
@@ -71,7 +71,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $description
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): void
     {
         $this->description = TransformString::getTrimmedStringOrNullOnEmpty($description);
     }
@@ -79,7 +79,7 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @param string|null $instructions
      */
-    public function setInstructions($instructions)
+    public function setInstructions(?string $instructions): void
     {
         $this->instructions = TransformString::getTrimmedStringOrNullOnEmpty($instructions);
     }

@@ -46,7 +46,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'config' => [

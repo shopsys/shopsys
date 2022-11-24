@@ -9,7 +9,7 @@ class NotNullableColumnsFinder
 {
     /**
      * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $classesMetadata
-     * @return string[][]
+     * @return array<string, mixed[]>
      */
     public function getAllNotNullableColumnNamesIndexedByTableName(array $classesMetadata): array
     {

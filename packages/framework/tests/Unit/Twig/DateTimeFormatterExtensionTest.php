@@ -30,11 +30,11 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     /**
      * @dataProvider formatDateDataProvider
-     * @param mixed $input
+     * @param DateTime|string $input
      * @param mixed $locale
      * @param mixed $result
      */
-    public function testFormatDate($input, $locale, $result): void
+    public function testFormatDate(\DateTime|string $input, string $locale, string $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();
@@ -48,7 +48,7 @@ class DateTimeFormatterExtensionTest extends TestCase
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Localization\Localization
      */
-    protected function createLocalizationMock($locale): Localization
+    protected function createLocalizationMock(string $locale): Localization
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()

@@ -23,7 +23,7 @@ use Twig\Environment;
 
 class OrderMailTest extends FunctionalTestCase
 {
-    public function testGetMailTemplateNameByStatus()
+    public function testGetMailTemplateNameByStatus(): void
     {
         $orderStatus1 = $this->getMockBuilder(OrderStatus::class)
             ->setMethods(['getId'])
@@ -49,7 +49,7 @@ class OrderMailTest extends FunctionalTestCase
         $this->assertNotSame($mailTempleteName1, $mailTempleteName2);
     }
 
-    public function testGetMessageByOrder()
+    public function testGetMessageByOrder(): void
     {
         $routerMock = $this->getMockBuilder(RouterInterface::class)->setMethods(
             ['generate']

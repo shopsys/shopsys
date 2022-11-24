@@ -36,7 +36,7 @@ class OrderNumberSequence
     /**
      * @return string
      */
-    public function getNumber()
+    public function getNumber(): string
     {
         return $this->number;
     }
@@ -44,7 +44,7 @@ class OrderNumberSequence
     /**
      * @param string $number
      */
-    public function setNumber($number)
+    public function setNumber(string $number): void
     {
         $this->number = $number;
     }

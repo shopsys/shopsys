@@ -27,7 +27,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('have more pieces of the same product as one item in cart');
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
@@ -58,7 +58,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from product list');
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
@@ -86,7 +86,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from homepage');
         $me->amOnPage('/');
 
@@ -113,7 +113,7 @@ class CartCest
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage,
         CartPage $cartPage
-    ) {
+    ): void {
         $me->wantTo('add product to cart from product detail');
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
@@ -138,7 +138,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('change items in cart and recalculate price');
 
         // 22-sencor-sle-22f46dm4-hello-kitty
@@ -166,7 +166,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('add some items to cart and remove them');
 
         // panasonic-dmc-ft5ep
@@ -206,7 +206,7 @@ class CartCest
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage
-    ) {
+    ): void {
         $me->wantTo('add distinct products to cart');
 
         // 22-sencor-sle-22f46dm4-hello-kitty
@@ -235,7 +235,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('see that prices of products in cart are calculated well');
 
         // aquila-aquagym-non-carbonated-spring-water
@@ -268,7 +268,7 @@ class CartCest
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me
-    ) {
+    ): void {
         $me->wantTo('see that flow of promocode in cart is correct');
 
         // aquila-aquagym-non-carbonated-spring-water

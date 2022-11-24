@@ -16,7 +16,7 @@ class ProductListComponent extends AbstractPage
      * @param int $quantity
      * @param \Facebook\WebDriver\WebDriverElement $context
      */
-    public function addProductToCartByName($productName, $quantity, WebDriverElement $context)
+    public function addProductToCartByName(string $productName, int $quantity, WebDriverElement $context): void
     {
         $productItemElement = $this->findProductListItemByName($productName, $context);
 
@@ -34,7 +34,7 @@ class ProductListComponent extends AbstractPage
      * @param \Facebook\WebDriver\WebDriverElement $context
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductListItemByName($productName, WebDriverElement $context)
+    private function findProductListItemByName(\string $productName, WebDriverElement $context): \Facebook\WebDriver\WebDriverElement
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $productItems = $context->findElements(WebDriverBy::cssSelector('.test-list-products-item'));

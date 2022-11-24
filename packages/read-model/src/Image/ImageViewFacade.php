@@ -51,7 +51,7 @@ class ImageViewFacade implements ImageViewFacadeInterface
     /**
      * @param string $entityClass
      * @param int $entityId
-     * @return \Shopsys\ReadModelBundle\Image\ImageView[]
+     * @return \Shopsys\ReadModelBundle\Image\ImageView[]|null[]
      */
     public function getAllImagesByEntityId(string $entityClass, int $entityId): array
     {

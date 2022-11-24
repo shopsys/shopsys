@@ -85,7 +85,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getPageSize(): ?int
+    public function getPageSize(): int
     {
         return $this->pageSize;
     }
@@ -117,7 +117,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getFromItem(): float|int
+    public function getFromItem(): int
     {
         return $this->fromItem;
     }
@@ -125,7 +125,7 @@ class PaginationResult
     /**
      * @return int
      */
-    public function getToItem(): float|int
+    public function getToItem(): int
     {
         return $this->toItem;
     }

@@ -160,7 +160,7 @@ class OrderItem
     /**
      * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -168,7 +168,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getOrder()
+    public function getOrder(): \Shopsys\FrameworkBundle\Model\Order\Order
     {
         return $this->order;
     }
@@ -176,7 +176,7 @@ class OrderItem
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -242,7 +242,7 @@ class OrderItem
     /**
      * @return string
      */
-    public function getVatPercent()
+    public function getVatPercent(): string
     {
         return $this->vatPercent;
     }
@@ -250,7 +250,7 @@ class OrderItem
     /**
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
@@ -258,7 +258,7 @@ class OrderItem
     /**
      * @return string|null
      */
-    public function getUnitName()
+    public function getUnitName(): ?string
     {
         return $this->unitName;
     }
@@ -266,7 +266,7 @@ class OrderItem
     /**
      * @return string|null
      */
-    public function getCatnum()
+    public function getCatnum(): ?string
     {
         return $this->catnum;
     }
@@ -274,7 +274,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      */
-    public function edit(OrderItemData $orderItemData)
+    public function edit(OrderItemData $orderItemData): void
     {
         $this->name = $orderItemData->name;
         $this->priceWithoutVat = $orderItemData->priceWithoutVat;
@@ -348,7 +348,7 @@ class OrderItem
     /**
      * @return bool
      */
-    public function hasProduct()
+    public function hasProduct(): bool
     {
         $this->checkTypeProduct();
         return $this->product !== null;

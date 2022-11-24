@@ -28,7 +28,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -36,7 +36,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -47,7 +47,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string
     {
         return ChoiceType::class;
     }
@@ -55,7 +55,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [
             'choices' => $this->orderStatusFacade->getAll(),
@@ -69,7 +69,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
@@ -84,7 +84,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_IS:

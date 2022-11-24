@@ -14,7 +14,7 @@ class ImageExtension extends BaseImageExtension
      * @param array $attributes
      * @return string
      */
-    public function getImageHtml($imageView, array $attributes = []): string
+    public function getImageHtml(\Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object|null $imageView, array $attributes = []): string
     {
         if ($imageView === null) {
             return $this->getNoimageHtml($attributes);
@@ -55,7 +55,7 @@ class ImageExtension extends BaseImageExtension
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl($imageView, $sizeName = null, $type = null)
+    public function getImageUrl(\Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object $imageView, ?string $sizeName = null, ?string $type = null): string
     {
         if ($imageView instanceof ImageView) {
             $entityName = $imageView->getEntityName();

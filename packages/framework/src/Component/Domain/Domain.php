@@ -188,7 +188,7 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getCurrentDomainConfig(): ?Config\DomainConfig
+    public function getCurrentDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
     {
         if ($this->currentDomainConfig === null) {
             throw new NoDomainSelectedException();

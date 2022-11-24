@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class ImageFactoryTest extends TestCase
 {
-    public function testCreateMultipleException()
+    public function testCreateMultipleException(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => false]);
 
@@ -33,7 +33,7 @@ class ImageFactoryTest extends TestCase
         $imageFactory->createMultiple($imageEntityConfig, 1, 'type', []);
     }
 
-    public function testCreateMultiple()
+    public function testCreateMultiple(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => true]);
         $filenames = ['filename1.jpg', 'filename2.png'];
@@ -43,7 +43,7 @@ class ImageFactoryTest extends TestCase
             ->setMethods(['convertToShopFormatAndGetNewFilename'])
             ->getMock();
         $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')
-            ->willReturnCallback(function ($filepath) {
+            ->willReturnCallback(function ($filepath): string {
                 return pathinfo($filepath, PATHINFO_BASENAME);
             });
 
@@ -59,7 +59,7 @@ class ImageFactoryTest extends TestCase
         }
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], [], ['type' => true]);
         $filename = 'filename.jpg';

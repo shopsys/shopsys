@@ -11,7 +11,7 @@ class BaseClass4
      *
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function getCategoryFacade()
+    public function getCategoryFacade(): \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
     {
     }
 
@@ -20,7 +20,7 @@ class BaseClass4
      *
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    public function setCategory($category)
+    public function setCategory(\Shopsys\FrameworkBundle\Model\Category\Category $category): void
     {
     }
 }

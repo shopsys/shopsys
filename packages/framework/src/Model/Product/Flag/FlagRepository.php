@@ -23,7 +23,7 @@ class FlagRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getFlagRepository()
+    protected function getFlagRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
@@ -32,7 +32,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
      */
-    public function findById($flagId)
+    public function findById(int $flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
@@ -41,7 +41,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function getById($flagId)
+    public function getById(int $flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flag = $this->findById($flagId);
 
@@ -54,7 +54,7 @@ class FlagRepository
 
     /**
      * @param int[] $flagIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return object[]
      */
     public function getByIds(array $flagIds): array
     {
@@ -77,16 +77,16 @@ class FlagRepository
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return object[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
     }
 
     /**
      * @param string[] $uuids
-     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @return object[]
      */
     public function getByUuids(array $uuids): array
     {

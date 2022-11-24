@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 
 class UserTest extends TestCase
 {
-    public function testGetFullNameReturnsLastnameAndFirstnameForUser()
+    public function testGetFullNameReturnsLastnameAndFirstnameForUser(): void
     {
         $customerData = new CustomerData();
         $customerData->domainId = Domain::FIRST_DOMAIN_ID;
@@ -36,7 +36,7 @@ class UserTest extends TestCase
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
 
-    public function testGetFullNameReturnsCompanyNameForCompanyUser()
+    public function testGetFullNameReturnsCompanyNameForCompanyUser(): void
     {
         $customerData = new CustomerData();
         $customerData->domainId = Domain::FIRST_DOMAIN_ID;
@@ -60,7 +60,10 @@ class UserTest extends TestCase
         $this->assertSame('CompanyName', $customerUser->getFullName());
     }
 
-    public function isResetPasswordHashValidProvider()
+    /**
+     * @return array<int, array{resetPasswordHash: string|null, resetPasswordHashValidThrough: \DateTime|null, sentHash: string, isExpectedValid: bool}>
+     */
+    public function isResetPasswordHashValidProvider(): array
     {
         return [
             [
@@ -98,17 +101,17 @@ class UserTest extends TestCase
 
     /**
      * @dataProvider isResetPasswordHashValidProvider
-     * @param mixed $resetPasswordHash
+     * @param string|null $resetPasswordHash
      * @param mixed $resetPasswordHashValidThrough
      * @param mixed $sentHash
      * @param mixed $isExpectedValid
      */
     public function testIsResetPasswordHashValid(
-        $resetPasswordHash,
-        $resetPasswordHashValidThrough,
-        $sentHash,
-        $isExpectedValid
-    ) {
+        ?string $resetPasswordHash,
+        ?\DateTime $resetPasswordHashValidThrough,
+        string $sentHash,
+        bool $isExpectedValid
+    ): void {
         $customerUserData = new CustomerUserData();
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
@@ -127,7 +130,7 @@ class UserTest extends TestCase
      * @param string $propertyName
      * @param mixed $value
      */
-    private function setProperty(CustomerUser $customerUser, string $propertyName, $value)
+    private function setProperty(CustomerUser $customerUser, string $propertyName, \string|null|\DateTime $value): void
     {
         $reflection = new ReflectionClass($customerUser);
         $property = $reflection->getProperty($propertyName);
@@ -138,7 +141,7 @@ class UserTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress()
+    private function createBillingAddress(): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
     {
         return new BillingAddress(new BillingAddressData());
     }

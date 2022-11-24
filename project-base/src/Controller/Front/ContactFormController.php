@@ -55,7 +55,7 @@ class ContactFormController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->domain->getId();
         $privacyPolicyArticle = $this->legalConditionsFacade->findPrivacyPolicy($domainId);

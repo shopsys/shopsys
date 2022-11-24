@@ -18,7 +18,7 @@ class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
      */
     private OrderNumberSequenceRepository $orderNumberSequenceRepository;
 
-    public function testGetNextNumber()
+    public function testGetNextNumber(): void
     {
         $numbers = [];
         for ($i = 0; $i < 10; $i++) {

@@ -27,7 +27,7 @@ abstract class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @return string[]
+     * @return string[]|int[]
      */
     public function getRouteNames(): array
     {
@@ -37,7 +37,7 @@ abstract class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @return string[]
      */
-    protected function getRouteNameMap(): ?array
+    protected function getRouteNameMap(): array
     {
         if ($this->routeNameMap === null) {
             // Caching in order to translate breadcrumb item names only once

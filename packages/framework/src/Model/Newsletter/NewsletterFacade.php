@@ -42,7 +42,7 @@ class NewsletterFacade
      * @param string $email
      * @param int $domainId
      */
-    public function addSubscribedEmail($email, $domainId)
+    public function addSubscribedEmail(string $email, int $domainId): void
     {
         if ($this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
             return;
@@ -61,7 +61,7 @@ class NewsletterFacade
      * @param int $domainId
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getAllEmailsDataIteratorByDomainId($domainId)
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
     {
         return $this->newsletterRepository->getAllEmailsDataIteratorByDomainId($domainId);
     }
@@ -71,7 +71,7 @@ class NewsletterFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber|null
      */
-    public function findNewsletterSubscriberByEmailAndDomainId($email, $domainId)
+    public function findNewsletterSubscriberByEmailAndDomainId(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
     {
         return $this->newsletterRepository->findNewsletterSubscribeByEmailAndDomainId($email, $domainId);
     }
@@ -81,7 +81,7 @@ class NewsletterFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData)
+    public function getQueryBuilderForQuickSearch(int $selectedDomainId, QuickSearchFormData $searchData): \Doctrine\ORM\QueryBuilder
     {
         return $this->newsletterRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData);
     }
@@ -90,7 +90,7 @@ class NewsletterFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
-    public function getNewsletterSubscriberById(int $id)
+    public function getNewsletterSubscriberById(int $id): \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
     {
         return $this->newsletterRepository->getNewsletterSubscriberById($id);
     }
@@ -98,7 +98,7 @@ class NewsletterFacade
     /**
      * @param int $id
      */
-    public function deleteById(int $id)
+    public function deleteById(int $id): void
     {
         $newsletterSubscriber = $this->getNewsletterSubscriberById($id);
 

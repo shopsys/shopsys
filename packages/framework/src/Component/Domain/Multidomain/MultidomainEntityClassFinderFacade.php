@@ -55,7 +55,7 @@ class MultidomainEntityClassFinderFacade
     }
 
     /**
-     * @return string[]
+     * @return class-string<object>[]
      */
     public function getMultidomainEntitiesNames(): array
     {

@@ -37,22 +37,22 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
     /**
      * @dataProvider getTestCalculateAvailabilityData
      * @param mixed $usingStock
-     * @param mixed $stockQuantity
-     * @param mixed $outOfStockAction
+     * @param null|int $stockQuantity
+     * @param null|string $outOfStockAction
      * @param string|null $availability
      * @param string|null $outOfStockAvailability
      * @param string|null $defaultInStockAvailability
      * @param string|null $expectedCalculatedAvailability
      */
     public function testCalculateAvailability(
-        $usingStock,
-        $stockQuantity,
-        $outOfStockAction,
+        bool $usingStock,
+        ?int $stockQuantity,
+        ?string $outOfStockAction,
         ?string $availability = null,
         ?string $outOfStockAvailability = null,
         ?string $defaultInStockAvailability = null,
         ?string $expectedCalculatedAvailability = null
-    ) {
+    ): void {
         $productData = $this->productDataFactory->create();
         $productData->usingStock = $usingStock;
         $productData->stockQuantity = $stockQuantity;
@@ -95,7 +95,10 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $this->assertSame($this->getReference($expectedCalculatedAvailability), $calculatedAvailability);
     }
 
-    public function getTestCalculateAvailabilityData()
+    /**
+     * @return array<int, array{usingStock: bool, stockQuantity: int|null, outOfStockAction: string|null, availability: null|string, outOfStockAvailability: string|null, defaultInStockAvailability: string, calculatedAvailability: string}>
+     */
+    public function getTestCalculateAvailabilityData(): array
     {
         return [
             [
@@ -146,7 +149,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         ];
     }
 
-    public function testCalculateAvailabilityMainVariant()
+    public function testCalculateAvailabilityMainVariant(): void
     {
         $productData = $this->productDataFactory->create();
         $this->setVats($productData);
@@ -198,7 +201,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         $this->assertSame($variant1->getCalculatedAvailability(), $mainVariantCalculatedAvailability);
     }
 
-    public function testCalculateAvailabilityMainVariantWithNoSellableVariants()
+    public function testCalculateAvailabilityMainVariantWithNoSellableVariants(): void
     {
         $productData = $this->productDataFactory->create();
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_ON_REQUEST);

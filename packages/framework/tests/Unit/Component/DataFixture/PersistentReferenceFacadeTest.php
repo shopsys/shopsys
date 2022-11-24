@@ -17,7 +17,7 @@ use stdClass;
 
 class PersistentReferenceFacadeTest extends TestCase
 {
-    public function testCannotPersistReferenceToEntityWithoutGetIdMethod()
+    public function testCannotPersistReferenceToEntityWithoutGetIdMethod(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])
@@ -41,7 +41,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade->persistReference('referenceName', new stdClass());
     }
 
-    public function testCanPersistNewReference()
+    public function testCanPersistNewReference(): void
     {
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->setMethods(['__construct', 'persist', 'flush'])
@@ -73,7 +73,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade->persistReference('newReferenceName', $productMock);
     }
 
-    public function testGetReference()
+    public function testGetReference(): void
     {
         $persistentReference = new PersistentReference('referenceName', 'entityName', 1);
         $expectedObject = new stdClass();
@@ -102,7 +102,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $this->assertSame($expectedObject, $persistentReferenceFacade->getReference('referenceName'));
     }
 
-    public function testGetReferenceNotFound()
+    public function testGetReferenceNotFound(): void
     {
         $persistentReference = new PersistentReference('referenceName', 'entityName', 2);
 

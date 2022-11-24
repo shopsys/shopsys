@@ -22,7 +22,7 @@ trait MultidomainMigrationTrait
      * @param int $domainId
      * @return string
      */
-    protected function getDomainLocale($domainId)
+    protected function getDomainLocale(int $domainId)
     {
         return $this
             ->sql('SELECT get_domain_locale(:domainId)', ['domainId' => $domainId])

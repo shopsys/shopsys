@@ -16,7 +16,7 @@ class SelfWithMethodsAndVariables
 
     private static $privateProperty;
 
-    public function method()
+    public function method(): void
     {
         echo self::A;
         self::class;
@@ -49,17 +49,17 @@ class SelfWithMethodsAndVariables
         echo static::$privateProperty;
     }
 
-    public static function publicStaticMethod()
+    public static function publicStaticMethod(): void
     {
         echo 'value';
     }
 
-    protected static function protectedStaticMethod()
+    protected static function protectedStaticMethod(): void
     {
         echo 'value';
     }
 
-    private static function privateStaticMethod()
+    private static function privateStaticMethod(): void
     {
         echo 'value';
     }

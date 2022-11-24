@@ -34,7 +34,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('getShopInfoPhoneNumber', [$this, 'getPhoneNumber']),
@@ -46,7 +46,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected function getDomain()
+    protected function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         // Twig extensions are loaded during assetic:dump command,
         // so they cannot be dependent on Domain service
@@ -56,7 +56,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'shopInfo';
     }
@@ -64,7 +64,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return string|null
      */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 
@@ -74,7 +74,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return string|null
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 
@@ -84,7 +84,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return string|null
      */
-    public function getPhoneHours()
+    public function getPhoneHours(): ?string
     {
         $currentDomainId = $this->getDomain()->getId();
 

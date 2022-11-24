@@ -59,7 +59,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $data = $this->getDataForArticles($domainConfig->getLocale());
@@ -73,7 +73,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
 
     /**
      * @param string $locale
-     * @return string[][]
+     * @return array<int, mixed[]>
      */
     private function getDataForArticles(string $locale): array
     {
@@ -184,7 +184,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         }
     }
 
-    private function changeDataForSecondDomain()
+    private function changeDataForSecondDomain(): void
     {
         /** @var \App\Model\Article\Article $cookiesArticle */
         $cookiesArticle = $this->getReferenceForDomain(self::ARTICLE_COOKIES, Domain::SECOND_DOMAIN_ID);

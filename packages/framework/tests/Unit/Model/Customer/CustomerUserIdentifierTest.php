@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CustomerUserIdentifierTest extends TestCase
 {
-    public function testCannotCreateIdentifierForEmptyCartIdentifierAndNullUser()
+    public function testCannotCreateIdentifierForEmptyCartIdentifierAndNullUser(): void
     {
         $cartIdentifier = '';
         $customerUser = null;

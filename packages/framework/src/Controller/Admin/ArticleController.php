@@ -96,7 +96,7 @@ class ArticleController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $article = $this->articleFacade->getById($id);
         $articleData = $this->articleDataFactory->createFromArticle($article);
@@ -136,7 +136,7 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
         $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
@@ -157,7 +157,7 @@ class ArticleController extends AdminBaseController
      * @Route("/article/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $articleData = $this->articleDataFactory->create();
 
@@ -195,7 +195,7 @@ class ArticleController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
@@ -219,7 +219,7 @@ class ArticleController extends AdminBaseController
      * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(mixed $id): \Symfony\Component\HttpFoundation\Response
     {
         $article = $this->articleFacade->getById($id);
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
@@ -257,7 +257,7 @@ class ArticleController extends AdminBaseController
      * @param string $articlePlacement
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<array<string, mixed>>
      */
-    protected function getGrid($articlePlacement)
+    protected function getGrid(string $articlePlacement): \Shopsys\FrameworkBundle\Component\Grid\Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),

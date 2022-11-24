@@ -71,7 +71,7 @@ class CategoryController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $category = $this->categoryFacade->getById($id);
         $categoryData = $this->categoryDataFactory->createFromCategory($category);
@@ -113,7 +113,7 @@ class CategoryController extends AdminBaseController
      * @Route("/category/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -150,7 +150,7 @@ class CategoryController extends AdminBaseController
      * @Route("/category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         if (count($this->domain->getAll()) > 1) {
             if ($request->query->has('domain')) {
@@ -210,7 +210,7 @@ class CategoryController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $fullName = $this->categoryFacade->getById($id)->getName();
@@ -230,7 +230,7 @@ class CategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_category_list');
     }
 
-    public function listDomainTabsAction()
+    public function listDomainTabsAction(): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->session->get('categories_selected_domain_id', static::ALL_DOMAINS);
 
@@ -245,7 +245,7 @@ class CategoryController extends AdminBaseController
      * @param int $domainId
      * @param int $id
      */
-    public function loadBranchJsonAction($domainId, $id)
+    public function loadBranchJsonAction(int $domainId, $id): \Symfony\Component\HttpFoundation\JsonResponse
     {
         $domainId = (int)$domainId;
         $id = (int)$id;

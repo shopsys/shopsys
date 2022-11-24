@@ -63,7 +63,7 @@ class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      */
-    protected function fillFromOrderStatus(OrderStatusData $orderStatusData, OrderStatus $orderStatus)
+    protected function fillFromOrderStatus(OrderStatusData $orderStatusData, OrderStatus $orderStatus): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation[] $translations */
         $translations = $orderStatus->getTranslations();

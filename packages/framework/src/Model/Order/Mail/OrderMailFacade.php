@@ -51,7 +51,7 @@ class OrderMailFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      */
-    public function sendEmail(Order $order)
+    public function sendEmail(Order $order): void
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
         $messageData = $this->orderMail->createMessage($mailTemplate, $order);
@@ -64,7 +64,7 @@ class OrderMailFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, $domainId)
+    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
     {
         $templateName = OrderMail::getMailTemplateNameByStatus($orderStatus);
 

@@ -31,16 +31,16 @@ class TopCategoryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTopCategoryRepository()
+    protected function getTopCategoryRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(TopCategory::class);
     }
 
     /**
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
+     * @return object[]
      */
-    public function getAllByDomainId($domainId)
+    public function getAllByDomainId(int $domainId): array
     {
         return $this->getTopCategoryRepository()->findBy(['domainId' => $domainId], ['position' => 'ASC']);
     }
@@ -49,7 +49,7 @@ class TopCategoryRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory[]
      */
-    public function getVisibleByDomainId($domainId)
+    public function getVisibleByDomainId(int $domainId): array
     {
         return $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->select('tc')

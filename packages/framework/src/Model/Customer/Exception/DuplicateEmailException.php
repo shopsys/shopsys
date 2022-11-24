@@ -25,7 +25,7 @@ class DuplicateEmailException extends Exception implements CustomerUserException
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

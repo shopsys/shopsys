@@ -12,5 +12,5 @@ interface TimelimitLoginInterface
     /**
      * @param \DateTime $lastActivity
      */
-    public function setLastActivity($lastActivity);
+    public function setLastActivity(\DateTime $lastActivity);
 }

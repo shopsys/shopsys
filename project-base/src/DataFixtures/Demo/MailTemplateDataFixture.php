@@ -47,7 +47,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
@@ -151,10 +151,10 @@ team of {domain}
      */
     private function createMailTemplate(
         ObjectManager $manager,
-        $name,
+        string $name,
         MailTemplateData $mailTemplateData,
         int $domainId
-    ) {
+    ): void {
         $repository = $manager->getRepository(MailTemplate::class);
 
         $mailTemplate = $repository->findOneBy([

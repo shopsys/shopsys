@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
  * @param string|null $locale
  * @return string
  */
-function t(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null)
+function t(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
 {
     return Translator::staticTrans($id, $parameters, $domain, $locale);
 }

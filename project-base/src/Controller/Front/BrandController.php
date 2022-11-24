@@ -22,7 +22,7 @@ class BrandController extends FrontBaseController
         $this->brandFacade = $brandFacade;
     }
 
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Content/Brand/list.html.twig', [
             'brands' => $this->brandFacade->getAll(),

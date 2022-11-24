@@ -14,7 +14,7 @@ class DomainHelper extends Module
     /**
      * {@inheritDoc}
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $webDriver */
         $webDriver = $this->getModule(StrictWebDriver::class);

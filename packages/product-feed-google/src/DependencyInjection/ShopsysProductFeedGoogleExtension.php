@@ -12,6 +12,7 @@ class ShopsysProductFeedGoogleExtension extends Extension implements PrependExte
 {
     /**
      * {@inheritDoc}
+     * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

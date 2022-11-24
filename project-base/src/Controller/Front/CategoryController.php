@@ -62,7 +62,7 @@ class CategoryController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function panelAction(Request $request)
+    public function panelAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
             $this->categoryFacade->getRootCategory(),
@@ -93,7 +93,7 @@ class CategoryController extends FrontBaseController
     /**
      * @param int $parentCategoryId
      */
-    public function branchAction($parentCategoryId)
+    public function branchAction(int $parentCategoryId): \Symfony\Component\HttpFoundation\Response
     {
         $parentCategory = $this->categoryFacade->getById($parentCategoryId);
 
@@ -110,7 +110,7 @@ class CategoryController extends FrontBaseController
         ]);
     }
 
-    public function topAction()
+    public function topAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Content/Category/top.html.twig', [
             'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
@@ -121,7 +121,7 @@ class CategoryController extends FrontBaseController
      * @param \App\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
      */
-    public function categoryListAction(array $categories, $showProductsCountByCategory = true)
+    public function categoryListAction(array $categories, bool $showProductsCountByCategory = true): \Symfony\Component\HttpFoundation\Response
     {
         if ($showProductsCountByCategory === true) {
             $pricingGroup = $this->currentCustomerUser->getPricingGroup();

@@ -54,7 +54,7 @@ class UrlListType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['route_name'] === null) {
             throw new MissingRouteNameException();
@@ -103,7 +103,7 @@ class UrlListType extends AbstractType
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $absoluteUrlsByDomainIdAndSlug = $this->getAbsoluteUrlsIndexedByDomainIdAndSlug(
             $options['route_name'],
@@ -124,7 +124,7 @@ class UrlListType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => UrlListData::class,
@@ -137,9 +137,9 @@ class UrlListType extends AbstractType
     /**
      * @param string $routeName
      * @param int $entityId
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[][]
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]&mixed[][]
      */
-    private function getFriendlyUrlsIndexedByDomain($routeName, $entityId)
+    private function getFriendlyUrlsIndexedByDomain(string $routeName, \int $entityId): array
     {
         $friendlyUrlsByDomain = [];
         if ($entityId !== null) {
@@ -155,9 +155,9 @@ class UrlListType extends AbstractType
     /**
      * @param string $routeName
      * @param int $entityId
-     * @return string[][]
+     * @return array<mixed, array<string, string>>
      */
-    private function getAbsoluteUrlsIndexedByDomainIdAndSlug($routeName, $entityId)
+    private function getAbsoluteUrlsIndexedByDomainIdAndSlug(string $routeName, int $entityId): array
     {
         $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($routeName, $entityId);
         $absoluteUrlsByDomainIdAndSlug = [];
@@ -180,9 +180,9 @@ class UrlListType extends AbstractType
     /**
      * @param string $routeName
      * @param int $entityId
-     * @return string[]
+     * @return string[]|null[]
      */
-    private function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId)
+    private function getMainFriendlyUrlSlugsIndexedByDomainId(string $routeName, int $entityId): array
     {
         $mainFriendlyUrlsSlugsByDomainId = [];
         foreach ($this->domain->getAll() as $domainConfig) {
@@ -205,7 +205,7 @@ class UrlListType extends AbstractType
     /**
      * @return string[]
      */
-    private function getDomainUrlsIndexedById()
+    private function getDomainUrlsIndexedById(): array
     {
         $domainUrlsById = [];
         foreach ($this->domain->getAll() as $domainConfig) {

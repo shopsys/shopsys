@@ -35,7 +35,7 @@ class Category extends BaseCategory
     /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
-    public function edit(BaseCategoryData $categoryData)
+    public function edit(BaseCategoryData $categoryData): void
     {
         parent::edit($categoryData);
     }

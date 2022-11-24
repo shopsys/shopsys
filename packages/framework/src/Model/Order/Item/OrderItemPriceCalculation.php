@@ -85,7 +85,7 @@ class OrderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateTotalPricesIndexedById($orderItems): array
+    public function calculateTotalPricesIndexedById(array $orderItems): array
     {
         $prices = [];
 

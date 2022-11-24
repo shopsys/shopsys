@@ -12,7 +12,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class RoundingTest extends TestCase
 {
-    public function roundingProvider()
+    /**
+     * @return array<int, array{unroundedPrice: \Shopsys\FrameworkBundle\Component\Money\Money, expectedAsPriceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money, expectedAsPriceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, expectedAsVatAmount: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function roundingProvider(): array
     {
         return [
             [
@@ -62,11 +65,11 @@ class RoundingTest extends TestCase
      * @param mixed $expectedAsVatAmount
      */
     public function testRoundingByCurrency(
-        $unroundedPrice,
-        $expectedAsPriceWithVat,
-        $expectedAsPriceWithoutVat,
-        $expectedAsVatAmount
-    ) {
+        \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithVat,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithoutVat,
+        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsVatAmount
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -87,7 +90,10 @@ class RoundingTest extends TestCase
         $this->assertThat($rounding->roundVatAmount($unroundedPrice), new IsMoneyEqual($expectedAsVatAmount));
     }
 
-    public function roundingPriceWithVatProvider()
+    /**
+     * @return array<int, array{roundingType: string, inputPrice: \Shopsys\FrameworkBundle\Component\Money\Money, outputPrice: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function roundingPriceWithVatProvider(): array
     {
         return [
             [
@@ -145,10 +151,10 @@ class RoundingTest extends TestCase
      * @param mixed $outputPrice
      */
     public function testRoundingPriceWithVatByCurrency(
-        $roundingType,
-        $inputPrice,
-        $outputPrice
-    ) {
+        string $roundingType,
+        \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice,
+        \Shopsys\FrameworkBundle\Component\Money\Money $outputPrice
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
             ->getMock();

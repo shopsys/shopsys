@@ -51,7 +51,7 @@ class SitemapListener implements EventSubscriberInterface
     /**
      * @inheritdoc
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             SitemapPopulateEvent::class => 'populateSitemap',
@@ -61,7 +61,7 @@ class SitemapListener implements EventSubscriberInterface
     /**
      * @param \Presta\SitemapBundle\Event\SitemapPopulateEvent $event
      */
-    public function populateSitemap(SitemapPopulateEvent $event)
+    public function populateSitemap(SitemapPopulateEvent $event): void
     {
         $section = $event->getSection();
         $domainId = (int)$section;
@@ -111,9 +111,9 @@ class SitemapListener implements EventSubscriberInterface
         array $sitemapItems,
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        $section,
-        $elementPriority
-    ) {
+        string $section,
+        float|string|int|null $elementPriority
+    ): void {
         foreach ($sitemapItems as $sitemapItem) {
             $absoluteUrl = $this->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
             $urlConcrete = new UrlConcrete($absoluteUrl, null, null, $elementPriority);
@@ -130,9 +130,9 @@ class SitemapListener implements EventSubscriberInterface
     protected function addHomepageUrl(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        $section,
-        $elementPriority
-    ) {
+        string $section,
+        float|string|int|null $elementPriority
+    ): void {
         $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
         $absoluteUrl = $domainRouter->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $urlConcrete = new UrlConcrete($absoluteUrl, null, null, $elementPriority);
@@ -144,7 +144,7 @@ class SitemapListener implements EventSubscriberInterface
      * @param string $slug
      * @return string
      */
-    protected function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, $slug)
+    protected function getAbsoluteUrlByDomainConfigAndSlug(DomainConfig $domainConfig, string $slug): string
     {
         return $domainConfig->getUrl() . '/' . $slug;
     }

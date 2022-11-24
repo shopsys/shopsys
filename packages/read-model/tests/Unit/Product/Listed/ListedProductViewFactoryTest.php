@@ -44,8 +44,8 @@ class ListedProductViewFactoryTest extends TestCase
         int $priceAmount,
         ImageView $imageView,
         ProductActionView $productActionView,
-        $flags,
-        $expectedFlags
+        array|\Doctrine\Common\Collections\Collection $flags,
+        array $expectedFlags
     ): void {
         $domainMock = $this->createDomainMock();
         $productCachedAttributesFacadeMock = $this->createProductCachedAttributesFacadeMock($priceAmount);
@@ -95,7 +95,7 @@ class ListedProductViewFactoryTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function createProductMock(int $id, string $name, string $shortDescription, string $availabilityName, $flags)
+    private function createProductMock(int $id, string $name, string $shortDescription, string $availabilityName, \array|\Doctrine\Common\Collections\Collection $flags): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
     {
         $productMock = $this->createMock(Product::class);
 
@@ -116,7 +116,7 @@ class ListedProductViewFactoryTest extends TestCase
      * @param int $id
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    private function createFlagMock(int $id)
+    private function createFlagMock(int $id): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
     {
         $flagMock = $this->createMock(Flag::class);
         $flagMock->method('getId')->willReturn($id);
@@ -164,7 +164,7 @@ class ListedProductViewFactoryTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private function createDomainMock()
+    private function createDomainMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Component\Domain\Domain
     {
         $domainMock = $this->createMock(Domain::class);
         $domainMock->method('getId')->willReturn(1);
@@ -175,7 +175,7 @@ class ListedProductViewFactoryTest extends TestCase
      * @param int $priceAmount
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
      */
-    private function createProductCachedAttributesFacadeMock(int $priceAmount)
+    private function createProductCachedAttributesFacadeMock(int $priceAmount): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
     {
         $productCachedAttributesFacadeMock = $this->createMock(ProductCachedAttributesFacade::class);
         $productCachedAttributesFacadeMock->method('getProductSellingPrice')->willReturn(

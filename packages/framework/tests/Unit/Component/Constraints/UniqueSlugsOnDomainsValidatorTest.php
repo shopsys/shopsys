@@ -18,7 +18,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @inheritdoc
      */
-    protected function createValidator()
+    protected function createValidator(): \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator
     {
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs'),
@@ -46,7 +46,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         return new UniqueSlugsOnDomainsValidator($domain, $domainRouterFactoryMock);
     }
 
-    public function testValidateSameSlugsOnDifferentDomains()
+    public function testValidateSameSlugsOnDifferentDomains(): void
     {
         $values = [
             [
@@ -64,7 +64,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function testValidateDuplicateSlugsOnSameDomain()
+    public function testValidateDuplicateSlugsOnSameDomain(): void
     {
         $values = [
             [
@@ -86,7 +86,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function testValidateExistingSlug()
+    public function testValidateExistingSlug(): void
     {
         $values = [
             [

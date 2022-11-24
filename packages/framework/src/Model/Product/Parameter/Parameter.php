@@ -54,7 +54,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      */
-    public function edit(ParameterData $parameterData)
+    public function edit(ParameterData $parameterData): void
     {
         $this->setData($parameterData);
     }
@@ -71,7 +71,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -88,7 +88,7 @@ class Parameter extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getName($locale = null)
+    public function getName(?string $locale = null): ?string
     {
         return $this->translation($locale)->getName();
     }
@@ -96,7 +96,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @return bool
      */
-    public function isVisible()
+    public function isVisible(): bool
     {
         return $this->visible;
     }
@@ -104,7 +104,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      */
-    protected function setTranslations(ParameterData $parameterData)
+    protected function setTranslations(ParameterData $parameterData): void
     {
         foreach ($parameterData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -114,7 +114,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
      */
-    protected function createTranslation()
+    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
     {
         return new ParameterTranslation();
     }

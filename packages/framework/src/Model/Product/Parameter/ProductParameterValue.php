@@ -53,7 +53,7 @@ class ProductParameterValue
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct()
+    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
     {
         return $this->product;
     }
@@ -61,7 +61,7 @@ class ProductParameterValue
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getParameter()
+    public function getParameter(): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
     {
         return $this->parameter;
     }
@@ -69,7 +69,7 @@ class ProductParameterValue
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function getValue()
+    public function getValue(): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
     {
         return $this->value;
     }

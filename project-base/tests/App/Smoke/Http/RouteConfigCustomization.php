@@ -42,7 +42,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer)
+    public function customizeRouteConfigs(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $this->filterRoutesForTesting($routeConfigCustomizer);
         $this->configureGeneralRules($routeConfigCustomizer);
@@ -53,30 +53,30 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer)
+    private function filterRoutesForTesting(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if (!$info->isHttpMethodAllowed('GET')) {
                     $config->skipRoute('Only routes supporting GET method are tested.');
                 }
             })
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if (preg_match('~^(/admin)?/_~', $info->getRoutePath())) {
                     $config->skipRoute('Internal routes (prefixed with "/_") are not tested.');
                 }
             })
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if ($info->getRouteCondition() === 'request.isXmlHttpRequest()') {
                     $config->skipRoute('AJAX-only routes are not tested.');
                 }
             })
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if (!preg_match('~^(admin|front)_~', $info->getRouteName())) {
                     $config->skipRoute('Only routes for front-end and administration are tested.');
                 }
             })
-            ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config) {
+            ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config): void {
                 $config->skipRoute(
                     'Used by firewall to catch login requests. '
                     . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path'
@@ -84,28 +84,28 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName(
                 ['front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type'],
-                function (RouteConfig $config) {
+                function (RouteConfig $config): void {
                     $config->skipRoute('There are no images in the shop when the tests are processed.');
                 }
             )
-            ->customizeByRouteName('admin_domain_selectdomain', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_domain_selectdomain', function (RouteConfig $config): void {
                 $config->skipRoute('Used only for internal setting of selected domain by tab control in admin.');
             })
-            ->customizeByRouteName('admin_feed_generate', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_feed_generate', function (RouteConfig $config): void {
                 $config->skipRoute('Do not rewrite XML feed by test products.');
             })
-            ->customizeByRouteName('admin_logout', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_logout', function (RouteConfig $config): void {
                 $config->skipRoute('There is different security configuration in TEST environment.');
             })
-            ->customizeByRouteName('admin_unit_delete', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_unit_delete', function (RouteConfig $config): void {
                 $config->skipRoute('temporarily not tested until it will be optimized in US-1517.');
             })
-            ->customizeByRouteName('admin_domain_list', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_domain_list', function (RouteConfig $config): void {
                 if ($this->isSingleDomain()) {
                     $config->skipRoute('Domain list in administration is not available when only 1 domain exists.');
                 }
             })
-            ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
+            ->customizeByRouteName('admin_access_denied', function (RouteConfig $config): void {
                 $config->changeDefaultRequestDataSet(
                     'This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).'
                 )
@@ -116,10 +116,10 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureGeneralRules(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 foreach ($info->getRouteParameterNames() as $name) {
                     if ($info->isRouteParameterRequired($name) && preg_match('~^(id|.+Id)$~', $name)) {
                         $debugNote = 'Route requires ID parameter "%s". Using %d by default.';
@@ -128,13 +128,13 @@ class RouteConfigCustomization
                     }
                 }
             })
-            ->customize(function (RouteConfig $config, RouteInfo $info) {
+            ->customize(function (RouteConfig $config, RouteInfo $info): void {
                 if (preg_match('~_delete$~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->addCallDuringTestExecution(
-                            function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                            function (RequestDataSet $requestDataSet, ContainerInterface $container): void {
                                 $container = $container->get('test.service_container');
                                 /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
                                 $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
@@ -157,7 +157,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureAdminRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customize(function (RouteConfig $config, RouteInfo $info) {
@@ -300,7 +300,7 @@ class RouteConfigCustomization
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteConfigCustomizer $routeConfigCustomizer
      */
-    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer)
+    private function configureFrontendRoutes(RouteConfigCustomizer $routeConfigCustomizer): void
     {
         $routeConfigCustomizer
             ->customizeByRouteName(['front_customer_edit', 'front_customer_orders'], function (RouteConfig $config) {
@@ -476,7 +476,7 @@ class RouteConfigCustomization
      * @param int|null $domainId
      * @return object
      */
-    private function getPersistentReference($name, ?int $domainId = null)
+    private function getPersistentReference(string $name, ?int $domainId = null): object
     {
         /** @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade */
         $persistentReferenceFacade = $this->container
@@ -491,7 +491,7 @@ class RouteConfigCustomization
     /**
      * @return bool
      */
-    private function isSingleDomain()
+    private function isSingleDomain(): bool
     {
         /** @var \Shopsys\FrameworkBundle\Component\Domain\Domain $domain */
         $domain = $this->container->get(Domain::class);

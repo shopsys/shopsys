@@ -14,7 +14,7 @@ class ErrorHandlerController extends FrontBaseController
     /**
      * @Route("/error-handler/notice")
      */
-    public function noticeAction()
+    public function noticeAction(): \Symfony\Component\HttpFoundation\Response
     {
         $undefined[42];
 
@@ -24,7 +24,7 @@ class ErrorHandlerController extends FrontBaseController
     /**
      * @Route("/error-handler/exception")
      */
-    public function exceptionAction()
+    public function exceptionAction(): void
     {
         throw new ExpectedTestException('Expected exception');
     }
@@ -32,7 +32,7 @@ class ErrorHandlerController extends FrontBaseController
     /**
      * @Route("/error-handler/unknown-domain")
      */
-    public function unknownDomainAction()
+    public function unknownDomainAction(): void
     {
         throw new UnableToResolveDomainException('http://localhost:8000');
     }

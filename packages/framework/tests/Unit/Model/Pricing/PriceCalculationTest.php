@@ -14,7 +14,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class PriceCalculationTest extends TestCase
 {
-    public function applyVatPercentProvider()
+    /**
+     * @return array<int, array{priceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string, expectedPriceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function applyVatPercentProvider(): array
     {
         return [
             [
@@ -50,7 +53,7 @@ class PriceCalculationTest extends TestCase
         Money $priceWithoutVat,
         string $vatPercent,
         Money $expectedPriceWithVat
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -67,7 +70,10 @@ class PriceCalculationTest extends TestCase
         $this->assertThat($actualPriceWithVat, new IsMoneyEqual($expectedPriceWithVat));
     }
 
-    public function getVatAmountByPriceWithVatProvider()
+    /**
+     * @return array<int, mixed[]>
+     */
+    public function getVatAmountByPriceWithVatProvider(): array
     {
         return [
             [
@@ -98,7 +104,7 @@ class PriceCalculationTest extends TestCase
         Money $priceWithVat,
         string $vatPercent,
         Money $expectedVatAmount
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
             ->getMock();

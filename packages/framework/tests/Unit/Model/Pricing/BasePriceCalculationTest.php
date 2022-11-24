@@ -17,7 +17,10 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class BasePriceCalculationTest extends TestCase
 {
-    public function calculateBasePriceProvider()
+    /**
+     * @return array<int, array{inputPriceType: int, inputPrice: \Shopsys\FrameworkBundle\Component\Money\Money, vatPercent: string, basePriceWithoutVat: \Shopsys\FrameworkBundle\Component\Money\Money, basePriceWithVat: \Shopsys\FrameworkBundle\Component\Money\Money, basePriceVatAmount: \Shopsys\FrameworkBundle\Component\Money\Money}>
+     */
+    public function calculateBasePriceProvider(): array
     {
         return [
             [
@@ -51,11 +54,11 @@ class BasePriceCalculationTest extends TestCase
     public function testCalculateBasePriceRoundedByCurrency(
         int $inputPriceType,
         Money $inputPrice,
-        $vatPercent,
+        string $vatPercent,
         Money $basePriceWithoutVat,
         Money $basePriceWithVat,
         Money $basePriceVatAmount
-    ) {
+    ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
             ->getMock();

@@ -48,7 +48,7 @@ class ProductParametersBatchLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string[]
+     * @return string[]|null[]
      */
     public function getProductParametersByName(Product $product, DomainConfig $domainConfig): array
     {

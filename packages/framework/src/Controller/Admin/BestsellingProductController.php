@@ -54,7 +54,7 @@ class BestsellingProductController extends AdminBaseController
      * @Route("/product/bestselling-product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
@@ -78,7 +78,7 @@ class BestsellingProductController extends AdminBaseController
      * @Route("/product/bestselling-product/detail/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function detailAction(Request $request)
+    public function detailAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $category = $this->categoryFacade->getById($request->get('categoryId'));
         $domainId = $request->get('domainId');

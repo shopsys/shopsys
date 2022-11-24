@@ -43,11 +43,11 @@ class ProductFilterCountRepository
      */
     public function getProductFilterCountData(
         QueryBuilder $productsQueryBuilder,
-        $locale,
+        string $locale,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
         $productFilterCountData = new ProductFilterCountData();
         $productFilterCountData->countInStock = $this->getCountInStock(
             $productsQueryBuilder,
@@ -87,7 +87,7 @@ class ProductFilterCountRepository
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): int {
         $productsInStockQueryBuilder = clone $productsQueryBuilder;
         $productInStockFilterData = clone $productFilterData;
 
@@ -118,7 +118,7 @@ class ProductFilterCountRepository
         array $brandFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($brandFilterChoices) === 0) {
             return [];
         }
@@ -171,7 +171,7 @@ class ProductFilterCountRepository
         array $flagFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ) {
+    ): array {
         if (count($flagFilterChoices) === 0) {
             return [];
         }
@@ -228,15 +228,15 @@ class ProductFilterCountRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
-     * @return int[][]
+     * @return array<int, array<int|string, mixed>>
      */
     protected function getCountIndexedByParameterIdAndValueId(
         QueryBuilder $productsQueryBuilder,
         array $parameterFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-        $locale
-    ) {
+        string $locale
+    ): array {
         $countByParameterIdAndValueId = [];
 
         foreach ($parameterFilterChoices as $parameterFilterChoice) {

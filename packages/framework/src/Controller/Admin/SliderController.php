@@ -75,7 +75,7 @@ class SliderController extends AdminBaseController
     /**
      * @Route("/slider/list/")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('s')
@@ -106,7 +106,7 @@ class SliderController extends AdminBaseController
      * @Route("/slider/item/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -145,7 +145,7 @@ class SliderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
         $sliderItemData = $this->sliderItemDataFactory->createFromSliderItem($sliderItem);
@@ -189,7 +189,7 @@ class SliderController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $name = $this->sliderItemFacade->getById($id)->getName();

@@ -49,7 +49,7 @@ class ProductParameterValueDataFactory implements ProductParameterValueDataFacto
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $productParameterValueData
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue $productParameterValue
      */
-    protected function fillFromProductParameterValue(ProductParameterValueData $productParameterValueData, ProductParameterValue $productParameterValue)
+    protected function fillFromProductParameterValue(ProductParameterValueData $productParameterValueData, ProductParameterValue $productParameterValue): void
     {
         $productParameterValueData->parameter = $productParameterValue->getParameter();
         $productParameterValueData->parameterValueData = $this->parameterValueDataFactory->createFromParameterValue(

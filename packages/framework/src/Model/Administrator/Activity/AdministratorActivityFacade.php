@@ -44,8 +44,8 @@ class AdministratorActivityFacade
      */
     public function create(
         Administrator $administrator,
-        $ipAddress
-    ) {
+        string $ipAddress
+    ): \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity {
         $administratorActivity = $this->administratorActivityFactory->create($administrator, $ipAddress);
 
         $this->em->persist($administratorActivity);
@@ -57,7 +57,7 @@ class AdministratorActivityFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
-    public function updateCurrentActivityLastActionTime(Administrator $administrator)
+    public function updateCurrentActivityLastActionTime(Administrator $administrator): void
     {
         $currentAdministratorActivity = $this->administratorActivityRepository->getCurrent($administrator);
         $currentAdministratorActivity->updateLastActionTime();
@@ -69,7 +69,7 @@ class AdministratorActivityFacade
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity[]
      */
-    public function getLastAdministratorActivities(Administrator $administrator, $maxResults)
+    public function getLastAdministratorActivities(Administrator $administrator, int $maxResults): array
     {
         return $this->administratorActivityRepository->getLastAdministratorActivities($administrator, $maxResults);
     }

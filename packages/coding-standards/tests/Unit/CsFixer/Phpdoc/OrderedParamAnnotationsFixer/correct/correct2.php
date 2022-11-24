@@ -11,7 +11,7 @@ class SomeClass
      * @param callable $callback
      * @return \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
      */
-    public function customizeByRouteName($routeName, $callback)
+    public function customizeByRouteName(string|array $routeName, callable $callback): \Shopsys\HttpSmokeTesting\RouteConfigCustomizer
     {
     }
 }

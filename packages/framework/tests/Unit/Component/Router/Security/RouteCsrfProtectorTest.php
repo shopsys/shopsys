@@ -70,7 +70,7 @@ class RouteCsrfProtectorTest extends TestCase
         $tokenManagerMock
             ->expects($this->atLeastOnce())
             ->method('isTokenValid')
-            ->with($this->callback(function (CsrfToken $token) use ($validCsrfToken) {
+            ->with($this->callback(function (CsrfToken $token) use ($validCsrfToken): bool {
                 return $token->getValue() === $validCsrfToken;
             }))
             ->willReturn(true);
@@ -123,7 +123,7 @@ class RouteCsrfProtectorTest extends TestCase
         $tokenManagerMock
             ->expects($this->atLeastOnce())
             ->method('isTokenValid')
-            ->with($this->callback(function (CsrfToken $token) use ($invalidCsrfToken) {
+            ->with($this->callback(function (CsrfToken $token) use ($invalidCsrfToken): bool {
                 return $token->getValue() === $invalidCsrfToken;
             }))
             ->willReturn(false);

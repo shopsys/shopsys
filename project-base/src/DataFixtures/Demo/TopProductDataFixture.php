@@ -35,7 +35,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $defaultTopProductReferenceNames = [
             ProductDataFixture::PRODUCT_PREFIX . '1',
@@ -75,7 +75,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     /**
      * {@inheritDoc}
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             ProductDataFixture::class,

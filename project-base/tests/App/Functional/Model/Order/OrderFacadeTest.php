@@ -74,7 +74,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
      */
     private OrderDataFactoryInterface $orderDataFactory;
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $product = $this->productRepository->getById(1);
 
@@ -130,7 +130,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertCount(3, $orderFromDb->getItems());
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference('order_1');

@@ -69,7 +69,7 @@ class ZboziProductDomainFacade
      * @param int $productId
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData[] $zboziProductDomainsData
      */
-    public function saveZboziProductDomainsForProductId($productId, array $zboziProductDomainsData): void
+    public function saveZboziProductDomainsForProductId(int $productId, array $zboziProductDomainsData): void
     {
         $existingZboziProductDomains = $this->zboziProductDomainRepository->findByProductId($productId);
 

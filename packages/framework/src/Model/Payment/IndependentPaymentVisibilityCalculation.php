@@ -24,7 +24,7 @@ class IndependentPaymentVisibilityCalculation
      * @param int $domainId
      * @return bool
      */
-    public function isIndependentlyVisible(Payment $payment, $domainId)
+    public function isIndependentlyVisible(Payment $payment, int $domainId): bool
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 

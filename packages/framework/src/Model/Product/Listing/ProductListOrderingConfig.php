@@ -41,7 +41,7 @@ class ProductListOrderingConfig
     /**
      * @return string[]
      */
-    public function getSupportedOrderingModesNamesIndexedById()
+    public function getSupportedOrderingModesNamesIndexedById(): array
     {
         return $this->supportedOrderingModesNamesById;
     }
@@ -49,7 +49,7 @@ class ProductListOrderingConfig
     /**
      * @return string
      */
-    public function getCookieName()
+    public function getCookieName(): string
     {
         return $this->cookieName;
     }
@@ -57,15 +57,15 @@ class ProductListOrderingConfig
     /**
      * @return string
      */
-    public function getDefaultOrderingModeId()
+    public function getDefaultOrderingModeId(): string
     {
         return $this->defaultOrderingModeId;
     }
 
     /**
-     * @return string[]
+     * @return int[]|string[]
      */
-    public function getSupportedOrderingModeIds()
+    public function getSupportedOrderingModeIds(): array
     {
         return array_keys($this->supportedOrderingModesNamesById);
     }

@@ -24,7 +24,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return bool
      */
-    public function isActive($domainId)
+    public function isActive(int $domainId): bool
     {
         return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId) !== null;
     }
@@ -34,7 +34,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return bool
      */
-    public function isFree(Money $productsPriceWithVat, $domainId)
+    public function isFree(Money $productsPriceWithVat, int $domainId): bool
     {
         $freeTransportAndPaymentPriceLimit = $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId);
         if ($freeTransportAndPaymentPriceLimit === null) {
@@ -49,7 +49,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getRemainingPriceWithVat(Money $productsPriceWithVat, $domainId): Money
+    public function getRemainingPriceWithVat(Money $productsPriceWithVat, int $domainId): Money
     {
         if (!$this->isFree($productsPriceWithVat, $domainId) && $this->isActive($domainId)) {
             return $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId)->subtract($productsPriceWithVat);
@@ -62,7 +62,7 @@ class FreeTransportAndPaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    protected function getFreeTransportAndPaymentPriceLimitOnDomain($domainId): ?Money
+    protected function getFreeTransportAndPaymentPriceLimitOnDomain(int $domainId): ?Money
     {
         return $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
     }

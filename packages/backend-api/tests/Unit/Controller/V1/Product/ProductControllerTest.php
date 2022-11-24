@@ -48,7 +48,7 @@ class ProductControllerTest extends TestCase
         );
     }
 
-    public function testGetProductActionWithUuidIncludingInvalidCharacter()
+    public function testGetProductActionWithUuidIncludingInvalidCharacter(): void
     {
         $this->expectException(BadRequestHttpException::class);
 

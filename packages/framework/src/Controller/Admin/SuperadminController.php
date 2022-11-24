@@ -83,7 +83,7 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/errors/")
      */
-    public function errorsAction()
+    public function errorsAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
@@ -92,7 +92,7 @@ class SuperadminController extends AdminBaseController
      * @Route("/superadmin/pricing/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function pricingAction(Request $request)
+    public function pricingAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $pricingSettingData = [
             'type' => $this->pricingSetting->getInputPriceType(),
@@ -118,7 +118,7 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/urls/")
      */
-    public function urlsAction()
+    public function urlsAction(): \Symfony\Component\HttpFoundation\Response
     {
         $allLocales = $this->localization->getLocalesOfAllDomains();
         $dataSource = new ArrayDataSource($this->loadDataForUrls($allLocales));
@@ -160,7 +160,7 @@ class SuperadminController extends AdminBaseController
      * @Route("/superadmin/modules/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function modulesAction(Request $request)
+    public function modulesAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $formData = [];
         foreach ($this->moduleList->getNames() as $moduleName) {
@@ -189,7 +189,7 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/css-documentation/")
      */
-    public function cssDocumentationAction()
+    public function cssDocumentationAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
     }

@@ -36,7 +36,7 @@ class CustomerUserIdentifier
     /**
      * @return string
      */
-    public function getCartIdentifier()
+    public function getCartIdentifier(): string
     {
         return $this->cartIdentifier;
     }
@@ -44,7 +44,7 @@ class CustomerUserIdentifier
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUser()
+    public function getCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
     {
         return $this->customerUser;
     }
@@ -52,7 +52,7 @@ class CustomerUserIdentifier
     /**
      * @return string
      */
-    public function getObjectHash()
+    public function getObjectHash(): string
     {
         if ($this->customerUser instanceof CustomerUser) {
             $customerUserId = $this->customerUser->getId();

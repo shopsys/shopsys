@@ -29,6 +29,7 @@ final class ForbiddenDumpFixer implements FixerInterface
 
     /**
      * {@inheritdoc}
+     * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function isCandidate(Tokens $tokens): bool
     {
@@ -45,6 +46,7 @@ final class ForbiddenDumpFixer implements FixerInterface
 
     /**
      * {@inheritdoc}
+     * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {

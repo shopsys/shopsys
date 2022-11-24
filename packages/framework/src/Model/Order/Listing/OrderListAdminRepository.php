@@ -25,7 +25,7 @@ class OrderListAdminRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilder($locale)
+    public function getOrderListQueryBuilder(string $locale): \Doctrine\ORM\QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('

@@ -15,7 +15,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -23,7 +23,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -34,7 +34,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string
     {
         return TextType::class;
     }
@@ -42,7 +42,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -50,7 +50,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if (
@@ -75,7 +75,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

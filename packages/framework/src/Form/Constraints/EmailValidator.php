@@ -11,7 +11,7 @@ class EmailValidator extends ConstraintValidator
     /**
      * @inheritdoc
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Email) {
             throw new UnexpectedTypeException($constraint, Email::class);
@@ -37,7 +37,7 @@ class EmailValidator extends ConstraintValidator
      * @param string $value
      * @return bool
      */
-    protected function isEmail($value)
+    protected function isEmail(string $value): bool
     {
         $atom = "[-a-z0-9!#$%&'*+/=?^_`{|}~]"; // RFC 5322 unquoted characters in local-part
         $alpha = "a-z\x80-\xFF"; // superset of IDN

@@ -52,7 +52,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $personalDataAccessRequest)
+    public function createMessage(MailTemplate $template, $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),
@@ -78,7 +78,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param string $domainName
      * @return array
      */
-    protected function getBodyValuesIndexedByVariableName($url, $email, $domainName)
+    protected function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
     {
         return [
             self::VARIABLE_URL => $url,
@@ -91,7 +91,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param string $domainName
      * @return array
      */
-    protected function getSubjectValuesIndexedByVariableName($domainName)
+    protected function getSubjectValuesIndexedByVariableName(string $domainName): array
     {
         return [
             self::VARIABLE_DOMAIN => $domainName,
@@ -102,7 +102,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param string $hash
      * @return string
      */
-    protected function getVariablePersonalDataAccessUrl($hash)
+    protected function getVariablePersonalDataAccessUrl(string $hash): string
     {
         $router = $this->domainRouterFactory->getRouter($this->domain->getId());
 

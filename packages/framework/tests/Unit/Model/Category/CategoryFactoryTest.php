@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFactory;
 
 class CategoryFactoryTest extends TestCase
 {
-    public function testCreateSetRoot()
+    public function testCreateSetRoot(): void
     {
         $categoryData = new CategoryData();
         $rootCategory = new Category($categoryData);
@@ -21,7 +21,7 @@ class CategoryFactoryTest extends TestCase
         $this->assertSame($rootCategory, $category->getParent());
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $rootCategory = new Category(new CategoryData());
         $parentCategory = new Category(new CategoryData());

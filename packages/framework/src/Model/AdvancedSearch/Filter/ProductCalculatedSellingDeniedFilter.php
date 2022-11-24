@@ -13,7 +13,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -21,7 +21,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -32,7 +32,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string
     {
         return HiddenType::class;
     }
@@ -40,7 +40,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -48,7 +48,7 @@ class ProductCalculatedSellingDeniedFilter implements AdvancedSearchFilterInterf
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $sellingDenied = $ruleData->operator === self::OPERATOR_IS;

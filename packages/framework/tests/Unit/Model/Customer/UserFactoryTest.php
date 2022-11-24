@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 
 class UserFactoryTest extends TestCase
 {
-    public function testCreate()
+    public function testCreate(): void
     {
         $customerUserFactory = $this->getUserFactory();
 

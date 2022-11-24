@@ -203,7 +203,7 @@ CODE_SAMPLE
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike
      * @return bool
      */
-    protected function refactorParam(Param $param, int $position, $functionLike): bool
+    protected function refactorParam(Param $param, int $position, \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike): bool
     {
         $inferedType = $this->paramTypeInferer->inferParam($param);
         $inferedType = RectorUnionTypeHelper::optimizeUnionType($inferedType);
@@ -243,7 +243,7 @@ CODE_SAMPLE
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike
      * @return bool
      */
-    protected function shouldSkipParam(Param $param, $functionLike): bool
+    protected function shouldSkipParam(Param $param, \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike): bool
     {
         if ($param->variadic) {
             return true;

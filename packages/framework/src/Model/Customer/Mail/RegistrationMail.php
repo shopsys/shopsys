@@ -44,7 +44,7 @@ class RegistrationMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $mailTemplate, $customerUser)
+    public function createMessage(MailTemplate $mailTemplate, $customerUser): \Shopsys\FrameworkBundle\Model\Mail\MessageData
     {
         return new MessageData(
             $customerUser->getEmail(),
@@ -61,7 +61,7 @@ class RegistrationMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return array
      */
-    protected function getVariablesReplacements(CustomerUser $customerUser)
+    protected function getVariablesReplacements(CustomerUser $customerUser): array
     {
         $router = $this->domainRouterFactory->getRouter($customerUser->getDomainId());
 

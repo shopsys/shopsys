@@ -62,7 +62,7 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
     /**
      * @return \App\Form\Front\Order\OrderFlow
      */
-    public function create()
+    public function create(): \App\Form\Front\Order\OrderFlow
     {
         $orderFlow = new OrderFlow();
         $orderFlow->setDomainId($this->domain->getId());

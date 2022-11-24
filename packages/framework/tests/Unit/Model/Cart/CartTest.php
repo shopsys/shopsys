@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 
 class CartTest extends TestCase
 {
-    public function testGetItemsCountZero()
+    public function testGetItemsCountZero(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
@@ -20,7 +20,7 @@ class CartTest extends TestCase
         $this->assertSame(0, $cart->getItemsCount());
     }
 
-    public function testGetItemsCount()
+    public function testGetItemsCount(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -43,7 +43,7 @@ class CartTest extends TestCase
         $this->assertSame(2, $cart->getItemsCount());
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
@@ -52,7 +52,7 @@ class CartTest extends TestCase
         $this->assertTrue($cart->isEmpty());
     }
 
-    public function testIsNotEmpty()
+    public function testIsNotEmpty(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $productData = new ProductData();
@@ -67,7 +67,7 @@ class CartTest extends TestCase
         $this->assertFalse($cart->isEmpty());
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
         $productData1 = new ProductData();

@@ -14,7 +14,7 @@ class NotInArrayValidator extends ConstraintValidator
      * @param string $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof NotInArray) {
             throw new UnexpectedTypeException($constraint, NotInArray::class);

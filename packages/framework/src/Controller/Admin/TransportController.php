@@ -65,7 +65,7 @@ class TransportController extends AdminBaseController
      * @Route("/transport/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -102,7 +102,7 @@ class TransportController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $transport = $this->transportFacade->getById($id);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -145,7 +145,7 @@ class TransportController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $transportName = $this->transportFacade->getById($id)->getName();
@@ -165,7 +165,7 @@ class TransportController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         $grid = $this->transportGridFactory->create();
 

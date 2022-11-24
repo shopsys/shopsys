@@ -38,7 +38,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -59,7 +59,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
@@ -74,7 +74,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatDate($dateTime, $locale = null)
+    public function formatDate(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -89,7 +89,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatTime($dateTime, $locale = null)
+    public function formatTime(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -104,7 +104,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatDateTime($dateTime, $locale = null)
+    public function formatDateTime(mixed $dateTime, ?string $locale = null): string
     {
         return $this->format(
             $dateTime,
@@ -121,7 +121,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    protected function format($dateTime, $dateType, $timeType, $locale = null)
+    protected function format(mixed $dateTime, int $dateType, int $timeType, ?string $locale = null): string
     {
         if ($dateTime === null) {
             return '-';
@@ -139,7 +139,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    protected function getLocale($locale = null)
+    protected function getLocale(?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->localization->getLocale();
@@ -152,7 +152,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param mixed $value
      * @return \DateTime
      */
-    protected function convertToDateTime($value)
+    protected function convertToDateTime(mixed $value): \DateTime
     {
         if ($value instanceof DateTime) {
             return $value;
@@ -168,7 +168,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param int $date
      * @return string
      */
-    public function dateOfCreation($date)
+    public function dateOfCreation(int $date): string
     {
         $startDate = date('Y', strtotime('1-1-' . $date));
         $endDate = date('Y');
@@ -183,7 +183,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'date_formatter_extension';
     }

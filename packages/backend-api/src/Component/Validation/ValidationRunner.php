@@ -15,7 +15,7 @@ class ValidationRunner
     /**
      * @param array $apiData
      * @param \Symfony\Component\Validator\Constraints\Collection $constraintCollection
-     * @return string[]
+     * @return \Stringable[]|string[]
      */
     public function runValidation(array $apiData, Collection $constraintCollection): array
     {

@@ -31,7 +31,7 @@ class Version20180603135347 extends AbstractMigration
      * @param string $mailTemplateName
      * @param string $sendMail
      */
-    private function createMailTemplateIfNotExist($mailTemplateName, $sendMail)
+    private function createMailTemplateIfNotExist(string $mailTemplateName, string $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName', [
             'mailTemplateName' => $mailTemplateName,

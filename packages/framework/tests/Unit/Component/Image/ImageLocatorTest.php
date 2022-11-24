@@ -20,7 +20,7 @@ class ImageLocatorTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    private function getBaseImageConfig()
+    private function getBaseImageConfig(): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
     {
         $inputConfig = [
             [
@@ -85,7 +85,10 @@ class ImageLocatorTest extends TestCase
         return new ImageConfig($imageEntityConfigByClass, $entityNameResolver);
     }
 
-    public function getRelativeImagePathProvider()
+    /**
+     * @return array<int, array<string|null>>
+     */
+    public function getRelativeImagePathProvider(): array
     {
         return [
             [
@@ -118,11 +121,11 @@ class ImageLocatorTest extends TestCase
     /**
      * @dataProvider getRelativeImagePathProvider
      * @param mixed $entityName
-     * @param mixed $type
-     * @param mixed $sizeName
+     * @param string|null $type
+     * @param string|null $sizeName
      * @param mixed $expectedPath
      */
-    public function testGetRelativeImagePath($entityName, $type, $sizeName, $expectedPath)
+    public function testGetRelativeImagePath(string $entityName, ?string $type, ?string $sizeName, string $expectedPath): void
     {
         $filesystemMock = $this->createMock(FilesystemInterface::class);
         $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemMock);
@@ -130,7 +133,10 @@ class ImageLocatorTest extends TestCase
         $this->assertSame($expectedPath, $imageLocator->getRelativeImagePath($entityName, $type, $sizeName));
     }
 
-    public function getRelativeImagePathExceptionProvider()
+    /**
+     * @return array<int, array<class-string<\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException>|class-string<\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException>|class-string<\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException>|string|null>>
+     */
+    public function getRelativeImagePathExceptionProvider(): array
     {
         return [
             [
@@ -157,11 +163,11 @@ class ImageLocatorTest extends TestCase
     /**
      * @dataProvider getRelativeImagePathExceptionProvider
      * @param mixed $entityName
-     * @param mixed $type
-     * @param mixed $sizeName
+     * @param null|string $type
+     * @param null|string $sizeName
      * @param mixed $exceptionClass
      */
-    public function testGetRelativeImagePathException($entityName, $type, $sizeName, $exceptionClass)
+    public function testGetRelativeImagePathException(string $entityName, ?string $type, ?string $sizeName, string $exceptionClass): void
     {
         $filesystemMock = $this->createMock(FilesystemInterface::class);
         $imageLocator = new ImageLocator('imageDir', $this->getBaseImageConfig(), $filesystemMock);

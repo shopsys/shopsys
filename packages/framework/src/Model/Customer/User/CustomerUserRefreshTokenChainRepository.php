@@ -25,14 +25,14 @@ class CustomerUserRefreshTokenChainRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCustomerUserRefreshTokenChainRepository(): ObjectRepository
+    protected function getCustomerUserRefreshTokenChainRepository(): \Doctrine\ORM\EntityRepository
     {
         return $this->em->getRepository(CustomerUserRefreshTokenChain::class);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain[]
+     * @return object[]
      */
     public function findCustomersTokenChains(CustomerUser $customerUser): array
     {

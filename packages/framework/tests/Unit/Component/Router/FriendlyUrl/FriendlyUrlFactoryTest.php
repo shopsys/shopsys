@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FriendlyUrlFactoryTest extends TestCase
 {
-    public function testCreateForAllDomains()
+    public function testCreateForAllDomains(): void
     {
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'example.cz', 'cs'),

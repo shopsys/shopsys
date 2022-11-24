@@ -27,7 +27,7 @@ class FileThumbnailInfo
     /**
      * @return string|null
      */
-    public function getIconType()
+    public function getIconType(): ?string
     {
         return $this->iconType;
     }
@@ -35,7 +35,7 @@ class FileThumbnailInfo
     /**
      * @return string|null
      */
-    public function getImageUri()
+    public function getImageUri(): ?string
     {
         return $this->imageUri;
     }

@@ -47,7 +47,7 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter(
@@ -74,7 +74,7 @@ class NumberFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatNumber($number, $locale = null)
+    public function formatNumber(mixed $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -92,7 +92,7 @@ class NumberFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatDecimalNumber($number, $minimumFractionDigits, $locale = null)
+    public function formatDecimalNumber(mixed $number, int $minimumFractionDigits, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -109,7 +109,7 @@ class NumberFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    public function formatPercent($number, $locale = null)
+    public function formatPercent(mixed $number, ?string $locale = null): string
     {
         $numberFormatter = new NumberFormatter($this->numberFormatRepository, [
             'locale' => $this->getLocale($locale),
@@ -125,7 +125,7 @@ class NumberFormatterExtension extends AbstractExtension
      * @param string|null $locale
      * @return string
      */
-    protected function getLocale($locale = null)
+    protected function getLocale(?string $locale = null): string
     {
         if ($locale !== null) {
             return $locale;
@@ -141,7 +141,7 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'number_formatter_extension';
     }
@@ -150,7 +150,7 @@ class NumberFormatterExtension extends AbstractExtension
      * @param mixed $number
      * @return bool
      */
-    public function isInteger($number)
+    public function isInteger(mixed $number): bool
     {
         return is_numeric($number) && (string)(int)$number === (string)$number;
     }

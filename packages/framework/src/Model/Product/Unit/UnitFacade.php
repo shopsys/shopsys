@@ -60,7 +60,7 @@ class UnitFacade
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getById($unitId)
+    public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         return $this->unitRepository->getById($unitId);
     }
@@ -69,7 +69,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function create(UnitData $unitData)
+    public function create(UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->unitFactory->create($unitData);
         $this->em->persist($unit);
@@ -85,7 +85,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function edit($unitId, UnitData $unitData)
+    public function edit(int $unitId, UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $unit = $this->unitRepository->getById($unitId);
         $unit->edit($unitData);
@@ -100,7 +100,7 @@ class UnitFacade
      * @param int $unitId
      * @param int|null $newUnitId
      */
-    public function deleteById($unitId, $newUnitId = null)
+    public function deleteById(int $unitId, ?int $newUnitId = null): void
     {
         $oldUnit = $this->unitRepository->getById($unitId);
 
@@ -122,7 +122,7 @@ class UnitFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->unitRepository->getAll();
     }
@@ -131,7 +131,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
-    public function isUnitUsed(Unit $unit)
+    public function isUnitUsed(Unit $unit): bool
     {
         return $this->unitRepository->existsProductWithUnit($unit);
     }
@@ -140,7 +140,7 @@ class UnitFacade
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit[]
      */
-    public function getAllExceptId($unitId)
+    public function getAllExceptId(int $unitId): array
     {
         return $this->unitRepository->getAllExceptId($unitId);
     }
@@ -148,7 +148,7 @@ class UnitFacade
     /**
      * @return int
      */
-    protected function getDefaultUnitId()
+    protected function getDefaultUnitId(): int
     {
         return $this->setting->get(Setting::DEFAULT_UNIT);
     }
@@ -156,7 +156,7 @@ class UnitFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getDefaultUnit()
+    public function getDefaultUnit(): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
     {
         $defaultUnitId = $this->getDefaultUnitId();
 
@@ -166,7 +166,7 @@ class UnitFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      */
-    public function setDefaultUnit(Unit $unit)
+    public function setDefaultUnit(Unit $unit): void
     {
         $this->setting->set(Setting::DEFAULT_UNIT, $unit->getId());
     }
@@ -175,7 +175,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      * @return bool
      */
-    public function isUnitDefault(Unit $unit)
+    public function isUnitDefault(Unit $unit): bool
     {
         return $this->getDefaultUnit() === $unit;
     }

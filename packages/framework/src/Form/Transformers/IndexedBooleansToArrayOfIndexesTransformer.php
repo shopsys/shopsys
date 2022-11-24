@@ -9,7 +9,7 @@ class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInter
     /**
      * {@inheritdoc}
      */
-    public function transform($value)
+    public function transform($value): ?array
     {
         if (!is_array($value)) {
             return null;
@@ -21,7 +21,7 @@ class IndexedBooleansToArrayOfIndexesTransformer implements DataTransformerInter
     /**
      * {@inheritdoc}
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?array
     {
         if (!is_array($value)) {
             return null;

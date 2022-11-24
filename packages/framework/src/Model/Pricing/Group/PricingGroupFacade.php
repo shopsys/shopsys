@@ -104,7 +104,7 @@ class PricingGroupFacade
      * @param int $pricingGroupId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getById($pricingGroupId)
+    public function getById(int $pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         return $this->pricingGroupRepository->getById($pricingGroupId);
     }
@@ -114,7 +114,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function create(PricingGroupData $pricingGroupData, $domainId)
+    public function create(PricingGroupData $pricingGroupData, int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->pricingGroupFactory->create($pricingGroupData, $domainId);
 
@@ -138,7 +138,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function edit($pricingGroupId, PricingGroupData $pricingGroupData)
+    public function edit(int $pricingGroupId, PricingGroupData $pricingGroupData): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
     {
         $pricingGroup = $this->pricingGroupRepository->getById($pricingGroupId);
         $pricingGroup->edit($pricingGroupData);
@@ -156,7 +156,7 @@ class PricingGroupFacade
      * @param int $oldPricingGroupId
      * @param int|null $newPricingGroupId
      */
-    public function delete($oldPricingGroupId, $newPricingGroupId = null)
+    public function delete(int $oldPricingGroupId, ?int $newPricingGroupId = null): void
     {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
         if ($newPricingGroupId !== null) {
@@ -183,7 +183,7 @@ class PricingGroupFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->pricingGroupRepository->getAll();
     }
@@ -192,7 +192,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getByDomainId($domainId)
+    public function getByDomainId(int $domainId): array
     {
         return $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
     }
@@ -202,7 +202,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
      */
-    public function getAllExceptIdByDomainId($id, $domainId)
+    public function getAllExceptIdByDomainId(int $id, int $domainId): array
     {
         return $this->pricingGroupRepository->getAllExceptIdByDomainId($id, $domainId);
     }
@@ -210,7 +210,7 @@ class PricingGroupFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[][]
      */
-    public function getAllIndexedByDomainId()
+    public function getAllIndexedByDomainId(): array
     {
         $pricingGroupsByDomainId = [];
         foreach ($this->domain->getAll() as $domain) {

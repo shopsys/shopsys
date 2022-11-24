@@ -89,7 +89,7 @@ class CategoryDataFixture
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function load(OutputInterface $output)
+    public function load(OutputInterface $output): void
     {
         $progressBar = $this->progressBarFactory->create($output, $this->recursivelyCountCategoriesInCategoryTree());
 
@@ -105,7 +105,7 @@ class CategoryDataFixture
      * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      * @param int $categoryLevel
      */
-    private function recursivelyCreateCategoryTree($parentCategory, ProgressBar $progressBar, $categoryLevel = 0)
+    private function recursivelyCreateCategoryTree(\App\Model\Category\Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);
@@ -126,7 +126,7 @@ class CategoryDataFixture
      * @param int $categoryLevel
      * @return int
      */
-    private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0)
+    private function recursivelyCountCategoriesInCategoryTree(int $categoryLevel = 0): int
     {
         $count = 0;
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
@@ -143,7 +143,7 @@ class CategoryDataFixture
      * @param \App\Model\Category\Category $parentCategory
      * @return \App\Model\Category\CategoryData
      */
-    private function getRandomCategoryDataByParentCategory(Category $parentCategory)
+    private function getRandomCategoryDataByParentCategory(Category $parentCategory): \App\Model\Category\CategoryData
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;

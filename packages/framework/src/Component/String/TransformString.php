@@ -121,7 +121,7 @@ class TransformString
      * @param string $path
      * @return string
      */
-    public static function removeDriveLetterFromPath(string $path): ?string
+    public static function removeDriveLetterFromPath(string $path): string
     {
         return preg_replace('#^[A-Z]:#', '', $path);
     }

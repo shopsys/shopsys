@@ -40,7 +40,7 @@ class ModuleFacade
      * @param string $moduleName
      * @return bool
      */
-    public function isEnabled($moduleName)
+    public function isEnabled(string $moduleName): bool
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 
@@ -51,7 +51,7 @@ class ModuleFacade
      * @param string $moduleName
      * @param bool $isEnabled
      */
-    public function setEnabled($moduleName, $isEnabled)
+    public function setEnabled(string $moduleName, bool $isEnabled): void
     {
         $enabledModule = $this->enabledModuleRepository->findByName($moduleName);
 

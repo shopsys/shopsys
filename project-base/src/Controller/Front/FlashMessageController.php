@@ -6,7 +6,7 @@ namespace App\Controller\Front;
 
 class FlashMessageController extends FrontBaseController
 {
-    public function indexAction()
+    public function indexAction(): \Symfony\Component\HttpFoundation\Response
     {
         return $this->render('Front/Inline/FlashMessage/index.html.twig', [
             'errorMessages' => $this->getErrorMessages(),

@@ -124,7 +124,7 @@ class CountryFormType extends AbstractType
     }
 
     /**
-     * @return string[]
+     * @return string[]|null[]
      */
     protected function getOtherCountryCodes(): array
     {

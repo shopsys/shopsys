@@ -386,7 +386,7 @@ class TranslationReplaceSourceCommand extends Command
 
     /**
      * @param string $searchedDirectoryPath
-     * @return string[]
+     * @return string[]|mixed[][]
      */
     private function getAllPathNames(string $searchedDirectoryPath): array
     {

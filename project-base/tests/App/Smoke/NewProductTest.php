@@ -17,7 +17,10 @@ use Tests\App\Test\FunctionalTestCase;
 
 class NewProductTest extends FunctionalTestCase
 {
-    public function createOrEditProductProvider()
+    /**
+     * @return array<int, array<string>>
+     */
+    public function createOrEditProductProvider(): array
     {
         return [['admin/product/new/'], ['admin/product/edit/1']];
     }
@@ -26,7 +29,7 @@ class NewProductTest extends FunctionalTestCase
      * @dataProvider createOrEditProductProvider
      * @param mixed $relativeUrl
      */
-    public function testCreateOrEditProduct($relativeUrl)
+    public function testCreateOrEditProduct(string $relativeUrl): void
     {
         $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
         $isDomainSecured = parse_url($domainUrl, PHP_URL_SCHEME) === 'https';
@@ -69,7 +72,7 @@ class NewProductTest extends FunctionalTestCase
     /**
      * @param \Symfony\Component\DomCrawler\Form $form
      */
-    private function fillForm(Form $form)
+    private function fillForm(Form $form): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit */
         $unit = $this->getReference(UnitDataFixture::UNIT_CUBIC_METERS);
@@ -99,7 +102,7 @@ class NewProductTest extends FunctionalTestCase
      * @param \Symfony\Component\DomCrawler\Form $form
      * @param \Symfony\Component\Security\Csrf\CsrfToken $token
      */
-    private function setFormCsrfToken(Form $form, CsrfToken $token)
+    private function setFormCsrfToken(Form $form, CsrfToken $token): void
     {
         $form['product_form[_token]'] = $token->getValue();
     }
@@ -107,7 +110,7 @@ class NewProductTest extends FunctionalTestCase
     /**
      * @param \Symfony\Component\DomCrawler\Form $form
      */
-    private function fillManualInputPrices(Form $form)
+    private function fillManualInputPrices(Form $form): void
     {
         $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);
         foreach ($pricingGroupFacade->getAll() as $pricingGroup) {
@@ -122,7 +125,7 @@ class NewProductTest extends FunctionalTestCase
     /**
      * @param \Symfony\Component\DomCrawler\Form $form
      */
-    private function fillVats(Form $form)
+    private function fillVats(Form $form): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */

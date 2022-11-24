@@ -20,7 +20,7 @@ class OrderEditResult
     /**
      * @return bool
      */
-    public function isStatusChanged()
+    public function isStatusChanged(): bool
     {
         return $this->statusChanged;
     }

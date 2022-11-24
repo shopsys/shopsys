@@ -17,7 +17,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 class CronFacadeTest extends TestCase
 {
-    public function testRunModuleByServiceId()
+    public function testRunModuleByServiceId(): void
     {
         $serviceId = 'cronModuleServiceId';
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
@@ -31,7 +31,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runModuleByServiceId($serviceId);
     }
 
-    public function testRunIteratedModuleByServiceId()
+    public function testRunIteratedModuleByServiceId(): void
     {
         $serviceId = 'cronModuleServiceId';
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
@@ -51,7 +51,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runModuleByServiceId($serviceId);
     }
 
-    public function testScheduleModulesByTime()
+    public function testScheduleModulesByTime(): void
     {
         $validServiceId = 'validCronModuleServiceId';
         $validCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
@@ -61,14 +61,14 @@ class CronFacadeTest extends TestCase
 
         $cronTimeResolverMock = $this->createMock(CronTimeResolver::class);
         $cronTimeResolverMock->method('isValidAtTime')->willReturnCallback(
-            function (CronModuleConfig $cronModuleConfig) use ($validServiceId) {
+            function (CronModuleConfig $cronModuleConfig) use ($validServiceId): bool {
                 return $cronModuleConfig->getServiceId() === $validServiceId;
             }
         );
 
         $cronModuleFacadeMock->expects($this->atLeastOnce())
             ->method('scheduleModules')
-            ->with(Assert::callback(function ($modules) use ($validServiceId) {
+            ->with(Assert::callback(function ($modules) use ($validServiceId): bool {
                 return count($modules) === 1 && current($modules)->getServiceId() === $validServiceId;
             }));
 
@@ -79,7 +79,7 @@ class CronFacadeTest extends TestCase
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->scheduleModulesByTime(new DateTime());
     }
 
-    public function testRunScheduledModules()
+    public function testRunScheduledModules(): void
     {
         $scheduledServiceId = 'scheduledCronModuleServiceId';
         $scheduledCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
@@ -110,7 +110,7 @@ class CronFacadeTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronFacade
      */
-    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade)
+    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade): \Shopsys\FrameworkBundle\Component\Cron\CronFacade
     {
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
@@ -123,7 +123,7 @@ class CronFacadeTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function mockCronModuleFacade()
+    private function mockCronModuleFacade(): \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade|\PHPUnit\Framework\MockObject\MockObject
     {
         return $this->createMock(CronModuleFacade::class);
     }
@@ -133,7 +133,7 @@ class CronFacadeTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|null $cronTimeResolverMock
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
      */
-    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, $cronTimeResolverMock = null)
+    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, ?\Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolverMock = null): \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
     {
         $cronTimeResolver = $cronTimeResolverMock !== null ? $cronTimeResolverMock : new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);

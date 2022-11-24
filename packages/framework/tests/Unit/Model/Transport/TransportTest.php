@@ -13,7 +13,7 @@ class TransportTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    private function createTransport()
+    private function createTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
     {
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -24,7 +24,7 @@ class TransportTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    private function createPayment()
+    private function createPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
     {
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName', 'en' => 'paymentName'];
@@ -32,7 +32,7 @@ class TransportTest extends TestCase
         return new Payment($paymentData);
     }
 
-    public function testSetPayments()
+    public function testSetPayments(): void
     {
         $transport = $this->createTransport();
         $payment = $this->createPayment();
@@ -42,7 +42,7 @@ class TransportTest extends TestCase
         $this->assertContains($transport, $payment->getTransports());
     }
 
-    public function testRemovePayment()
+    public function testRemovePayment(): void
     {
         $transport = $this->createTransport();
         $payment = $this->createPayment();

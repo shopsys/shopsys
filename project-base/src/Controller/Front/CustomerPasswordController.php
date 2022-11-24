@@ -48,7 +48,7 @@ class CustomerPasswordController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function resetPasswordAction(Request $request)
+    public function resetPasswordAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
@@ -87,7 +87,7 @@ class CustomerPasswordController extends FrontBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function setNewPasswordAction(Request $request)
+    public function setNewPasswordAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $email = $request->query->get('email');
         $hash = $request->query->get('hash');

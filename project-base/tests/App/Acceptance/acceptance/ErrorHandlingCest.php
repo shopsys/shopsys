@@ -12,7 +12,7 @@ class ErrorHandlingCest
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testDisplayNotice(AcceptanceTester $me)
+    public function testDisplayNotice(AcceptanceTester $me): void
     {
         $me->wantTo('display notice error page');
         $me->amOnPage('/test/error-handler/notice');
@@ -23,7 +23,7 @@ class ErrorHandlingCest
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testAccessUnknownDomain(AcceptanceTester $me)
+    public function testAccessUnknownDomain(AcceptanceTester $me): void
     {
         $me->wantTo('display error when accessing an unknown domain');
         $me->amOnPage('/test/error-handler/unknown-domain');
@@ -34,7 +34,7 @@ class ErrorHandlingCest
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function test500ErrorPage(AcceptanceTester $me)
+    public function test500ErrorPage(AcceptanceTester $me): void
     {
         $me->wantTo('display 500 error and check error ID uniqueness');
         $me->amOnPage('/test/error-handler/exception');

@@ -13,7 +13,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -21,7 +21,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_GT,
@@ -35,7 +35,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): string
     {
         return NumberType::class;
     }
@@ -43,7 +43,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -51,7 +51,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
@@ -69,7 +69,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string|null
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): ?string
     {
         switch ($operator) {
             case self::OPERATOR_GT:

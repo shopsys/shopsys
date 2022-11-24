@@ -64,7 +64,7 @@ class PromoCodeController extends AdminBaseController
     /**
      * @Route("/promo-code/list")
      */
-    public function listAction()
+    public function listAction(): \Symfony\Component\HttpFoundation\Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -85,7 +85,7 @@ class PromoCodeController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
     {
         try {
             $code = $this->promoCodeFacade->getById($id)->getCode();
@@ -109,7 +109,7 @@ class PromoCodeController extends AdminBaseController
      * @Route("/promo-code/new")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $promoCodeData = $this->promoCodeDataFactory->create();
 
@@ -145,7 +145,7 @@ class PromoCodeController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
     {
         $promoCode = $this->promoCodeFacade->getById($id);
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($promoCode);

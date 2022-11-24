@@ -36,7 +36,7 @@ class VatDataFactory implements VatDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
-    protected function fillFromVat(VatData $vatData, Vat $vat)
+    protected function fillFromVat(VatData $vatData, Vat $vat): void
     {
         $vatData->name = $vat->getName();
         $vatData->percent = $vat->getPercent();
