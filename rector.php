@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
-        __DIR__ . '/src'
+        __DIR__ . '/packages',
+        __DIR__ . '/project-base',
     ]);
 
     $rectorConfig->rules([
@@ -18,9 +17,19 @@ return static function (RectorConfig $rectorConfig): void {
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictTypedPropertyRector::class,
-        \Rector\TypeDeclaration\Rector\ClassMethod\AddArrayParamDocTypeRector::class,
-        \Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddArrayParamDocTypeRector::class, // comment line - $this->paramTagRemover->removeParamTagsIfUseless($phpDocInfo, $node);
+        \Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector::class, // comment line - $hasChanged = $this->returnTagRemover->removeReturnTagIfUseless($phpDocInfo, $node);
         \Rector\TypeDeclaration\Rector\ClassMethod\AddMethodCallBasedStrictParamTypeRector::class,
+
+        \Shopsys\FrameworkBundle\Component\Rector\ParamTypeDeclarationByPhpDocRector::class,
+        \Rector\TypeDeclaration\Rector\ClassMethod\ParamTypeByMethodCallTypeRector::class,
+
+        /**
+         * Apply following diff in Rector\PHPStanStaticTypeMapper\TypeMapper\UnionTypeMapper
+         * - $phpParserNode = $unionedType instanceof NullType && $typeKind === TypeKind::PROPERTY ? new Name('null') : $this->phpStanStaticTypeMapper->mapToPhpParserNode($unionedType, $typeKind);
+         * + $phpParserNode = $unionedType instanceof NullType && in_array($typeKind, [TypeKind::PROPERTY, TypeKind::RETURN, TypeKind::PARAM], true) ? new Name('null') : $this->phpStanStaticTypeMapper->mapToPhpParserNode($unionedType, $typeKind);
+         */
+        \Shopsys\FrameworkBundle\Component\Rector\ReturnTypeDeclarationByPhpDocRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
     ]);
 
