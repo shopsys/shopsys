@@ -25,9 +25,9 @@ class OrderStatusTest extends TestCase
     /**
      * @dataProvider checkForDeleteProvider
      * @param mixed $statusType
-     * @param mixed|null $expectedException
+     * @param mixed $expectedException
      */
-    public function testCheckForDelete(int $statusType, ?mixed $expectedException = null): void
+    public function testCheckForDelete(int $statusType, mixed $expectedException = null): void
     {
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['en' => 'orderStatusName'];

@@ -49,7 +49,7 @@ class OrdersResolver implements QueryInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument): \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+    public function resolve(Argument $argument): object
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 

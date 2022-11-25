@@ -165,7 +165,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    private function getRandomCustomerUserUpdateDataByDomainId(\int $domainId, \int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+    private function getRandomCustomerUserUpdateDataByDomainId(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);

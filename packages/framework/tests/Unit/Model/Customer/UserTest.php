@@ -130,7 +130,7 @@ class UserTest extends TestCase
      * @param string $propertyName
      * @param mixed $value
      */
-    private function setProperty(CustomerUser $customerUser, string $propertyName, \string|null|\DateTime $value): void
+    private function setProperty(CustomerUser $customerUser, string $propertyName, mixed $value): void
     {
         $reflection = new ReflectionClass($customerUser);
         $property = $reflection->getProperty($propertyName);

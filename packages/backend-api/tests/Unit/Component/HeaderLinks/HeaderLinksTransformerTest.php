@@ -27,9 +27,9 @@ class HeaderLinksTransformerTest extends TestCase
     }
 
     /**
-     * @return Generator<\Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks[]|\Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<mixed>[]>
+     * @return Generator<array<\Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks|\Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<mixed>>>
      */
-    public function getFromPaginationResultTestCases(): \Tests\BackendApiBundle\Unit\Component\HeaderLinks\Generator
+    public function getFromPaginationResultTestCases(): \Generator
     {
         yield [
             new PaginationResult(1, 20, 10, []),

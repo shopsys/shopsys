@@ -233,7 +233,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      * @param string $jmeterOutputFilename
      */
-    private function exportJmeterCsvReport(array $performanceTestSamples, \string $jmeterOutputFilename): void
+    private function exportJmeterCsvReport(array $performanceTestSamples, string $jmeterOutputFilename): void
     {
         $jmeterCsvReporter = new JmeterCsvReporter();
         $performanceResultsCsvExporter = new PerformanceResultsCsvExporter($jmeterCsvReporter);

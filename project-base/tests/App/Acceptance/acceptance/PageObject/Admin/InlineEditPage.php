@@ -116,7 +116,7 @@ class InlineEditPage extends AbstractPage
      * @param int|null $rowId
      * @return string
      */
-    private function getRowCssLocator(?\int $rowId): string
+    private function getRowCssLocator(?int $rowId): string
     {
         if ($rowId === null) {
             return '.test-grid-row:not([data-inline-edit-row-id])';

@@ -103,7 +103,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
      * @param int $lineIndex
      * @return array
      */
-    private function getCsvLine(\string $filename, \int $lineIndex): array
+    private function getCsvLine(string $filename, int $lineIndex): array
     {
         $handle = fopen($filename, 'r');
 

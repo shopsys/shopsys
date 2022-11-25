@@ -76,7 +76,7 @@ class RegistrationPage extends AbstractPage
      * @param string $fieldClass
      * @param string $text
      */
-    private function seeErrorForField(string $fieldClass, \string $text): void
+    private function seeErrorForField(string $fieldClass, string $text): void
     {
         // Error message might be in popup - wait for animation
         $this->tester->wait(1);

@@ -93,7 +93,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getQuantityFieldByProductName(\string $productName): \Facebook\WebDriver\WebDriverElement
+    private function getQuantityFieldByProductName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -104,7 +104,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductRowInCartByName(\string $productName): \Facebook\WebDriver\WebDriverElement
+    private function findProductRowInCartByName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
@@ -133,7 +133,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductTotalPriceCellByName(\string $productName): \Facebook\WebDriver\WebDriverElement
+    private function getProductTotalPriceCellByName(string $productName): \Facebook\WebDriver\WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 

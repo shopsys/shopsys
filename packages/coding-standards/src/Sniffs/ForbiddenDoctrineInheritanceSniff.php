@@ -47,7 +47,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param int $phpDocStartPosition
      * @return array
      */
-    private function findPhpDocTags(File $file, \int $classPosition, int $phpDocStartPosition): array
+    private function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
     {
         $phpDocEndPosition = $file->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $classPosition);
 

@@ -158,13 +158,13 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $expectedPrice
-     * @param mixed $vatPercent
+     * @param string $vatPercent
      * @param string $scheduleSetInputPricesMethod
      */
     private function doTestOnKernelResponseRecalculateInputPrices(
         Money $inputPrice,
         Money $expectedPrice,
-        \string $vatPercent,
+        string $vatPercent,
         string $scheduleSetInputPricesMethod
     ): void {
         $paymentData = $this->paymentDataFactory->create();

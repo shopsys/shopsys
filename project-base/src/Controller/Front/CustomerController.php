@@ -157,7 +157,7 @@ class CustomerController extends FrontBaseController
      * @param string $urlHash
      * @param string $orderNumber
      */
-    private function orderDetailAction(?\string $urlHash = null, ?\string $orderNumber = null): \Symfony\Component\HttpFoundation\Response
+    private function orderDetailAction(?string $urlHash = null, ?string $orderNumber = null): \Symfony\Component\HttpFoundation\Response
     {
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {

@@ -139,7 +139,7 @@ class UrlListType extends AbstractType
      * @param int $entityId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]&mixed[][]
      */
-    private function getFriendlyUrlsIndexedByDomain(string $routeName, \int $entityId): array
+    private function getFriendlyUrlsIndexedByDomain(string $routeName, int $entityId): array
     {
         $friendlyUrlsByDomain = [];
         if ($entityId !== null) {

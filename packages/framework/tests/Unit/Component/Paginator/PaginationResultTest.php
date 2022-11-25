@@ -43,9 +43,9 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @return Generator<int[]|bool[]|null[]>
+     * @return \Generator<array<int|bool|null>>
      */
-    public function getTestIsFirstPageData(): \Tests\FrameworkBundle\Unit\Component\Paginator\Generator
+    public function getTestIsFirstPageData(): \Generator
     {
         yield [1, 10, 20, true];
         yield [2, 10, 20, false];
@@ -67,9 +67,9 @@ class PaginationResultTest extends TestCase
     }
 
     /**
-     * @return Generator<int[]|bool[]|null[]>
+     * @return \Generator<array<int|bool|null>>
      */
-    public function getTestIsLastPageData(): \Tests\FrameworkBundle\Unit\Component\Paginator\Generator
+    public function getTestIsLastPageData(): \Generator
     {
         yield [1, 10, 20, false];
         yield [2, 10, 20, true];

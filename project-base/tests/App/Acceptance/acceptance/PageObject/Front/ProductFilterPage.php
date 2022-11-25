@@ -81,7 +81,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterLabel
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findParameterElementByLabel(\string $parameterLabel): \Facebook\WebDriver\WebDriverElement
+    private function findParameterElementByLabel(string $parameterLabel): \Facebook\WebDriver\WebDriverElement
     {
         $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
@@ -113,7 +113,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterValueText
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, \string $parameterValueText): \Facebook\WebDriver\WebDriverElement
+    private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, string $parameterValueText): \Facebook\WebDriver\WebDriverElement
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterValueDivs = $parameterElement->findElements(

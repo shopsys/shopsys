@@ -15,8 +15,8 @@ function function2(mixed $value): void
 }
 
 /**
- * @param mixed|null $value
+ * @param mixed $value
  */
-function function3(?mixed $value = null): void
+function function3(mixed $value = null): void
 {
 }

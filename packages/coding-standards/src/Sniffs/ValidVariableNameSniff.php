@@ -52,7 +52,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param int $position
      * @param string $errorMessageFormat
      */
-    private function checkCamelCaseFormatViolation(File $file, \int $position, string $errorMessageFormat): void
+    private function checkCamelCaseFormatViolation(File $file, int $position, string $errorMessageFormat): void
     {
         $currentToken = $file->getTokens()[$position];
 

@@ -311,9 +311,9 @@ interface ActorInterface
 
     /**
      * @param string $css
-     * @param mixed|null $contextSelector
+     * @param mixed $contextSelector
      */
-    public function clickByCss(string $css, ?mixed $contextSelector = null): void;
+    public function clickByCss(string $css, mixed $contextSelector = null): void;
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element

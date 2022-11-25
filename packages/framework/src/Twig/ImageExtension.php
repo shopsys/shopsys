@@ -107,7 +107,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return bool
      */
-    public function imageExists(\Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity, ?string $type = null): bool
+    public function imageExists(object $imageOrEntity, ?string $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -124,7 +124,7 @@ class ImageExtension extends AbstractExtension
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl(\Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
+    public function getImageUrl(object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
     {
         try {
             return $this->imageFacade->getImageUrl(
@@ -153,7 +153,7 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    public function getImageHtml(\Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity, array $attributes = []): string
+    public function getImageHtml(object $imageOrEntity, array $attributes = []): string
     {
         $this->preventDefault($attributes);
 
