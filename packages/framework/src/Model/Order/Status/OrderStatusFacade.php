@@ -59,7 +59,7 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusFormData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function create(OrderStatusData $orderStatusFormData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function create(OrderStatusData $orderStatusFormData): OrderStatus
     {
         $orderStatus = $this->orderStatusFactory->create($orderStatusFormData, OrderStatus::TYPE_IN_PROGRESS);
         $this->em->persist($orderStatus);
@@ -77,7 +77,7 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function edit(int $orderStatusId, OrderStatusData $orderStatusData): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function edit(int $orderStatusId, OrderStatusData $orderStatusData): OrderStatus
     {
         $orderStatus = $this->orderStatusRepository->getById($orderStatusId);
         $orderStatus->edit($orderStatusData);
@@ -107,7 +107,7 @@ class OrderStatusFacade
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function getById(int $orderStatusId): OrderStatus
     {
         return $this->orderStatusRepository->getById($orderStatusId);
     }

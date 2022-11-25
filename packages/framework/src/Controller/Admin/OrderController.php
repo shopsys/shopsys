@@ -19,7 +19,9 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
@@ -106,8 +108,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $order = $this->orderFacade->getById($id);
 
@@ -153,8 +156,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/add-product/{orderId}", requirements={"orderId" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $orderId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addProductAction(Request $request, $orderId): \Symfony\Component\HttpFoundation\Response
+    public function addProductAction(Request $request, $orderId): Response
     {
         $productId = $request->get('productId');
         $orderItem = $this->orderItemFacade->addProductToOrder($orderId, $productId);
@@ -180,8 +184,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -259,8 +264,9 @@ class OrderController extends AdminBaseController
      * @Route("/order/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $orderNumber = $this->orderFacade->getById($id)->getNumber();
@@ -285,7 +291,7 @@ class OrderController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
             $request->get('filterName'),
@@ -300,8 +306,9 @@ class OrderController extends AdminBaseController
     /**
      * @Route("/order/preview/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction($id): \Symfony\Component\HttpFoundation\Response
+    public function previewAction($id): Response
     {
         $order = $this->orderFacade->getById($id);
 

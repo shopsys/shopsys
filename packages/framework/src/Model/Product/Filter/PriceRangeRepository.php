@@ -41,7 +41,7 @@ class PriceRangeRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRangeInCategory(int $domainId, PricingGroup $pricingGroup, Category $category): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+    public function getPriceRangeInCategory(int $domainId, PricingGroup $pricingGroup, Category $category): PriceRange
     {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
@@ -91,7 +91,7 @@ class PriceRangeRepository
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRangeForSearch(int $domainId, PricingGroup $pricingGroup, string $locale, ?string $searchText): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+    public function getPriceRangeForSearch(int $domainId, PricingGroup $pricingGroup, string $locale, ?string $searchText): PriceRange
     {
         $productsQueryBuilder = $this->productRepository
             ->getListableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
@@ -104,7 +104,7 @@ class PriceRangeRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    protected function getPriceRangeByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+    protected function getPriceRangeByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, PricingGroup $pricingGroup): PriceRange
     {
         $queryBuilder = clone $productsQueryBuilder;
 

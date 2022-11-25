@@ -24,7 +24,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -138,8 +140,9 @@ class CustomerController extends AdminBaseController
      * @Route("/customer/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
@@ -185,8 +188,9 @@ class CustomerController extends AdminBaseController
     /**
      * @Route("/customer/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -235,8 +239,9 @@ class CustomerController extends AdminBaseController
     /**
      * @Route("/customer/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -276,8 +281,9 @@ class CustomerController extends AdminBaseController
      * @Route("/customer/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->customerUserFacade->getCustomerUserById($id)->getFullName();
@@ -300,8 +306,9 @@ class CustomerController extends AdminBaseController
     /**
      * @Route("/customer/login-as-user/{customerUserId}/", requirements={"id" = "\d+"})
      * @param int $customerUserId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function loginAsUserAction($customerUserId): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function loginAsUserAction($customerUserId): RedirectResponse
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
 

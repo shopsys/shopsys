@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Script;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Twig\MoneyExtension;
@@ -69,7 +70,7 @@ class ScriptFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->scriptRepository->getAllQueryBuilder();
     }
@@ -78,7 +79,7 @@ class ScriptFacade
      * @param int $scriptId
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
+    public function getById(int $scriptId): Script
     {
         return $this->scriptRepository->getById($scriptId);
     }
@@ -87,7 +88,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function create(ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
+    public function create(ScriptData $scriptData): Script
     {
         $script = $this->scriptFactory->create($scriptData);
 
@@ -102,7 +103,7 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptData $scriptData
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function edit(int $scriptId, ScriptData $scriptData): \Shopsys\FrameworkBundle\Model\Script\Script
+    public function edit(int $scriptId, ScriptData $scriptData): Script
     {
         $script = $this->scriptRepository->getById($scriptId);
 

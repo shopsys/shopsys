@@ -90,7 +90,7 @@ class Availability extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation
+    protected function createTranslation(): AvailabilityTranslation
     {
         return new AvailabilityTranslation();
     }

@@ -663,7 +663,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      * @param array $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
-    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
+    private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): ParameterFilterData
     {
         $parameter = $this->parameterRepository->findParameterByNames($namesByLocale);
         $parameterValues = $this->getParameterValuesByLocalesAndTexts($valuesTextsByLocales);

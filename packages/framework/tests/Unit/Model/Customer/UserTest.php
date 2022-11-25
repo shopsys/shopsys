@@ -108,7 +108,7 @@ class UserTest extends TestCase
      */
     public function testIsResetPasswordHashValid(
         ?string $resetPasswordHash,
-        ?\DateTime $resetPasswordHashValidThrough,
+        ?DateTime $resetPasswordHashValidThrough,
         string $sentHash,
         bool $isExpectedValid
     ): void {
@@ -141,7 +141,7 @@ class UserTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
+    private function createBillingAddress(): BillingAddress
     {
         return new BillingAddress(new BillingAddressData());
     }

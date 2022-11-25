@@ -103,7 +103,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      * @param string $providerKey
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?\Symfony\Component\HttpFoundation\Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
         return null;
     }

@@ -48,7 +48,7 @@ class HoneyPotExtension extends AbstractExtension
      * @param \Symfony\Component\Form\FormView $formView
      * @return \Symfony\Component\Form\FormView
      */
-    protected function getRootFormView(FormView $formView): \Symfony\Component\Form\FormView
+    protected function getRootFormView(FormView $formView): FormView
     {
         $rootFormView = $formView;
 

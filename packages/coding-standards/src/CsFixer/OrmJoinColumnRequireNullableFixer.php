@@ -45,6 +45,7 @@ SAMPLE
 
     /**
      * {@inheritdoc}
+     *
      * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function isCandidate(Tokens $tokens): bool
@@ -62,6 +63,7 @@ SAMPLE
 
     /**
      * {@inheritdoc}
+     *
      * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void

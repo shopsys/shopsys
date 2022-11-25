@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
@@ -27,7 +29,7 @@ class VatRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getVatRepository(): \Doctrine\ORM\EntityRepository
+    protected function getVatRepository(): EntityRepository
     {
         return $this->em->getRepository(Vat::class);
     }
@@ -36,7 +38,7 @@ class VatRepository
      * @param string $vatAlias
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getQueryBuilderForAll(string $vatAlias): \Doctrine\ORM\QueryBuilder
+    protected function getQueryBuilderForAll(string $vatAlias): QueryBuilder
     {
         return $this->getVatRepository()
             ->createQueryBuilder($vatAlias)
@@ -57,7 +59,7 @@ class VatRepository
      * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
      */
-    public function findById(int $vatId): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    public function findById(int $vatId): ?Vat
     {
         return $this->getVatRepository()->find($vatId);
     }
@@ -66,7 +68,7 @@ class VatRepository
      * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    public function getById(int $vatId): Vat
     {
         $vat = $this->findById($vatId);
 
@@ -125,6 +127,7 @@ class VatRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @return bool
      */
     public function isVatUsed(Vat $vat): bool
     {

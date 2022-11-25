@@ -28,6 +28,7 @@ class ProductsType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -37,6 +38,7 @@ class ProductsType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
      */

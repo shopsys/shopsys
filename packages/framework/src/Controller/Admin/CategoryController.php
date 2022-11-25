@@ -11,6 +11,8 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -70,8 +72,9 @@ class CategoryController extends AdminBaseController
      * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $category = $this->categoryFacade->getById($id);
         $categoryData = $this->categoryDataFactory->createFromCategory($category);
@@ -112,8 +115,9 @@ class CategoryController extends AdminBaseController
     /**
      * @Route("/category/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -149,8 +153,9 @@ class CategoryController extends AdminBaseController
     /**
      * @Route("/category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         if (count($this->domain->getAll()) > 1) {
             if ($request->query->has('domain')) {
@@ -209,8 +214,9 @@ class CategoryController extends AdminBaseController
      * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->categoryFacade->getById($id)->getName();
@@ -230,7 +236,10 @@ class CategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_category_list');
     }
 
-    public function listDomainTabsAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listDomainTabsAction(): Response
     {
         $domainId = $this->session->get('categories_selected_domain_id', static::ALL_DOMAINS);
 
@@ -244,8 +253,9 @@ class CategoryController extends AdminBaseController
      * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param int $domainId
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function loadBranchJsonAction(int $domainId, $id): \Symfony\Component\HttpFoundation\JsonResponse
+    public function loadBranchJsonAction(int $domainId, $id): JsonResponse
     {
         $domainId = (int)$domainId;
         $id = (int)$id;

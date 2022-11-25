@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest;
 
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+
 class BaseClass3
 {
     /**
@@ -11,7 +13,7 @@ class BaseClass3
      *
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function getCategoryFacade(): \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+    public function getCategoryFacade(): CategoryFacade
     {
     }
 }

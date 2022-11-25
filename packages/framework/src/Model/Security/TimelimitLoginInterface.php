@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use DateTime;
+
 interface TimelimitLoginInterface
 {
     /**
@@ -12,5 +14,5 @@ interface TimelimitLoginInterface
     /**
      * @param \DateTime $lastActivity
      */
-    public function setLastActivity(\DateTime $lastActivity);
+    public function setLastActivity(DateTime $lastActivity);
 }

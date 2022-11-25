@@ -78,7 +78,7 @@ class ManualBestsellingProductFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProductsIndexedByPosition(\Shopsys\FrameworkBundle\Model\Category\Category $category, int $domainId): array
+    public function getProductsIndexedByPosition(Category $category, int $domainId): array
     {
         $bestsellingProducts = $this->manualBestsellingProductRepository->getByCategory($domainId, $category);
 

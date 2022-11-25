@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
@@ -45,7 +46,7 @@ class HomepagePage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getTopProductsContext(): \Facebook\WebDriver\WebDriverElement
+    private function getTopProductsContext(): WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('#top-products'));
     }

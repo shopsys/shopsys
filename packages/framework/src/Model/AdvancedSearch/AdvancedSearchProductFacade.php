@@ -2,8 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdvancedSearchProductFacade
@@ -52,7 +54,7 @@ class AdvancedSearchProductFacade
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAdvancedSearchForm(Request $request): \Symfony\Component\Form\FormInterface
+    public function createAdvancedSearchForm(Request $request): FormInterface
     {
         $rawRulesData = $request->get(static::RULES_FORM_NAME);
         $rulesData = is_array($rawRulesData) ? $rawRulesData : [];
@@ -66,7 +68,7 @@ class AdvancedSearchProductFacade
      * @param string|int $index
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRuleForm(string $filterName, string|int $index): \Symfony\Component\Form\FormInterface
+    public function createRuleForm(string $filterName, string|int $index): FormInterface
     {
         $rulesData = [
             $index => $this->ruleFormViewDataFactory->createDefault($filterName),
@@ -79,7 +81,7 @@ class AdvancedSearchProductFacade
      * @param array $advancedSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
         $queryBuilder = $this->productListAdminFacade->getProductListQueryBuilder();
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);

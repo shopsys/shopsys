@@ -104,7 +104,7 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function create(PaymentData $paymentData): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function create(PaymentData $paymentData): Payment
     {
         $payment = $this->paymentFactory->create($paymentData);
         $this->em->persist($payment);
@@ -138,7 +138,7 @@ class PaymentFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function getById(int $id): Payment
     {
         return $this->paymentRepository->getById($id);
     }

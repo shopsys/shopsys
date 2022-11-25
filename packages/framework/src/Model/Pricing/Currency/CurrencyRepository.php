@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException;
 
 class CurrencyRepository
@@ -23,7 +24,7 @@ class CurrencyRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCurrencyRepository(): \Doctrine\ORM\EntityRepository
+    protected function getCurrencyRepository(): EntityRepository
     {
         return $this->em->getRepository(Currency::class);
     }
@@ -32,7 +33,7 @@ class CurrencyRepository
      * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
      */
-    public function findById(int $currencyId): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function findById(int $currencyId): ?Currency
     {
         return $this->getCurrencyRepository()->find($currencyId);
     }
@@ -41,7 +42,7 @@ class CurrencyRepository
      * @param string $code
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|null
      */
-    public function findByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function findByCode(string $code): ?Currency
     {
         return $this->getCurrencyRepository()->findOneBy([
             'code' => $code,
@@ -68,7 +69,7 @@ class CurrencyRepository
      * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function getById(int $currencyId): Currency
     {
         $currency = $this->findById($currencyId);
 

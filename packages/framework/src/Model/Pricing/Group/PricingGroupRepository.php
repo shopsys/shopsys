@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundException;
 
@@ -25,7 +26,7 @@ class PricingGroupRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getPricingGroupRepository(): \Doctrine\ORM\EntityRepository
+    protected function getPricingGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(PricingGroup::class);
     }
@@ -34,7 +35,7 @@ class PricingGroupRepository
      * @param int $pricingGroupId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getById(int $pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function getById(int $pricingGroupId): PricingGroup
     {
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
         if ($pricingGroup === null) {
@@ -65,7 +66,7 @@ class PricingGroupRepository
      * @param int $pricingGroupId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null
      */
-    public function findById(int $pricingGroupId): ?\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function findById(int $pricingGroupId): ?PricingGroup
     {
         return $this->getPricingGroupRepository()->find($pricingGroupId);
     }

@@ -2,6 +2,7 @@
 
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\Plugin\PluginCrudExtensionInterface;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface;
@@ -110,7 +111,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
         string $propertyName,
-        bool|\Shopsys\FrameworkBundle\Component\Money\Money|null $propertyValue
+        bool|Money|null $propertyValue
     ): void {
         switch ($propertyName) {
             case 'show':

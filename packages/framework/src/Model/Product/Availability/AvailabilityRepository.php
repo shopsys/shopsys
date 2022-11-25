@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException;
@@ -27,7 +28,7 @@ class AvailabilityRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getAvailabilityRepository(): \Doctrine\ORM\EntityRepository
+    protected function getAvailabilityRepository(): EntityRepository
     {
         return $this->em->getRepository(Availability::class);
     }
@@ -36,7 +37,7 @@ class AvailabilityRepository
      * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function findById(int $availabilityId): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function findById(int $availabilityId): ?Availability
     {
         return $this->getAvailabilityRepository()->find($availabilityId);
     }
@@ -45,7 +46,7 @@ class AvailabilityRepository
      * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getById(int $availabilityId): Availability
     {
         $availability = $this->findById($availabilityId);
 

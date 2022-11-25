@@ -31,7 +31,7 @@ class ParameterFilterChoice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getParameter(): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+    public function getParameter(): Parameter
     {
         return $this->parameter;
     }

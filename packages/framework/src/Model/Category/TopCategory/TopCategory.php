@@ -47,7 +47,7 @@ class TopCategory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getCategory(): Category
     {
         return $this->category;
     }

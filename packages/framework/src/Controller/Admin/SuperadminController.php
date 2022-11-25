@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RequestContext;
 
@@ -82,8 +83,9 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/errors/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function errorsAction(): \Symfony\Component\HttpFoundation\Response
+    public function errorsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
@@ -91,8 +93,9 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/pricing/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
      */
-    public function pricingAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function pricingAction(Request $request): Response
     {
         $pricingSettingData = [
             'type' => $this->pricingSetting->getInputPriceType(),
@@ -117,8 +120,9 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/urls/")
+     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
      */
-    public function urlsAction(): \Symfony\Component\HttpFoundation\Response
+    public function urlsAction(): Response
     {
         $allLocales = $this->localization->getLocalesOfAllDomains();
         $dataSource = new ArrayDataSource($this->loadDataForUrls($allLocales));
@@ -159,8 +163,9 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/modules/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
      */
-    public function modulesAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function modulesAction(Request $request): Response
     {
         $formData = [];
         foreach ($this->moduleList->getNames() as $moduleName) {
@@ -188,8 +193,9 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/css-documentation/")
+     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
      */
-    public function cssDocumentationAction(): \Symfony\Component\HttpFoundation\Response
+    public function cssDocumentationAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
     }

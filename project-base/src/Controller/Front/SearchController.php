@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends FrontBaseController
 {
@@ -38,8 +39,9 @@ class SearchController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function autocompleteAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function autocompleteAction(Request $request): Response
     {
         $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl(
@@ -62,8 +64,9 @@ class SearchController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function boxAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function boxAction(Request $request): Response
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
             trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER))

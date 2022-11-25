@@ -3,7 +3,9 @@
 namespace Shopsys\FrameworkBundle\Model\Product\TopProduct;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class TopProductRepository
@@ -31,7 +33,7 @@ class TopProductRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTopProductRepository(): \Doctrine\ORM\EntityRepository
+    protected function getTopProductRepository(): EntityRepository
     {
         return $this->em->getRepository(TopProduct::class);
     }
@@ -50,7 +52,7 @@ class TopProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getOfferedProductsForTopProductsOnDomain(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup): array
+    public function getOfferedProductsForTopProductsOnDomain(int $domainId, PricingGroup $pricingGroup): array
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
 

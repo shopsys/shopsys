@@ -64,7 +64,7 @@ class DomainExtension extends AbstractExtension
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    public function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
+    public function getDomain(): Domain
     {
         return $this->domain;
     }

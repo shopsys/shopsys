@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -246,7 +245,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
      */
-    private function getOrderItemByName(\App\Model\Order\Order $order, string $name): \App\Model\Order\Item\OrderItem
+    private function getOrderItemByName(Order $order, string $name): OrderItem
     {
         foreach ($order->getItems() as $orderItem) {
             if ($orderItem->getName() === $name) {

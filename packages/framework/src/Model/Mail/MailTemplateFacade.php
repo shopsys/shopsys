@@ -78,7 +78,7 @@ class MailTemplateFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function get(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public function get(string $templateName, int $domainId): MailTemplate
     {
         return $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
     }

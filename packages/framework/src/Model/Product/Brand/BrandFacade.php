@@ -78,7 +78,7 @@ class BrandFacade
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    public function getById(int $brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    public function getById(int $brandId): Brand
     {
         return $this->brandRepository->getById($brandId);
     }
@@ -87,7 +87,7 @@ class BrandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    public function create(BrandData $brandData): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    public function create(BrandData $brandData): Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandFactory->create($brandData);
@@ -115,7 +115,7 @@ class BrandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    public function edit(int $brandId, BrandData $brandData): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    public function edit(int $brandId, BrandData $brandData): Brand
     {
         $domains = $this->domain->getAll();
         $brand = $this->brandRepository->getById($brandId);

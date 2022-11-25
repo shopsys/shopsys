@@ -47,7 +47,7 @@ class ProductFilterCountRepository
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup
-    ): \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData {
+    ): ProductFilterCountData {
         $productFilterCountData = new ProductFilterCountData();
         $productFilterCountData->countInStock = $this->getCountInStock(
             $productsQueryBuilder,

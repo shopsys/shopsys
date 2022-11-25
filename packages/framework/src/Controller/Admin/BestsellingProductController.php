@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BestsellingProductController extends AdminBaseController
@@ -53,8 +54,9 @@ class BestsellingProductController extends AdminBaseController
     /**
      * @Route("/product/bestselling-product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
@@ -77,8 +79,9 @@ class BestsellingProductController extends AdminBaseController
     /**
      * @Route("/product/bestselling-product/detail/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function detailAction(Request $request): Response
     {
         $category = $this->categoryFacade->getById($request->get('categoryId'));
         $domainId = $request->get('domainId');

@@ -65,10 +65,10 @@ class RoundingTest extends TestCase
      * @param mixed $expectedAsVatAmount
      */
     public function testRoundingByCurrency(
-        \Shopsys\FrameworkBundle\Component\Money\Money $unroundedPrice,
-        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithVat,
-        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsPriceWithoutVat,
-        \Shopsys\FrameworkBundle\Component\Money\Money $expectedAsVatAmount
+        Money $unroundedPrice,
+        Money $expectedAsPriceWithVat,
+        Money $expectedAsPriceWithoutVat,
+        Money $expectedAsVatAmount
     ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()
@@ -152,8 +152,8 @@ class RoundingTest extends TestCase
      */
     public function testRoundingPriceWithVatByCurrency(
         string $roundingType,
-        \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice,
-        \Shopsys\FrameworkBundle\Component\Money\Money $outputPrice
+        Money $inputPrice,
+        Money $outputPrice
     ): void {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->disableOriginalConstructor()

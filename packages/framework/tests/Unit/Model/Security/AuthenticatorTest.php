@@ -73,7 +73,7 @@ class AuthenticatorTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Security\Authenticator
      */
-    private function getAuthenticator(): \Shopsys\FrameworkBundle\Model\Security\Authenticator
+    private function getAuthenticator(): Authenticator
     {
         $tokenStorageMock = $this->createMock(TokenStorageInterface::class);
         $eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);

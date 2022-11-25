@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -28,7 +29,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -156,8 +159,9 @@ class ProductController extends AdminBaseController
      * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $product = $this->productFacade->getById($id);
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -201,8 +205,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         try {
             $productData = $this->productDataFactory->create();
@@ -242,8 +247,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -306,8 +312,9 @@ class ProductController extends AdminBaseController
      * @Route("/product/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $product = $this->productFacade->getById($id);
@@ -330,8 +337,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/get-advanced-search-rule-form/", methods={"post"})
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getRuleFormAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
             $request->get('filterName'),
@@ -346,8 +354,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/create-variant/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function createVariantAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function createVariantAction(Request $request): Response
     {
         $form = $this->createForm(VariantFormType::class);
         $form->handleRequest($request);
@@ -386,7 +395,7 @@ class ProductController extends AdminBaseController
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<array<string, mixed>>
      */
-    protected function getGrid(QueryBuilder $queryBuilder): \Shopsys\FrameworkBundle\Component\Grid\Grid
+    protected function getGrid(QueryBuilder $queryBuilder): Grid
     {
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
@@ -424,8 +433,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/visibility/{productId}")
      * @param int $productId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function visibilityAction($productId): \Symfony\Component\HttpFoundation\Response
+    public function visibilityAction($productId): Response
     {
         $product = $this->productFacade->getById($productId);
 

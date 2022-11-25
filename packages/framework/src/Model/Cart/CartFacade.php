@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CartFacade
@@ -120,7 +121,7 @@ class CartFacade
      * @param int $quantity
      * @return \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
      */
-    public function addProductToCart(int $productId, int $quantity): \Shopsys\FrameworkBundle\Model\Cart\AddProductResult
+    public function addProductToCart(int $productId, int $quantity): AddProductResult
     {
         $product = $this->productRepository->getSellableById(
             $productId,
@@ -219,7 +220,7 @@ class CartFacade
      * @param int $cartItemId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProductByCartItemId(int $cartItemId): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProductByCartItemId(int $cartItemId): Product
     {
         $cart = $this->findCartOfCurrentCustomerUser();
 
@@ -240,7 +241,7 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?\Shopsys\FrameworkBundle\Model\Cart\Cart
+    public function findCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Cart
     {
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
@@ -260,7 +261,7 @@ class CartFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findCartOfCurrentCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Cart\Cart
+    public function findCartOfCurrentCustomerUser(): ?Cart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
@@ -270,7 +271,7 @@ class CartFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function getCartOfCurrentCustomerUserCreateIfNotExists(): \Shopsys\FrameworkBundle\Model\Cart\Cart
+    public function getCartOfCurrentCustomerUserCreateIfNotExists(): Cart
     {
         $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
 
@@ -281,7 +282,7 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier): \Shopsys\FrameworkBundle\Model\Cart\Cart
+    public function getCartByCustomerUserIdentifierCreateIfNotExists(CustomerUserIdentifier $customerUserIdentifier): Cart
     {
         $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 

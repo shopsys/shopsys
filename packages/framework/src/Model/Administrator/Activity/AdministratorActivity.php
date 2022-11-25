@@ -75,7 +75,7 @@ class AdministratorActivity
     /**
      * @return \DateTime
      */
-    public function getLoginTime(): \DateTime
+    public function getLoginTime(): DateTime
     {
         return $this->loginTime;
     }
@@ -83,7 +83,7 @@ class AdministratorActivity
     /**
      * @return \DateTime
      */
-    public function getLastActionTime(): \DateTime
+    public function getLastActionTime(): DateTime
     {
         return $this->lastActionTime;
     }

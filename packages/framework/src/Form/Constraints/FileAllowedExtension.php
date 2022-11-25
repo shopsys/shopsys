@@ -29,6 +29,9 @@ class FileAllowedExtension extends Constraint
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultOption(): string
     {
         return 'extensions';

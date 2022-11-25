@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductPickerController extends AdminBaseController
@@ -68,13 +69,14 @@ class ProductPickerController extends AdminBaseController
      * @param string $jsInstanceId
      * @param bool $allowMainVariants
      * @param bool $allowVariants
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function pickMultipleAction(
         Request $request,
         $jsInstanceId,
         bool $allowMainVariants = true,
         bool $allowVariants = true
-    ): \Symfony\Component\HttpFoundation\Response {
+    ): Response {
         return $this->getPickerResponse(
             $request,
             [
@@ -93,8 +95,9 @@ class ProductPickerController extends AdminBaseController
      * @Route("/product-picker/pick-single/{parentInstanceId}/", defaults={"parentInstanceId"="__instance_id__"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parentInstanceId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function pickSingleAction(Request $request, $parentInstanceId): \Symfony\Component\HttpFoundation\Response
+    public function pickSingleAction(Request $request, $parentInstanceId): Response
     {
         return $this->getPickerResponse(
             $request,
@@ -114,8 +117,9 @@ class ProductPickerController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array<string, mixed> $viewParameters
      * @param array<string, mixed> $gridViewParameters
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): \Symfony\Component\HttpFoundation\Response
+    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();

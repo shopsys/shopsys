@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Form;
 
 use Shopsys\FormTypesBundle\YesNoType;
+use Symfony\Component\Form\FormInterface;
 use Tests\App\Test\FunctionalTestCase;
 
 class YesNoTypeTest extends FunctionalTestCase
@@ -44,7 +45,7 @@ class YesNoTypeTest extends FunctionalTestCase
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function getForm(): \Symfony\Component\Form\FormInterface
+    private function getForm(): FormInterface
     {
         /** @var \Symfony\Component\Form\FormFactoryInterface $formFactory */
         $formFactory = $this->getContainer()->get('form.factory');

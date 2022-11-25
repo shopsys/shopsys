@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 
@@ -24,7 +25,7 @@ class OrderStatusRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getOrderStatusRepository(): \Doctrine\ORM\EntityRepository
+    protected function getOrderStatusRepository(): EntityRepository
     {
         return $this->em->getRepository(OrderStatus::class);
     }
@@ -33,7 +34,7 @@ class OrderStatusRepository
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
-    public function findById(int $orderStatusId): ?\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function findById(int $orderStatusId): ?OrderStatus
     {
         return $this->getOrderStatusRepository()->find($orderStatusId);
     }
@@ -42,7 +43,7 @@ class OrderStatusRepository
      * @param int $orderStatusId
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getById(int $orderStatusId): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function getById(int $orderStatusId): OrderStatus
     {
         $orderStatus = $this->findById($orderStatusId);
 
@@ -57,7 +58,7 @@ class OrderStatusRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getDefault(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function getDefault(): OrderStatus
     {
         $orderStatus = $this->getOrderStatusRepository()->findOneBy(['type' => OrderStatus::TYPE_NEW]);
 

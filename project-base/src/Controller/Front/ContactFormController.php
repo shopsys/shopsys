@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactFormController extends FrontBaseController
 {
@@ -54,8 +55,9 @@ class ContactFormController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function indexAction(Request $request): Response
     {
         $domainId = $this->domain->getId();
         $privacyPolicyArticle = $this->legalConditionsFacade->findPrivacyPolicy($domainId);

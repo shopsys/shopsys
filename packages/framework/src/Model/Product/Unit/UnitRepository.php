@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 
@@ -25,7 +27,7 @@ class UnitRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getUnitRepository(): \Doctrine\ORM\EntityRepository
+    protected function getUnitRepository(): EntityRepository
     {
         return $this->em->getRepository(Unit::class);
     }
@@ -34,7 +36,7 @@ class UnitRepository
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
      */
-    public function findById(int $unitId): ?\Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function findById(int $unitId): ?Unit
     {
         return $this->getUnitRepository()->find($unitId);
     }
@@ -43,7 +45,7 @@ class UnitRepository
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function getById(int $unitId): Unit
     {
         $unit = $this->findById($unitId);
 
@@ -57,7 +59,7 @@ class UnitRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAllQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    protected function getAllQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('u')

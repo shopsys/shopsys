@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
@@ -64,7 +65,7 @@ class OrderMailFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public function getMailTemplateByStatusAndDomainId(OrderStatus $orderStatus, int $domainId): MailTemplate
     {
         $templateName = OrderMail::getMailTemplateNameByStatus($orderStatus);
 

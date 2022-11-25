@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use PHPUnit\Framework\Assert;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -62,7 +63,7 @@ class ProductListPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductListCompomentContext(): \Facebook\WebDriver\WebDriverElement
+    private function getProductListCompomentContext(): WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('.web__main__content'));
     }

@@ -92,7 +92,7 @@ class PerformanceTestSample
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
      */
-    public function getDomainConfig(): \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
+    public function getDomainConfig(): DomainConfig
     {
         return $this->domainConfig;
     }

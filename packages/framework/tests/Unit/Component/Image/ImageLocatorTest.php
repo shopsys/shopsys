@@ -20,7 +20,7 @@ class ImageLocatorTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
-    private function getBaseImageConfig(): \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
+    private function getBaseImageConfig(): ImageConfig
     {
         $inputConfig = [
             [

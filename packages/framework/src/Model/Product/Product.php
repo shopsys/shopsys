@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
@@ -9,12 +10,14 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 /**
  * Product
@@ -336,7 +339,7 @@ class Product extends AbstractTranslatableEntity
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public static function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
+    public static function create(ProductData $productData): self
     {
         return new static($productData, null);
     }
@@ -346,7 +349,7 @@ class Product extends AbstractTranslatableEntity
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public static function createMainVariant(ProductData $productData, array $variants): \Shopsys\FrameworkBundle\Model\Product\Product
+    public static function createMainVariant(ProductData $productData, array $variants): self
     {
         return new static($productData, $variants);
     }
@@ -466,7 +469,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \DateTime|null
      */
-    public function getSellingFrom(): ?\DateTime
+    public function getSellingFrom(): ?DateTime
     {
         return $this->sellingFrom;
     }
@@ -474,7 +477,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \DateTime|null
      */
-    public function getSellingTo(): ?\DateTime
+    public function getSellingTo(): ?DateTime
     {
         return $this->sellingTo;
     }
@@ -530,7 +533,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getUnit(): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function getUnit(): Unit
     {
         return $this->unit;
     }
@@ -546,7 +549,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function getAvailability(): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getAvailability(): ?Availability
     {
         return $this->availability;
     }
@@ -554,7 +557,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
      */
-    public function getOutOfStockAvailability(): ?\Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getOutOfStockAvailability(): ?Availability
     {
         return $this->outOfStockAvailability;
     }
@@ -562,7 +565,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function getCalculatedAvailability(): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getCalculatedAvailability(): Availability
     {
         return $this->calculatedAvailability;
     }
@@ -688,7 +691,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null
      */
-    public function getBrand(): ?\Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    public function getBrand(): ?Brand
     {
         return $this->brand;
     }
@@ -776,7 +779,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getMainVariant(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getMainVariant(): self
     {
         if (!$this->isVariant()) {
             throw new ProductIsNotVariantException();
@@ -913,7 +916,7 @@ class Product extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDomain
      */
-    protected function getProductDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Product\ProductDomain
+    protected function getProductDomain(int $domainId): ProductDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -980,7 +983,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
+    protected function createTranslation(): ProductTranslation
     {
         return new ProductTranslation();
     }
@@ -1003,7 +1006,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
      */
-    public function getProductDeleteResult(): \Shopsys\FrameworkBundle\Model\Product\ProductDeleteResult
+    public function getProductDeleteResult(): ProductDeleteResult
     {
         if ($this->isMainVariant()) {
             foreach ($this->getVariants() as $variantProduct) {

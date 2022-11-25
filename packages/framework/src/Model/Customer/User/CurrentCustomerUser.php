@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -41,7 +42,7 @@ class CurrentCustomerUser
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function getPricingGroup(): PricingGroup
     {
         $customerUser = $this->findCurrentCustomerUser();
         if ($customerUser === null) {
@@ -53,7 +54,7 @@ class CurrentCustomerUser
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findCurrentCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function findCurrentCustomerUser(): ?CustomerUser
     {
         $token = $this->tokenStorage->getToken();
 

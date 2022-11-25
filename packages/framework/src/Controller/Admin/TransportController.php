@@ -10,7 +10,9 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TransportController extends AdminBaseController
@@ -64,8 +66,9 @@ class TransportController extends AdminBaseController
     /**
      * @Route("/transport/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -101,8 +104,9 @@ class TransportController extends AdminBaseController
      * @Route("/transport/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $transport = $this->transportFacade->getById($id);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -144,8 +148,9 @@ class TransportController extends AdminBaseController
      * @Route("/transport/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $transportName = $this->transportFacade->getById($id)->getName();
@@ -165,7 +170,10 @@ class TransportController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): Response
     {
         $grid = $this->transportGridFactory->create();
 

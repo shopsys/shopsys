@@ -37,7 +37,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param string $email
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function loadUserByUsername($email): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function loadUserByUsername($email): CustomerUser
     {
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             mb_strtolower($email),
@@ -59,7 +59,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function refreshUser(UserInterface $userInterface): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function refreshUser(UserInterface $userInterface): CustomerUser
     {
         $class = get_class($userInterface);
         if (!$this->supportsClass($class)) {

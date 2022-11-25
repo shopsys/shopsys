@@ -17,6 +17,7 @@ class ShopsysBackendApiExtension extends Extension implements PrependExtensionIn
 {
     /**
      * {@inheritDoc}
+     *
      * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void

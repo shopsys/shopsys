@@ -11,7 +11,9 @@ use Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException;
 use Shopsys\FrameworkBundle\Model\Script\Script;
 use Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ScriptController extends AdminBaseController
@@ -57,8 +59,9 @@ class ScriptController extends AdminBaseController
     /**
      * @Route("/script/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $scriptData = $this->scriptDataFactory->create();
         $form = $this->createForm(ScriptFormType::class, $scriptData);
@@ -89,8 +92,9 @@ class ScriptController extends AdminBaseController
      * @Route("/script/edit/{scriptId}")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $scriptId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $scriptId): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $scriptId): Response
     {
         $script = $this->scriptFacade->getById($scriptId);
         $scriptData = $this->scriptDataFactory->createFromScript($script);
@@ -121,8 +125,9 @@ class ScriptController extends AdminBaseController
 
     /**
      * @Route("/script/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $dataSource = new QueryBuilderDataSource($this->scriptFacade->getAllQueryBuilder(), 's.id');
 
@@ -148,8 +153,9 @@ class ScriptController extends AdminBaseController
     /**
      * @Route("/script/delete/{scriptId}")
      * @param int $scriptId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($scriptId): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($scriptId): RedirectResponse
     {
         try {
             $script = $this->scriptFacade->getById($scriptId);
@@ -172,8 +178,9 @@ class ScriptController extends AdminBaseController
     /**
      * @Route("/script/google-analytics/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function googleAnalyticsAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function googleAnalyticsAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = ['trackingId' => $this->scriptFacade->getGoogleAnalyticsTrackingId($domainId)];

@@ -27,6 +27,7 @@ class ChainedFixer implements FixerInterface
 
     /**
      * {@inheritDoc}
+     *
      * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function isCandidate(Tokens $tokens): bool
@@ -56,6 +57,7 @@ class ChainedFixer implements FixerInterface
 
     /**
      * {@inheritDoc}
+     *
      * @param \PhpCsFixer\Tokenizer\Tokens<\PhpCsFixer\Tokenizer\Token> $tokens
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void

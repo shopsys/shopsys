@@ -174,7 +174,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Shopsys\HttpSmokeTesting\RequestDataSet $requestDataSet
      * @return \Tests\App\Performance\Page\PerformanceTestSample
      */
-    private function doTestRequestDataSet(RequestDataSet $requestDataSet): \Tests\App\Performance\Page\PerformanceTestSample
+    private function doTestRequestDataSet(RequestDataSet $requestDataSet): PerformanceTestSample
     {
         $this->setUp();
 
@@ -267,7 +267,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @return \Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter
      */
-    private function getRouterAdapter(): \Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter
+    private function getRouterAdapter(): SymfonyRouterAdapter
     {
         $router = static::$container->get('router');
         return new SymfonyRouterAdapter($router);
@@ -277,7 +277,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @return \Tests\App\Performance\Page\PerformanceTestSampleQueryCounter
      */
-    private function injectQueryCounter(EntityManagerInterface $entityManager): \Tests\App\Performance\Page\PerformanceTestSampleQueryCounter
+    private function injectQueryCounter(EntityManagerInterface $entityManager): PerformanceTestSampleQueryCounter
     {
         $connectionConfiguration = $entityManager->getConnection()->getConfiguration();
 
@@ -299,7 +299,7 @@ class AllPagesTest extends KernelTestCase
     /**
      * @return \Tests\App\Performance\Page\PerformanceTestSampleQualifier
      */
-    private function createPerformanceTestSampleQualifier(): \Tests\App\Performance\Page\PerformanceTestSampleQualifier
+    private function createPerformanceTestSampleQualifier(): PerformanceTestSampleQualifier
     {
         $container = static::$container;
 

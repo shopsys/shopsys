@@ -12,6 +12,7 @@ class ShopsysProductFeedHeurekaExtension extends Extension implements PrependExt
 {
     /**
      * {@inheritDoc}
+     *
      * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void

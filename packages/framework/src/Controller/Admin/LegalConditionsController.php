@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\LegalConditions\LegalConditionsSettingFormType;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LegalConditionsController extends AdminBaseController
@@ -36,8 +37,9 @@ class LegalConditionsController extends AdminBaseController
     /**
      * @Route("/legal-conditions/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $settingData = [

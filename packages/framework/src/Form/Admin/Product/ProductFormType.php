@@ -242,7 +242,7 @@ class ProductFormType extends AbstractType
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBasicInformationGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): \Symfony\Component\Form\FormBuilderInterface
+    private function createBasicInformationGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): FormBuilderInterface
     {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
@@ -316,7 +316,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
+    private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderShortDescriptionGroup = $builder->create('shortDescriptionsGroup', GroupType::class, [
             'label' => t('Short description'),
@@ -354,7 +354,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
+    private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderDescriptionGroup = $builder->create('descriptionsGroup', GroupType::class, [
             'label' => t('Description'),
@@ -388,7 +388,7 @@ class ProductFormType extends AbstractType
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): \Symfony\Component\Form\FormBuilderInterface
+    private function createDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): FormBuilderInterface
     {
         $productMainCategoriesIndexedByDomainId = [];
         if ($product !== null) {
@@ -638,7 +638,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
+    private function createPricesGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $builderPricesGroup = $builder->create('pricesGroup', GroupType::class, [
             'label' => t('Prices'),
@@ -717,7 +717,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
+    private function createSeoGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
@@ -788,7 +788,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): \Symfony\Component\Form\FormBuilderInterface
+    private function createVariantGroup(FormBuilderInterface $builder, ?Product $product): FormBuilderInterface
     {
         $variantGroup = $builder->create('variantGroup', FormType::class, [
             'inherit_data' => true,

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -202,7 +203,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime
      */
-    public function getLastActivity(): \DateTime
+    public function getLastActivity(): DateTime
     {
         return $this->lastActivity;
     }
@@ -291,7 +292,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -299,7 +300,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \DateTime|null
      */
-    public function getLastLogin(): ?\DateTime
+    public function getLastLogin(): ?DateTime
     {
         return $this->lastLogin;
     }
@@ -307,7 +308,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function getPricingGroup(): PricingGroup
     {
         return $this->pricingGroup;
     }

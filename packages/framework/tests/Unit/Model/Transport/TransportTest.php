@@ -13,7 +13,7 @@ class TransportTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    private function createTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    private function createTransport(): Transport
     {
         $transportData = new TransportData();
         $transportData->name = ['cs' => 'transportName'];
@@ -24,7 +24,7 @@ class TransportTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    private function createPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    private function createPayment(): Payment
     {
         $paymentData = new PaymentData();
         $paymentData->name = ['cs' => 'paymentName', 'en' => 'paymentName'];

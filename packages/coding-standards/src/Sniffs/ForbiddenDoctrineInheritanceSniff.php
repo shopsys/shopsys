@@ -64,6 +64,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
 
     /**
      * @param array $token
+     * @return bool
      */
     private function isDoctrineInheritanceAnnotation(array $token): bool
     {

@@ -16,7 +16,9 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends AdminBaseController
@@ -103,8 +105,9 @@ class AdvertController extends AdminBaseController
      * @Route("/advert/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $advert = $this->advertFacade->getById($id);
 
@@ -146,8 +149,9 @@ class AdvertController extends AdminBaseController
 
     /**
      * @Route("/advert/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -196,8 +200,9 @@ class AdvertController extends AdminBaseController
     /**
      * @Route("/advert/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -237,8 +242,9 @@ class AdvertController extends AdminBaseController
      * @Route("/advert/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->advertFacade->getById($id)->getName();

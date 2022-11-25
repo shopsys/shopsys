@@ -6,6 +6,8 @@ namespace Tests\FrameworkBundle\Test\Codeception;
 
 use Closure;
 use Codeception\TestInterface;
+use Codeception\Util\ActionSequence;
+use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 
 interface ActorInterface
@@ -54,7 +56,7 @@ interface ActorInterface
      * @param string $text
      * @param array|string $selector optional
      */
-    public function canSee(string $text, array|string $selector = null);
+    public function canSee(string $text, array|string|null $selector = null);
 
     /**
      * @param string $checkboxId
@@ -114,7 +116,7 @@ interface ActorInterface
      * @param string $table
      * @param array $criteria
      */
-    public function canSeeInDatabase(string $table, array $criteria = null);
+    public function canSeeInDatabase(string $table, ?array $criteria = null);
 
     /**
      * @param string $text
@@ -164,7 +166,7 @@ interface ActorInterface
      * @param string $text
      * @param string $url optional
      */
-    public function canSeeLink(string $text, string $url = null);
+    public function canSeeLink(string $text, ?string $url = null);
 
     /**
      * @param int $expectedNumber Expected number
@@ -197,7 +199,7 @@ interface ActorInterface
      * @param string $text
      * @param array|string $selector optional
      */
-    public function cantSee(string $text, array|string $selector = null);
+    public function cantSee(string $text, array|string|null $selector = null);
 
     /**
      * @param string $checkboxId
@@ -284,7 +286,7 @@ interface ActorInterface
      * @param string $text
      * @param string $url optional
      */
-    public function cantSeeLink(string $text, string $url = null);
+    public function cantSeeLink(string $text, ?string $url = null);
 
     /**
      * @param array|string $selector
@@ -325,27 +327,27 @@ interface ActorInterface
      * @param string $name
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByName(string $name, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void;
+    public function clickByName(string $name, WebDriverBy|WebDriverElement|null $contextSelector = null): void;
 
     /**
      * @param string $text
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByText(string $text, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void;
+    public function clickByText(string $text, WebDriverBy|WebDriverElement|null $contextSelector = null): void;
 
     /**
      * @param string $cssOrXPath css or xpath of the web element (body by default)
      * @param int $offsetX
      * @param int $offsetY
      */
-    public function clickWithLeftButton(string $cssOrXPath = null, int $offsetX = null, int $offsetY = null);
+    public function clickWithLeftButton(?string $cssOrXPath = null, ?int $offsetX = null, ?int $offsetY = null);
 
     /**
      * @param string $cssOrXPath css or xpath of the web element (body by default)
      * @param int $offsetX
      * @param int $offsetY
      */
-    public function clickWithRightButton(string $cssOrXPath = null, int $offsetX = null, int $offsetY = null);
+    public function clickWithRightButton(?string $cssOrXPath = null, ?int $offsetX = null, ?int $offsetY = null);
 
     public function closeTab();
 
@@ -369,7 +371,7 @@ interface ActorInterface
      * @param string $text
      * @param array|string $selector optional
      */
-    public function dontSee(string $text, array|string $selector = null);
+    public function dontSee(string $text, array|string|null $selector = null);
 
     /**
      * @param string $checkboxId
@@ -456,7 +458,7 @@ interface ActorInterface
      * @param string $text
      * @param string $url optional
      */
-    public function dontSeeLink(string $text, string $url = null);
+    public function dontSeeLink(string $text, ?string $url = null);
 
     /**
      * @param array|string $selector
@@ -553,7 +555,7 @@ interface ActorInterface
      * @param string $uri optional
      * @return mixed
      */
-    public function grabFromCurrentUrl(string $uri = null);
+    public function grabFromCurrentUrl(?string $uri = null);
 
     /**
      * @param string $table
@@ -568,7 +570,7 @@ interface ActorInterface
      * @param string $attribute
      * @return string[]
      */
-    public function grabMultiple(string $cssOrXpath, string $attribute = null);
+    public function grabMultiple(string $cssOrXpath, ?string $attribute = null);
 
     /**
      * @param string $table Table name
@@ -616,7 +618,7 @@ interface ActorInterface
     /**
      * @param string $name
      */
-    public function makeScreenshot(string $name = null);
+    public function makeScreenshot(?string $name = null);
 
     public function maximizeWindow();
 
@@ -629,7 +631,7 @@ interface ActorInterface
      * @param int $offsetX
      * @param int $offsetY
      */
-    public function moveMouseOver(string $cssOrXPath = null, int $offsetX = null, int $offsetY = null);
+    public function moveMouseOver(?string $cssOrXPath = null, ?int $offsetX = null, ?int $offsetY = null);
 
     /**
      * @param string $css
@@ -646,14 +648,14 @@ interface ActorInterface
      * @param string $databaseKey
      * @param \Codeception\Util\ActionSequence|array|callable $actions
      */
-    public function performInDatabase(string $databaseKey, \Codeception\Util\ActionSequence|array|callable $actions);
+    public function performInDatabase(string $databaseKey, ActionSequence|array|callable $actions);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param array $actions
      * @param int $timeout
      */
-    public function performOn(\Facebook\WebDriver\WebDriverElement $element, array $actions, int $timeout = 10);
+    public function performOn(WebDriverElement $element, array $actions, int $timeout = 10);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
@@ -687,13 +689,13 @@ interface ActorInterface
      * @param int $offsetX
      * @param int $offsetY
      */
-    public function scrollTo(array|string $selector, int $offsetX = null, int $offsetY = null);
+    public function scrollTo(array|string $selector, ?int $offsetX = null, ?int $offsetY = null);
 
     /**
      * @param string $text
      * @param array|string $selector optional
      */
-    public function see(string $text, array|string $selector = null);
+    public function see(string $text, array|string|null $selector = null);
 
     /**
      * @param string $checkboxId
@@ -803,7 +805,7 @@ interface ActorInterface
      * @param string $text
      * @param string $url optional
      */
-    public function seeLink(string $text, string $url = null);
+    public function seeLink(string $text, ?string $url = null);
 
     /**
      * @param int $expectedNumber Expected number
@@ -856,7 +858,7 @@ interface ActorInterface
      * @param array $params
      * @param string $button
      */
-    public function submitForm(array|string $selector, array $params, string $button = null);
+    public function submitForm(array|string $selector, array $params, ?string $button = null);
 
     /**
      * @param string|null $name
@@ -911,51 +913,51 @@ interface ActorInterface
     /**
      * @param int $timeout
      */
-    public function waitForAjax(int $timeout = null);
+    public function waitForAjax(?int $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param int $timeout seconds
      */
-    public function waitForElement(\Facebook\WebDriver\WebDriverElement $element, int $timeout = null);
+    public function waitForElement(WebDriverElement $element, ?int $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param \Closure $callback
      * @param int $timeout seconds
      */
-    public function waitForElementChange(\Facebook\WebDriver\WebDriverElement $element, Closure $callback, int $timeout = null);
+    public function waitForElementChange(WebDriverElement $element, Closure $callback, ?int $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param int $timeout seconds
      */
-    public function waitForElementClickable(\Facebook\WebDriver\WebDriverElement $element, int $timeout = null);
+    public function waitForElementClickable(WebDriverElement $element, ?int $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param int $timeout seconds
      */
-    public function waitForElementNotVisible(\Facebook\WebDriver\WebDriverElement $element, int $timeout = null);
+    public function waitForElementNotVisible(WebDriverElement $element, ?int $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param int $timeout seconds
      */
-    public function waitForElementVisible(\Facebook\WebDriver\WebDriverElement $element, int $timeout = null);
+    public function waitForElementVisible(WebDriverElement $element, ?int $timeout = null);
 
     /**
      * @param string $script
      * @param int $timeout seconds
      */
-    public function waitForJS(string $script, int $timeout = null);
+    public function waitForJS(string $script, ?int $timeout = null);
 
     /**
      * @param string $text
      * @param int $timeout seconds
      * @param string $selector optional
      */
-    public function waitForText(string $text, int $timeout = null, string $selector = null);
+    public function waitForText(string $text, ?int $timeout = null, ?string $selector = null);
 
     /**
      * @param string $text

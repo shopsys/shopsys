@@ -110,7 +110,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $mailTemplate, $order): \Shopsys\FrameworkBundle\Model\Mail\MessageData
+    public function createMessage(MailTemplate $mailTemplate, $order): MessageData
     {
         return new MessageData(
             $order->getEmail(),
@@ -138,7 +138,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    public static function findMailTemplateForOrderStatus(array $mailTemplates, OrderStatus $orderStatus): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public static function findMailTemplateForOrderStatus(array $mailTemplates, OrderStatus $orderStatus): ?MailTemplate
     {
         foreach ($mailTemplates as $mailTemplate) {
             if ($mailTemplate->getName() === self::getMailTemplateNameByStatus($orderStatus)) {

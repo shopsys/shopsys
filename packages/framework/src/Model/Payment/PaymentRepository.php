@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
@@ -27,7 +29,7 @@ class PaymentRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getPaymentRepository(): \Doctrine\ORM\EntityRepository
+    protected function getPaymentRepository(): EntityRepository
     {
         return $this->em->getRepository(Payment::class);
     }
@@ -35,7 +37,7 @@ class PaymentRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForAll(): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilderForAll(): QueryBuilder
     {
         return $this->getPaymentRepository()->createQueryBuilder('p')
             ->where('p.deleted = :deleted')->setParameter('deleted', false)
@@ -63,7 +65,7 @@ class PaymentRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function findById(int $id): ?Payment
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('p.id = :paymentId')->setParameter('paymentId', $id)
@@ -75,7 +77,7 @@ class PaymentRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function getById(int $id): Payment
     {
         $payment = $this->findById($id);
         if ($payment === null) {

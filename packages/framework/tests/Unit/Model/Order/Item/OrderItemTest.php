@@ -218,7 +218,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function createOrderMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
+    private function createOrderMock(): MockObject|Order
     {
         return $this->createMock(Order::class);
     }
@@ -226,7 +226,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    private function createTransportMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Transport\Transport
+    private function createTransportMock(): MockObject|Transport
     {
         return $this->createMock(Transport::class);
     }
@@ -234,7 +234,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    private function createPaymentMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Payment\Payment
+    private function createPaymentMock(): MockObject|Payment
     {
         return $this->createMock(Payment::class);
     }
@@ -242,7 +242,7 @@ class OrderItemTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
      */
-    private function createProductMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Product\Product
+    private function createProductMock(): MockObject|Product
     {
         return $this->createMock(Product::class);
     }

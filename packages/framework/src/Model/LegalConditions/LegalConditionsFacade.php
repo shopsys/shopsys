@@ -43,7 +43,7 @@ abstract class LegalConditionsFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findTermsAndConditions(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
+    public function findTermsAndConditions(int $domainId): ?Article
     {
         return $this->findArticle(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainId);
     }
@@ -66,7 +66,7 @@ abstract class LegalConditionsFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findPrivacyPolicy(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
+    public function findPrivacyPolicy(int $domainId): ?Article
     {
         return $this->findArticle(Setting::PRIVACY_POLICY_ARTICLE_ID, $domainId);
     }
@@ -105,7 +105,7 @@ abstract class LegalConditionsFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    protected function findArticle(string $settingKey, int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
+    protected function findArticle(string $settingKey, int $domainId): ?Article
     {
         $articleId = $this->setting->getForDomain($settingKey, $domainId);
 

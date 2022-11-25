@@ -324,7 +324,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
+    protected function createTranslation(): PaymentTranslation
     {
         return new PaymentTranslation();
     }
@@ -360,7 +360,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
      */
-    public function getPaymentDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Payment\PaymentDomain
+    public function getPaymentDomain(int $domainId): PaymentDomain
     {
         foreach ($this->domains as $paymentDomain) {
             if ($paymentDomain->getDomainId() === $domainId) {

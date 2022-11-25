@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order\Listing;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class OrderListAdminFacade
@@ -31,7 +32,7 @@ class OrderListAdminFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getOrderListQueryBuilder(): QueryBuilder
     {
         return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getAdminLocale());
     }

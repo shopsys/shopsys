@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegistrationController extends FrontBaseController
 {
@@ -64,8 +65,9 @@ class RegistrationController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function existsEmailAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
+    public function existsEmailAction(Request $request): JsonResponse
     {
         $email = $request->get('email');
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
@@ -75,8 +77,9 @@ class RegistrationController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function registerAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function registerAction(Request $request): Response
     {
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');

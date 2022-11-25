@@ -289,7 +289,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation
+    protected function createTranslation(): TransportTranslation
     {
         return new TransportTranslation();
     }
@@ -344,7 +344,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportDomain
      */
-    public function getTransportDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Transport\TransportDomain
+    public function getTransportDomain(int $domainId): TransportDomain
     {
         foreach ($this->domains as $transportDomain) {
             if ($transportDomain->getDomainId() === $domainId) {

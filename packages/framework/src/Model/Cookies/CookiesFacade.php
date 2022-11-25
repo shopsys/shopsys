@@ -63,7 +63,7 @@ class CookiesFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findCookiesArticleByDomainId(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
+    public function findCookiesArticleByDomainId(int $domainId): ?Article
     {
         $cookiesArticleId = $this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainId);
 

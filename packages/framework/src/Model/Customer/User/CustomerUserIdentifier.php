@@ -44,7 +44,7 @@ class CustomerUserIdentifier
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function getCustomerUser(): ?CustomerUser
     {
         return $this->customerUser;
     }

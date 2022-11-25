@@ -40,7 +40,7 @@ class PromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function create(PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function create(PromoCodeData $promoCodeData): PromoCode
     {
         $promoCode = $this->promoCodeFactory->create($promoCodeData);
         $this->em->persist($promoCode);
@@ -54,7 +54,7 @@ class PromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function edit(int $promoCodeId, PromoCodeData $promoCodeData): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function edit(int $promoCodeId, PromoCodeData $promoCodeData): PromoCode
     {
         $promoCode = $this->getById($promoCodeId);
         $promoCode->edit($promoCodeData);
@@ -67,7 +67,7 @@ class PromoCodeFacade
      * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function getById(int $promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function getById(int $promoCodeId): PromoCode
     {
         return $this->promoCodeRepository->getById($promoCodeId);
     }
@@ -86,7 +86,7 @@ class PromoCodeFacade
      * @param string $code
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function findPromoCodeByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function findPromoCodeByCode(string $code): ?PromoCode
     {
         return $this->promoCodeRepository->findByCode($code);
     }

@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ShopInfo\ShopInfoSettingFormType;
 use Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ShopInfoController extends AdminBaseController
@@ -35,8 +36,9 @@ class ShopInfoController extends AdminBaseController
     /**
      * @Route("/shop-info/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 

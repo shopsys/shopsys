@@ -10,6 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SingleCheckboxChoiceType extends AbstractType
 {
+    /**
+     * @return string
+     */
     public function getParent(): string
     {
         return ChoiceType::class;

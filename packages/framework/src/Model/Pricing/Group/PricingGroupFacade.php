@@ -104,7 +104,7 @@ class PricingGroupFacade
      * @param int $pricingGroupId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getById(int $pricingGroupId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function getById(int $pricingGroupId): PricingGroup
     {
         return $this->pricingGroupRepository->getById($pricingGroupId);
     }
@@ -114,7 +114,7 @@ class PricingGroupFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function create(PricingGroupData $pricingGroupData, int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function create(PricingGroupData $pricingGroupData, int $domainId): PricingGroup
     {
         $pricingGroup = $this->pricingGroupFactory->create($pricingGroupData, $domainId);
 
@@ -138,7 +138,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function edit(int $pricingGroupId, PricingGroupData $pricingGroupData): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function edit(int $pricingGroupId, PricingGroupData $pricingGroupData): PricingGroup
     {
         $pricingGroup = $this->pricingGroupRepository->getById($pricingGroupId);
         $pricingGroup->edit($pricingGroupData);

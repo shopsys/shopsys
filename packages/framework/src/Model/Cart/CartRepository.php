@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CartRepository
@@ -25,7 +26,7 @@ class CartRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCartRepository(): \Doctrine\ORM\EntityRepository
+    protected function getCartRepository(): EntityRepository
     {
         return $this->em->getRepository(Cart::class);
     }
@@ -34,7 +35,7 @@ class CartRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?\Shopsys\FrameworkBundle\Model\Cart\Cart
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): ?Cart
     {
         $criteria = [];
         if ($customerUserIdentifier->getCustomerUser() !== null) {

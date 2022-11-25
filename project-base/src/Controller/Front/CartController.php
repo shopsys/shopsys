@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -105,8 +106,9 @@ class CartController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function indexAction(Request $request): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         $cartItems = $cart === null ? [] : $cart->getItems();
@@ -167,8 +169,9 @@ class CartController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function boxAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function boxAction(Request $request): Response
     {
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
 
@@ -201,8 +204,9 @@ class CartController extends FrontBaseController
     /**
      * @param \App\Model\Product\Product $product
      * @param string $type
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addProductFormAction(Product $product, string $type = 'normal'): \Symfony\Component\HttpFoundation\Response
+    public function addProductFormAction(Product $product, string $type = 'normal'): Response
     {
         $form = $this->createForm(AddProductFormType::class, ['productId' => $product->getId()], [
             'action' => $this->generateUrl('front_cart_add_product'),
@@ -218,8 +222,9 @@ class CartController extends FrontBaseController
     /**
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
      * @param string $type
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function productActionAction(ProductActionView $productActionView, string $type = 'normal'): \Symfony\Component\HttpFoundation\Response
+    public function productActionAction(ProductActionView $productActionView, string $type = 'normal'): Response
     {
         $form = $this->createForm(AddProductFormType::class, ['productId' => $productActionView->getId()], [
             'action' => $this->generateUrl('front_cart_add_product'),
@@ -234,8 +239,9 @@ class CartController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function addProductAction(Request $request): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function addProductAction(Request $request): RedirectResponse
     {
         $form = $this->createForm(AddProductFormType::class);
         $form->handleRequest($request);
@@ -280,8 +286,9 @@ class CartController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addProductAjaxAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function addProductAjaxAction(Request $request): Response
     {
         $form = $this->createForm(AddProductFormType::class);
         $form->handleRequest($request);

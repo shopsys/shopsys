@@ -104,7 +104,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function create(TransportData $transportData): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function create(TransportData $transportData): Transport
     {
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
@@ -134,7 +134,7 @@ class TransportFacade
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function getById(int $id): Transport
     {
         return $this->transportRepository->getById($id);
     }

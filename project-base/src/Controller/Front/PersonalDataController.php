@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PersonalDataController extends FrontBaseController
@@ -100,8 +101,9 @@ class PersonalDataController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function indexAction(Request $request): Response
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
@@ -132,8 +134,9 @@ class PersonalDataController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function exportAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function exportAction(Request $request): Response
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
@@ -164,8 +167,9 @@ class PersonalDataController extends FrontBaseController
 
     /**
      * @param string $hash
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function accessDisplayAction(string $hash): \Symfony\Component\HttpFoundation\Response
+    public function accessDisplayAction(string $hash): Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
@@ -202,8 +206,9 @@ class PersonalDataController extends FrontBaseController
 
     /**
      * @param string $hash
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function accessExportAction(string $hash): \Symfony\Component\HttpFoundation\Response
+    public function accessExportAction(string $hash): Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
@@ -244,8 +249,9 @@ class PersonalDataController extends FrontBaseController
 
     /**
      * @param string $hash
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function exportXmlAction(string $hash): \Symfony\Component\HttpFoundation\Response
+    public function exportXmlAction(string $hash): Response
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -259,7 +260,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function createOrder(OrderData $orderData, OrderPreview $orderPreview, ?CustomerUser $customerUser = null): Order
     {
         $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
@@ -294,7 +295,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function createOrderFromFront(OrderData $orderData, ?DeliveryAddress $deliveryAddress): Order
     {
         $orderData->status = $this->orderStatusRepository->getDefault();
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
@@ -337,7 +338,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function edit(int $orderId, OrderData $orderData): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function edit(int $orderId, OrderData $orderData): Order
     {
         $order = $this->orderRepository->getById($orderId);
         $originalOrderStatus = $order->getStatus();
@@ -437,7 +438,7 @@ class OrderFacade
      * @param int $orderId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById(int $orderId): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getById(int $orderId): Order
     {
         return $this->orderRepository->getById($orderId);
     }
@@ -447,7 +448,7 @@ class OrderFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         return $this->orderRepository->getByUrlHashAndDomain($urlHash, $domainId);
     }
@@ -457,7 +458,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getByOrderNumberAndUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         return $this->orderRepository->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
     }
@@ -466,7 +467,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
+    public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
             $this->localization->getAdminLocale(),
@@ -493,6 +494,7 @@ class OrderFacade
     /**
      * @param string $email
      * @param int $domainId
+     * @return int
      */
     public function getOrdersCountByEmailAndDomainId(string $email, int $domainId): int
     {

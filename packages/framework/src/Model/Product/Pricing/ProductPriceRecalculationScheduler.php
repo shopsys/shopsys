@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
@@ -49,7 +50,7 @@ class ProductPriceRecalculationScheduler
     /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]
      */
-    public function getProductsIteratorForDelayedRecalculation(): \Doctrine\ORM\Internal\Hydration\IterableResult|array
+    public function getProductsIteratorForDelayedRecalculation(): IterableResult|array
     {
         return $this->productRepository->getProductsForPriceRecalculationIterator();
     }

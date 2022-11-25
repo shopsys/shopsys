@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Twig\Extension\AbstractExtension;
@@ -110,7 +112,7 @@ class ProductExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getProductMainCategory(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getProductMainCategory(Product $product, int $domainId): Category
     {
         return $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
     }
@@ -120,7 +122,7 @@ class ProductExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
-    public function findProductMainCategory(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
+    public function findProductMainCategory(Product $product, int $domainId): ?Category
     {
         return $this->categoryFacade->findProductMainCategoryByDomainId($product, $domainId);
     }
@@ -129,7 +131,7 @@ class ProductExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
-    public function getProductSellingPrice(Product $product): ?\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+    public function getProductSellingPrice(Product $product): ?ProductPrice
     {
         return $this->productCachedAttributesFacade->getProductSellingPrice($product);
     }

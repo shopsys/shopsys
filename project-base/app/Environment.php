@@ -53,7 +53,7 @@ class Environment
     /**
      * @return \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
      */
-    private static function getEnvironmentFileSetting(): \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
+    private static function getEnvironmentFileSetting(): EnvironmentFileSetting
     {
         if (self::$environmentFileSetting === null) {
             self::$environmentFileSetting = new EnvironmentFileSetting(__DIR__ . '/..');

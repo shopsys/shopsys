@@ -77,7 +77,7 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $filepath
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    public function getFileThumbnailInfo(string $filepath): FileThumbnailInfo
     {
         try {
             return $this->getImageThumbnailInfo($filepath);
@@ -90,7 +90,7 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $temporaryFilename
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    public function getFileThumbnailInfoByTemporaryFilename(string $temporaryFilename): FileThumbnailInfo
     {
         $filepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
@@ -101,7 +101,7 @@ class FileThumbnailExtension extends AbstractExtension
      * @param string $filepath
      * @return \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
      */
-    protected function getImageThumbnailInfo(string $filepath): \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailInfo
+    protected function getImageThumbnailInfo(string $filepath): FileThumbnailInfo
     {
         $image = $this->imageThumbnailFactory->getImageThumbnail($filepath);
 

@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication\CustomerUserCommunicationFormType;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CustomerCommunicationController extends AdminBaseController
@@ -36,8 +37,9 @@ class CustomerCommunicationController extends AdminBaseController
     /**
      * @Route("/customer-communication/order-submitted/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function orderSubmittedAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function orderSubmittedAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $domainId);

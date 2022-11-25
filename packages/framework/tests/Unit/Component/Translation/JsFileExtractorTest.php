@@ -47,8 +47,9 @@ class JsFileExtractorTest extends TestCase
 
     /**
      * @param mixed $filename
+     * @return \JMS\TranslationBundle\Model\MessageCatalogue
      */
-    private function extract(string $filename): \JMS\TranslationBundle\Model\MessageCatalogue
+    private function extract(string $filename): MessageCatalogue
     {
         if (!is_file($filename)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $filename));
@@ -63,7 +64,10 @@ class JsFileExtractorTest extends TestCase
         return $catalogue;
     }
 
-    private function getExtractor(): \Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor
+     */
+    private function getExtractor(): JsFileExtractor
     {
         return new JsFileExtractor();
     }

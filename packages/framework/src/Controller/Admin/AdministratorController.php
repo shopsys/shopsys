@@ -16,7 +16,9 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -80,8 +82,9 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
@@ -108,8 +111,9 @@ class AdministratorController extends AdminBaseController
      * @Route("/administrator/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, int $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, int $id): Response
     {
         $administrator = $this->administratorFacade->getById($id);
 
@@ -182,8 +186,9 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @Route("/administrator/my-account/")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function myAccountAction(): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function myAccountAction(): RedirectResponse
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
@@ -196,8 +201,9 @@ class AdministratorController extends AdminBaseController
     /**
      * @Route("/administrator/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
@@ -242,8 +248,9 @@ class AdministratorController extends AdminBaseController
      * @Route("/administrator/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();

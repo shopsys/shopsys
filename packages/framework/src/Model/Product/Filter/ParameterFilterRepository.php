@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 
@@ -47,7 +48,7 @@ class ParameterFilterRepository
         ParameterFilterData $parameterFilterData,
         EntityManagerInterface $em,
         int $parameterIndex
-    ): \Doctrine\ORM\QueryBuilder {
+    ): QueryBuilder {
         $ppvAlias = 'ppv' . $parameterIndex;
         $parameterPlaceholder = ':parameter' . $parameterIndex;
 
@@ -87,7 +88,7 @@ class ParameterFilterRepository
         QueryBuilder $parameterQueryBuilder,
         string $ppvAlias,
         int $parameterIndex
-    ): \Doctrine\ORM\Query\Expr\Orx {
+    ): Orx {
         $valuesExpr = $parameterQueryBuilder->expr()->orX();
 
         $valueIndex = 1;

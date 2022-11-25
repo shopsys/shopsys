@@ -40,7 +40,10 @@ class RobotsController extends FrontBaseController
         $this->sitemapFilePrefixer = $sitemapFilePrefixer;
     }
 
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         $sitemapFilePrefix = $this->sitemapFilePrefixer->getSitemapFilePrefixForDomain($this->domain->getId());
 

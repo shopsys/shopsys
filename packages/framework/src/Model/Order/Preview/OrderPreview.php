@@ -129,7 +129,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
-    public function getTransport(): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function getTransport(): ?Transport
     {
         return $this->transport;
     }
@@ -137,7 +137,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getTransportPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getTransportPrice(): ?Price
     {
         return $this->transportPrice;
     }
@@ -145,7 +145,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment|null
      */
-    public function getPayment(): ?\Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function getPayment(): ?Payment
     {
         return $this->payment;
     }
@@ -153,7 +153,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getPaymentPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getPaymentPrice(): ?Price
     {
         return $this->paymentPrice;
     }
@@ -161,7 +161,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTotalPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getTotalPrice(): Price
     {
         return $this->totalPrice;
     }
@@ -169,7 +169,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getProductsPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getProductsPrice(): Price
     {
         return $this->productsPrice;
     }
@@ -177,7 +177,7 @@ class OrderPreview
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
-    public function getRoundingPrice(): ?\Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getRoundingPrice(): ?Price
     {
         return $this->roundingPrice;
     }

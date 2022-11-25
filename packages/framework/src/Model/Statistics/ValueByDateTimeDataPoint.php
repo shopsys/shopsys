@@ -29,7 +29,7 @@ class ValueByDateTimeDataPoint
     /**
      * @return \DateTime
      */
-    public function getDateTime(): \DateTime
+    public function getDateTime(): DateTime
     {
         return $this->dateTime;
     }

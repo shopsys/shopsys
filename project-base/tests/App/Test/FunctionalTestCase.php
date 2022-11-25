@@ -58,11 +58,11 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected function findClient(
         bool $createNew = false,
-        string $username = null,
-        string $password = null,
+        ?string $username = null,
+        ?string $password = null,
         array $kernelOptions = [],
         array $clientOptions = []
-    ): \Symfony\Bundle\FrameworkBundle\Client {
+    ): Client {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),

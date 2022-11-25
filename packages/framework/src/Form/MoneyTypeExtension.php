@@ -37,6 +37,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritdoc}
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -47,6 +48,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritdoc}
+     *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
      */

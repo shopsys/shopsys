@@ -11,7 +11,9 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use SplFileObject;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,8 +52,9 @@ class NewsletterController extends AdminBaseController
     /**
      * @Route("/newsletter/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
@@ -86,8 +89,9 @@ class NewsletterController extends AdminBaseController
      * @Route("/newsletter/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction(int $id): RedirectResponse
     {
         try {
             $email = $this->newsletterFacade->getNewsletterSubscriberById($id)->getEmail();

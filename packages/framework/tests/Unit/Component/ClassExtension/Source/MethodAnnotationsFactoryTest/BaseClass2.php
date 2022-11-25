@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest;
 
+use Shopsys\FrameworkBundle\Model\Article\ArticleData;
+
 class BaseClass2
 {
     /**
@@ -11,7 +13,7 @@ class BaseClass2
      *
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
      */
-    public function getArticleData(): \Shopsys\FrameworkBundle\Model\Article\ArticleData
+    public function getArticleData(): ArticleData
     {
     }
 }

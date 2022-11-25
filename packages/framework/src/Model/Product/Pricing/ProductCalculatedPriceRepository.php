@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -33,7 +34,7 @@ class ProductCalculatedPriceRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductCalculatedPriceRepository(): \Doctrine\ORM\EntityRepository
+    protected function getProductCalculatedPriceRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductCalculatedPrice::class);
     }

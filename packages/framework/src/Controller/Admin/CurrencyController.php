@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,8 +57,9 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @Route("/currency/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $grid = $this->currencyInlineEdit->getGrid();
 
@@ -69,8 +71,9 @@ class CurrencyController extends AdminBaseController
     /**
      * @Route("/currency/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction(mixed $id): \Symfony\Component\HttpFoundation\Response
+    public function deleteConfirmAction(mixed $id): Response
     {
         try {
             $currency = $this->currencyFacade->getById($id);
@@ -89,8 +92,9 @@ class CurrencyController extends AdminBaseController
      * @Route("/currency/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->currencyFacade->getById($id)->getName();
@@ -115,8 +119,9 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingsAction(Request $request): Response
     {
         $domainNames = [];
 

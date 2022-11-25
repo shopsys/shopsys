@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
+use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -167,7 +168,10 @@ class OrderController extends FrontBaseController
         $this->newsletterFacade = $newsletterFacade;
     }
 
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
@@ -289,8 +293,9 @@ class OrderController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function previewAction(Request $request): Response
     {
         $transportId = $request->get('transportId');
         $paymentId = $request->get('paymentId');
@@ -352,7 +357,10 @@ class OrderController extends FrontBaseController
         }
     }
 
-    public function saveOrderFormAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function saveOrderFormAction(): Response
     {
         $flow = $this->domainAwareOrderFlowFactory->create();
         $flow->bind(new FrontOrderData());
@@ -362,7 +370,10 @@ class OrderController extends FrontBaseController
         return new Response();
     }
 
-    public function sentAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sentAction(): Response
     {
         $orderId = $this->session->get(self::SESSION_CREATED_ORDER, null);
         $this->session->remove(self::SESSION_CREATED_ORDER);
@@ -377,12 +388,18 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    public function termsAndConditionsAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function termsAndConditionsAction(): Response
     {
         return $this->getTermsAndConditionsResponse();
     }
 
-    public function termsAndConditionsDownloadAction(): \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse
+     */
+    public function termsAndConditionsDownloadAction(): DownloadFileResponse
     {
         $response = $this->getTermsAndConditionsResponse();
 
@@ -396,7 +413,7 @@ class OrderController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getTermsAndConditionsResponse(): \Symfony\Component\HttpFoundation\Response
+    private function getTermsAndConditionsResponse(): Response
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
@@ -408,7 +425,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\Order $order
      */
-    private function sendMail(\App\Model\Order\Order $order): void
+    private function sendMail(Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
             $order->getStatus(),

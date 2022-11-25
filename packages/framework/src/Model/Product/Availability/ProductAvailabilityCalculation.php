@@ -60,7 +60,7 @@ class ProductAvailabilityCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function calculateAvailability(Product $product): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function calculateAvailability(Product $product): Availability
     {
         // If the product is not managed by EntityManager yet, it's not possible to calculate its availability consistently
         // Let's return a same availability for the moment, do not change it now and mark the product for recalculation
@@ -101,7 +101,7 @@ class ProductAvailabilityCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    protected function calculateMainVariantAvailability(Product $mainVariant): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    protected function calculateMainVariantAvailability(Product $mainVariant): Availability
     {
         $atLeastSomewhereSellableVariants = $this->getAtLeastSomewhereSellableVariantsByMainVariant($mainVariant);
         if (count($atLeastSomewhereSellableVariants) === 0) {

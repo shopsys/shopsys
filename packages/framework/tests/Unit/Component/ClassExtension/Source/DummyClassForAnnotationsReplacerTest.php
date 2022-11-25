@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension\Source;
 
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+
 class DummyClassForAnnotationsReplacerTest
 {
     /**
@@ -24,14 +26,14 @@ class DummyClassForAnnotationsReplacerTest
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      */
-    public function returnsFrameworkCategoryFacade(): \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+    public function returnsFrameworkCategoryFacade(): CategoryFacade
     {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null
      */
-    public function returnsFrameworkCategoryFacadeOrNull(): ?\Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+    public function returnsFrameworkCategoryFacadeOrNull(): ?CategoryFacade
     {
     }
 
@@ -69,7 +71,7 @@ class DummyClassForAnnotationsReplacerTest
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData[] $array
      * @param int $integer
      */
-    public function acceptsVariousParameters(\Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade, ?\Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacadeOrNull, array $array, int $integer): void
+    public function acceptsVariousParameters(CategoryFacade $categoryFacade, ?CategoryFacade $categoryFacadeOrNull, array $array, int $integer): void
     {
     }
 }

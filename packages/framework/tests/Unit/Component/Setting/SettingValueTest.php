@@ -48,9 +48,9 @@ class SettingValueTest extends TestCase
 
     /**
      * @dataProvider editExceptionProvider
-     * @param mixed[]|stdClass $value
+     * @param mixed[]|\stdClass $value
      */
-    public function testEditException(array|\stdClass $value): void
+    public function testEditException(array|stdClass $value): void
     {
         $this->expectException(InvalidArgumentException::class);
         new SettingValue('name', $value, 1);

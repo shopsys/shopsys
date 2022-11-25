@@ -117,7 +117,7 @@ class Brand extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation
+    protected function createTranslation(): BrandTranslation
     {
         return new BrandTranslation();
     }
@@ -154,7 +154,7 @@ class Brand extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain
      */
-    protected function getBrandDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain
+    protected function getBrandDomain(int $domainId): BrandDomain
     {
         foreach ($this->domains as $domain) {
             if ($domain->getDomainId() === $domainId) {
@@ -196,7 +196,7 @@ class Brand extends AbstractTranslatableEntity
      * @param string $locale
      * @return string
      */
-    public function getDescription(string $locale = null): string
+    public function getDescription(?string $locale = null): string
     {
         return $this->translation($locale)->getDescription();
     }

@@ -3,7 +3,9 @@
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportRepository
@@ -24,7 +26,7 @@ class TransportRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTransportRepository(): \Doctrine\ORM\EntityRepository
+    protected function getTransportRepository(): EntityRepository
     {
         return $this->em->getRepository(Transport::class);
     }
@@ -32,7 +34,7 @@ class TransportRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForAll(): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilderForAll(): QueryBuilder
     {
         return $this->getTransportRepository()->createQueryBuilder('t')
             ->where('t.deleted = :deleted')->setParameter('deleted', false)
@@ -89,7 +91,7 @@ class TransportRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport|null
      */
-    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function findById(int $id): ?Transport
     {
         return $this->getQueryBuilderForAll()
             ->andWhere('t.id = :transportId')->setParameter('transportId', $id)
@@ -101,7 +103,7 @@ class TransportRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function getById(int $id): Transport
     {
         $transport = $this->findById($id);
         if ($transport === null) {

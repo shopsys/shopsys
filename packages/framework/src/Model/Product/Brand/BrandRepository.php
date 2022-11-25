@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
 class BrandRepository
@@ -23,7 +24,7 @@ class BrandRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getBrandRepository(): \Doctrine\ORM\EntityRepository
+    protected function getBrandRepository(): EntityRepository
     {
         return $this->em->getRepository(Brand::class);
     }
@@ -32,7 +33,7 @@ class BrandRepository
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    public function getById(int $brandId): \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+    public function getById(int $brandId): Brand
     {
         $brand = $this->getBrandRepository()->find($brandId);
 

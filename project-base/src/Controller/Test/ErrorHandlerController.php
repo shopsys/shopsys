@@ -13,8 +13,9 @@ class ErrorHandlerController extends FrontBaseController
 {
     /**
      * @Route("/error-handler/notice")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function noticeAction(): \Symfony\Component\HttpFoundation\Response
+    public function noticeAction(): Response
     {
         $undefined[42];
 

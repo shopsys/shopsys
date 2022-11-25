@@ -203,7 +203,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return \DateTime
      */
-    public function getLastActivity(): \DateTime
+    public function getLastActivity(): DateTime
     {
         return $this->lastActivity;
     }

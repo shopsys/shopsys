@@ -114,7 +114,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation
+    protected function createTranslation(): ParameterTranslation
     {
         return new ParameterTranslation();
     }

@@ -42,7 +42,7 @@ class AdvancedSearchConfig
      * @param string $filterName
      * @return \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
      */
-    public function getFilter(string $filterName): \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface
+    public function getFilter(string $filterName): AdvancedSearchFilterInterface
     {
         if (!array_key_exists($filterName, $this->filters)) {
             $message = 'Filter "' . $filterName . '" not found.';

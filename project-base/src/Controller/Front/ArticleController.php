@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class ArticleController extends FrontBaseController
 {
@@ -24,8 +25,9 @@ class ArticleController extends FrontBaseController
 
     /**
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function detailAction(int $id): \Symfony\Component\HttpFoundation\Response
+    public function detailAction(int $id): Response
     {
         $article = $this->articleFacade->getVisibleById($id);
 
@@ -34,7 +36,10 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
-    public function menuAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function menuAction(): Response
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_TOP_MENU);
 
@@ -43,7 +48,10 @@ class ArticleController extends FrontBaseController
         ]);
     }
 
-    public function footerAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function footerAction(): Response
     {
         $articles = $this->articleFacade->getVisibleArticlesForPlacementOnCurrentDomain(Article::PLACEMENT_FOOTER);
 

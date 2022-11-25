@@ -12,7 +12,7 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
     /**
      * @inheritdoc
      */
-    protected function createValidator(): \Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLengthValidator
+    protected function createValidator(): FileExtensionMaxLengthValidator
     {
         return new FileExtensionMaxLengthValidator();
     }

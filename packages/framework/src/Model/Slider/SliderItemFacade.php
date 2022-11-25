@@ -58,7 +58,7 @@ class SliderItemFacade
      * @param int $sliderItemId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function getById(int $sliderItemId): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
+    public function getById(int $sliderItemId): SliderItem
     {
         return $this->sliderItemRepository->getById($sliderItemId);
     }
@@ -67,7 +67,7 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function create(SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
+    public function create(SliderItemData $sliderItemData): SliderItem
     {
         $sliderItem = $this->sliderItemFactory->create($sliderItemData);
 
@@ -83,7 +83,7 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem
      */
-    public function edit(int $sliderItemId, SliderItemData $sliderItemData): \Shopsys\FrameworkBundle\Model\Slider\SliderItem
+    public function edit(int $sliderItemId, SliderItemData $sliderItemData): SliderItem
     {
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
         $sliderItem->edit($sliderItemData);

@@ -87,7 +87,7 @@ class StrictWebDriver extends WebDriver
      * @param string $text
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByText(string $text, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void
+    public function clickByText(string $text, WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
         $locateBy = $this->getWebDriverByText($text);
 
@@ -122,7 +122,7 @@ class StrictWebDriver extends WebDriver
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      * @return \Facebook\WebDriver\Remote\RemoteWebElement|\Facebook\WebDriver\WebDriverElement
      */
-    private function getElementBySelectorAndContext(WebDriverBy $locateBy, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): WebDriverElement
+    private function getElementBySelectorAndContext(WebDriverBy $locateBy, WebDriverBy|WebDriverElement|null $contextSelector = null): WebDriverElement
     {
         if ($contextSelector instanceof WebDriverBy) {
             return $this->webDriver->findElement($contextSelector)->findElement($locateBy);
@@ -139,7 +139,7 @@ class StrictWebDriver extends WebDriver
      * @param string $name
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByName(string $name, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void
+    public function clickByName(string $name, WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
         $element = $this->getElementBySelectorAndContext(WebDriverBy::name($name), $contextSelector);
 
@@ -150,7 +150,7 @@ class StrictWebDriver extends WebDriver
      * @param string $css
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByCss(string $css, \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void
+    public function clickByCss(string $css, WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
         $element = $this->getElementBySelectorAndContext(WebDriverBy::cssSelector($css), $contextSelector);
 

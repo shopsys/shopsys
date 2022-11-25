@@ -13,7 +13,7 @@ class WebDriverHelper extends Module
     /**
      * @return \Tests\App\Test\Codeception\Module\StrictWebDriver
      */
-    private function getWebDriver(): \Tests\App\Test\Codeception\Module\StrictWebDriver
+    private function getWebDriver(): StrictWebDriver
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver */
         $strictWebDriver = $this->getModule(StrictWebDriver::class);

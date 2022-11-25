@@ -52,7 +52,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $personalDataAccessRequest): \Shopsys\FrameworkBundle\Model\Mail\MessageData
+    public function createMessage(MailTemplate $template, $personalDataAccessRequest): MessageData
     {
         return new MessageData(
             $personalDataAccessRequest->getEmail(),

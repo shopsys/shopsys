@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Script;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException;
 
 class ScriptRepository
@@ -23,7 +25,7 @@ class ScriptRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getScriptRepository(): \Doctrine\ORM\EntityRepository
+    protected function getScriptRepository(): EntityRepository
     {
         return $this->em->getRepository(Script::class);
     }
@@ -32,7 +34,7 @@ class ScriptRepository
      * @param int $scriptId
      * @return \Shopsys\FrameworkBundle\Model\Script\Script
      */
-    public function getById(int $scriptId): \Shopsys\FrameworkBundle\Model\Script\Script
+    public function getById(int $scriptId): Script
     {
         $script = $this->getScriptRepository()->find($scriptId);
 
@@ -54,7 +56,7 @@ class ScriptRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getAllQueryBuilder(): QueryBuilder
     {
         return $this->getScriptRepository()->createQueryBuilder('s');
     }

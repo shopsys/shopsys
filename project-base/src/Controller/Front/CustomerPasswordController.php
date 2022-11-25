@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUse
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordController extends FrontBaseController
 {
@@ -47,8 +48,9 @@ class CustomerPasswordController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function resetPasswordAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function resetPasswordAction(Request $request): Response
     {
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
@@ -86,8 +88,9 @@ class CustomerPasswordController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function setNewPasswordAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function setNewPasswordAction(Request $request): Response
     {
         $email = $request->query->get('email');
         $hash = $request->query->get('hash');

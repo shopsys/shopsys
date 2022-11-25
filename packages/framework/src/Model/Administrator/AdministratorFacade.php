@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
@@ -71,7 +72,7 @@ class AdministratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function create(AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    public function create(AdministratorData $administratorData): Administrator
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
         if ($administratorByUserName !== null) {
@@ -93,7 +94,7 @@ class AdministratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function edit(int $administratorId, AdministratorData $administratorData): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    public function edit(int $administratorId, AdministratorData $administratorData): Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $this->checkUsername($administrator, $administratorData->username);
@@ -178,7 +179,7 @@ class AdministratorFacade
      * @param int $administratorId
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getById(int $administratorId): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    public function getById(int $administratorId): Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }
@@ -186,7 +187,7 @@ class AdministratorFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllListableQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getAllListableQueryBuilder(): QueryBuilder
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
     }

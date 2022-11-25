@@ -69,7 +69,7 @@ class VatFacade
      * @param int $vatId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function getById(int $vatId): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    public function getById(int $vatId): Vat
     {
         return $this->vatRepository->getById($vatId);
     }
@@ -112,7 +112,7 @@ class VatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */
-    public function edit(int $vatId, VatData $vatData): \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    public function edit(int $vatId, VatData $vatData): Vat
     {
         $vat = $this->vatRepository->getById($vatId);
         $vat->edit($vatData);

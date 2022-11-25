@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
+use App\Model\Customer\User\CustomerUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -150,7 +152,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \App\Model\Customer\User\CustomerUser
      */
-    private function createCustomerUserOnDomain(int $domainId, int $userNumber): \App\Model\Customer\User\CustomerUser
+    private function createCustomerUserOnDomain(int $domainId, int $userNumber): CustomerUser
     {
         $customerUserUpdateData = $this->getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber);
 
@@ -165,7 +167,7 @@ class CustomerUserDataFixture
      * @param int $userNumber
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    private function getRandomCustomerUserUpdateDataByDomainId(int $domainId, int $userNumber): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+    private function getRandomCustomerUserUpdateDataByDomainId(int $domainId, int $userNumber): CustomerUserUpdateData
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $country = $this->persistentReferenceFacade->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Symfony\Component\HttpFoundation\Response;
 
 class BreadcrumbController extends AdminBaseController
 {
@@ -19,7 +20,10 @@ class BreadcrumbController extends AdminBaseController
         $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Breadcrumb/breadcrumb.html.twig', [
             'breadcrumbOverrider' => $this->breadcrumbOverrider,

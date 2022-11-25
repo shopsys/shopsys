@@ -4,6 +4,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use DateTime;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
@@ -110,7 +111,7 @@ class CronFacadeTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronFacade
      */
-    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade): \Shopsys\FrameworkBundle\Component\Cron\CronFacade
+    private function createCronFacade(CronConfig $cronConfig, CronModuleFacade $cronModuleFacade): CronFacade
     {
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
@@ -123,7 +124,7 @@ class CronFacadeTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function mockCronModuleFacade(): \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade|\PHPUnit\Framework\MockObject\MockObject
+    private function mockCronModuleFacade(): CronModuleFacade|MockObject
     {
         return $this->createMock(CronModuleFacade::class);
     }
@@ -133,7 +134,7 @@ class CronFacadeTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|null $cronTimeResolverMock
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
      */
-    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, ?\Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolverMock = null): \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
+    private function createCronConfigWithRegisteredServices(array $servicesIndexedById, ?CronTimeResolver $cronTimeResolverMock = null): CronConfig
     {
         $cronTimeResolver = $cronTimeResolverMock !== null ? $cronTimeResolverMock : new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);

@@ -6,6 +6,8 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FlagController extends AdminBaseController
@@ -34,8 +36,9 @@ class FlagController extends AdminBaseController
 
     /**
      * @Route("/product/flag/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $productInlineEdit = $this->flagInlineEdit;
 
@@ -50,8 +53,9 @@ class FlagController extends AdminBaseController
      * @Route("/product/flag/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->flagFacade->getById($id)->getName();

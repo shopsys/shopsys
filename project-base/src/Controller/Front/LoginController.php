@@ -9,7 +9,9 @@ use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends FrontBaseController
 {
@@ -28,8 +30,9 @@ class LoginController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loginAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function loginAction(Request $request): Response
     {
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
@@ -48,7 +51,10 @@ class LoginController extends FrontBaseController
         ]);
     }
 
-    public function windowFormAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function windowFormAction(): Response
     {
         return $this->render('Front/Content/Login/windowForm.html.twig', [
             'form' => $this->getLoginForm()->createView(),
@@ -58,7 +64,7 @@ class LoginController extends FrontBaseController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function getLoginForm(): \Symfony\Component\Form\FormInterface
+    private function getLoginForm(): FormInterface
     {
         return $this->createForm(LoginFormType::class, null, [
             'action' => $this->generateUrl('front_login_check'),

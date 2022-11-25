@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 
 class AdvertRepository
@@ -23,7 +25,7 @@ class AdvertRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getAdvertRepository(): \Doctrine\ORM\EntityRepository
+    protected function getAdvertRepository(): EntityRepository
     {
         return $this->em->getRepository(Advert::class);
     }
@@ -32,7 +34,7 @@ class AdvertRepository
      * @param string $advertId
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findById(string $advertId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
+    public function findById(string $advertId): ?Advert
     {
         return $this->getAdvertRepository()->find($advertId);
     }
@@ -42,7 +44,7 @@ class AdvertRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAdvertByPositionQueryBuilder(string $positionName, int $domainId): \Doctrine\ORM\QueryBuilder
+    protected function getAdvertByPositionQueryBuilder(string $positionName, int $domainId): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('a')
@@ -57,7 +59,7 @@ class AdvertRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findRandomAdvertByPosition(string $positionName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Advert\Advert
+    public function findRandomAdvertByPosition(string $positionName, int $domainId): ?Advert
     {
         $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
             ->select('COUNT(a)')
@@ -78,7 +80,7 @@ class AdvertRepository
      * @param int $advertId
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert
      */
-    public function getById(int $advertId): \Shopsys\FrameworkBundle\Model\Advert\Advert
+    public function getById(int $advertId): Advert
     {
         $advert = $this->getAdvertRepository()->find($advertId);
         if ($advert === null) {

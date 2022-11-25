@@ -139,7 +139,7 @@ class Cart
      * @param int $itemId
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getItemById(int $itemId): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
+    public function getItemById(int $itemId): CartItem
     {
         foreach ($this->items as $item) {
             if ($item->getId() === $itemId) {

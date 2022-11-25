@@ -3,8 +3,10 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -44,7 +46,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterRepository(): \Doctrine\ORM\EntityRepository
+    protected function getParameterRepository(): EntityRepository
     {
         return $this->em->getRepository(Parameter::class);
     }
@@ -52,7 +54,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterValueRepository(): \Doctrine\ORM\EntityRepository
+    protected function getParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterValue::class);
     }
@@ -60,7 +62,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductParameterValueRepository(): \Doctrine\ORM\EntityRepository
+    protected function getProductParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductParameterValue::class);
     }
@@ -69,7 +71,7 @@ class ParameterRepository
      * @param int $parameterId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findById(int $parameterId): ?\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+    public function findById(int $parameterId): ?Parameter
     {
         return $this->getParameterRepository()->find($parameterId);
     }
@@ -78,7 +80,7 @@ class ParameterRepository
      * @param int $parameterId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getById(int $parameterId): \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+    public function getById(int $parameterId): Parameter
     {
         $parameter = $this->findById($parameterId);
 
@@ -133,7 +135,7 @@ class ParameterRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+    public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $valueText,
@@ -178,7 +180,7 @@ class ParameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductQueryBuilder(Product $product): \Doctrine\ORM\QueryBuilder
+    protected function getProductParameterValuesByProductQueryBuilder(Product $product): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('ppv')
@@ -192,7 +194,7 @@ class ParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, string $locale): \Doctrine\ORM\QueryBuilder
+    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(Product $product, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('ppv')
@@ -272,7 +274,7 @@ class ParameterRepository
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findParameterByNames(array $namesByLocale): ?\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+    public function findParameterByNames(array $namesByLocale): ?Parameter
     {
         $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p');
         $index = 0;

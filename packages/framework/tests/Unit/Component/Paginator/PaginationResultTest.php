@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Paginator;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
@@ -45,7 +46,7 @@ class PaginationResultTest extends TestCase
     /**
      * @return \Generator<array<int|bool|null>>
      */
-    public function getTestIsFirstPageData(): \Generator
+    public function getTestIsFirstPageData(): Generator
     {
         yield [1, 10, 20, true];
         yield [2, 10, 20, false];
@@ -69,7 +70,7 @@ class PaginationResultTest extends TestCase
     /**
      * @return \Generator<array<int|bool|null>>
      */
-    public function getTestIsLastPageData(): \Generator
+    public function getTestIsLastPageData(): Generator
     {
         yield [1, 10, 20, false];
         yield [2, 10, 20, true];
@@ -93,7 +94,10 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedIsLast, $paginationResult->isLastPage());
     }
 
-    public function getTestGetPreviousPageData(): \Generator
+    /**
+     * @return \Generator
+     */
+    public function getTestGetPreviousPageData(): Generator
     {
         yield [1, 10, 20, null];
         yield [2, 10, 20, 1];
@@ -115,7 +119,10 @@ class PaginationResultTest extends TestCase
         $this->assertSame($expectedPrevious, $paginationResult->getPreviousPage());
     }
 
-    public function getTestGetNextPageData(): \Generator
+    /**
+     * @return \Generator
+     */
+    public function getTestGetNextPageData(): Generator
     {
         yield [1, 10, 20, 2];
         yield [2, 10, 20, null];

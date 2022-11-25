@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
 class FlagRepository
@@ -23,7 +24,7 @@ class FlagRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getFlagRepository(): \Doctrine\ORM\EntityRepository
+    protected function getFlagRepository(): EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
@@ -32,7 +33,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
      */
-    public function findById(int $flagId): ?\Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    public function findById(int $flagId): ?Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
@@ -41,7 +42,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function getById(int $flagId): \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+    public function getById(int $flagId): Flag
     {
         $flag = $this->findById($flagId);
 

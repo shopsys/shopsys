@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Product\Product;
+use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
@@ -244,7 +247,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
-    private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier): \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+    private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier): CartFacade
     {
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory */
         $customerUserIdentifierFactory = $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier);
@@ -267,7 +270,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
-    private function getCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): \Shopsys\FrameworkBundle\Model\Cart\Cart
+    private function getCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier): Cart
     {
         return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists(
             $customerUserIdentifier
@@ -299,7 +302,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier): \PHPUnit\Framework\MockObject\MockObject
+    private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier): MockObject
     {
         $customerUserIdentifierFactoryMock = $this->getMockBuilder(CustomerUserIdentifierFactory::class)
             ->disableOriginalConstructor()
@@ -313,7 +316,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\Product
      */
-    private function createProduct(): \App\Model\Product\Product
+    private function createProduct(): Product
     {
         return $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
     }

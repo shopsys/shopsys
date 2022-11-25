@@ -11,12 +11,16 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
+use App\Model\Order\OrderData;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
@@ -197,7 +201,7 @@ class OrderDataFixture
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @return \App\Model\Order\OrderData
      */
-    private function createOrderData(?CustomerUser $customerUser = null): \App\Model\Order\OrderData
+    private function createOrderData(?CustomerUser $customerUser = null): OrderData
     {
         $orderData = $this->orderDataFactory->create();
 
@@ -333,7 +337,7 @@ class OrderDataFixture
     /**
      * @return \App\Model\Transport\Transport
      */
-    private function getRandomTransport(): \App\Model\Transport\Transport
+    private function getRandomTransport(): Transport
     {
         $randomTransportReferenceName = $this->faker->randomElement([
             TransportDataFixture::TRANSPORT_CZECH_POST,
@@ -349,7 +353,7 @@ class OrderDataFixture
     /**
      * @return \App\Model\Payment\Payment
      */
-    private function getRandomPayment(): \App\Model\Payment\Payment
+    private function getRandomPayment(): Payment
     {
         $randomPaymentReferenceName = $this->faker->randomElement([
             PaymentDataFixture::PAYMENT_CARD,
@@ -365,7 +369,7 @@ class OrderDataFixture
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    private function getRandomCountryFromFirstDomain(): \Shopsys\FrameworkBundle\Model\Country\Country
+    private function getRandomCountryFromFirstDomain(): Country
     {
         $randomCountryReferenceName = $this->faker->randomElement([
             CountryDataFixture::COUNTRY_CZECH_REPUBLIC,

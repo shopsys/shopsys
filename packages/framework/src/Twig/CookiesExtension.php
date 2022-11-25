@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -52,7 +53,7 @@ class CookiesExtension extends AbstractExtension
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\Article|null
      */
-    public function findCookiesArticleByDomainId(int $domainId): ?\Shopsys\FrameworkBundle\Model\Article\Article
+    public function findCookiesArticleByDomainId(int $domainId): ?Article
     {
         return $this->cookiesFacade->findCookiesArticleByDomainId($domainId);
     }

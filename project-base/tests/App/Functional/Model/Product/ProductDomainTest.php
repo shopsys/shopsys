@@ -120,7 +120,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\Product
      */
-    private function getRefreshedProductFromDatabase(Product $product): \App\Model\Product\Product
+    private function getRefreshedProductFromDatabase(Product $product): Product
     {
         $this->em->persist($product);
         $this->em->flush();

@@ -164,7 +164,7 @@ class ProductFilterRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em): \Doctrine\ORM\QueryBuilder
+    protected function getFlagsQueryBuilder(array $flags, EntityManagerInterface $em): QueryBuilder
     {
         $flagsQueryBuilder = $em->createQueryBuilder();
 
@@ -183,7 +183,7 @@ class ProductFilterRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em): \Doctrine\ORM\QueryBuilder
+    protected function getBrandsQueryBuilder(array $brands, EntityManagerInterface $em): QueryBuilder
     {
         $brandsQueryBuilder = $em->createQueryBuilder();
 

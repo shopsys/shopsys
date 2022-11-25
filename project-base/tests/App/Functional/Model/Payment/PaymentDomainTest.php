@@ -83,7 +83,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Payment\Payment $payment
      * @return \App\Model\Payment\Payment
      */
-    private function getRefreshedPaymentFromDatabase(Payment $payment): \App\Model\Payment\Payment
+    private function getRefreshedPaymentFromDatabase(Payment $payment): Payment
     {
         $this->em->persist($payment);
         $this->em->flush();

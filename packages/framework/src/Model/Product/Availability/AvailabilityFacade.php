@@ -68,7 +68,7 @@ class AvailabilityFacade
      * @param int $availabilityId
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function getById(int $availabilityId): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getById(int $availabilityId): Availability
     {
         return $this->availabilityRepository->getById($availabilityId);
     }
@@ -77,7 +77,7 @@ class AvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function create(AvailabilityData $availabilityData): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function create(AvailabilityData $availabilityData): Availability
     {
         $availability = $this->availabilityFactory->create($availabilityData);
         $this->em->persist($availability);
@@ -93,7 +93,7 @@ class AvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData $availabilityData
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function edit(int $availabilityId, AvailabilityData $availabilityData): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function edit(int $availabilityId, AvailabilityData $availabilityData): Availability
     {
         $availability = $this->availabilityRepository->getById($availabilityId);
         $availability->edit($availabilityData);
@@ -131,7 +131,7 @@ class AvailabilityFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    public function getDefaultInStockAvailability(): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    public function getDefaultInStockAvailability(): Availability
     {
         $availabilityId = $this->setting->get(Setting::DEFAULT_AVAILABILITY_IN_STOCK);
 

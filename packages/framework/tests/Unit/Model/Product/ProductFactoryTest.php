@@ -2,6 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Model\Product;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
@@ -46,7 +47,7 @@ class ProductFactoryTest extends TestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getProductAvailabilityCalculationMock(): \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation|\PHPUnit\Framework\MockObject\MockObject
+    private function getProductAvailabilityCalculationMock(): ProductAvailabilityCalculation|MockObject
     {
         $dummyAvailability = new Availability(new AvailabilityData());
         $productAvailabilityCalculationMock = $this->getMockBuilder(ProductAvailabilityCalculation::class)

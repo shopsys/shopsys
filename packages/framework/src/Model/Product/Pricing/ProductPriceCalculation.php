@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -66,7 +67,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): ProductPrice
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -81,7 +82,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateMainVariantPrice(Product $mainVariant, int $domainId, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+    protected function calculateMainVariantPrice(Product $mainVariant, int $domainId, PricingGroup $pricingGroup): ProductPrice
     {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
@@ -109,7 +110,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup): ProductPrice
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
@@ -138,7 +139,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getMinimumPriceByPriceWithoutVat(array $prices): \Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getMinimumPriceByPriceWithoutVat(array $prices): Price
     {
         if (count($prices) === 0) {
             throw new InvalidArgumentException('Array can not be empty.');

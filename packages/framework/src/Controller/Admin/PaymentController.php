@@ -10,7 +10,9 @@ use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AdminBaseController
@@ -64,8 +66,9 @@ class PaymentController extends AdminBaseController
     /**
      * @Route("/payment/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -101,8 +104,9 @@ class PaymentController extends AdminBaseController
      * @Route("/payment/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $payment = $this->paymentFacade->getById($id);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -142,8 +146,9 @@ class PaymentController extends AdminBaseController
      * @Route("/payment/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $paymentName = $this->paymentFacade->getById($id)->getName();
@@ -163,7 +168,10 @@ class PaymentController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): Response
     {
         $grid = $this->paymentGridFactory->create();
 

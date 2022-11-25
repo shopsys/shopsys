@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class BestsellingProductController extends FrontBaseController
 {
@@ -44,8 +45,9 @@ class BestsellingProductController extends FrontBaseController
 
     /**
      * @param \App\Model\Category\Category $category
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Category $category): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Category $category): Response
     {
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),

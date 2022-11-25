@@ -123,7 +123,7 @@ class CurrencyFacade
      * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getById(int $currencyId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function getById(int $currencyId): Currency
     {
         return $this->currencyRepository->getById($currencyId);
     }
@@ -141,7 +141,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function create(CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function create(CurrencyData $currencyData): Currency
     {
         $currency = $this->currencyFactory->create($currencyData);
         $this->em->persist($currency);
@@ -155,7 +155,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function edit(int $currencyId, CurrencyData $currencyData): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function edit(int $currencyId, CurrencyData $currencyData): Currency
     {
         $currency = $this->currencyRepository->getById($currencyId);
         $currency->edit($currencyData);
@@ -195,7 +195,7 @@ class CurrencyFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getDefaultCurrency(): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function getDefaultCurrency(): Currency
     {
         return $this->getById($this->pricingSetting->getDefaultCurrencyId());
     }
@@ -204,7 +204,7 @@ class CurrencyFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getDomainDefaultCurrencyByDomainId(int $domainId): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function getDomainDefaultCurrencyByDomainId(int $domainId): Currency
     {
         return $this->getById($this->pricingSetting->getDomainDefaultCurrencyIdByDomainId($domainId));
     }

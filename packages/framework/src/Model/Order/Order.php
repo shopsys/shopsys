@@ -7,11 +7,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
  * @ORM\Table(name="orders")
@@ -451,7 +456,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
      */
-    public function getPayment(): \Shopsys\FrameworkBundle\Model\Payment\Payment
+    public function getPayment(): Payment
     {
         return $this->payment;
     }
@@ -467,7 +472,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getOrderPayment(): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+    public function getOrderPayment(): OrderItem
     {
         foreach ($this->items as $item) {
             if ($item->isTypePayment()) {
@@ -481,7 +486,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
      */
-    public function getTransport(): \Shopsys\FrameworkBundle\Model\Transport\Transport
+    public function getTransport(): Transport
     {
         return $this->transport;
     }
@@ -497,7 +502,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getOrderTransport(): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+    public function getOrderTransport(): OrderItem
     {
         foreach ($this->items as $item) {
             if ($item->isTypeTransport()) {
@@ -511,7 +516,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      */
-    public function getStatus(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
+    public function getStatus(): OrderStatus
     {
         return $this->status;
     }
@@ -551,7 +556,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
-    public function getCurrency(): \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+    public function getCurrency(): Currency
     {
         return $this->currency;
     }
@@ -606,7 +611,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUser(): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function getCustomerUser(): ?CustomerUser
     {
         return $this->customerUser;
     }
@@ -614,7 +619,7 @@ class Order
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -660,7 +665,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function getTransportAndPaymentPrice(): \Shopsys\FrameworkBundle\Model\Pricing\Price
+    public function getTransportAndPaymentPrice(): Price
     {
         $transportAndPaymentItems = $this->getTransportAndPaymentItems();
         $totalPrice = Price::zero();
@@ -677,7 +682,7 @@ class Order
      * @param int $orderItemId
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
      */
-    public function getItemById(int $orderItemId): \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem
+    public function getItemById(int $orderItemId): OrderItem
     {
         foreach ($this->getItems() as $orderItem) {
             if ($orderItem->getId() === $orderItemId) {
@@ -773,7 +778,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getCountry(): \Shopsys\FrameworkBundle\Model\Country\Country
+    public function getCountry(): Country
     {
         return $this->country;
     }
@@ -845,7 +850,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getDeliveryCountry(): ?\Shopsys\FrameworkBundle\Model\Country\Country
+    public function getDeliveryCountry(): ?Country
     {
         return $this->deliveryCountry;
     }
@@ -900,7 +905,7 @@ class Order
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
      */
-    public function getCreatedAsAdministrator(): ?\Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    public function getCreatedAsAdministrator(): ?Administrator
     {
         return $this->createdAsAdministrator;
     }

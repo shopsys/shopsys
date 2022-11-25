@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment\FreeTransportAndPaymentPriceLimitsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TransportAndPaymentController extends AdminBaseController
@@ -34,8 +35,9 @@ class TransportAndPaymentController extends AdminBaseController
 
     /**
      * @Route("/transport-and-payment/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig');
     }
@@ -43,8 +45,9 @@ class TransportAndPaymentController extends AdminBaseController
     /**
      * @Route("/transport-and-payment/free-transport-and-payment-limit/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function freeTransportAndPaymentLimitAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function freeTransportAndPaymentLimitAction(Request $request): Response
     {
         $formData = [];
         foreach ($this->domain->getAll() as $domainConfig) {

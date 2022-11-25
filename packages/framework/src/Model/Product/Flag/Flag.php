@@ -130,7 +130,7 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation
+    protected function createTranslation(): FlagTranslation
     {
         return new FlagTranslation();
     }

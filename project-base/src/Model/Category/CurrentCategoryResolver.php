@@ -37,7 +37,7 @@ class CurrentCategoryResolver
      * @param int $domainId
      * @return \App\Model\Category\Category|null
      */
-    public function findCurrentCategoryByRequest(Request $request, int $domainId): ?\App\Model\Category\Category
+    public function findCurrentCategoryByRequest(Request $request, int $domainId): ?Category
     {
         $routeName = $request->get('_route');
 

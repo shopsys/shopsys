@@ -73,7 +73,7 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
-    public function createForCurrentUser(?Transport $transport = null, ?Payment $payment = null): \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
+    public function createForCurrentUser(?Transport $transport = null, ?Payment $payment = null): OrderPreview
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
@@ -111,7 +111,7 @@ class OrderPreviewFactory
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null
-    ): \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview {
+    ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
             $domainId,

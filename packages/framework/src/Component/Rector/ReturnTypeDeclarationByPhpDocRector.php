@@ -6,6 +6,9 @@ namespace Shopsys\FrameworkBundle\Component\Rector;
 
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;
+use PhpParser\Node\IntersectionType;
+use PhpParser\Node\Name;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
@@ -188,7 +191,7 @@ CODE_SAMPLE
      * @param \PHPStan\Type\Type $inferedType
      * @return \PhpParser\Node|null
      */
-    protected function processType(\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $node, Type $inferedType): ?Node
+    protected function processType(ClassMethod|Function_ $node, Type $inferedType): ?Node
     {
         $inferredReturnNode = $this->staticTypeMapper->mapPHPStanTypeToPhpParserNode($inferedType, TypeKind::RETURN);
         // nothing to change in PHP code
@@ -223,7 +226,7 @@ CODE_SAMPLE
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike
      * @return bool
      */
-    protected function shouldSkipInferredReturnNode(\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike): bool
+    protected function shouldSkipInferredReturnNode(ClassMethod|Function_ $functionLike): bool
     {
         // already overridden by previous populateChild() method run
         if ($functionLike->returnType === null) {
@@ -237,7 +240,7 @@ CODE_SAMPLE
      * @param \PHPStan\Type\Type $inferedType
      * @return bool
      */
-    protected function shouldSkipExistingReturnType(\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike, Type $inferedType): bool
+    protected function shouldSkipExistingReturnType(ClassMethod|Function_ $functionLike, Type $inferedType): bool
     {
         if ($functionLike->returnType === null) {
             return false;
@@ -256,7 +259,7 @@ CODE_SAMPLE
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike
      * @param \PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType|\PhpParser\Node\IntersectionType $inferredReturnNode
      */
-    protected function addReturnType(\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike, \PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType|\PhpParser\Node\IntersectionType $inferredReturnNode): void
+    protected function addReturnType(ClassMethod|Function_ $functionLike, Name|NullableType|\PhpParser\Node\UnionType|IntersectionType $inferredReturnNode): void
     {
         if ($functionLike->returnType === null) {
             $functionLike->returnType = $inferredReturnNode;

@@ -38,7 +38,10 @@ class HeurekaController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    public function embedWidgetAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function embedWidgetAction(): Response
     {
         $domainId = $this->domain->getId();
 

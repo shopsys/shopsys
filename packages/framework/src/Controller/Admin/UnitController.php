@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,8 +47,9 @@ class UnitController extends AdminBaseController
 
     /**
      * @Route("/product/unit/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $unitInlineEdit = $this->unitInlineEdit;
 
@@ -61,8 +63,9 @@ class UnitController extends AdminBaseController
     /**
      * @Route("/unit/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
+    public function deleteConfirmAction($id): Response
     {
         try {
             $unit = $this->unitFacade->getById($id);
@@ -106,8 +109,9 @@ class UnitController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -143,8 +147,9 @@ class UnitController extends AdminBaseController
     /**
      * @Route("/product/unit/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingAction(Request $request): Response
     {
         try {
             $defaultUnit = $this->unitFacade->getDefaultUnit();

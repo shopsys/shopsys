@@ -32,7 +32,7 @@ class CurrentPromoCodeFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function getValidEnteredPromoCodeOrNull(): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function getValidEnteredPromoCodeOrNull(): ?PromoCode
     {
         $enteredCode = $this->session->get(static::PROMO_CODE_SESSION_KEY);
         if ($enteredCode === null) {

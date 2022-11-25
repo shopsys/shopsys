@@ -83,7 +83,7 @@ class Unit extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation
+    protected function createTranslation(): UnitTranslation
     {
         return new UnitTranslation();
     }

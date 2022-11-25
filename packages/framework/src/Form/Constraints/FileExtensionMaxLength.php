@@ -29,6 +29,9 @@ class FileExtensionMaxLength extends Constraint
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultOption(): string
     {
         return 'limit';

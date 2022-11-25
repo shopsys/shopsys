@@ -18,7 +18,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     /**
      * @inheritdoc
      */
-    protected function createValidator(): \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator
+    protected function createValidator(): UniqueSlugsOnDomainsValidator
     {
         $domainConfigs = [
             new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.cz', 'name1', 'cs'),

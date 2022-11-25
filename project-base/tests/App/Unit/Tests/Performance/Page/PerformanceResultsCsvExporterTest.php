@@ -118,7 +118,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @return \Tests\App\Performance\Page\PerformanceResultsCsvExporter
      */
-    private function createPerformanceResultsCsvExporter(): \Tests\App\Performance\Page\PerformanceResultsCsvExporter
+    private function createPerformanceResultsCsvExporter(): PerformanceResultsCsvExporter
     {
         return new PerformanceResultsCsvExporter(new JmeterCsvReporter());
     }

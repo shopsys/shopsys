@@ -27,7 +27,7 @@ class ProductPriceCalculationTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $variants
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
      */
-    private function getProductPriceCalculationWithInputPriceTypeAndVariants(int $inputPriceType, array $variants): \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
+    private function getProductPriceCalculationWithInputPriceTypeAndVariants(int $inputPriceType, array $variants): ProductPriceCalculation
     {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType', 'getRoundingType', 'getDomainDefaultCurrencyIdByDomainId'])
@@ -104,7 +104,7 @@ class ProductPriceCalculationTest extends TestCase
      * @param array $prices
      * @param mixed $minimumPrice
      */
-    public function testGetMinimumPrice(array $prices, \Shopsys\FrameworkBundle\Model\Pricing\Price $minimumPrice): void
+    public function testGetMinimumPrice(array $prices, Price $minimumPrice): void
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,

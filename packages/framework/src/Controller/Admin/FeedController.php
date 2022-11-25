@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AdminBaseController
@@ -47,8 +49,9 @@ class FeedController extends AdminBaseController
      * @Route("/feed/generate/{feedName}/{domainId}", requirements={"domainId" = "\d+"})
      * @param string $feedName
      * @param int $domainId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function generateAction(string $feedName, $domainId): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function generateAction(string $feedName, $domainId): RedirectResponse
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
 
@@ -75,8 +78,9 @@ class FeedController extends AdminBaseController
 
     /**
      * @Route("/feed/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $feedsData = [];
 

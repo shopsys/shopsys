@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Cookies\CookiesSettingFormType;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CookiesController extends AdminBaseController
@@ -35,8 +36,9 @@ class CookiesController extends AdminBaseController
     /**
      * @Route("/cookies/setting/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingAction(Request $request): Response
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $cookiesArticle = $this->cookiesFacade->findCookiesArticleByDomainId($selectedDomainId);

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -131,7 +132,7 @@ class ProductVisibilityRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductVisibilityRepository(): \Doctrine\ORM\EntityRepository
+    protected function getProductVisibilityRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductVisibility::class);
     }
@@ -146,7 +147,7 @@ class ProductVisibilityRepository
         Product $product,
         PricingGroup $pricingGroup,
         int $domainId
-    ): \Shopsys\FrameworkBundle\Model\Product\ProductVisibility {
+    ): ProductVisibility {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
             'pricingGroup' => $pricingGroup->getId(),

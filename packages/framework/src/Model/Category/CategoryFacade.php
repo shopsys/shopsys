@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
@@ -106,7 +107,7 @@ class CategoryFacade
      * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getById(int $categoryId): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getById(int $categoryId): Category
     {
         return $this->categoryRepository->getById($categoryId);
     }
@@ -150,7 +151,7 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function create(CategoryData $categoryData): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function create(CategoryData $categoryData): Category
     {
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryFactory->create($categoryData, $rootCategory);
@@ -171,7 +172,7 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function edit(int $categoryId, CategoryData $categoryData): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function edit(int $categoryId, CategoryData $categoryData): Category
     {
         $rootCategory = $this->getRootCategory();
         $category = $this->categoryRepository->getById($categoryId);
@@ -373,7 +374,7 @@ class CategoryFacade
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getSearchAutocompleteCategories(?string $searchText, int $limit): \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+    public function getSearchAutocompleteCategories(?string $searchText, int $limit): PaginationResult
     {
         $page = 1;
 
@@ -408,7 +409,7 @@ class CategoryFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getProductMainCategoryByDomainId(Product $product, int $domainId): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getProductMainCategoryByDomainId(Product $product, int $domainId): Category
     {
         return $this->categoryRepository->getProductMainCategoryOnDomain($product, $domainId);
     }
@@ -418,7 +419,7 @@ class CategoryFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
-    public function findProductMainCategoryByDomainId(Product $product, int $domainId): ?\Shopsys\FrameworkBundle\Model\Category\Category
+    public function findProductMainCategoryByDomainId(Product $product, int $domainId): ?Category
     {
         return $this->categoryRepository->findProductMainCategoryOnDomain($product, $domainId);
     }
@@ -439,7 +440,7 @@ class CategoryFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getRootCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getRootCategory(): Category
     {
         return $this->categoryRepository->getRootCategory();
     }
@@ -449,7 +450,7 @@ class CategoryFacade
      * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getVisibleOnDomainById(int $domainId, int $categoryId): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getVisibleOnDomainById(int $domainId, int $categoryId): Category
     {
         $category = $this->getById($categoryId);
         if (!$category->isVisible($domainId)) {

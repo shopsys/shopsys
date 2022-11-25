@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
 class PersonalDataAccessRequestRepository
 {
@@ -25,7 +26,7 @@ class PersonalDataAccessRequestRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest|null
      */
-    public function findByHashAndDomainId(string $hash, int $domainId): ?\Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
+    public function findByHashAndDomainId(string $hash, int $domainId): ?PersonalDataAccessRequest
     {
         $dateTime = new DateTime('-1 day');
 
@@ -58,7 +59,7 @@ class PersonalDataAccessRequestRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    protected function getQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('pdar')

@@ -38,8 +38,9 @@ class ImageController extends FrontBaseController
      * @param mixed $type
      * @param mixed $sizeName
      * @param mixed $imageId
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getImageAction(mixed $entityName, mixed $type, mixed $sizeName, mixed $imageId): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function getImageAction(mixed $entityName, mixed $type, mixed $sizeName, mixed $imageId): StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;
@@ -72,8 +73,9 @@ class ImageController extends FrontBaseController
      * @param mixed $sizeName
      * @param int $imageId
      * @param int $additionalIndex
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
-    public function getAdditionalImageAction(mixed $entityName, mixed $type, mixed $sizeName, int $imageId, int $additionalIndex): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function getAdditionalImageAction(mixed $entityName, mixed $type, mixed $sizeName, int $imageId, int $additionalIndex): StreamedResponse
     {
         if ($sizeName === ImageConfig::DEFAULT_SIZE_NAME) {
             $sizeName = null;

@@ -98,7 +98,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
+    protected function createTranslation(): OrderStatusTranslation
     {
         return new OrderStatusTranslation();
     }

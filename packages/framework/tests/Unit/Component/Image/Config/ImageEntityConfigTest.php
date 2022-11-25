@@ -78,7 +78,7 @@ class ImageEntityConfigTest extends TestCase
      * @param string|null $name
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    private function createImageSizeConfig(?string $name): \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
+    private function createImageSizeConfig(?string $name): ImageSizeConfig
     {
         return new ImageSizeConfig($name, null, null, false, null, []);
     }

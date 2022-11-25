@@ -45,7 +45,7 @@ class AdministratorActivityFacade
     public function create(
         Administrator $administrator,
         string $ipAddress
-    ): \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity {
+    ): AdministratorActivity {
         $administratorActivity = $this->administratorActivityFactory->create($administrator, $ipAddress);
 
         $this->em->persist($administratorActivity);

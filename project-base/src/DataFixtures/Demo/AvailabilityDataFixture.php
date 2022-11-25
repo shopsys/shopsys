@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -99,7 +100,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
      * @param string|null $referenceName
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */
-    private function createAvailability(AvailabilityData $availabilityData, ?string $referenceName = null): \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
+    private function createAvailability(AvailabilityData $availabilityData, ?string $referenceName = null): Availability
     {
         $availability = $this->availabilityFacade->create($availabilityData);
         if ($referenceName !== null) {

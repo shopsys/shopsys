@@ -43,7 +43,7 @@ class ResetPasswordMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $template, $customerUser): \Shopsys\FrameworkBundle\Model\Mail\MessageData
+    public function createMessage(MailTemplate $template, $customerUser): MessageData
     {
         return new MessageData(
             $customerUser->getEmail(),

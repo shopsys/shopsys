@@ -12,7 +12,9 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DomainController extends AdminBaseController
@@ -63,7 +65,10 @@ class DomainController extends AdminBaseController
         $this->errorExtractor = $errorExtractor;
     }
 
-    public function domainTabsAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function domainTabsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
             'domainConfigs' => $this->domain->getAll(),
@@ -75,8 +80,9 @@ class DomainController extends AdminBaseController
      * @Route("/multidomain/select-domain/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param mixed $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function selectDomainAction(Request $request, int $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function selectDomainAction(Request $request, int $id): RedirectResponse
     {
         $id = (int)$id;
 
@@ -91,8 +97,9 @@ class DomainController extends AdminBaseController
 
     /**
      * @Route("/domain/list")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
 
@@ -113,8 +120,9 @@ class DomainController extends AdminBaseController
      * @Route("/domain/edit/{id}", requirements={"id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $id = (int)$id;
         $domain = $this->domain->getDomainConfigById($id);

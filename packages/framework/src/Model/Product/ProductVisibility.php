@@ -56,6 +56,9 @@ class ProductVisibility
         $this->visible = false;
     }
 
+    /**
+     * @return bool
+     */
     public function isVisible(): bool
     {
         return $this->visible;

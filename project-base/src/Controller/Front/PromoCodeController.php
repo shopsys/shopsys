@@ -7,7 +7,9 @@ namespace App\Controller\Front;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PromoCodeController extends FrontBaseController
 {
@@ -27,7 +29,10 @@ class PromoCodeController extends FrontBaseController
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         return $this->render('Front/Content/Order/PromoCode/index.html.twig', [
             'validEnteredPromoCode' => $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull(),
@@ -36,8 +41,9 @@ class PromoCodeController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function applyAction(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
+    public function applyAction(Request $request): JsonResponse
     {
         $promoCode = $request->get(self::PROMO_CODE_PARAMETER);
         try {
@@ -53,7 +59,10 @@ class PromoCodeController extends FrontBaseController
         return new JsonResponse(['result' => true]);
     }
 
-    public function removeAction(): \Symfony\Component\HttpFoundation\RedirectResponse
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function removeAction(): RedirectResponse
     {
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
         $this->addSuccessFlash(t('Promo code removed from order'));

@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
@@ -29,7 +31,7 @@ class CustomerUserRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCustomerUserRepository(): \Doctrine\ORM\EntityRepository
+    protected function getCustomerUserRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUser::class);
     }
@@ -39,7 +41,7 @@ class CustomerUserRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findCustomerUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function findCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
             'email' => mb_strtolower($email),
@@ -52,7 +54,7 @@ class CustomerUserRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUserByEmailAndDomain(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function getCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
 
@@ -70,7 +72,7 @@ class CustomerUserRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function getCustomerUserById(int $id): \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function getCustomerUserById(int $id): CustomerUser
     {
         $customerUser = $this->findById($id);
         if ($customerUser === null) {
@@ -83,7 +85,7 @@ class CustomerUserRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function findById(int $id): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->find($id);
     }
@@ -93,7 +95,7 @@ class CustomerUserRepository
      * @param string $loginToken
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findByIdAndLoginToken(int $id, string $loginToken): ?\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+    public function findByIdAndLoginToken(int $id, string $loginToken): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
             'id' => $id,
@@ -109,7 +111,7 @@ class CustomerUserRepository
     public function getCustomerUserListQueryBuilderByQuickSearchData(
         int $domainId,
         QuickSearchFormData $quickSearchData
-    ): \Doctrine\ORM\QueryBuilder {
+    ): QueryBuilder {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
                 u.id,

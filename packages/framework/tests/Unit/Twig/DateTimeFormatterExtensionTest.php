@@ -30,11 +30,11 @@ class DateTimeFormatterExtensionTest extends TestCase
 
     /**
      * @dataProvider formatDateDataProvider
-     * @param DateTime|string $input
+     * @param \DateTime|string $input
      * @param mixed $locale
      * @param mixed $result
      */
-    public function testFormatDate(\DateTime|string $input, string $locale, string $result): void
+    public function testFormatDate(DateTime|string $input, string $locale, string $result): void
     {
         $localizationMock = $this->createLocalizationMock($locale);
         $dateTimeFormatter = $this->createDateTimeFormatter();

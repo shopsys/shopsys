@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 
@@ -26,7 +27,7 @@ class MailTemplateRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getMailTemplateRepository(): \Doctrine\ORM\EntityRepository
+    protected function getMailTemplateRepository(): EntityRepository
     {
         return $this->em->getRepository(MailTemplate::class);
     }
@@ -36,7 +37,7 @@ class MailTemplateRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate|null
      */
-    public function findByNameAndDomainId(string $templateName, int $domainId): ?\Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public function findByNameAndDomainId(string $templateName, int $domainId): ?MailTemplate
     {
         $criteria = [
             'name' => $templateName,
@@ -51,7 +52,7 @@ class MailTemplateRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
      */
-    public function getByNameAndDomainId(string $templateName, int $domainId): \Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    public function getByNameAndDomainId(string $templateName, int $domainId): MailTemplate
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
         if ($mailTemplate === null) {

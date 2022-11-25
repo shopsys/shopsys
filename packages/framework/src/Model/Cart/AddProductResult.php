@@ -36,7 +36,7 @@ class AddProductResult
     /**
      * @return \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
      */
-    public function getCartItem(): \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
+    public function getCartItem(): CartItem
     {
         return $this->cartItem;
     }

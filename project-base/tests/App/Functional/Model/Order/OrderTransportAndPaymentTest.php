@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
+use array;
 
 class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 {
@@ -306,7 +307,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      * @param bool $hidden
      * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment(array $enabledForDomains, bool $hidden): \App\Model\Payment\Payment
+    public function getDefaultPayment(array $enabledForDomains, bool $hidden): Payment
     {
         $paymentDataFactory = $this->paymentDataFactory;
 
@@ -327,7 +328,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      * @param bool $hidden
      * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport(array $enabledForDomains, bool $hidden): \App\Model\Transport\Transport
+    public function getDefaultTransport(array $enabledForDomains, bool $hidden): Transport
     {
         $transportDataFactory = $this->transportDataFactory;
 
@@ -348,7 +349,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
      * @param bool[] $enabledForDomains
      * @return bool[]
      */
-    private function getFilteredEnabledForDomains(\array $enabledForDomains): array
+    private function getFilteredEnabledForDomains(array $enabledForDomains): array
     {
         return array_intersect_key($enabledForDomains, array_flip($this->domain->getAllIds()));
     }

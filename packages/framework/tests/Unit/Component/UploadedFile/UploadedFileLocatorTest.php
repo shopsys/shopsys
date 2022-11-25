@@ -84,7 +84,7 @@ class UploadedFileLocatorTest extends TestCase
      * @param bool $has
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
      */
-    private function createUploadedFileLocator(bool $has = true): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
+    private function createUploadedFileLocator(bool $has = true): UploadedFileLocator
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 

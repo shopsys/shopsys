@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Category\TopCategory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
@@ -31,7 +32,7 @@ class TopCategoryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getTopCategoryRepository(): \Doctrine\ORM\EntityRepository
+    protected function getTopCategoryRepository(): EntityRepository
     {
         return $this->em->getRepository(TopCategory::class);
     }

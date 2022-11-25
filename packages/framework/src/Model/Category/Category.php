@@ -153,7 +153,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category|null
      */
-    public function getParent(): ?\Shopsys\FrameworkBundle\Model\Category\Category
+    public function getParent(): ?self
     {
         return $this->parent;
     }
@@ -204,7 +204,7 @@ class Category extends AbstractTranslatableEntity
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
      */
-    protected function getCategoryDomain(int $domainId): \Shopsys\FrameworkBundle\Model\Category\CategoryDomain
+    protected function getCategoryDomain(int $domainId): CategoryDomain
     {
         foreach ($this->domains as $categoryDomain) {
             if ($categoryDomain->getDomainId() === $domainId) {
@@ -290,7 +290,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
      */
-    protected function createTranslation(): \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
+    protected function createTranslation(): CategoryTranslation
     {
         return new CategoryTranslation();
     }

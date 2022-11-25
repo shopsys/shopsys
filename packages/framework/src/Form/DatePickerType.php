@@ -44,6 +44,9 @@ class DatePickerType extends AbstractType
         $resolver->setDefaults($defaults);
     }
 
+    /**
+     * @return string
+     */
     public function getParent(): string
     {
         return DateType::class;

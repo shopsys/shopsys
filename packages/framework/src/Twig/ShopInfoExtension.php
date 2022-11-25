@@ -46,7 +46,7 @@ class ShopInfoExtension extends AbstractExtension
     /**
      * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected function getDomain(): \Shopsys\FrameworkBundle\Component\Domain\Domain
+    protected function getDomain(): Domain
     {
         // Twig extensions are loaded during assetic:dump command,
         // so they cannot be dependent on Domain service

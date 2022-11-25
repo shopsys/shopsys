@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class ProductCachedAttributesFacade
@@ -53,7 +54,7 @@ class ProductCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
-    public function getProductSellingPrice(Product $product): ?\Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+    public function getProductSellingPrice(Product $product): ?ProductPrice
     {
         if (isset($this->sellingPricesByProductId[$product->getId()])) {
             return $this->sellingPricesByProductId[$product->getId()];

@@ -6,7 +6,9 @@ use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTransl
 use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
@@ -53,7 +55,7 @@ abstract class AbstractAdvancedSearchFormFactory
      * @param array $rulesViewData
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createRulesForm(string $name, array $rulesViewData): \Symfony\Component\Form\FormInterface
+    public function createRulesForm(string $name, array $rulesViewData): FormInterface
     {
         $options = [
             'csrf_protection' => false,
@@ -80,7 +82,7 @@ abstract class AbstractAdvancedSearchFormFactory
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface $ruleFilter
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    protected function createRuleFormBuilder(string $name, AdvancedSearchFilterInterface $ruleFilter): \Symfony\Component\Form\FormBuilderInterface
+    protected function createRuleFormBuilder(string $name, AdvancedSearchFilterInterface $ruleFilter): FormBuilderInterface
     {
         return $this->formFactory->createNamedBuilder($name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,

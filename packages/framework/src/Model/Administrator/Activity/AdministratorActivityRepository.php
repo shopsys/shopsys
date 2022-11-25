@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator\Activity;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\Exception\CurrentAdministratorActivityNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
@@ -24,7 +26,7 @@ class AdministratorActivityRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getAdministratorActivityRepository(): \Doctrine\ORM\EntityRepository
+    protected function getAdministratorActivityRepository(): EntityRepository
     {
         return $this->em->getRepository(AdministratorActivity::class);
     }
@@ -34,7 +36,7 @@ class AdministratorActivityRepository
      * @param int $maxResults
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getLastActivitiesQueryBuilder(Administrator $administrator, int $maxResults): \Doctrine\ORM\QueryBuilder
+    protected function getLastActivitiesQueryBuilder(Administrator $administrator, int $maxResults): QueryBuilder
     {
         $lastActivitiesQueryBuilder = $this->getAdministratorActivityRepository()->createQueryBuilder('aa');
 
@@ -50,7 +52,7 @@ class AdministratorActivityRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
      */
-    public function getCurrent(Administrator $administrator): \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivity
+    public function getCurrent(Administrator $administrator): AdministratorActivity
     {
         $currentAdministratorActivity = $this->getLastActivitiesQueryBuilder(
             $administrator,

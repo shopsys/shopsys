@@ -10,11 +10,17 @@ class EncodingConverterTest extends TestCase
 {
     private const STRING_UTF8 = 'příšerně žluťoučký kůň úpěl ďábelské ódy. PŘÍŠERNĚ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ ÓDY.';
 
+    /**
+     * @return string
+     */
     private function getUtf8String(): string
     {
         return self::STRING_UTF8;
     }
 
+    /**
+     * @return string|bool
+     */
     private function getCp1250String(): string|bool
     {
         return iconv('UTF-8', 'CP1250', self::STRING_UTF8);

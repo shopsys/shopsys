@@ -138,7 +138,7 @@ class OrderFacadeHeurekaTest extends TestCase
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function createOrderMock(): \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Order\Order
+    private function createOrderMock(): MockObject|Order
     {
         $order = $this->createMock(Order::class);
         $order->method('getDomainId')->willReturn(Domain::FIRST_DOMAIN_ID);

@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -33,7 +34,7 @@ class ProductListAdminFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductListQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    public function getProductListQueryBuilder(): QueryBuilder
     {
         /**
          * temporary solution -
@@ -50,7 +51,7 @@ class ProductListAdminFacade
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         $queryBuilder = $this->getProductListQueryBuilder();
         $this->productListAdminRepository->extendQueryBuilderByQuickSearchData($queryBuilder, $quickSearchData);

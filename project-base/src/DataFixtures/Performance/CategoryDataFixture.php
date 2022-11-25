@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Performance;
 
+use App\Model\Category\CategoryData;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
@@ -143,7 +144,7 @@ class CategoryDataFixture
      * @param \App\Model\Category\Category $parentCategory
      * @return \App\Model\Category\CategoryData
      */
-    private function getRandomCategoryDataByParentCategory(Category $parentCategory): \App\Model\Category\CategoryData
+    private function getRandomCategoryDataByParentCategory(Category $parentCategory): CategoryData
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;

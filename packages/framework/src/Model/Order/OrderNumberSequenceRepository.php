@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Exception;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNumberSequenceNotFoundException;
 
@@ -27,7 +28,7 @@ class OrderNumberSequenceRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getOrderNumberSequenceRepository(): \Doctrine\ORM\EntityRepository
+    protected function getOrderNumberSequenceRepository(): EntityRepository
     {
         return $this->em->getRepository(OrderNumberSequence::class);
     }

@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Accessory;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -43,7 +45,7 @@ class ProductAccessoryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    public function getProductAccessoryRepository(): \Doctrine\ORM\EntityRepository
+    public function getProductAccessoryRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductAccessory::class);
     }
@@ -91,7 +93,7 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, int $domainId, PricingGroup $pricingGroup): \Doctrine\ORM\QueryBuilder
+    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, int $domainId, PricingGroup $pricingGroup): QueryBuilder
     {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->queryBuilderExtender->addOrExtendJoin(
@@ -112,7 +114,7 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $accessory
      * @return \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory|null
      */
-    public function findByProductAndAccessory(Product $product, Product $accessory): ?\Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessory
+    public function findByProductAndAccessory(Product $product, Product $accessory): ?ProductAccessory
     {
         return $this->getProductAccessoryRepository()->findOneBy([
             'product' => $product,

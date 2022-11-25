@@ -4,7 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -40,7 +42,7 @@ class OrderRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getOrderRepository(): \Doctrine\ORM\EntityRepository
+    protected function getOrderRepository(): EntityRepository
     {
         return $this->em->getRepository(Order::class);
     }
@@ -48,7 +50,7 @@ class OrderRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function createOrderQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    protected function createOrderQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o')
@@ -71,7 +73,7 @@ class OrderRepository
      * @param int $customerUserId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findLastByCustomerUserId(int $customerUserId): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    public function findLastByCustomerUserId(int $customerUserId): ?Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.customerUser = :user')->setParameter(':user', $customerUserId)
@@ -84,7 +86,7 @@ class OrderRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findById(int $id): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    public function findById(int $id): ?Order
     {
         return $this->createOrderQueryBuilder()
             ->andWhere('o.id = :orderId')->setParameter(':orderId', $id)
@@ -96,7 +98,7 @@ class OrderRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getById(int $id): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getById(int $id): Order
     {
         $order = $this->findById($id);
 
@@ -132,7 +134,7 @@ class OrderRepository
     public function getOrderListQueryBuilderByQuickSearchData(
         string $locale,
         QuickSearchFormData $quickSearchData
-    ): \Doctrine\ORM\QueryBuilder {
+    ): QueryBuilder {
         $queryBuilder = $this->orderListAdminRepository->getOrderListQueryBuilder($locale);
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
@@ -196,7 +198,7 @@ class OrderRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByUrlHashAndDomain(string $urlHash, int $domainId): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getByUrlHashAndDomain(string $urlHash, int $domainId): Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.urlHash = :urlHash')->setParameter(':urlHash', $urlHash)
@@ -219,7 +221,7 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
     {
         $order = $this->createOrderQueryBuilder()
             ->andWhere('o.number = :number')->setParameter(':number', $orderNumber)
@@ -239,7 +241,7 @@ class OrderRepository
      * @param string $urlHash
      * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
-    public function findByUrlHashIncludingDeletedOrders(string $urlHash): ?\Shopsys\FrameworkBundle\Model\Order\Order
+    public function findByUrlHashIncludingDeletedOrders(string $urlHash): ?Order
     {
         return $this->getOrderRepository()->findOneBy(['urlHash' => $urlHash]);
     }
@@ -276,7 +278,7 @@ class OrderRepository
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getOrderListQueryBuilder(): \Doctrine\ORM\QueryBuilder
+    protected function getOrderListQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('o, oi, os, ost, c')

@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -16,7 +17,9 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AdminBaseController
@@ -95,8 +98,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $article = $this->articleFacade->getById($id);
         $articleData = $this->articleDataFactory->createFromArticle($article);
@@ -135,8 +139,9 @@ class ArticleController extends AdminBaseController
 
     /**
      * @Route("/article/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
         $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
@@ -156,8 +161,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $articleData = $this->articleDataFactory->create();
 
@@ -194,8 +200,9 @@ class ArticleController extends AdminBaseController
      * @Route("/article/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction($id): RedirectResponse
     {
         try {
             $fullName = $this->articleFacade->getById($id)->getName();
@@ -218,8 +225,9 @@ class ArticleController extends AdminBaseController
     /**
      * @Route("/article/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction(mixed $id): \Symfony\Component\HttpFoundation\Response
+    public function deleteConfirmAction(mixed $id): Response
     {
         $article = $this->articleFacade->getById($id);
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
@@ -257,7 +265,7 @@ class ArticleController extends AdminBaseController
      * @param string $articlePlacement
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid<array<string, mixed>>
      */
-    protected function getGrid(string $articlePlacement): \Shopsys\FrameworkBundle\Component\Grid\Grid
+    protected function getGrid(string $articlePlacement): Grid
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),

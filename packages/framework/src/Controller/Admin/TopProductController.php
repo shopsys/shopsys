@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TopProductController extends AdminBaseController
@@ -35,8 +36,9 @@ class TopProductController extends AdminBaseController
     /**
      * @Route("/product/top-product/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = [

@@ -50,7 +50,7 @@ class ProductManualInputPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -58,7 +58,7 @@ class ProductManualInputPrice
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup(): \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+    public function getPricingGroup(): PricingGroup
     {
         return $this->pricingGroup;
     }

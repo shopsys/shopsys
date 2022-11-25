@@ -14,7 +14,9 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BrandController extends AdminBaseController
@@ -85,8 +87,9 @@ class BrandController extends AdminBaseController
      * @Route("/brand/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request, $id): Response
     {
         $brand = $this->brandFacade->getById($id);
         $brandData = $this->brandDataFactory->createFromBrand($brand);
@@ -123,8 +126,9 @@ class BrandController extends AdminBaseController
 
     /**
      * @Route("/brand/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
@@ -158,8 +162,9 @@ class BrandController extends AdminBaseController
     /**
      * @Route("/brand/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function newAction(Request $request): Response
     {
         $brandData = $this->brandDataFactory->create();
 
@@ -194,8 +199,9 @@ class BrandController extends AdminBaseController
      * @Route("/brand/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(int $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction(int $id): RedirectResponse
     {
         try {
             $fullName = $this->brandFacade->getById($id)->getName();

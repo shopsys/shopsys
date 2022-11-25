@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -27,7 +28,7 @@ class CountryRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCountryRepository(): \Doctrine\ORM\EntityRepository
+    protected function getCountryRepository(): EntityRepository
     {
         return $this->em->getRepository(Country::class);
     }

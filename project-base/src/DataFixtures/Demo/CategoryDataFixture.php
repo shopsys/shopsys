@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Category\Category;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -255,7 +256,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
      * @param string|null $referenceName
      * @return \App\Model\Category\Category
      */
-    private function createCategory(CategoryData $categoryData, ?string $referenceName = null): \App\Model\Category\Category
+    private function createCategory(CategoryData $categoryData, ?string $referenceName = null): Category
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);

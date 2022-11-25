@@ -3,6 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Component\Setting;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
@@ -197,7 +198,10 @@ class SettingTest extends TestCase
         $setting->setForDomain('nonexistentKey', 'anyValue', 1);
     }
 
-    private function createDummyEntityManagerMock(): \PHPUnit\Framework\MockObject\MockObject&\Doctrine\ORM\EntityManager
+    /**
+     * @return \Tests\FrameworkBundle\Unit\Component\Setting\Tests\FrameworkBundle\Unit\Component\Setting\MockObject&\Doctrine\ORM\EntityManager
+     */
+    private function createDummyEntityManagerMock(): MockObject & EntityManager
     {
         return $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()

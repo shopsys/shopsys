@@ -4,6 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
@@ -25,7 +28,7 @@ class NewsletterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getNewsletterSubscriberRepository(): \Doctrine\ORM\EntityRepository
+    protected function getNewsletterSubscriberRepository(): EntityRepository
     {
         return $this->em->getRepository(NewsletterSubscriber::class);
     }
@@ -49,7 +52,7 @@ class NewsletterRepository
      * @param int $domainId
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getAllEmailsDataIteratorByDomainId(int $domainId): \Doctrine\ORM\Internal\Hydration\IterableResult
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): IterableResult
     {
         $query = $this->getNewsletterSubscriberRepository()
             ->createQueryBuilder('ns')
@@ -66,7 +69,7 @@ class NewsletterRepository
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData): \Doctrine\ORM\QueryBuilder
+    public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData): QueryBuilder
     {
         $queryBuilder = $this->getNewsletterSubscriberRepository()
             ->createQueryBuilder('ns')
@@ -86,7 +89,7 @@ class NewsletterRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
      */
-    public function getNewsletterSubscriberById(int $id): \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
+    public function getNewsletterSubscriberById(int $id): NewsletterSubscriber
     {
         return $this->getNewsletterSubscriberRepository()->find($id);
     }
@@ -96,7 +99,7 @@ class NewsletterRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber|null
      */
-    public function findNewsletterSubscribeByEmailAndDomainId(string $email, int $domainId): ?\Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber
+    public function findNewsletterSubscribeByEmailAndDomainId(string $email, int $domainId): ?NewsletterSubscriber
     {
         return $this->getNewsletterSubscriberRepository()
             ->findOneBy([

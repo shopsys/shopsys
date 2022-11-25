@@ -99,7 +99,7 @@ class Vat
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
      */
-    public function getReplaceWith(): ?\Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+    public function getReplaceWith(): ?self
     {
         return $this->replaceWith;
     }
@@ -112,6 +112,9 @@ class Vat
         $this->replaceWith = $newVat;
     }
 
+    /**
+     * @return bool
+     */
     public function isMarkedAsDeleted(): bool
     {
         return $this->replaceWith !== null;

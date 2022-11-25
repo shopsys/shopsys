@@ -6,6 +6,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -81,7 +82,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterLabel
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findParameterElementByLabel(string $parameterLabel): \Facebook\WebDriver\WebDriverElement
+    private function findParameterElementByLabel(string $parameterLabel): WebDriverElement
     {
         $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
@@ -113,7 +114,7 @@ class ProductFilterPage extends AbstractPage
      * @param string $parameterValueText
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getLabelElementByParameterValueText(\Facebook\WebDriver\WebDriverElement $parameterElement, string $parameterValueText): \Facebook\WebDriver\WebDriverElement
+    private function getLabelElementByParameterValueText(WebDriverElement $parameterElement, string $parameterValueText): WebDriverElement
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterValueDivs = $parameterElement->findElements(

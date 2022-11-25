@@ -129,7 +129,7 @@ class PriceExtensionTest extends FunctionalTestCase
      * @param mixed $domainId
      * @param mixed $result
      */
-    public function testPriceFilter(\Shopsys\FrameworkBundle\Component\Money\Money $input, int $domainId, string $result): void
+    public function testPriceFilter(Money $input, int $domainId, string $result): void
     {
         $this->domain->switchDomainById($domainId);
 

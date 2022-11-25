@@ -48,7 +48,7 @@ class ProductAccessory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -56,7 +56,7 @@ class ProductAccessory
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getAccessory(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getAccessory(): Product
     {
         return $this->accessory;
     }

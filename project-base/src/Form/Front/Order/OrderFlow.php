@@ -126,7 +126,7 @@ class OrderFlow extends FormFlow
     /**
      * @return \Craue\FormFlowBundle\Form\StepInterface|null
      */
-    private function getFirstInvalidStep(): ?\Craue\FormFlowBundle\Form\StepInterface
+    private function getFirstInvalidStep(): ?StepInterface
     {
         foreach ($this->getSteps() as $step) {
             if (!$this->isStepValid($step)) {

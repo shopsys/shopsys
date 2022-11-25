@@ -29,7 +29,7 @@ class QuantifiedProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }

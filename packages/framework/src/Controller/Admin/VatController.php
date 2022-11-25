@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Vat\VatSettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,8 +56,9 @@ class VatController extends AdminBaseController
 
     /**
      * @Route("/vat/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $grid = $this->vatInlineEdit->getGrid();
 
@@ -68,8 +70,9 @@ class VatController extends AdminBaseController
     /**
      * @Route("/vat/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
+    public function deleteConfirmAction($id): Response
     {
         try {
             $vat = $this->vatFacade->getById($id);
@@ -104,8 +107,9 @@ class VatController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -140,8 +144,9 @@ class VatController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function settingsAction(Request $request): Response
     {
         $vatSettingsFormData = [
             'defaultVat' => $this->vatFacade->getDefaultVatForDomain(

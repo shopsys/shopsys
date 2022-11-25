@@ -263,7 +263,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData|null $billingAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
      */
-    private function createBillingAddress(?BillingAddressData $billingAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
+    private function createBillingAddress(?BillingAddressData $billingAddressData = null): BillingAddress
     {
         if ($billingAddressData === null) {
             $billingAddressData = new BillingAddressData();
@@ -276,7 +276,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
-    private function createDeliveryAddress(?DeliveryAddressData $deliveryAddressData = null): \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+    private function createDeliveryAddress(?DeliveryAddressData $deliveryAddressData = null): DeliveryAddress
     {
         if ($deliveryAddressData === null) {
             $deliveryAddressData = new DeliveryAddressData();

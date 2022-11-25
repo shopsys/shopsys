@@ -81,7 +81,7 @@ class TransportDomainTest extends TransactionFunctionalTestCase
      * @param \App\Model\Transport\Transport $transport
      * @return \App\Model\Transport\Transport
      */
-    private function getRefreshedTransportFromDatabase(Transport $transport): \App\Model\Transport\Transport
+    private function getRefreshedTransportFromDatabase(Transport $transport): Transport
     {
         $this->em->persist($transport);
         $this->em->flush();

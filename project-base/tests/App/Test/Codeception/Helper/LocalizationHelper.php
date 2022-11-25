@@ -6,6 +6,8 @@ namespace Tests\App\Test\Codeception\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -106,7 +108,7 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [], \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void
+    public function clickByTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
@@ -118,7 +120,7 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [], \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector = null): void
+    public function clickByTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);

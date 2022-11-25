@@ -85,8 +85,9 @@ class CustomerController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function editAction(Request $request): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->addErrorFlash(t('You have to be logged in to enter this page'));
@@ -121,7 +122,10 @@ class CustomerController extends FrontBaseController
         ]);
     }
 
-    public function ordersAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function ordersAction(): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->addErrorFlash(t('You have to be logged in to enter this page'));
@@ -139,16 +143,18 @@ class CustomerController extends FrontBaseController
 
     /**
      * @param string $orderNumber
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function orderDetailRegisteredAction(string $orderNumber): \Symfony\Component\HttpFoundation\Response
+    public function orderDetailRegisteredAction(string $orderNumber): Response
     {
         return $this->orderDetailAction(null, $orderNumber);
     }
 
     /**
      * @param string $urlHash
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function orderDetailUnregisteredAction(string $urlHash): \Symfony\Component\HttpFoundation\Response
+    public function orderDetailUnregisteredAction(string $urlHash): Response
     {
         return $this->orderDetailAction($urlHash, null);
     }
@@ -156,8 +162,9 @@ class CustomerController extends FrontBaseController
     /**
      * @param string $urlHash
      * @param string $orderNumber
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function orderDetailAction(?string $urlHash = null, ?string $orderNumber = null): \Symfony\Component\HttpFoundation\Response
+    private function orderDetailAction(?string $urlHash = null, ?string $orderNumber = null): Response
     {
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
@@ -192,7 +199,7 @@ class CustomerController extends FrontBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loginAsRememberedUserAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function loginAsRememberedUserAction(Request $request): Response
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
@@ -211,7 +218,7 @@ class CustomerController extends FrontBaseController
      * @param int $deliveryAddressId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteDeliveryAddressAction(int $deliveryAddressId): \Symfony\Component\HttpFoundation\Response
+    public function deleteDeliveryAddressAction(int $deliveryAddressId): Response
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             throw $this->createAccessDeniedException('');

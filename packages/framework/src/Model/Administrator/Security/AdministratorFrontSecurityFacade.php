@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
@@ -90,7 +91,7 @@ class AdministratorFrontSecurityFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getCurrentAdministrator(): \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+    public function getCurrentAdministrator(): Administrator
     {
         if ($this->isAdministratorLogged()) {
             /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user */
@@ -106,7 +107,7 @@ class AdministratorFrontSecurityFacade
      * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      */
-    protected function getAdministratorToken(): \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+    protected function getAdministratorToken(): TokenInterface
     {
         $serializedToken = $this->session->get('_security_' . static::ADMINISTRATION_CONTEXT);
         if ($serializedToken === null) {

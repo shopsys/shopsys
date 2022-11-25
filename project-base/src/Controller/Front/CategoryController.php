@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends FrontBaseController
 {
@@ -61,8 +62,9 @@ class CategoryController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function panelAction(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function panelAction(Request $request): Response
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
             $this->categoryFacade->getRootCategory(),
@@ -92,8 +94,9 @@ class CategoryController extends FrontBaseController
 
     /**
      * @param int $parentCategoryId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function branchAction(int $parentCategoryId): \Symfony\Component\HttpFoundation\Response
+    public function branchAction(int $parentCategoryId): Response
     {
         $parentCategory = $this->categoryFacade->getById($parentCategoryId);
 
@@ -110,7 +113,10 @@ class CategoryController extends FrontBaseController
         ]);
     }
 
-    public function topAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function topAction(): Response
     {
         return $this->render('Front/Content/Category/top.html.twig', [
             'categories' => $this->topCategoryFacade->getVisibleCategoriesByDomainId($this->domain->getId()),
@@ -120,8 +126,9 @@ class CategoryController extends FrontBaseController
     /**
      * @param \App\Model\Category\Category[] $categories
      * @param bool $showProductsCountByCategory
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function categoryListAction(array $categories, bool $showProductsCountByCategory = true): \Symfony\Component\HttpFoundation\Response
+    public function categoryListAction(array $categories, bool $showProductsCountByCategory = true): Response
     {
         if ($showProductsCountByCategory === true) {
             $pricingGroup = $this->currentCustomerUser->getPricingGroup();

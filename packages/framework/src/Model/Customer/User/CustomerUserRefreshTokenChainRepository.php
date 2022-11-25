@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 
 class CustomerUserRefreshTokenChainRepository
 {
@@ -25,7 +25,7 @@ class CustomerUserRefreshTokenChainRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCustomerUserRefreshTokenChainRepository(): \Doctrine\ORM\EntityRepository
+    protected function getCustomerUserRefreshTokenChainRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUserRefreshTokenChain::class);
     }

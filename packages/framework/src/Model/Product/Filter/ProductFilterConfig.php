@@ -69,7 +69,7 @@ class ProductFilterConfig
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    public function getPriceRange(): \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+    public function getPriceRange(): PriceRange
     {
         return $this->priceRange;
     }

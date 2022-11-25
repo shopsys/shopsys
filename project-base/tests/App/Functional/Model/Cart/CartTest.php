@@ -91,7 +91,7 @@ class CartTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\Product
      */
-    private function createProduct(): \App\Model\Product\Product
+    private function createProduct(): Product
     {
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();

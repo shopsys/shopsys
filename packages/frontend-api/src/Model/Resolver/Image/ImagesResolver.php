@@ -85,7 +85,7 @@ class ImagesResolver implements QueryInterface
      * @param string|null $size
      * @return array<mixed, array{type: string|null, position: int|null, width: int|null, height: int|null, size: string, url: string}>
      */
-    public function resolveByProduct(\Shopsys\FrameworkBundle\Model\Product\Product|array $data, ?string $type, ?string $size): array
+    public function resolveByProduct(Product|array $data, ?string $type, ?string $size): array
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
         return $this->resolveByEntityId($productId, static::IMAGE_ENTITY_PRODUCT, $type, $size);

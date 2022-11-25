@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 
 /**
  * @ORM\Table(name="billing_addresses")
@@ -179,7 +180,7 @@ class BillingAddress
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function getCountry(): ?\Shopsys\FrameworkBundle\Model\Country\Country
+    public function getCountry(): ?Country
     {
         return $this->country;
     }

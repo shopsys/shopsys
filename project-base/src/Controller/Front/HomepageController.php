@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomepageController extends FrontBaseController
 {
@@ -49,7 +50,10 @@ class HomepageController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
-    public function indexAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(): Response
     {
         $sliderItems = $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
         $topProducts = $this->listedProductViewFacade->getAllTop();

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException;
 
 class PromoCodeRepository
@@ -23,7 +24,7 @@ class PromoCodeRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getPromoCodeRepository(): \Doctrine\ORM\EntityRepository
+    protected function getPromoCodeRepository(): EntityRepository
     {
         return $this->em->getRepository(PromoCode::class);
     }
@@ -32,7 +33,7 @@ class PromoCodeRepository
      * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function findById(int $promoCodeId): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function findById(int $promoCodeId): ?PromoCode
     {
         return $this->getPromoCodeRepository()->find($promoCodeId);
     }
@@ -41,7 +42,7 @@ class PromoCodeRepository
      * @param string $code
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function findByCode(string $code): ?\Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function findByCode(string $code): ?PromoCode
     {
         return $this->getPromoCodeRepository()->findOneBy(['code' => $code]);
     }
@@ -50,7 +51,7 @@ class PromoCodeRepository
      * @param int $promoCodeId
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
-    public function getById(int $promoCodeId): \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
+    public function getById(int $promoCodeId): PromoCode
     {
         $promoCode = $this->findById($promoCodeId);
 

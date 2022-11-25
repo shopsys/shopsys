@@ -152,7 +152,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      * @param mixed $value
      * @return \DateTime
      */
-    protected function convertToDateTime(mixed $value): \DateTime
+    protected function convertToDateTime(mixed $value): DateTime
     {
         if ($value instanceof DateTime) {
             return $value;

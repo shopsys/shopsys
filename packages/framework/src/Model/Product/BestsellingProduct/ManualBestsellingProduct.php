@@ -77,7 +77,7 @@ class ManualBestsellingProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getProduct(): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -85,7 +85,7 @@ class ManualBestsellingProduct
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
-    public function getCategory(): \Shopsys\FrameworkBundle\Model\Category\Category
+    public function getCategory(): Category
     {
         return $this->category;
     }

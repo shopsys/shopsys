@@ -18,6 +18,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 {
     /**
      * {@inheritDoc}
+     *
      * @param string[] $configs
      */
     public function load(array $configs, ContainerBuilder $container): void

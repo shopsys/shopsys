@@ -168,7 +168,7 @@ class OrderItem
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function getOrder(): \Shopsys\FrameworkBundle\Model\Order\Order
+    public function getOrder(): Order
     {
         return $this->order;
     }

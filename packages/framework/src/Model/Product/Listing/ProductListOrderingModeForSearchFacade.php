@@ -24,7 +24,7 @@ abstract class ProductListOrderingModeForSearchFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
      */
-    public function getProductListOrderingConfig(): \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
+    public function getProductListOrderingConfig(): ProductListOrderingConfig
     {
         return new ProductListOrderingConfig(
             $this->getSupportedOrderingModesNamesById(),

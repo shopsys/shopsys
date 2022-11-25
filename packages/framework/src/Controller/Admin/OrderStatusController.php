@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForb
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,8 +47,9 @@ class OrderStatusController extends AdminBaseController
 
     /**
      * @Route("/order-status/list/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    public function listAction(): Response
     {
         $grid = $this->orderStatusInlineEdit->getGrid();
 
@@ -61,8 +63,9 @@ class OrderStatusController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, $id): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function deleteAction(Request $request, $id): RedirectResponse
     {
         $newId = $request->get('newId');
 
@@ -104,8 +107,9 @@ class OrderStatusController extends AdminBaseController
     /**
      * @Route("/order-status/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteConfirmAction($id): \Symfony\Component\HttpFoundation\Response
+    public function deleteConfirmAction($id): Response
     {
         try {
             $orderStatus = $this->orderStatusFacade->getById($id);

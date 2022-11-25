@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdvertController extends FrontBaseController
 {
@@ -23,8 +24,9 @@ class AdvertController extends FrontBaseController
 
     /**
      * @param string $positionName
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function boxAction(string $positionName): \Symfony\Component\HttpFoundation\Response
+    public function boxAction(string $positionName): Response
     {
         $advert = $this->advertFacade->findRandomAdvertByPositionOnCurrentDomain($positionName);
 

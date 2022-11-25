@@ -227,7 +227,7 @@ class ProductFacade
      * @param int $productId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getById(int $productId): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getById(int $productId): Product
     {
         return $this->productRepository->getById($productId);
     }
@@ -245,7 +245,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function create(ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function create(ProductData $productData): Product
     {
         $product = $this->productFactory->create($productData);
 
@@ -295,7 +295,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function edit(int $productId, ProductData $productData): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function edit(int $productId, ProductData $productData): Product
     {
         $product = $this->productRepository->getById($productId);
         $originalNames = $product->getNames();
@@ -494,7 +494,7 @@ class ProductFacade
      * @param string $productCatnum
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getOneByCatnumExcludeMainVariants(string $productCatnum): \Shopsys\FrameworkBundle\Model\Product\Product
+    public function getOneByCatnumExcludeMainVariants(string $productCatnum): Product
     {
         return $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
     }

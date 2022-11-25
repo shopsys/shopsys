@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\BackendApiBundle\Unit\Component\HeaderLinks;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer;
@@ -27,9 +28,9 @@ class HeaderLinksTransformerTest extends TestCase
     }
 
     /**
-     * @return Generator<array<\Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks|\Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<mixed>>>
+     * @return \Tests\BackendApiBundle\Unit\Component\HeaderLinks\Generator<array<(\Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinks|\Shopsys\FrameworkBundle\Component\Paginator\PaginationResult<mixed>)>>
      */
-    public function getFromPaginationResultTestCases(): \Generator
+    public function getFromPaginationResultTestCases(): Generator
     {
         yield [
             new PaginationResult(1, 20, 10, []),

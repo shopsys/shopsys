@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AdminBaseController
 {
@@ -19,7 +20,10 @@ class MenuController extends AdminBaseController
         $this->domainFacade = $domainFacade;
     }
 
-    public function menuAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function menuAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Menu/menu.html.twig', [
             'domainConfigs' => $this->domainFacade->getAllDomainConfigs(),

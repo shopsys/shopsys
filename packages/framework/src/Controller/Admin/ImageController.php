@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ImageController extends AdminBaseController
@@ -22,8 +23,9 @@ class ImageController extends AdminBaseController
 
     /**
      * @Route("/image/overview/")
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function overviewAction(): \Symfony\Component\HttpFoundation\Response
+    public function overviewAction(): Response
     {
         $imageEntityConfigs = $this->imageFacade->getAllImageEntityConfigsByClass();
 

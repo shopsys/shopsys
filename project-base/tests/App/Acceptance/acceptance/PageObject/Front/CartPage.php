@@ -6,6 +6,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
@@ -93,7 +94,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getQuantityFieldByProductName(string $productName): \Facebook\WebDriver\WebDriverElement
+    private function getQuantityFieldByProductName(string $productName): WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -104,7 +105,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function findProductRowInCartByName(string $productName): \Facebook\WebDriver\WebDriverElement
+    private function findProductRowInCartByName(string $productName): WebDriverElement
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
@@ -133,7 +134,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductTotalPriceCellByName(string $productName): \Facebook\WebDriver\WebDriverElement
+    private function getProductTotalPriceCellByName(string $productName): WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -144,7 +145,7 @@ class CartPage extends AbstractPage
      * @param string $productName
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getProductPriceCellByName(string $productName): \Facebook\WebDriver\WebDriverElement
+    private function getProductPriceCellByName(string $productName): WebDriverElement
     {
         $row = $this->findProductRowInCartByName($productName);
 
@@ -154,7 +155,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    private function getTotalProductsPriceCell(): \Facebook\WebDriver\WebDriverElement
+    private function getTotalProductsPriceCell(): WebDriverElement
     {
         return $this->webDriver->findElement(WebDriverBy::cssSelector('.test-cart-total-price'));
     }
@@ -182,7 +183,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function canSeePromoCodeSubmitButtonElement(): \Facebook\WebDriver\WebDriverElement
+    public function canSeePromoCodeSubmitButtonElement(): WebDriverElement
     {
         return $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
     }
@@ -190,7 +191,7 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function canSeePromoCodeRemoveButtonElement(): \Facebook\WebDriver\WebDriverElement
+    public function canSeePromoCodeRemoveButtonElement(): WebDriverElement
     {
         return $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
     }

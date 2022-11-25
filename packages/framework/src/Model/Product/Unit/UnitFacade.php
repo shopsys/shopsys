@@ -60,7 +60,7 @@ class UnitFacade
      * @param int $unitId
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getById(int $unitId): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function getById(int $unitId): Unit
     {
         return $this->unitRepository->getById($unitId);
     }
@@ -69,7 +69,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function create(UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function create(UnitData $unitData): Unit
     {
         $unit = $this->unitFactory->create($unitData);
         $this->em->persist($unit);
@@ -85,7 +85,7 @@ class UnitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function edit(int $unitId, UnitData $unitData): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function edit(int $unitId, UnitData $unitData): Unit
     {
         $unit = $this->unitRepository->getById($unitId);
         $unit->edit($unitData);
@@ -156,7 +156,7 @@ class UnitFacade
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      */
-    public function getDefaultUnit(): \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
+    public function getDefaultUnit(): Unit
     {
         $defaultUnitId = $this->getDefaultUnitId();
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Symfony\Component\HttpFoundation\Response;
 
 class BrandController extends FrontBaseController
 {
@@ -22,7 +23,10 @@ class BrandController extends FrontBaseController
         $this->brandFacade = $brandFacade;
     }
 
-    public function listAction(): \Symfony\Component\HttpFoundation\Response
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): Response
     {
         return $this->render('Front/Content/Brand/list.html.twig', [
             'brands' => $this->brandFacade->getAll(),

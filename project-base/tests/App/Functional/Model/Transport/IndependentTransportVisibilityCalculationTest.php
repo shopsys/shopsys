@@ -147,7 +147,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
      * @param bool $deleted
      * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport(array $enabledForDomains, bool $hidden, bool $deleted = false): \App\Model\Transport\Transport
+    public function getDefaultTransport(array $enabledForDomains, bool $hidden, bool $deleted = false): Transport
     {
         $transportData = $this->transportDataFactory->create();
         $names = [];
