@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -18,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
@@ -69,7 +70,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     /**
      * @return \App\Model\Product\ProductData
      */
-    private function getDefaultProductData(): \App\Model\Product\ProductData
+    private function getDefaultProductData(): ProductData
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
@@ -93,7 +94,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    private function setVatsForAllDomains(ProductData $productData): void
+    private function setVatsForAllDomains(BaseProductData $productData): void
     {
         $productVats = [];
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -113,7 +114,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
      * @param \App\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $price
      */
-    private function setPriceForAllDomains(ProductData $productData, ?Money $price): void
+    private function setPriceForAllDomains(BaseProductData $productData, ?Money $price): void
     {
         $manualInputPrices = [];
 

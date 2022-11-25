@@ -3,6 +3,8 @@
 namespace Tests\ReadModelBundle\Unit\Product\Listed;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -21,8 +23,6 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
-use Doctrine\Common\Collections\Collection;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class ListedProductViewFactoryTest extends TestCase
 {

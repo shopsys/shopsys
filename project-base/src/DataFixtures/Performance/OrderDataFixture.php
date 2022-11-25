@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
+use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\OrderData;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
@@ -21,7 +22,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
@@ -201,7 +202,7 @@ class OrderDataFixture
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @return \App\Model\Order\OrderData
      */
-    private function createOrderData(?CustomerUser $customerUser = null): OrderData
+    private function createOrderData(?BaseCustomerUser $customerUser = null): OrderData
     {
         $orderData = $this->orderDataFactory->create();
 
@@ -307,7 +308,7 @@ class OrderDataFixture
 
         $qb = $this->em->createQueryBuilder()
             ->select('u.id')
-            ->from(CustomerUser::class, 'u')
+            ->from(BaseCustomerUser::class, 'u')
             ->where('u.id >= :firstPerformanceUserId')
             ->andWhere('u.domainId = :domainId')
             ->setParameter('firstPerformanceUserId', $firstPerformanceUser->getId())
@@ -319,7 +320,7 @@ class OrderDataFixture
     /**
      * @return \App\Model\Customer\User\CustomerUser|null
      */
-    private function getRandomCustomerUserOrNull(): ?\App\Model\Customer\User\CustomerUser
+    private function getRandomCustomerUserOrNull(): ?CustomerUser
     {
         $shouldBeRegisteredUser = $this->faker->boolean(self::PERCENTAGE_OF_ORDERS_BY_REGISTERED_USERS);
 

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Performance;
 
+use App\Model\Category\Category;
 use App\Model\Category\CategoryData;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -106,7 +107,7 @@ class CategoryDataFixture
      * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      * @param int $categoryLevel
      */
-    private function recursivelyCreateCategoryTree(\App\Model\Category\Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
+    private function recursivelyCreateCategoryTree(Category $parentCategory, ProgressBar $progressBar, int $categoryLevel = 0): void
     {
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $categoryData = $this->getRandomCategoryDataByParentCategory($parentCategory);
@@ -144,7 +145,7 @@ class CategoryDataFixture
      * @param \App\Model\Category\Category $parentCategory
      * @return \App\Model\Category\CategoryData
      */
-    private function getRandomCategoryDataByParentCategory(Category $parentCategory): CategoryData
+    private function getRandomCategoryDataByParentCategory(BaseCategory $parentCategory): CategoryData
     {
         $categoryData = $this->categoryDataFactory->create();
         $categoryName = $this->faker->word . ' #' . $this->categoriesCreated;

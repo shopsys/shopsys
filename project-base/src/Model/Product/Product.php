@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Product|null $mainVariant
  * @method static \App\Model\Product\Product create(\App\Model\Product\ProductData $productData)
  * @method static \App\Model\Product\Product createMainVariant(\App\Model\Product\ProductData $productData, \App\Model\Product\Product[] $variants)
- * @method \App\Model\Category\Category[][] getCategoriesIndexedByDomainId()
+ * @method \App\Model\Category\Category[]&array[] getCategoriesIndexedByDomainId()
  * @method \App\Model\Product\Brand\Brand|null getBrand()
  * @method \App\Model\Product\Product getMainVariant()
  * @method \App\Model\Product\Product[] getVariants()

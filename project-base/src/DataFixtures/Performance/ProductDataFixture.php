@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\ProductDataFixture as DemoProductDataFixture;
+use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Faker\Generator as Faker;
@@ -16,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -231,10 +232,10 @@ class ProductDataFixture
      * @param string $catnum
      * @return \App\Model\Product\Product
      */
-    private function getProductByCatnum(string $catnum): \App\Model\Product\Product
+    private function getProductByCatnum(string $catnum): Product
     {
         if (!array_key_exists($catnum, $this->productsByCatnum)) {
-            $query = $this->em->createQuery('SELECT p FROM ' . Product::class . ' p WHERE p.catnum = :catnum')
+            $query = $this->em->createQuery('SELECT p FROM ' . BaseProduct::class . ' p WHERE p.catnum = :catnum')
                 ->setParameter('catnum', $catnum);
             $this->productsByCatnum[$catnum] = $query->getSingleResult();
         }
