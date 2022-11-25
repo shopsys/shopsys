@@ -24,9 +24,12 @@ class TokenAuthenticator extends BaseTokenAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
+        $formattedError = FormattedError::createFromException($exception);
+        $formattedError['extensions']['userCode'] = 'invalid-token';
+
         // return errors as array until https://github.com/shopsys/shopsys/pull/2387 is resolved
         $responseData = [
-            'errors' => [FormattedError::createFromException($exception)],
+            'errors' => [$formattedError],
         ];
 
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
