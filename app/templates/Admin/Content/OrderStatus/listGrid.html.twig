@@ -19,12 +19,6 @@
         >
             {{ icon('info') }}
         </span>
-    {% elseif row.os.type == TYPE_OVER_LIMIT %}
-        <span title="{{ 'This status can\'t be deleted, because there is a functionality bounded to it - it identifies orders that were marked as oversized.'|trans }}"
-            class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
-        >
-            {{ icon('info') }}
-        </span>
     {% else %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% endif %}

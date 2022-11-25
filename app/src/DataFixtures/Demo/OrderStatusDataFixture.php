@@ -17,7 +17,6 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     public const ORDER_STATUS_IN_PROGRESS = 'order_status_in_progress';
     public const ORDER_STATUS_DONE = 'order_status_done';
     public const ORDER_STATUS_CANCELED = 'order_status_canceled';
-    public const ORDER_STATUS_OVER_LIMIT = 'order_status_over_limit';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
@@ -58,7 +57,6 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
         $this->createOrderStatusReference(2, self::ORDER_STATUS_IN_PROGRESS);
         $this->createOrderStatusReference(3, self::ORDER_STATUS_DONE);
         $this->createOrderStatusReference(4, self::ORDER_STATUS_CANCELED);
-        $this->createOrderStatusReference(5, self::ORDER_STATUS_OVER_LIMIT);
     }
 
     /**
@@ -87,9 +85,6 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
                     break;
                 case self::ORDER_STATUS_CANCELED:
                     $orderStatusData->name[$locale] = t('Canceled', [], 'dataFixtures', $locale);
-                    break;
-                case self::ORDER_STATUS_OVER_LIMIT:
-                    $orderStatusData->name[$locale] = t('Over limit', [], 'dataFixtures', $locale);
                     break;
                 default:
                     throw new UnknownNameTranslationForOrderStatusReferenceNameException($referenceName);

@@ -19,7 +19,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_CZECH_POST = 'transport_cp';
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
-    public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
+    public const TRANSPORT_DRONE = 'transport_drone';
 
     /**
      * @var string[]
@@ -123,15 +123,15 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->typeOfDeliveryKey = 5;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Nadlimitní', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('Vhodné pro nadměrné zboží', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Drone delivery', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t('Vhodné pro všechny druhy zboží', [], 'dataFixtures', $locale);
             $transportData->instructions[$locale] = t('Očekávejte dodávku koncem příštího měsíce', [], 'dataFixtures', $locale);
         }
 
         $transportData->personalPickup = false;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
-        $this->createTransport(self::TRANSPORT_OVER_LIMIT, $transportData);
+        $this->createTransport(self::TRANSPORT_DRONE, $transportData);
     }
 
     /**

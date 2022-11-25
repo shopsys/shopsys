@@ -778,6 +778,9 @@ msgstr ""
 msgid "Doprava a platba"
 msgstr ""
 
+msgid "Drone delivery"
+msgstr ""
+
 msgid "Druhá podsekce %locale%"
 msgstr ""
 
@@ -1129,9 +1132,6 @@ msgstr ""
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
-msgid "Nadlimitní"
-msgstr ""
-
 msgid "Nejčastější dotazy FAQ"
 msgstr ""
 
@@ -1249,9 +1249,6 @@ msgstr ""
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr ""
 
-msgid "Over limit"
-msgstr ""
-
 msgid "Overall performance"
 msgstr ""
 
@@ -1277,6 +1274,9 @@ msgid "Pages count"
 msgstr ""
 
 msgid "Parallel port"
+msgstr ""
+
+msgid "Pay later"
 msgstr ""
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
@@ -1759,7 +1759,7 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
-msgid "Vhodné pro nadměrné zboží"
+msgid "Vhodné pro všechny druhy zboží"
 msgstr ""
 
 msgid "Video"

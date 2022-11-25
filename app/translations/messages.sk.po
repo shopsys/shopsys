@@ -304,9 +304,6 @@ msgstr "Mesto"
 msgid "Clean Storefront Cache"
 msgstr ""
 
-msgid "Clean Storefront Queries Cache"
-msgstr ""
-
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
@@ -537,9 +534,6 @@ msgstr ""
 
 msgid "Doprava"
 msgstr "Doprava"
-
-msgid "Doprava pro nadlimitní množství"
-msgstr ""
 
 msgid "Duplikovat"
 msgstr ""
@@ -1312,9 +1306,6 @@ msgstr ""
 msgid "Platba"
 msgstr ""
 
-msgid "Platba pro nadlimitní množství"
-msgstr ""
-
 msgid "Platba předautorizována"
 msgstr ""
 
@@ -1838,9 +1829,6 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
-msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were marked as oversized."
 msgstr ""
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."

@@ -46,12 +46,6 @@ class Payment extends BasePayment
     private $hiddenByGoPay;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $isOverLimitPayment;
-
-    /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
     public function __construct(BasePaymentData $paymentData)
@@ -77,7 +71,6 @@ class Payment extends BasePayment
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
         $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
-        $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
     }
 
     /**
@@ -132,13 +125,5 @@ class Payment extends BasePayment
         if ($this->type === self::TYPE_GOPAY) {
             $this->goPayPaymentMethod = $paymentData->goPayPaymentMethod;
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOverLimitPayment(): bool
-    {
-        return $this->isOverLimitPayment;
     }
 }

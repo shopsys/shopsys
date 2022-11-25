@@ -151,7 +151,7 @@ class PaymentsTest extends GraphQlTestCase
                             ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Drone delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'goPayPaymentMethod' => [
                             'identifier' => 'BANK_ACCOUNT',
@@ -162,7 +162,7 @@ class PaymentsTest extends GraphQlTestCase
                         ],
                     ],
                     [
-                        'name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Pay later', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 5,
@@ -170,7 +170,7 @@ class PaymentsTest extends GraphQlTestCase
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
                         'images' => [],
                         'transports' => [
-                            ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Drone delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                         'goPayPaymentMethod' => null,
                     ],

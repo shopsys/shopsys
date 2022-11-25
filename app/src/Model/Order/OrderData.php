@@ -39,11 +39,6 @@ class OrderData extends BaseOrderData
     public $gtmCoupon;
 
     /**
-     * @var bool
-     */
-    public $isOverLimit;
-
-    /**
      * @var string|null
      */
     public ?string $trackingNumber;

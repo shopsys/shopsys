@@ -258,16 +258,7 @@ class OrderFacade extends BaseOrderFacade
             $promoCode->decreaseRemainingUses();
         }
 
-        $orderData->isOverLimit = false;
-        if ($orderData->transport->isOverLimitTransport() === true) {
-            $orderData->isOverLimit = true;
-        }
-
-        if ($orderData->isOverLimit === true) {
-            /** @var \App\Model\Order\Status\OrderStatus $status */
-            $status = $this->orderStatusRepository->findById(OrderStatus::TYPE_OVER_LIMIT);
-            $orderData->status = $status;
-        } elseif ($orderData->status === null) {
+        if ($orderData->status === null) {
             /** @var \App\Model\Order\Status\OrderStatus $status */
             $status = $this->orderStatusRepository->getDefault();
             $orderData->status = $status;

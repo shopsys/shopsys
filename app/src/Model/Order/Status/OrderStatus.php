@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus as BaseOrderStatus;
  */
 class OrderStatus extends BaseOrderStatus
 {
-    public const TYPE_OVER_LIMIT = 5;
     public const TYPE_IM_SENT = 6;
     public const TYPE_IM_ERROR = 7;
     public const TYPE_ERP_INSTOCK = 8;
@@ -33,7 +32,6 @@ class OrderStatus extends BaseOrderStatus
             self::TYPE_IN_PROGRESS,
             self::TYPE_DONE,
             self::TYPE_CANCELED,
-            self::TYPE_OVER_LIMIT,
             self::TYPE_IM_SENT,
             self::TYPE_IM_ERROR,
             self::TYPE_ERP_INSTOCK,

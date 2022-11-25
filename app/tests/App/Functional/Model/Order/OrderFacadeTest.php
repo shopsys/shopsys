@@ -111,7 +111,6 @@ class OrderFacadeTest extends FunctionalTestCase
         $orderData->note = 'note';
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
-        $orderData->isOverLimit = false;
 
         $orderPreview = $this->orderPreviewFactory->create(
             $orderData->currency,

@@ -79,12 +79,6 @@ class Order extends BaseOrder
     protected $gtmCoupon;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $isOverLimit;
-
-    /**
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -135,7 +129,6 @@ class Order extends BaseOrder
         $this->firstName = $orderData->firstName;
         $this->lastName = $orderData->lastName;
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->isOverLimit = $orderData->isOverLimit;
         $this->trackingNumber = $orderData->trackingNumber;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
         $this->paymentTransactions = new ArrayCollection();
@@ -150,7 +143,6 @@ class Order extends BaseOrder
         parent::editData($orderData);
 
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->isOverLimit = $orderData->isOverLimit;
         $this->trackingNumber = $orderData->trackingNumber;
     }
 
@@ -220,14 +212,6 @@ class Order extends BaseOrder
     public function getGtmCoupon(): ?string
     {
         return $this->gtmCoupon;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsOverLimit(): bool
-    {
-        return $this->isOverLimit;
     }
 
     /**

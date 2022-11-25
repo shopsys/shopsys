@@ -185,7 +185,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -3 day'))->setTime(12, 40, 22);
-        $orderData->isOverLimit = false;
         $order = $this->createOrder(
             $orderData,
             [
@@ -213,7 +212,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 34, 19);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $orderData->isOverLimit = false;
         $orderData->gtmCoupon = 'promoCode123';
         $this->createOrder(
             $orderData,
@@ -242,7 +240,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -3 day'))->setTime(18, 27, 36);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -269,7 +266,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -295,7 +291,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -2 day'))->setTime(1, 46, 6);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -322,7 +317,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -12 day'))->setTime(0, 49, 0);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -352,7 +346,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -13 day'))->setTime(23, 35, 15);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -379,7 +372,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -5 day'))->setTime(9, 11, 59);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -390,7 +382,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED);
         $orderData->firstName = 'Ivan';
@@ -405,7 +397,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -14 day'))->setTime(12, 54, 07);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -431,7 +422,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
-        $orderData->isOverLimit = false;
         $orderData->gtmCoupon = 'promoCode123';
         $this->createOrder(
             $orderData,
@@ -456,7 +446,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 28, 20);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -482,7 +471,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -10 day'))->setTime(18, 3, 36);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -508,7 +496,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -10 day'))->setTime(23, 47, 11);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -534,7 +521,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -10 day'))->setTime(8, 14, 8);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -561,7 +547,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 43, 25);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -590,7 +575,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -5 day'))->setTime(3, 3, 12);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -603,7 +587,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
         $orderData->firstName = 'Radim';
@@ -630,7 +614,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -13 day'))->setTime(17, 34, 40);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -671,7 +654,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -6 day'))->setTime(5, 7, 38);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -708,7 +690,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -1 day'))->setTime(22, 51, 55);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -746,7 +727,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -4 day'))->setTime(21, 23, 5);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -774,7 +754,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -4 day'))->setTime(11, 14, 2);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -800,7 +779,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 10, 47);
-        $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
             [
@@ -809,9 +787,9 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
 
         $orderData = $this->orderDataFactory->create();
-        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_OVER_LIMIT);
-        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_OVER_LIMIT);
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_OVER_LIMIT);
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_LATER);
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
         $orderData->firstName = 'Jindřich';
         $orderData->lastName = 'Němec';
         $orderData->email = 'no-reply@shopsys.com';
@@ -824,7 +802,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 10, 47);
-        $orderData->isOverLimit = true;
         $this->createOrder(
             $orderData,
             [
