@@ -21,7 +21,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
-    public function process(File $file, int $classPosition): void
+    public function process(File $file, $classPosition): void
     {
         $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $classPosition);
         if ($phpDocStartPosition === false) {

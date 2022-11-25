@@ -28,7 +28,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     /**
      * {@inheritdoc}
      */
-    public function process(File $file, int $classPosition): void
+    public function process(File $file, $classPosition): void
     {
         $protectedConstants = $this->getAllProtectedConstantsInClass($file);
 

@@ -24,7 +24,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      */
-    public function process(File $file, int $classPosition): void
+    public function process(File $file, $classPosition): void
     {
         $tokens = $file->getTokens();
         $docBlockOpeningTagPositions = $this->getAllDocBlockOpeningTagPositions($file, $classPosition);

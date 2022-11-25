@@ -23,7 +23,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
-    protected function processVariable(File $file, int $position): void
+    protected function processVariable(File $file, $position): void
     {
         $errorMessageFormat = 'Variable "$%s" should be camel case';
         $this->checkCamelCaseFormatViolation($file, $position, $errorMessageFormat);
@@ -33,7 +33,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
-    protected function processVariableInString(File $file, int $position): void
+    protected function processVariableInString(File $file, $position): void
     {
     }
 
@@ -41,7 +41,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
-    protected function processMemberVar(File $file, int $position): void
+    protected function processMemberVar(File $file, $position): void
     {
         $errorMessageFormat = 'Class member variable "$%s" should be camel case';
         $this->checkCamelCaseFormatViolation($file, $position, $errorMessageFormat);
