@@ -22,7 +22,6 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
 use Doctrine\Common\Collections\Collection;
-use array;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ListedProductViewFactoryTest extends TestCase
