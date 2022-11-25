@@ -259,7 +259,7 @@ CODE_SAMPLE
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $functionLike
      * @param \PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType|\PhpParser\Node\IntersectionType $inferredReturnNode
      */
-    protected function addReturnType(ClassMethod|Function_ $functionLike, Name|NullableType|\PhpParser\Node\UnionType|IntersectionType $inferredReturnNode): void
+    protected function addReturnType(ClassMethod|Function_ $functionLike, Name|NullableType|Node\UnionType|IntersectionType $inferredReturnNode): void
     {
         if ($functionLike->returnType === null) {
             $functionLike->returnType = $inferredReturnNode;
