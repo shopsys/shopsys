@@ -50,7 +50,7 @@ final class PackageProvider
      * @param array $json
      * @param string $url
      */
-    private function ensureIsValidResponse(array $json, string $url)
+    private function ensureIsValidResponse(array $json, string $url): void
     {
         if (isset($json[self::PACKAGE_NAMES])) {
             return;

@@ -163,7 +163,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
             'Enter next development version of Shopsys Framework',
             $suggestedDevelopmentVersion->getOriginalString()
         );
-        $question->setValidator(static function ($answer) {
+        $question->setValidator(static function ($answer): Version {
             $version = new Version($answer);
 
             if (!$version->hasPreReleaseSuffix()) {

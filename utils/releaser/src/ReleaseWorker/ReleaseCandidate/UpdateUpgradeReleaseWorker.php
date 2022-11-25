@@ -114,7 +114,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function updateUpgradeFileForMonorepo(Version $version)
+    private function updateUpgradeFileForMonorepo(Version $version): void
     {
         $upgradeFilePath = getcwd() . '/upgrade/upgrading-monorepo.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
@@ -132,7 +132,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version)
+    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version): void
     {
         $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '-dev.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
@@ -152,7 +152,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function updateGeneralUpgradeFile(Version $version)
+    private function updateGeneralUpgradeFile(Version $version): void
     {
         $upgradeFilePath = getcwd() . '/UPGRADE.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
@@ -169,7 +169,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForNextDevelopmentVersion(Version $version)
+    private function createUpgradeFileForNextDevelopmentVersion(Version $version): void
     {
         $content = $this->twigEnvironment->render(
             'UPGRADE-next-development-version.md.twig',

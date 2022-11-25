@@ -52,7 +52,7 @@ final class VersionUpgradeFileManipulator
         return Strings::replace(
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
-            function ($match) use ($versionString, $initialBranchName) {
+            function ($match) use ($versionString, $initialBranchName): string|array {
                 return str_replace(
                     [$versionString . '-dev', '...' . $initialBranchName],
                     [$versionString, '...' . $versionString],
@@ -79,7 +79,7 @@ final class VersionUpgradeFileManipulator
         return Strings::replace(
             $content,
             self::FILE_CONTENT_INFORMATION_PATTERN,
-            function ($match) use ($versionString) {
+            function ($match) use ($versionString): string|array {
                 return str_replace($versionString . '-dev', $versionString, $match[0]);
             }
         );

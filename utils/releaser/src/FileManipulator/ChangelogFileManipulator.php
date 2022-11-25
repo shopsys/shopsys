@@ -19,7 +19,7 @@ final class ChangelogFileManipulator
         return Strings::replace(
             $fileContent,
             $currentReleaseHeadlinePattern,
-            function ($match) use ($todayInString) {
+            function ($match) use ($todayInString): string|array {
                 return str_replace($match[1], $todayInString, $match[0]);
             }
         );
