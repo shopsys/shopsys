@@ -27,7 +27,7 @@ class ApiDataSetter
 
     /**
      * @param string $arrayKey
-     * @param array $apiData
+     * @param mixed[] $apiData
      * @param object $entityData
      * @param string|null $entityDataKey
      */
@@ -42,7 +42,7 @@ class ApiDataSetter
 
     /**
      * @param string $arrayKey
-     * @param array $apiData
+     * @param mixed[] $apiData
      * @param object $entityData
      * @param string|null $entityDataKey
      */
@@ -57,7 +57,7 @@ class ApiDataSetter
 
     /**
      * @param string $arrayKey
-     * @param array $apiData
+     * @param mixed[] $apiData
      * @param object $entityData
      * @param string|null $entityDataKey
      */
@@ -78,7 +78,7 @@ class ApiDataSetter
 
     /**
      * @param string $arrayKey
-     * @param array $apiData
+     * @param mixed[] $apiData
      * @param object $entityData
      * @param string|null $entityDataKey
      */

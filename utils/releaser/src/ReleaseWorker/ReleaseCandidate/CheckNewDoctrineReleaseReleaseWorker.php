@@ -73,8 +73,9 @@ final class CheckNewDoctrineReleaseReleaseWorker extends AbstractShopsysReleaseW
 
     /**
      * @param string $packageName
+     * @return string|null
      */
-    private function getMostRecentStableVersionForPackage(string $packageName)
+    private function getMostRecentStableVersionForPackage(string $packageName): ?string
     {
         $url = sprintf('https://repo.packagist.org/p/%s.json', $packageName);
         $json = $this->apiCaller->sendGetToJsonArray($url);

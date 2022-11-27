@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueProductParametersValidator extends ConstraintValidator
 {
     /**
-     * @param array $values
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint): void
@@ -21,7 +21,6 @@ class UniqueProductParametersValidator extends ConstraintValidator
         $uniqueValues = [];
         $violations = [];
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $value */
         foreach ($values as $value) {
             $parameterId = $value->parameter->getId();
             $uniqueKey = $parameterId . '-' . $value->parameterValueData->locale;

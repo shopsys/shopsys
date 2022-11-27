@@ -59,7 +59,7 @@ class DummyClassForAnnotationsReplacerTest
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function returnsNotTypedArray(): array
     {

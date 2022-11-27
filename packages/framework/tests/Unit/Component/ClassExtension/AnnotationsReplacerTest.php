@@ -33,7 +33,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{input: string, output: string}>
      */
     public function getTestReplaceAnnotationsDataProvider(): array
     {
@@ -92,7 +92,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: \Roave\BetterReflection\Reflection\ReflectionMethod, 1: string}>
      */
     public function getTestReplaceInMethodReturnTypeDataProvider(): array
     {
@@ -119,7 +119,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: \Roave\BetterReflection\Reflection\ReflectionProperty|null, 1: string}>
      */
     public function getTestReplaceInInPropertyTypeDataProvider(): array
     {
@@ -143,7 +143,7 @@ class AnnotationsReplacerTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: \Roave\BetterReflection\Reflection\ReflectionParameter|null, 1: string}>
      */
     public function testReplaceInParameterTypeDataProvider(): array
     {

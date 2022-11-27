@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class PriceFactory
 {
     /**
-     * @param array $pricesArray
+     * @param array<array{price_without_vat: string|int|float, price_with_vat: string|int|float, price_from: bool}> $pricesArray
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */

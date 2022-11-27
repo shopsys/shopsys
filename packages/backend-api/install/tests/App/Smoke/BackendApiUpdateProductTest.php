@@ -180,7 +180,7 @@ class BackendApiUpdateProductTest extends OauthTestCase
 
     /**
      * @param string $uuid
-     * @return array
+     * @return mixed[]
      */
     private function getProduct(string $uuid): array
     {

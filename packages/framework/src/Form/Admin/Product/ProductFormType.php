@@ -161,7 +161,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -239,7 +239,7 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param string[] $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createBasicInformationGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): FormBuilderInterface
@@ -385,7 +385,7 @@ class ProductFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
-     * @param array $disabledItemInMainVariantAttr
+     * @param string[] $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product, array $disabledItemInMainVariantAttr = []): FormBuilderInterface
@@ -896,7 +896,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createImagesGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface

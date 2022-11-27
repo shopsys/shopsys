@@ -29,10 +29,12 @@ class Db extends BaseDb
 
     /**
      * @inheritDoc
+     * @param string|null $databaseKey
+     * @param mixed[]|null $databaseConfig
      */
-    public function _loadDump($databaseKey = null, $databaseConfig = null)
+    public function _loadDump($databaseKey = null, $databaseConfig = null): void
     {
         $this->cleanup();
-        return parent::_loadDump($databaseKey, $databaseConfig);
+        parent::_loadDump($databaseKey, $databaseConfig);
     }
 }

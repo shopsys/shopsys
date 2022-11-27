@@ -28,7 +28,7 @@ class ApiProductTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
+     * @return mixed[]
      */
     public function transform(Product $product): array
     {

@@ -38,7 +38,7 @@ class RouterExtension extends AbstractExtension
 
     /**
      * @param string $route
-     * @param array $routeParams
+     * @param mixed[] $routeParams
      * @param int $domainId
      * @return string|null
      */

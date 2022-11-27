@@ -247,7 +247,7 @@ class TransportAndPaymentWatcher
     }
 
     /**
-     * @return array
+     * @return array{transport_prices: \Shopsys\FrameworkBundle\Component\Money\Money[], payment_prices: \Shopsys\FrameworkBundle\Component\Money\Money[]}
      */
     protected function getRememberedTransportAndPayment(): array
     {

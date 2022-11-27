@@ -31,7 +31,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @dataProvider getInvalidTestCases
      */
     public function testInvalid(array $data): void
@@ -42,7 +42,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getInvalidTestCases(): array
     {
@@ -78,7 +78,7 @@ class SubscriptionFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Form\FormExtensionInterface[]
      */
     protected function getExtensions(): array
     {

@@ -16,7 +16,7 @@ final class IntervalEvaluator
     /**
      * @return bool
      */
-    private $isClosedInterval = true;
+    private bool $isClosedInterval = true;
 
     /**
      * @param string $version

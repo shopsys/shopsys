@@ -13,7 +13,7 @@ use const T_DOC_COMMENT_OPEN_TAG;
 class ForbiddenDoctrineDefaultValueSniff implements Sniff
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function register(): array
     {

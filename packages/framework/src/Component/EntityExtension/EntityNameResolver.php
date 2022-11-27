@@ -7,12 +7,12 @@ use ReflectionObject;
 class EntityNameResolver
 {
     /**
-     * @var string[]
+     * @var array<class-string, class-string>
      */
     protected $entityExtensionMap;
 
     /**
-     * @param string[] $entityExtensionMap
+     * @param array<class-string, class-string> $entityExtensionMap
      */
     public function __construct(array $entityExtensionMap)
     {

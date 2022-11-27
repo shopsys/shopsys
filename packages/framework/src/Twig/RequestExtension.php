@@ -43,7 +43,7 @@ class RequestExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getAllRequestParams(): array
     {
@@ -62,7 +62,7 @@ class RequestExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function getParamsFromRequest(): array
     {
@@ -70,7 +70,7 @@ class RequestExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getRouteParams(): array
     {

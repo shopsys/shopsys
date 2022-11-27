@@ -25,7 +25,7 @@ class BreadcrumbController extends FrontBaseController
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
+     * @param mixed[] $routeParameters
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(string $routeName, array $routeParameters = []): Response

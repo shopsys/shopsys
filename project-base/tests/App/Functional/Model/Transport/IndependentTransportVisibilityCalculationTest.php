@@ -142,7 +142,7 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     }
 
     /**
-     * @param array $enabledForDomains
+     * @param bool[] $enabledForDomains
      * @param bool $hidden
      * @param bool $deleted
      * @return \App\Model\Transport\Transport

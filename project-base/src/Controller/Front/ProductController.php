@@ -432,7 +432,7 @@ class ProductController extends FrontBaseController
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getRequestParametersWithoutPage(): array
     {

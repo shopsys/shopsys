@@ -7,6 +7,7 @@ namespace Shopsys\BackendApiBundle\Controller\V1\Product;
 use DateTime;
 use Shopsys\BackendApiBundle\Component\Validation\ValidationRunner;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -35,7 +36,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     }
 
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return string[]
      */
     public function validateCreate(array $productApiData): array
@@ -46,7 +47,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     }
 
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return string[]
      */
     public function validateUpdate(array $productApiData): array
@@ -55,7 +56,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function getConstraintDefinition(): array
     {
@@ -141,7 +142,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<string, \Symfony\Component\Validator\Constraint>
      */
     protected function createNameConstraintDefinition(): array
     {
@@ -157,7 +158,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<int, \Symfony\Component\Validator\Constraint>
      */
     protected function createDescriptionConstraintDefinition(): array
     {

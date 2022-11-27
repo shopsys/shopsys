@@ -13,7 +13,7 @@ class EmptyMessageChoiceTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {

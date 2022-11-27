@@ -45,7 +45,7 @@ class IndexRegistryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: bool}
      */
     public function registeredIndexProvider(): array
     {

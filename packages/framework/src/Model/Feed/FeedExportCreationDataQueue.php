@@ -14,9 +14,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class FeedExportCreationDataQueue
 {
     /**
-     * @var array
+     * @var array<array{feed_name: string, domain: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig}>
      */
-    protected $dataInQueue = [];
+    protected array $dataInQueue = [];
 
     /**
      * @param string[] $feedNames

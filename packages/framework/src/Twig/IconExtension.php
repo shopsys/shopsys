@@ -36,7 +36,7 @@ class IconExtension extends AbstractExtension
 
     /**
      * @param string $iconName
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @param string|null $iconType
      * @return string
      */

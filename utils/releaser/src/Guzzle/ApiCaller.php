@@ -39,7 +39,7 @@ final class ApiCaller
 
     /**
      * @param string[] $urls
-     * @param array $headers
+     * @param mixed[] $headers
      * @return string[]
      */
     public function sendGetsAsyncToStrings(array $urls, array $headers): array

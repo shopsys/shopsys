@@ -12,13 +12,13 @@ class ProductsResult
     protected $total;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $hits;
 
     /**
      * @param int $total
-     * @param array $hits
+     * @param mixed[] $hits
      */
     public function __construct(int $total, array $hits)
     {
@@ -35,7 +35,7 @@ class ProductsResult
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getHits(): array
     {

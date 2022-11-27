@@ -222,8 +222,8 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     }
 
     /**
-     * @param array $namesByLocale
-     * @param array $valuesTextsByLocales
+     * @param array<string, string> $namesByLocale
+     * @param array<array<string, string>> $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): ParameterFilterData

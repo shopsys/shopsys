@@ -10,13 +10,13 @@ namespace Shopsys\BackendApiBundle\Controller\V1\Product;
 interface ProductApiDataValidatorInterface
 {
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return string[]
      */
     public function validateCreate(array $productApiData): array;
 
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return string[]
      */
     public function validateUpdate(array $productApiData): array;

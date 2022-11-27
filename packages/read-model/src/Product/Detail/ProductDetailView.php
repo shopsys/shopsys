@@ -112,19 +112,19 @@ class ProductDetailView
     protected $mainVariantId;
 
     /**
-     * @var array
+     * @var \Shopsys\ReadModelBundle\Parameter\ParameterView[]
      */
-    protected $parameterViews;
+    protected array $parameterViews;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
-    protected $accessories;
+    protected array $accessories;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
-    protected $variants;
+    protected array $variants;
 
     /**
      * @param int $id

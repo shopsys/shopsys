@@ -47,7 +47,7 @@ final class PackageProvider
     }
 
     /**
-     * @param array $json
+     * @param mixed[] $json
      * @param string $url
      */
     private function ensureIsValidResponse(array $json, string $url): void

@@ -50,8 +50,8 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     /**
      * @param string $query
-     * @param array $expected
-     * @param array $variables
+     * @param mixed[] $expected
+     * @param mixed[] $variables
      */
     protected function assertQueryWithExpectedArray(string $query, array $expected, array $variables = []): void
     {
@@ -65,9 +65,9 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     /**
      * @param string $query
-     * @param array $variables
-     * @param array $customServer
-     * @return array
+     * @param mixed[] $variables
+     * @param mixed[] $customServer
+     * @return mixed[]
      */
     protected function getResponseContentForQuery(string $query, array $variables = [], array $customServer = []): array
     {
@@ -78,8 +78,8 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     /**
      * @param string $query
-     * @param array $variables
-     * @param array $customServer
+     * @param mixed[] $variables
+     * @param mixed[] $customServer
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function getResponseForQuery(string $query, array $variables, array $customServer = []): Response

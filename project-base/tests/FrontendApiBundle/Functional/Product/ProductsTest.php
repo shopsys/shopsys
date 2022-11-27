@@ -103,7 +103,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedDataForFifthProduct(): array
     {

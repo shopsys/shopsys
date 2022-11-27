@@ -15,7 +15,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class AbstractOrderTestCase extends GraphQlTestCase
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function getExpectedOrderItems(): array
     {
@@ -72,7 +72,7 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
-     * @param array $expectedOrderItems
+     * @param mixed[] $expectedOrderItems
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public static function getOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): Price
@@ -93,8 +93,8 @@ class AbstractOrderTestCase extends GraphQlTestCase
     }
 
     /**
-     * @param array $expectedOrderItems
-     * @return array
+     * @param mixed[] $expectedOrderItems
+     * @return array{priceWithVat: string, priceWithoutVat: string, vatAmount: string}
      */
     public static function getSerializedOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): array
     {

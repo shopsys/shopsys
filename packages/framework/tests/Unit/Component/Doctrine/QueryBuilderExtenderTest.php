@@ -40,7 +40,7 @@ class QueryBuilderExtenderTest extends TestCase
      * @param string $firstJoinedEntity
      * @param string $secondJoinedEntity
      * @param string $expectedJoinedEntity
-     * @param array $extensionMap
+     * @param array<class-string, class-string> $extensionMap
      */
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
@@ -74,7 +74,7 @@ class QueryBuilderExtenderTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function extendJoinWithExtendedEntityProvider(): array
     {

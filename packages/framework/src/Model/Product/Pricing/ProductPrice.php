@@ -9,13 +9,13 @@ class ProductPrice extends Price
     /**
      * @var bool
      */
-    protected $priceFrom;
+    protected bool $priceFrom;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param bool $priceFrom
      */
-    public function __construct(Price $price, $priceFrom)
+    public function __construct(Price $price, bool $priceFrom)
     {
         $this->priceFrom = $priceFrom;
 

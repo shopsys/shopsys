@@ -43,7 +43,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     private VatFacade $vatFacade;
 
     /**
-     * @return array
+     * @return array<string[]>
      */
     public function variantsWithAvailabilitiesCanBeCreatedProvider(): array
     {
@@ -79,7 +79,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: int, 1: string, 2: string|null}>
      */
     public function variantsWithStockCanBeCreatedProvider(): array
     {

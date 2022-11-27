@@ -117,8 +117,8 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     /**
      * @param string $query
-     * @param array $expected
-     * @param array $variables
+     * @param mixed[] $expected
+     * @param mixed[] $variables
      */
     protected function assertQueryWithExpectedArray(string $query, array $expected, array $variables = []): void
     {
@@ -132,9 +132,9 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     /**
      * @param string $query
-     * @param array $variables
-     * @param array $customServer
-     * @return array
+     * @param mixed[] $variables
+     * @param mixed[] $customServer
+     * @return mixed[]
      */
     protected function getResponseContentForQuery(string $query, array $variables = [], array $customServer = []): array
     {
@@ -145,8 +145,8 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     /**
      * @param string $query
-     * @param array $variables
-     * @param array $customServer
+     * @param mixed[] $variables
+     * @param mixed[] $customServer
      * @return \Symfony\Component\HttpFoundation\Response
      */
     private function getResponseForQuery(string $query, array $variables, array $customServer = []): Response
@@ -183,8 +183,8 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
-     * @return array
+     * @param array{errors: mixed[]} $response
+     * @return mixed[]
      */
     protected function getErrorsFromResponse(array $response): array
     {
@@ -192,8 +192,8 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
-     * @return array
+     * @param mixed[] $response
+     * @return mixed[]
      */
     protected function getErrorsExtensionValidationFromResponse(array $response): array
     {
@@ -201,9 +201,9 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
+     * @param mixed[] $response
      * @param string $graphQlType
-     * @return array
+     * @return mixed[]
      */
     protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array
     {
@@ -211,7 +211,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
+     * @param mixed[] $response
      * @param string $graphQlType
      */
     protected function assertResponseContainsArrayOfDataForGraphQlType(array $response, string $graphQlType): void
@@ -222,7 +222,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
+     * @param mixed[] $response
      */
     protected function assertResponseContainsArrayOfErrors(array $response): void
     {
@@ -231,7 +231,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     }
 
     /**
-     * @param array $response
+     * @param mixed[] $response
      */
     protected function assertResponseContainsArrayOfExtensionValidationErrors(array $response): void
     {
@@ -283,7 +283,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      * @param string $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param int $quantity
-     * @return array
+     * @return array{priceWithVat: string, priceWithoutVat: string, vatAmount: string}
      */
     protected function getSerializedPriceConvertedToDomainDefaultCurrency(
         string $priceWithoutVat,

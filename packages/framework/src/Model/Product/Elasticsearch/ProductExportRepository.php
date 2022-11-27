@@ -114,7 +114,7 @@ class ProductExportRepository
      * @param string $locale
      * @param int $lastProcessedId
      * @param int $batchSize
-     * @return array
+     * @return array<int, mixed[]>
      */
     public function getProductsData(int $domainId, string $locale, int $lastProcessedId, int $batchSize): array
     {
@@ -138,7 +138,7 @@ class ProductExportRepository
      * @param int $domainId
      * @param string $locale
      * @param int[] $productIds
-     * @return array
+     * @return array<int, mixed[]>
      */
     public function getProductsDataForIds(int $domainId, string $locale, array $productIds): array
     {
@@ -208,7 +208,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param string $locale
-     * @return array
+     * @return mixed[]
      */
     protected function extractResult(Product $product, int $domainId, string $locale): array
     {
@@ -347,7 +347,7 @@ class ProductExportRepository
     /**
      * @param string $locale
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
+     * @return mixed[]
      */
     protected function extractParameters(string $locale, Product $product): array
     {
@@ -379,7 +379,7 @@ class ProductExportRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
+     * @return array<array{pricing_group_id: int, price_with_vat: float, price_without_vat: float, vat: float, price_from: bool}>
      */
     protected function extractPrices(int $domainId, Product $product): array
     {
@@ -408,7 +408,7 @@ class ProductExportRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
+     * @return array<array{pricing_group_id: int, visible: bool}>
      */
     protected function extractVisibility(int $domainId, Product $product): array
     {
@@ -444,7 +444,7 @@ class ProductExportRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return array
+     * @return int[]
      */
     protected function extractAccessoriesIds(Product $product): array
     {

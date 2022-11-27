@@ -278,7 +278,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllOfferedProducts(): array
     {

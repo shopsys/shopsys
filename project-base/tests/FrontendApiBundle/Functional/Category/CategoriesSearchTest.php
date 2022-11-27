@@ -71,7 +71,7 @@ class CategoriesSearchTest extends GraphQlTestCase
 
     /**
      * @param string $query
-     * @param array $categories
+     * @param mixed[] $categories
      * @param bool $found
      */
     protected function assertCategories(string $query, array $categories, bool $found = true): void

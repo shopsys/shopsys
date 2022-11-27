@@ -37,7 +37,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: string, 1: mixed[]}>
      */
     private function getOrdersDataProvider(): array
     {
@@ -131,7 +131,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     private function getExpectedUserOrders(): array
     {

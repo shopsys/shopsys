@@ -55,7 +55,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     }
 
     /**
-     * @param array $value
+     * @param array{uploadedFiles: string} $value
      * @return string
      */
     public function reverseTransform($value): string
@@ -65,7 +65,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
 
     /**
      * @param string $value
-     * @return array
+     * @return array{uploadedFiles: string[]}
      */
     public function transform($value): array
     {
@@ -75,7 +75,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -86,7 +86,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -109,7 +109,7 @@ class Naming
 
     /**
      * @param \PHP_CodeSniffer\Files\File $file
-     * @return array
+     * @return \SlevomatCodingStandard\Helpers\ReferencedName[]
      */
     private function getReferencedNames(File $file): array
     {

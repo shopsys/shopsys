@@ -15,7 +15,7 @@ class FileAllowedExtension extends Constraint
     public $message = 'File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}.';
 
     /**
-     * @var array
+     * @var string[]
      */
     public $extensions;
 

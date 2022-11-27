@@ -161,7 +161,7 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string[]>
      */
     public function stringTrailingSlashesProvider(): array
     {
@@ -214,7 +214,7 @@ class TransformStringTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string|null>>
      */
     public function trimmedStringOrNullProvider(): array
     {

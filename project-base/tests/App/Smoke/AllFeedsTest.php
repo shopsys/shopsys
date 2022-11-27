@@ -25,7 +25,7 @@ class AllFeedsTest extends FunctionalTestCase
     private FilesystemInterface $filesystem;
 
     /**
-     * @return array
+     * @return array<string, array{0: \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface, 1: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig}>
      */
     public function getAllFeedExportCreationData(): array
     {

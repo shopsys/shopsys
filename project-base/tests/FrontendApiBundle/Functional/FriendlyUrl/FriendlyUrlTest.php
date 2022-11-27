@@ -60,7 +60,7 @@ class FriendlyUrlTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string, string>>
      */
     private function getEntityNameByFriendlyUrlProvider(): array
     {
@@ -94,7 +94,7 @@ class FriendlyUrlTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string, string>>
      */
     private function getFriendlyUrlNotFoundForRouteBySlug(): array
     {

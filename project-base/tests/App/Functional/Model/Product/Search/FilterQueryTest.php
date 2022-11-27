@@ -217,7 +217,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     }
 
     /**
-     * @param array $result
+     * @param mixed[] $result
      * @return int[]
      */
     protected function extractIds(array $result): array

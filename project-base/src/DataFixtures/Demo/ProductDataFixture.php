@@ -9222,7 +9222,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @return array
+     * @return array<string, string[]>
      */
     public static function getVariantCatnumsByMainVariantCatnum(): array
     {
@@ -9281,7 +9281,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param array $parametersTranslations
+     * @param array<array{names: string[], values: string[]}> $parametersTranslations
      */
     private function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
@@ -9326,7 +9326,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $parameterTranslations
+     * @param array<array{names: array<string, string>, values: array<string, string>}> $parameterTranslations
      * @param string $parameterName
      * @param string $parameterValue
      * @param string $locale
@@ -9488,7 +9488,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     }
 
     /**
-     * @param array $productCatnumsByMainVariantCatnum
+     * @param array<string, string> $productCatnumsByMainVariantCatnum
      * @return string[]
      */
     private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array

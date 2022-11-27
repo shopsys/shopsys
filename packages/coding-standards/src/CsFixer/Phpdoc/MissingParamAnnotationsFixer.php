@@ -66,7 +66,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
      * @param \PhpCsFixer\Tokenizer\Token $docToken
-     * @return array
+     * @return \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[]
      */
     private function filterArgumentAnalysesFromExistingParamAnnotations(array $argumentAnalyses, Token $docToken): array
     {
@@ -84,7 +84,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
 
     /**
      * @param \PhpCsFixer\Tokenizer\Tokens $tokens
-     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis $argumentAnalyses
+     * @param \PhpCsFixer\Tokenizer\Analyzer\Analysis\ArgumentAnalysis[] $argumentAnalyses
      * @param string $indent
      * @return \PhpCsFixer\DocBlock\Line[]
      */

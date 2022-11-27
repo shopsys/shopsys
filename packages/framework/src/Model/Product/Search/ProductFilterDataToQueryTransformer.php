@@ -74,7 +74,7 @@ class ProductFilterDataToQueryTransformer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $parameters
-     * @return array
+     * @return array<int, int[]>
      */
     protected function flattenParameterFilterData(array $parameters): array
     {

@@ -30,7 +30,7 @@ class IndexDefinitionTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function indexDefinitionParametersForIndexAlias(): array
     {

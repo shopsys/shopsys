@@ -137,7 +137,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param int $domainId
-     * @param array $data
+     * @param mixed[] $data
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
     private function getCustomerUserUpdateData(int $domainId, array $data): CustomerUserUpdateData
@@ -164,7 +164,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $billingAddressInputData
+     * @param mixed[] $billingAddressInputData
      */
     private function setBillingAddressData(CustomerUserUpdateData $customerUserUpdateData, array $billingAddressInputData): void
     {
@@ -180,7 +180,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param array $deliveryAddressInputData
+     * @param mixed[] $deliveryAddressInputData
      */
     private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void
     {
@@ -197,7 +197,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     private function getDefaultCustomerUsersDataProvider(): array
     {
@@ -341,7 +341,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getDistinctCustomerUsersDataProvider(): array
     {

@@ -95,7 +95,7 @@ class UploadedFileConfigTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<class-string, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig>
      */
     private function getFileEntityConfigsByClass(): array
     {

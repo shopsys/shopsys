@@ -76,7 +76,7 @@ class PersonalDataAccessMail implements MessageFactoryInterface
      * @param string $url
      * @param string $email
      * @param string $domainName
-     * @return array
+     * @return array<string, string>
      */
     protected function getBodyValuesIndexedByVariableName(string $url, string $email, string $domainName): array
     {
@@ -89,7 +89,7 @@ class PersonalDataAccessMail implements MessageFactoryInterface
 
     /**
      * @param string $domainName
-     * @return array
+     * @return array<string, string>
      */
     protected function getSubjectValuesIndexedByVariableName(string $domainName): array
     {

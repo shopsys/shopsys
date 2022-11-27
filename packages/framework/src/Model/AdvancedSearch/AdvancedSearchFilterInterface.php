@@ -44,7 +44,7 @@ interface AdvancedSearchFilterInterface
     /**
      * Returns options that will be passed to the form type used for value selection
      *
-     * @return array
+     * @return mixed[]
      */
     public function getValueFormOptions();
 

@@ -8,7 +8,7 @@ function function1(int $value): void
 }
 
 /**
- * @param array $value
+ * @param mixed[] $value
  */
 function function2(array $value): void
 {

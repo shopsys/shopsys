@@ -5,8 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 class ProductElasticsearchConverter
 {
     /**
-     * @param array $product
-     * @return array
+     * @param mixed[] $product
+     * @return mixed[]
      */
     public function fillEmptyFields(array $product): array
     {
@@ -53,8 +53,8 @@ class ProductElasticsearchConverter
     }
 
     /**
-     * @param array $parameters
-     * @return array
+     * @param mixed[] $parameters
+     * @return mixed[]
      */
     protected function fillEmptyParameters(array $parameters): array
     {

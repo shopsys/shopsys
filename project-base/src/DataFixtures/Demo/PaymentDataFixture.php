@@ -111,7 +111,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param string $referenceName
      * @param \App\Model\Payment\PaymentData $paymentData
-     * @param array $transportsReferenceNames
+     * @param string[] $transportsReferenceNames
      */
     private function createPayment(
         string $referenceName,

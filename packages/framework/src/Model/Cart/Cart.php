@@ -122,7 +122,7 @@ class Cart
     }
 
     /**
-     * @param array $quantitiesByItemId
+     * @param int[] $quantitiesByItemId
      */
     public function changeQuantities(array $quantitiesByItemId): void
     {

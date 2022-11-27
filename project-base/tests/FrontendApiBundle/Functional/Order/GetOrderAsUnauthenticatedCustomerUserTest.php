@@ -51,7 +51,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: string, 1: array{status: string, totalPriceWithVat: string}}>
      */
     public function getOrderDataProvider(): array
     {
@@ -73,7 +73,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: string|null, 1: string}>
      */
     public function getIncorrectOrderDataProvider(): array
     {

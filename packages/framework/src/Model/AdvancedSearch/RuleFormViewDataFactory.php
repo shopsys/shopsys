@@ -10,8 +10,8 @@ class RuleFormViewDataFactory
 
     /**
      * @param string $defaultFilterName
-     * @param array|null $requestData
-     * @return array
+     * @param mixed[]|null $requestData
+     * @return mixed[]
      */
     public function createFromRequestData(string $defaultFilterName, ?array $requestData = null): array
     {
@@ -32,7 +32,7 @@ class RuleFormViewDataFactory
 
     /**
      * @param string $filterName
-     * @return array
+     * @return mixed[]
      */
     public function createDefault(string $filterName): array
     {

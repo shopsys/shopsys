@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class HttpUuidValidator
 {
     /**
-     * @param array $uuids
+     * @param string[] $uuids
      */
     public static function validateUuids(array $uuids): void
     {

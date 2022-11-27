@@ -91,7 +91,7 @@ class ListedProductViewFactory
      * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param array $flagIds
+     * @param int[] $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
@@ -139,7 +139,7 @@ class ListedProductViewFactory
     }
 
     /**
-     * @param array $productArray
+     * @param mixed[] $productArray
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
@@ -190,7 +190,7 @@ class ListedProductViewFactory
     }
 
     /**
-     * @param array $productsArray
+     * @param mixed[] $productsArray
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
     public function createFromProductsArray(array $productsArray): array

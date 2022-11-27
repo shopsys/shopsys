@@ -58,7 +58,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getContentCss(): array
     {

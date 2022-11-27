@@ -50,7 +50,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, \Roave\BetterReflection\Reflection\ReflectionObject[]>
      */
     public function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {

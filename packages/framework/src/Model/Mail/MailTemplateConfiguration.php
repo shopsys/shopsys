@@ -18,14 +18,14 @@ class MailTemplateConfiguration
     public const TYPE_ORDER_STATUS = 'order-status';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
-    protected $mailTemplateVariables = [];
+    protected array $mailTemplateVariables = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
      */
-    protected $orderStatusFacade;
+    protected OrderStatusFacade $orderStatusFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
@@ -52,7 +52,7 @@ class MailTemplateConfiguration
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getReadableNamesIndexedBySlug(): array
     {

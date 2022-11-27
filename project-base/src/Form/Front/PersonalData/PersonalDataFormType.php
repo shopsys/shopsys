@@ -20,7 +20,7 @@ class PersonalDataFormType extends AbstractType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

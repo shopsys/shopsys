@@ -101,7 +101,7 @@ class PricingSetting
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public static function getInputPriceTypes(): array
     {

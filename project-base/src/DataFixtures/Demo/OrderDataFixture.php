@@ -726,8 +726,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param array $products
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \App\Model\Product\Product[] $products
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      */
     private function createOrder(
         OrderData $orderData,

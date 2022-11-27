@@ -481,7 +481,7 @@ class CategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param array $originalNames
+     * @param string[] $originalNames
      */
     protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
@@ -499,8 +499,8 @@ class CategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param array $originalNames
-     * @return array
+     * @param string[] $originalNames
+     * @return string[]
      */
     protected function getChangedNamesByLocale(Category $category, array $originalNames): array
     {

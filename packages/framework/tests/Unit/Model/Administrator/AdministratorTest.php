@@ -32,7 +32,7 @@ class AdministratorTest extends TestCase
 
     /**
      * @dataProvider administratorRolesDataProvider
-     * @param array $roles
+     * @param string[] $roles
      * @param string $expectedRole
      */
     public function testSetAdministratorRolesWithMandatoryRole(array $roles, string $expectedRole): void

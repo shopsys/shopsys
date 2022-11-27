@@ -39,7 +39,7 @@ class GetAdvertPositionsTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return array<array<string, string>>
      */
     private function getExpectedAdvertPositions(): array
     {

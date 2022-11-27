@@ -38,7 +38,7 @@ class MoneyRange extends Constraint
     public $max;
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      */
     public function __construct(array $options)
     {
@@ -56,7 +56,7 @@ class MoneyRange extends Constraint
 
     /**
      * @param string $optionName
-     * @param array $options
+     * @param mixed[] $options
      */
     protected function validateMoneyOrNullOption(string $optionName, array $options): void
     {

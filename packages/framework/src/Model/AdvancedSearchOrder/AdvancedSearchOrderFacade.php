@@ -84,7 +84,7 @@ class AdvancedSearchOrderFacade
     }
 
     /**
-     * @param array $advancedSearchOrderData
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchOrderData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderByAdvancedSearchOrderData(array $advancedSearchOrderData): QueryBuilder

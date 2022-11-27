@@ -9,7 +9,7 @@ use Twig\TwigFilter;
 class MoneyExtension extends AbstractExtension
 {
     /**
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {

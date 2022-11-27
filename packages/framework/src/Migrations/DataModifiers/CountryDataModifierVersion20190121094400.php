@@ -7,17 +7,17 @@ namespace Shopsys\FrameworkBundle\Migrations\DataModifiers;
 class CountryDataModifierVersion20190121094400
 {
     /**
-     * @var array
+     * @var array<array{id: int, domain_id: int, code: string}>
      */
     private $data;
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     private $tmpIds;
 
     /**
-     * @param array $data
+     * @param array<array{id: int, domain_id: int, code: string}> $data
      */
     public function __construct(array $data)
     {
@@ -26,7 +26,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return array<string, array{id: int, domain_id: int, code: string}>
      */
     public function getGroupedByCode(): array
     {
@@ -39,7 +39,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return array<string, int>
      */
     public function getNewIdCodePair(): array
     {
@@ -58,7 +58,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAllCodes(): array
     {
@@ -66,7 +66,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return array<int, int>
      */
     public function getAllIds(): array
     {
@@ -119,7 +119,7 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param int $domainId
      * @param string $countryCode
-     * @return array
+     * @return array{country_id: int, domain_id: int, enable: bool, priority: int}
      */
     public function getDomainDataForCountry(int $domainId, string $countryCode): array
     {
@@ -136,7 +136,7 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param int $domainId
      * @param string $countryCode
-     * @return array
+     * @return array{translatable_id: int, name: string}
      */
     public function getTranslatableDataForCountry(int $domainId, string $countryCode): array
     {
@@ -165,7 +165,7 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getObsoleteCountryIds(): array
     {
@@ -180,8 +180,9 @@ class CountryDataModifierVersion20190121094400
     }
 
     /**
-     * @param array $data
-     * @return array
+     * @template T
+     * @param array<array{domain_id: int}&T> $data
+     * @return array<T[]>
      */
     private function groupDataIntoDomains(array $data): array
     {

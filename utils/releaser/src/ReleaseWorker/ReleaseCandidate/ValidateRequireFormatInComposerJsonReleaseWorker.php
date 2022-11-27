@@ -13,7 +13,6 @@ use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\SplFileInfo;
 use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
 use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -46,7 +45,8 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         ComposerJsonFilesProvider $composerJsonFilesProvider,
         JsonFileManager $jsonFileManager,
         PackageNamesProvider $packageNamesProvider
-    ) {
+    )
+    {
         $this->composerJsonFilesProvider = $composerJsonFilesProvider;
         $this->jsonFileManager = $jsonFileManager;
         $this->packageNamesProvider = $packageNamesProvider;
@@ -85,7 +85,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
      * @param string $section
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      */
-    private function validateVersions(array $jsonContent, string $section, SmartFileInfo $splFileInfo): void
+    private function validateVersions(array $jsonContent, string $section, SplFileInfo $splFileInfo): void
     {
         if (!isset($jsonContent[$section])) {
             return;

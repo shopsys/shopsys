@@ -145,7 +145,7 @@ class ProductElasticsearchRepository
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
      * @param string $indexName
      * @param string $searchText
-     * @return array
+     * @return mixed[]
      */
     protected function createQuery(string $indexName, string $searchText): array
     {
@@ -155,7 +155,7 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $result
+     * @param array{hits: array{hits: array{_id: int}}} $result
      * @return int[]
      */
     protected function extractIds(array $result): array
@@ -165,12 +165,12 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $result
-     * @return array
+     * @param array{hits: array{hits: mixed[]}} $result
+     * @return mixed[]
      */
     protected function extractHits(array $result): array
     {
-        return array_map(function ($value) {
+        return array_map(function (array $value) {
             $data = $value['_source'];
             $data['id'] = (int)$value['_id'];
 
@@ -179,7 +179,7 @@ class ProductElasticsearchRepository
     }
 
     /**
-     * @param array $result
+     * @param array{hits: array{total: array{value: int|numeric-string}}} $result
      * @return int
      */
     protected function extractTotalCount(array $result): int
@@ -200,7 +200,7 @@ class ProductElasticsearchRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
-     * @return array
+     * @return mixed[]
      */
     public function getProductsByFilterQuery(FilterQuery $filterQuery): array
     {

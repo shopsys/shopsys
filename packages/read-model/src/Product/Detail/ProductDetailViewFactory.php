@@ -218,7 +218,7 @@ class ProductDetailViewFactory
     }
 
     /**
-     * @param array $imageViews
+     * @param mixed[] $imageViews
      * @return \Shopsys\ReadModelBundle\Image\ImageView|null
      */
     protected function getMainImageView(array $imageViews): ?ImageView

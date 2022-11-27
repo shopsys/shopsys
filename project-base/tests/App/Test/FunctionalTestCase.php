@@ -36,7 +36,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected Domain $domain;
 
-    protected function setUpDomain()
+    protected function setUpDomain(): void
     {
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
@@ -50,10 +50,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     /**
      * @param bool $createNew
-     * @param string $username
-     * @param string $password
-     * @param array $kernelOptions
-     * @param array $clientOptions
+     * @param string|null $username
+     * @param string|null $password
+     * @param mixed[] $kernelOptions
+     * @param mixed[] $clientOptions
      * @return \Symfony\Bundle\FrameworkBundle\Client
      */
     protected function findClient(
@@ -122,7 +122,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
     }
 
-    protected function skipTestIfFirstDomainIsNotInEnglish()
+    protected function skipTestIfFirstDomainIsNotInEnglish(): void
     {
         if ($this->getFirstDomainLocale() !== 'en') {
             $this->markTestSkipped(
@@ -143,7 +143,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     /**
      * @param string $routeName
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return string
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string

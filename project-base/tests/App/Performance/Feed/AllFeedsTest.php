@@ -116,7 +116,7 @@ class AllFeedsTest extends KernelTestCase
     }
 
     /**
-     * @return array[]
+     * @return array<int, array<\Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface|\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|int>>
      */
     public function getAllFeedGenerationData(): array
     {

@@ -158,9 +158,9 @@ class ProductData
     public $seoH1s;
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    public $pluginData;
+    public array $pluginData;
 
     /**
      * @var string|null
@@ -168,9 +168,9 @@ class ProductData
     public $uuid;
 
     /**
-     * @var array
+     * @var array<int, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat>
      */
-    public $vatsIndexedByDomainId;
+    public array $vatsIndexedByDomainId;
 
     public function __construct()
     {

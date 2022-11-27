@@ -859,7 +859,7 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllOfferedProducts(int $domainId, PricingGroup $pricingGroup): array
     {
@@ -890,7 +890,7 @@ class ProductRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getProductsWithParameter(Parameter $parameter): array
     {

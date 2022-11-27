@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Validation;
 class ValidationRunner
 {
     /**
-     * @param array $apiData
+     * @param mixed[] $apiData
      * @param \Symfony\Component\Validator\Constraints\Collection $constraintCollection
      * @return \Stringable[]|string[]
      */

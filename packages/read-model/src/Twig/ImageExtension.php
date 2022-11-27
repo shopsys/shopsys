@@ -11,7 +11,7 @@ class ImageExtension extends BaseImageExtension
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object|null $imageView
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return string
      */
     public function getImageHtml(?object $imageView, array $attributes = []): string

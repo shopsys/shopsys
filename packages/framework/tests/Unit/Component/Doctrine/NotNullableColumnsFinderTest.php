@@ -52,7 +52,7 @@ class NotNullableColumnsFinderTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getAssociationMappings(): array
     {

@@ -138,7 +138,7 @@ class GetAdvertsTest extends GraphQlTestCase
 
     /**
      * @param string $query
-     * @param array $expectedData
+     * @param mixed[] $expectedData
      */
     private function assetAdvertsAreAsExpected(string $query, array $expectedData): void
     {
@@ -195,7 +195,7 @@ class GetAdvertsTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedAdverts(): array
     {

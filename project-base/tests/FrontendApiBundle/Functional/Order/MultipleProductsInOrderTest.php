@@ -58,7 +58,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     protected function getExpectedOrderItems(): array
     {

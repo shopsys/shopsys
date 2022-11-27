@@ -41,7 +41,7 @@ class ProductActionViewFactory
     }
 
     /**
-     * @param array $productArray
+     * @param array{id: int, calculated_selling_denied: bool, is_main_variant: bool, detail_url: string} $productArray
      * @return \Shopsys\ReadModelBundle\Product\Action\ProductActionView
      */
     public function createFromArray(array $productArray): ProductActionView

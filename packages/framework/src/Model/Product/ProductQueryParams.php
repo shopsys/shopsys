@@ -32,7 +32,7 @@ class ProductQueryParams
     }
 
     /**
-     * @param array $uuids
+     * @param string[] $uuids
      * @return self
      */
     public function withUuids(array $uuids): self

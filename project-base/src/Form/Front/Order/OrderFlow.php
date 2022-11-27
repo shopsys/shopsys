@@ -36,7 +36,7 @@ class OrderFlow extends FormFlow
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     protected function loadStepsConfig(): array
     {
@@ -68,7 +68,7 @@ class OrderFlow extends FormFlow
     /**
      * @param int $step
      * @param array $options
-     * @return array
+     * @return mixed[]
      */
     public function getFormOptions($step, array $options = []): array
     {

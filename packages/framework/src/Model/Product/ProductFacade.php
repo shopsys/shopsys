@@ -573,7 +573,7 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
+     * @param string[] $originalNames
      */
     protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
@@ -591,8 +591,8 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $originalNames
-     * @return array
+     * @param string[] $originalNames
+     * @return string[]
      */
     protected function getChangedNamesByLocale(Product $product, array $originalNames): array
     {

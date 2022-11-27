@@ -93,7 +93,7 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/pricing/")
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function pricingAction(Request $request): Response
     {
@@ -120,7 +120,7 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/urls/")
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function urlsAction(): Response
     {
@@ -163,7 +163,7 @@ class SuperadminController extends AdminBaseController
     /**
      * @Route("/superadmin/modules/")
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function modulesAction(Request $request): Response
     {
@@ -193,7 +193,7 @@ class SuperadminController extends AdminBaseController
 
     /**
      * @Route("/superadmin/css-documentation/")
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cssDocumentationAction(): Response
     {

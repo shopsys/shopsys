@@ -47,7 +47,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     }
 
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @param string|null $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
@@ -64,7 +64,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
     public function createFromProductAndApi(Product $product, array $productApiData): ProductData
@@ -76,7 +76,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      */
     protected function setProductDataByApi(ProductData $productData, array $productApiData): void
     {

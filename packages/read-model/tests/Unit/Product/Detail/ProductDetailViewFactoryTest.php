@@ -51,7 +51,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{seoH1: string|null, name: string|null, expected: string|null}>
      */
     public function getTestGetNameData(): array
     {
@@ -113,7 +113,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{input: string|null, expected: string|null}>
      */
     public function getTestNullableArguments(): array
     {
@@ -156,7 +156,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{availabilityString: string, dispatchTime: int|null, expectedAvailabilityString: string, expectedInStockStatus: bool}>
      */
     public function getTestGetAvailabilityAndInStock(): array
     {
@@ -216,7 +216,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getTestVariants(): array
     {
@@ -276,7 +276,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{input: string|null, expected: string}>
      */
     public function getTestGetSeoMetaDescription(): array
     {
@@ -309,7 +309,7 @@ class ProductDetailViewFactoryTest extends TestCase
 
     /**
      * @dataProvider getTestGetMainImageView
-     * @param array $imageViews
+     * @param \Shopsys\ReadModelBundle\Image\ImageView[] $imageViews
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $expectedMainImageView
      */
     public function testGetMainImageView(
@@ -325,7 +325,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<array{imageViews: \Shopsys\ReadModelBundle\Image\ImageView[], expectedMainImageView: \Shopsys\ReadModelBundle\Image\ImageView|null}>
      */
     public function getTestGetMainImageView(): array
     {
@@ -353,10 +353,10 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $imageViews
-     * @param array $accessories
-     * @param array $variants
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      * @param int|null $priceAmount
      * @return \Shopsys\ReadModelBundle\Product\Detail\ProductDetailView
      */
@@ -395,7 +395,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @param array $productData
+     * @param mixed[] $productData
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
     private function createProductMock(array $productData): Product
@@ -412,7 +412,7 @@ class ProductDetailViewFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getDefaultProductData(): array
     {

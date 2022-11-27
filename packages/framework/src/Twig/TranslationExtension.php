@@ -37,7 +37,7 @@ class TranslationExtension extends AbstractExtension
      * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      * @param \Twig\Environment $twig
      * @param string $message
-     * @param array $arguments
+     * @param mixed[] $arguments
      * @param string|null $domain
      * @param string|null $locale
      * @return string
@@ -54,8 +54,8 @@ class TranslationExtension extends AbstractExtension
      * Escapes all elements in array with default twig "escape" filter
      *
      * @param \Twig\Environment $twig
-     * @param array $elements
-     * @return array
+     * @param callable[] $elements
+     * @return mixed[]
      */
     protected function getEscapedElements(Environment $twig, array $elements): array
     {

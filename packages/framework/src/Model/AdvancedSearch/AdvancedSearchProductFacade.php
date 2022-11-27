@@ -78,7 +78,7 @@ class AdvancedSearchProductFacade
     }
 
     /**
-     * @param array $advancedSearchData
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $advancedSearchData
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder

@@ -144,7 +144,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryNoFilterTestCase(): array
     {
@@ -205,7 +205,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryOneFlagTestCase(): array
     {
@@ -264,7 +264,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryOneBrandTestCase(): array
     {
@@ -322,7 +322,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryAllFlagsAllBrandsTestCase(): array
     {
@@ -377,7 +377,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryPriceTestCase(): array
     {
@@ -448,7 +448,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryStockTestCase(): array
     {
@@ -506,7 +506,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryFlagBrandAndParametersTestCase(): array
     {
@@ -581,7 +581,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: \App\Model\Category\Category, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function categoryParametersTestCase(): array
     {
@@ -659,8 +659,8 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @param array $namesByLocale
-     * @param array $valuesTextsByLocales
+     * @param array<string, string> $namesByLocale
+     * @param array<array<string, string>> $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData
      */
     private function createParameterFilterData(array $namesByLocale, array $valuesTextsByLocales): ParameterFilterData
@@ -676,7 +676,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @param array[] $valuesTextsByLocales
+     * @param array<array<string, string>> $valuesTextsByLocales
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     private function getParameterValuesByLocalesAndTexts(array $valuesTextsByLocales): array
@@ -698,7 +698,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchNoFilterTestCase(): array
     {
@@ -734,7 +734,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchOneFlagTestCase(): array
     {
@@ -766,7 +766,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchOneBrandTestCase(): array
     {
@@ -802,7 +802,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchPriceTestCase(): array
     {
@@ -841,7 +841,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchStockTestCase(): array
     {
@@ -875,7 +875,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     }
 
     /**
-     * @return array
+     * @return array{0: string, 1: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData, 2: \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData}
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {

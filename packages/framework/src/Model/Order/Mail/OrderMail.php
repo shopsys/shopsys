@@ -151,7 +151,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return array
+     * @return array<string, string|null>
      */
     protected function getVariablesReplacementsForBody(Order $order): array
     {
@@ -183,7 +183,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getVariablesReplacementsForSubject(Order $order): array
     {

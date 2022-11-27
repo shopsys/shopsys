@@ -39,7 +39,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     private $currentCustomerUser;
 
     /**
-     * @return array
+     * @return mixed[][]
      */
     public function getTermsAndConditionsAgreementIsMandatoryData(): array
     {
@@ -50,7 +50,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @param array $personalInfoFormData
+     * @param mixed[] $personalInfoFormData
      * @param bool $isExpectedValid
      * @dataProvider getTermsAndConditionsAgreementIsMandatoryData
      */
@@ -67,7 +67,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
 
     /**
      * @param bool $legalConditionsAgreement
-     * @return array
+     * @return mixed[]
      */
     private function getPersonalInfoFormData(bool $legalConditionsAgreement): array
     {
@@ -101,7 +101,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Form\FormExtensionInterface[]
      */
     protected function getExtensions(): array
     {

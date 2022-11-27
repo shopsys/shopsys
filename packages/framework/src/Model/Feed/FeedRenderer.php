@@ -59,7 +59,7 @@ class FeedRenderer
 
     /**
      * @param string $name
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return string
      */
     protected function getRenderedBlock(string $name, array $parameters): string

@@ -150,7 +150,7 @@ class ImageExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return string
      */
     public function getImageHtml(object $imageOrEntity, array $attributes = []): string
@@ -175,7 +175,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return string
      */
     public function getNoimageHtml(array $attributes = []): string
@@ -233,7 +233,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     protected function preventDefault(array &$attributes): void
     {
@@ -244,7 +244,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @param string $entityName
      * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
      * @return string
@@ -265,7 +265,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
+     * @param mixed[] $attributes
      * @return bool
      */
     protected function isLazyLoadEnabled(array $attributes): bool
@@ -278,8 +278,8 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $attributes
-     * @return array
+     * @param mixed[] $attributes
+     * @return mixed[]
      */
     protected function extractHtmlAttributesFromAttributes(array $attributes): array
     {
@@ -293,8 +293,8 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param array $htmlAttributes
-     * @return array
+     * @param mixed[] $htmlAttributes
+     * @return mixed[]
      */
     protected function makeHtmlAttributesLazyLoaded(array $htmlAttributes): array
     {

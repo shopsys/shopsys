@@ -108,7 +108,7 @@ class ProductDetailViewElasticsearchFactory
     }
 
     /**
-     * @param array $productArray
+     * @param mixed[] $productArray
      * @return \Shopsys\ReadModelBundle\Product\Detail\ProductDetailView
      */
     public function createFromProductArray(array $productArray): ProductDetailView
@@ -129,7 +129,7 @@ class ProductDetailViewElasticsearchFactory
     }
 
     /**
-     * @param array $productArray
+     * @param mixed[] $productArray
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $imageViews
      * @param \Shopsys\ReadModelBundle\Parameter\ParameterView[] $parameterViews
      * @param \Shopsys\ReadModelBundle\Brand\BrandView $brandView
@@ -176,7 +176,7 @@ class ProductDetailViewElasticsearchFactory
     }
 
     /**
-     * @param array $imageViews
+     * @param mixed[] $imageViews
      * @return \Shopsys\ReadModelBundle\Image\ImageView|null
      */
     protected function getMainImageView(array $imageViews): ?ImageView
@@ -185,7 +185,7 @@ class ProductDetailViewElasticsearchFactory
     }
 
     /**
-     * @param array $productArray
+     * @param mixed[] $productArray
      * @return string
      */
     protected function getSeoMetaDescription(array $productArray): string

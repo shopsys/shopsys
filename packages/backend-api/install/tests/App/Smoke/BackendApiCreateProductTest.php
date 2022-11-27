@@ -84,7 +84,7 @@ class BackendApiCreateProductTest extends OauthTestCase
 
     /**
      * @param string $uuid
-     * @return array
+     * @return mixed[]
      */
     private function getProduct(string $uuid): array
     {
@@ -209,7 +209,7 @@ class BackendApiCreateProductTest extends OauthTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getValidProduct(): array
     {

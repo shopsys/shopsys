@@ -130,7 +130,7 @@ class CronFacadeTest extends TestCase
     }
 
     /**
-     * @param array $servicesIndexedById
+     * @param array<\Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface> $servicesIndexedById
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver|null $cronTimeResolverMock
      * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
      */

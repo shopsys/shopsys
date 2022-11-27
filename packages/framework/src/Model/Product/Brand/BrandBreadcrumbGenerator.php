@@ -22,7 +22,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
     /**
      * @param string $routeName
-     * @param array $routeParameters
+     * @param mixed[] $routeParameters
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array

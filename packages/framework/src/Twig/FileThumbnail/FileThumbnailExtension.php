@@ -53,7 +53,7 @@ class FileThumbnailExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

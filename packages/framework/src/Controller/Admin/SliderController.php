@@ -108,7 +108,7 @@ class SliderController extends AdminBaseController
     /**
      * @Route("/slider/item/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request): Response
     {
@@ -148,7 +148,7 @@ class SliderController extends AdminBaseController
      * @Route("/slider/item/edit/{id}", requirements={"id"="\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
-     * @return \Shopsys\FrameworkBundle\Controller\Admin\Shopsys\FrameworkBundle\Controller\Admin \\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $id): Response
     {

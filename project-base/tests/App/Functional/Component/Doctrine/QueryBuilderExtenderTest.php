@@ -45,7 +45,7 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, class-string>>
      */
     public function extendJoinWithExtendedEntityProvider(): array
     {

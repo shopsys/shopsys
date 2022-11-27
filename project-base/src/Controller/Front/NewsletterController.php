@@ -88,7 +88,7 @@ class NewsletterController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\Form\FormErrorIterator $formErrors
-     * @return array
+     * @return string[]
      */
     private function parseErrors(FormErrorIterator $formErrors): array
     {

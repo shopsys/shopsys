@@ -79,7 +79,7 @@ class DomainController extends AdminBaseController
     /**
      * @Route("/multidomain/select-domain/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function selectDomainAction(Request $request, int $id): RedirectResponse

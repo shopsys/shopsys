@@ -52,7 +52,7 @@ abstract class AbstractAdvancedSearchFormFactory
 
     /**
      * @param string $name
-     * @param array $rulesViewData
+     * @param mixed[] $rulesViewData
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createRulesForm(string $name, array $rulesViewData): FormInterface

@@ -45,7 +45,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $classPosition
      * @param int $phpDocStartPosition
-     * @return array
+     * @return mixed[]
      */
     private function findPhpDocTags(File $file, int $classPosition, int $phpDocStartPosition): array
     {
@@ -63,7 +63,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     }
 
     /**
-     * @param array $token
+     * @param array{content: string} $token
      * @return bool
      */
     private function isDoctrineInheritanceAnnotation(array $token): bool

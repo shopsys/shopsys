@@ -47,8 +47,8 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     }
 
     /**
-     * @param array $configuration
-     * @return array
+     * @param mixed[] $configuration
+     * @return mixed[]
      */
     private function extractNamespaces(array $configuration): array
     {

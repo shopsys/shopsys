@@ -86,7 +86,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param array{pp: array{id: int}} $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
@@ -118,7 +118,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param array<array{pv: array{id: int}, pp: array{id: int}}> $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
@@ -144,7 +144,7 @@ class ParameterFilterChoiceRepository
     }
 
     /**
-     * @param array $rows
+     * @param array<array{pp: array{id: int}}> $rows
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */

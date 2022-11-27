@@ -197,7 +197,7 @@ class CartPage extends AbstractPage
     }
 
     /**
-     * @param array $products
+     * @param array<string, int> $products
      * @param int $discount
      */
     public function assertTotalPriceWithVatByProducts(array $products, int $discount = 0): void

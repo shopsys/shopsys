@@ -26,7 +26,7 @@ class MailTemplateFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -82,7 +82,7 @@ class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Validator\Constraints\NotBlank[]|\Symfony\Component\Validator\Constraints\Length[]|\Shopsys\FrameworkBundle\Form\Constraints\Contains[]
      */
     private function getSubjectConstraints(array $options): array
@@ -110,7 +110,7 @@ class MailTemplateFormType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      * @return \Symfony\Component\Validator\Constraints\NotBlank[]|\Shopsys\FrameworkBundle\Form\Constraints\Contains[]
      */
     private function getBodyConstraints(array $options): array

@@ -4,15 +4,18 @@ namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Symfony\Component\Form\DataTransformerInterface;
 
+/**
+ * @template T
+ */
 class InverseMultipleChoiceTransformer implements DataTransformerInterface
 {
     /**
-     * @var array
+     * @var T[]
      */
     protected $allChoices;
 
     /**
-     * @param array $allChoices Choices from ChoiceType options
+     * @param T[] $allChoices Choices from ChoiceType options
      */
     public function __construct(array $allChoices)
     {
@@ -21,6 +24,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
 
     /**
      * {@inheritDoc}
+     * @return T[]|null
      */
     public function transform($value): ?array
     {
@@ -33,6 +37,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
 
     /**
      * {@inheritDoc}
+     * @return T[]|null
      */
     public function reverseTransform($value): ?array
     {
@@ -44,8 +49,8 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $inputValues
-     * @return array
+     * @param T[] $inputValues
+     * @return T[]
      */
     protected function getInvertedValues(array $inputValues): array
     {

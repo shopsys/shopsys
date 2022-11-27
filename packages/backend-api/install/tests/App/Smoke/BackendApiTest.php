@@ -58,7 +58,7 @@ class BackendApiTest extends OauthTestCase
     }
 
     /**
-     * @param array $product
+     * @param mixed[] $product
      */
     private function assertProductJsonStructure(array $product): void
     {

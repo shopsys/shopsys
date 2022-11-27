@@ -14,9 +14,9 @@ class BrandCachedFacade
     protected $friendlyUrlFacade;
 
     /**
-     * @var array
+     * @var array<int, array<int, string>>
      */
-    protected $brandUrlsIndexedByBrandIdAndDomainId = [];
+    protected array $brandUrlsIndexedByBrandIdAndDomainId = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade

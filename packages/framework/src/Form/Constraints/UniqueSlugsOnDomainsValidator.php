@@ -33,7 +33,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param array<array{domain: int, slug: string}> $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
     public function validate($values, Constraint $constraint): void
@@ -47,7 +47,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param array<array{domain: int, slug: string}> $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
     protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint): void
@@ -69,7 +69,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
+     * @param array<array{domain: int, slug: string}> $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
     protected function validateExists(array $values, UniqueSlugsOnDomains $constraint): void
@@ -96,8 +96,8 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $values
-     * @return array<int|string, array<int|string, int>&mixed[]>
+     * @param array<array{domain: int, slug: string}> $values
+     * @return array<int, array<string, int>>
      */
     protected function getSlugsCountIndexedByDomainId(array $values): array
     {

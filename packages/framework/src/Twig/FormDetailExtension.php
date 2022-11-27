@@ -23,7 +23,7 @@ class FormDetailExtension extends AbstractExtension
     }
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {
@@ -60,7 +60,7 @@ class FormDetailExtension extends AbstractExtension
     /**
      * @param mixed $object
      * @param \Symfony\Component\Form\FormView $formView
-     * @param array $vars
+     * @param mixed[] $vars
      * @return string
      */
     public function formSave(mixed $object, FormView $formView, array $vars = []): string

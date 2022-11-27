@@ -206,7 +206,7 @@ class ProductFilterCountDataElasticsearchRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData $parameterFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $parameterFilterQuery
-     * @return array
+     * @return array<int, int>
      */
     protected function calculateParameterPlusNumbers(
         ParameterFilterData $parameterFilterData,
@@ -230,7 +230,7 @@ class ProductFilterCountDataElasticsearchRepository
      * Plus numbers are not replaced as expected, they are "added" to meet the original SQL implementation
      *
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
-     * @param array $plusParameterNumbers
+     * @param array<int, int> $plusParameterNumbers
      * @param int $parameterId
      */
     protected function mergeParameterCountData(ProductFilterCountData $countData, array $plusParameterNumbers, int $parameterId): void

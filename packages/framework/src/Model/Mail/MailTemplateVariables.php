@@ -43,7 +43,7 @@ class MailTemplateVariables
     protected $readableName;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $variables = [];
 
@@ -234,7 +234,7 @@ class MailTemplateVariables
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getLabeledVariables(): array
     {

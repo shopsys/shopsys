@@ -12,7 +12,7 @@ class HoneyPotExtension extends AbstractExtension
     protected const PASSWORD_FIELD_NAME = 'password';
 
     /**
-     * @return array
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

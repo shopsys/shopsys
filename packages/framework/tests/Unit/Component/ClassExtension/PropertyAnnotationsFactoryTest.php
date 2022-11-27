@@ -44,7 +44,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @return array
+     * @return array<string, \Roave\BetterReflection\Reflection\ReflectionObject[]>
      */
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {

@@ -34,6 +34,10 @@ class StrictWebDriver extends WebDriver
 
     /**
      * {@inheritDoc}
+     * @param \Facebook\WebDriver\WebDriverSearchContext $page
+     * @param string|string[] $selector
+     * @param bool $throwMalformed
+     * @return \Facebook\WebDriver\WebDriverElement[]
      */
     protected function match($page, $selector, $throwMalformed = true): array
     {
@@ -47,6 +51,8 @@ class StrictWebDriver extends WebDriver
 
     /**
      * {@inheritDoc}
+     * @param string|string[] $selector
+     * @return \Facebook\WebDriver\WebDriverElement[]
      */
     protected function findFields($selector): array
     {
@@ -550,7 +556,7 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $text
-     * @param array $nodes
+     * @param mixed[] $nodes
      * @param mixed $selector
      */
     protected function assertNodesContain($text, $nodes, $selector = null): void
@@ -562,7 +568,7 @@ class StrictWebDriver extends WebDriver
 
     /**
      * @param string $text
-     * @param array $nodes
+     * @param mixed[] $nodes
      * @param mixed $selector
      */
     protected function assertNodesNotContain($text, $nodes, $selector = null): void

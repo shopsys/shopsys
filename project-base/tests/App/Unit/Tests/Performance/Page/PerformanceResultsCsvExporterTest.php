@@ -87,7 +87,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     }
 
     /**
-     * @param array $expectedLine
+     * @param string[] $expectedLine
      * @param string $filename
      * @param int $lineIndex
      */
@@ -101,7 +101,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
     /**
      * @param string $filename
      * @param int $lineIndex
-     * @return array
+     * @return string[]
      */
     private function getCsvLine(string $filename, int $lineIndex): array
     {

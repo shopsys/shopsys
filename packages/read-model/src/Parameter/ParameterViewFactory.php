@@ -23,7 +23,7 @@ class ParameterViewFactory
     }
 
     /**
-     * @param array $parameterArray
+     * @param array{parameter_id: int, parameter_name: string, parameter_value_id: int, parameter_Value_text: string} $parameterArray
      * @return \Shopsys\ReadModelBundle\Parameter\ParameterView
      */
     public function createFromParameterArray(array $parameterArray): ParameterView

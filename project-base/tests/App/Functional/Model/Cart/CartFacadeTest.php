@@ -278,8 +278,8 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param array $expected
-     * @param array $actual
+     * @param object[] $expected
+     * @param object[] $actual
      */
     private function assertArrayHasSameElements(array $expected, array $actual): void
     {

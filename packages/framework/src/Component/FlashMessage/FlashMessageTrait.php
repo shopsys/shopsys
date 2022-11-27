@@ -11,7 +11,7 @@ trait FlashMessageTrait
 {
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addSuccessFlashTwig(string $template, array $parameters = []): void
     {
@@ -20,7 +20,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addErrorFlashTwig(string $template, array $parameters = []): void
     {
@@ -29,7 +29,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      */
     public function addInfoFlashTwig(string $template, array $parameters = []): void
     {
@@ -77,7 +77,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $template
-     * @param array $parameters
+     * @param mixed[] $parameters
      * @return string
      */
     protected function renderStringTwigTemplate(string $template, array $parameters = []): string
@@ -103,7 +103,7 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getErrorMessages(): array
     {
@@ -111,7 +111,7 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getInfoMessages(): array
     {
@@ -119,7 +119,7 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSuccessMessages(): array
     {
@@ -128,7 +128,7 @@ trait FlashMessageTrait
 
     /**
      * @param string $key
-     * @return array
+     * @return string[]
      */
     protected function getMessages(string $key): array
     {

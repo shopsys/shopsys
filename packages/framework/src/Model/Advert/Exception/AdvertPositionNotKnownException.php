@@ -8,7 +8,7 @@ class AdvertPositionNotKnownException extends Exception implements AdvertExcepti
 {
     /**
      * @param string $positionName
-     * @param array $knownPositionsNames
+     * @param string[] $knownPositionsNames
      * @param \Exception|null $previous
      */
     public function __construct(string $positionName, array $knownPositionsNames, ?Exception $previous = null)

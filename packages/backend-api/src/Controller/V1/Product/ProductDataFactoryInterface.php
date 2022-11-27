@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 interface ProductDataFactoryInterface
 {
     /**
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @param string|null $uuid
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
@@ -21,7 +21,7 @@ interface ProductDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param array $productApiData
+     * @param mixed[] $productApiData
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductData
      */
     public function createFromProductAndApi(Product $product, array $productApiData): ProductData;

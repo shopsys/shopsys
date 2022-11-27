@@ -106,7 +106,7 @@ class ProductTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedProductDetailWithAllAttributes(): array
     {

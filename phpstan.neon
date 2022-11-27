@@ -18,16 +18,6 @@ parameters:
         -
             message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
-        -
-            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/*
-        -
-            message: '#^Unsafe usage of new static\(\).#'
-            path: %currentWorkingDirectory%/packages/framework/*
-        -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) \$cssOrXPath of method Tests\\(.*)\\Codeception\\(.*) expects (.*)#'
-            path: %currentWorkingDirectory%/packages/framework/tests/Test/Codeception/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
             # We need to have undefined variable for testing purposes
@@ -50,22 +40,14 @@ parameters:
             message: '#^PHPDoc tag @param for parameter \$function with type callable is not subtype of native type Closure.$#'
             path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
-            # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
-            message: '#^Service "[^"]+" is private.$#'
-            path: %currentWorkingDirectory%/*/tests/*
-        -
-            message: '#^Service "test.service_container" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/*/tests/*
-        -
-            message: '#^Service "snc_redis.test" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/project-base/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
-        -
             message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
             path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
         -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
-            path: %currentWorkingDirectory%/project-base/tests/App/*
+            message: '#^Service ".*" is private\.$#'
+            path: %currentWorkingDirectory%/**/tests/*
+        -
+            message: '#^Service ".*" is not registered in the container\.$#'
+            path: %currentWorkingDirectory%/**/tests/*
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
@@ -73,6 +55,8 @@ parameters:
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
         # Exclude backend api package as the integration is currently removed
         - %currentWorkingDirectory%/packages/backend-api/*
+        # Exclude backend api package as the integration is currently removed
+        - %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

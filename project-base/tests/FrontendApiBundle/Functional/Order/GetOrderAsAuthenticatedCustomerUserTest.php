@@ -51,7 +51,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return array
+     * @return array<array{0: string, 1: array{status: string, totalPriceWithVat: string}}>
      */
     private function getOrderDataForCurrentlyLoggedCustomerUserProvider(): array
     {

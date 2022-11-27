@@ -70,7 +70,7 @@ interface ActorInterface
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      */
     public function canSeeCookie(string $cookie, array $params = []);
 
@@ -90,14 +90,14 @@ interface ActorInterface
     public function canSeeCurrentUrlMatches(string $uri);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function canSeeElement(array|string $selector, array $attributes = []);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function canSeeElementInDOM(array|string $selector, array $attributes = []);
 
@@ -114,7 +114,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[]|null $criteria
      */
     public function canSeeInDatabase(string $table, ?array $criteria = null);
 
@@ -137,8 +137,8 @@ interface ActorInterface
     public function canSeeInFieldByName(string $value, string $fieldName): void;
 
     /**
-     * @param array|string $formSelector
-     * @param array $params
+     * @param string|string[] $formSelector
+     * @param mixed[] $params
      */
     public function canSeeInFormFields(array|string $formSelector, array $params);
 
@@ -171,7 +171,7 @@ interface ActorInterface
     /**
      * @param int $expectedNumber Expected number
      * @param string $table Table name
-     * @param array $criteria Search criteria [Optional]
+     * @param mixed[] $criteria Search criteria [Optional]
      */
     public function canSeeNumRecords(int $expectedNumber, string $table, array $criteria = []);
 
@@ -213,7 +213,7 @@ interface ActorInterface
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      */
     public function cantSeeCookie(string $cookie, array $params = []);
 
@@ -229,13 +229,13 @@ interface ActorInterface
 
     /**
      * @param array|string $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function cantSeeElement(array|string $selector, array $attributes = []);
 
     /**
      * @param array|string $selector
-     * @param array $attributes
+     * @param mixed[] $attributes
      */
     public function cantSeeElementInDOM(array|string $selector, array $attributes = []);
 
@@ -246,7 +246,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function cantSeeInDatabase(string $table, array $criteria = []);
 
@@ -257,8 +257,8 @@ interface ActorInterface
     public function cantSeeInField(string $field, string $value);
 
     /**
-     * @param array|string $formSelector
-     * @param array $params
+     * @param string|string[] $formSelector
+     * @param mixed[] $params
      */
     public function cantSeeInFormFields(array|string $formSelector, array $params);
 
@@ -289,7 +289,7 @@ interface ActorInterface
     public function cantSeeLink(string $text, ?string $url = null);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param string $optionText
      */
     public function cantSeeOptionIsSelected(array|string $selector, string $optionText);
@@ -369,7 +369,7 @@ interface ActorInterface
 
     /**
      * @param string $text
-     * @param array|string $selector optional
+     * @param string|string[] $selector optional
      */
     public function dontSee(string $text, array|string|null $selector = null);
 
@@ -385,7 +385,7 @@ interface ActorInterface
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      */
     public function dontSeeCookie(string $cookie, array $params = []);
 
@@ -400,14 +400,14 @@ interface ActorInterface
     public function dontSeeCurrentUrlMatches(string $uri);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function dontSeeElement(array|string $selector, array $attributes = []);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function dontSeeElementInDOM(array|string $selector, array $attributes = []);
 
@@ -418,7 +418,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function dontSeeInDatabase(string $table, array $criteria = []);
 
@@ -429,8 +429,8 @@ interface ActorInterface
     public function dontSeeInField(string $field, string $value);
 
     /**
-     * @param array|string $formSelector
-     * @param array $params
+     * @param string|string[] $formSelector
+     * @param mixed[] $params
      */
     public function dontSeeInFormFields(array|string $formSelector, array $params);
 
@@ -461,7 +461,7 @@ interface ActorInterface
     public function dontSeeLink(string $text, ?string $url = null);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param string $optionText
      */
     public function dontSeeOptionIsSelected(array|string $selector, string $optionText);
@@ -484,7 +484,7 @@ interface ActorInterface
 
     /**
      * @param string $script
-     * @param array $arguments
+     * @param mixed[] $arguments
      * @return mixed
      */
     public function executeAsyncJS(string $script, array $arguments = []);
@@ -496,7 +496,7 @@ interface ActorInterface
 
     /**
      * @param string $script
-     * @param array $arguments
+     * @param mixed[] $arguments
      * @return mixed
      */
     public function executeJS(string $script, array $arguments = []);
@@ -539,14 +539,14 @@ interface ActorInterface
     /**
      * @param string $table
      * @param string $column
-     * @param array $criteria
-     * @return array
+     * @param mixed[] $criteria
+     * @return mixed[]
      */
     public function grabColumnFromDatabase(string $table, string $column, array $criteria = []);
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @return mixed
      */
     public function grabCookie(string $cookie, array $params = []);
@@ -560,7 +560,7 @@ interface ActorInterface
     /**
      * @param string $table
      * @param string $column
-     * @param array $criteria
+     * @param mixed[] $criteria
      * @return mixed
      */
     public function grabFromDatabase(string $table, string $column, array $criteria = []);
@@ -574,7 +574,7 @@ interface ActorInterface
 
     /**
      * @param string $table Table name
-     * @param array $criteria Search criteria [Optional]
+     * @param mixed[] $criteria Search criteria [Optional]
      * @return int
      */
     public function grabNumRecords(string $table, array $criteria = []);
@@ -604,7 +604,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $data
+     * @param mixed[] $data
      * @return int
      */
     public function haveInDatabase(string $table, array $data);
@@ -652,7 +652,7 @@ interface ActorInterface
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
-     * @param array $actions
+     * @param mixed[] $actions
      * @param int $timeout
      */
     public function performOn(WebDriverElement $element, array $actions, int $timeout = 10);
@@ -667,7 +667,7 @@ interface ActorInterface
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      * @return mixed
      */
     public function resetCookie(string $cookie, array $params = []);
@@ -685,7 +685,7 @@ interface ActorInterface
     public function saveSessionSnapshot(string $name);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param int $offsetX
      * @param int $offsetY
      */
@@ -693,7 +693,7 @@ interface ActorInterface
 
     /**
      * @param string $text
-     * @param array|string $selector optional
+     * @param string|string[] $selector optional
      */
     public function see(string $text, array|string|null $selector = null);
 
@@ -709,7 +709,7 @@ interface ActorInterface
 
     /**
      * @param string $cookie
-     * @param array $params
+     * @param mixed[] $params
      */
     public function seeCookie(string $cookie, array $params = []);
 
@@ -729,14 +729,14 @@ interface ActorInterface
     public function seeCurrentUrlMatches(string $uri);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function seeElement(array|string $selector, array $attributes = []);
 
     /**
-     * @param array|string $selector
-     * @param array $attributes
+     * @param string|string[] $selector
+     * @param mixed[] $attributes
      */
     public function seeElementInDOM(array|string $selector, array $attributes = []);
 
@@ -753,7 +753,7 @@ interface ActorInterface
 
     /**
      * @param string $table
-     * @param array $criteria
+     * @param mixed[] $criteria
      */
     public function seeInDatabase(string $table, array $criteria = []);
 
@@ -776,8 +776,8 @@ interface ActorInterface
     public function seeInFieldByName(string $value, string $fieldName): void;
 
     /**
-     * @param array|string $formSelector
-     * @param array $params
+     * @param string|string[] $formSelector
+     * @param mixed[] $params
      */
     public function seeInFormFields(array|string $formSelector, array $params);
 
@@ -810,30 +810,30 @@ interface ActorInterface
     /**
      * @param int $expectedNumber Expected number
      * @param string $table Table name
-     * @param array $criteria Search criteria [Optional]
+     * @param mixed[] $criteria Search criteria [Optional]
      */
     public function seeNumRecords(int $expectedNumber, string $table, array $criteria = []);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param mixed $expected int or int[]
      */
     public function seeNumberOfElements(array|string $selector, mixed $expected);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param mixed $expected int or int[]
      */
     public function seeNumberOfElementsInDOM(array|string $selector, mixed $expected);
 
     /**
-     * @param array|string $selector
+     * @param string|string[] $selector
      * @param string $optionText
      */
     public function seeOptionIsSelected(array|string $selector, string $optionText);
 
     /**
-     * @param array|string $select
+     * @param string|string[] $select
      * @param string $option
      */
     public function selectOption(array|string $select, string $option);
@@ -847,15 +847,15 @@ interface ActorInterface
     /**
      * @param string $cookie
      * @param string $value
-     * @param array $params
+     * @param mixed[] $params
      * @param mixed $showDebug
      * @return mixed
      */
     public function setCookie(string $cookie, string $value, array $params = [], mixed $showDebug = true);
 
     /**
-     * @param array|string $selector
-     * @param array $params
+     * @param string|string[] $selector
+     * @param mixed[] $params
      * @param string $button
      */
     public function submitForm(array|string $selector, array $params, ?string $button = null);
@@ -883,7 +883,7 @@ interface ActorInterface
     public function switchToWindow(?string $name = null);
 
     /**
-     * @param array $keys
+     * @param mixed[] $keys
      */
     public function typeInPopup(array $keys);
 
@@ -893,15 +893,15 @@ interface ActorInterface
     public function uncheckOption(string $option);
 
     /**
-     * @param array|string $select
+     * @param string|string[] $select
      * @param string $option
      */
     public function unselectOption(array|string $select, string $option);
 
     /**
      * @param string $table
-     * @param array $data
-     * @param array $criteria
+     * @param mixed[] $data
+     * @param mixed[] $criteria
      */
     public function updateInDatabase(string $table, array $data, array $criteria = []);
 

@@ -59,7 +59,7 @@ class RegistrationMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @return array
+     * @return array<string, string>
      */
     protected function getVariablesReplacements(CustomerUser $customerUser): array
     {

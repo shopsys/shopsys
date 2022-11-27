@@ -144,7 +144,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param array $articles
+     * @param mixed[] $articles
      * @param int $domainId
      */
     private function createArticlesFromArray(array $articles, int $domainId): void
@@ -155,7 +155,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @param int $domainId
      */
     private function createArticleFromArray(array $data, int $domainId): void

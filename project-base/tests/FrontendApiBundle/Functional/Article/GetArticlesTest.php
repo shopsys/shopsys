@@ -46,9 +46,9 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $keys
-     * @param array $actual
-     * @param array $expected
+     * @param array<int|string> $keys
+     * @param mixed[] $actual
+     * @param mixed[] $expected
      */
     private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
     {
@@ -59,7 +59,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getArticlesDataProvider(): array
     {
@@ -198,7 +198,7 @@ class GetArticlesTest extends GraphQlTestCase
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     private function getExpectedArticles(): array
     {

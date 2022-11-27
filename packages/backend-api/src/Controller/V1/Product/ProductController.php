@@ -192,7 +192,7 @@ class ProductController extends AbstractFOSRestController
     }
 
     /**
-     * @param array $errors
+     * @param string[] $errors
      * @return \FOS\RestBundle\View\View
      */
     protected function createValidationView(array $errors): View

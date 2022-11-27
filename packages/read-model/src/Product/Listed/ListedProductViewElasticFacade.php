@@ -246,7 +246,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     }
 
     /**
-     * @param array $productsArray
+     * @param mixed[] $productsArray
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
     protected function createFromArray(array $productsArray): array
