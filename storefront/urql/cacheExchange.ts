@@ -31,7 +31,7 @@ export const cache = cacheExchange({
         AdvertCode: keyUuid,
         AdvertImage: keyUuid,
         AdvertPosition: (data) => data.positionName as string | null,
-        Article: keyUuid,
+        ArticleSite: keyUuid,
         Availability: keyName,
         BlogArticle: keyUuid,
         BlogCategory: keyUuid,

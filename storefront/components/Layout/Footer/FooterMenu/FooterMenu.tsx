@@ -1,6 +1,6 @@
 import { FooterMenuStyled } from './FooterMenu.style';
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem/FooterMenuItem';
-import { ArticlePlacementTypeEnumApi, SimpleArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
+import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
 
@@ -56,10 +56,10 @@ export const FooterMenu: FC = () => {
 };
 
 const filterArticlesByPlacement = (
-    array: ({ node: SimpleArticleFragmentApi | null } | null)[] | undefined | null,
+    array: ({ node: SimpleNotBlogArticleFragmentApi | null } | null)[] | undefined | null,
     placement: ArticlePlacementTypeEnumApi,
-): SimpleArticleFragmentApi[] =>
+): SimpleNotBlogArticleFragmentApi[] =>
     array?.reduce(
         (prev, current) => (current?.node?.placement === placement ? [...prev, current.node] : prev),
-        [] as SimpleArticleFragmentApi[],
+        [] as SimpleNotBlogArticleFragmentApi[],
     ) ?? [];

@@ -10,7 +10,7 @@ export const getSeoTitleAndDescriptionForFriendlyUrlPage = (data: FriendlyUrlPag
         case 'Store':
             title = data.storeName;
             break;
-        case 'Article':
+        case 'ArticleSite':
             title = data.articleName;
             break;
         default:

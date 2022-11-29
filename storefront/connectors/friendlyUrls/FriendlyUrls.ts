@@ -49,7 +49,7 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
             return { data: mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Store':
             return { data: mapStoreDetailApiData(data.slug), fetching };
-        case 'Article':
+        case 'ArticleSite':
             return { data: mapArticleDetail(data.slug), fetching };
         case 'BlogArticle':
             return { data: mapBlogArticleDetail(data.slug, currentDomainConfig), fetching };

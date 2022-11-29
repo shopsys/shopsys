@@ -1,7 +1,7 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
 export type ArticleDetailType = {
-    __typename: 'Article';
+    __typename: 'ArticleSite';
     slug: string;
     uuid: string;
     placement: string;
@@ -13,8 +13,16 @@ export type ArticleDetailType = {
     createdAt: string;
 };
 
-export type SimpleArticleType = {
-    __typename?: 'Article';
+export type SimpleArticleSiteType = {
+    __typename: 'ArticleSite';
     name: string;
     slug: string;
+    external: boolean;
+};
+
+export type SimpleArticleLinkType = {
+    __typename: 'ArticleLink';
+    name: string;
+    url: string;
+    external: boolean;
 };
