@@ -1,6 +1,8 @@
 import { SearchButtonStyled, SearchTextInputStyled, TextInputLoadingWrapper } from './TextInput.style';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { theme } from 'components/Theme/main';
 import { FC, InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -45,7 +47,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             </SearchButtonStyled>
             {isLoading && (
                 <TextInputLoadingWrapper>
-                    <Icon icon="Spinner" iconType="icon" width={30} height={30} />
+                    <Loader iconSize={30} color={theme.color.white} />
                 </TextInputLoadingWrapper>
             )}
         </LabelWrapper>

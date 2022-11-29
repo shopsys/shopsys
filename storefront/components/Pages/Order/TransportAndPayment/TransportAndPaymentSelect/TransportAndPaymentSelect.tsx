@@ -3,7 +3,7 @@ import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Transpo
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
@@ -281,7 +281,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 </div>
                 {transport !== null && preSelectedTransport === null && (
                     <PaymentListWrapper data-testid={TEST_IDENTIFIER + 'payment'}>
-                        {isTransportSelectionLoading && <LoadingOverlay iconSize={30} />}
+                        {isTransportSelectionLoading && <LoaderWithOverlay iconSize={30} />}
                         <Heading type="h3">{t('Choose payment')}</Heading>
                         <ul>
                             {payment !== null

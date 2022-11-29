@@ -1,4 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -54,7 +55,7 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
                 testIdentifier={TEST_IDENTIFIER}
             >
                 {fetching ? (
-                    <Icon icon="Spinner" iconType="icon" width={16} height={16} color={theme.color.white} />
+                    <Loader iconSize={16} color={theme.color.white} />
                 ) : (
                     <Icon iconType="icon" icon="Cart" color={theme.color.white} />
                 )}

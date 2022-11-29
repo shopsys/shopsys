@@ -8,6 +8,7 @@ import {
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
@@ -68,11 +69,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     variant="primary"
                                     data-testid={TEST_IDENTIFIER + '-button'}
                                 >
-                                    {fetching ? (
-                                        <Icon icon="Spinner" iconType="icon" width={26} height={26} />
-                                    ) : (
-                                        <Icon iconType="icon" icon="Cart" />
-                                    )}
+                                    {fetching ? <Loader iconSize={26} /> : <Icon iconType="icon" icon="Cart" />}
 
                                     {t('Add to cart')}
                                 </AddToCartButtonStyled>

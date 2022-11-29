@@ -1,5 +1,5 @@
 import { CartLoadingWrapperStyled } from './EmptyCart.style';
-import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { FC } from 'react';
 
@@ -9,7 +9,7 @@ export const CartLoading: FC = () => {
     return (
         <Webline>
             <CartLoadingWrapperStyled data-testid={TEST_IDENTIFIER}>
-                <Icon icon="Spinner" iconType="icon" />
+                <Loader />
             </CartLoadingWrapperStyled>
         </Webline>
     );

@@ -6,7 +6,7 @@ import {
     OrderActionRightStyled,
     OrderActionStyled,
 } from './OrderAction.style';
-import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -66,7 +66,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     hasDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
-                    {isLoading && <Icon icon="Spinner" iconType="icon" width={20} height={20} />}
+                    {isLoading && <Loader iconSize={20} />}
                     <span>{buttonNext}</span>
                     <OrderActionButtonNextIconStyled alt="" iconType="icon" icon="Arrow" />
                 </Button>

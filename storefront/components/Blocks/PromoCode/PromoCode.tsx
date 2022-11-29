@@ -8,8 +8,8 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
+import { Loader } from 'components/Basic/Loader/Loader';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { theme } from 'components/Theme/main';
 import { useCurrentCart } from 'connectors/cart/Cart';
@@ -97,7 +97,7 @@ export const PromoCode: FC = () => {
             <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
                 {promoCode !== null ? (
                     <>
-                        {fetchingRemovePromoCode && <LoadingOverlay iconSize={20} />}
+                        {fetchingRemovePromoCode && <LoaderWithOverlay iconSize={20} />}
                         <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
                     </>
                 ) : (
@@ -133,15 +133,7 @@ export const PromoCode: FC = () => {
                                         data-testid={TEST_IDENTIFIER + '-apply-button'}
                                         onClick={onApplyPromoCodeHandler}
                                     >
-                                        {fetchingApplyPromoCode && (
-                                            <Icon
-                                                icon="Spinner"
-                                                iconType="icon"
-                                                width={16}
-                                                height={16}
-                                                color={theme.color.white}
-                                            />
-                                        )}
+                                        {fetchingApplyPromoCode && <Loader iconSize={16} color={theme.color.white} />}
                                         {t('Apply')}
                                     </PromoCodeContentButtonStyled>
                                 </PromoCodeContentStyled>

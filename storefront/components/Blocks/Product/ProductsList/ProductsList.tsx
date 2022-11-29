@@ -1,6 +1,6 @@
 import { ProductItem } from './ProductItem/ProductItem';
 import { ProductsListStyled } from './ProductsList.style';
-import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
@@ -27,7 +27,7 @@ export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products, fet
                     gtmListName={gtmListName}
                 />
             ))}
-            {fetching && <LoadingOverlay iconSize={80} />}
+            {fetching && <LoaderWithOverlay iconSize={80} />}
         </ProductsListStyled>
     );
 };

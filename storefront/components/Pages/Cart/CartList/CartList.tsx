@@ -1,6 +1,6 @@
 import { ListStyled } from './CartList.style';
 import { CartListItem } from './CartListItem/CartListItem';
-import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { RemoveFromCartHandler, useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
@@ -27,7 +27,7 @@ export const CartList: FC<CartListProps> = ({ items }) => {
     return (
         <Webline>
             <ListStyled>
-                {(isRemovingItem || isChangingCartsItem) && <LoadingOverlay iconSize={64} />}
+                {(isRemovingItem || isChangingCartsItem) && <LoaderWithOverlay iconSize={64} />}
                 {items.map((item, index) => (
                     <CartListItem
                         key={item.uuid}

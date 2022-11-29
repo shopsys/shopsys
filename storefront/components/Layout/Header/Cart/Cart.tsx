@@ -16,7 +16,7 @@ import {
     CartValueStyled,
 } from './Cart.style';
 import { ListItem } from './ListItem/ListItem';
-import { LoadingOverlay } from 'components/Basic/LoadingOverlay/LoadingOverlay';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -54,7 +54,7 @@ export const Cart: FC = () => {
             onMouseEnter={() => setOnMouseEnterTrigger(!onMouseEnterTrigger)}
             onMouseLeave={() => setOnMouseLeaveTrigger(!onMouseLeaveTrigger)}
         >
-            {(!isInitiallyLoaded || loginLoading !== 'not-loading') && <LoadingOverlay iconSize={32} />}
+            {(!isInitiallyLoaded || loginLoading !== 'not-loading') && <LoaderWithOverlay iconSize={32} />}
             <NextLink href={cartUrl} passHref>
                 <CartBlockStyled isHovered={isCartHovered} data-testid={TEST_IDENTIFIER + 'block'}>
                     <CartPiecesStyled>
@@ -78,7 +78,7 @@ export const Cart: FC = () => {
                 {!isCartEmpty ? (
                     <>
                         <CartDetailList>
-                            {isRemovingItem && <LoadingOverlay iconSize={64} />}
+                            {isRemovingItem && <LoaderWithOverlay iconSize={64} />}
                             {cart?.items.map((cartItem, index) => (
                                 <ListItem
                                     key={cartItem.uuid}
