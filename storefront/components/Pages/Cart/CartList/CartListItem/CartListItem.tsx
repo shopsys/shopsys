@@ -49,7 +49,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
 
     const setUpdateTimeout = () => {
         return setTimeout(() => {
-            onItemQuantityChange(item.product.uuid, listIndex, spinboxRef.current!.valueAsNumber, 'cart', true);
+            onItemQuantityChange(item.product.uuid, listIndex, 'cart', spinboxRef.current!.valueAsNumber, true);
         }, 500);
     };
 

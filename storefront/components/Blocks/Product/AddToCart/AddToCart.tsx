@@ -36,9 +36,9 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
 
         const addToCartResult = await changeCartItemQuantity(
             productUuid,
-            listIndex,
             spinboxRef.current.valueAsNumber,
             gtmListName,
+            listIndex,
         );
         spinboxRef.current!.valueAsNumber = 1;
         setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));

@@ -78,19 +78,19 @@ export const getNewGtmEcommerceEvent = (eventType: GtmEventType, clear = false):
 
 export const getGtmChangeCartItemEvent = (
     cartItem: CartItemType,
-    listIndex: number,
     quantity: number,
     currencyCode: string,
     eventValue: number,
     eventValueWithTax: number,
     listName: GtmListNameType,
     domainUrl: string,
+    listIndex?: number,
 ): GtmChangeCartItemEventType => ({
     listName,
     value: eventValue,
     valueWithTax: eventValueWithTax,
     currency: currencyCode,
-    products: [mapGtmCartItemType(cartItem, listIndex, domainUrl, quantity)],
+    products: [mapGtmCartItemType(cartItem, domainUrl, listIndex, quantity)],
 });
 
 export const getGtmShippingInfoEvent = (

@@ -39,12 +39,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
             return;
         }
 
-        const addToCartResult = await changeCartItemQuantity(
-            product.uuid,
-            1,
-            spinboxRef.current.valueAsNumber,
-            'detail',
-        );
+        const addToCartResult = await changeCartItemQuantity(product.uuid, spinboxRef.current.valueAsNumber, 'detail');
         spinboxRef.current!.valueAsNumber = 1;
         setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
     };
