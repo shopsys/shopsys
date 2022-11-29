@@ -7,8 +7,6 @@ return [
     Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
     FM\ElfinderBundle\FMElfinderBundle::class => ['all' => true],
     Intaro\PostgresSearchBundle\IntaroPostgresSearchBundle::class => ['all' => true],
-    JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
-    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
     Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
@@ -26,6 +24,9 @@ return [
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    # JMS TranslationBundle needs to be after Symfony Framework as Symfony Framework also adds translate commands
+    JMS\TranslationBundle\JMSTranslationBundle::class => ['all' => true],
+    JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
     Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
